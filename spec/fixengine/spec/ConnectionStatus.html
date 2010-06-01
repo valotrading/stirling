@@ -1,0 +1,24 @@
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+<body>
+    <h1>Connection Status</h1>
+    <p>
+    The Heartbeat message is used to monitor the status of the connection.
+    When either end of the connection has not received any data for
+    (HeartBtInt + "some reasonable transmission time") seconds, a TestRequest
+    message is transmitted. It forces a Heartbeat message to be transmitted
+    from the opposing side.
+    </p>
+
+    <div class="example">
+        <h3>Example</h3>
+        <p>
+        When TestRequest message with TestReqID set to
+        <span concordion:set="#testReqId">test-id</span> is
+        received, <span concordion:execute="receiveTestRequest(#testReqId)" />
+        we reply with a <span concordion:assertEquals="getResponse()">Heartbeat</span>
+        message that has TestReqID set to
+        <span concordion:assertEquals="getTestReqId()">test-id</span> as well.
+        </p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+<body>
+    <h1>Logout</h1>
+
+    <p>
+    The initiator signals end of session by sending a <i>Logout</i> message
+    to the acceptor. The acceptor might need to perform Gap Fill operations
+    before terminating the connection.
+    </p>
+
+    <div class="example">
+        <h3>Example</h3>
+        <p>
+        The initiator sends a <i>Logout</i> message to the acceptor. The
+        acceptor responds with a <i>Logout</i> message and terminates
+        connection. The session is considered to be
+        <span concordion:assertEquals="issuesLogout()">closed</span>.
+        </p>
+    </div>
+
+    <div class="example">
+        <h3>Example</h3>
+        <p>
+        The initiator sends a <i>Logout</i> message to the acceptor. The
+        acceptor terminates connection immediately after which the session
+        is considered to be
+        <span concordion:assertEquals="terminates()">closed</span>.
+        </p>
+    </div>
+
+    <div class="example">
+        <h3>Example</h3>
+        <p>
+        The initiator sends a <i>Logout</i> message to the acceptor. The
+        acceptor detects a sequence number gap and replies with a
+        <i>ResendRequest</i> message to recover the messages. The initiator
+        resends the messages and waits for acceptor to issue a <i>Logon</i>
+        message. The acceptor issues a <i>Logout</i> message and terminates
+        connection and the session is considered to be
+        <span concordion:assertEquals="recoversMessagesBeforeLoggingOut()">closed</span>.
+        </p>
+    </div>
+</body>
+</html>

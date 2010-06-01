@@ -1,0 +1,24 @@
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+<body>
+    <h1>Message Resend</h1>
+
+    <div class="example">
+        <h3>Example</h3>
+        <p>
+        To fill the sequence number gap, the initiator sends a
+        <i>ResendRequest</i> message to the acceptor with BeginSeqNo set to
+        <span concordion:set="#beginSeqNo">1</span> and EndSeqNo set to
+        <span concordion:set="#endSeqNo">0</span>.
+        </p>
+
+        <p>
+        The acceptor
+        <span concordion:execute="respond(#beginSeqNo, #endSeqNo)">responds</span>
+        with a <i>SeqReset-GapFill</i> message with PossDupFlag set to
+        <span concordion:assertEquals="getPossDupFlag()">Y</span>,
+        <i>MsgSeqNum</i> set to <span concordion:assertEquals="getMsgSeqNo()">1</span>
+        and <i>NewSeqNo</i> set to <span concordion:assertEquals="getNewSeqNo()">3</span>.
+        </p>
+    </div>
+</body>
+</html>
