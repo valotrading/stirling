@@ -1,0 +1,8 @@
+<ivy-module version="2.0">
+  <info organisation="fixengine" module="fixengine"/>
+  <dependencies>
+    <dependency org="commons-lang" name="commons-lang" rev="2.4"/>
+    <dependency org="joda-time" name="joda-time" rev="1.5.2"/>
+    <dependency org="log4j" name="log4j" rev="1.2.16"/>
+  </dependencies>
+</ivy-module>
