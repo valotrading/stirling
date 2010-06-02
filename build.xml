@@ -1,0 +1,18 @@
+<project name="fixengine" default="compile" xmlns:ivy="antlib:org.apache.ivy.ant">
+  <property name="lib.dir" value="lib"/>
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <path id="lib.path.id">
+    <fileset dir="${lib.dir}"/>
+  </path>
+  <target name="init">
+    <ivy:retrieve/>
+    <mkdir dir="${build}"/>
+  </target>
+  <target name="compile" depends="init">
+    <javac srcdir="${src}" destdir="${build}" classpathref="lib.path.id"/>
+  </target>
+  <target name="clean">
+    <delete dir="${build}"/>
+  </target>
+</project>
