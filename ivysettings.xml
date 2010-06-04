@@ -1,0 +1,9 @@
+<ivysettings>
+  <settings defaultResolver="main"/>
+  <resolvers>
+    <chain name="main">
+      <ibiblio name="public" m2compatible="true"/>
+      <ibiblio name="laughingpanda" root="http://www.laughingpanda.org/maven2/" m2compatible="true"/>
+    </chain>
+  </resolvers>
+</ivysettings>
