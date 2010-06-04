@@ -20,7 +20,7 @@
   </target>
   <!-- Bread and butter -->
   <property name="lib.dir" value="lib"/>
-  <property name="src" location="src"/>
+  <property name="main.src" location="src"/>
   <property name="build" location="build"/>
   <path id="lib.path.id">
     <fileset dir="${lib.dir}"/>
@@ -30,7 +30,7 @@
     <mkdir dir="${build}"/>
   </target>
   <target name="compile" depends="init">
-    <javac srcdir="${src}" destdir="${build}" classpathref="lib.path.id"/>
+    <javac srcdir="${main.src}" destdir="${build}" classpathref="lib.path.id"/>
   </target>
   <target name="clean">
     <delete dir="${build}"/>
