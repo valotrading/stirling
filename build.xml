@@ -22,8 +22,13 @@
   <property name="lib.dir" value="lib"/>
   <property name="main.src" location="src"/>
   <property name="build" location="build"/>
+  <property name="test.src" location="test"/>
   <path id="lib.path.id">
     <fileset dir="${lib.dir}"/>
+  </path>
+  <path id="test.path.id">
+    <path refid="lib.path.id"/>
+    <pathelement location="${build}"/>
   </path>
   <target name="init" depends="init-ivy">
     <ivy:retrieve/>
@@ -31,6 +36,17 @@
   </target>
   <target name="compile" depends="init">
     <javac srcdir="${main.src}" destdir="${build}" classpathref="lib.path.id"/>
+  </target>
+  <target name="test" depends="compile">
+    <javac srcdir="${test.src}" destdir="${build}" classpathref="lib.path.id"/>
+    <junit printsummary="yes" haltonfailure="true">
+      <classpath refid="test.path.id"/>
+      <batchtest>
+        <fileset dir="${test.src}">
+          <include name="**/*Spec.java"/>
+        </fileset>
+      </batchtest>
+    </junit>
   </target>
   <target name="clean">
     <delete dir="${build}"/>
