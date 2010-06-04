@@ -25,6 +25,7 @@
   <property name="main.build" location="${build}/main"/>
   <property name="test.src" location="test"/>
   <property name="test.build" location="${build}/test"/>
+  <property name="library" value="${basedir}/fixengine.jar"/>
   <path id="lib.path.id">
     <fileset dir="${lib.dir}"/>
   </path>
@@ -41,6 +42,9 @@
   <target name="compile" depends="init">
     <javac srcdir="${main.src}" destdir="${main.build}" classpathref="lib.path.id"/>
   </target>
+  <target name="dist">
+    <jar destfile="${library}" basedir="${main.build}"/>
+  </target>
   <target name="test" depends="compile">
     <javac srcdir="${test.src}" destdir="${test.build}" classpathref="test.path.id"/>
     <junit printsummary="yes" haltonfailure="true">
@@ -54,5 +58,6 @@
   </target>
   <target name="clean">
     <delete dir="${build}"/>
+    <delete file="${library}"/>
   </target>
 </project>
