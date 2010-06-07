@@ -1,4 +1,4 @@
-<project name="fixengine" default="compile" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="fixengine" default="compile-main" xmlns:ivy="antlib:org.apache.ivy.ant">
   <!-- Automatic installation of Ivy -->
   <property name="ivy.install.version" value="2.1.0"/>
   <condition property="ivy.home" value="${env.IVY_HOME}">
@@ -39,13 +39,13 @@
     <mkdir dir="${main.build}"/>
     <mkdir dir="${test.build}"/>
   </target>
-  <target name="compile" depends="init">
+  <target name="compile-main" depends="init">
     <javac srcdir="${main.src}" destdir="${main.build}" classpathref="lib.path.id"/>
   </target>
-  <target name="dist" depends="compile">
+  <target name="dist" depends="compile-main">
     <jar destfile="${library}" basedir="${main.build}"/>
   </target>
-  <target name="test" depends="compile">
+  <target name="test" depends="compile-main">
     <javac srcdir="${test.src}" destdir="${test.build}" classpathref="test.path.id"/>
     <junit printsummary="yes" haltonfailure="true">
       <classpath refid="test.path.id"/>
