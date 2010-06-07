@@ -21,8 +21,6 @@ import static fixengine.messages.EncryptMethod.NONE;
  * @author Pekka Enberg 
  */
 public class LogonMessage extends AbstractMessage {
-    private ResetSeqNumFlagField resetSeqNumFlag = new ResetSeqNumFlagField(Required.NO);
-
     public LogonMessage() {
         this(new MessageHeader(MsgType.LOGON));
     }
@@ -32,15 +30,10 @@ public class LogonMessage extends AbstractMessage {
 
         add(new EncryptMethodField(NONE));
         add(new HeartBtIntField(30));
-        add(resetSeqNumFlag);
     }
 
     @Override
     public void apply(MessageVisitor visitor) {
         visitor.visit(this);
-    }
-
-    public void setResetSeqNumFlag(boolean resetSeqNumFlag) {
-        this.resetSeqNumFlag.setValue(resetSeqNumFlag);
     }
 }

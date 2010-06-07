@@ -31,13 +31,7 @@ public class InitiatorSession extends AbstractSession {
     }
 
     public void logon() {
-        /*
-         * Force sequence number reset in the other end to start a new session;
-         * otherwise we might participate in an existing session but have
-         * out-of-order sequence numbers.
-         */
         LogonMessage logonMsg = new LogonMessage();
-        logonMsg.setResetSeqNumFlag(true);
         send(logonMsg);
 
         processMessage(new DefaultMessageVisitor() {
