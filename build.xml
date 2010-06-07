@@ -42,7 +42,7 @@
   <target name="compile" depends="init">
     <javac srcdir="${main.src}" destdir="${main.build}" classpathref="lib.path.id"/>
   </target>
-  <target name="dist">
+  <target name="dist" depends="compile">
     <jar destfile="${library}" basedir="${main.build}"/>
   </target>
   <target name="test" depends="compile">
