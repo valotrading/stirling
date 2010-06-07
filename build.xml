@@ -23,11 +23,17 @@
   <property name="build" location="build"/>
   <property name="main.src" location="src"/>
   <property name="main.build" location="${build}/main"/>
+  <property name="examples.src" location="examples"/>
+  <property name="examples.build" location="${build}/examples"/>
   <property name="test.src" location="test"/>
   <property name="test.build" location="${build}/test"/>
   <property name="library" value="${basedir}/fixengine.jar"/>
   <path id="lib.path.id">
     <fileset dir="${lib.dir}"/>
+  </path>
+  <path id="examples.path.id">
+    <fileset dir="${lib.dir}"/>
+    <pathelement location="${main.build}"/>
   </path>
   <path id="test.path.id">
     <path refid="lib.path.id"/>
@@ -37,10 +43,14 @@
   <target name="init" depends="init-ivy">
     <ivy:retrieve/>
     <mkdir dir="${main.build}"/>
+    <mkdir dir="${examples.build}"/>
     <mkdir dir="${test.build}"/>
   </target>
   <target name="compile-main" depends="init">
     <javac srcdir="${main.src}" destdir="${main.build}" classpathref="lib.path.id"/>
+  </target>
+  <target name="compile-examples" depends="compile-main">
+    <javac srcdir="${examples.src}" destdir="${examples.build}" classpathref="examples.path.id"/>
   </target>
   <target name="dist" depends="compile-main">
     <jar destfile="${library}" basedir="${main.build}"/>
