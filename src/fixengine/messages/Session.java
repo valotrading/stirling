@@ -22,6 +22,7 @@ import fixengine.session.Sequence;
  */
 public interface Session {
     Sequence getOutgoingSeq();
+    void setOutgoingSeq(Sequence seq);
     Message processMessage(MessageVisitor visitor);
     boolean isAuthenticated();
     boolean isDisconnected();
