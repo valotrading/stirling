@@ -25,6 +25,7 @@ import fixengine.messages.Session;
 import fixengine.messages.TestRequestMessage;
 import fixengine.session.HeartBtInt;
 import fixengine.session.InitiatorSession;
+import fixengine.session.store.SessionStore;
 
 /**
  * @author Pekka Enberg 
@@ -33,11 +34,13 @@ public class InitiatorProtocolHandler extends AbstractProtocolHandler<Message> {
     private final Config config;
     protected Session session;
     private long testReqId;
+    private SessionStore store;
 
-    public InitiatorProtocolHandler(Config config, HeartBtInt heartBtInt) {
+    public InitiatorProtocolHandler(Config config, HeartBtInt heartBtInt, SessionStore store) {
         super(new MessageConverter(), heartBtInt.testRequest(), heartBtInt.heartbeat());
 
         this.config = config;
+        this.store = store;
     }
 
     @Override

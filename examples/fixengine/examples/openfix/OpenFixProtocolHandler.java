@@ -25,6 +25,7 @@ import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.Message;
 import fixengine.messages.SequenceResetMessage;
 import fixengine.session.HeartBtInt;
+import fixengine.session.store.SessionStore;
 
 /**
  * @author Pekka Enberg
@@ -32,8 +33,8 @@ import fixengine.session.HeartBtInt;
 public class OpenFixProtocolHandler extends InitiatorProtocolHandler {
     private static final BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
-    public OpenFixProtocolHandler(Config config) {
-        super(config, new HeartBtInt(30));
+    public OpenFixProtocolHandler(Config config, SessionStore store) {
+        super(config, new HeartBtInt(30), store);
     }
 
     @Override

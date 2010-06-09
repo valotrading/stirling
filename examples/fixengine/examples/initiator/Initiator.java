@@ -41,6 +41,8 @@ import fixengine.messages.OrderCancelRequestMessage;
 import fixengine.messages.OrderModificationRequestMessage;
 import fixengine.messages.Side;
 import fixengine.session.HeartBtInt;
+import fixengine.session.store.SessionStore;
+import fixengine.session.store.MongoSessionStore;
 
 /**
  * @author Pekka Enberg
@@ -53,15 +55,16 @@ public class Initiator {
     private static final String TARGET_COMP_ID = "acceptor";
 
     public static void main(String[] args) throws Exception {
+        SessionStore store = new MongoSessionStore("localhost", 27017);
         PropertyConfigurator.configure("examples/fixengine/examples/log4j.properties");
 
-        ProtocolHandler handler = newProtocolHandler(getConfig(), new HeartBtInt(30));
+        ProtocolHandler handler = newProtocolHandler(getConfig(), new HeartBtInt(30), store);
         FixClient client = new FixClient(InetAddress.getByName(HOST), PORT, handler);
         client.start();
     }
 
-    private static ProtocolHandler newProtocolHandler(Config config, HeartBtInt heartBtInt) {
-        return new InitiatorProtocolHandler(config, heartBtInt) {
+    private static ProtocolHandler newProtocolHandler(Config config, HeartBtInt heartBtInt, SessionStore store) {
+        return new InitiatorProtocolHandler(config, heartBtInt, store) {
             @Override
             public void onEstablished() {
                 session.logon();

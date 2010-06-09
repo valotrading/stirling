@@ -23,6 +23,8 @@ import fixengine.Config;
 import fixengine.Version;
 import fixengine.client.FixClient;
 import fixengine.io.ProtocolHandler;
+import fixengine.session.store.SessionStore;
+import fixengine.session.store.MongoSessionStore;
 
 /**
  * @author Pekka Enberg
@@ -44,7 +46,8 @@ public class OpenFixClient {
     }
 
     private static void run() throws Exception {
-        ProtocolHandler handler = new OpenFixProtocolHandler(getConfig());
+        SessionStore store = new MongoSessionStore("localhost", 27017);
+        ProtocolHandler handler = new OpenFixProtocolHandler(getConfig(), store);
         FixClient client = new FixClient(InetAddress.getByName(HOST), PORT, handler);
         client.start();
     }
