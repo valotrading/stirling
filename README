@@ -1,0 +1,15 @@
+== Setting up MongoDB
+
+In order to use fixengine, you must install MongoDB. MongoDB automatically
+creates a database called 'fixengine', while the collection 'sessions' is
+created automatically by fixengine.
+
+1. Download MongoDB version 1.4.3 or greater from MongoDB's site.
+
+2. Extract the downloaded binary distribution and launch MongoDB by running:
+
+  $ $MONGODB_HOME/bin/mongod --dbpath /path/to/my/data/dir
+
+== References
+
+1. http://www.mongodb.org
