@@ -63,6 +63,10 @@ public abstract class AbstractSession implements Session {
     public void setTimeSource(TimeSource timeSource) {
         this.timeSource = timeSource;
     }
+
+    public Sequence getOutgoingSeq() {
+        return outgoingSeq;
+    }
     
     public void setOutgoingSeq(Sequence outgoingSeq) {
         this.outgoingSeq = outgoingSeq;
