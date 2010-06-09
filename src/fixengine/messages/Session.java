@@ -15,10 +15,13 @@
  */
 package fixengine.messages;
 
+import fixengine.session.Sequence;
+
 /**
  * @author Pekka Enberg 
  */
 public interface Session {
+    Sequence getOutgoingSeq();
     Message processMessage(MessageVisitor visitor);
     boolean isAuthenticated();
     boolean isDisconnected();
