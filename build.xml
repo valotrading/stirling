@@ -1,4 +1,4 @@
-<project name="fixengine" default="compile-main" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="fixengine" default="compile-all" xmlns:ivy="antlib:org.apache.ivy.ant">
   <!-- Automatic installation of Ivy -->
   <property name="ivy.install.version" value="2.1.0"/>
   <condition property="ivy.home" value="${env.IVY_HOME}">
@@ -46,6 +46,7 @@
     <mkdir dir="${examples.build}"/>
     <mkdir dir="${test.build}"/>
   </target>
+  <target name="compile-all" depends="compile-main, compile-test, compile-examples"/>
   <target name="compile-main" depends="init">
     <javac srcdir="${main.src}" destdir="${main.build}" classpathref="lib.path.id"/>
   </target>
