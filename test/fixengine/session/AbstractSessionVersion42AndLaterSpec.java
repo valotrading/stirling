@@ -28,6 +28,7 @@ import fixengine.messages.BusinessMessageRejectMessage;
 import fixengine.messages.Message;
 import fixengine.messages.RejectMessage;
 import fixengine.messages.UnknownMessage;
+import fixengine.session.store.SessionStore;
 
 /**
  * @author Pekka Enberg
@@ -42,7 +43,8 @@ public class AbstractSessionVersion42AndLaterSpec extends Specification<Abstract
 
     @SuppressWarnings("unchecked")
     private final ObjectOutputStream<Message> stream = mock(ObjectOutputStream.class);
-    private final AbstractSession session = new AbstractSession(stream, config) {
+    private final SessionStore store = mock(SessionStore.class);
+    private final AbstractSession session = new AbstractSession(stream, config, store) {
         @Override
         public void logon() {
             authenticated = true;

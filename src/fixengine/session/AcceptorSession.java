@@ -22,6 +22,7 @@ import fixengine.messages.LogonMessage;
 import fixengine.messages.LogoutMessage;
 import fixengine.messages.Message;
 import fixengine.messages.NullMessage;
+import fixengine.session.store.SessionStore;
 
 /**
  * @author Pekka Enberg 
@@ -30,8 +31,8 @@ public class AcceptorSession extends AbstractSession {
     private final AuthenticationManager am;
     private final ConnectionManager cm;
 
-    public AcceptorSession(ObjectOutputStream<Message> stream, Config config, AuthenticationManager am, ConnectionManager cm) {
-        super(stream, config);
+    public AcceptorSession(ObjectOutputStream<Message> stream, Config config, AuthenticationManager am, ConnectionManager cm, SessionStore store) {
+        super(stream, config, store);
         this.am = am;
         this.cm = cm;
     }

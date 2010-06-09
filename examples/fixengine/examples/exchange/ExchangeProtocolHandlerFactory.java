@@ -25,6 +25,8 @@ import fixengine.io.ProtocolHandlerFactory;
 import fixengine.session.AuthenticationManager;
 import fixengine.session.ConnectionManager;
 import fixengine.session.HeartBtInt;
+import fixengine.session.store.SessionStore;
+import fixengine.session.store.MongoSessionStore;
 
 /**
  * @author Pekka Enberg 
@@ -36,8 +38,9 @@ public class ExchangeProtocolHandlerFactory implements ProtocolHandlerFactory {
     private static final String TARGET_COMP_ID = "initiator";
 
     @Override
-    public ProtocolHandler newProtocolHandler() {
-        return new ExchangeProtocolHandler(executor, getConfig(), HEART_BT_INT) {
+    public ProtocolHandler newProtocolHandler() throws Exception {
+        SessionStore store = new MongoSessionStore("localhost", 27017);
+        return new ExchangeProtocolHandler(executor, getConfig(), HEART_BT_INT, store) {
             @Override
             protected void onEstablished() {
                 session.logon();

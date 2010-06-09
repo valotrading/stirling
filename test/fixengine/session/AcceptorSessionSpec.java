@@ -30,6 +30,7 @@ import fixengine.messages.LogonMessage;
 import fixengine.messages.LogoutMessage;
 import fixengine.messages.Message;
 import fixengine.messages.NullMessage;
+import fixengine.session.store.SessionStore;
 
 /**
  * @author Pekka Enberg 
@@ -46,7 +47,8 @@ public class AcceptorSessionSpec extends Specification<AcceptorSession> {
     private final ConnectionManager cm = mock(ConnectionManager.class);
     @SuppressWarnings("unchecked")
     private final ObjectOutputStream<Message> stream = mock(ObjectOutputStream.class);
-    private AcceptorSession session = new AcceptorSession(stream, config, am, cm);
+    private final SessionStore store = mock(SessionStore.class);
+    private AcceptorSession session = new AcceptorSession(stream, config, am, cm, store);
 
     public class AcceptorThatReceivesLogonMessageFromKnownInitiator {
         public AcceptorSession create() {

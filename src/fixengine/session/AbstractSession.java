@@ -43,6 +43,7 @@ import fixengine.messages.SessionRejectReason;
 import fixengine.messages.TestRequestMessage;
 import fixengine.messages.UnknownMessage;
 import fixengine.messages.Validator;
+import fixengine.session.store.SessionStore;
 
 /**
  * @author Pekka Enberg 
@@ -54,10 +55,12 @@ public abstract class AbstractSession implements Session {
     protected final ObjectOutputStream<Message> stream;
     protected final Config config;
     protected boolean authenticated;
+    protected SessionStore store;
 
-    public AbstractSession(ObjectOutputStream<Message> stream, Config config) {
+    public AbstractSession(ObjectOutputStream<Message> stream, Config config, SessionStore store) {
         this.stream = stream;
         this.config = config;
+        this.store = store;
     }
 
     public void setTimeSource(TimeSource timeSource) {

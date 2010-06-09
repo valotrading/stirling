@@ -45,7 +45,7 @@ public class InitiatorProtocolHandler extends AbstractProtocolHandler<Message> {
 
     @Override
     protected void init(CodedObjectOutputStream<Message> output) {
-        session = new InitiatorSession(output, config);
+        session = new InitiatorSession(output, config, store);
     }
 
     @Override

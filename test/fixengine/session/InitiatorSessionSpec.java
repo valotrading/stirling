@@ -29,6 +29,7 @@ import fixengine.messages.HeartbeatMessage;
 import fixengine.messages.LogonMessage;
 import fixengine.messages.LogoutMessage;
 import fixengine.messages.Message;
+import fixengine.session.store.SessionStore;
 
 /**
  * @author Pekka Enberg
@@ -42,7 +43,8 @@ public class InitiatorSessionSpec extends Specification<InitiatorSession> {
     private final Config config = new Config().setSenderCompId(INITIATOR).setTargetCompId(ACCEPTOR).setVersion(Version.FIX_4_3);
     @SuppressWarnings("unchecked")
     private final ObjectOutputStream<Message> stream = mock(ObjectOutputStream.class);
-    private final InitiatorSession session = new InitiatorSession(stream, config);
+    private final SessionStore store = mock(SessionStore.class);
+    private final InitiatorSession session = new InitiatorSession(stream, config, store);
 
     public class InitiatorThatReceivesValidLogonForLogon {
         public InitiatorSession create() {

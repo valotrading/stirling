@@ -31,6 +31,7 @@ import fixengine.session.AcceptorSession;
 import fixengine.session.AuthenticationManager;
 import fixengine.session.ConnectionManager;
 import fixengine.session.HeartBtInt;
+import fixengine.session.store.SessionStore;
 
 /**
  * @author Pekka Enberg 
@@ -41,17 +42,19 @@ public abstract class ExchangeProtocolHandler extends AbstractProtocolHandler<Me
     private final Config config;
     protected Session session;
     private long testReqId;
+    private SessionStore store;
 
-    public ExchangeProtocolHandler(ExecutorService executor, Config config, HeartBtInt heartBtInt) {
+    public ExchangeProtocolHandler(ExecutorService executor, Config config, HeartBtInt heartBtInt, SessionStore store) {
         super(new MessageConverter(), heartBtInt.testRequest(), heartBtInt.heartbeat());
 
         this.executor = executor;
         this.config = config;
+        this.store = store;
     }
 
     @Override
     protected void init(CodedObjectOutputStream<Message> output) {
-        session = new AcceptorSession(output, config, getAuthenticationManager(), getConnectionManager());
+        session = new AcceptorSession(output, config, getAuthenticationManager(), getConnectionManager(), store);
         processor = new ExchangeMessageProcessor(session, new InMemoryOrderStore());
     }
 

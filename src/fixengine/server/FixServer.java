@@ -64,7 +64,7 @@ public class FixServer {
         }
     }
 
-    private void select() throws IOException {
+    private void select() throws Exception {
         Selector selector = selector();
 
         while (selector.select() > 0) {
@@ -102,7 +102,7 @@ public class FixServer {
         return selector;
     }
 
-    private void registerClient(Selector selector, final SocketChannel client) throws IOException {
+    private void registerClient(Selector selector, final SocketChannel client) throws Exception {
         final SelectionKey sk = client.register(selector, SelectionKey.OP_READ);
         final ProtocolHandler handler = factory.newProtocolHandler();
         executor.execute(new Runnable() {

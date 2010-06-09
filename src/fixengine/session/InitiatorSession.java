@@ -21,13 +21,14 @@ import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.LogonMessage;
 import fixengine.messages.LogoutMessage;
 import fixengine.messages.Message;
+import fixengine.session.store.SessionStore;
 
 /**
  * @author Pekka Enberg 
  */
 public class InitiatorSession extends AbstractSession {
-    public InitiatorSession(ObjectOutputStream<Message> stream, Config config) {
-        super(stream, config);
+    public InitiatorSession(ObjectOutputStream<Message> stream, Config config, SessionStore store) {
+        super(stream, config, store);
     }
 
     public void logon() {

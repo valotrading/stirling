@@ -43,6 +43,7 @@ import fixengine.messages.SequenceResetMessage;
 import fixengine.messages.TestReqIdField;
 import fixengine.messages.TimeInForceField;
 import fixengine.messages.TokenStream;
+import fixengine.session.store.SessionStore;
 
 /**
  * @author Pekka Enberg
@@ -58,7 +59,8 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
 
     @SuppressWarnings("unchecked")
     private final ObjectOutputStream<Message> stream = mock(ObjectOutputStream.class);
-    private final AbstractSession session = new AbstractSession(stream, config) {
+    private final SessionStore store = mock(SessionStore.class);
+    private final AbstractSession session = new AbstractSession(stream, config, store) {
         @Override
         public void logon() {
             authenticated = true;

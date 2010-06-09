@@ -19,5 +19,5 @@ package fixengine.io;
  * @author Pekka Enberg 
  */
 public interface ProtocolHandlerFactory {
-    ProtocolHandler newProtocolHandler();
+    ProtocolHandler newProtocolHandler() throws Exception;
 }
