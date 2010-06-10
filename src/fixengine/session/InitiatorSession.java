@@ -32,6 +32,7 @@ public class InitiatorSession extends AbstractSession {
     }
 
     public void logon() {
+        store.load(this);
         LogonMessage logonMsg = new LogonMessage();
         send(logonMsg);
 

@@ -30,6 +30,7 @@ import fixengine.messages.LogonMessage;
 import fixengine.messages.LogoutMessage;
 import fixengine.messages.Message;
 import fixengine.session.store.SessionStore;
+import fixengine.messages.Session;
 
 /**
  * @author Pekka Enberg
@@ -55,6 +56,7 @@ public class InitiatorSessionSpec extends Specification<InitiatorSession> {
             logonMsg.setTargetCompId(INITIATOR);
             logonMsg.setSendingTime(new DateTime());
             checking(new Expectations() {{
+                one(store).load(with(any(Session.class)));
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(LogonMessage.class)));
             }});
@@ -78,6 +80,7 @@ public class InitiatorSessionSpec extends Specification<InitiatorSession> {
             logonMsg.setTargetCompId("some-other-initiator");
             logonMsg.setSendingTime(new DateTime());
             checking(new Expectations() {{
+                one(store).load(with(any(Session.class)));
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(LogonMessage.class)));
                 one(stream).writeObject(with(any(LogoutMessage.class)));
@@ -96,6 +99,7 @@ public class InitiatorSessionSpec extends Specification<InitiatorSession> {
     public class InitiatorThatReceivesSomeOtherMessageThanLogonForLogon {
         public InitiatorSession create() {
             checking(new Expectations() {{
+                one(store).load(with(any(Session.class)));
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(LogonMessage.class)));
                 one(stream).close();
