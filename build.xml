@@ -34,6 +34,7 @@
   <path id="examples.path.id">
     <fileset dir="${lib.dir}"/>
     <pathelement location="${main.build}"/>
+    <pathelement location="${examples.build}"/>
   </path>
   <path id="test.path.id">
     <path refid="lib.path.id"/>
@@ -73,5 +74,10 @@
   <target name="clean">
     <delete dir="${build}"/>
     <delete file="${library}"/>
+  </target>
+  <target name="run-console" depends="compile-examples">
+    <java classname="fixengine.examples.console.ConsoleClient">
+      <classpath refid="examples.path.id"/>
+    </java>
   </target>
 </project>
