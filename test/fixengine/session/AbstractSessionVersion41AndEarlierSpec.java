@@ -27,6 +27,7 @@ import fixengine.io.ObjectOutputStream;
 import fixengine.messages.Message;
 import fixengine.messages.RejectMessage;
 import fixengine.messages.UnknownMessage;
+import fixengine.messages.Session;
 import fixengine.session.store.SessionStore;
 
 /**
@@ -63,6 +64,7 @@ public class AbstractSessionVersion41AndEarlierSpec extends Specification<Abstra
         public void rejectsTheMessage() {
             checking(new Expectations() {{
                 one(stream).writeObject(with(any(RejectMessage.class)));
+                one(store).save(with(any(Session.class)));
             }});
            session.receive(unknown);
         }
@@ -81,6 +83,7 @@ public class AbstractSessionVersion41AndEarlierSpec extends Specification<Abstra
         public void rejectsTheMessage() {
             checking(new Expectations() {{
                 one(stream).writeObject(with(any(RejectMessage.class)));
+                one(store).save(with(any(Session.class)));
             }});
            session.receive(unknown);
         }

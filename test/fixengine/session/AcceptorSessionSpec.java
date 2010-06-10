@@ -30,6 +30,7 @@ import fixengine.messages.LogonMessage;
 import fixengine.messages.LogoutMessage;
 import fixengine.messages.Message;
 import fixengine.messages.NullMessage;
+import fixengine.messages.Session;
 import fixengine.session.store.SessionStore;
 
 /**
@@ -63,6 +64,7 @@ public class AcceptorSessionSpec extends Specification<AcceptorSession> {
                 one(cm).connect(INITIATOR); will(returnValue(true));
                 one(am).authenticate(INITIATOR); will(returnValue(true));
                 one(stream).writeObject(with(any(LogonMessage.class)));
+                one(store).save(with(any(Session.class)));
             }});
             session.receive(logonMsg);
             session.logon();
@@ -134,6 +136,7 @@ public class AcceptorSessionSpec extends Specification<AcceptorSession> {
             checking(new Expectations() {{
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(LogoutMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(cm).disconnect(INITIATOR);
                 one(stream).close();
             }});

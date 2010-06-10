@@ -59,6 +59,7 @@ public class InitiatorSessionSpec extends Specification<InitiatorSession> {
                 one(store).load(with(any(Session.class)));
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(LogonMessage.class)));
+                one(store).save(with(any(Session.class)));
             }});
             session.receive(logonMsg);
             session.logon();
@@ -83,7 +84,9 @@ public class InitiatorSessionSpec extends Specification<InitiatorSession> {
                 one(store).load(with(any(Session.class)));
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(LogonMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).writeObject(with(any(LogoutMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).close();
             }});
             session.receive(logonMsg);
@@ -102,6 +105,7 @@ public class InitiatorSessionSpec extends Specification<InitiatorSession> {
                 one(store).load(with(any(Session.class)));
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(LogonMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).close();
             }});
             HeartbeatMessage message = new HeartbeatMessage();

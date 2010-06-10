@@ -43,6 +43,7 @@ import fixengine.messages.SequenceResetMessage;
 import fixengine.messages.TestReqIdField;
 import fixengine.messages.TimeInForceField;
 import fixengine.messages.TokenStream;
+import fixengine.messages.Session;
 import fixengine.session.store.SessionStore;
 
 /**
@@ -92,6 +93,7 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
             checking(new Expectations() {{
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(LogoutMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).close();
             }});
             session.logon();
@@ -109,6 +111,7 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
         public AbstractSession create() {
             checking(new Expectations() {{
                 one(stream).writeObject(with(any(LogoutMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).close();
                 one(stream).isClosed(); will(returnValue(true));
                 one(stream).close();
@@ -135,7 +138,9 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
             checking(new Expectations() {{
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(LogoutMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).writeObject(with(any(RejectMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).close();
             }});
             session.logon();
@@ -160,6 +165,7 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
             checking(new Expectations() {{
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(LogoutMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).close();
             }});
             session.logon();
@@ -192,6 +198,7 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
             checking(new Expectations() {{
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(RejectMessage.class)));
+                one(store).save(with(any(Session.class)));
             }});
             session.receive(message);
         }
@@ -222,6 +229,7 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
         public void terminatesTheConnection() {
             checking(new Expectations() {{
                 one(stream).writeObject(with(any(LogoutMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).close();
                 one(stream).isClosed(); will(returnValue(true));
             }});
@@ -277,6 +285,7 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
             checking(new Expectations() {{
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(RejectMessage.class)));
+                one(store).save(with(any(Session.class)));
             }});
             session.receive(message);
         }
@@ -300,7 +309,9 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
         public void rejectsTheMessage() {
             checking(new Expectations() {{
                 one(stream).writeObject(with(any(RejectMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).writeObject(with(any(LogoutMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).close();
                 one(stream).isClosed(); will(returnValue(true));
             }});
@@ -321,6 +332,7 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
         public void terminatesTheConnection() {
             checking(new Expectations() {{
                 one(stream).writeObject(with(any(LogoutMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).close();
                 one(stream).isClosed(); will(returnValue(true));
             }});
@@ -342,7 +354,9 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
         public void rejectsMessageAndTerminatesTheConnection() {
             checking(new Expectations() {{
                 one(stream).writeObject(with(any(RejectMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).writeObject(with(any(LogoutMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).close();
                 one(stream).isClosed(); will(returnValue(true));
             }});
@@ -359,6 +373,7 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
             checking(new Expectations() {{
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(ResendRequestMessage.class)));
+                one(store).save(with(any(Session.class)));
             }});
             message1.setBeginString(BEGIN_STRING);
             message1.setSenderCompId(ACCEPTOR);
@@ -466,7 +481,9 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
                 allowing(timeSource).currentTime(); will(returnValue(currentTime));
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(RejectMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).writeObject(with(any(LogoutMessage.class)));
+                one(store).save(with(any(Session.class)));
                 one(stream).close();
             }});
             session.receive(message);
@@ -491,6 +508,7 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
             checking(new Expectations() {{
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(RejectMessage.class)));
+                one(store).save(with(any(Session.class)));
             }});
             session.receive(message);
         }
@@ -514,6 +532,7 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
             checking(new Expectations() {{
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(RejectMessage.class)));
+                one(store).save(with(any(Session.class)));
             }});
             session.receive(message);
         }
@@ -537,6 +556,7 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
             checking(new Expectations() {{
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(RejectMessage.class)));
+                one(store).save(with(any(Session.class)));
             }});
             session.receive(message);
         }
@@ -559,6 +579,7 @@ public class AbstractSessionSpec extends Specification<AbstractSession> {
             checking(new Expectations() {{
                 allowing(stream).isClosed(); will(returnValue(false));
                 one(stream).writeObject(with(any(RejectMessage.class)));
+                one(store).save(with(any(Session.class)));
             }});
             session.receive(message);
         }

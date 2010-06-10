@@ -122,6 +122,7 @@ public abstract class AbstractSession implements Session {
         message.setMsgSeqNum(outgoingSeq.next());
         message.setSendingTime(timeSource.currentTime());
         stream.writeObject(message);
+        store.save(this);
     }
 
     public Message processMessage(final MessageVisitor processor) {
