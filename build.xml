@@ -60,9 +60,10 @@
     <jar destfile="${library}" basedir="${main.build}"/>
   </target>
   <target name="test" depends="compile-test">
-    <junit printsummary="yes" haltonfailure="true">
+    <junit printsummary="no" haltonfailure="true">
       <classpath refid="test.path.id"/>
       <batchtest>
+        <formatter type="plain" usefile="false"/>
         <fileset dir="${test.src}">
           <include name="**/*Spec.java"/>
         </fileset>
