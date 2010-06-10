@@ -48,6 +48,10 @@ public class MongoSessionStore implements SessionStore {
             session.setOutgoingSeq(outgoingSeq(sessionDoc));
     }
 
+    public void delete() {
+        sessions().drop();
+    }
+
     private DBCollection sessions() {
         return db.getCollection("sessions");
     }

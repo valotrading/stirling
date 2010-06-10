@@ -23,4 +23,5 @@ import fixengine.messages.Session;
 public interface SessionStore {
     void save(Session session);
     void load(Session session);
+    void delete();
 }
