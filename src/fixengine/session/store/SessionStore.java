@@ -16,6 +16,7 @@
 package fixengine.session.store;
 
 import fixengine.messages.Session;
+import fixengine.session.Sequence;
 
 /**
  * @author Karim Osman
@@ -24,4 +25,5 @@ public interface SessionStore {
     void save(Session session);
     void load(Session session);
     void delete();
+    void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence outgoingSeq);
 }

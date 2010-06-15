@@ -21,6 +21,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 
+import fixengine.Config;
 import fixengine.messages.Session;
 import fixengine.session.Sequence;
 
@@ -43,6 +44,12 @@ public class MongoSessionStore implements SessionStore {
         if (doc != null) session.setOutgoingSeq(outgoingSeq(doc));
     }
 
+    public void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence outgoingSeq) {
+        BasicDBObject query = sessionQuery(senderCompId, targetCompId);
+        BasicDBObject doc = sessionDoc(senderCompId, targetCompId, outgoingSeq);
+        sessions().update(query, doc, true, false);
+    }
+
     public void delete() {
         sessions().drop();
     }
@@ -52,17 +59,27 @@ public class MongoSessionStore implements SessionStore {
     }
 
     private BasicDBObject sessionQuery(Session session) {
+        Config config = session.getConfig();
+        return sessionQuery(config.getSenderCompId(), config.getTargetCompId());
+    }
+
+    private BasicDBObject sessionQuery(String senderCompId, String targetCompId) {
         BasicDBObject query = new BasicDBObject();
-        query.put("senderCompId", session.getConfig().getSenderCompId());
-        query.put("targetCompId", session.getConfig().getTargetCompId());
+        query.put("senderCompId", senderCompId);
+        query.put("targetCompId", targetCompId);
         return query;
     }
 
     private BasicDBObject sessionDoc(Session session) {
+        Config config = session.getConfig();
+        return sessionDoc(config.getSenderCompId(), config.getTargetCompId(), session.getOutgoingSeq());
+    }
+
+    private BasicDBObject sessionDoc(String senderCompId, String targetCompId, Sequence outgoingSeq) {
         BasicDBObject doc = new BasicDBObject();
-        doc.put("outgoingSeq", session.getOutgoingSeq().peek());
-        doc.put("senderCompId", session.getConfig().getSenderCompId());
-        doc.put("targetCompId", session.getConfig().getTargetCompId());
+        doc.put("outgoingSeq", outgoingSeq.peek());
+        doc.put("senderCompId", senderCompId);
+        doc.put("targetCompId", targetCompId);
         return doc;
     }
 
