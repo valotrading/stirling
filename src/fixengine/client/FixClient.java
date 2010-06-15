@@ -27,6 +27,7 @@ import java.util.Set;
 
 import fixengine.io.IoException;
 import fixengine.io.ProtocolHandler;
+import fixengine.messages.Session;
 
 /**
  * @author Pekka Enberg
@@ -48,6 +49,10 @@ public class FixClient {
         SelectionKey sk = channel.register(selector, SelectionKey.OP_READ);
         new Thread(new RequestProcessor(selector)).start();
         handler.start(sk, channel);
+    }
+
+    public Session getSession() {
+        return handler.getSession();
     }
 
     private Selector selector() {
