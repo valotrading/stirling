@@ -38,6 +38,7 @@ public class ConsoleClient {
             SessionStore store = new MongoSessionStore("localhost", 27017);
             registerCommand(new Quit());
             registerCommand(new Logon(store));
+            registerCommand(new Logout());
             registerCommand(new Reset());
             registerCommand(new StoreSequence(store));
         } catch (Exception e) {
