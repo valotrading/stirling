@@ -33,8 +33,7 @@ public class InitiatorSession extends AbstractSession {
 
     public void logon() {
         store.load(this);
-        LogonMessage logonMsg = new LogonMessage();
-        logonMsg.setResetSeqNumFlag(false);
+        LogonMessage logonMsg = new LogonMessage(false);
         send(logonMsg);
 
         processMessage(new DefaultMessageVisitor() {

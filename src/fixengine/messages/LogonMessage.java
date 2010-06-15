@@ -24,15 +24,24 @@ public class LogonMessage extends AbstractMessage {
     private ResetSeqNumFlagField resetSeqNumFlag = new ResetSeqNumFlagField(Required.NO);
 
     public LogonMessage() {
-        this(new MessageHeader(MsgType.LOGON));
+        this(true);
     }
 
     public LogonMessage(MessageHeader header) {
+        this(header, true);
+    }
+
+    public LogonMessage(boolean useResetSeqNumFlagTag) {
+        this(new MessageHeader(MsgType.LOGON), useResetSeqNumFlagTag);
+    }
+
+    public LogonMessage(MessageHeader header, boolean useResetSeqNumFlagTag) {
         super(header);
 
         add(new EncryptMethodField(NONE));
         add(new HeartBtIntField(30));
-        add(resetSeqNumFlag);
+
+        if (useResetSeqNumFlagTag) add(resetSeqNumFlag);
     }
 
     @Override
