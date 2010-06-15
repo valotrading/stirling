@@ -50,10 +50,6 @@ public class MongoSessionStore implements SessionStore {
         sessions().update(query, doc, true, false);
     }
 
-    public void delete() {
-        sessions().drop();
-    }
-
     private DBCollection sessions() {
         return db.getCollection("sessions");
     }

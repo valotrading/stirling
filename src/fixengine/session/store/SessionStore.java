@@ -24,6 +24,5 @@ import fixengine.session.Sequence;
 public interface SessionStore {
     void save(Session session);
     void load(Session session);
-    void delete();
     void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence outgoingSeq);
 }
