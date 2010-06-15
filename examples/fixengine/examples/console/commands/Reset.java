@@ -18,6 +18,9 @@ package fixengine.examples.console.commands;
 import java.io.Console;
 import java.util.Scanner;
 
+import fixengine.messages.Session;
+import fixengine.session.Sequence;
+
 import fixengine.session.store.SessionStore;
 
 import fixengine.examples.console.ConsoleClient.State;
@@ -26,17 +29,24 @@ import fixengine.examples.console.ConsoleClient.State;
  * @author Karim Osman
  */
 public class Reset implements Command {
-    private SessionStore store;
-
-    public Reset(SessionStore store) {
-        this.store = store;
-    }
-
     public String name() {
         return "reset";
     }
 
     public void execute(State state, Console console, Scanner scanner) {
-        store.delete();
+        if (!scanner.hasNext()) {
+            console.printf("sequence number must be specified and it must be an integer\n");
+            return;
+        }
+
+        Session session = state.client.getSession();
+        if (session == null || !session.isAuthenticated()) {
+            console.printf("no session\n");
+            return;
+        }
+
+        Sequence seq = new Sequence();
+        seq.reset(scanner.nextInt());
+        session.sequenceReset(seq);
     }
 }
