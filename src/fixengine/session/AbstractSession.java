@@ -121,6 +121,18 @@ public abstract class AbstractSession implements Session {
         disconnect();
     }
 
+    public void sequenceReset(Sequence seq) {
+        SequenceResetMessage message = new SequenceResetMessage();
+        message.setHeaderConfig(config);
+        message.setSendingTime(timeSource.currentTime());
+        message.setMsgSeqNum(seq.peek());
+        message.setNewSeqNo(seq.next());
+        message.setGapFillFlag(false);
+        stream.writeObject(message);
+        setOutgoingSeq(seq);
+        store.save(this);
+    }
+
     public void send(Message message) {
         message.setHeaderConfig(config);
         message.setMsgSeqNum(outgoingSeq.next());

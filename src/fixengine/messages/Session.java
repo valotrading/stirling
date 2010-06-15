@@ -32,6 +32,7 @@ public interface Session {
     void disconnect();
     void logon();
     void logout();
+    void sequenceReset(Sequence seq);
     void receive(Message message);
     void send(Message message);
 }
