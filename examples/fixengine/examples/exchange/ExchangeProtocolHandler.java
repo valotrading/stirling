@@ -52,6 +52,10 @@ public abstract class ExchangeProtocolHandler extends AbstractProtocolHandler<Me
         this.store = store;
     }
 
+    public Session getSession() {
+        return session;
+    }
+
     @Override
     protected void init(CodedObjectOutputStream<Message> output) {
         session = new AcceptorSession(output, config, getAuthenticationManager(), getConnectionManager(), store);

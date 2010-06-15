@@ -18,9 +18,12 @@ package fixengine.io;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 
+import fixengine.messages.Session;
+
 /**
  * @author Pekka Enberg
  */
 public interface ProtocolHandler {
     void start(SelectionKey sk, SocketChannel channel);
+    Session getSession();
 }

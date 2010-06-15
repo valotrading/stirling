@@ -43,6 +43,10 @@ public class InitiatorProtocolHandler extends AbstractProtocolHandler<Message> {
         this.store = store;
     }
 
+    public Session getSession() {
+        return session;
+    }
+
     @Override
     protected void init(CodedObjectOutputStream<Message> output) {
         session = new InitiatorSession(output, config, store);
