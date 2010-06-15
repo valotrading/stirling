@@ -15,12 +15,14 @@
  */
 package fixengine.messages;
 
+import fixengine.Config;
 import fixengine.session.Sequence;
 
 /**
  * @author Pekka Enberg 
  */
 public interface Session {
+    Config getConfig();
     Sequence getOutgoingSeq();
     void setOutgoingSeq(Sequence seq);
     Message processMessage(MessageVisitor visitor);
