@@ -35,17 +35,12 @@ public class MongoSessionStore implements SessionStore {
     }
 
     public void save(Session session) {
-        BasicDBObject sessionDoc = (BasicDBObject)sessions().findOne();
-        if (sessionDoc == null)
-            sessionDoc = new BasicDBObject();
-        sessionDoc.put("outgoingSeq", session.getOutgoingSeq().peek());
-        sessions().save(sessionDoc);
+        sessions().update(sessionQuery(session), sessionDoc(session), true, false);
     }
 
     public void load(Session session) {
-        BasicDBObject sessionDoc = (BasicDBObject)sessions().findOne();
-        if (sessionDoc != null)
-            session.setOutgoingSeq(outgoingSeq(sessionDoc));
+        BasicDBObject doc = (BasicDBObject)sessions().findOne(sessionQuery(session));
+        if (doc != null) session.setOutgoingSeq(outgoingSeq(doc));
     }
 
     public void delete() {
@@ -54,6 +49,21 @@ public class MongoSessionStore implements SessionStore {
 
     private DBCollection sessions() {
         return db.getCollection("sessions");
+    }
+
+    private BasicDBObject sessionQuery(Session session) {
+        BasicDBObject query = new BasicDBObject();
+        query.put("senderCompId", session.getConfig().getSenderCompId());
+        query.put("targetCompId", session.getConfig().getTargetCompId());
+        return query;
+    }
+
+    private BasicDBObject sessionDoc(Session session) {
+        BasicDBObject doc = new BasicDBObject();
+        doc.put("outgoingSeq", session.getOutgoingSeq().peek());
+        doc.put("senderCompId", session.getConfig().getSenderCompId());
+        doc.put("targetCompId", session.getConfig().getTargetCompId());
+        return doc;
     }
 
     private Sequence outgoingSeq(BasicDBObject sessionDoc) {
