@@ -42,6 +42,10 @@ public class Timeout {
     public TimeUnit unit() {
         return unit;
     }
+
+    public long delayMsec() {
+      return delay * 1000L;
+    }
     
     @Override
     public int hashCode() {
