@@ -15,7 +15,7 @@
  */
 package fixengine.session.store;
 
-import fixengine.messages.Session;
+import fixengine.session.Session;
 import fixengine.session.Sequence;
 
 /**
@@ -24,5 +24,5 @@ import fixengine.session.Sequence;
 public interface SessionStore {
     void save(Session session);
     void load(Session session);
-    void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence outgoingSeq);
+    void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq);
 }

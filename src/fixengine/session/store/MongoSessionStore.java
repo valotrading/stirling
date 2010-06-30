@@ -22,7 +22,7 @@ import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 
 import fixengine.Config;
-import fixengine.messages.Session;
+import fixengine.session.Session;
 import fixengine.session.Sequence;
 
 /**
@@ -41,12 +41,15 @@ public class MongoSessionStore implements SessionStore {
 
     public void load(Session session) {
         BasicDBObject doc = (BasicDBObject)sessions().findOne(sessionQuery(session));
-        if (doc != null) session.setOutgoingSeq(outgoingSeq(doc));
+        if (doc != null) {
+          session.setOutgoingSeq(outgoingSeq(doc));
+          session.setIncomingSeq(incomingSeq(doc));
+        }
     }
 
-    public void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence outgoingSeq) {
+    public void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq) {
         BasicDBObject query = sessionQuery(senderCompId, targetCompId);
-        BasicDBObject doc = sessionDoc(senderCompId, targetCompId, outgoingSeq);
+        BasicDBObject doc = sessionDoc(senderCompId, targetCompId, incomingSeq, outgoingSeq);
         sessions().update(query, doc, true, false);
     }
 
@@ -68,12 +71,13 @@ public class MongoSessionStore implements SessionStore {
 
     private BasicDBObject sessionDoc(Session session) {
         Config config = session.getConfig();
-        return sessionDoc(config.getSenderCompId(), config.getTargetCompId(), session.getOutgoingSeq());
+        return sessionDoc(config.getSenderCompId(), config.getTargetCompId(), session.getIncomingSeq(), session.getOutgoingSeq());
     }
 
-    private BasicDBObject sessionDoc(String senderCompId, String targetCompId, Sequence outgoingSeq) {
+    private BasicDBObject sessionDoc(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq) {
         BasicDBObject doc = new BasicDBObject();
         doc.put("outgoingSeq", outgoingSeq.peek());
+        doc.put("incomingSeq", incomingSeq.peek());
         doc.put("senderCompId", senderCompId);
         doc.put("targetCompId", targetCompId);
         return doc;
@@ -82,6 +86,12 @@ public class MongoSessionStore implements SessionStore {
     private Sequence outgoingSeq(BasicDBObject sessionDoc) {
         Sequence seq = new Sequence();
         seq.reset(sessionDoc.getInt("outgoingSeq"));
+        return seq;
+    }
+
+    private Sequence incomingSeq(BasicDBObject sessionDoc) {
+        Sequence seq = new Sequence();
+        seq.reset(sessionDoc.getInt("incomingSeq"));
         return seq;
     }
 }
