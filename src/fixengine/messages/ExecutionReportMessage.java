@@ -28,6 +28,7 @@ public class ExecutionReportMessage extends AbstractMessage {
     private final TransactTimeField transactTime = new TransactTimeField(Required.NO);
     private final OrigClOrdIdField origClOrdId = new OrigClOrdIdField(Required.NO);
     private final TimeInForceField timeInForce = new TimeInForceField(Required.NO);
+    private final ExecTransTypeField execTransType = new ExecTransTypeField();
     private final CurrencyField currency = new CurrencyField(Required.NO);
     private final ClOrdIdField clOrdId = new ClOrdIdField(Required.NO);
     private final LastMktField lastMkt = new LastMktField(Required.NO);
@@ -59,6 +60,7 @@ public class ExecutionReportMessage extends AbstractMessage {
         add(origClOrdId);
         add(parties);
         add(execId);
+        add(execTransType);
         add(execType);
         add(ordStatus);
         add(ordRejReason);
