@@ -17,8 +17,6 @@ package fixengine.examples.console.commands;
 
 import java.util.Scanner;
 
-import fixengine.session.Session;
-
 import fixengine.examples.console.ConsoleClient;
 
 /**

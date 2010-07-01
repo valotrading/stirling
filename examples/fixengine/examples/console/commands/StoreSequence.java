@@ -17,10 +17,8 @@ package fixengine.examples.console.commands;
 
 import java.util.Scanner;
 
-import fixengine.session.Sequence;
-import fixengine.session.store.SessionStore;
-
 import fixengine.examples.console.ConsoleClient;
+import fixengine.session.Sequence;
 
 /**
  * @author Karim Osman

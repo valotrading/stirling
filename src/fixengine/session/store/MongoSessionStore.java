@@ -18,12 +18,11 @@ package fixengine.session.store;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 
 import fixengine.Config;
-import fixengine.session.Session;
 import fixengine.session.Sequence;
+import fixengine.session.Session;
 
 /**
  * @author Karim Osman

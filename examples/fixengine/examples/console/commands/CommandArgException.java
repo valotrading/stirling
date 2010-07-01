@@ -22,4 +22,6 @@ public class CommandArgException extends Exception {
   public CommandArgException(String s) {
     super(s);
   }
+
+  private static final long serialVersionUID = 1L;
 }
