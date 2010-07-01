@@ -103,6 +103,11 @@ public abstract class AbstractField<T> implements Field {
     }
 
     @Override
+    public boolean isUnrecognized() {
+	return false;
+    }
+
+    @Override
     public boolean isMissing() {
         return required.equals(Required.YES) && !hasValue();
     }

@@ -22,4 +22,9 @@ public class UnrecognizedField extends StringField {
     protected UnrecognizedField(Tag tag) {
         super(tag);
     }
+
+    @Override
+    public boolean isUnrecognized() {
+        return true;
+    }
 }

@@ -31,6 +31,7 @@ public interface Field {
     boolean isMissing();
     boolean isParsed();
     boolean isEmpty();
+    boolean isUnrecognized();
     String format();
     int length();
 }
