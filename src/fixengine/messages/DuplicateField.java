@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 the original author or authors.
+ * Copyright 2008 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +16,25 @@
 package fixengine.messages;
 
 /**
- * @author Pekka Enberg
+ * @author Pekka Enberg 
  */
-public interface Field {
-    static final char DELIMITER = '\001';
+public class DuplicateField extends AbstractField<String> {
+    public DuplicateField(Tag tag) {
+        super(tag);
+    }
 
-    String name();
-    Tag tag();
-    int checksum();
-    void parse(TokenStream stream);
-    boolean supports(Tag tag);
-    boolean isFormatValid();
-    boolean isValueValid();
-    boolean isMissing();
-    boolean isParsed();
-    boolean isEmpty();
-    boolean isUnrecognized();
-    boolean isUserDefined();
-    boolean isDuplicate();
-    String format();
-    int length();
+    @Override
+    public void parse(String value) {
+        this.value = value;
+    }
+
+    @Override
+    protected String value() {
+        return value;
+    }
+
+    @Override
+    public boolean isDuplicate() {
+        return true;
+    }
 }

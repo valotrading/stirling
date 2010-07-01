@@ -249,6 +249,9 @@ public abstract class AbstractMessage implements Message {
             if (field == null)
                 add(field = new UnrecognizedField(tag));
         }
+        if (field.isParsed()) {
+            add(field = new DuplicateField(tag));
+        }
         field.parse(tokens);
     }
     

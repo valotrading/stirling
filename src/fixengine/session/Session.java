@@ -345,6 +345,17 @@ public class Session {
             }
           });
         add(new AbstractFieldsValidator() {
+            @Override
+            protected boolean isValid(Field field) {
+              return !field.isDuplicate();
+            }
+
+            @Override
+            protected void error(Message message, Field field) {
+              sessionReject(conn, message, SessionRejectReason.TAG_MULTIPLE_TIMES, toString(field) + ": Tag multiple times");
+            }
+          });
+        add(new AbstractFieldsValidator() {
           @Override
           protected boolean isValid(Field field) {
             return field.isFormatValid();
