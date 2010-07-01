@@ -1,2 +1,7 @@
 /fixengine.jar
 /build
+/bin
+/.classpath
+/.project
+/.settings
+/data
