@@ -25,6 +25,7 @@ public interface Field {
     Tag tag();
     int checksum();
     void parse(TokenStream stream);
+    void parseValue(String s);
     boolean supports(Tag tag);
     boolean isFormatValid();
     boolean isValueValid();
@@ -36,4 +37,5 @@ public interface Field {
     boolean isDuplicate();
     String format();
     int length();
+    String prettyName();
 }

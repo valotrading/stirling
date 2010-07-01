@@ -44,7 +44,7 @@ public class UtcTimestampFieldSpec extends Specification<UtcTimestampField> {
                 public void run() throws Throwable {
                     timestamp.parse("ZZ");
                 }
-            }, must.raise(InvalidFormatForTagException.class));
+            }, must.raise(InvalidValueFormatException.class));
         }
 
         public void formatsToStringTimestamp() {

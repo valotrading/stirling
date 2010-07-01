@@ -49,7 +49,7 @@ public class IntegerFieldSpec extends Specification<IntegerField> {
                 public void run() throws Throwable {
                     field.parse("1.23");
                 }
-            }, must.raise(InvalidFormatForTagException.class));
+            }, must.raise(InvalidValueFormatException.class));
         }
 
         public void failsToParseNonNumericStrings() {
@@ -58,7 +58,7 @@ public class IntegerFieldSpec extends Specification<IntegerField> {
                 public void run() throws Throwable {
                     field.parse("ZZ");
                 }
-            }, must.raise(InvalidFormatForTagException.class));
+            }, must.raise(InvalidValueFormatException.class));
         }
     }
 }

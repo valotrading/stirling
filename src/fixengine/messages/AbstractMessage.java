@@ -28,7 +28,7 @@ import fixengine.Config;
 import fixengine.Specification;
 
 /**
- * @author Pekka Enberg 
+ * @author Pekka Enberg
  */
 public abstract class AbstractMessage implements Message {
     private static final Minutes MAX_TIME_DIFFERENCE = Minutes.TWO;
@@ -151,10 +151,14 @@ public abstract class AbstractMessage implements Message {
     }
 
     public boolean getPossDupFlag() {
+        if (!possDupFlag.hasValue())
+            return false;
         return possDupFlag.getValue();
     }
 
     public boolean getPossResend() {
+        if (!possResend.hasValue())
+            return false;
         return possResend.getValue();
     }
 
@@ -183,7 +187,7 @@ public abstract class AbstractMessage implements Message {
 
     @Override
     public boolean isOrigSendingTimeMissing() {
-        return getPossDupFlag() && ! hasOrigSendingTime();
+        return getPossDupFlag() && !hasOrigSendingTime();
     }
 
     @Override
@@ -208,6 +212,11 @@ public abstract class AbstractMessage implements Message {
     }
 
     @Override
+    public Field lookup(Tag tag) {
+        return fields.lookup(tag);
+    }
+
+    @Override
     public List<Field> getFields() {
         return fields.getFields();
     }
@@ -219,16 +228,18 @@ public abstract class AbstractMessage implements Message {
                 break;
             }
             parseField(tag, tokens);
-        }   
+        }
         tokens.match('=');
         int checksum = tokens.integer();
         tokens.match(DELIMITER);
         if (checksum != checksum()) {
-            throw new InvalidCheckSumException("Expected " + checksum + ", but was: " + checksum());
+            throw new InvalidCheckSumException("Expected " + checksum
+                    + ", but was: " + checksum());
         }
         int length = length();
         if (length != header.getBodyLength()) {
-            throw new InvalidBodyLengthException("Expected " + header.getBodyLength() + ", but was: " + length);
+            throw new InvalidBodyLengthException("Expected "
+                    + header.getBodyLength() + ", but was: " + length);
         }
     }
 
@@ -254,7 +265,7 @@ public abstract class AbstractMessage implements Message {
         }
         field.parse(tokens);
     }
-    
+
     public String format() {
         MessageBuffer buffer = new MessageBuffer();
         buffer.append(msgType);
@@ -273,12 +284,12 @@ public abstract class AbstractMessage implements Message {
     public boolean equals(Object obj) {
         return Objects.equal(this, obj);
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hashCode(this);
     }
-    
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();

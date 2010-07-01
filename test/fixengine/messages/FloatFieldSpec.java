@@ -54,7 +54,7 @@ public class FloatFieldSpec extends Specification<FloatField> {
                 public void run() throws Throwable {
                     field.parse("1.23E4");
                 }
-            }, must.raise(InvalidFormatForTagException.class));
+            }, must.raise(InvalidValueFormatException.class));
         }
 
         public void formatsToDecimalNumber() {

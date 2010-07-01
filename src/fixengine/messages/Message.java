@@ -56,4 +56,5 @@ public interface Message {
     boolean contains(Specification<Field> spec);
     void parse(TokenStream tokens);
     List<Field> getFields();
+    Field lookup(Tag tag);
 }

@@ -40,6 +40,10 @@ public abstract class RepeatingGroup<T extends RepeatingGroupInstance> implement
         return instances;
     }
 
+    public void parseValue(String s) {
+        throw new UnsupportedOperationException();
+    }
+
     public void parse(TokenStream stream) {
         parsed = true;
         instanceCount.parse(stream);
@@ -143,6 +147,11 @@ public abstract class RepeatingGroup<T extends RepeatingGroupInstance> implement
     public Tag tag() {
         return instanceCount.tag();
     }
-    
+
+    @Override
+    public String prettyName() {
+        throw new UnsupportedOperationException();
+    }
+
     protected abstract T newInstance();
 }

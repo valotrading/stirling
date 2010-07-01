@@ -22,6 +22,6 @@ public class ResetSeqNumFlagField extends BooleanField {
     private static final Tag TAG = new Tag(141);
 
     public ResetSeqNumFlagField(Required required) {
-        super(TAG, Boolean.FALSE, required);
+        super(TAG, null, required);
     }
 }

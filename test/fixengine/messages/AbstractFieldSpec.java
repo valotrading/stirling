@@ -220,7 +220,7 @@ public class AbstractFieldSpec extends Specification<Field> {
 
                 @Override
                 public void parse(String value) {
-                    throw new InvalidFormatForTagException(value);
+                    throw new InvalidValueFormatException(value);
                 }
             };
         }

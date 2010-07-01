@@ -23,6 +23,10 @@ import lang.Integers;
 public class CheckSumField extends StringField {
     public static final Tag TAG = new Tag(10);
 
+    public CheckSumField() {
+        this(0);
+    }
+
     public CheckSumField(int checksum) {
         super(TAG, Integers.zfill(checksum, 3));
     }

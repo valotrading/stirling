@@ -148,12 +148,12 @@ public abstract class AbstractField<T> implements Field {
             parse(value);
         } catch (InvalidValueForTagException e) {
             validValue = false;
-        } catch (InvalidFormatForTagException e) {
+        } catch (InvalidValueFormatException e) {
             validFormat = false;
         }
     }
 
-    protected abstract void parse(String value);
+    public abstract void parse(String value);
     
     public String format() {
         String value = null;
@@ -183,7 +183,11 @@ public abstract class AbstractField<T> implements Field {
     public int hashCode() {
         return Objects.hashCode(this);
     }
-    
+
+    public String prettyName() {
+        return name() + "(" + tag() + ")";
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();

@@ -47,6 +47,11 @@ public abstract class AbstractEmptyMessage implements Message {
     }
 
     @Override
+    public Field lookup(Tag tag) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void parse(TokenStream tokens) {
         throw new UnsupportedOperationException();
     }

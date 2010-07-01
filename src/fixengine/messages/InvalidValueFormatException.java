@@ -16,10 +16,10 @@
 package fixengine.messages;
 
 /**
- * @author Pekka Enberg 
+ * @author Pekka Enberg
  */
-public class InvalidFormatForTagException extends RuntimeException {
-    public InvalidFormatForTagException(String message) {
+public class InvalidValueFormatException extends RuntimeException {
+    public InvalidValueFormatException(String message) {
         super(message);
     }
 

@@ -48,45 +48,6 @@ public class AbstractMessageSpec extends Specification<AbstractMessage> {
         }
     }
 
-    public class MessageThatHasFields {
-        public AbstractMessage create() {
-            message.setBeginString(Version.FIX_4_3.value());
-            message.setSenderCompId("id");
-            message.setTargetCompId("IB");
-            message.setMsgSeqNum(1);
-            message.add(new EncryptMethodField(EncryptMethod.NONE));
-            message.add(new HeartBtIntField(30));
-            return message;
-        }
-
-        public void formatsWholeMessageToOutputStream() throws Exception {
-            specify(message.format(), must.equal("8=FIX.4.3" + DELIMITER
-                    + "9=48" + DELIMITER + "35=A" + DELIMITER + "49=id"
-                    + DELIMITER + "56=IB" + DELIMITER + "34=1" + DELIMITER
-                    + "43=N" + DELIMITER + "97=N" + DELIMITER + "52="
-                    + DELIMITER + "98=0" + DELIMITER + "108=30" + DELIMITER
-                    + "10=025" + DELIMITER));
-        }
-    }
-
-    public class MessageThatHasNoFields {
-        public AbstractMessage create() {
-            message.setBeginString(Version.FIX_4_3.value());
-            message.setSenderCompId("id");
-            message.setTargetCompId("IB");
-            message.setMsgSeqNum(1);
-            return message;
-        }
-
-        public void formatsHeaderAndTrailerToOutputStream() throws Exception {
-            specify(message.format(), must.equal("8=FIX.4.3" + DELIMITER
-                    + "9=36" + DELIMITER + "35=A" + DELIMITER + "49=id"
-                    + DELIMITER + "56=IB" + DELIMITER + "34=1" + DELIMITER
-                    + "43=N" + DELIMITER + "97=N" + DELIMITER + "52="
-                    + DELIMITER + "10=253" + DELIMITER));
-        }
-    }
-
     public class MessageThatDoesNotHaveOnBehalfOfOrDeliverToCompIdsDefined {
         public AbstractMessage create() {
             return message;

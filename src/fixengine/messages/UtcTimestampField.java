@@ -45,7 +45,7 @@ public class UtcTimestampField extends AbstractField<DateTime> {
         try {
             this.value = fmt.withZone(UTC).parseDateTime(value);
         } catch (Exception e) {
-            throw new InvalidFormatForTagException(value);
+            throw new InvalidValueFormatException(prettyName() + ": Invalid value format");
         }
     }
     

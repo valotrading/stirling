@@ -22,6 +22,6 @@ public class PossDupFlagField extends BooleanField {
     private static final Tag TAG = new Tag(43);
 
     public PossDupFlagField(Required required) {
-        super(TAG, false, required);
+        super(TAG, null, required);
     }
 }
