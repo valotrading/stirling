@@ -32,4 +32,9 @@ public class UserDefinedField extends AbstractField<String> {
     protected String value() {
         return value;
     }
+
+    @Override
+    public boolean isUserDefined() {
+        return true;
+    }
 }

@@ -32,6 +32,7 @@ public interface Field {
     boolean isParsed();
     boolean isEmpty();
     boolean isUnrecognized();
+    boolean isUserDefined();
     String format();
     int length();
 }
