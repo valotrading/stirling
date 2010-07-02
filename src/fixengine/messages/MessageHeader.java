@@ -61,6 +61,10 @@ public class MessageHeader {
         return beginString.getValue();
     }
 
+    public void setBeginString(String beginString) {
+      this.beginString.setValue(beginString);
+    }
+
     public int getBodyLength() {
         return bodyLength.getValue();
     }

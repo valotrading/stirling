@@ -25,18 +25,22 @@ public class Parser {
     }
 
     private static Message parse(ByteBuffer b) {
-        Message result = header(b);
-        body(b, result);
-        trailer(b);
-        return result;
+        MessageHeader header = parseHeader(b);
+        return parseMessage(b, header);
     }
 
-    private static Message header(ByteBuffer b) throws AssertionError {
+    public static MessageHeader parseHeader(ByteBuffer b) {
         String beginString = beginString(b);
         bodyLength(b);
         MsgType type = msgType(b);
-        Message msg = type.newMessage(new MessageHeader(type));
-        msg.setBeginString(beginString);
+        MessageHeader header = new MessageHeader(type);
+        header.setBeginString(beginString);
+        return header;
+    }
+
+    public static Message parseMessage(ByteBuffer b, MessageHeader header) {
+        Message msg = body(b, header);
+        trailer(b);
         return msg;
     }
 
@@ -65,7 +69,9 @@ public class Parser {
         return type;
     }
 
-    private static void body(ByteBuffer b, Message msg) {
+    private static Message body(ByteBuffer b, MessageHeader header) {
+        Message msg = header.getMsgType().newMessage(header);
+        msg.setBeginString(header.getBeginString());
         Field previous = new MsgTypeField();
         for (;;) {
             b.mark();
@@ -84,6 +90,7 @@ public class Parser {
             previous = field;
         }
         b.reset();
+        return msg;
     }
 
     private static void trailer(ByteBuffer b) throws AssertionError {
