@@ -153,7 +153,7 @@ public class Session {
         }
       });
     } catch (ParseException e) {
-       sessionReject(conn, /* XXX */ 0, e.getReason(), e.getMessage());
+       sessionReject(conn, header.getMsgSeqNum(), e.getReason(), e.getMessage());
     } finally {
       store.save(this);
     }
