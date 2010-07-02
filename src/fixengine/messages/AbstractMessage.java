@@ -20,7 +20,6 @@ import java.util.List;
 import lang.Objects;
 
 import org.joda.time.DateTime;
-import org.joda.time.Minutes;
 
 import fixengine.Config;
 
@@ -28,20 +27,7 @@ import fixengine.Config;
  * @author Pekka Enberg
  */
 public abstract class AbstractMessage implements Message {
-    private static final Minutes MAX_TIME_DIFFERENCE = Minutes.TWO;
-
-    private final DeliverToCompIdField deliverToCompIdField = new DeliverToCompIdField(Required.NO);
-    private final OnBehalfOfCompIdField onBehalfOfCompId = new OnBehalfOfCompIdField(Required.NO);
-    private final OrigSendingTimeField origSendingTime = new OrigSendingTimeField(Required.NO);
-    private final PossDupFlagField possDupFlag = new PossDupFlagField(Required.NO);
-    private final PossResendField possResend = new PossResendField(Required.NO);
-    private final SenderCompIdField senderCompId = new SenderCompIdField();
-    private final TargetCompIdField targetCompId = new TargetCompIdField();
-    private final BeginStringField beginString = new BeginStringField();
-    private final SendingTimeField sendingTime = new SendingTimeField();
-    private final MsgSeqNumField msgSeqNum = new MsgSeqNumField();
     private final Fields fields = new Fields();
-    private final MsgTypeField msgType;
     private final MessageHeader header;
 
     protected AbstractMessage(MsgType msgType) {
@@ -49,22 +35,7 @@ public abstract class AbstractMessage implements Message {
     }
 
     protected AbstractMessage(MessageHeader header) {
-        this(header.getMsgType().value(), header);
-    }
-
-    protected AbstractMessage(String msgType, MessageHeader header) {
-        this.msgType = new MsgTypeField(msgType);
         this.header = header;
-
-        add(senderCompId);
-        add(targetCompId);
-        add(onBehalfOfCompId);
-        add(deliverToCompIdField);
-        add(msgSeqNum);
-        add(possDupFlag);
-        add(possResend);
-        add(sendingTime);
-        add(origSendingTime);
     }
 
     public abstract void apply(MessageVisitor visitor);
@@ -76,15 +47,15 @@ public abstract class AbstractMessage implements Message {
     }
 
     public String getMsgType() {
-        return msgType.getValue();
+        return header.getMsgType();
     }
 
     public void setBeginString(String beginString) {
-        this.beginString.setValue(beginString);
+        header.setBeginString(beginString);
     }
 
     public String getBeginString() {
-        return beginString.getValue();
+        return header.getBeginString();
     }
 
     public void setBodyLength(int bodyLength) {
@@ -92,71 +63,67 @@ public abstract class AbstractMessage implements Message {
     }
 
     public void setSenderCompId(String senderCompId) {
-        this.senderCompId.setValue(senderCompId);
+        header.setSenderCompId(senderCompId);
     }
 
     public String getSenderCompId() {
-        return senderCompId.getValue();
+        return header.getSenderCompId();
     }
 
     public void setTargetCompId(String targetCompId) {
-        this.targetCompId.setValue(targetCompId);
+        header.setTargetCompId(targetCompId);
     }
 
     public String getTargetCompId() {
-        return targetCompId.getValue();
+        return header.getTargetCompId();
     }
 
     public void setOnBehalfOfCompId(String onBehalfOfCompId) {
-        this.onBehalfOfCompId.setValue(onBehalfOfCompId);
+        header.setOnBehalfOfCompId(onBehalfOfCompId);
     }
 
     public void setDeliverToCompId(String deliverToCompId) {
-        this.deliverToCompIdField.setValue(deliverToCompId);
+        header.setDeliverToCompId(deliverToCompId);
     }
 
     public void setMsgSeqNum(int msgSeqNum) {
-        this.msgSeqNum.setValue(msgSeqNum);
+        header.setMsgSeqNum(msgSeqNum);
     }
 
     public int getMsgSeqNum() {
-        return msgSeqNum.getValue();
+        return header.getMsgSeqNum();
     }
 
     public void setSendingTime(DateTime sendingTime) {
-        this.sendingTime.setValue(sendingTime);
+        header.setSendingTime(sendingTime);
     }
 
     public DateTime getSendingTime() {
-        return sendingTime.getValue();
+        return header.getSendingTime();
     }
 
     public void setOrigSendingTime(DateTime origSendingTime) {
-        this.origSendingTime.setValue(origSendingTime);
+        header.setOrigSendingTime(origSendingTime);
     }
 
     public DateTime getOrigSendingTime() {
-        return origSendingTime.getValue();
+        return header.getOrigSendingTime();
     }
 
     public boolean hasOrigSendingTime() {
-        return origSendingTime.hasValue();
+        return header.hasOrigSendingTime();
     }
 
     public void setPossDupFlag(boolean possDupFlag) {
-        this.possDupFlag.setValue(possDupFlag);
+        header.setPossDupFlag(possDupFlag);
     }
 
     public boolean getPossDupFlag() {
-        if (!possDupFlag.hasValue())
-            return false;
-        return possDupFlag.getValue();
+        return header.getPossDupFlag();
     }
 
     public boolean getPossResend() {
-        if (!possResend.hasValue())
-            return false;
-        return possResend.getValue();
+        return header.getPossResend();
     }
 
     public boolean hasValidTargetCompId(Config config) {
@@ -164,7 +131,7 @@ public abstract class AbstractMessage implements Message {
     }
 
     public boolean isPointToPoint() {
-        return !onBehalfOfCompId.hasValue() && !deliverToCompIdField.hasValue();
+        return header.isPointToPoint();
     }
 
     @Override
@@ -189,19 +156,12 @@ public abstract class AbstractMessage implements Message {
 
     @Override
     public boolean hasAccurateSendingTime(DateTime currentTime) {
-        if (!sendingTime.hasValue()) {
-            return true;
-        }
-        Minutes difference = Minutes.minutesBetween(currentTime, getSendingTime());
-        return difference.isLessThan(MAX_TIME_DIFFERENCE);
+        return header.hasAccurateSendingTime(currentTime);
     }
 
     @Override
     public boolean hasOrigSendTimeAfterSendingTime() {
-        if (!getPossDupFlag() || !origSendingTime.hasValue()) {
-            return true;
-        }
-        return !origSendingTime.getValue().isAfter(sendingTime.getValue());
+        return header.hasOrigSendTimeAfterSendingTime();
     }
 
     @Override
@@ -216,10 +176,11 @@ public abstract class AbstractMessage implements Message {
 
     public String format() {
         MessageBuffer buffer = new MessageBuffer();
-        buffer.append(msgType);
+        buffer.append(header.getMsgTypeField());
+        buffer.append(header.getFields().format());
         buffer.append(fields.format());
         buffer.prefix(new BodyLengthField(buffer.length()));
-        buffer.prefix(beginString);
+        buffer.prefix(header.getBeginStringField());
         buffer.append(new CheckSumField(buffer.checksum()));
         return buffer.toString();
     }
@@ -241,8 +202,8 @@ public abstract class AbstractMessage implements Message {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append(beginString + " ");
-        result.append(msgType + " ");
+        result.append(header.getBeginStringField() + " ");
+        result.append(header.getMsgTypeField() + " ");
         for (Field field : fields.getFields()) {
             result.append(field.toString() + " ");
         }

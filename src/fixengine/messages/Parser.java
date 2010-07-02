@@ -35,6 +35,24 @@ public class Parser {
         MsgType type = msgType(b);
         MessageHeader header = new MessageHeader(type);
         header.setBeginString(beginString);
+        Field previous = new MsgTypeField();
+        for (;;) {
+            b.mark();
+            Tag tag = parseTag(b, previous);
+            Field field = header.lookup(tag);
+            if (field == null)
+                break;
+            if (field.isParsed())
+                throw new TagMultipleTimesException(field.prettyName() + ": Tag multiple times");
+            String value = parseValue(b, field);
+            field.parseValue(value);
+            if (!field.isFormatValid())
+                throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
+            if (!field.isValueValid())
+                throw new InvalidValueException(field.prettyName() + ": Invalid value");
+            previous = field;
+        }
+        b.reset();
         return header;
     }
 
@@ -70,7 +88,7 @@ public class Parser {
     }
 
     private static Message body(ByteBuffer b, MessageHeader header) {
-        Message msg = header.getMsgType().newMessage(header);
+        Message msg = MsgType.parse(header.getMsgType()).newMessage(header);
         msg.setBeginString(header.getBeginString());
         Field previous = new MsgTypeField();
         for (;;) {

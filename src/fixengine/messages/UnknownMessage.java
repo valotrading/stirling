@@ -22,11 +22,7 @@ import org.apache.commons.lang.CharUtils;
  */
 public class UnknownMessage extends AbstractMessage {
     public UnknownMessage(String msgType) {
-        super(msgType, new MessageHeader(msgType));
-    }
-
-    public UnknownMessage(String msgType, MessageHeader header) {
-        super(msgType, header);
+        super(new MessageHeader(msgType));
     }
 
     @Override
