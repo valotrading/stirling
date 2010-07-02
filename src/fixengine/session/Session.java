@@ -15,12 +15,13 @@
  */
 package fixengine.session;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
 import lang.DefaultTimeSource;
 import lang.TimeSource;
-
+import silvertip.Connection;
 import fixengine.Config;
 import fixengine.Version;
 import fixengine.messages.AbstractFieldsValidator;
@@ -34,8 +35,10 @@ import fixengine.messages.HeartbeatMessage;
 import fixengine.messages.LogonMessage;
 import fixengine.messages.LogoutMessage;
 import fixengine.messages.Message;
-import fixengine.messages.MessageConverter;
+import fixengine.messages.MessageHeader;
 import fixengine.messages.MessageVisitor;
+import fixengine.messages.ParseException;
+import fixengine.messages.Parser;
 import fixengine.messages.RejectMessage;
 import fixengine.messages.ResendRequestMessage;
 import fixengine.messages.SequenceResetMessage;
@@ -45,8 +48,6 @@ import fixengine.messages.UnknownMessage;
 import fixengine.messages.Validator;
 import fixengine.session.store.SessionStore;
 
-import silvertip.Connection;
-
 /**
  * @author Karim Osman
  */
@@ -54,7 +55,6 @@ public class Session {
   protected MessageQueue queue = new MessageQueue();
   protected Sequence outgoingSeq = new Sequence();
   protected TimeSource timeSource = new DefaultTimeSource();
-  protected MessageConverter converter = new MessageConverter();
 
   protected final HeartBtInt heartBtInt;
   protected final Config config;
@@ -99,51 +99,64 @@ public class Session {
     message.setHeaderConfig(config);
     message.setMsgSeqNum(outgoingSeq.next());
     message.setSendingTime(timeSource.currentTime());
-    conn.send(toSilvertipMessage(message));
+    conn.send(silvertip.Message.fromString(message.format()));
     prevTxTimeMsec = System.currentTimeMillis();
     store.save(this);
   }
 
   public void receive(final Connection conn, silvertip.Message message, final MessageVisitor visitor) {
     prevRxTimeMsec = System.currentTimeMillis();
-    final Message msg = fromSilvertipMessage(message);
-    msg.apply(new DefaultMessageVisitor() {
-      @Override
-      public void visit(GarbledMessage message) {
-        /* Ignore the message.  */
-      }
-
-      @Override
-      public void visit(UnknownMessage message) {
-        if (config.supports(Version.FIX_4_2)) {
-          if (message.hasValidMsgType())
-            businessReject(conn, message, BusinessRejectReason.UNKNOWN_MESSAGE_TYPE, message.getMsgType());
-          else
-            sessionReject(conn, message, SessionRejectReason.INVALID_MSG_TYPE, message.getMsgType());
-        } else {
-          sessionReject(conn, message, null, message.getMsgType());
+    MessageHeader header = null;
+    try {
+      ByteBuffer buffer = message.toByteBuffer();
+      header = Parser.parseHeader(buffer);
+      final Message msg = Parser.parseMessage(buffer, header);
+      msg.apply(new DefaultMessageVisitor() {
+        @Override
+        public void visit(GarbledMessage message) {
+          /* Ignore the message. */
         }
-      }
 
-      @Override
-      public void defaultAction(Message message) {
-        int expected = queue.nextSeqNum();
+        @Override
+        public void visit(UnknownMessage message) {
+          if (config.supports(Version.FIX_4_2)) {
+            if (message.hasValidMsgType())
+              businessReject(conn, message,
+                  BusinessRejectReason.UNKNOWN_MESSAGE_TYPE, message
+                      .getMsgType());
+            else
+              sessionReject(conn, message,
+                  SessionRejectReason.INVALID_MSG_TYPE, message.getMsgType());
+          } else {
+            sessionReject(conn, message, null, message.getMsgType());
+          }
+        }
 
-        if (validate(conn, message))
-          process(conn, message, visitor);
-        else
-          queue.skip(message);
+        @Override
+        public void defaultAction(Message message) {
+          int expected = queue.nextSeqNum();
 
-        /*
-         * We're out-of-sync if there's a gap in the sequence numbers. However,
-         * if the other side is in the middle of resending the missing messages,
-         * don't attempt to sync after each received message.
-         */
-        if (!conn.isClosed() && isOutOfSync() && message.getMsgSeqNum() != expected)
-          syncMessages(conn);
-      }
-    });
-    store.save(this);
+          if (validate(conn, message))
+            process(conn, message, visitor);
+          else
+            queue.skip(message);
+
+          /*
+           * We're out-of-sync if there's a gap in the sequence numbers.
+           * However, if the other side is in the middle of resending the
+           * missing messages, don't attempt to sync after each received
+           * message.
+           */
+          if (!conn.isClosed() && isOutOfSync()
+              && message.getMsgSeqNum() != expected)
+            syncMessages(conn);
+        }
+      });
+    } catch (ParseException e) {
+       sessionReject(conn, /* XXX */ 0, e.getReason(), e.getMessage());
+    } finally {
+      store.save(this);
+    }
   }
 
   public void logon(Connection conn) {
@@ -163,7 +176,7 @@ public class Session {
     message.setMsgSeqNum(seq.peek());
     message.setNewSeqNo(seq.next());
     message.setGapFillFlag(false);
-    conn.send(toSilvertipMessage(message));
+    conn.send(silvertip.Message.fromString(message.format()));
     prevTxTimeMsec = System.currentTimeMillis();
     setOutgoingSeq(seq);
     store.save(this);
@@ -414,8 +427,12 @@ public class Session {
   }
 
   private void sessionReject(Connection conn, Message message, SessionRejectReason reason, String text) {
+      sessionReject(conn, message.getMsgSeqNum(), reason, text);
+  }
+
+  private void sessionReject(Connection conn, int msgSeqNum, SessionRejectReason reason, String text) {
     RejectMessage reject = new RejectMessage();
-    reject.setRefSeqNo(message.getMsgSeqNum());
+    reject.setRefSeqNo(msgSeqNum);
     reject.setSessionRejectReason(reason);
     reject.setText(text);
     send(conn, reject);
@@ -458,13 +475,5 @@ public class Session {
     if (checkSeqResetSeqNum() && !message.isResetOk(queue.nextSeqNum()))
       throw new InvalidSequenceResetException("Expected: " + queue.nextSeqNum() + ", but was: " + message.getMsgSeqNum());
     queue.reset(message.getNewSeqNo());
-  }
-
-  private silvertip.Message toSilvertipMessage(Message message) {
-    return silvertip.Message.fromString(message.format());
-  }
-
-  private Message fromSilvertipMessage(silvertip.Message message) {
-    return converter.convertToObject(message.toByteBuffer());
   }
 }
