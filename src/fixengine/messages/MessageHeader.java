@@ -15,7 +15,6 @@
  */
 package fixengine.messages;
 
-import fixengine.Version;
 
 /**
  * @author Pekka Enberg 
@@ -34,19 +33,6 @@ public class MessageHeader {
 
     public MessageHeader(String msgType) {
         this.msgType.setValue(msgType);
-    }
-
-    public void parse(TokenStream tokens) {
-        beginString.supports(tokens.tag());
-        beginString.parse(tokens);
-        if (!Version.supports(beginString.getValue())) {
-            throw new InvalidBeginStringException(beginString.getValue());
-        }
-        bodyLength.supports(tokens.tag());
-        bodyLength.parse(tokens);
-
-        msgType.supports(tokens.tag());
-        msgType.parse(tokens);
     }
 
     public int checksum() {

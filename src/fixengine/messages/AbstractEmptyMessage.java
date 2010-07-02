@@ -22,7 +22,6 @@ import lang.Objects;
 import org.joda.time.DateTime;
 
 import fixengine.Config;
-import fixengine.Specification;
 
 /**
  * @author Pekka Enberg
@@ -48,16 +47,6 @@ public abstract class AbstractEmptyMessage implements Message {
 
     @Override
     public Field lookup(Tag tag) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void parse(TokenStream tokens) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void parseField(Tag tag, TokenStream tokens) {
         throw new UnsupportedOperationException();
     }
 
@@ -168,11 +157,6 @@ public abstract class AbstractEmptyMessage implements Message {
 
     @Override
     public boolean isOrigSendingTimeMissing() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean contains(Specification<Field> spec) {
         throw new UnsupportedOperationException();
     }
 

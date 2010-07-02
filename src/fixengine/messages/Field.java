@@ -24,7 +24,6 @@ public interface Field {
     String name();
     Tag tag();
     int checksum();
-    void parse(TokenStream stream);
     void parseValue(String s);
     boolean supports(Tag tag);
     boolean isFormatValid();

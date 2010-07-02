@@ -122,23 +122,6 @@ public abstract class AbstractField<T> implements Field {
         return required.equals(Required.YES) && !hasValue();
     }
 
-    @Override
-    public void parse(TokenStream stream) {
-        checksum += tag.checksum();
-        checksum += stream.match('=');
-        length = tag.length() + 2;
-
-        String value = stream.string(DELIMITER);
-        for (int i = 0; i < value.length(); i++) {
-            checksum += value.charAt(i);
-        }
-        length += value.length();
-        if (value.length() == 0)
-            value = null;
-        parseValue(value);
-        checksum += stream.match(DELIMITER);
-    }
-
     public void parseValue(String value) {
         defined = true;
         if (value == null) {

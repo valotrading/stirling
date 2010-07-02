@@ -18,8 +18,6 @@ package fixengine.messages;
 import java.util.ArrayList;
 import java.util.List;
 
-import fixengine.Specification;
-
 /**
  * @author Pekka Enberg
  */
@@ -41,15 +39,6 @@ public class Fields {
             }
         }
         return null;
-    }
-
-    public boolean contains(Specification<Field> spec) {
-        for (Field field : fields) {
-            if (spec.isSatisfiedBy(field)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public String format() {

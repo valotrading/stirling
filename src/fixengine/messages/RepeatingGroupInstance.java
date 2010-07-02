@@ -15,8 +15,6 @@
  */
 package fixengine.messages;
 
-import fixengine.Specification;
-
 /**
  * @author Pekka Enberg 
  */
@@ -27,27 +25,8 @@ public class RepeatingGroupInstance {
         fields.add(field);
     }
 
-    public void parse(TokenStream stream) {
-        while (true) {
-            Tag tag = stream.tag();
-            if (tag == null) {
-                break;
-            }
-            Field field = fields.lookup(tag);
-            if (field == null || field.isParsed()) {
-                stream.push(tag.toString());
-                break;
-            }
-            field.parse(stream);
-        }
-    }
-
     public String format() {
         return fields.format();
-    }
-
-    public boolean contains(Specification<Field> spec) {
-        return fields.contains(spec);
     }
 
     public int checksum() {

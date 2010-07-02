@@ -45,16 +45,6 @@ public class FieldsSpec extends Specification<Fields> {
             specify(fields.format(), must.equal("XY"));
         }
 
-        @SuppressWarnings("unchecked")
-        public void containFieldThatMatchesSpecification() {
-            final fixengine.Specification<Field> spec = mock(fixengine.Specification.class);
-            checking(new Expectations() {{
-                one(spec).isSatisfiedBy(field1); will(returnValue(false));
-                one(spec).isSatisfiedBy(field2); will(returnValue(true));
-            }});
-            specify(fields.contains(spec), must.equal(true));
-        }
-
         public void looksUpFieldThatSupportsTag() {
             final Tag tag = new Tag(10);
             checking(new Expectations() {{
@@ -86,11 +76,6 @@ public class FieldsSpec extends Specification<Fields> {
 
         public void formatsToEmptyString() {
             specify(fields.format(), must.equal(""));
-        }
-
-        @SuppressWarnings("unchecked")
-        public void doesNotContainAnything() {
-            specify(fields.contains(dummy(fixengine.Specification.class)), must.equal(false));
         }
 
         public void failsLookup() {

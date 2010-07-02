@@ -15,8 +15,6 @@
  */
 package fixengine.messages;
 
-import static fixengine.messages.Field.DELIMITER;
-
 import java.util.List;
 
 import lang.Objects;
@@ -25,7 +23,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
 import fixengine.Config;
-import fixengine.Specification;
 
 /**
  * @author Pekka Enberg
@@ -207,10 +204,6 @@ public abstract class AbstractMessage implements Message {
         return !origSendingTime.getValue().isAfter(sendingTime.getValue());
     }
 
-    public boolean contains(Specification<Field> spec) {
-        return fields.contains(spec);
-    }
-
     @Override
     public Field lookup(Tag tag) {
         return fields.lookup(tag);
@@ -219,51 +212,6 @@ public abstract class AbstractMessage implements Message {
     @Override
     public List<Field> getFields() {
         return fields.getFields();
-    }
-
-    public void parse(TokenStream tokens) {
-        while (true) {
-            Tag tag = tokens.tag();
-            if (tag.equals(CheckSumField.TAG)) {
-                break;
-            }
-            parseField(tag, tokens);
-        }
-        tokens.match('=');
-        int checksum = tokens.integer();
-        tokens.match(DELIMITER);
-        if (checksum != checksum()) {
-            throw new InvalidCheckSumException("Expected " + checksum
-                    + ", but was: " + checksum());
-        }
-        int length = length();
-        if (length != header.getBodyLength()) {
-            throw new InvalidBodyLengthException("Expected "
-                    + header.getBodyLength() + ", but was: " + length);
-        }
-    }
-
-    private int length() {
-        return header.length() + fields.length();
-    }
-
-    private int checksum() {
-        return (header.checksum() + fields.checksum()) % 256;
-    }
-
-    public void parseField(Tag tag, TokenStream tokens) {
-        Field field = null;
-        if (tag.isUserDefined()) {
-            add(field = new UserDefinedField(tag));
-        } else {
-            field = fields.lookup(tag);
-            if (field == null)
-                add(field = new UnrecognizedField(tag));
-        }
-        if (field.isParsed()) {
-            add(field = new DuplicateField(tag));
-        }
-        field.parse(tokens);
     }
 
     public String format() {

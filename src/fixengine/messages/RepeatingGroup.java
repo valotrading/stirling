@@ -18,8 +18,6 @@ package fixengine.messages;
 import java.util.ArrayList;
 import java.util.List;
 
-import fixengine.Specification;
-
 /**
  * @author Pekka Enberg 
  */
@@ -42,24 +40,6 @@ public abstract class RepeatingGroup<T extends RepeatingGroupInstance> implement
 
     public void parseValue(String s) {
         throw new UnsupportedOperationException();
-    }
-
-    public void parse(TokenStream stream) {
-        parsed = true;
-        instanceCount.parse(stream);
-        Integer count = instanceCount.getValue();
-        if (count == null) {
-            return;
-        }
-        for (int i = 0; i < count; i++) {
-            T instance = newInstance();
-            instance.parse(stream);
-            instances.add(instance);
-        }
-    }
-
-    public boolean contains(Specification<Field> spec) {
-        return spec.isSatisfiedBy(instanceCount);
     }
 
     @Override

@@ -20,14 +20,12 @@ import java.util.List;
 import org.joda.time.DateTime;
 
 import fixengine.Config;
-import fixengine.Specification;
 
 /**
  * @author Pekka Enberg 
  */
 public interface Message {
     void apply(MessageVisitor visitor);
-    void parseField(Tag tag, TokenStream tokens);
     String format();
     public void setBeginString(String beginString);
     String getBeginString();
@@ -53,8 +51,6 @@ public interface Message {
     boolean hasValidSenderCompId(Config config);
     boolean isTooLowSeqNum(int seqNo);
     boolean isOrigSendingTimeMissing();
-    boolean contains(Specification<Field> spec);
-    void parse(TokenStream tokens);
     List<Field> getFields();
     Field lookup(Tag tag);
 }
