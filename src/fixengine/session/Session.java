@@ -358,50 +358,6 @@ public class Session {
             }
           });
         add(new AbstractFieldsValidator() {
-            @Override
-            protected boolean isValid(Field field) {
-              return !field.isDuplicate();
-            }
-
-            @Override
-            protected void error(Message message, Field field) {
-              sessionReject(conn, message, SessionRejectReason.TAG_MULTIPLE_TIMES, toString(field) + ": Tag multiple times");
-            }
-          });
-        add(new AbstractFieldsValidator() {
-          @Override
-          protected boolean isValid(Field field) {
-            return field.isFormatValid();
-          }
-
-          @Override
-          protected void error(Message message, Field field) {
-            sessionReject(conn, message, SessionRejectReason.INVALID_VALUE_FORMAT, toString(field) + ": Invalid value format");
-          }
-        });
-        add(new AbstractFieldsValidator() {
-          @Override
-          protected boolean isValid(Field field) {
-            return field.isValueValid();
-          }
-
-          @Override
-          protected void error(Message message, Field field) {
-            sessionReject(conn, message, SessionRejectReason.INVALID_VALUE, toString(field) + ": Invalid value");
-          }
-        });
-        add(new AbstractFieldsValidator() {
-          @Override
-          protected boolean isValid(Field field) {
-            return !field.isEmpty();
-          }
-
-          @Override
-          protected void error(Message message, Field field) {
-            sessionReject(conn, message, SessionRejectReason.EMPTY_TAG, toString(field) + ": Empty tag");
-          }
-        });
-        add(new AbstractFieldsValidator() {
           @Override
           protected boolean isValid(Field field) {
             return !field.isMissing();
