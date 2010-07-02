@@ -31,10 +31,13 @@ public class Parser {
 
     public static MessageHeader parseHeader(ByteBuffer b) {
         String beginString = beginString(b);
-        bodyLength(b);
+        int bodyLength = bodyLength(b);
+        int msgTypePosition = b.position();
         MsgType type = msgType(b);
         MessageHeader header = new MessageHeader(type);
         header.setBeginString(beginString);
+        header.setBodyLength(bodyLength);
+        header.setMsgTypePosition(msgTypePosition);
         Field previous = new MsgTypeField();
         for (;;) {
             b.mark();
@@ -58,7 +61,7 @@ public class Parser {
 
     public static Message parseMessage(ByteBuffer b, MessageHeader header) {
         Message msg = body(b, header);
-        trailer(b);
+        trailer(b, header);
         return msg;
     }
 
@@ -71,10 +74,10 @@ public class Parser {
         return beginString;
     }
 
-    private static void bodyLength(ByteBuffer b) throws AssertionError {
+    private static int bodyLength(ByteBuffer b) throws AssertionError {
         if (!BodyLengthField.TAG.equals(parseTag(b, new BeginStringField())))
             throw new AssertionError();
-        parseValue(b, new BodyLengthField());
+        return Integer.parseInt(parseValue(b, new BodyLengthField()));
     }
 
     private static MsgType msgType(ByteBuffer b) throws AssertionError {
@@ -111,7 +114,10 @@ public class Parser {
         return msg;
     }
 
-    private static void trailer(ByteBuffer b) throws AssertionError {
+    private static void trailer(ByteBuffer b, MessageHeader header) {
+        int pos = b.position() - header.getMsgTypePosition();
+        if (pos != header.getBodyLength())
+            throw new InvalidBodyLengthException("Expected: " + header.getBodyLength() + ", but was: " + pos);
         int expected = checksum(b, b.position());
         if (!CheckSumField.TAG.equals(parseTag(b, null)))
             throw new AssertionError();

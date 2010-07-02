@@ -169,6 +169,25 @@ public class ParserSpec extends Specification<String> {
             }, must.raise(InvalidBeginStringException.class, "BeginString(8): 'FIX.FIX' is not supported"));
         }
     }
+    public class InvalidBodyLength {
+        public String create() {
+            return raw = message("75", "0")
+                .field(MsgSeqNum, "1")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(TestReqID, "1")
+                .field(CheckSum, "206")
+                .toString();
+        }
+
+        public void parse() {
+            specify(new Block() {
+                @Override public void run() throws Throwable {
+                    Parser.parse(silvertip.Message.fromString(raw));
+                }
+            }, must.raise(InvalidBodyLengthException.class));
+        }
+    }
+
 
     public class InvalidMsgType {
         public String create() {

@@ -39,6 +39,8 @@ public class MessageHeader {
     private final MsgTypeField msgType = new MsgTypeField();
     private final Fields fields = new Fields();
 
+    private int msgTypePosition;
+
     public MessageHeader() {
         this((String) null);
     }
@@ -194,6 +196,14 @@ public class MessageHeader {
             return true;
         }
         return !origSendingTime.getValue().isAfter(sendingTime.getValue());
+    }
+
+    public void setMsgTypePosition(int msgTypePosition) {
+        this.msgTypePosition = msgTypePosition;
+    }
+
+    public int getMsgTypePosition() {
+        return msgTypePosition;
     }
 
     public Message newMessage() {
