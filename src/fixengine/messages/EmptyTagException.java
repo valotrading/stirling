@@ -20,7 +20,7 @@ package fixengine.messages;
  */
 public class EmptyTagException extends ParseException {
     public EmptyTagException(String message) {
-        super(message);
+        super(message, SessionRejectReason.EMPTY_TAG);
     }
 
     private static final long serialVersionUID = 1L;

@@ -18,9 +18,9 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg
  */
-public class InvalidValueFormatException extends RuntimeException {
+public class InvalidValueFormatException extends ParseException {
     public InvalidValueFormatException(String message) {
-        super(message);
+        super(message, SessionRejectReason.INVALID_VALUE_FORMAT);
     }
 
     private static final long serialVersionUID = 1L;

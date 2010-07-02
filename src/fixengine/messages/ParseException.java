@@ -19,16 +19,28 @@ package fixengine.messages;
  * @author Pekka Enberg 
  */
 public class ParseException extends RuntimeException {
+    private SessionRejectReason reason;
+
     protected ParseException() {
     }
 
     protected ParseException(String message) {
+        this(message, null);
+    }
+
+    protected ParseException(String message, SessionRejectReason reason) {
         super(message);
+
+        this.reason = reason;
     }
 
     protected ParseException(Throwable cause) {
         super(cause);
     }
 
-    private static final long serialVersionUID = 1L; 
+    public SessionRejectReason getReason() {
+        return reason;
+    }
+
+    private static final long serialVersionUID = 1L;
 }

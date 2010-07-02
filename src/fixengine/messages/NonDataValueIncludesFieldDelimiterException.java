@@ -20,7 +20,7 @@ package fixengine.messages;
  */
 public class NonDataValueIncludesFieldDelimiterException extends ParseException {
     public NonDataValueIncludesFieldDelimiterException(String message) {
-        super(message);
+        super(message, SessionRejectReason.FIELD_DELIMITER_IN_VALUE);
     }
 
     private static final long serialVersionUID = 1L;
