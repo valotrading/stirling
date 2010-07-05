@@ -31,8 +31,8 @@ import fixengine.messages.BusinessRejectReason;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.Field;
 import fixengine.messages.GarbledMessage;
+import fixengine.messages.GarbledMessageException;
 import fixengine.messages.HeartbeatMessage;
-import fixengine.messages.InvalidBodyLengthException;
 import fixengine.messages.LogonMessage;
 import fixengine.messages.LogoutMessage;
 import fixengine.messages.Message;
@@ -150,7 +150,7 @@ public class Session {
             syncMessages(conn);
         }
       });
-    } catch (InvalidBodyLengthException e) {
+    } catch (GarbledMessageException e) {
         /* garbled */
     } catch (ParseException e) {
        sessionReject(conn, e.getMsgSeqNum(), e.getReason(), e.getMessage());

@@ -146,6 +146,29 @@ public class ParserSpec extends Specification<String> {
         }
     }
 
+    public class BeginStringMissing {
+        public String create() {
+            return raw = message()
+                    .field(BodyLength, "57")
+                    .field(MsgType, "0")
+                    .field(SenderCompID, "Sender")
+                    .field(TargetCompID, "Target")
+                    .field(MsgSeqNum, "1")
+                    .field(SendingTime, "20100701-12:09:40")
+                    .field(TestReqID, "1")
+                    .field(CheckSum, "33")
+                    .toString();
+        }
+
+        public void parse() {
+            specify(new Block() {
+                @Override public void run() throws Throwable {
+                    Parser.parse(silvertip.Message.fromString(raw));
+                }
+            }, must.raise(BeginStringMissingException.class, "BeginString(8): is missing"));
+        }
+    }
+
     public class InvalidBeginString {
         public String create() {
             return raw = message()
@@ -169,6 +192,30 @@ public class ParserSpec extends Specification<String> {
             }, must.raise(InvalidBeginStringException.class, "BeginString(8): 'FIX.FIX' is not supported"));
         }
     }
+
+    public class BodyLengthMissing {
+        public String create() {
+            return raw = message()
+                    .field(BeginString, "FIX.4.2")
+                    .field(MsgType, "0")
+                    .field(SenderCompID, "Sender")
+                    .field(TargetCompID, "Target")
+                    .field(MsgSeqNum, "1")
+                    .field(SendingTime, "20100701-12:09:40")
+                    .field(TestReqID, "1")
+                    .field(CheckSum, "33")
+                    .toString();
+        }
+
+        public void parse() {
+            specify(new Block() {
+                @Override public void run() throws Throwable {
+                    Parser.parse(silvertip.Message.fromString(raw));
+                }
+            }, must.raise(BodyLengthMissingException.class, "BodyLength(9): is missing"));
+        }
+    }
+
     public class InvalidBodyLength {
         public String create() {
             return raw = message("75", "0")
@@ -188,6 +235,28 @@ public class ParserSpec extends Specification<String> {
         }
     }
 
+    public class MsgTypeMissing {
+        public String create() {
+            return raw = message()
+                    .field(BeginString, "FIX.4.2")
+                    .field(BodyLength, "57")
+                    .field(SenderCompID, "Sender")
+                    .field(TargetCompID, "Target")
+                    .field(MsgSeqNum, "1")
+                    .field(SendingTime, "20100701-12:09:40")
+                    .field(TestReqID, "1")
+                    .field(CheckSum, "33")
+                    .toString();
+        }
+
+        public void parse() {
+            specify(new Block() {
+                @Override public void run() throws Throwable {
+                    Parser.parse(silvertip.Message.fromString(raw));
+                }
+            }, must.raise(MsgTypeMissingException.class, "MsgType(35): is missing"));
+        }
+    }
 
     public class InvalidMsgType {
         public String create() {

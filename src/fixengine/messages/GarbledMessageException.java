@@ -16,12 +16,12 @@
 package fixengine.messages;
 
 /**
- * @author Pekka Enberg 
+ * @author Pekka Enberg
  */
-public class InvalidBeginStringException extends ParseException {
-    public InvalidBeginStringException(String message) {
+public class GarbledMessageException extends ParseException {
+    public GarbledMessageException(String message) {
         super(message);
     }
 
-    private static final long serialVersionUID = 1L; 
+    private static final long serialVersionUID = 1L;
 }

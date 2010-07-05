@@ -95,7 +95,7 @@ public class Parser {
 
     private static String beginString(ByteBuffer b) {
         if (!BeginStringField.TAG.equals(parseTag(b, new BeginStringField())))
-            throw new AssertionError();
+            throw new BeginStringMissingException("BeginString(8): is missing");
         String beginString = parseValue(b, new BeginStringField());
         if (!Version.supports(beginString))
             throw new InvalidBeginStringException("BeginString(8): '" + beginString + "' is not supported");
@@ -104,13 +104,13 @@ public class Parser {
 
     private static int bodyLength(ByteBuffer b) {
         if (!BodyLengthField.TAG.equals(parseTag(b, new BeginStringField())))
-            throw new AssertionError();
+            throw new BodyLengthMissingException("BodyLength(9): is missing");
         return Integer.parseInt(parseValue(b, new BodyLengthField()));
     }
 
     private static String msgType(ByteBuffer b) {
         if (!MsgTypeField.TAG.equals(parseTag(b, new BodyLengthField())))
-            throw new AssertionError();
+            throw new MsgTypeMissingException("MsgType(35): is missing");
         return parseValue(b, new MsgTypeField());
     }
 

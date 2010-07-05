@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public class InvalidBodyLengthException extends ParseException {
+public class InvalidBodyLengthException extends GarbledMessageException {
     public InvalidBodyLengthException(String message) {
         super(message);
     }
