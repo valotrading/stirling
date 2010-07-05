@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public class InvalidCheckSumException extends ParseException {
+public class InvalidCheckSumException extends GarbledMessageException {
     public InvalidCheckSumException(String message) {
         super(message);
     }
