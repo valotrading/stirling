@@ -19,8 +19,8 @@ package fixengine.messages;
  * @author Pekka Enberg
  */
 public class TagMultipleTimesException extends ParseException {
-    public TagMultipleTimesException(String message) {
-        super(message, SessionRejectReason.TAG_MULTIPLE_TIMES);
+    public TagMultipleTimesException(String message, int msgSeqNum) {
+        super(message, msgSeqNum, SessionRejectReason.TAG_MULTIPLE_TIMES);
     }
 
     private static final long serialVersionUID = 1L;

@@ -15,7 +15,6 @@
  */
 package fixengine.messages;
 
-import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
@@ -39,12 +38,8 @@ public class UtcTimestampFieldSpec extends Specification<UtcTimestampField> {
         }
 
         public void failsToParseNonTimestampStrings() {
-            specify(new Block() {
-                @Override
-                public void run() throws Throwable {
-                    timestamp.parse("ZZ");
-                }
-            }, must.raise(InvalidValueFormatException.class));
+            timestamp.parse("ZZ");
+            specify(timestamp.isFormatValid(), must.equal(false));
         }
 
         public void formatsToStringTimestamp() {

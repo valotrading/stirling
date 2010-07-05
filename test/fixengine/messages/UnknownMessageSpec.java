@@ -27,49 +27,55 @@ import org.junit.runner.RunWith;
 public class UnknownMessageSpec extends Specification<UnknownMessage> {
     public class EmptyMsgType {
         public void isNotValid() {
-            specify(new UnknownMessage("").hasValidMsgType(), must.equal(false));
+            specify(message("").hasValidMsgType(), must.equal(false));
         }
     }
 
     public class ValidOneCharacterMsgTypes {
         public void areValid() {
-            specify(new UnknownMessage("0").hasValidMsgType(), must.equal(true));
-            specify(new UnknownMessage("9").hasValidMsgType(), must.equal(true));
+            specify(message("0").hasValidMsgType(), must.equal(true));
+            specify(message("9").hasValidMsgType(), must.equal(true));
 
-            specify(new UnknownMessage("A").hasValidMsgType(), must.equal(true));
-            specify(new UnknownMessage("Z").hasValidMsgType(), must.equal(true));
+            specify(message("A").hasValidMsgType(), must.equal(true));
+            specify(message("Z").hasValidMsgType(), must.equal(true));
 
-            specify(new UnknownMessage("a").hasValidMsgType(), must.equal(true));
-            specify(new UnknownMessage("z").hasValidMsgType(), must.equal(true));
+            specify(message("a").hasValidMsgType(), must.equal(true));
+            specify(message("z").hasValidMsgType(), must.equal(true));
         }
     }
     
     public class InvalidOneCharacterMsgTypes {
         public void areNotValid() {
-            specify(new UnknownMessage("!").hasValidMsgType(), must.equal(false));
+            specify(message("!").hasValidMsgType(), must.equal(false));
         }
     }
 
     public class ValidTwoCharacterMsgTypes {
         public void areValid() {
-            specify(new UnknownMessage("AA").hasValidMsgType(), must.equal(true));
-            specify(new UnknownMessage("AI").hasValidMsgType(), must.equal(true));
+            specify(message("AA").hasValidMsgType(), must.equal(true));
+            specify(message("AI").hasValidMsgType(), must.equal(true));
         }
     }
 
     public class InvalidTwoCharacterMsgTypes {
         public void areNotValid() {
-            specify(new UnknownMessage("aa").hasValidMsgType(), must.equal(false));
-            specify(new UnknownMessage("AJ").hasValidMsgType(), must.equal(false));
+            specify(message("aa").hasValidMsgType(), must.equal(false));
+            specify(message("AJ").hasValidMsgType(), must.equal(false));
 
-            specify(new UnknownMessage("ZA").hasValidMsgType(), must.equal(false));
-            specify(new UnknownMessage("ZZ").hasValidMsgType(), must.equal(false));
+            specify(message("ZA").hasValidMsgType(), must.equal(false));
+            specify(message("ZZ").hasValidMsgType(), must.equal(false));
         }
     }
 
     public class AnyThreeCodeMsgTypes {
         public void areNotValid() {
-            specify(new UnknownMessage("AAA").hasValidMsgType(), must.equal(false));
+            specify(message("AAA").hasValidMsgType(), must.equal(false));
         }
+    }
+
+    private UnknownMessage message(String msgType) {
+        MessageHeader header = new MessageHeader();
+        header.setMsgType(msgType);
+        return new UnknownMessage(header);
     }
 }

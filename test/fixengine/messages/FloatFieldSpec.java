@@ -15,7 +15,6 @@
  */
 package fixengine.messages;
 
-import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
@@ -49,12 +48,8 @@ public class FloatFieldSpec extends Specification<FloatField> {
         }
 
         public void failsToParseScientificNotation() {
-            specify(new Block() {
-                @Override
-                public void run() throws Throwable {
-                    field.parse("1.23E4");
-                }
-            }, must.raise(InvalidValueFormatException.class));
+            field.parse("1.23E4");
+            specify(field.isFormatValid(), must.equal(false));
         }
 
         public void formatsToDecimalNumber() {

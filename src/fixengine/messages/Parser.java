@@ -33,11 +33,17 @@ public class Parser {
         String beginString = beginString(b);
         int bodyLength = bodyLength(b);
         int msgTypePosition = b.position();
-        MsgType type = msgType(b);
-        MessageHeader header = new MessageHeader(type);
+        String msgTypeValue = msgType(b);
+        MessageHeader header = new MessageHeader();
+        int msgSeqNum = msgSeqNum(b, header);
         header.setBeginString(beginString);
         header.setBodyLength(bodyLength);
+        header.setMsgType(msgTypeValue);
+        header.setMsgSeqNum(msgSeqNum);
         header.setMsgTypePosition(msgTypePosition);
+        MsgType msgType = MsgType.parse(msgTypeValue);
+        if (msgType == null)
+            return header;
         Field previous = new MsgTypeField();
         for (;;) {
             b.mark();
@@ -46,26 +52,48 @@ public class Parser {
             if (field == null)
                 break;
             if (field.isParsed())
-                throw new TagMultipleTimesException(field.prettyName() + ": Tag multiple times");
+                throw new TagMultipleTimesException(field.prettyName() + ": Tag multiple times", header.getMsgSeqNum());
             String value = parseValue(b, field);
             field.parseValue(value);
             if (!field.isFormatValid())
-                throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
+                throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format", header.getMsgSeqNum());
             if (!field.isValueValid())
-                throw new InvalidValueException(field.prettyName() + ": Invalid value");
+                throw new InvalidValueException(field.prettyName() + ": Invalid value", header.getMsgSeqNum());
             previous = field;
         }
         b.reset();
         return header;
     }
 
+    private static int msgSeqNum(ByteBuffer b, MessageHeader header) {
+        int result = -1;
+        b.mark();
+        Field previous = new MsgTypeField();
+        for (;;) {
+            Tag tag = parseTag(b, previous);
+            Field field = header.lookup(tag);
+            if (field == null)
+                break;
+            String value = parseValue(b, field);
+            if (MsgSeqNumField.TAG.equals(tag)) {
+                result = Integer.parseInt(value);
+                break;
+            }
+            previous = field;
+        }
+        b.reset();
+        return result;
+    }
+
     public static Message parseMessage(ByteBuffer b, MessageHeader header) {
+        if (MsgType.parse(header.getMsgType()) == null)
+            return new UnknownMessage(header);
         Message msg = body(b, header);
         trailer(b, header);
         return msg;
     }
 
-    private static String beginString(ByteBuffer b) throws AssertionError {
+    private static String beginString(ByteBuffer b) {
         if (!BeginStringField.TAG.equals(parseTag(b, new BeginStringField())))
             throw new AssertionError();
         String beginString = parseValue(b, new BeginStringField());
@@ -74,20 +102,16 @@ public class Parser {
         return beginString;
     }
 
-    private static int bodyLength(ByteBuffer b) throws AssertionError {
+    private static int bodyLength(ByteBuffer b) {
         if (!BodyLengthField.TAG.equals(parseTag(b, new BeginStringField())))
             throw new AssertionError();
         return Integer.parseInt(parseValue(b, new BodyLengthField()));
     }
 
-    private static MsgType msgType(ByteBuffer b) throws AssertionError {
+    private static String msgType(ByteBuffer b) {
         if (!MsgTypeField.TAG.equals(parseTag(b, new BodyLengthField())))
             throw new AssertionError();
-        String s = parseValue(b, new MsgTypeField());
-        MsgType type = MsgType.parse(s);
-        if (type == null)
-            throw new InvalidMsgTypeException("MsgType(35): '" + s + "' is not supported");
-        return type;
+        return parseValue(b, new MsgTypeField());
     }
 
     private static Message body(ByteBuffer b, MessageHeader header) {
@@ -101,13 +125,13 @@ public class Parser {
                 break;
             Field field = msg.lookup(tag);
             if (field.isParsed())
-                throw new TagMultipleTimesException(field.prettyName() + ": Tag multiple times");
+                throw new TagMultipleTimesException(field.prettyName() + ": Tag multiple times", header.getMsgSeqNum());
             String value = parseValue(b, field);
             field.parseValue(value);
             if (!field.isFormatValid())
-                throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
+                throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format", header.getMsgSeqNum());
             if (!field.isValueValid())
-                throw new InvalidValueException(field.prettyName() + ": Invalid value");
+                throw new InvalidValueException(field.prettyName() + ": Invalid value", header.getMsgSeqNum());
             previous = field;
         }
         b.reset();

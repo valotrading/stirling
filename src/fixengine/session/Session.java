@@ -122,12 +122,9 @@ public class Session {
         public void visit(UnknownMessage message) {
           if (config.supports(Version.FIX_4_2)) {
             if (message.hasValidMsgType())
-              businessReject(conn, message,
-                  BusinessRejectReason.UNKNOWN_MESSAGE_TYPE, message
-                      .getMsgType());
+              businessReject(conn, message,BusinessRejectReason.UNKNOWN_MESSAGE_TYPE, message.getMsgType());
             else
-              sessionReject(conn, message,
-                  SessionRejectReason.INVALID_MSG_TYPE, message.getMsgType());
+              sessionReject(conn, message, SessionRejectReason.INVALID_MSG_TYPE, message.getMsgType());
           } else {
             sessionReject(conn, message, null, message.getMsgType());
           }
@@ -156,7 +153,7 @@ public class Session {
     } catch (InvalidBodyLengthException e) {
         /* garbled */
     } catch (ParseException e) {
-       sessionReject(conn, header.getMsgSeqNum(), e.getReason(), e.getMessage());
+       sessionReject(conn, e.getMsgSeqNum(), e.getReason(), e.getMessage());
     } finally {
       store.save(this);
     }

@@ -199,11 +199,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(new Block() {
-                @Override public void run() throws Throwable {
-                    Parser.parse(silvertip.Message.fromString(raw));
-                }
-            }, must.raise(InvalidMsgTypeException.class, "MsgType(35): 'XX' is not supported"));
+            specify(Parser.parse(silvertip.Message.fromString(raw)) instanceof UnknownMessage);
         }
     }
 

@@ -20,6 +20,7 @@ package fixengine.messages;
  */
 public class ParseException extends RuntimeException {
     private SessionRejectReason reason;
+    private int msgSeqNum;
 
     protected ParseException() {
     }
@@ -38,8 +39,19 @@ public class ParseException extends RuntimeException {
         super(cause);
     }
 
+    public ParseException(String message, int msgSeqNum, SessionRejectReason reason) {
+        super(message);
+
+        this.reason = reason;
+        this.msgSeqNum = msgSeqNum;
+    }
+
     public SessionRejectReason getReason() {
         return reason;
+    }
+
+    public int getMsgSeqNum() {
+        return msgSeqNum;
     }
 
     private static final long serialVersionUID = 1L;

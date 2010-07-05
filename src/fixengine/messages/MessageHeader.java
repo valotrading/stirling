@@ -75,6 +75,10 @@ public class MessageHeader {
         return fields;
     }
 
+    public void setMsgType(String msgType) {
+        this.msgType.setValue(msgType);
+    }
+
     public BeginStringField getBeginStringField() {
         return beginString;
     }
@@ -209,7 +213,7 @@ public class MessageHeader {
     public Message newMessage() {
         MsgType type = MsgType.parse(getMsgType());
         if (type == null) {
-            return new UnknownMessage(msgType.getValue());
+            throw new RuntimeException();
         }
         return type.newMessage(this);
     }

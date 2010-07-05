@@ -21,7 +21,7 @@ import lang.Objects;
  * @author Pekka Enberg 
  */
 public abstract class AbstractField<T> implements Field {
-    private boolean validFormat = true;
+    protected boolean validFormat = true;
     private boolean validValue = true;
     private final Required required;
     private final String name;

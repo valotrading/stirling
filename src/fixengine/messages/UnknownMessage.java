@@ -21,8 +21,8 @@ import org.apache.commons.lang.CharUtils;
  * @author Pekka Enberg
  */
 public class UnknownMessage extends AbstractMessage {
-    public UnknownMessage(String msgType) {
-        super(new MessageHeader(msgType));
+    public UnknownMessage(MessageHeader header) {
+        super(header);
     }
 
     @Override

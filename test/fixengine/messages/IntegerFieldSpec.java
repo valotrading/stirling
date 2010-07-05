@@ -15,7 +15,6 @@
  */
 package fixengine.messages;
 
-import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
@@ -44,21 +43,13 @@ public class IntegerFieldSpec extends Specification<IntegerField> {
         }
 
         public void failsToParseFloats() {
-            specify(new Block() {
-                @Override
-                public void run() throws Throwable {
-                    field.parse("1.23");
-                }
-            }, must.raise(InvalidValueFormatException.class));
+            field.parse("1.23");
+            specify(field.isFormatValid(), must.equal(false));
         }
 
         public void failsToParseNonNumericStrings() {
-            specify(new Block() {
-                @Override
-                public void run() throws Throwable {
-                    field.parse("ZZ");
-                }
-            }, must.raise(InvalidValueFormatException.class));
+            field.parse("ZZ");
+            specify(field.isFormatValid(), must.equal(false));
         }
     }
 }
