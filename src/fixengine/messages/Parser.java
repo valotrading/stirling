@@ -123,7 +123,11 @@ public class Parser {
             Tag tag = parseTag(b, previous);
             if (CheckSumField.TAG.equals(tag))
                 break;
+            if (tag.isUserDefined())
+                throw new InvalidTagNumberException("Invalid tag number: " + tag.value(), header.getMsgSeqNum());
             Field field = msg.lookup(tag);
+            if (field == null)
+                throw new InvalidTagException("Tag not defined for this message: " + tag.value(), header.getMsgSeqNum());
             if (field.isParsed())
                 throw new TagMultipleTimesException(field.prettyName() + ": Tag multiple times", header.getMsgSeqNum());
             String value = parseValue(b, field);

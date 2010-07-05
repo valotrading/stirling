@@ -31,7 +31,6 @@ public class ParserSpec extends Specification<String> {
     // - Too few entries in repeating group
     // - Too many entries in repeating group
     // - Missing required field
-    // - User defined tag
 
     public class FullMessage {
         public String create() {
@@ -269,6 +268,46 @@ public class ParserSpec extends Specification<String> {
 
         public void parse() {
             specify(Parser.parse(silvertip.Message.fromString(raw)) instanceof UnknownMessage);
+        }
+    }
+
+    public class InvalidTagNumber {
+        public String create() {
+            return raw = message("57", "0")
+                .field(MsgSeqNum, "1")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(TestReqID, "1")
+                .field(9898, "value")
+                .field(CheckSum, "206")
+                .toString();
+        }
+
+        public void parse() {
+            specify(new Block() {
+                @Override public void run() throws Throwable {
+                    Parser.parse(silvertip.Message.fromString(raw));
+                }
+            }, must.raise(InvalidTagNumberException.class, "Invalid tag number: 9898"));
+        }
+    }
+
+    public class InvalidTag {
+        public String create() {
+            return raw = message("57", "0")
+                .field(MsgSeqNum, "1")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(TestReqID, "1")
+                .field(88, "0")
+                .field(CheckSum, "206")
+                .toString();
+        }
+
+        public void parse() {
+            specify(new Block() {
+                @Override public void run() throws Throwable {
+                    Parser.parse(silvertip.Message.fromString(raw));
+                }
+            }, must.raise(InvalidTagException.class, "Tag not defined for this message: 88"));
         }
     }
 
