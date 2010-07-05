@@ -22,7 +22,7 @@ import org.joda.time.Minutes;
 /**
  * @author Pekka Enberg 
  */
-public class MessageHeader {
+public class MessageHeader implements Parseable {
     private static final Minutes MAX_TIME_DIFFERENCE = Minutes.TWO;
 
     private final DeliverToCompIdField deliverToCompIdField = new DeliverToCompIdField(Required.NO);
@@ -67,7 +67,7 @@ public class MessageHeader {
         fields.add(field);
     }
 
-    public Field lookup(Tag tag) {
+    @Override public Field lookup(Tag tag) {
         return fields.lookup(tag);
     }
 

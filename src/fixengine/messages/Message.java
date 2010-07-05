@@ -24,7 +24,7 @@ import fixengine.Config;
 /**
  * @author Pekka Enberg 
  */
-public interface Message {
+public interface Message extends Parseable {
     void apply(MessageVisitor visitor);
     String format();
     public void setBeginString(String beginString);
@@ -52,5 +52,4 @@ public interface Message {
     boolean isTooLowSeqNum(int seqNo);
     boolean isOrigSendingTimeMissing();
     List<Field> getFields();
-    Field lookup(Tag tag);
 }

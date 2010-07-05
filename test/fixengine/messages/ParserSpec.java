@@ -15,14 +15,17 @@
  */
 package fixengine.messages;
 
-import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 
 @RunWith(JDaveRunner.class)
 public class ParserSpec extends Specification<String> {
+    private Parser.Callback callback = mock(Parser.Callback.class);
     private String raw;
 
     // TODO:
@@ -43,8 +46,10 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            Message m = Parser.parse(silvertip.Message.fromString(raw));
-            specify(m.format(), must.equal(raw));
+            checking(new Expectations() {{
+                one(callback).message(with(new MessageMatcher(raw)));
+            }});
+            Parser.parse(silvertip.Message.fromString(raw), callback);
         }
     }
 
@@ -59,12 +64,9 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(new Block() {
-                @Override public void run() throws Throwable {
-                    Parser.parse(silvertip.Message.fromString(raw));
-                }
-            }, must.raise(EmptyTagException.class, "TestReqId(112): Empty tag"));
+            expectInvalidMessage(SessionRejectReason.EMPTY_TAG, "TestReqId(112): Empty tag");
         }
+
     }
 
     public class InvalidValueFormat {
@@ -78,11 +80,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(new Block() {
-                @Override public void run() throws Throwable {
-                    Parser.parse(silvertip.Message.fromString(raw));
-                }
-            }, must.raise(InvalidValueFormatException.class, "SendingTime(52): Invalid value format"));
+            expectInvalidMessage(SessionRejectReason.INVALID_VALUE_FORMAT, "SendingTime(52): Invalid value format");
         }
     }
 
@@ -98,11 +96,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(new Block() {
-                @Override public void run() throws Throwable {
-                    Parser.parse(silvertip.Message.fromString(raw));
-                }
-            }, must.raise(InvalidValueException.class, "EncryptMethod(98): Invalid value"));
+            expectInvalidMessage(SessionRejectReason.INVALID_VALUE, "EncryptMethod(98): Invalid value");
         }
     }
 
@@ -118,11 +112,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(new Block() {
-                @Override public void run() throws Throwable {
-                    Parser.parse(silvertip.Message.fromString(raw));
-                }
-            }, must.raise(TagMultipleTimesException.class, "TestReqId(112): Tag multiple times"));
+            expectInvalidMessage(SessionRejectReason.TAG_MULTIPLE_TIMES, "TestReqId(112): Tag multiple times");
         }
     }
 
@@ -137,11 +127,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(new Block() {
-                @Override public void run() throws Throwable {
-                    Parser.parse(silvertip.Message.fromString(raw));
-                }
-            }, must.raise(InvalidCheckSumException.class, "Invalid checksum: Expected: 206, but was: 999"));
+            expectGarbledMessage("CheckSum(10): Expected: 206, but was: 999");
         }
     }
 
@@ -160,11 +146,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(new Block() {
-                @Override public void run() throws Throwable {
-                    Parser.parse(silvertip.Message.fromString(raw));
-                }
-            }, must.raise(BeginStringMissingException.class, "BeginString(8): is missing"));
+            expectGarbledMessage("BeginString(8): is missing");
         }
     }
 
@@ -184,11 +166,10 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(new Block() {
-                @Override public void run() throws Throwable {
-                    Parser.parse(silvertip.Message.fromString(raw));
-                }
-            }, must.raise(InvalidBeginStringException.class, "BeginString(8): 'FIX.FIX' is not supported"));
+            checking(new Expectations() {{
+                one(callback).invalidBeginString("BeginString(8): 'FIX.FIX' is not supported");
+            }});
+            Parser.parse(silvertip.Message.fromString(raw), callback);
         }
     }
 
@@ -207,11 +188,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(new Block() {
-                @Override public void run() throws Throwable {
-                    Parser.parse(silvertip.Message.fromString(raw));
-                }
-            }, must.raise(BodyLengthMissingException.class, "BodyLength(9): is missing"));
+            expectGarbledMessage("BodyLength(9): is missing");
         }
     }
 
@@ -226,11 +203,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(new Block() {
-                @Override public void run() throws Throwable {
-                    Parser.parse(silvertip.Message.fromString(raw));
-                }
-            }, must.raise(InvalidBodyLengthException.class));
+            expectGarbledMessage("BodyLength(9): Expected: 75, but was: 57");
         }
     }
 
@@ -249,11 +222,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(new Block() {
-                @Override public void run() throws Throwable {
-                    Parser.parse(silvertip.Message.fromString(raw));
-                }
-            }, must.raise(MsgTypeMissingException.class, "MsgType(35): is missing"));
+            expectGarbledMessage("MsgType(35): is missing");
         }
     }
 
@@ -267,7 +236,10 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(Parser.parse(silvertip.Message.fromString(raw)) instanceof UnknownMessage);
+            checking(new Expectations() {{
+                one(callback).unknownMsgType("XX", 1);
+            }});
+            Parser.parse(silvertip.Message.fromString(raw), callback);
         }
     }
 
@@ -283,11 +255,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(new Block() {
-                @Override public void run() throws Throwable {
-                    Parser.parse(silvertip.Message.fromString(raw));
-                }
-            }, must.raise(InvalidTagNumberException.class, "Invalid tag number: 9898"));
+            expectInvalidMessage(SessionRejectReason.INVALID_TAG_NUMBER, "Invalid tag number: 9898");
         }
     }
 
@@ -303,11 +271,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(new Block() {
-                @Override public void run() throws Throwable {
-                    Parser.parse(silvertip.Message.fromString(raw));
-                }
-            }, must.raise(InvalidTagException.class, "Tag not defined for this message: 88"));
+            expectInvalidMessage(SessionRejectReason.INVALID_TAG, "Tag not defined for this message: 88");
         }
     }
 
@@ -322,19 +286,15 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            specify(new Block() {
-                @Override public void run() throws Throwable {
-                    Parser.parse(silvertip.Message.fromString(raw));
-                }
-            }, must.raise(NonDataValueIncludesFieldDelimiterException.class, "TestReqId(112): Non-data value includes field delimiter (SOH character)"));
+            expectInvalidMessage(SessionRejectReason.FIELD_DELIMITER_IN_VALUE, "TestReqId(112): Non-data value includes field delimiter (SOH character)");
         }
     }
 
-    public static FixMessageBuilder message() {
+    static FixMessageBuilder message() {
         return new FixMessageBuilder();
     }
 
-    public static FixMessageBuilder message(String bodyLength, String msgType) {
+    static FixMessageBuilder message(String bodyLength, String msgType) {
         return message()
                 .field(BeginString, "FIX.4.2")
                 .field(BodyLength, bodyLength)
@@ -343,7 +303,7 @@ public class ParserSpec extends Specification<String> {
                 .field(TargetCompID, "Target");
     }
 
-    public static class FixMessageBuilder {
+    static class FixMessageBuilder {
         StringBuilder s = new StringBuilder();
 
         public FixMessageBuilder field(int tag, String value) {
@@ -357,6 +317,37 @@ public class ParserSpec extends Specification<String> {
         @Override public String toString() {
             return s.toString();
         }
+    }
+
+    private void expectInvalidMessage(final SessionRejectReason reason, final String text) {
+        checking(new Expectations() {{
+            one(callback).invalidMessage(1, reason, text);
+        }});
+        Parser.parse(silvertip.Message.fromString(raw), callback);
+    }
+
+    private void expectGarbledMessage(final String text) {
+        checking(new Expectations() {{
+            one(callback).garbledMessage(text);
+        }});
+        Parser.parse(silvertip.Message.fromString(raw), callback);
+    }
+
+    class MessageMatcher extends BaseMatcher<Message> {
+      private final String raw;
+
+      public MessageMatcher(String raw) {
+        this.raw = raw;
+      }
+
+      @Override public boolean matches(Object item) {
+        Message m = (Message) item;
+        return raw.equals(m.format());
+      }
+
+      @Override public void describeTo(Description description) {
+        description.appendValue(raw);
+      }
     }
 
     private static final int BeginString   = 8;

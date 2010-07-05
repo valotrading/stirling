@@ -19,8 +19,6 @@ package fixengine.messages;
  * @author Pekka Enberg 
  */
 public interface MessageVisitor {
-    void visit(NullMessage message);
-    void visit(GarbledMessage message);
     void visit(UnknownMessage message);
     void visit(ExecutionReportMessage message);
     void visit(HeartbeatMessage message);

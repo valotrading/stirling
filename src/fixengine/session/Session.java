@@ -15,7 +15,6 @@
  */
 package fixengine.session;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,29 +22,23 @@ import lang.DefaultTimeSource;
 import lang.TimeSource;
 import silvertip.Connection;
 import fixengine.Config;
-import fixengine.Version;
 import fixengine.messages.AbstractFieldsValidator;
 import fixengine.messages.AbstractMessageValidator;
 import fixengine.messages.BusinessMessageRejectMessage;
 import fixengine.messages.BusinessRejectReason;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.Field;
-import fixengine.messages.GarbledMessage;
-import fixengine.messages.GarbledMessageException;
 import fixengine.messages.HeartbeatMessage;
 import fixengine.messages.LogonMessage;
 import fixengine.messages.LogoutMessage;
 import fixengine.messages.Message;
-import fixengine.messages.MessageHeader;
 import fixengine.messages.MessageVisitor;
-import fixengine.messages.ParseException;
 import fixengine.messages.Parser;
 import fixengine.messages.RejectMessage;
 import fixengine.messages.ResendRequestMessage;
 import fixengine.messages.SequenceResetMessage;
 import fixengine.messages.SessionRejectReason;
 import fixengine.messages.TestRequestMessage;
-import fixengine.messages.UnknownMessage;
 import fixengine.messages.Validator;
 import fixengine.session.store.SessionStore;
 
@@ -107,31 +100,9 @@ public class Session {
 
   public void receive(final Connection conn, silvertip.Message message, final MessageVisitor visitor) {
     prevRxTimeMsec = System.currentTimeMillis();
-    MessageHeader header = null;
     try {
-      ByteBuffer buffer = message.toByteBuffer();
-      header = Parser.parseHeader(buffer);
-      final Message msg = Parser.parseMessage(buffer, header);
-      msg.apply(new DefaultMessageVisitor() {
-        @Override
-        public void visit(GarbledMessage message) {
-          /* Ignore the message. */
-        }
-
-        @Override
-        public void visit(UnknownMessage message) {
-          if (config.supports(Version.FIX_4_2)) {
-            if (message.hasValidMsgType())
-              businessReject(conn, message,BusinessRejectReason.UNKNOWN_MESSAGE_TYPE, message.getMsgType());
-            else
-              sessionReject(conn, message, SessionRejectReason.INVALID_MSG_TYPE, message.getMsgType());
-          } else {
-            sessionReject(conn, message, null, message.getMsgType());
-          }
-        }
-
-        @Override
-        public void defaultAction(Message message) {
+      Parser.parse(message, new Parser.Callback() {
+        @Override public void message(Message message) {
           int expected = queue.nextSeqNum();
 
           if (validate(conn, message))
@@ -145,15 +116,30 @@ public class Session {
            * missing messages, don't attempt to sync after each received
            * message.
            */
-          if (!conn.isClosed() && isOutOfSync()
-              && message.getMsgSeqNum() != expected)
+          if (!conn.isClosed() && isOutOfSync() && message.getMsgSeqNum() != expected)
             syncMessages(conn);
         }
+
+        @Override public void invalidMessage(int msgSeqNum, SessionRejectReason reason, String text) {
+          sessionReject(conn, msgSeqNum, reason, text);
+        }
+
+        @Override public void unknownMsgType(String msgType, int msgSeqNum) {
+          businessReject(conn, msgType, msgSeqNum, BusinessRejectReason.UNKNOWN_MESSAGE_TYPE, "MsgType(35): Unknown message type: " + msgType);
+        }
+
+        @Override public void invalidMessageType(String msgType, int msgSeqNum) {
+          sessionReject(conn, msgSeqNum, SessionRejectReason.INVALID_MSG_TYPE, "MsgType(35): Invalid message type: " + msgType);
+        }
+
+        @Override public void garbledMessage(String text) {
+          /* Ignore the message. */
+        }
+
+        @Override public void invalidBeginString(String text) {
+          terminate(conn, null, text);
+        }
       });
-    } catch (GarbledMessageException e) {
-        /* garbled */
-    } catch (ParseException e) {
-       sessionReject(conn, e.getMsgSeqNum(), e.getReason(), e.getMessage());
     } finally {
       store.save(this);
     }
@@ -394,10 +380,10 @@ public class Session {
     send(conn, reject);
   }
 
-  private void businessReject(Connection conn, Message message, BusinessRejectReason reason, String text) {
+  private void businessReject(Connection conn, String msgType, int msgSeqNum, BusinessRejectReason reason, String text) {
     BusinessMessageRejectMessage reject = new BusinessMessageRejectMessage();
-    reject.setRefSeqNo(message.getMsgSeqNum());
-    reject.setRefMsgType(message.getMsgType());
+    reject.setRefSeqNo(msgSeqNum);
+    reject.setRefMsgType(msgType);
     reject.setBusinessRejectReason(reason);
     reject.setText(text);
     send(conn, reject);

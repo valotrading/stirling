@@ -45,16 +45,6 @@ public class DefaultMessageVisitor implements MessageVisitor {
     }
 
     @Override
-    public void visit(NullMessage message) {
-        defaultAction(message);
-    }
-
-    @Override
-    public void visit(GarbledMessage message) {
-        defaultAction(message);
-    }
-
-    @Override
     public void visit(UnknownMessage message) {
         defaultAction(message);
     }

@@ -20,77 +20,57 @@ import java.nio.ByteBuffer;
 import fixengine.Version;
 
 public class Parser {
-    public static Message parse(silvertip.Message m) {
-        return parse(m.toByteBuffer());
+    public interface Callback {
+        void message(Message m);
+        void invalidMessage(int msgSeqNum, SessionRejectReason reason, String text);
+        void unknownMsgType(String msgType, int msgSeqNum);
+        void invalidMessageType(String msgType, int msgSeqNum);
+        void garbledMessage(String text);
+        void invalidBeginString(String text);
     }
 
-    private static Message parse(ByteBuffer b) {
-        MessageHeader header = parseHeader(b);
-        return parseMessage(b, header);
+    public static void parse(silvertip.Message m, Callback callback) {
+        parse(m.toByteBuffer(), callback);
     }
 
-    public static MessageHeader parseHeader(ByteBuffer b) {
+    private static void parse(ByteBuffer b, Callback callback) {
+        MessageHeader header = null;
+        try {
+            header = parseHeaderBegin(b);
+        } catch (InvalidBeginStringException e) {
+            callback.invalidBeginString(e.getMessage());
+        } catch (GarbledMessageException e) {
+            callback.garbledMessage(e.getMessage());
+        }
+        if (header == null)
+            return;
+        try {
+            parseFields(b, header);
+            Message msg = body(b, header);
+            trailer(b, header);
+            callback.message(msg);
+        } catch (UnknownMsgTypeException e) {
+            callback.unknownMsgType(header.getMsgType(), header.getMsgSeqNum());
+        } catch (GarbledMessageException e) {
+            callback.garbledMessage(e.getMessage());
+        } catch (ParseException e) {
+            callback.invalidMessage(header.getMsgSeqNum(), e.getReason(), e.getMessage());
+        }
+    }
+
+    private static MessageHeader parseHeaderBegin(ByteBuffer b) {
+        MessageHeader header = new MessageHeader();
         String beginString = beginString(b);
         int bodyLength = bodyLength(b);
         int msgTypePosition = b.position();
         String msgTypeValue = msgType(b);
-        MessageHeader header = new MessageHeader();
         int msgSeqNum = msgSeqNum(b, header);
         header.setBeginString(beginString);
         header.setBodyLength(bodyLength);
         header.setMsgType(msgTypeValue);
         header.setMsgSeqNum(msgSeqNum);
         header.setMsgTypePosition(msgTypePosition);
-        MsgType msgType = MsgType.parse(msgTypeValue);
-        if (msgType == null)
-            return header;
-        Field previous = new MsgTypeField();
-        for (;;) {
-            b.mark();
-            Tag tag = parseTag(b, previous);
-            Field field = header.lookup(tag);
-            if (field == null)
-                break;
-            if (field.isParsed())
-                throw new TagMultipleTimesException(field.prettyName() + ": Tag multiple times", header.getMsgSeqNum());
-            String value = parseValue(b, field);
-            field.parseValue(value);
-            if (!field.isFormatValid())
-                throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format", header.getMsgSeqNum());
-            if (!field.isValueValid())
-                throw new InvalidValueException(field.prettyName() + ": Invalid value", header.getMsgSeqNum());
-            previous = field;
-        }
-        b.reset();
         return header;
-    }
-
-    private static int msgSeqNum(ByteBuffer b, MessageHeader header) {
-        int result = -1;
-        b.mark();
-        Field previous = new MsgTypeField();
-        for (;;) {
-            Tag tag = parseTag(b, previous);
-            Field field = header.lookup(tag);
-            if (field == null)
-                break;
-            String value = parseValue(b, field);
-            if (MsgSeqNumField.TAG.equals(tag)) {
-                result = Integer.parseInt(value);
-                break;
-            }
-            previous = field;
-        }
-        b.reset();
-        return result;
-    }
-
-    public static Message parseMessage(ByteBuffer b, MessageHeader header) {
-        if (MsgType.parse(header.getMsgType()) == null)
-            return new UnknownMessage(header);
-        Message msg = body(b, header);
-        trailer(b, header);
-        return msg;
     }
 
     private static String beginString(ByteBuffer b) {
@@ -114,44 +94,65 @@ public class Parser {
         return parseValue(b, new MsgTypeField());
     }
 
+    private static int msgSeqNum(ByteBuffer b, MessageHeader header) {
+        int result = -1;
+        b.mark();
+        Field previous = new MsgTypeField();
+        for (;;) {
+            Tag tag = parseTag(b, previous);
+            Field field = header.lookup(tag);
+            if (field == null)
+                break;
+            String value = parseValue(b, field);
+            if (MsgSeqNumField.TAG.equals(tag)) {
+                result = Integer.parseInt(value);
+                break;
+            }
+            previous = field;
+        }
+        b.reset();
+        return result;
+    }
+
     private static Message body(ByteBuffer b, MessageHeader header) {
         Message msg = MsgType.parse(header.getMsgType()).newMessage(header);
         msg.setBeginString(header.getBeginString());
+        parseFields(b, msg);
+        return msg;
+    }
+
+    private static void parseFields(ByteBuffer b, Parseable parseable) {
         Field previous = new MsgTypeField();
         for (;;) {
             b.mark();
             Tag tag = parseTag(b, previous);
-            if (CheckSumField.TAG.equals(tag))
-                break;
-            if (tag.isUserDefined())
-                throw new InvalidTagNumberException("Invalid tag number: " + tag.value(), header.getMsgSeqNum());
-            Field field = msg.lookup(tag);
+            Field field = parseable.lookup(tag);
             if (field == null)
-                throw new InvalidTagException("Tag not defined for this message: " + tag.value(), header.getMsgSeqNum());
+                break;
             if (field.isParsed())
-                throw new TagMultipleTimesException(field.prettyName() + ": Tag multiple times", header.getMsgSeqNum());
+                throw new TagMultipleTimesException(field.prettyName() + ": Tag multiple times");
             String value = parseValue(b, field);
             field.parseValue(value);
             if (!field.isFormatValid())
-                throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format", header.getMsgSeqNum());
+                throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
             if (!field.isValueValid())
-                throw new InvalidValueException(field.prettyName() + ": Invalid value", header.getMsgSeqNum());
+                throw new InvalidValueException(field.prettyName() + ": Invalid value");
             previous = field;
         }
         b.reset();
-        return msg;
     }
 
     private static void trailer(ByteBuffer b, MessageHeader header) {
         int pos = b.position() - header.getMsgTypePosition();
         if (pos != header.getBodyLength())
-            throw new InvalidBodyLengthException("Expected: " + header.getBodyLength() + ", but was: " + pos);
+            throw new InvalidBodyLengthException("BodyLength(9): Expected: " + header.getBodyLength() + ", but was: " + pos);
         int expected = checksum(b, b.position());
-        if (!CheckSumField.TAG.equals(parseTag(b, null)))
-            throw new AssertionError();
+        Tag tag = parseTag(b, null);
+        if (!CheckSumField.TAG.equals(tag))
+            throw new InvalidTagException("Tag not defined for this message: " + tag.value());
         int checksum = Integer.parseInt(parseValue(b, new CheckSumField()));
         if (checksum != expected)
-            throw new InvalidCheckSumException("Invalid checksum: Expected: " + expected + ", but was: " + checksum);
+            throw new InvalidCheckSumException("CheckSum(10): Expected: " + expected + ", but was: " + checksum);
     }
 
     private static int checksum(ByteBuffer b, int end) {
@@ -173,7 +174,10 @@ public class Parser {
         String s = result.toString();
         if (s.contains("" + Field.DELIMITER))
             throw new NonDataValueIncludesFieldDelimiterException(previous.prettyName() + ": Non-data value includes field delimiter (SOH character)");
-        return new Tag(Integer.parseInt(s));
+        Tag tag = new Tag(Integer.parseInt(s));
+        if (tag.isUserDefined())
+            throw new InvalidTagNumberException("Invalid tag number: " + tag.value());
+        return tag;
     }
 
     private static String parseValue(ByteBuffer b, Field field) {

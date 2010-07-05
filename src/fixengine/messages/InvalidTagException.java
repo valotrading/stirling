@@ -19,8 +19,8 @@ package fixengine.messages;
  * @author Pekka Enberg
  */
 public class InvalidTagException extends ParseException {
-    public InvalidTagException(String message, int msgSeqNum) {
-        super(message, msgSeqNum, SessionRejectReason.INVALID_TAG);
+    public InvalidTagException(String message) {
+        super(message, SessionRejectReason.INVALID_TAG);
     }
 
     private static final long serialVersionUID = 1L;

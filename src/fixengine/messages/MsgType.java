@@ -115,6 +115,6 @@ public enum MsgType {
             if (type.value.equals(value))
                 return type;
         }
-        return null;
+        throw new UnknownMsgTypeException("MsgType(35): Unknown message type: " + value);
     }
 }
