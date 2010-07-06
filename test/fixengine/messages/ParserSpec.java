@@ -292,6 +292,21 @@ public class ParserSpec extends Specification<String> {
         }
     }
 
+    public class OutOfOrderTag {
+        public String create() {
+            return raw = message("60", "0")
+                .field(MsgSeqNum, "1")
+                .field(TestReqID, "1000")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(CheckSum, "088")
+                .toString();
+        }
+
+        public void parse() {
+            expectInvalidMessage(SessionRejectReason.OUT_OF_ORDER_TAG, "SendingTime(52): Out of order tag");
+        }
+    }
+
     public class SOHInValue {
         public String create() {
             return raw = message("60", "0")
