@@ -33,20 +33,19 @@ public class MessageQueue {
     private int maxSeqNum;
 
     public void skip(Message message) {
-        advance(message);
+        skip(message.getMsgSeqNum());
     }
 
     public void enqueue(Message message) {
         queue.add(message);
-        advance(message);
+        skip(message.getMsgSeqNum());
     }
 
-    private void advance(Message message) {
-        int seqNum = message.getMsgSeqNum();
-        if (seqNum == sequence.peek()) {
+    public void skip(int msgSeqNum) {
+        if (msgSeqNum == sequence.peek()) {
             sequence.next();
         }
-        maxSeqNum = Math.max(seqNum, maxSeqNum);
+        maxSeqNum = Math.max(msgSeqNum, maxSeqNum);
     }
 
     public Message dequeue() {
