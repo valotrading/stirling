@@ -16,71 +16,62 @@
 package fixengine.messages;
 
 /**
- * @author Pekka Enberg 
+ * @author Pekka Enberg
  */
 public class DefaultMessageVisitor implements MessageVisitor {
-    @Override
-    public void visit(ExecutionReportMessage message) {
+    @Override public void visit(ExecutionReportMessage message) {
         defaultAction(message);
     }
 
-    @Override
-    public void visit(HeartbeatMessage message) {
+    @Override public void visit(HeartbeatMessage message) {
         defaultAction(message);
     }
 
-    @Override
-    public void visit(LogonMessage message) {
+    @Override public void visit(LogonMessage message) {
         defaultAction(message);
     }
 
-    @Override
-    public void visit(LogoutMessage message) {
+    @Override public void visit(LogoutMessage message) {
         defaultAction(message);
     }
 
-    @Override
-    public void visit(NewOrderSingleMessage message) {
+    @Override public void visit(NewOrderSingleMessage message) {
         defaultAction(message);
     }
 
-    @Override
-    public void visit(OrderCancelRequestMessage message) {
+    @Override public void visit(OrderCancelRequestMessage message) {
         defaultAction(message);
     }
 
-    @Override
-    public void visit(OrderCancelRejectMessage message) {
+    @Override public void visit(OrderCancelRejectMessage message) {
         defaultAction(message);
     }
 
-    @Override
-    public void visit(OrderModificationRequestMessage message) {
+    @Override public void visit(OrderModificationRequestMessage message) {
         defaultAction(message);
     }
 
-    @Override
-    public void visit(BusinessMessageRejectMessage message) {
+    @Override public void visit(BusinessMessageRejectMessage message) {
         defaultAction(message);
     }
 
-    @Override
-    public void visit(RejectMessage message) {
+    @Override public void visit(RejectMessage message) {
         defaultAction(message);
     }
 
-    @Override
-    public void visit(ResendRequestMessage message) {
+    @Override public void visit(ResendRequestMessage message) {
         defaultAction(message);
     }
 
-    @Override
-    public void visit(SequenceResetMessage message) {
+    @Override public void visit(SequenceResetMessage message) {
         defaultAction(message);
     }
 
-    @Override
-    public void visit(TestRequestMessage message) {
+    @Override public void visit(TestRequestMessage message) {
+        defaultAction(message);
+    }
+
+    @Override public void visit(AllocationMessage message) {
         defaultAction(message);
     }
 

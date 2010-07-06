@@ -15,6 +15,8 @@
  */
 package fixengine.messages;
 
+import java.nio.ByteBuffer;
+
 import lang.Objects;
 
 import org.joda.time.DateTime;
@@ -172,6 +174,10 @@ public abstract class AbstractMessage extends AbstractFieldContainer implements 
     @Override
     public boolean hasOrigSendTimeAfterSendingTime() {
         return header.hasOrigSendTimeAfterSendingTime();
+    }
+
+    public void parse(ByteBuffer b) {
+        fields.parse(b);
     }
 
     public String format() {

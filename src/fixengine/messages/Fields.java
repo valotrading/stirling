@@ -20,8 +20,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import fixengine.tags.MsgType;
-
 /**
  * @author Pekka Enberg
  */
@@ -41,19 +39,23 @@ public class Fields implements Iterable<Field> {
     }
 
     public void parse(ByteBuffer b) {
-        for (;;) {
-            b.mark();
-            int tag = Tag.parseTag(b);
-            Field field = lookup(tag);
-            if (field == null)
-                break;
-            field.parse(b);
-            if (!field.isFormatValid())
-                throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
-            if (!field.isValueValid())
-                throw new InvalidValueException(field.prettyName() + ": Invalid value");
+        try {
+            for (;;) {
+                b.mark();
+                int tag = Tag.parseTag(b);
+                Field field = lookup(tag);
+                if (field == null) {
+                    break;
+                }
+                field.parse(b);
+                if (!field.isFormatValid())
+                    throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
+                if (!field.isValueValid())
+                    throw new InvalidValueException(field.prettyName() + ": Invalid value");
+            }
+        } finally {
+            b.reset();
         }
-        b.reset();
     }
 
     public String format() {
@@ -73,5 +75,9 @@ public class Fields implements Iterable<Field> {
 
     public void add(Tag<?> tag, Required required) {
         this.fields.put(tag.value(), tag.newField(required));
+    }
+
+    public void add(RepeatingGroup group) {
+        this.fields.put(group.countTag().value(), group);
     }
 }

@@ -71,7 +71,7 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
         parseHeadField(b, BodyLength.TAG);
         msgTypePosition = b.position();
         parseHeadField(b, MsgType.TAG);
-        super.parse(b);
+        fields.parse(b);
     }
 
     private void parseHeadField(ByteBuffer b, Tag<?> tag) {

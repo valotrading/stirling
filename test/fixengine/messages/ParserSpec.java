@@ -28,13 +28,6 @@ public class ParserSpec extends Specification<String> {
     private Parser.Callback callback = mock(Parser.Callback.class);
     private String raw;
 
-    // TODO:
-
-    // - Header field in body
-    // - Too few entries in repeating group
-    // - Too many entries in repeating group
-    // - Missing required field
-
     public class FullMessage {
         public String create() {
             return raw = message("57", "0")
@@ -408,6 +401,42 @@ public class ParserSpec extends Specification<String> {
         }
     }
 
+    public class RepeatingGroup {
+        public String create() {
+            return raw = message("183", "J")
+                .field(MsgSeqNum, "1")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(AllocID, "12807331319411")
+                .field(AllocTransType, "0")
+                .field(NoOrders, "1")
+                .field(ClOrdID, "12807331319412")
+                .field(Side, "2") 
+                .field(Symbol, "GOOG")
+                .field(Shares, "1000.00")
+                .field(AvgPx, "370.00")
+                .field(TradeDate, "20011004")
+                .field(NoAllocs, "2")
+                .field(AllocAccount, "1234")
+                .field(AllocShares, "900.00")
+                .field(AllocAccount, "2345")
+                .field(AllocShares, "100.00")
+                .field(CheckSum, "119")
+                .toString();
+        }
+
+        public void parse() {
+            checking(new Expectations() {{
+                one(callback).message(with(new MessageMatcher(raw)));
+            }});
+            Parser.parse(silvertip.Message.fromString(raw), callback);
+        }
+    }
+
+    // TODO:
+
+    // - Too few entries in repeating group
+    // - Too many entries in repeating group
+
     static FixMessageBuilder message() {
         return new FixMessageBuilder();
     }
@@ -468,15 +497,32 @@ public class ParserSpec extends Specification<String> {
       }
     }
 
-    private static final int BeginString   = 8;
-    private static final int BodyLength    = 9;
-    private static final int CheckSum      = 10;
-    private static final int EncryptMethod = 98;
-    private static final int HeartBtInt    = 108;
-    private static final int MsgSeqNum     = 34;
-    private static final int MsgType       = 35;
-    private static final int SenderCompID  = 49;
-    private static final int SendingTime   = 52;
-    private static final int TargetCompID  = 56;
-    private static final int TestReqID     = 112;
+    // Header and trailer tags
+    private static final int BeginString    = 8;
+    private static final int BodyLength     = 9;
+    private static final int CheckSum       = 10;
+    private static final int EncryptMethod  = 98;
+    private static final int HeartBtInt     = 108;
+    private static final int MsgSeqNum      = 34;
+    private static final int MsgType        = 35;
+    private static final int SenderCompID   = 49;
+    private static final int SendingTime    = 52;
+    private static final int TargetCompID   = 56;
+
+    // Heartbeat message
+    private static final int TestReqID      = 112;
+
+    // Allocation message
+    private static final int AllocAccount   = 79;
+    private static final int AllocID        = 70;
+    private static final int AllocShares    = 80;
+    private static final int AllocTransType = 71;
+    private static final int AvgPx          = 6;
+    private static final int ClOrdID        = 11;
+    private static final int NoAllocs       = 78;
+    private static final int NoOrders       = 73;
+    private static final int Shares         = 53;
+    private static final int Side           = 54;
+    private static final int Symbol         = 55;
+    private static final int TradeDate      = 75;
 }

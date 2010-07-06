@@ -85,6 +85,12 @@ public enum MsgTypeValue {
         @Override public Message newMessage(MessageHeader header) {
             return new BusinessMessageRejectMessage(header);
         }
+    },
+    ALLOCATION_INSTRUCTION("J") {
+        @Override
+        public Message newMessage(MessageHeader header) {
+            return new AllocationMessage(header);
+        }
     };
 
     private String value;
