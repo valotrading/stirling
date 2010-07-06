@@ -56,6 +56,7 @@ public class Session {
 
   private long testReqId;
   private boolean initiatedLogout;
+  private boolean available = true;
 
   private long prevTxTimeMsec = System.currentTimeMillis();
   private long prevRxTimeMsec = System.currentTimeMillis();
@@ -167,6 +168,10 @@ public class Session {
     store.save(this);
   }
 
+  public void setAvailable(boolean available) {
+    this.available = available;
+  }
+
   public void keepAlive(Connection conn) {
     long curTimeMsec = System.currentTimeMillis();
 
@@ -238,6 +243,17 @@ public class Session {
   private boolean validate(final Connection conn, Message message) {
     List<Validator<Message>> validators = new ArrayList<Validator<Message>>() {
       {
+        add(new AbstractMessageValidator() {
+          @Override
+          protected boolean isValid(Message message) {
+            return available;
+          }
+
+          @Override
+          protected void error(Message message) {
+            businessReject(conn, message.getMsgType(), message.getMsgSeqNum(), BusinessRejectReason.APPLICATION_NOT_AVAILABLE, "Application not available");
+          }
+        });
         add(new AbstractMessageValidator() {
           @Override
           protected boolean isValid(Message message) {

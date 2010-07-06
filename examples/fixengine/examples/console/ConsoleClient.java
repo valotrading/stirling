@@ -120,5 +120,7 @@ public class ConsoleClient {
     commands.put("logout", new Logout());
     commands.put("reset", new Reset());
     commands.put("storeseq", new StoreSequence());
+    commands.put("available", new Available());
+    commands.put("unavailable", new Unavailable());
   }
 }
