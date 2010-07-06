@@ -19,7 +19,7 @@ package fixengine.messages;
  * @author Pekka Enberg 
  */
 public class SequenceResetMessage extends AbstractMessage {
-    private GapFillFlagField gapFillFlag = new GapFillFlagField();
+    private GapFillFlagField gapFillFlag = new GapFillFlagField(Required.NO);
     private NewSeqNoField newSeqNo = new NewSeqNoField();
 
     public SequenceResetMessage() {

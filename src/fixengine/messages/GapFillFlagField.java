@@ -21,7 +21,7 @@ package fixengine.messages;
 public class GapFillFlagField extends BooleanField {
     private static final Tag TAG = new Tag(123);
 
-    public GapFillFlagField() {
-        super(TAG);
+    public GapFillFlagField(Required required) {
+        super(TAG, null, required);
     }
 }
