@@ -228,7 +228,7 @@ public class ParserSpec extends Specification<String> {
 
     public class InvalidMsgType {
         public String create() {
-            return raw = message("57", "XX")
+            return raw = message("57", "ZZ")
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(CheckSum, "206")
@@ -237,7 +237,24 @@ public class ParserSpec extends Specification<String> {
 
         public void parse() {
             checking(new Expectations() {{
-                one(callback).unknownMsgType("XX", 1);
+                one(callback).invalidMsgType("ZZ", 1);
+            }});
+            Parser.parse(silvertip.Message.fromString(raw), callback);
+        }
+    }
+
+    public class UnsupportedMsgType {
+        public String create() {
+            return raw = message("57", "P")
+                .field(MsgSeqNum, "1")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(CheckSum, "206")
+                .toString();
+        }
+
+        public void parse() {
+            checking(new Expectations() {{
+                one(callback).unsupportedMsgType("P", 1);
             }});
             Parser.parse(silvertip.Message.fromString(raw), callback);
         }

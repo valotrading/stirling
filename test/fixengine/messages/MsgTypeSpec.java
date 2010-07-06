@@ -15,6 +15,7 @@
  */
 package fixengine.messages;
 
+import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
@@ -24,58 +25,55 @@ import org.junit.runner.RunWith;
  * @author Pekka Enberg 
  */
 @RunWith(JDaveRunner.class)
-public class UnknownMessageSpec extends Specification<UnknownMessage> {
+public class MsgTypeSpec extends Specification<MsgType> {
     public class EmptyMsgType {
         public void isNotValid() {
-            specify(message("").hasValidMsgType(), must.equal(false));
+            specify(parse(""), must.raise(InvalidMsgTypeException.class));
         }
     }
 
     public class ValidOneCharacterMsgTypes {
         public void areValid() {
-            specify(message("0").hasValidMsgType(), must.equal(true));
-            specify(message("9").hasValidMsgType(), must.equal(true));
-
-            specify(message("A").hasValidMsgType(), must.equal(true));
-            specify(message("Z").hasValidMsgType(), must.equal(true));
-
-            specify(message("a").hasValidMsgType(), must.equal(true));
-            specify(message("z").hasValidMsgType(), must.equal(true));
+            specify(MsgType.parse("0"), must.equal(MsgType.HEARTBEAT));
+            specify(MsgType.parse("9"), must.equal(MsgType.ORDER_CANCEL_REJECT));
         }
     }
     
     public class InvalidOneCharacterMsgTypes {
         public void areNotValid() {
-            specify(message("!").hasValidMsgType(), must.equal(false));
+            specify(parse("!"), must.raise(InvalidMsgTypeException.class));
         }
     }
 
     public class ValidTwoCharacterMsgTypes {
         public void areValid() {
-            specify(message("AA").hasValidMsgType(), must.equal(true));
-            specify(message("AI").hasValidMsgType(), must.equal(true));
+            specify(parse("AA"), must.raise(UnsupportedMsgTypeException.class));
+            specify(parse("AI"), must.raise(UnsupportedMsgTypeException.class));
         }
     }
 
     public class InvalidTwoCharacterMsgTypes {
         public void areNotValid() {
-            specify(message("aa").hasValidMsgType(), must.equal(false));
-            specify(message("AJ").hasValidMsgType(), must.equal(false));
+            specify(parse("aa"), must.raise(InvalidMsgTypeException.class));
+            specify(parse("AJ"), must.raise(InvalidMsgTypeException.class));
 
-            specify(message("ZA").hasValidMsgType(), must.equal(false));
-            specify(message("ZZ").hasValidMsgType(), must.equal(false));
+            specify(parse("ZA"), must.raise(InvalidMsgTypeException.class));
+            specify(parse("ZZ"), must.raise(InvalidMsgTypeException.class));
         }
     }
 
     public class AnyThreeCodeMsgTypes {
         public void areNotValid() {
-            specify(message("AAA").hasValidMsgType(), must.equal(false));
+            specify(parse("AAA"), must.raise(InvalidMsgTypeException.class));
         }
     }
-
-    private UnknownMessage message(String msgType) {
-        MessageHeader header = new MessageHeader();
-        header.setMsgType(msgType);
-        return new UnknownMessage(header);
+    
+    Block parse(final String value) {
+        return new Block() {
+            @Override public void run() throws Throwable {
+                MsgType.parse(value);
+            }
+            
+        };
     }
 }

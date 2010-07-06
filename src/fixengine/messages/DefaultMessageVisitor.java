@@ -45,11 +45,6 @@ public class DefaultMessageVisitor implements MessageVisitor {
     }
 
     @Override
-    public void visit(UnknownMessage message) {
-        defaultAction(message);
-    }
-
-    @Override
     public void visit(OrderCancelRequestMessage message) {
         defaultAction(message);
     }

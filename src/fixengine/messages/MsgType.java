@@ -15,6 +15,8 @@
  */
 package fixengine.messages;
 
+import org.apache.commons.lang.CharUtils;
+
 /**
  * @author Pekka Enberg 
  */
@@ -111,10 +113,38 @@ public enum MsgType {
     }
 
     public static MsgType parse(String value) {
+        if (!isValid(value))
+            throw new InvalidMsgTypeException("MsgType(35): Invalid message type: " + value);
         for (MsgType type : MsgType.values()) {
             if (type.value.equals(value))
                 return type;
         }
-        throw new UnknownMsgTypeException("MsgType(35): Unknown message type: " + value);
+        throw new UnsupportedMsgTypeException("MsgType(35): Unknown message type: " + value);
+    }
+
+    private static boolean isValid(String msgType) {
+        if (msgType.length() == 1) {
+            return isValidSingle(msgType);
+        } else if (msgType.length() == 2) {
+            return isValidWide(msgType);
+        }
+        return false;
+    }
+
+    private static boolean isValidSingle(String msgType) {
+        char first = msgType.charAt(0);
+        return CharUtils.isAsciiAlphanumeric(first);
+    }
+
+    private static boolean isValidWide(String msgType) {
+        char first = msgType.charAt(0);
+        if (first != 'A')
+            return false;
+
+        char second = msgType.charAt(1);
+        if (!CharUtils.isAsciiAlphaUpper(second))
+            return false;
+
+        return second >= 'A' && second <= 'I';
     }
 }

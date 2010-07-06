@@ -21,8 +21,8 @@ public class Parser {
     public interface Callback {
         void message(Message m);
         void invalidMessage(int msgSeqNum, SessionRejectReason reason, String text);
-        void unknownMsgType(String msgType, int msgSeqNum);
-        void invalidMessageType(String msgType, int msgSeqNum);
+        void unsupportedMsgType(String msgType, int msgSeqNum);
+        void invalidMsgType(String msgType, int msgSeqNum);
         void garbledMessage(String text);
     }
 
@@ -44,8 +44,10 @@ public class Parser {
             Message msg = body(b, header);
             trailer(b, header);
             callback.message(msg);
-        } catch (UnknownMsgTypeException e) {
-            callback.unknownMsgType(header.getMsgType(), header.getMsgSeqNum());
+        } catch (InvalidMsgTypeException e) {
+            callback.invalidMsgType(header.getMsgType(), header.getMsgSeqNum());
+        } catch (UnsupportedMsgTypeException e) {
+            callback.unsupportedMsgType(header.getMsgType(), header.getMsgSeqNum());
         } catch (GarbledMessageException e) {
             callback.garbledMessage(e.getMessage());
         } catch (ParseException e) {

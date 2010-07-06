@@ -18,8 +18,8 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg
  */
-public class UnknownMsgTypeException extends ParseException {
-    public UnknownMsgTypeException(String message) {
+public class UnsupportedMsgTypeException extends ParseException {
+    public UnsupportedMsgTypeException(String message) {
         super(message);
     }
 

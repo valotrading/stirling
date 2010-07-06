@@ -125,12 +125,12 @@ public class Session {
           sessionReject(conn, msgSeqNum, reason, text);
         }
 
-        @Override public void unknownMsgType(String msgType, int msgSeqNum) {
+        @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {
           queue.skip(msgSeqNum);
           businessReject(conn, msgType, msgSeqNum, BusinessRejectReason.UNKNOWN_MESSAGE_TYPE, "MsgType(35): Unknown message type: " + msgType);
         }
 
-        @Override public void invalidMessageType(String msgType, int msgSeqNum) {
+        @Override public void invalidMsgType(String msgType, int msgSeqNum) {
           queue.skip(msgSeqNum);
           sessionReject(conn, msgSeqNum, SessionRejectReason.INVALID_MSG_TYPE, "MsgType(35): Invalid message type: " + msgType);
         }
