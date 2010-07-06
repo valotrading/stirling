@@ -161,13 +161,13 @@ public class ParserSpec extends Specification<String> {
                     .field(MsgSeqNum, "1")
                     .field(SendingTime, "20100701-12:09:40")
                     .field(TestReqID, "1")
-                    .field(CheckSum, "33")
+                    .field(CheckSum, "033")
                     .toString();
         }
 
         public void parse() {
             checking(new Expectations() {{
-                one(callback).invalidBeginString("BeginString(8): 'FIX.FIX' is not supported");
+                one(callback).message(with(new MessageMatcher(raw)));
             }});
             Parser.parse(silvertip.Message.fromString(raw), callback);
         }

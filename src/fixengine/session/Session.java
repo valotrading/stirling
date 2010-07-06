@@ -138,10 +138,6 @@ public class Session {
         @Override public void garbledMessage(String text) {
           /* Ignore the message. */
         }
-
-        @Override public void invalidBeginString(String text) {
-          terminate(conn, null, text);
-        }
       });
     } finally {
       store.save(this);

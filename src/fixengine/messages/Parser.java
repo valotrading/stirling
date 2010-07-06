@@ -17,8 +17,6 @@ package fixengine.messages;
 
 import java.nio.ByteBuffer;
 
-import fixengine.Version;
-
 public class Parser {
     public interface Callback {
         void message(Message m);
@@ -26,7 +24,6 @@ public class Parser {
         void unknownMsgType(String msgType, int msgSeqNum);
         void invalidMessageType(String msgType, int msgSeqNum);
         void garbledMessage(String text);
-        void invalidBeginString(String text);
     }
 
     public static void parse(silvertip.Message m, Callback callback) {
@@ -37,8 +34,6 @@ public class Parser {
         MessageHeader header = null;
         try {
             header = parseHeaderBegin(b);
-        } catch (InvalidBeginStringException e) {
-            callback.invalidBeginString(e.getMessage());
         } catch (GarbledMessageException e) {
             callback.garbledMessage(e.getMessage());
         }
@@ -76,10 +71,7 @@ public class Parser {
     private static String beginString(ByteBuffer b) {
         if (!BeginStringField.TAG.equals(parseTag(b, new BeginStringField())))
             throw new BeginStringMissingException("BeginString(8): is missing");
-        String beginString = parseValue(b, new BeginStringField());
-        if (!Version.supports(beginString))
-            throw new InvalidBeginStringException("BeginString(8): '" + beginString + "' is not supported");
-        return beginString;
+        return parseValue(b, new BeginStringField());
     }
 
     private static int bodyLength(ByteBuffer b) {
