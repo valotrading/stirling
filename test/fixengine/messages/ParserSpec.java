@@ -281,8 +281,8 @@ public class ParserSpec extends Specification<String> {
             return raw = message("57", "0")
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
-                .field(TestReqID, "1")
                 .field(88, "0")
+                .field(TestReqID, "1")
                 .field(CheckSum, "206")
                 .toString();
         }

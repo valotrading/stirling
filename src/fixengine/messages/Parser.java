@@ -138,12 +138,12 @@ public class Parser {
 
     private static void trailer(ByteBuffer b, MessageHeader header) {
         int pos = b.position() - header.getMsgTypePosition();
-        if (pos != header.getBodyLength())
-            throw new InvalidBodyLengthException("BodyLength(9): Expected: " + header.getBodyLength() + ", but was: " + pos);
         int expected = checksum(b, b.position());
         Tag tag = parseTag(b, null);
         if (!CheckSumField.TAG.equals(tag))
             throw new InvalidTagException("Tag not defined for this message: " + tag.value());
+        if (pos != header.getBodyLength())
+            throw new InvalidBodyLengthException("BodyLength(9): Expected: " + header.getBodyLength() + ", but was: " + pos);
         int checksum = Integer.parseInt(parseValue(b, new CheckSumField()));
         if (checksum != expected)
             throw new InvalidCheckSumException("CheckSum(10): Expected: " + expected + ", but was: " + checksum);
