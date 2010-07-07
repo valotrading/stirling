@@ -112,8 +112,7 @@ public class Parser {
     }
 
     private static Message body(ByteBuffer b, MessageHeader header) {
-        Message msg = MsgType.parse(header.getMsgType()).newMessage(header);
-        msg.setBeginString(header.getBeginString());
+        Message msg = header.newMessage();
         parseFields(b, msg);
         return msg;
     }
