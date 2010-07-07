@@ -169,6 +169,10 @@ public abstract class AbstractMessage implements Message {
         fields.parse(b);
     }
 
+    @Override public void validate() {
+        fields.validate();
+    }
+
     @Override
     public List<Field> getFields() {
         return fields.getFields();

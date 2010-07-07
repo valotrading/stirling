@@ -55,11 +55,11 @@ public class ParserSpec extends Specification<String> {
 
     public class EmptyTag {
         public String create() {
-            return raw = message("57", "0")
+            return raw = message("56", "0")
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(TestReqID, "")
-                .field(CheckSum, "206")
+                .field(CheckSum, "156")
                 .toString();
         }
 
@@ -72,14 +72,14 @@ public class ParserSpec extends Specification<String> {
         public String create() {
             return raw = message()
                 .field(BeginString, "FIX.4.2")
-                .field(BodyLength, "51")
+                .field(BodyLength, "50")
                 .field(MsgType, "0")
                 .field(SenderCompID, "")
                 .field(TargetCompID, "Target")
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(TestReqID, "")
-                .field(CheckSum, "206")
+                .field(CheckSum, "53")
                 .toString();
         }
 

@@ -53,9 +53,10 @@ public class Fields {
             if (field.isParsed())
                 throw new TagMultipleTimesException(field.prettyName() + ": Tag multiple times");
             String value = parseValue(b, field);
-            if (value.isEmpty())
-                throw new EmptyTagException(field.prettyName() + ": Empty tag");
-            field.parseValue(value);
+            if (!value.isEmpty())
+                field.parseValue(value);
+            else
+                field.parseValue(null);
             if (!field.isFormatValid())
                 throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
             if (!field.isValueValid())
@@ -90,8 +91,6 @@ public class Fields {
                 break;
             result.append((char) ch);
         }
-        if (result.length() == 0)
-            throw new EmptyTagException(field.prettyName() + ": Empty tag");
         return result.toString();
     }
 
@@ -117,5 +116,12 @@ public class Fields {
             checksum += field.checksum();
         }
         return checksum;
+    }
+
+    public void validate() {
+        for (Field field : fields) {
+            if (field.isEmpty())
+                throw new EmptyTagException(field.prettyName() + ": Empty tag");
+        }
     }
 }

@@ -36,11 +36,11 @@ public class Parser {
             header = parseHeaderBegin(b);
             if (header == null)
                 return;
-            int msgSeqNum = msgSeqNum(b, header);
-            header.setMsgSeqNum(msgSeqNum);
             header.parse(b);
+            header.validate();
             Message msg = header.newMessage();
             msg.parse(b);
+            msg.validate();
             trailer(b, header);
             callback.message(msg);
         } catch (InvalidMsgTypeException e) {
@@ -90,26 +90,6 @@ public class Parser {
         if (!MsgTypeField.TAG.equals(parseTag(b, new BodyLengthField())))
             throw new MsgTypeMissingException("MsgType(35): is missing");
         return parseValue(b, new MsgTypeField());
-    }
-
-    private static int msgSeqNum(ByteBuffer b, MessageHeader header) {
-        int result = -1;
-        b.mark();
-        Field previous = new MsgTypeField();
-        for (;;) {
-            Tag tag = parseTag(b, previous);
-            Field field = header.lookup(tag);
-            if (field == null)
-                break;
-            String value = parseValue(b, field);
-            if (MsgSeqNumField.TAG.equals(tag)) {
-                result = Integer.parseInt(value);
-                break;
-            }
-            previous = field;
-        }
-        b.reset();
-        return result;
     }
 
     private static void trailer(ByteBuffer b, MessageHeader header) {

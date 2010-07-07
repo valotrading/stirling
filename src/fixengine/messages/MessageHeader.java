@@ -223,4 +223,8 @@ public class MessageHeader implements Parseable {
         }
         return type.newMessage(this);
     }
+
+    public void validate() {
+        fields.validate();
+    }
 }

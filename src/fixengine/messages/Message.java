@@ -52,4 +52,5 @@ public interface Message extends Parseable {
     boolean isTooLowSeqNum(int seqNo);
     boolean isOrigSendingTimeMissing();
     List<Field> getFields();
+    void validate();
 }
