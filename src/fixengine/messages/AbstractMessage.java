@@ -24,6 +24,7 @@ import org.joda.time.DateTime;
 
 import fixengine.Config;
 import fixengine.tags.BodyLength;
+import fixengine.tags.CheckSum;
 
 /**
  * @author Pekka Enberg
@@ -186,7 +187,7 @@ public abstract class AbstractMessage implements Message {
         buffer.append(fields.format());
         buffer.prefix(new IntegerField(BodyLength.TAG, buffer.length()));
         buffer.prefix(header.getBeginStringField());
-        buffer.append(new CheckSumField(buffer.checksum()));
+        buffer.append(new StringField(CheckSum.TAG, CheckSum.format(buffer.checksum())));
         return buffer.toString();
     }
 

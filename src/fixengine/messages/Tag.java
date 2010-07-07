@@ -57,10 +57,10 @@ public class Tag<T extends Field> {
         return value;
     }
 
-    public T parse(ByteBuffer b, Tag<?> previous) {
+    public T parse(ByteBuffer b, Tag<?> previous) throws UnexpectedTagException {
         Tag tag = parseTag(b, previous);
         if (value != tag.value)
-            throw new BeginStringMissingException(prettyName() + ": is missing");
+            throw new UnexpectedTagException(tag);
         T field = Classes.newInstance(type, tag);
         String value = parseValue(b, field);
         if (!value.isEmpty())

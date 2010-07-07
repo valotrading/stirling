@@ -13,21 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.messages;
+package fixengine.tags;
 
 import lang.Integers;
+import fixengine.messages.StringField;
+import fixengine.messages.Tag;
 
 /**
  * @author Pekka Enberg 
  */
-public class CheckSumField extends StringField {
-    public static final Tag TAG = new Tag(10);
+public class CheckSum extends Tag<StringField> {
+    public static final CheckSum TAG = new CheckSum();
 
-    public CheckSumField() {
-        this(0);
-    }
-
-    public CheckSumField(int checksum) {
-        super(TAG, Integers.zfill(checksum, 3));
+    public CheckSum() { super(10, StringField.class); }
+    
+    public static String format(int checksum) {
+        return Integers.zfill(checksum, 3);
     }
 }
