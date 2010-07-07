@@ -34,12 +34,10 @@ public class Parser {
         MessageHeader header = null;
         try {
             header = parseHeaderBegin(b);
-        } catch (GarbledMessageException e) {
-            callback.garbledMessage(e.getMessage());
-        }
-        if (header == null)
-            return;
-        try {
+            if (header == null)
+                return;
+            int msgSeqNum = msgSeqNum(b, header);
+            header.setMsgSeqNum(msgSeqNum);
             parseFields(b, header);
             Message msg = body(b, header);
             trailer(b, header);
@@ -61,11 +59,9 @@ public class Parser {
         int bodyLength = bodyLength(b);
         int msgTypePosition = b.position();
         String msgTypeValue = msgType(b);
-        int msgSeqNum = msgSeqNum(b, header);
         header.setBeginString(beginString);
         header.setBodyLength(bodyLength);
         header.setMsgType(msgTypeValue);
-        header.setMsgSeqNum(msgSeqNum);
         header.setMsgTypePosition(msgTypePosition);
         return header;
     }
@@ -79,7 +75,14 @@ public class Parser {
     private static int bodyLength(ByteBuffer b) {
         if (!BodyLengthField.TAG.equals(parseTag(b, new BeginStringField())))
             throw new BodyLengthMissingException("BodyLength(9): is missing");
-        return Integer.parseInt(parseValue(b, new BodyLengthField()));
+        String value = parseValue(b, new BodyLengthField());
+        if (value.isEmpty())
+            throw new BodyLengthMissingException("BodyLength(9): Empty tag");
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            throw new BodyLengthMissingException("BodyLength(9): Invalid value format");
+        }
     }
 
     private static String msgType(ByteBuffer b) {
@@ -126,6 +129,8 @@ public class Parser {
             if (field.isParsed())
                 throw new TagMultipleTimesException(field.prettyName() + ": Tag multiple times");
             String value = parseValue(b, field);
+            if (value.length() == 0)
+                throw new EmptyTagException(field.prettyName() + ": Empty tag");
             field.parseValue(value);
             if (!field.isFormatValid())
                 throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
@@ -186,8 +191,6 @@ public class Parser {
                 break;
             result.append((char) ch);
         }
-        if (result.length() == 0)
-            throw new EmptyTagException(field.prettyName() + ": Empty tag");
         return result.toString();
     }
 }

@@ -66,7 +66,26 @@ public class ParserSpec extends Specification<String> {
         public void parse() {
             expectInvalidMessage(SessionRejectReason.EMPTY_TAG, "TestReqId(112): Empty tag");
         }
+    }
 
+    public class EmptyTagBeforeMsgSeqNum {
+        public String create() {
+            return raw = message()
+                .field(BeginString, "FIX.4.2")
+                .field(BodyLength, "51")
+                .field(MsgType, "0")
+                .field(SenderCompID, "")
+                .field(TargetCompID, "Target")
+                .field(MsgSeqNum, "1")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(TestReqID, "")
+                .field(CheckSum, "206")
+                .toString();
+        }
+
+        public void parse() {
+            expectInvalidMessage(SessionRejectReason.EMPTY_TAG, "SenderCompId(49): Empty tag");
+        }
     }
 
     public class InvalidValueFormat {
@@ -173,6 +192,29 @@ public class ParserSpec extends Specification<String> {
         }
     }
 
+    public class EmptyBeginString {
+        public String create() {
+            return raw = message()
+                    .field(BeginString, "")
+                    .field(BodyLength, "57")
+                    .field(MsgType, "0")
+                    .field(SenderCompID, "Sender")
+                    .field(TargetCompID, "Target")
+                    .field(MsgSeqNum, "1")
+                    .field(SendingTime, "20100701-12:09:40")
+                    .field(TestReqID, "1")
+                    .field(CheckSum, "037")
+                    .toString();
+        }
+
+        public void parse() {
+            checking(new Expectations() {{
+                one(callback).message(with(new MessageMatcher(raw)));
+            }});
+            Parser.parse(silvertip.Message.fromString(raw), callback);
+        }
+    }
+
     public class BodyLengthMissing {
         public String create() {
             return raw = message()
@@ -189,6 +231,36 @@ public class ParserSpec extends Specification<String> {
 
         public void parse() {
             expectGarbledMessage("BodyLength(9): is missing");
+        }
+    }
+
+    public class EmptyBodyLength {
+        public String create() {
+            return raw = message("", "0")
+                .field(MsgSeqNum, "1")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(TestReqID, "1")
+                .field(CheckSum, "206")
+                .toString();
+        }
+
+        public void parse() {
+            expectGarbledMessage("BodyLength(9): Empty tag");
+        }
+    }
+
+    public class InvalidFormatBodyLength {
+        public String create() {
+            return raw = message("XX", "0")
+                .field(MsgSeqNum, "1")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(TestReqID, "1")
+                .field(CheckSum, "206")
+                .toString();
+        }
+
+        public void parse() {
+            expectGarbledMessage("BodyLength(9): Invalid value format");
         }
     }
 
