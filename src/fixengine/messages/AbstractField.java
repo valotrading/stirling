@@ -43,6 +43,9 @@ public abstract class AbstractField<T> implements Field {
     }
     
     private String parseFieldName() {
+        if (!tag.getClass().equals(Tag.class)) {
+            return tag.getClass().getSimpleName();
+        }
         String s = getClass().getSimpleName();
         if (s.length() < 5) {
             return s;

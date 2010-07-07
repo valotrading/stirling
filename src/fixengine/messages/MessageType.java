@@ -18,91 +18,78 @@ package fixengine.messages;
 import org.apache.commons.lang.CharUtils;
 
 /**
- * @author Pekka Enberg 
+ * @author Pekka Enberg
  */
-public enum MsgType {
+public enum MessageType {
     HEARTBEAT("0") {
-        @Override
-        public Message newMessage(MessageHeader header) {
+        @Override public Message newMessage(MessageHeader header) {
             return new HeartbeatMessage(header);
         }
     },
     TEST_REQUEST("1") {
-        @Override
-        public Message newMessage(MessageHeader header) {
+        @Override public Message newMessage(MessageHeader header) {
             return new TestRequestMessage(header);
         }
     },
     RESEND_REQUEST("2") {
-        @Override
-        public Message newMessage(MessageHeader header) {
+        @Override public Message newMessage(MessageHeader header) {
             return new ResendRequestMessage(header);
         }
     },
     REJECT("3") {
-        @Override
-        public Message newMessage(MessageHeader header) {
+        @Override public Message newMessage(MessageHeader header) {
             return new RejectMessage(header);
         }
     },
     SEQUENCE_RESET("4") {
-        @Override
-        public Message newMessage(MessageHeader header) {
+        @Override public Message newMessage(MessageHeader header) {
             return new SequenceResetMessage(header);
         }
     },
     LOGOUT("5") {
-        @Override
-        public Message newMessage(MessageHeader header) {
+        @Override public Message newMessage(MessageHeader header) {
             return new LogoutMessage(header);
         }
     },
     EXECUTION_REPORT("8") {
-        @Override
-        public Message newMessage(MessageHeader header) {
+        @Override public Message newMessage(MessageHeader header) {
             return new ExecutionReportMessage(header);
         }
     },
     ORDER_CANCEL_REJECT("9") {
-        @Override
-        public Message newMessage(MessageHeader header) {
+        @Override public Message newMessage(MessageHeader header) {
             return new OrderCancelRejectMessage(header);
         }
     },
     LOGON("A") {
-        @Override
-        public Message newMessage(MessageHeader header) {
+        @Override public Message newMessage(MessageHeader header) {
             return new LogonMessage(header);
         }
     },
     NEW_ORDER_SINGLE("D") {
-        @Override
-        public Message newMessage(MessageHeader header) {
+        @Override public Message newMessage(MessageHeader header) {
             return new NewOrderSingleMessage(header);
         }
     },
     ORDER_CANCEL_REQUEST("F") {
-        @Override
-        public Message newMessage(MessageHeader header) {
+        @Override public Message newMessage(MessageHeader header) {
             return new OrderCancelRequestMessage(header);
         }
     },
     ORDER_MODIFICATION_REQUEST("G") {
-        @Override
-        public Message newMessage(MessageHeader header) {
+        @Override public Message newMessage(MessageHeader header) {
             return new OrderModificationRequestMessage(header);
         }
     },
     BUSINESS_MESSAGE_REJECT("j") {
-        @Override
-        public Message newMessage(MessageHeader header) {
+        @Override public Message newMessage(MessageHeader header) {
             return new BusinessMessageRejectMessage(header);
         }
     };
 
     private String value;
-    
-    MsgType(String value) {
+
+    MessageType(String value) {
         this.value = value;
     }
 
@@ -112,10 +99,10 @@ public enum MsgType {
         return value;
     }
 
-    public static MsgType parse(String value) {
+    public static MessageType parse(String value) {
         if (!isValid(value))
             throw new InvalidMsgTypeException("MsgType(35): Invalid message type: " + value);
-        for (MsgType type : MsgType.values()) {
+        for (MessageType type : MessageType.values()) {
             if (type.value.equals(value))
                 return type;
         }

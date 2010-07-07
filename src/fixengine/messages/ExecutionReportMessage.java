@@ -48,7 +48,7 @@ public class ExecutionReportMessage extends AbstractMessage {
     private final SideField side = new SideField();
 
     public ExecutionReportMessage() {
-        this(new MessageHeader(MsgType.EXECUTION_REPORT));
+        this(new MessageHeader(MessageType.EXECUTION_REPORT));
     }
 
     public ExecutionReportMessage(MessageHeader header) {

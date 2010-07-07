@@ -36,7 +36,7 @@ public class NewOrderSingleMessage extends AbstractMessage implements RequestMes
     private final SideField side = new SideField();
 
     public NewOrderSingleMessage() {
-        this(new MessageHeader(MsgType.NEW_ORDER_SINGLE));
+        this(new MessageHeader(MessageType.NEW_ORDER_SINGLE));
     }
 
     public NewOrderSingleMessage(MessageHeader header) {

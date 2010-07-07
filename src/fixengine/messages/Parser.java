@@ -17,6 +17,10 @@ package fixengine.messages;
 
 import java.nio.ByteBuffer;
 
+import fixengine.tags.BeginString;
+import fixengine.tags.BodyLength;
+import fixengine.tags.MsgType;
+
 public class Parser {
     public interface Callback {
         void message(Message m);
@@ -68,28 +72,24 @@ public class Parser {
     }
 
     private static String beginString(ByteBuffer b) {
-        if (!BeginStringField.TAG.equals(parseTag(b, new BeginStringField())))
-            throw new BeginStringMissingException("BeginString(8): is missing");
-        return parseValue(b, new BeginStringField());
+        StringField field = BeginString.TAG.parse(b, BeginString.TAG);
+        return field.getValue();
     }
 
     private static int bodyLength(ByteBuffer b) {
-        if (!BodyLengthField.TAG.equals(parseTag(b, new BeginStringField())))
-            throw new BodyLengthMissingException("BodyLength(9): is missing");
-        String value = parseValue(b, new BodyLengthField());
-        if (value.isEmpty())
-            throw new BodyLengthMissingException("BodyLength(9): Empty tag");
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
+        IntegerField field = BodyLength.TAG.parse(b, BeginString.TAG);
+        if (!field.isFormatValid())
             throw new BodyLengthMissingException("BodyLength(9): Invalid value format");
-        }
+        if (field.isEmpty())
+            throw new BodyLengthMissingException("BodyLength(9): Empty tag");
+        return field.getValue();
     }
 
     private static String msgType(ByteBuffer b) {
-        if (!MsgTypeField.TAG.equals(parseTag(b, new BodyLengthField())))
+        StringField field = MsgType.TAG.parse(b, BodyLength.TAG);
+        if (field.isEmpty())
             throw new MsgTypeMissingException("MsgType(35): is missing");
-        return parseValue(b, new MsgTypeField());
+        return field.getValue();
     }
 
     private static void trailer(ByteBuffer b, MessageHeader header) {

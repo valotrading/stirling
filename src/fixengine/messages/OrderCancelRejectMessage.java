@@ -28,7 +28,7 @@ public class OrderCancelRejectMessage extends AbstractMessage {
     private final ClOrdIdField clOrdId = new ClOrdIdField();
 
     public OrderCancelRejectMessage() {
-        this(new MessageHeader(MsgType.ORDER_CANCEL_REJECT));
+        this(new MessageHeader(MessageType.ORDER_CANCEL_REJECT));
     }
 
     public OrderCancelRejectMessage(MessageHeader header) {

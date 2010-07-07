@@ -23,7 +23,7 @@ public class ResendRequestMessage extends AbstractMessage {
     private final EndSeqNoField endSeqNo = new EndSeqNoField();
 
     public ResendRequestMessage() {
-        this(new MessageHeader(MsgType.RESEND_REQUEST));
+        this(new MessageHeader(MessageType.RESEND_REQUEST));
     }
 
     public ResendRequestMessage(MessageHeader header) {

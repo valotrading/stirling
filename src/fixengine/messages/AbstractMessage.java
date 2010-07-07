@@ -23,6 +23,7 @@ import lang.Objects;
 import org.joda.time.DateTime;
 
 import fixengine.Config;
+import fixengine.tags.BodyLength;
 
 /**
  * @author Pekka Enberg
@@ -31,7 +32,7 @@ public abstract class AbstractMessage implements Message {
     private final Fields fields = new Fields();
     private final MessageHeader header;
 
-    protected AbstractMessage(MsgType msgType) {
+    protected AbstractMessage(MessageType msgType) {
         this(new MessageHeader(msgType));
     }
 
@@ -183,7 +184,7 @@ public abstract class AbstractMessage implements Message {
         buffer.append(header.getMsgTypeField());
         buffer.append(header.getFields().format());
         buffer.append(fields.format());
-        buffer.prefix(new BodyLengthField(buffer.length()));
+        buffer.prefix(new IntegerField(BodyLength.TAG, buffer.length()));
         buffer.prefix(header.getBeginStringField());
         buffer.append(new CheckSumField(buffer.checksum()));
         return buffer.toString();

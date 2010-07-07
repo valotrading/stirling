@@ -25,7 +25,7 @@ public class RejectMessage extends AbstractMessage {
     private final TextField text = new TextField(Required.NO);
 
     public RejectMessage() {
-        this(new MessageHeader(MsgType.REJECT));
+        this(new MessageHeader(MessageType.REJECT));
     }
 
     public RejectMessage(MessageHeader header) {

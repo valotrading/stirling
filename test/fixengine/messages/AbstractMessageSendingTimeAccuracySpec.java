@@ -30,7 +30,7 @@ public class AbstractMessageSendingTimeAccuracySpec extends Specification<Abstra
     private static final DateTime NOW = new DateTime(2);
     private static final DateTime IN_FUTURE = new DateTime(3);
 
-    private AbstractMessage message = new AbstractMessage(MsgType.LOGON) {
+    private AbstractMessage message = new AbstractMessage(MessageType.LOGON) {
         @Override
         public void apply(MessageVisitor visitor) {
         }

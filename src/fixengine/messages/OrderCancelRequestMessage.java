@@ -32,7 +32,7 @@ public class OrderCancelRequestMessage extends AbstractMessage implements Reques
     private final SideField side = new SideField();
 
     public OrderCancelRequestMessage() {
-        this(new MessageHeader(MsgType.ORDER_CANCEL_REQUEST));
+        this(new MessageHeader(MessageType.ORDER_CANCEL_REQUEST));
     }
 
     public OrderCancelRequestMessage(MessageHeader header) {

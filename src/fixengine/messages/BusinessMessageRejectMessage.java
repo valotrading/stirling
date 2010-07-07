@@ -25,7 +25,7 @@ public class BusinessMessageRejectMessage extends AbstractMessage {
     private final TextField text = new TextField(Required.NO);
 
     public BusinessMessageRejectMessage() {
-        this(new MessageHeader(MsgType.BUSINESS_MESSAGE_REJECT));
+        this(new MessageHeader(MessageType.BUSINESS_MESSAGE_REJECT));
     }
 
     public BusinessMessageRejectMessage(MessageHeader header) {

@@ -20,6 +20,9 @@ import java.nio.ByteBuffer;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
+import fixengine.tags.BeginString;
+import fixengine.tags.BodyLength;
+import fixengine.tags.MsgType;
 
 /**
  * @author Pekka Enberg 
@@ -32,13 +35,13 @@ public class MessageHeader implements Parseable {
     private final OrigSendingTimeField origSendingTime = new OrigSendingTimeField(Required.NO);
     private final PossDupFlagField possDupFlag = new PossDupFlagField(Required.NO);
     private final PossResendField possResend = new PossResendField(Required.NO);
+    private final StringField beginString = new StringField(BeginString.TAG);
+    private final IntegerField bodyLength = new IntegerField(BodyLength.TAG);
     private final SenderCompIdField senderCompId = new SenderCompIdField();
     private final TargetCompIdField targetCompId = new TargetCompIdField();
-    private final BeginStringField beginString = new BeginStringField();
     private final SendingTimeField sendingTime = new SendingTimeField();
-    private final BodyLengthField bodyLength = new BodyLengthField();
     private final MsgSeqNumField msgSeqNum = new MsgSeqNumField();
-    private final MsgTypeField msgType = new MsgTypeField();
+    private final StringField msgType = new StringField(MsgType.TAG);
     private final Fields fields = new Fields();
 
     private int msgTypePosition;
@@ -47,7 +50,7 @@ public class MessageHeader implements Parseable {
         this((String) null);
     }
 
-    public MessageHeader(MsgType msgType) {
+    public MessageHeader(MessageType msgType) {
         this(msgType.value());
     }
 
@@ -85,11 +88,11 @@ public class MessageHeader implements Parseable {
         this.msgType.setValue(msgType);
     }
 
-    public BeginStringField getBeginStringField() {
+    public StringField getBeginStringField() {
         return beginString;
     }
 
-    public MsgTypeField getMsgTypeField() {
+    public StringField getMsgTypeField() {
         return msgType;
     }
 
@@ -217,7 +220,7 @@ public class MessageHeader implements Parseable {
     }
 
     public Message newMessage() {
-        MsgType type = MsgType.parse(getMsgType());
+        MessageType type = MessageType.parse(getMsgType());
         if (type == null) {
             throw new RuntimeException();
         }

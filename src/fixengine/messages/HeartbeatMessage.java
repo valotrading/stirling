@@ -22,7 +22,7 @@ public class HeartbeatMessage extends AbstractMessage {
     private final TestReqIdField testReqId = new TestReqIdField(Required.NO);
 
     public HeartbeatMessage() {
-        this(new MessageHeader(MsgType.HEARTBEAT));
+        this(new MessageHeader(MessageType.HEARTBEAT));
     }
 
     public HeartbeatMessage(MessageHeader header) {

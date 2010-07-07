@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 the original author or authors.
+ * Copyright 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.messages;
+package fixengine.tags;
 
-/**
- * @author Pekka Enberg 
- */
-public class BodyLengthField extends IntegerField {
-    public static final Tag TAG = new Tag(9);
+import fixengine.messages.StringField;
+import fixengine.messages.Tag;
 
-    public BodyLengthField() {
-        super(TAG);
-    }
+public class BeginString extends Tag<StringField> {
+    public static final Tag<StringField> TAG = new BeginString();
 
-    public BodyLengthField(int len) {
-        super(TAG, len);
-    }
+    public BeginString() { super(8, StringField.class); }
 }

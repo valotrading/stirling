@@ -15,16 +15,26 @@
  */
 package fixengine.messages;
 
+import java.nio.ByteBuffer;
+
+import lang.Classes;
 import lang.Objects;
 
 /**
  * @author Pekka Enberg 
  */
-public class Tag {
+public class Tag<T extends Field> {
+    private Class<T> type;
     private int value;
 
     public Tag(int value) {
         this.value = value;
+    }
+
+    public Tag(int value, Class<T> type) {
+        this(value);
+
+        this.type = type;
     }
 
     public boolean isUserDefined() {
@@ -45,6 +55,51 @@ public class Tag {
 
     public int value() {
         return value;
+    }
+
+    public T parse(ByteBuffer b, Tag<?> previous) {
+        Tag tag = parseTag(b, previous);
+        if (value != tag.value)
+            throw new BeginStringMissingException(prettyName() + ": is missing");
+        T field = Classes.newInstance(type, tag);
+        String value = parseValue(b, field);
+        if (!value.isEmpty())
+            field.parseValue(value);
+        else
+            field.parseValue(null);
+        return field;
+    }
+
+    private static Tag parseTag(ByteBuffer b, Tag previous) {
+        StringBuilder result = new StringBuilder();
+        for (;;) {
+            int ch = b.get();
+            if (ch == '=')
+                break;
+            result.append((char) ch);
+        }
+        String s = result.toString();
+        if (s.contains("" + Field.DELIMITER))
+            throw new NonDataValueIncludesFieldDelimiterException(previous.prettyName() + ": Non-data value includes field delimiter (SOH character)");
+        Tag tag = new Tag(Integer.parseInt(s));
+        if (tag.isUserDefined())
+            throw new InvalidTagNumberException("Invalid tag number: " + tag.value());
+        return tag;
+    }
+
+    private static String parseValue(ByteBuffer b, Field field) {
+        StringBuilder result = new StringBuilder();
+        for (;;) {
+            int ch = b.get();
+            if (ch == Field.DELIMITER)
+                break;
+            result.append((char) ch);
+        }
+        return result.toString();
+    }
+
+    public String prettyName() {
+        return getClass().getSimpleName() + "(" + value + ")";
     }
 
     @Override

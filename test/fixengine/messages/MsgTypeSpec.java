@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
  * @author Pekka Enberg 
  */
 @RunWith(JDaveRunner.class)
-public class MsgTypeSpec extends Specification<MsgType> {
+public class MsgTypeSpec extends Specification<MessageType> {
     public class EmptyMsgType {
         public void isNotValid() {
             specify(parse(""), must.raise(InvalidMsgTypeException.class));
@@ -34,8 +34,8 @@ public class MsgTypeSpec extends Specification<MsgType> {
 
     public class ValidOneCharacterMsgTypes {
         public void areValid() {
-            specify(MsgType.parse("0"), must.equal(MsgType.HEARTBEAT));
-            specify(MsgType.parse("9"), must.equal(MsgType.ORDER_CANCEL_REJECT));
+            specify(MessageType.parse("0"), must.equal(MessageType.HEARTBEAT));
+            specify(MessageType.parse("9"), must.equal(MessageType.ORDER_CANCEL_REJECT));
         }
     }
     
@@ -71,7 +71,7 @@ public class MsgTypeSpec extends Specification<MsgType> {
     Block parse(final String value) {
         return new Block() {
             @Override public void run() throws Throwable {
-                MsgType.parse(value);
+                MessageType.parse(value);
             }
             
         };

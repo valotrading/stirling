@@ -38,7 +38,7 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
     private final SideField side = new SideField();
 
     public OrderModificationRequestMessage() {
-        this(new MessageHeader(MsgType.ORDER_MODIFICATION_REQUEST));
+        this(new MessageHeader(MessageType.ORDER_MODIFICATION_REQUEST));
     }
 
     public OrderModificationRequestMessage(MessageHeader header) {

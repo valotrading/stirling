@@ -21,10 +21,7 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 
-import fixengine.messages.MessageBuffer;
-import fixengine.messages.MsgType;
-import fixengine.messages.MsgTypeField;
-import fixengine.messages.TargetCompIdField;
+import fixengine.tags.MsgType;
 
 /**
  * @author Pekka Enberg 
@@ -45,7 +42,7 @@ public class MessageBufferSpec extends Specification<MessageBuffer> {
 
     public class BufferThatHasAppendedTag {
         public MessageBuffer create() {
-            buffer.append(new MsgTypeField(MsgType.LOGON.value()));
+            buffer.append(new StringField(MsgType.TAG, MessageType.LOGON.value()));
             return buffer;
         }
 

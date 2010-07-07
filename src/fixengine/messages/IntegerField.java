@@ -19,7 +19,7 @@ package fixengine.messages;
  * @author Pekka Enberg 
  */
 public class IntegerField extends AbstractField<Integer> {
-    protected IntegerField(Tag tag) {
+    public IntegerField(Tag tag) {
         this(tag, null, Required.YES);
     }
 

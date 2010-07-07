@@ -22,7 +22,7 @@ public class LogoutMessage extends AbstractMessage {
     private final TextField text = new TextField(Required.NO);
 
     public LogoutMessage() {
-        this(new MessageHeader(MsgType.LOGOUT));
+        this(new MessageHeader(MessageType.LOGOUT));
     }
 
     public LogoutMessage(MessageHeader header) {

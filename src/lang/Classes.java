@@ -15,6 +15,8 @@
  */
 package lang;
 
+import java.lang.reflect.Constructor;
+
 /**
  * @author Pekka Enberg 
  */
@@ -22,6 +24,15 @@ public class Classes {
     public static <T> T newInstance(Class<T> clazz) {
         try {
             return clazz.newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static <T> T newInstance(Class<T> clazz, Object arg) {
+        try {
+            Constructor<T> ctor = clazz.getDeclaredConstructor(arg.getClass());
+            return ctor.newInstance(arg);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

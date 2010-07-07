@@ -22,7 +22,7 @@ public class TestRequestMessage extends AbstractMessage {
     private final TestReqIdField testReqId = new TestReqIdField(Required.YES);
 
     public TestRequestMessage() {
-        this(new MessageHeader(MsgType.TEST_REQUEST));
+        this(new MessageHeader(MessageType.TEST_REQUEST));
     }
 
     public TestRequestMessage(MessageHeader header) {

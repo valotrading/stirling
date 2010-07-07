@@ -23,7 +23,7 @@ public class SequenceResetMessage extends AbstractMessage {
     private NewSeqNoField newSeqNo = new NewSeqNoField();
 
     public SequenceResetMessage() {
-        this(new MessageHeader(MsgType.SEQUENCE_RESET));
+        this(new MessageHeader(MessageType.SEQUENCE_RESET));
     }
 
     public SequenceResetMessage(MessageHeader header) {

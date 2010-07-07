@@ -19,6 +19,8 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import fixengine.tags.MsgType;
+
 /**
  * @author Pekka Enberg
  */
@@ -43,7 +45,7 @@ public class Fields {
     }
 
     public void parse(ByteBuffer b) {
-        Field previous = new MsgTypeField();
+        Field previous = new StringField(MsgType.TAG);
         for (;;) {
             b.mark();
             Tag tag = parseTag(b, previous);

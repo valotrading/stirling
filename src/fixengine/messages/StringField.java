@@ -19,7 +19,7 @@ package fixengine.messages;
  * @author Pekka Enberg 
  */
 public class StringField extends AbstractField<String> {
-    protected StringField(Tag tag) {
+    public StringField(Tag tag) {
         this(tag, null);
     }
 

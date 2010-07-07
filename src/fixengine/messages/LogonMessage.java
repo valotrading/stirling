@@ -32,7 +32,7 @@ public class LogonMessage extends AbstractMessage {
     }
 
     public LogonMessage(boolean useResetSeqNumFlagTag) {
-        this(new MessageHeader(MsgType.LOGON), useResetSeqNumFlagTag);
+        this(new MessageHeader(MessageType.LOGON), useResetSeqNumFlagTag);
     }
 
     public LogonMessage(MessageHeader header, boolean useResetSeqNumFlagTag) {
