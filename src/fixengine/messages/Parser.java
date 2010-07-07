@@ -38,9 +38,9 @@ public class Parser {
                 return;
             int msgSeqNum = msgSeqNum(b, header);
             header.setMsgSeqNum(msgSeqNum);
-            parseFields(b, header);
+            header.parse(b);
             Message msg = header.newMessage();
-            parseFields(b, msg);
+            msg.parse(b);
             trailer(b, header);
             callback.message(msg);
         } catch (InvalidMsgTypeException e) {
@@ -110,29 +110,6 @@ public class Parser {
         }
         b.reset();
         return result;
-    }
-
-    private static void parseFields(ByteBuffer b, Parseable parseable) {
-        Field previous = new MsgTypeField();
-        for (;;) {
-            b.mark();
-            Tag tag = parseTag(b, previous);
-            Field field = parseable.lookup(tag);
-            if (field == null)
-                break;
-            if (field.isParsed())
-                throw new TagMultipleTimesException(field.prettyName() + ": Tag multiple times");
-            String value = parseValue(b, field);
-            if (value.length() == 0)
-                throw new EmptyTagException(field.prettyName() + ": Empty tag");
-            field.parseValue(value);
-            if (!field.isFormatValid())
-                throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
-            if (!field.isValueValid())
-                throw new InvalidValueException(field.prettyName() + ": Invalid value");
-            previous = field;
-        }
-        b.reset();
     }
 
     private static void trailer(ByteBuffer b, MessageHeader header) {

@@ -15,6 +15,7 @@
  */
 package fixengine.messages;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,59 @@ public class Fields {
             }
         }
         return null;
+    }
+
+    public void parse(ByteBuffer b) {
+        Field previous = new MsgTypeField();
+        for (;;) {
+            b.mark();
+            Tag tag = parseTag(b, previous);
+            Field field = lookup(tag);
+            if (field == null)
+                break;
+            if (field.isParsed())
+                throw new TagMultipleTimesException(field.prettyName() + ": Tag multiple times");
+            String value = parseValue(b, field);
+            if (value.isEmpty())
+                throw new EmptyTagException(field.prettyName() + ": Empty tag");
+            field.parseValue(value);
+            if (!field.isFormatValid())
+                throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
+            if (!field.isValueValid())
+                throw new InvalidValueException(field.prettyName() + ": Invalid value");
+            previous = field;
+        }
+        b.reset();
+    }
+
+    private static Tag parseTag(ByteBuffer b, Field previous) {
+        StringBuilder result = new StringBuilder();
+        for (;;) {
+            int ch = b.get();
+            if (ch == '=')
+                break;
+            result.append((char) ch);
+        }
+        String s = result.toString();
+        if (s.contains("" + Field.DELIMITER))
+            throw new NonDataValueIncludesFieldDelimiterException(previous.prettyName() + ": Non-data value includes field delimiter (SOH character)");
+        Tag tag = new Tag(Integer.parseInt(s));
+        if (tag.isUserDefined())
+            throw new InvalidTagNumberException("Invalid tag number: " + tag.value());
+        return tag;
+    }
+
+    private static String parseValue(ByteBuffer b, Field field) {
+        StringBuilder result = new StringBuilder();
+        for (;;) {
+            int ch = b.get();
+            if (ch == Field.DELIMITER)
+                break;
+            result.append((char) ch);
+        }
+        if (result.length() == 0)
+            throw new EmptyTagException(field.prettyName() + ": Empty tag");
+        return result.toString();
     }
 
     public String format() {

@@ -15,6 +15,7 @@
  */
 package fixengine.messages;
 
+import java.nio.ByteBuffer;
 import java.util.List;
 
 import lang.Objects;
@@ -164,9 +165,8 @@ public abstract class AbstractMessage implements Message {
         return header.hasOrigSendTimeAfterSendingTime();
     }
 
-    @Override
-    public Field lookup(Tag tag) {
-        return fields.lookup(tag);
+    @Override public void parse(ByteBuffer b) {
+        fields.parse(b);
     }
 
     @Override

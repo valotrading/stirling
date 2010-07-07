@@ -46,11 +46,6 @@ public abstract class AbstractEmptyMessage implements Message {
     }
 
     @Override
-    public Field lookup(Tag tag) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void setBeginString(String beginString) {
         throw new UnsupportedOperationException();
     }

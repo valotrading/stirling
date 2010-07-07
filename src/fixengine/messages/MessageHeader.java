@@ -15,6 +15,8 @@
  */
 package fixengine.messages;
 
+import java.nio.ByteBuffer;
+
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
@@ -67,7 +69,11 @@ public class MessageHeader implements Parseable {
         fields.add(field);
     }
 
-    @Override public Field lookup(Tag tag) {
+    @Override public void parse(ByteBuffer b) {
+        fields.parse(b);
+    }
+
+    public Field lookup(Tag tag) {
         return fields.lookup(tag);
     }
 

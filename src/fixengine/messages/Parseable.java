@@ -1,5 +1,7 @@
 package fixengine.messages;
 
+import java.nio.ByteBuffer;
+
 public interface Parseable {
-    Field lookup(Tag tag);
+    void parse(ByteBuffer b);
 }
