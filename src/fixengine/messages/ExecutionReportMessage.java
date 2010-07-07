@@ -22,7 +22,6 @@ public class ExecutionReportMessage extends AbstractMessage {
     private final ExecRestatementReasonField execRestatementReason = new ExecRestatementReasonField(Required.NO);
     private final MaturityMonthYearField maturityMonthYear = new MaturityMonthYearField(Required.NO);
     private final ExDestinationField exDestination = new ExDestinationField(Required.NO);
-    private final PartiesRepeatingGroup parties = new PartiesRepeatingGroup(Required.NO);
     private final OrdRejReasonField ordRejReason = new OrdRejReasonField(Required.NO);
     private final SecurityTypeField securityType = new SecurityTypeField(Required.NO);
     private final TransactTimeField transactTime = new TransactTimeField(Required.NO);
@@ -58,7 +57,6 @@ public class ExecutionReportMessage extends AbstractMessage {
         add(orderId);
         add(clOrdId);
         add(origClOrdId);
-        add(parties);
         add(execId);
         add(execTransType);
         add(execType);
@@ -159,10 +157,6 @@ public class ExecutionReportMessage extends AbstractMessage {
 
     public void setAvgPx(double avgPx) {
         this.avgPx.setValue(avgPx);
-    }
-
-    public void add(Party party) {
-        this.parties.add(party);
     }
 
     @Override
