@@ -39,7 +39,8 @@ public class Parser {
             int msgSeqNum = msgSeqNum(b, header);
             header.setMsgSeqNum(msgSeqNum);
             parseFields(b, header);
-            Message msg = body(b, header);
+            Message msg = header.newMessage();
+            parseFields(b, msg);
             trailer(b, header);
             callback.message(msg);
         } catch (InvalidMsgTypeException e) {
@@ -109,12 +110,6 @@ public class Parser {
         }
         b.reset();
         return result;
-    }
-
-    private static Message body(ByteBuffer b, MessageHeader header) {
-        Message msg = header.newMessage();
-        parseFields(b, msg);
-        return msg;
     }
 
     private static void parseFields(ByteBuffer b, Parseable parseable) {
