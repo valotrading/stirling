@@ -126,4 +126,8 @@ public class Fields {
                 throw new EmptyTagException(field.prettyName() + ": Empty tag");
         }
     }
+
+    public void add(Tag<?> tag, Required required) {
+        this.fields.add(tag.newField(required));
+    }
 }

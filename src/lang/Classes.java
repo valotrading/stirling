@@ -29,9 +29,9 @@ public class Classes {
         }
     }
 
-    public static <T> T newInstance(Class<T> clazz, Object arg) {
+    public static <T> T newInstance(Class<T> clazz, Class<?> argType, Object arg) {
         try {
-            Constructor<T> ctor = clazz.getDeclaredConstructor(arg.getClass());
+            Constructor<T> ctor = clazz.getDeclaredConstructor(argType);
             return ctor.newInstance(arg);
         } catch (Exception e) {
             throw new RuntimeException(e);

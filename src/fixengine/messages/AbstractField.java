@@ -23,7 +23,7 @@ import lang.Objects;
 public abstract class AbstractField<T> implements Field {
     protected boolean validFormat = true;
     private boolean validValue = true;
-    private final Required required;
+    private Required required;
     private final String name;
     private boolean defined;
     private final Tag tag;
@@ -51,6 +51,10 @@ public abstract class AbstractField<T> implements Field {
             return s;
         }
         return s.substring(0, s.length() - 5);
+    }
+
+    @Override public void setRequired(Required required) {
+        this.required = required;
     }
 
     public void setValue(T value) {

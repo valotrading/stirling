@@ -38,6 +38,10 @@ public abstract class RepeatingGroup<T extends RepeatingGroupInstance> implement
         return instances;
     }
 
+    @Override public void setRequired(Required required) {
+        throw new UnsupportedOperationException();
+    }
+
     @Override public boolean hasValue() {
         throw new UnsupportedOperationException();
     }

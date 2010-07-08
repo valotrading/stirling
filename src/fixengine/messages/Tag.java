@@ -56,11 +56,17 @@ public class Tag<T extends Field> {
         return value;
     }
 
+    public T newField(Required required) {
+        T field = Classes.newInstance(type, Tag.class, this);
+        field.setRequired(required);
+        return field;
+    }
+
     public T parse(ByteBuffer b, Tag<?> previous) throws UnexpectedTagException {
-        Tag tag = parseTag(b, previous);
+        Tag<?> tag = parseTag(b, previous);
         if (value != tag.value)
             throw new UnexpectedTagException(tag);
-        T field = Classes.newInstance(type, tag);
+        T field = Classes.newInstance(type, Tag.class, tag);
         String value = parseValue(b, field);
         if (!value.isEmpty())
             field.parseValue(value);

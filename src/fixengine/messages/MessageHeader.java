@@ -39,18 +39,10 @@ import fixengine.tags.TargetCompID;
 public class MessageHeader implements Parseable {
     private static final Minutes MAX_TIME_DIFFERENCE = Minutes.TWO;
 
-    private final UtcTimestampField origSendingTime = new UtcTimestampField(OrigSendingTime.TAG, Required.NO);
-    private final StringField onBehalfOfCompID = new StringField(OnBehalfOfCompID.TAG, Required.NO);
-    private final StringField deliverToCompID = new StringField(DeliverToCompID.TAG, Required.NO);
-    private final BooleanField possDupFlag = new BooleanField(PossDupFlag.TAG, Required.NO);
-    private final BooleanField possResend = new BooleanField(PossResend.TAG, Required.NO);
-    private final StringField senderCompID = new StringField(SenderCompID.TAG);
-    private final StringField targetCompID = new StringField(TargetCompID.TAG);
     private final StringField beginString = new StringField(BeginString.TAG);
     private final IntegerField bodyLength = new IntegerField(BodyLength.TAG);
-    private final UtcTimestampField sendingTime = new UtcTimestampField(SendingTime.TAG);
-    private final IntegerField msgSeqNum = new IntegerField(MsgSeqNum.TAG);
     private final StringField msgType = new StringField(MsgType.TAG);
+
     private final Fields fields = new Fields();
 
     private int msgTypePosition;
@@ -66,15 +58,23 @@ public class MessageHeader implements Parseable {
     public MessageHeader(String msgType) {
         this.msgType.setValue(msgType);
 
-        add(senderCompID);
-        add(targetCompID);
-        add(onBehalfOfCompID);
-        add(deliverToCompID);
-        add(msgSeqNum);
-        add(possDupFlag);
-        add(possResend);
-        add(sendingTime);
-        add(origSendingTime);
+        field(SenderCompID.TAG);
+        field(TargetCompID.TAG);
+        field(OnBehalfOfCompID.TAG, Required.NO);
+        field(DeliverToCompID.TAG, Required.NO);
+        field(MsgSeqNum.TAG);
+        field(PossDupFlag.TAG, Required.NO);
+        field(PossResend.TAG, Required.NO);
+        field(SendingTime.TAG);
+        field(OrigSendingTime.TAG, Required.NO);
+    }
+
+    private void field(Tag<?> tag) {
+        field(tag, Required.YES);
+    }
+
+    private void field(Tag<?> tag, Required required) {
+        fields.add(tag, required);
     }
 
     public boolean hasValue(Tag<?> tag) {

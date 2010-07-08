@@ -19,7 +19,7 @@ package fixengine.messages;
  * @author Pekka Enberg 
  */
 public class BooleanField extends AbstractField<Boolean> {
-    protected BooleanField(Tag<BooleanField> tag) {
+    public BooleanField(Tag<BooleanField> tag) {
         this(tag, null, Required.YES);
     }
 
