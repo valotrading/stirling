@@ -32,12 +32,4 @@ public class ExecRestatementReasonField extends EnumField<ExecRestatementReason>
     public void parse(String value) {
         this.value = ExecRestatementReason.parse(Integer.parseInt(value));
     }
-
-    @Override
-    protected String value() {
-        if (value == null) {
-            return "";
-        }
-        return Integer.toString(value.value());
-    }
 }

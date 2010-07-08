@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum OrdStatus {
+public enum OrdStatus implements Formattable<OrdStatus> {
     NEW('0'),
     PARTIALLY_FILLED('1'),
     FILLED('2'),
@@ -41,8 +41,8 @@ public enum OrdStatus {
         this.value = value;
     }
 
-    public char value() {
-        return value;
+    @Override public String value() {
+        return Character.toString(value);
     }
 
     public static OrdStatus parse(char value) {

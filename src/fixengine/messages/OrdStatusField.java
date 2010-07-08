@@ -29,9 +29,4 @@ public class OrdStatusField extends EnumField<OrdStatus> {
     public void parse(String value) {
         this.value = OrdStatus.parse(value.charAt(0));
     }
-
-    @Override
-    protected String value() {
-        return Character.toString(value.value());
-    }
 }

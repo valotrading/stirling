@@ -25,16 +25,7 @@ public class TimeInForceField extends EnumField<TimeInForce> {
         super(TAG, required);
     }
 
-    @Override
-    public void parse(String value) {
+    @Override public void parse(String value) {
         this.value = TimeInForce.parse(value.charAt(0));
-    }
-
-    @Override
-    protected String value() {
-        if (value == null) {
-            return null;
-        }
-        return Character.toString(value.value());
     }
 }

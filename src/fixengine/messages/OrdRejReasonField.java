@@ -29,12 +29,4 @@ public class OrdRejReasonField extends EnumField<OrdRejReason> {
     public void parse(String value) {
         this.value = OrdRejReason.parse(Integer.parseInt(value));
     }
-
-    @Override
-    protected String value() {
-        if (value == null) {
-            return "";
-        }
-        return Integer.toString(value.value());
-    }
 }

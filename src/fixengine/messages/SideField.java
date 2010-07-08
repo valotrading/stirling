@@ -29,9 +29,4 @@ public class SideField extends EnumField<Side> {
     public void parse(String value) {
         this.value = Side.parse(value.charAt(0));
     }
-
-    @Override
-    protected String value() {
-        return Character.toString(value.value());
-    }
 }

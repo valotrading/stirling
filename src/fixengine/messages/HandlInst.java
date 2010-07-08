@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum HandlInst {
+public enum HandlInst implements Formattable<HandlInst> {
     /** Automated execution order, private, no Broker intervention */
     AUTOMATED_ORDER_PRIVATE('1'),
 
@@ -34,8 +34,8 @@ public enum HandlInst {
         this.value = value;
     }
 
-    public char value() {
-        return value;
+    @Override public String value() {
+        return Character.toString(value);
     }
 
     public static HandlInst parse(char value) {

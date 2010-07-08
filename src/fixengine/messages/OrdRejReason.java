@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum OrdRejReason {
+public enum OrdRejReason implements Formattable<OrdRejReason> {
     BROKER_EXCHANGE_OPTION(0),
     UNKNOWN_SYMBOL(1),
     EXCHANGE_CLOSED(2),
@@ -39,8 +39,8 @@ public enum OrdRejReason {
         this.value = value;
     }
 
-    public int value() {
-        return value;
+    @Override public String value() {
+        return Integer.toString(value);
     }
 
     public static OrdRejReason parse(int value) {

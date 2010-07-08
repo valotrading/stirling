@@ -18,8 +18,15 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public abstract class EnumField<T extends Enum<T>> extends AbstractField<T> {
-    public EnumField(Tag tag, Required required) {
+public abstract class EnumField<T extends Formattable<T>> extends AbstractField<T> {
+    public EnumField(Tag<EnumField<T>> tag, Required required) {
         super(tag, null, required);
+    }
+
+    @Override protected String value() {
+        if (value == null) {
+            return null;
+        }
+        return value.value();
     }
 }

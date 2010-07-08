@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum ExecType {
+public enum ExecType implements Formattable<ExecType> {
     NEW('0'),
     PARTIAL_FILL('1'),
     FILL('2'),
@@ -45,8 +45,8 @@ public enum ExecType {
         this.value = value;
     }
 
-    public char value() {
-        return value;
+    @Override public String value() {
+        return Character.toString(value);
     }
 
     public static ExecType parse(char value) {

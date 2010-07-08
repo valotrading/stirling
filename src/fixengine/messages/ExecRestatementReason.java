@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum ExecRestatementReason {
+public enum ExecRestatementReason implements Formattable<ExecRestatementReason> {
     GT_CORPORATE_ACTION(0),
     GT_RENEWAL_RESTATEMENT(1), /* (no corporate action) */
     VERBAL_CHANGE(2),
@@ -35,8 +35,8 @@ public enum ExecRestatementReason {
         this.value = value;
     }
 
-    public int value() {
-        return value;
+    @Override public String value() {
+        return Integer.toString(value);
     }
 
     public static ExecRestatementReason parse(int value) {

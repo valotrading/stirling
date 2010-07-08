@@ -29,9 +29,4 @@ public class CxlRejReasonField extends EnumField<CxlRejReason> {
     public void parse(String value) {
         this.value = CxlRejReason.parse(Integer.parseInt(value));
     }
-
-    @Override
-    protected String value() {
-        return Integer.toString(value.value());
-    }
 }

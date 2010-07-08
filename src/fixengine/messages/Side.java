@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum Side {
+public enum Side implements Formattable<Side> {
     BUY('1'),
     SELL('2'),
     BUY_MINUS('3'),
@@ -38,8 +38,8 @@ public enum Side {
         this.value = value;
     }
 
-    public char value() {
-        return value;
+    @Override public String value() {
+        return Character.toString(value);
     }
 
     public static Side parse(char value) {

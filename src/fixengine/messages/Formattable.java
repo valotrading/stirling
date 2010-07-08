@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 the original author or authors.
+ * Copyright 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,6 @@
  */
 package fixengine.messages;
 
-/**
- * @author Pekka Enberg
- */
-public class BusinessRejectReasonField extends EnumField<BusinessRejectReason> {
-    private static final Tag TAG = new Tag(380);
-
-    public BusinessRejectReasonField() {
-        super(TAG, Required.YES);
-    }
-
-    @Override public void parse(String value) {
-        this.value = BusinessRejectReason.parse(Integer.parseInt(value));
-    }
+public interface Formattable<T> {
+    String value();
 }

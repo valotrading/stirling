@@ -29,9 +29,4 @@ public class SessionRejectReasonField extends EnumField<SessionRejectReason> {
     public void parse(String value) {
         this.value = SessionRejectReason.parse(Integer.parseInt(value));
     }
-
-    @Override
-    protected String value() {
-        return Integer.toString(value.value());
-    }
 }

@@ -33,12 +33,4 @@ public class OrdTypeField extends EnumField<OrdType> {
     public void parse(String value) {
         this.value = OrdType.parse(value.charAt(0));
     }
-
-    @Override
-    protected String value() {
-        if (value == null) {
-            return null;
-        }
-        return Character.toString(value.value());
-    }
 }

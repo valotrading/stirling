@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum CustomerOrFirm {
+public enum CustomerOrFirm implements Formattable<CustomerOrFirm> {
     CUSTOMER(0),
     FIRM(1);
 
@@ -28,8 +28,8 @@ public enum CustomerOrFirm {
         this.value = value;
     }
 
-    public int value() {
-        return value;
+    @Override public String value() {
+        return Integer.toString(value);
     }
 
     public static CustomerOrFirm parse(int value) {

@@ -31,9 +31,4 @@ public class EncryptMethodField extends EnumField<EncryptMethod> {
     public void parse(String value) {
         this.value = EncryptMethod.parse(Integer.parseInt(value));
     }
-
-    @Override
-    protected String value() {
-        return Integer.toString(value.value());
-    }
 }

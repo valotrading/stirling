@@ -29,9 +29,4 @@ public class ExecTypeField extends EnumField<ExecType> {
     public void parse(String value) {
         this.value = ExecType.parse(value.charAt(0));
     }
-
-    @Override
-    protected String value() {
-        return Character.toString(value.value());
-    }
 }

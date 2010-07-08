@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum SessionRejectReason {
+public enum SessionRejectReason implements Formattable<SessionRejectReason> {
     /** Invalid tag number.  */
     INVALID_TAG_NUMBER(0),
 
@@ -79,8 +79,8 @@ public enum SessionRejectReason {
         this.value = value;
     }
 
-    public int value() {
-        return value;
+    @Override public String value() {
+        return Integer.toString(value);
     }
 
     public static SessionRejectReason parse(int value) {

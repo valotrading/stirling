@@ -29,9 +29,4 @@ public class CxlRejResponseToField extends EnumField<CxlRejResponseTo> {
     public void parse(String value) {
         this.value = CxlRejResponseTo.parse(value.charAt(0));
     }
-
-    @Override
-    protected String value() {
-        return Character.toString(value.value());
-    }
 }

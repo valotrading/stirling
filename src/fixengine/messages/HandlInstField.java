@@ -29,9 +29,4 @@ public class HandlInstField extends EnumField<HandlInst> {
     public void parse(String value) {
         this.value = HandlInst.parse(value.charAt(0));
     }
-
-    @Override
-    protected String value() {
-        return Character.toString(value.value());
-    }
 }

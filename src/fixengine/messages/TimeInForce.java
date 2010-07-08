@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum TimeInForce {
+public enum TimeInForce implements Formattable<TimeInForce> {
     DAY('0'),
     GOOD_TILL_CANCEL('1'),
     AT_THE_OPENING('2'),
@@ -34,8 +34,8 @@ public enum TimeInForce {
         this.value = value;
     }
 
-    public char value() {
-        return value;
+    public String value() {
+        return Character.toString(value);
     }
 
     public static TimeInForce parse(char value) {

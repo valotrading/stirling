@@ -34,9 +34,4 @@ public class CustomerOrFirmField extends EnumField<CustomerOrFirm> {
     public void parse(String value) {
         this.value = CustomerOrFirm.parse(Integer.parseInt(value));
     }
-
-    @Override
-    protected String value() {
-        return Integer.toString(value.value());
-    }
 }

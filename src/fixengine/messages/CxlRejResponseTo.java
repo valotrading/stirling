@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum CxlRejResponseTo {
+public enum CxlRejResponseTo implements Formattable<CxlRejResponseTo> {
     ORDER_CANCEL_REQUEST('1'),
     ORDER_MODIFICATION_REQUEST('2');
 
@@ -28,8 +28,8 @@ public enum CxlRejResponseTo {
         this.value = value;
     }
 
-    public char value() {
-        return value;
+    @Override public String value() {
+        return Character.toString(value);
     }
 
     public static CxlRejResponseTo parse(char value) {

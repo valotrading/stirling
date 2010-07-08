@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum EncryptMethod {
+public enum EncryptMethod implements Formattable<EncryptMethod> {
     /** None / other */
     NONE(0),
 
@@ -46,8 +46,8 @@ public enum EncryptMethod {
         this.value = value;
     }
 
-    public int value() {
-        return value;
+    @Override public String value() {
+        return Integer.toString(value);
     }
 
     public static EncryptMethod parse(int value) {
