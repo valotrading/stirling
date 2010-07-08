@@ -53,6 +53,23 @@ public class ParserSpec extends Specification<String> {
         }
     }
 
+    public class OptionalFieldMissing {
+        public String create() {
+            return raw = message("51", "0")
+                .field(MsgSeqNum, "1")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(CheckSum, "197")
+                .toString();
+        }
+
+        public void parse() {
+            checking(new Expectations() {{
+                one(callback).message(with(new MessageMatcher(raw)));
+            }});
+            Parser.parse(silvertip.Message.fromString(raw), callback);
+        }
+    }
+
     public class EmptyTag {
         public String create() {
             return raw = message("56", "0")
