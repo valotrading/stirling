@@ -153,14 +153,6 @@ public class MessageHeader implements Parseable {
         return msgType;
     }
 
-    public int checksum() {
-        return beginString.checksum() + bodyLength.checksum() + msgType.checksum();
-    }
-
-    public int length() {
-        return msgType.length();
-    }
-
     public String getBeginString() {
         return beginString.getValue();
     }
