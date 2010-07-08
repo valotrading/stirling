@@ -93,6 +93,7 @@ public abstract class AbstractField<T> implements Field {
         return defined;
     }
     
+    @Override
     public boolean hasValue() {
         return value != null;
     }

@@ -20,6 +20,7 @@ import java.nio.ByteBuffer;
 import fixengine.tags.BeginString;
 import fixengine.tags.BodyLength;
 import fixengine.tags.CheckSum;
+import fixengine.tags.MsgSeqNum;
 import fixengine.tags.MsgType;
 
 public class Parser {
@@ -49,13 +50,13 @@ public class Parser {
             trailer(b, header);
             callback.message(msg);
         } catch (InvalidMsgTypeException e) {
-            callback.invalidMsgType(header.getMsgType(), header.getMsgSeqNum());
+            callback.invalidMsgType(header.getMsgType(), header.getInteger(MsgSeqNum.TAG));
         } catch (UnsupportedMsgTypeException e) {
-            callback.unsupportedMsgType(header.getMsgType(), header.getMsgSeqNum());
+            callback.unsupportedMsgType(header.getMsgType(), header.getInteger(MsgSeqNum.TAG));
         } catch (GarbledMessageException e) {
             callback.garbledMessage(e.getMessage());
         } catch (ParseException e) {
-            callback.invalidMessage(header.getMsgSeqNum(), e.getReason(), e.getMessage());
+            callback.invalidMessage(header.getInteger(MsgSeqNum.TAG), e.getReason(), e.getMessage());
         }
     }
 

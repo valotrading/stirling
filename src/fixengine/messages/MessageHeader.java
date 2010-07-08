@@ -77,6 +77,54 @@ public class MessageHeader implements Parseable {
         add(origSendingTime);
     }
 
+    public boolean hasValue(Tag<?> tag) {
+        Field field = fields.lookup(tag);
+        return field.hasValue();
+    }
+
+    public void setString(Tag<StringField> tag, String value) {
+        StringField field = (StringField) fields.lookup(tag);
+        field.setValue(value);
+    }
+
+    public void setInteger(Tag<IntegerField> tag, Integer value) {
+        IntegerField field = (IntegerField) fields.lookup(tag);
+        field.setValue(value);
+    }
+
+    public void setBoolean(Tag<BooleanField> tag, Boolean value) {
+        BooleanField field = (BooleanField) fields.lookup(tag);
+        field.setValue(value);
+    }
+
+    public void setDateTime(Tag<UtcTimestampField> tag, DateTime value) {
+        UtcTimestampField field = (UtcTimestampField) fields.lookup(tag);
+        field.setValue(value);
+    }
+
+    public String getString(Tag<StringField> tag) {
+        StringField field = (StringField) fields.lookup(tag);
+        return field.getValue();
+    }
+
+    public Integer getInteger(Tag<IntegerField> tag) {
+        IntegerField field = (IntegerField) fields.lookup(tag);
+        return field.getValue();
+    }
+
+    public boolean getBoolean(Tag<BooleanField> tag) {
+        BooleanField field = (BooleanField) fields.lookup(tag);
+        Boolean result = field.getValue();
+        if (result == null)
+            result = Boolean.FALSE;
+        return result;
+    }
+
+    public DateTime getDateTime(Tag<UtcTimestampField> tag) {
+        UtcTimestampField field = (UtcTimestampField) fields.lookup(tag);
+        return field.getValue();
+    }
+
     protected void add(Field field) {
         fields.add(field);
     }
@@ -133,91 +181,23 @@ public class MessageHeader implements Parseable {
         return msgType.getValue();
     }
 
-    public void setSenderCompId(String senderCompId) {
-        this.senderCompID.setValue(senderCompId);
-    }
-
-    public String getSenderCompId() {
-        return senderCompID.getValue();
-    }
-
-    public void setTargetCompId(String targetCompId) {
-        this.targetCompID.setValue(targetCompId);
-    }
-
-    public String getTargetCompId() {
-        return targetCompID.getValue();
-    }
-
-    public void setOnBehalfOfCompId(String onBehalfOfCompId) {
-        this.onBehalfOfCompID.setValue(onBehalfOfCompId);
-    }
-
-    public void setDeliverToCompId(String deliverToCompId) {
-        this.deliverToCompID.setValue(deliverToCompId);
-    }
-
-    public void setMsgSeqNum(int msgSeqNum) {
-        this.msgSeqNum.setValue(msgSeqNum);
-    }
-
-    public int getMsgSeqNum() {
-        return msgSeqNum.getValue();
-    }
-
-    public void setSendingTime(DateTime sendingTime) {
-        this.sendingTime.setValue(sendingTime);
-    }
-
-    public DateTime getSendingTime() {
-        return sendingTime.getValue();
-    }
-
-    public void setOrigSendingTime(DateTime origSendingTime) {
-        this.origSendingTime.setValue(origSendingTime);
-    }
-
-    public DateTime getOrigSendingTime() {
-        return origSendingTime.getValue();
-    }
-
-    public boolean hasOrigSendingTime() {
-        return origSendingTime.hasValue();
-    }
-
-    public void setPossDupFlag(boolean possDupFlag) {
-        this.possDupFlag.setValue(possDupFlag);
-    }
-
-    public boolean getPossDupFlag() {
-        if (!possDupFlag.hasValue())
-            return false;
-        return possDupFlag.getValue();
-    }
-
-    public boolean getPossResend() {
-        if (!possResend.hasValue())
-            return false;
-        return possResend.getValue();
-    }
-
     public boolean isPointToPoint() {
-        return !onBehalfOfCompID.hasValue() && !deliverToCompID.hasValue();
+        return !hasValue(OnBehalfOfCompID.TAG) && !hasValue(DeliverToCompID.TAG);
     }
 
     public boolean hasAccurateSendingTime(DateTime currentTime) {
-        if (!sendingTime.hasValue()) {
+        if (!hasValue(SendingTime.TAG)) {
             return true;
         }
-        Minutes difference = Minutes.minutesBetween(currentTime, getSendingTime());
+        Minutes difference = Minutes.minutesBetween(currentTime, getDateTime(SendingTime.TAG));
         return difference.isLessThan(MAX_TIME_DIFFERENCE);
     }
 
     public boolean hasOrigSendTimeAfterSendingTime() {
-        if (!getPossDupFlag() || !origSendingTime.hasValue()) {
+        if (!getBoolean(PossDupFlag.TAG) || !origSendingTime.hasValue()) {
             return true;
         }
-        return !origSendingTime.getValue().isAfter(sendingTime.getValue());
+        return !getDateTime(OrigSendingTime.TAG).isAfter(getDateTime(SendingTime.TAG));
     }
 
     public void setMsgTypePosition(int msgTypePosition) {

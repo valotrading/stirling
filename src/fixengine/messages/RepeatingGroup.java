@@ -38,6 +38,10 @@ public abstract class RepeatingGroup<T extends RepeatingGroupInstance> implement
         return instances;
     }
 
+    @Override public boolean hasValue() {
+        throw new UnsupportedOperationException();
+    }
+
     public void parseValue(String s) {
         throw new UnsupportedOperationException();
     }

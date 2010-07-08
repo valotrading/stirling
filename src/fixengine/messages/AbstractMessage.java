@@ -25,6 +25,15 @@ import org.joda.time.DateTime;
 import fixengine.Config;
 import fixengine.tags.BodyLength;
 import fixengine.tags.CheckSum;
+import fixengine.tags.DeliverToCompID;
+import fixengine.tags.MsgSeqNum;
+import fixengine.tags.OnBehalfOfCompID;
+import fixengine.tags.OrigSendingTime;
+import fixengine.tags.PossDupFlag;
+import fixengine.tags.PossResend;
+import fixengine.tags.SenderCompID;
+import fixengine.tags.SendingTime;
+import fixengine.tags.TargetCompID;
 
 /**
  * @author Pekka Enberg
@@ -66,67 +75,67 @@ public abstract class AbstractMessage implements Message {
     }
 
     public void setSenderCompId(String senderCompId) {
-        header.setSenderCompId(senderCompId);
+        header.setString(SenderCompID.TAG, senderCompId);
     }
 
     public String getSenderCompId() {
-        return header.getSenderCompId();
+        return header.getString(SenderCompID.TAG);
     }
 
     public void setTargetCompId(String targetCompId) {
-        header.setTargetCompId(targetCompId);
+        header.setString(TargetCompID.TAG, targetCompId);
     }
 
     public String getTargetCompId() {
-        return header.getTargetCompId();
+        return header.getString(TargetCompID.TAG);
     }
 
     public void setOnBehalfOfCompId(String onBehalfOfCompId) {
-        header.setOnBehalfOfCompId(onBehalfOfCompId);
+        header.setString(OnBehalfOfCompID.TAG, onBehalfOfCompId);
     }
 
     public void setDeliverToCompId(String deliverToCompId) {
-        header.setDeliverToCompId(deliverToCompId);
+        header.setString(DeliverToCompID.TAG, deliverToCompId);
     }
 
     public void setMsgSeqNum(int msgSeqNum) {
-        header.setMsgSeqNum(msgSeqNum);
+        header.setInteger(MsgSeqNum.TAG, msgSeqNum);
     }
 
     public int getMsgSeqNum() {
-        return header.getMsgSeqNum();
+        return header.getInteger(MsgSeqNum.TAG);
     }
 
     public void setSendingTime(DateTime sendingTime) {
-        header.setSendingTime(sendingTime);
+        header.setDateTime(SendingTime.TAG, sendingTime);
     }
 
     public DateTime getSendingTime() {
-        return header.getSendingTime();
+        return header.getDateTime(SendingTime.TAG);
     }
 
     public void setOrigSendingTime(DateTime origSendingTime) {
-        header.setOrigSendingTime(origSendingTime);
+        header.setDateTime(OrigSendingTime.TAG, origSendingTime);
     }
 
     public DateTime getOrigSendingTime() {
-        return header.getOrigSendingTime();
+        return header.getDateTime(OrigSendingTime.TAG);
     }
 
     public boolean hasOrigSendingTime() {
-        return header.hasOrigSendingTime();
+        return header.hasValue(OrigSendingTime.TAG);
     }
 
     public void setPossDupFlag(boolean possDupFlag) {
-        header.setPossDupFlag(possDupFlag);
+        header.setBoolean(PossDupFlag.TAG, possDupFlag);
     }
 
     public boolean getPossDupFlag() {
-        return header.getPossDupFlag();
+        return header.getBoolean(PossDupFlag.TAG);
     }
 
     public boolean getPossResend() {
-        return header.getPossResend();
+        return header.getBoolean(PossResend.TAG);
     }
 
     public boolean hasValidTargetCompId(Config config) {
