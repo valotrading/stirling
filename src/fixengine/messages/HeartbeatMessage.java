@@ -21,8 +21,6 @@ import fixengine.tags.TestReqID;
  * @author Pekka Enberg 
  */
 public class HeartbeatMessage extends AbstractMessage {
-    private final StringField testReqId = new StringField(TestReqID.TAG, Required.NO);
-
     public HeartbeatMessage() {
         this(new MessageHeader(MessageType.HEARTBEAT));
     }
@@ -30,19 +28,11 @@ public class HeartbeatMessage extends AbstractMessage {
     public HeartbeatMessage(MessageHeader header) {
         super(header);
 
-        add(testReqId);
+        field(TestReqID.TAG, Required.NO);
     }
 
     @Override
     public void apply(MessageVisitor visitor) {
         visitor.visit(this);
-    }
-
-    public void setTestReqId(String testReqId) {
-        this.testReqId.setValue(testReqId);
-    }
-
-    public String getTestReqId() {
-        return testReqId.getValue();
     }
 }

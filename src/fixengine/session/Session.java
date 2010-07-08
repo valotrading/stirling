@@ -41,6 +41,7 @@ import fixengine.messages.SessionRejectReason;
 import fixengine.messages.TestRequestMessage;
 import fixengine.messages.Validator;
 import fixengine.session.store.SessionStore;
+import fixengine.tags.TestReqID;
 
 /**
  * @author Karim Osman
@@ -206,7 +207,7 @@ public class Session {
             @Override public void visit(TestRequestMessage message) {
                 queue.skip(message);
                 HeartbeatMessage heartbeat = new HeartbeatMessage();
-                heartbeat.setTestReqId(message.getTestReqId());
+                heartbeat.setString(TestReqID.TAG, message.getTestReqId());
                 send(conn, heartbeat);
             }
 
