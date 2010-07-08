@@ -33,14 +33,12 @@ import fixengine.tags.TargetCompID;
 /**
  * @author Pekka Enberg 
  */
-public class MessageHeader implements Parseable {
+public class MessageHeader extends AbstractFieldContainer implements Parseable {
     private static final Minutes MAX_TIME_DIFFERENCE = Minutes.TWO;
 
     private String beginString;
     private int bodyLength;
     private String msgType;
-
-    private final Fields fields = new Fields();
 
     private int msgTypePosition;
 
@@ -64,66 +62,6 @@ public class MessageHeader implements Parseable {
         field(PossResend.TAG, Required.NO);
         field(SendingTime.TAG);
         field(OrigSendingTime.TAG, Required.NO);
-    }
-
-    private void field(Tag<?> tag) {
-        field(tag, Required.YES);
-    }
-
-    private void field(Tag<?> tag, Required required) {
-        fields.add(tag, required);
-    }
-
-    public boolean hasValue(Tag<?> tag) {
-        Field field = fields.lookup(tag);
-        return field.hasValue();
-    }
-
-    public void setString(Tag<StringField> tag, String value) {
-        StringField field = (StringField) fields.lookup(tag);
-        field.setValue(value);
-    }
-
-    public void setInteger(Tag<IntegerField> tag, Integer value) {
-        IntegerField field = (IntegerField) fields.lookup(tag);
-        field.setValue(value);
-    }
-
-    public void setBoolean(Tag<BooleanField> tag, Boolean value) {
-        BooleanField field = (BooleanField) fields.lookup(tag);
-        field.setValue(value);
-    }
-
-    public void setDateTime(Tag<UtcTimestampField> tag, DateTime value) {
-        UtcTimestampField field = (UtcTimestampField) fields.lookup(tag);
-        field.setValue(value);
-    }
-
-    public String getString(Tag<StringField> tag) {
-        StringField field = (StringField) fields.lookup(tag);
-        return field.getValue();
-    }
-
-    public Integer getInteger(Tag<IntegerField> tag) {
-        IntegerField field = (IntegerField) fields.lookup(tag);
-        return field.getValue();
-    }
-
-    public boolean getBoolean(Tag<BooleanField> tag) {
-        BooleanField field = (BooleanField) fields.lookup(tag);
-        Boolean result = field.getValue();
-        if (result == null)
-            result = Boolean.FALSE;
-        return result;
-    }
-
-    public DateTime getDateTime(Tag<UtcTimestampField> tag) {
-        UtcTimestampField field = (UtcTimestampField) fields.lookup(tag);
-        return field.getValue();
-    }
-
-    protected void add(Field field) {
-        fields.add(field);
     }
 
     @Override public void parse(ByteBuffer b) {

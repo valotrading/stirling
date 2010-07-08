@@ -40,8 +40,7 @@ import fixengine.tags.TargetCompID;
 /**
  * @author Pekka Enberg
  */
-public abstract class AbstractMessage implements Message {
-    private final Fields fields = new Fields();
+public abstract class AbstractMessage extends AbstractFieldContainer implements Message {
     private final MessageHeader header;
 
     protected AbstractMessage(MessageType msgType) {
