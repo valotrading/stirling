@@ -20,11 +20,8 @@ import java.nio.ByteBuffer;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
-import fixengine.tags.BeginString;
-import fixengine.tags.BodyLength;
 import fixengine.tags.DeliverToCompID;
 import fixengine.tags.MsgSeqNum;
-import fixengine.tags.MsgType;
 import fixengine.tags.OnBehalfOfCompID;
 import fixengine.tags.OrigSendingTime;
 import fixengine.tags.PossDupFlag;
@@ -39,9 +36,9 @@ import fixengine.tags.TargetCompID;
 public class MessageHeader implements Parseable {
     private static final Minutes MAX_TIME_DIFFERENCE = Minutes.TWO;
 
-    private final StringField beginString = new StringField(BeginString.TAG);
-    private final IntegerField bodyLength = new IntegerField(BodyLength.TAG);
-    private final StringField msgType = new StringField(MsgType.TAG);
+    private String beginString;
+    private int bodyLength;
+    private String msgType;
 
     private final Fields fields = new Fields();
 
@@ -56,7 +53,7 @@ public class MessageHeader implements Parseable {
     }
 
     public MessageHeader(String msgType) {
-        this.msgType.setValue(msgType);
+        this.msgType = msgType;
 
         field(SenderCompID.TAG);
         field(TargetCompID.TAG);
@@ -141,36 +138,28 @@ public class MessageHeader implements Parseable {
         return fields;
     }
 
-    public void setMsgType(String msgType) {
-        this.msgType.setValue(msgType);
-    }
-
-    public StringField getBeginStringField() {
+    public String getBeginString() {
         return beginString;
     }
 
-    public StringField getMsgTypeField() {
-        return msgType;
-    }
-
-    public String getBeginString() {
-        return beginString.getValue();
-    }
-
     public void setBeginString(String beginString) {
-      this.beginString.setValue(beginString);
+      this.beginString = beginString;
     }
 
     public int getBodyLength() {
-        return bodyLength.getValue();
+        return bodyLength;
     }
 
     public void setBodyLength(int bodyLength) {
-        this.bodyLength.setValue(bodyLength);
+        this.bodyLength = bodyLength;
     }
 
     public String getMsgType() {
-        return msgType.getValue();
+        return msgType;
+    }
+
+    public void setMsgType(String msgType) {
+        this.msgType = msgType;
     }
 
     public boolean isPointToPoint() {

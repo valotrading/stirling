@@ -23,10 +23,12 @@ import lang.Objects;
 import org.joda.time.DateTime;
 
 import fixengine.Config;
+import fixengine.tags.BeginString;
 import fixengine.tags.BodyLength;
 import fixengine.tags.CheckSum;
 import fixengine.tags.DeliverToCompID;
 import fixengine.tags.MsgSeqNum;
+import fixengine.tags.MsgType;
 import fixengine.tags.OnBehalfOfCompID;
 import fixengine.tags.OrigSendingTime;
 import fixengine.tags.PossDupFlag;
@@ -191,11 +193,11 @@ public abstract class AbstractMessage implements Message {
 
     public String format() {
         MessageBuffer buffer = new MessageBuffer();
-        buffer.append(header.getMsgTypeField());
+        buffer.append(new StringField(MsgType.TAG, header.getMsgType()));
         buffer.append(header.getFields().format());
         buffer.append(fields.format());
         buffer.prefix(new IntegerField(BodyLength.TAG, buffer.length()));
-        buffer.prefix(header.getBeginStringField());
+        buffer.prefix(new StringField(BeginString.TAG, header.getBeginString()));
         buffer.append(new StringField(CheckSum.TAG, CheckSum.format(buffer.checksum())));
         return buffer.toString();
     }
@@ -217,8 +219,8 @@ public abstract class AbstractMessage implements Message {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append(header.getBeginStringField() + " ");
-        result.append(header.getMsgTypeField() + " ");
+        result.append(new StringField(BeginString.TAG, header.getBeginString()).toString() + " ");
+        result.append(new StringField(MsgType.TAG, header.getMsgType()).toString() + " ");
         for (Field field : fields.getFields()) {
             result.append(field.toString() + " ");
         }
