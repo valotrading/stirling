@@ -15,12 +15,15 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.BeginSeqNo;
+import fixengine.tags.EndSeqNo;
+
 /**
  * @author Pekka Enberg 
  */
 public class ResendRequestMessage extends AbstractMessage {
-    private final BeginSeqNoField beginSeqNo = new BeginSeqNoField();
-    private final EndSeqNoField endSeqNo = new EndSeqNoField();
+    private final IntegerField beginSeqNo = new IntegerField(BeginSeqNo.TAG);
+    private final IntegerField endSeqNo = new IntegerField(EndSeqNo.TAG);
 
     public ResendRequestMessage() {
         this(new MessageHeader(MessageType.RESEND_REQUEST));

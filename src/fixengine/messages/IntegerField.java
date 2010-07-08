@@ -19,15 +19,19 @@ package fixengine.messages;
  * @author Pekka Enberg 
  */
 public class IntegerField extends AbstractField<Integer> {
-    public IntegerField(Tag tag) {
+    public IntegerField(Tag<IntegerField> tag) {
         this(tag, null, Required.YES);
     }
 
-    protected IntegerField(Tag tag, Integer value) {
+    protected IntegerField(Tag<IntegerField> tag, Integer value) {
         this(tag, value, Required.YES);
     }
 
-    protected IntegerField(Tag tag, Integer value, Required required) {
+    protected IntegerField(Tag<IntegerField> tag, Required required) {
+        this(tag, null, required);
+    }
+
+    protected IntegerField(Tag<IntegerField> tag, Integer value, Required required) {
         super(tag, value, required);
     }
 

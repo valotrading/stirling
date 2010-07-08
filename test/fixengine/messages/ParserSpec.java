@@ -64,7 +64,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReason.EMPTY_TAG, "TestReqId(112): Empty tag");
+            expectInvalidMessage(SessionRejectReason.EMPTY_TAG, "TestReqID(112): Empty tag");
         }
     }
 
@@ -84,7 +84,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReason.EMPTY_TAG, "SenderCompId(49): Empty tag");
+            expectInvalidMessage(SessionRejectReason.EMPTY_TAG, "SenderCompID(49): Empty tag");
         }
     }
 
@@ -131,7 +131,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReason.TAG_MULTIPLE_TIMES, "TestReqId(112): Tag multiple times");
+            expectInvalidMessage(SessionRejectReason.TAG_MULTIPLE_TIMES, "TestReqID(112): Tag multiple times");
         }
     }
 
@@ -390,7 +390,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReason.FIELD_DELIMITER_IN_VALUE, "TestReqId(112): Non-data value includes field delimiter (SOH character)");
+            expectInvalidMessage(SessionRejectReason.FIELD_DELIMITER_IN_VALUE, "TestReqID(112): Non-data value includes field delimiter (SOH character)");
         }
     }
 

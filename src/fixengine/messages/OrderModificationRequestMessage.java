@@ -17,6 +17,16 @@ package fixengine.messages;
 
 import org.joda.time.DateTime;
 
+import fixengine.tags.ClOrdID;
+import fixengine.tags.Currency;
+import fixengine.tags.MaturityMonthYear;
+import fixengine.tags.OrderQty;
+import fixengine.tags.OrigClOrdID;
+import fixengine.tags.Price;
+import fixengine.tags.SecurityType;
+import fixengine.tags.Symbol;
+import fixengine.tags.TransactTime;
+
 /**
  * This class represents the Order Cancel/Replace Request (a.k.a. Order
  * Modification Request) message.
@@ -24,17 +34,17 @@ import org.joda.time.DateTime;
  * @author Pekka Enberg
  */
 public class OrderModificationRequestMessage extends AbstractMessage implements RequestMessage, CancelRequestMessage {
-    private final MaturityMonthYearField maturityMonthYear = new MaturityMonthYearField(Required.NO);
-    private final SecurityTypeField securityType = new SecurityTypeField(Required.NO);
-    private final TransactTimeField transactTime = new TransactTimeField();
-    private final CurrencyField currency = new CurrencyField(Required.NO);
-    private final OrigClOrdIdField origClOrdId = new OrigClOrdIdField();
+    private final StringField maturityMonthYear = new StringField(MaturityMonthYear.TAG, Required.NO);
+    private final StringField securityType = new StringField(SecurityType.TAG, Required.NO);
+    private final UtcTimestampField transactTime = new UtcTimestampField(TransactTime.TAG);
+    private final StringField currency = new StringField(Currency.TAG, Required.NO);
+    private final StringField origClOrdId = new StringField(OrigClOrdID.TAG);
     private final HandlInstField handlInst = new HandlInstField();
-    private final PriceField price = new PriceField(Required.NO);
-    private final OrderQtyField orderQty = new OrderQtyField();
-    private final ClOrdIdField clOrdId = new ClOrdIdField();
+    private final FloatField price = new FloatField(Price.TAG, Required.NO);
+    private final FloatField orderQty = new FloatField(OrderQty.TAG);
+    private final StringField clOrdId = new StringField(ClOrdID.TAG);
     private final OrdTypeField ordType = new OrdTypeField();
-    private final SymbolField symbol = new SymbolField();
+    private final StringField symbol = new StringField(Symbol.TAG);
     private final SideField side = new SideField();
 
     public OrderModificationRequestMessage() {

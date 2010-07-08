@@ -22,6 +22,7 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
 import fixengine.tags.MsgType;
+import fixengine.tags.TargetCompID;
 
 /**
  * @author Pekka Enberg 
@@ -55,12 +56,12 @@ public class MessageBufferSpec extends Specification<MessageBuffer> {
         }
 
         public void retainsAlreadyAppendedTagsWhenNewTagsAreAppended() {
-            buffer.append(new TargetCompIdField("IB"));
+            buffer.append(new StringField(TargetCompID.TAG, "IB"));
             specify(buffer.toString(), must.equal("35=A" + DELIMITER + "56=IB" + DELIMITER));
         }
         
         public void retainsAlreadyAppendedTagsAtTheBackWhenNewTagsArePrefixed() {
-            buffer.prefix(new TargetCompIdField("IB"));
+            buffer.prefix(new StringField(TargetCompID.TAG, "IB"));
             specify(buffer.toString(), must.equal("56=IB" + DELIMITER + "35=A" + DELIMITER));
         }
     }

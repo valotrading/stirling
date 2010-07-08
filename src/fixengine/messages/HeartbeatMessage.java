@@ -15,11 +15,13 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.TestReqID;
+
 /**
  * @author Pekka Enberg 
  */
 public class HeartbeatMessage extends AbstractMessage {
-    private final TestReqIdField testReqId = new TestReqIdField(Required.NO);
+    private final StringField testReqId = new StringField(TestReqID.TAG, Required.NO);
 
     public HeartbeatMessage() {
         this(new MessageHeader(MessageType.HEARTBEAT));

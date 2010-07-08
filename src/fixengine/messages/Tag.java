@@ -24,16 +24,15 @@ import lang.Objects;
  * @author Pekka Enberg 
  */
 public class Tag<T extends Field> {
-    private Class<T> type;
+    private transient Class<T> type; // FIXME
     private int value;
 
-    public Tag(int value) {
-        this.value = value;
+    @Deprecated public Tag(int value) {
+        this(value, null);
     }
 
     public Tag(int value, Class<T> type) {
-        this(value);
-
+        this.value = value;
         this.type = type;
     }
 

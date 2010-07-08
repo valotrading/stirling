@@ -15,11 +15,13 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.Text;
+
 /**
  * @author Pekka Enberg 
  */
 public class LogoutMessage extends AbstractMessage {
-    private final TextField text = new TextField(Required.NO);
+    private final StringField text = new StringField(Text.TAG, Required.NO);
 
     public LogoutMessage() {
         this(new MessageHeader(MessageType.LOGOUT));

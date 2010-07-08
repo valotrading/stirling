@@ -22,7 +22,16 @@ import org.joda.time.Minutes;
 
 import fixengine.tags.BeginString;
 import fixengine.tags.BodyLength;
+import fixengine.tags.DeliverToCompID;
+import fixengine.tags.MsgSeqNum;
 import fixengine.tags.MsgType;
+import fixengine.tags.OnBehalfOfCompID;
+import fixengine.tags.OrigSendingTime;
+import fixengine.tags.PossDupFlag;
+import fixengine.tags.PossResend;
+import fixengine.tags.SenderCompID;
+import fixengine.tags.SendingTime;
+import fixengine.tags.TargetCompID;
 
 /**
  * @author Pekka Enberg 
@@ -30,17 +39,17 @@ import fixengine.tags.MsgType;
 public class MessageHeader implements Parseable {
     private static final Minutes MAX_TIME_DIFFERENCE = Minutes.TWO;
 
-    private final DeliverToCompIdField deliverToCompIdField = new DeliverToCompIdField(Required.NO);
-    private final OnBehalfOfCompIdField onBehalfOfCompId = new OnBehalfOfCompIdField(Required.NO);
-    private final OrigSendingTimeField origSendingTime = new OrigSendingTimeField(Required.NO);
-    private final PossDupFlagField possDupFlag = new PossDupFlagField(Required.NO);
-    private final PossResendField possResend = new PossResendField(Required.NO);
+    private final UtcTimestampField origSendingTime = new UtcTimestampField(OrigSendingTime.TAG, Required.NO);
+    private final StringField onBehalfOfCompID = new StringField(OnBehalfOfCompID.TAG, Required.NO);
+    private final StringField deliverToCompID = new StringField(DeliverToCompID.TAG, Required.NO);
+    private final BooleanField possDupFlag = new BooleanField(PossDupFlag.TAG, Required.NO);
+    private final BooleanField possResend = new BooleanField(PossResend.TAG, Required.NO);
+    private final StringField senderCompID = new StringField(SenderCompID.TAG);
+    private final StringField targetCompID = new StringField(TargetCompID.TAG);
     private final StringField beginString = new StringField(BeginString.TAG);
     private final IntegerField bodyLength = new IntegerField(BodyLength.TAG);
-    private final SenderCompIdField senderCompId = new SenderCompIdField();
-    private final TargetCompIdField targetCompId = new TargetCompIdField();
-    private final SendingTimeField sendingTime = new SendingTimeField();
-    private final MsgSeqNumField msgSeqNum = new MsgSeqNumField();
+    private final UtcTimestampField sendingTime = new UtcTimestampField(SendingTime.TAG);
+    private final IntegerField msgSeqNum = new IntegerField(MsgSeqNum.TAG);
     private final StringField msgType = new StringField(MsgType.TAG);
     private final Fields fields = new Fields();
 
@@ -57,10 +66,10 @@ public class MessageHeader implements Parseable {
     public MessageHeader(String msgType) {
         this.msgType.setValue(msgType);
 
-        add(senderCompId);
-        add(targetCompId);
-        add(onBehalfOfCompId);
-        add(deliverToCompIdField);
+        add(senderCompID);
+        add(targetCompID);
+        add(onBehalfOfCompID);
+        add(deliverToCompID);
         add(msgSeqNum);
         add(possDupFlag);
         add(possResend);
@@ -125,27 +134,27 @@ public class MessageHeader implements Parseable {
     }
 
     public void setSenderCompId(String senderCompId) {
-        this.senderCompId.setValue(senderCompId);
+        this.senderCompID.setValue(senderCompId);
     }
 
     public String getSenderCompId() {
-        return senderCompId.getValue();
+        return senderCompID.getValue();
     }
 
     public void setTargetCompId(String targetCompId) {
-        this.targetCompId.setValue(targetCompId);
+        this.targetCompID.setValue(targetCompId);
     }
 
     public String getTargetCompId() {
-        return targetCompId.getValue();
+        return targetCompID.getValue();
     }
 
     public void setOnBehalfOfCompId(String onBehalfOfCompId) {
-        this.onBehalfOfCompId.setValue(onBehalfOfCompId);
+        this.onBehalfOfCompID.setValue(onBehalfOfCompId);
     }
 
     public void setDeliverToCompId(String deliverToCompId) {
-        this.deliverToCompIdField.setValue(deliverToCompId);
+        this.deliverToCompID.setValue(deliverToCompId);
     }
 
     public void setMsgSeqNum(int msgSeqNum) {
@@ -193,7 +202,7 @@ public class MessageHeader implements Parseable {
     }
 
     public boolean isPointToPoint() {
-        return !onBehalfOfCompId.hasValue() && !deliverToCompIdField.hasValue();
+        return !onBehalfOfCompID.hasValue() && !deliverToCompID.hasValue();
     }
 
     public boolean hasAccurateSendingTime(DateTime currentTime) {

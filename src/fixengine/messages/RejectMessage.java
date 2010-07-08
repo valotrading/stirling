@@ -15,14 +15,18 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.RefSeqNo;
+import fixengine.tags.RefTagId;
+import fixengine.tags.Text;
+
 /**
  * @author Pekka Enberg
  */
 public class RejectMessage extends AbstractMessage {
     private final SessionRejectReasonField sessionRejectReason = new SessionRejectReasonField(Required.NO); 
-    private final RefSeqNoField refSeqNo = new RefSeqNoField(Required.YES);
-    private final RefTagIdField refTagId = new RefTagIdField(Required.NO);
-    private final TextField text = new TextField(Required.NO);
+    private final IntegerField refSeqNo = new IntegerField(RefSeqNo.TAG, Required.YES);
+    private final IntegerField refTagId = new IntegerField(RefTagId.TAG, Required.NO);
+    private final StringField text = new StringField(Text.TAG, Required.NO);
 
     public RejectMessage() {
         this(new MessageHeader(MessageType.REJECT));

@@ -15,17 +15,22 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.ClOrdID;
+import fixengine.tags.OrderID;
+import fixengine.tags.OrigClOrdID;
+import fixengine.tags.Text;
+
 /**
  * @author Pekka Enberg 
  */
 public class OrderCancelRejectMessage extends AbstractMessage {
     private final CxlRejResponseToField cxlRejResponseTo = new CxlRejResponseToField(); 
     private final CxlRejReasonField cxlRejReason = new CxlRejReasonField(Required.NO);
-    private final OrigClOrdIdField origClOrdId = new OrigClOrdIdField();
+    private final StringField origClOrdId = new StringField(OrigClOrdID.TAG);
     private final OrdStatusField ordStatus = new OrdStatusField();
-    private final TextField text = new TextField(Required.NO);
-    private final OrderIdField orderId = new OrderIdField();
-    private final ClOrdIdField clOrdId = new ClOrdIdField();
+    private final StringField text = new StringField(Text.TAG, Required.NO);
+    private final StringField orderId = new StringField(OrderID.TAG);
+    private final StringField clOrdId = new StringField(ClOrdID.TAG);
 
     public OrderCancelRejectMessage() {
         this(new MessageHeader(MessageType.ORDER_CANCEL_REJECT));

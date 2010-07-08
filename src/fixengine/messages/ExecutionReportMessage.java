@@ -15,36 +15,57 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.AvgPx;
+import fixengine.tags.ClOrdID;
+import fixengine.tags.CumQty;
+import fixengine.tags.Currency;
+import fixengine.tags.ExDestination;
+import fixengine.tags.ExecID;
+import fixengine.tags.ExecTransType;
+import fixengine.tags.LastMkt;
+import fixengine.tags.LastPx;
+import fixengine.tags.LastQty;
+import fixengine.tags.LeavesQty;
+import fixengine.tags.MaturityMonthYear;
+import fixengine.tags.OrderID;
+import fixengine.tags.OrderQty;
+import fixengine.tags.OrigClOrdID;
+import fixengine.tags.Price;
+import fixengine.tags.SecurityType;
+import fixengine.tags.Symbol;
+import fixengine.tags.Text;
+import fixengine.tags.TransactTime;
+
 /**
  * @author Pekka Enberg 
  */
 public class ExecutionReportMessage extends AbstractMessage {
     private final ExecRestatementReasonField execRestatementReason = new ExecRestatementReasonField(Required.NO);
-    private final MaturityMonthYearField maturityMonthYear = new MaturityMonthYearField(Required.NO);
-    private final ExDestinationField exDestination = new ExDestinationField(Required.NO);
+    private final StringField maturityMonthYear = new StringField(MaturityMonthYear.TAG, Required.NO);
+    private final StringField exDestination = new StringField(ExDestination.TAG, Required.NO);
     private final OrdRejReasonField ordRejReason = new OrdRejReasonField(Required.NO);
-    private final SecurityTypeField securityType = new SecurityTypeField(Required.NO);
-    private final TransactTimeField transactTime = new TransactTimeField(Required.NO);
-    private final OrigClOrdIdField origClOrdId = new OrigClOrdIdField(Required.NO);
+    private final StringField securityType = new StringField(SecurityType.TAG, Required.NO);
+    private final UtcTimestampField transactTime = new UtcTimestampField(TransactTime.TAG, Required.NO);
+    private final StringField origClOrdId = new StringField(OrigClOrdID.TAG, Required.NO);
     private final TimeInForceField timeInForce = new TimeInForceField(Required.NO);
-    private final ExecTransTypeField execTransType = new ExecTransTypeField();
-    private final CurrencyField currency = new CurrencyField(Required.NO);
-    private final ClOrdIdField clOrdId = new ClOrdIdField(Required.NO);
-    private final LastMktField lastMkt = new LastMktField(Required.NO);
-    private final LastQtyField lastQty = new LastQtyField(Required.NO);
+    private final StringField execTransType = new StringField(ExecTransType.TAG);
+    private final StringField currency = new StringField(Currency.TAG, Required.NO);
+    private final StringField clOrdId = new StringField(ClOrdID.TAG, Required.NO);
+    private final StringField lastMkt = new StringField(LastMkt.TAG, Required.NO);
+    private final FloatField lastQty = new FloatField(LastQty.TAG, Required.NO);
     private final OrdTypeField ordType = new OrdTypeField(Required.NO);
-    private final LastPxField lastPx = new LastPxField(Required.NO);
-    private final LeavesQtyField leavesQty = new LeavesQtyField();
+    private final FloatField lastPx = new FloatField(LastPx.TAG, Required.NO);
+    private final FloatField leavesQty = new FloatField(LeavesQty.TAG);
     private final OrdStatusField ordStatus = new OrdStatusField();
-    private final PriceField price = new PriceField(Required.NO);
+    private final FloatField price = new FloatField(Price.TAG, Required.NO);
     private final ExecTypeField execType = new ExecTypeField();
-    private final OrderQtyField orderQty = new OrderQtyField();
-    private final TextField text = new TextField(Required.NO);
-    private final OrderIdField orderId = new OrderIdField();
-    private final CumQtyField cumQty = new CumQtyField();
-    private final ExecIdField execId = new ExecIdField();
-    private final SymbolField symbol = new SymbolField();
-    private final AvgPxField avgPx = new AvgPxField();
+    private final FloatField orderQty = new FloatField(OrderQty.TAG);
+    private final StringField text = new StringField(Text.TAG, Required.NO);
+    private final StringField orderId = new StringField(OrderID.TAG);
+    private final FloatField cumQty = new FloatField(CumQty.TAG);
+    private final StringField execId = new StringField(ExecID.TAG);
+    private final StringField symbol = new StringField(Symbol.TAG);
+    private final FloatField avgPx = new FloatField(AvgPx.TAG);
     private final SideField side = new SideField();
 
     public ExecutionReportMessage() {

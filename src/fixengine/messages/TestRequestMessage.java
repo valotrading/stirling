@@ -15,11 +15,13 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.TestReqID;
+
 /**
  * @author Pekka Enberg 
  */
 public class TestRequestMessage extends AbstractMessage {
-    private final TestReqIdField testReqId = new TestReqIdField(Required.YES);
+    private final StringField testReqId = new StringField(TestReqID.TAG, Required.YES);
 
     public TestRequestMessage() {
         this(new MessageHeader(MessageType.TEST_REQUEST));

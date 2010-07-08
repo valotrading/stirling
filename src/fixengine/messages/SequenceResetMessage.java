@@ -15,12 +15,15 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.GapFillFlag;
+import fixengine.tags.NewSeqNo;
+
 /**
  * @author Pekka Enberg 
  */
 public class SequenceResetMessage extends AbstractMessage {
-    private GapFillFlagField gapFillFlag = new GapFillFlagField(Required.NO);
-    private NewSeqNoField newSeqNo = new NewSeqNoField();
+    private BooleanField gapFillFlag = new BooleanField(GapFillFlag.TAG, Required.NO);
+    private IntegerField newSeqNo = new IntegerField(NewSeqNo.TAG);
 
     public SequenceResetMessage() {
         this(new MessageHeader(MessageType.SEQUENCE_RESET));

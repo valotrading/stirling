@@ -16,12 +16,14 @@
 package fixengine.messages;
 
 import static fixengine.messages.EncryptMethod.NONE;
+import fixengine.tags.HeartBtInt;
+import fixengine.tags.ResetSeqNumFlag;
 
 /**
  * @author Pekka Enberg 
  */
 public class LogonMessage extends AbstractMessage {
-    private ResetSeqNumFlagField resetSeqNumFlag = new ResetSeqNumFlagField(Required.NO);
+    private BooleanField resetSeqNumFlag = new BooleanField(ResetSeqNumFlag.TAG, Required.NO);
 
     public LogonMessage() {
         this(true);
@@ -39,7 +41,7 @@ public class LogonMessage extends AbstractMessage {
         super(header);
 
         add(new EncryptMethodField(NONE));
-        add(new HeartBtIntField(30));
+        add(new IntegerField(HeartBtInt.TAG, 30));
 
         if (useResetSeqNumFlagTag) add(resetSeqNumFlag);
     }
