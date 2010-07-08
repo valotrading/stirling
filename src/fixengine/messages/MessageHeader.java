@@ -186,7 +186,7 @@ public class MessageHeader implements Parseable {
     }
 
     public boolean hasOrigSendTimeAfterSendingTime() {
-        if (!getBoolean(PossDupFlag.TAG) || !origSendingTime.hasValue()) {
+        if (!getBoolean(PossDupFlag.TAG) || !hasValue(OrigSendingTime.TAG)) {
             return true;
         }
         return !getDateTime(OrigSendingTime.TAG).isAfter(getDateTime(SendingTime.TAG));
