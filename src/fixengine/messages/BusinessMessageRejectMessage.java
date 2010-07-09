@@ -43,7 +43,7 @@ public class BusinessMessageRejectMessage extends AbstractMessage {
         visitor.visit(this);
     }
 
-    public void setBusinessRejectReason(BusinessRejectReason reason) {
+    public void setBusinessRejectReason(BusinessRejectReasonValue reason) {
         this.businessRejectReason.setValue(reason);
     }
 }

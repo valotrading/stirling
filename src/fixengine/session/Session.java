@@ -25,7 +25,7 @@ import fixengine.Config;
 import fixengine.messages.AbstractFieldsValidator;
 import fixengine.messages.AbstractMessageValidator;
 import fixengine.messages.BusinessMessageRejectMessage;
-import fixengine.messages.BusinessRejectReason;
+import fixengine.messages.BusinessRejectReasonValue;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.Field;
 import fixengine.messages.HeartbeatMessage;
@@ -132,7 +132,7 @@ public class Session {
 
                 @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {
                     queue.skip(msgSeqNum);
-                    businessReject(conn, msgType, msgSeqNum, BusinessRejectReason.UNKNOWN_MESSAGE_TYPE,
+                    businessReject(conn, msgType, msgSeqNum, BusinessRejectReasonValue.UNKNOWN_MESSAGE_TYPE,
                             "MsgType(35): Unknown message type: " + msgType);
                 }
 
@@ -251,7 +251,7 @@ public class Session {
                     }
 
                     @Override protected void error(Message message) {
-                        businessReject(conn, message.getMsgType(), message.getMsgSeqNum(), BusinessRejectReason.APPLICATION_NOT_AVAILABLE,
+                        businessReject(conn, message.getMsgType(), message.getMsgSeqNum(), BusinessRejectReasonValue.APPLICATION_NOT_AVAILABLE,
                                 "Application not available");
                     }
                 });
@@ -379,7 +379,7 @@ public class Session {
         send(conn, reject);
     }
 
-    private void businessReject(Connection conn, String msgType, int msgSeqNum, BusinessRejectReason reason, String text) {
+    private void businessReject(Connection conn, String msgType, int msgSeqNum, BusinessRejectReasonValue reason, String text) {
         BusinessMessageRejectMessage reject = new BusinessMessageRejectMessage();
         reject.setInteger(RefSeqNo.TAG, msgSeqNum);
         reject.setString(RefMsgType.TAG, msgType);

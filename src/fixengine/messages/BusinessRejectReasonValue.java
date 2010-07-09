@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum BusinessRejectReason implements Formattable<BusinessRejectReason> {
+public enum BusinessRejectReasonValue implements Formattable<BusinessRejectReasonValue> {
     /** Other.  */
     OTHER(0),
     
@@ -45,7 +45,7 @@ public enum BusinessRejectReason implements Formattable<BusinessRejectReason> {
 
     private final int value;
 
-    BusinessRejectReason(int value) {
+    BusinessRejectReasonValue(int value) {
         this.value = value;
     }
 
@@ -53,8 +53,8 @@ public enum BusinessRejectReason implements Formattable<BusinessRejectReason> {
         return Integer.toString(value);
     }
 
-    public static BusinessRejectReason parse(int value) {
-        for (BusinessRejectReason type : BusinessRejectReason.values()) {
+    public static BusinessRejectReasonValue parse(int value) {
+        for (BusinessRejectReasonValue type : BusinessRejectReasonValue.values()) {
             if (type.value == value)
                 return type;
         }

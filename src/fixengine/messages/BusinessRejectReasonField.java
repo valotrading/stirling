@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg
  */
-public class BusinessRejectReasonField extends EnumField<BusinessRejectReason> {
+public class BusinessRejectReasonField extends EnumField<BusinessRejectReasonValue> {
     private static final Tag TAG = new Tag(380);
 
     public BusinessRejectReasonField() {
@@ -26,6 +26,6 @@ public class BusinessRejectReasonField extends EnumField<BusinessRejectReason> {
     }
 
     @Override public void parse(String value) {
-        this.value = BusinessRejectReason.parse(Integer.parseInt(value));
+        this.value = BusinessRejectReasonValue.parse(Integer.parseInt(value));
     }
 }
