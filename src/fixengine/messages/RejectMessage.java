@@ -29,7 +29,7 @@ public class RejectMessage extends AbstractMessage {
     private final StringField text = new StringField(Text.TAG, Required.NO);
 
     public RejectMessage() {
-        this(new MessageHeader(MessageType.REJECT));
+        this(new MessageHeader(MsgTypeValue.REJECT));
     }
 
     public RejectMessage(MessageHeader header) {
@@ -50,11 +50,11 @@ public class RejectMessage extends AbstractMessage {
         this.refSeqNo.setValue(refSeqNo);
     }
 
-    public void setSessionRejectReason(SessionRejectReason reason) {
+    public void setSessionRejectReason(SessionRejectReasonValue reason) {
         this.sessionRejectReason.setValue(reason);
     }
 
-    public SessionRejectReason getSessionRejectReason() {
+    public SessionRejectReasonValue getSessionRejectReason() {
         return this.sessionRejectReason.getValue();
     }
 

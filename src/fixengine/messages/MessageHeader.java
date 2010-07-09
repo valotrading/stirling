@@ -46,7 +46,7 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
         this((String) null);
     }
 
-    public MessageHeader(MessageType msgType) {
+    public MessageHeader(MsgTypeValue msgType) {
         this(msgType.value());
     }
 
@@ -128,7 +128,7 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
     }
 
     public Message newMessage() {
-        MessageType type = MessageType.parse(getMsgType());
+        MsgTypeValue type = MsgTypeValue.parse(getMsgType());
         if (type == null) {
             throw new RuntimeException();
         }

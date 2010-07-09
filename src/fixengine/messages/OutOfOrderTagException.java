@@ -20,7 +20,7 @@ package fixengine.messages;
  */
 public class OutOfOrderTagException extends ParseException {
     public OutOfOrderTagException(String message) {
-        super(message, SessionRejectReason.OUT_OF_ORDER_TAG);
+        super(message, SessionRejectReasonValue.OUT_OF_ORDER_TAG);
     }
 
     private static final long serialVersionUID = 1L;

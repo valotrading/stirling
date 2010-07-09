@@ -15,7 +15,7 @@
  */
 package fixengine.messages;
 
-import static fixengine.messages.EncryptMethod.NONE;
+import static fixengine.messages.EncryptMethodValue.NONE;
 import fixengine.tags.HeartBtInt;
 import fixengine.tags.ResetSeqNumFlag;
 
@@ -26,7 +26,7 @@ public class LogonMessage extends AbstractMessage {
     private BooleanField resetSeqNumFlag = new BooleanField(ResetSeqNumFlag.TAG, Required.NO);
 
     public LogonMessage() {
-        this(new MessageHeader(MessageType.LOGON));
+        this(new MessageHeader(MsgTypeValue.LOGON));
     }
 
     public LogonMessage(MessageHeader header) {

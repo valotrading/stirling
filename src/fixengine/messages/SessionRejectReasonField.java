@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public class SessionRejectReasonField extends EnumField<SessionRejectReason> {
+public class SessionRejectReasonField extends EnumField<SessionRejectReasonValue> {
     private static final Tag TAG = new Tag(373);
 
     public SessionRejectReasonField(Required required) {
@@ -27,6 +27,6 @@ public class SessionRejectReasonField extends EnumField<SessionRejectReason> {
 
     @Override
     public void parse(String value) {
-        this.value = SessionRejectReason.parse(Integer.parseInt(value));
+        this.value = SessionRejectReasonValue.parse(Integer.parseInt(value));
     }
 }

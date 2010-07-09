@@ -18,35 +18,32 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum Side implements Formattable<Side> {
-    BUY('1'),
-    SELL('2'),
-    BUY_MINUS('3'),
-    SELL_PLUS('4'),
-    SELL_SHORT('5'),
-    SELL_SHORT_EXEMPT('6'),
-    UNDISCLOSED('7'),
-    CROSS('8'),
-    CROSS_SHORT('9'),
-    CROSS_SHORT_EXEMPT('A'),
-    AS_DEFINED('B'),    /* for multileg */
-    OPPOSITE('C');      /* for multileg */
+public enum ExecRestatementReasonValue implements Formattable<ExecRestatementReasonValue> {
+    GT_CORPORATE_ACTION(0),
+    GT_RENEWAL_RESTATEMENT(1), /* (no corporate action) */
+    VERBAL_CHANGE(2),
+    REPRICING_OF_ORDER(3),
+    BROKER_OPTION(4),
+    PARTIAL_DECLINE_OF_ORDER_QTY(5), /* (e.g. exchange-initiated partial cancel) */
+    CANCEL_ON_TRADING_HALT(6),
+    CANCEL_ON_SYSTEM_FAILURE(7),
+    MARKET_OPTION(8);
 
-    private char value;
+    private int value;
     
-    Side(char value) {
+    ExecRestatementReasonValue(int value) {
         this.value = value;
     }
 
     @Override public String value() {
-        return Character.toString(value);
+        return Integer.toString(value);
     }
 
-    public static Side parse(char value) {
-        for (Side type : Side.values()) {
+    public static ExecRestatementReasonValue parse(int value) {
+        for (ExecRestatementReasonValue type : ExecRestatementReasonValue.values()) {
             if (type.value == value)
                 return type;
         }
-        throw new InvalidValueForTagException(Character.toString(value));
+        throw new InvalidValueForTagException(Integer.toString(value));
     }
 }

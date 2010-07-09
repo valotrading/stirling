@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg
  */
-public class CxlRejResponseToField extends EnumField<CxlRejResponseTo> {
+public class CxlRejResponseToField extends EnumField<CxlRejResponseToValue> {
     private static final Tag TAG = new Tag(434);
 
     public CxlRejResponseToField() {
@@ -27,6 +27,6 @@ public class CxlRejResponseToField extends EnumField<CxlRejResponseTo> {
 
     @Override
     public void parse(String value) {
-        this.value = CxlRejResponseTo.parse(value.charAt(0));
+        this.value = CxlRejResponseToValue.parse(value.charAt(0));
     }
 }

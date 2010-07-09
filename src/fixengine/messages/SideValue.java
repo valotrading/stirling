@@ -18,13 +18,23 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum CxlRejResponseTo implements Formattable<CxlRejResponseTo> {
-    ORDER_CANCEL_REQUEST('1'),
-    ORDER_MODIFICATION_REQUEST('2');
+public enum SideValue implements Formattable<SideValue> {
+    BUY('1'),
+    SELL('2'),
+    BUY_MINUS('3'),
+    SELL_PLUS('4'),
+    SELL_SHORT('5'),
+    SELL_SHORT_EXEMPT('6'),
+    UNDISCLOSED('7'),
+    CROSS('8'),
+    CROSS_SHORT('9'),
+    CROSS_SHORT_EXEMPT('A'),
+    AS_DEFINED('B'),    /* for multileg */
+    OPPOSITE('C');      /* for multileg */
 
     private char value;
     
-    CxlRejResponseTo(char value) {
+    SideValue(char value) {
         this.value = value;
     }
 
@@ -32,8 +42,8 @@ public enum CxlRejResponseTo implements Formattable<CxlRejResponseTo> {
         return Character.toString(value);
     }
 
-    public static CxlRejResponseTo parse(char value) {
-        for (CxlRejResponseTo type : CxlRejResponseTo.values()) {
+    public static SideValue parse(char value) {
+        for (SideValue type : SideValue.values()) {
             if (type.value == value)
                 return type;
         }

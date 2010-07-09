@@ -18,19 +18,13 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum HandlInst implements Formattable<HandlInst> {
-    /** Automated execution order, private, no Broker intervention */
-    AUTOMATED_ORDER_PRIVATE('1'),
-
-    /** Automated execution order, public, Broker intervention OK */
-    AUTOMATED_ORDER_PUBLIC('2'),
-
-    /** Manual order, best execution */
-    MANUAL_ORDER('3');
+public enum CxlRejResponseToValue implements Formattable<CxlRejResponseToValue> {
+    ORDER_CANCEL_REQUEST('1'),
+    ORDER_MODIFICATION_REQUEST('2');
 
     private char value;
     
-    HandlInst(char value) {
+    CxlRejResponseToValue(char value) {
         this.value = value;
     }
 
@@ -38,8 +32,8 @@ public enum HandlInst implements Formattable<HandlInst> {
         return Character.toString(value);
     }
 
-    public static HandlInst parse(char value) {
-        for (HandlInst type : HandlInst.values()) {
+    public static CxlRejResponseToValue parse(char value) {
+        for (CxlRejResponseToValue type : CxlRejResponseToValue.values()) {
             if (type.value == value)
                 return type;
         }

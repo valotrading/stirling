@@ -33,7 +33,7 @@ public class OrderCancelRejectMessage extends AbstractMessage {
     private final StringField clOrdId = new StringField(ClOrdID.TAG);
 
     public OrderCancelRejectMessage() {
-        this(new MessageHeader(MessageType.ORDER_CANCEL_REJECT));
+        this(new MessageHeader(MsgTypeValue.ORDER_CANCEL_REJECT));
     }
 
     public OrderCancelRejectMessage(MessageHeader header) {
@@ -68,11 +68,11 @@ public class OrderCancelRejectMessage extends AbstractMessage {
         return origClOrdId.getValue();
     }
 
-    public void setOrdStatus(OrdStatus ordStatus) {
+    public void setOrdStatus(OrdStatusValue ordStatus) {
         this.ordStatus.setValue(ordStatus);
     }
 
-    public OrdStatus getOrdStatus() {
+    public OrdStatusValue getOrdStatus() {
         return ordStatus.getValue();
     }
 
@@ -80,7 +80,7 @@ public class OrderCancelRejectMessage extends AbstractMessage {
         return text.getValue();
     }
 
-    public void setCxlRejResponseTo(CxlRejResponseTo cxlRejResponseTo) {
+    public void setCxlRejResponseTo(CxlRejResponseToValue cxlRejResponseTo) {
         this.cxlRejResponseTo.setValue(cxlRejResponseTo);
     }
 

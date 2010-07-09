@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public class OrdStatusField extends EnumField<OrdStatus> {
+public class OrdStatusField extends EnumField<OrdStatusValue> {
     private static final Tag TAG = new Tag(39);
 
     public OrdStatusField() {
@@ -27,6 +27,6 @@ public class OrdStatusField extends EnumField<OrdStatus> {
 
     @Override
     public void parse(String value) {
-        this.value = OrdStatus.parse(value.charAt(0));
+        this.value = OrdStatusValue.parse(value.charAt(0));
     }
 }

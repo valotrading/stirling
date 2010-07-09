@@ -69,7 +69,7 @@ public class ExecutionReportMessage extends AbstractMessage {
     private final SideField side = new SideField();
 
     public ExecutionReportMessage() {
-        this(new MessageHeader(MessageType.EXECUTION_REPORT));
+        this(new MessageHeader(MsgTypeValue.EXECUTION_REPORT));
     }
 
     public ExecutionReportMessage(MessageHeader header) {
@@ -128,11 +128,11 @@ public class ExecutionReportMessage extends AbstractMessage {
         return text.getValue();
     }
 
-    public void setOrdStatus(OrdStatus ordStatus) {
+    public void setOrdStatus(OrdStatusValue ordStatus) {
         this.ordStatus.setValue(ordStatus);
     }
 
-    public OrdStatus getOrdStatus() {
+    public OrdStatusValue getOrdStatus() {
         return ordStatus.getValue();
     }
 
@@ -140,15 +140,15 @@ public class ExecutionReportMessage extends AbstractMessage {
         this.execId.setValue(execId);
     }
 
-    public void setExecType(ExecType execType) {
+    public void setExecType(ExecTypeValue execType) {
         this.execType.setValue(execType);
     }
 
-    public ExecType getExecType() {
+    public ExecTypeValue getExecType() {
         return execType.getValue();
     }
 
-    public ExecRestatementReason getExecRestatementReason() {
+    public ExecRestatementReasonValue getExecRestatementReason() {
         return execRestatementReason.getValue();
     }
 
@@ -156,11 +156,11 @@ public class ExecutionReportMessage extends AbstractMessage {
         this.symbol.setValue(symbol);
     }
 
-    public void setOrdType(OrdType ordType) {
+    public void setOrdType(OrdTypeValue ordType) {
         this.ordType.setValue(ordType);
     }
 
-    public void setSide(Side side) {
+    public void setSide(SideValue side) {
         this.side.setValue(side);
     }
 

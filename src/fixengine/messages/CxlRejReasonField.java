@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public class CxlRejReasonField extends EnumField<CxlRejReason> {
+public class CxlRejReasonField extends EnumField<CxlRejReasonValue> {
     private static final Tag TAG = new Tag(102);
 
     public CxlRejReasonField(Required required) {
@@ -27,6 +27,6 @@ public class CxlRejReasonField extends EnumField<CxlRejReason> {
 
     @Override
     public void parse(String value) {
-        this.value = CxlRejReason.parse(Integer.parseInt(value));
+        this.value = CxlRejReasonValue.parse(Integer.parseInt(value));
     }
 }

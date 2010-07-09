@@ -20,7 +20,7 @@ package fixengine.messages;
  */
 public class InvalidTagNumberException extends ParseException {
     public InvalidTagNumberException(String message) {
-        super(message, SessionRejectReason.INVALID_TAG_NUMBER);
+        super(message, SessionRejectReasonValue.INVALID_TAG_NUMBER);
     }
 
     private static final long serialVersionUID = 1L;

@@ -18,24 +18,31 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum OrdRejReason implements Formattable<OrdRejReason> {
-    BROKER_EXCHANGE_OPTION(0),
-    UNKNOWN_SYMBOL(1),
-    EXCHANGE_CLOSED(2),
-    ORDER_EXCEEDS_LIMIT(3),
-    TOO_LATE_TO_ENTER(4),
-    UNKNOWN_ORDER(5),
-    DUPLICATE_ORDER(6),
-    DUPLICATE_OF_VERBALLY_COMMUNICATED_ORDER(7),
-    STALE_ORDER(8),
-    TRADE_ALONG_REQUIRED(9),
-    INVALID_INVESTOR_ID(10),
-    UNSUPPORTED_ORDER_CHARACTERISTIC(11),
-    SURVEILLANCE_OPTION(12);
+public enum EncryptMethodValue implements Formattable<EncryptMethodValue> {
+    /** None / other */
+    NONE(0),
 
-    private int value;
-    
-    OrdRejReason(int value) {
+    /** PKCS (proprietary) */
+    PKCS(1),
+
+    /** DES (ECB mode) */
+    DES(2),
+
+    /** PKCS/DES (proprietary) */
+    PKCS_DES(3),
+
+    /** PGP/DES (defunct) */
+    PGP_DES(4),
+
+    /** PGP/DES-MD5 */
+    PGP_DES_MD5(5),
+
+    /** PEM/DES-MD5 */
+    PEM_DES_MD5(6);
+
+    private final int value;
+
+    EncryptMethodValue(int value) {
         this.value = value;
     }
 
@@ -43,8 +50,8 @@ public enum OrdRejReason implements Formattable<OrdRejReason> {
         return Integer.toString(value);
     }
 
-    public static OrdRejReason parse(int value) {
-        for (OrdRejReason type : OrdRejReason.values()) {
+    public static EncryptMethodValue parse(int value) {
+        for (EncryptMethodValue type : EncryptMethodValue.values()) {
             if (type.value == value)
                 return type;
         }

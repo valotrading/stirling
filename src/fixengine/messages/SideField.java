@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public class SideField extends EnumField<Side> {
+public class SideField extends EnumField<SideValue> {
     private static final Tag TAG = new Tag(54);
 
     public SideField() {
@@ -27,6 +27,6 @@ public class SideField extends EnumField<Side> {
 
     @Override
     public void parse(String value) {
-        this.value = Side.parse(value.charAt(0));
+        this.value = SideValue.parse(value.charAt(0));
     }
 }

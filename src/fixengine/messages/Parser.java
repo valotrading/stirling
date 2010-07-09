@@ -26,7 +26,7 @@ import fixengine.tags.MsgType;
 public class Parser {
     public interface Callback {
         void message(Message m);
-        void invalidMessage(int msgSeqNum, SessionRejectReason reason, String text);
+        void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text);
         void unsupportedMsgType(String msgType, int msgSeqNum);
         void invalidMsgType(String msgType, int msgSeqNum);
         void garbledMessage(String text);

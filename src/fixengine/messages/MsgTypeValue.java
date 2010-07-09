@@ -20,7 +20,7 @@ import org.apache.commons.lang.CharUtils;
 /**
  * @author Pekka Enberg
  */
-public enum MessageType {
+public enum MsgTypeValue {
     HEARTBEAT("0") {
         @Override public Message newMessage(MessageHeader header) {
             return new HeartbeatMessage(header);
@@ -89,7 +89,7 @@ public enum MessageType {
 
     private String value;
 
-    MessageType(String value) {
+    MsgTypeValue(String value) {
         this.value = value;
     }
 
@@ -99,10 +99,10 @@ public enum MessageType {
         return value;
     }
 
-    public static MessageType parse(String value) {
+    public static MsgTypeValue parse(String value) {
         if (!isValid(value))
             throw new InvalidMsgTypeException("MsgType(35): Invalid message type: " + value);
-        for (MessageType type : MessageType.values()) {
+        for (MsgTypeValue type : MsgTypeValue.values()) {
             if (type.value.equals(value))
                 return type;
         }

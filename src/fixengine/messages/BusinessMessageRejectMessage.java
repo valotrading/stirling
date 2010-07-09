@@ -25,7 +25,7 @@ import fixengine.tags.Text;
  */
 public class BusinessMessageRejectMessage extends AbstractMessage {
     public BusinessMessageRejectMessage() {
-        this(new MessageHeader(MessageType.BUSINESS_MESSAGE_REJECT));
+        this(new MessageHeader(MsgTypeValue.BUSINESS_MESSAGE_REJECT));
     }
 
     public BusinessMessageRejectMessage(MessageHeader header) {

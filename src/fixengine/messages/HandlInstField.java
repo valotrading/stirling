@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public class HandlInstField extends EnumField<HandlInst> {
+public class HandlInstField extends EnumField<HandlInstValue> {
     private static final Tag TAG = new Tag(21);
 
     public HandlInstField() {
@@ -27,6 +27,6 @@ public class HandlInstField extends EnumField<HandlInst> {
 
     @Override
     public void parse(String value) {
-        this.value = HandlInst.parse(value.charAt(0));
+        this.value = HandlInstValue.parse(value.charAt(0));
     }
 }

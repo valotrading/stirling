@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public class TimeInForceField extends EnumField<TimeInForce> {
+public class TimeInForceField extends EnumField<TimeInForceValue> {
     public static final Tag TAG = new Tag(59);
 
     public TimeInForceField(Required required) {
@@ -26,6 +26,6 @@ public class TimeInForceField extends EnumField<TimeInForce> {
     }
 
     @Override public void parse(String value) {
-        this.value = TimeInForce.parse(value.charAt(0));
+        this.value = TimeInForceValue.parse(value.charAt(0));
     }
 }

@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum OrdType implements Formattable<OrdType> {
+public enum OrdTypeValue implements Formattable<OrdTypeValue> {
     MARKET('1'),
     LIMIT('2'),
     STOP('3'),
@@ -45,7 +45,7 @@ public enum OrdType implements Formattable<OrdType> {
 
     private char value;
     
-    OrdType(char value) {
+    OrdTypeValue(char value) {
         this.value = value;
     }
 
@@ -53,8 +53,8 @@ public enum OrdType implements Formattable<OrdType> {
         return Character.toString(value);
     }
 
-    public static OrdType parse(char value) {
-        for (OrdType type : OrdType.values()) {
+    public static OrdTypeValue parse(char value) {
+        for (OrdTypeValue type : OrdTypeValue.values()) {
             if (type.value == value)
                 return type;
         }

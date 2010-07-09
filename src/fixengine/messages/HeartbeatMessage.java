@@ -22,7 +22,7 @@ import fixengine.tags.TestReqID;
  */
 public class HeartbeatMessage extends AbstractMessage {
     public HeartbeatMessage() {
-        this(new MessageHeader(MessageType.HEARTBEAT));
+        this(new MessageHeader(MsgTypeValue.HEARTBEAT));
     }
 
     public HeartbeatMessage(MessageHeader header) {

@@ -48,7 +48,7 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
     private final SideField side = new SideField();
 
     public OrderModificationRequestMessage() {
-        this(new MessageHeader(MessageType.ORDER_MODIFICATION_REQUEST));
+        this(new MessageHeader(MsgTypeValue.ORDER_MODIFICATION_REQUEST));
     }
 
     public OrderModificationRequestMessage(MessageHeader header) {
@@ -84,7 +84,7 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
         return clOrdId.getValue();
     }
 
-    public void setHandlInst(HandlInst handlInst) {
+    public void setHandlInst(HandlInstValue handlInst) {
         this.handlInst.setValue(handlInst);
     }
 
@@ -104,11 +104,11 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
         this.maturityMonthYear.setValue(maturityMonthYear);
     }
 
-    public void setSide(Side side) {
+    public void setSide(SideValue side) {
         this.side.setValue(side);
     }
 
-    public Side getSide() {
+    public SideValue getSide() {
         return side.getValue();
     }
 
@@ -124,7 +124,7 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
         return orderQty.getValue();
     }
 
-    public void setOrdType(OrdType ordType) {
+    public void setOrdType(OrdTypeValue ordType) {
         this.ordType.setValue(ordType);
     }
 
@@ -136,7 +136,7 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
         this.price.setValue(price);
     }
 
-    public OrdType getOrdType() {
+    public OrdTypeValue getOrdType() {
         return this.ordType.getValue();
     }
 

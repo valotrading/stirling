@@ -20,7 +20,7 @@ package fixengine.messages;
  */
 public class InvalidValueException extends ParseException {
     public InvalidValueException(String message) {
-        super(message, SessionRejectReason.INVALID_VALUE);
+        super(message, SessionRejectReasonValue.INVALID_VALUE);
     }
 
     private static final long serialVersionUID = 1L;

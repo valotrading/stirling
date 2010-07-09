@@ -23,7 +23,7 @@ package fixengine.messages;
  * 
  * @author Pekka Enberg
  */
-public class CustomerOrFirmField extends EnumField<CustomerOrFirm> {
+public class CustomerOrFirmField extends EnumField<CustomerOrFirmValue> {
     private static final Tag TAG = new Tag(204);
 
     public CustomerOrFirmField(Required required) {
@@ -32,6 +32,6 @@ public class CustomerOrFirmField extends EnumField<CustomerOrFirm> {
 
     @Override
     public void parse(String value) {
-        this.value = CustomerOrFirm.parse(Integer.parseInt(value));
+        this.value = CustomerOrFirmValue.parse(Integer.parseInt(value));
     }
 }

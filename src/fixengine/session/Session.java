@@ -37,7 +37,7 @@ import fixengine.messages.Parser;
 import fixengine.messages.RejectMessage;
 import fixengine.messages.ResendRequestMessage;
 import fixengine.messages.SequenceResetMessage;
-import fixengine.messages.SessionRejectReason;
+import fixengine.messages.SessionRejectReasonValue;
 import fixengine.messages.TestRequestMessage;
 import fixengine.messages.Validator;
 import fixengine.session.store.SessionStore;
@@ -126,7 +126,7 @@ public class Session {
                         syncMessages(conn);
                 }
 
-                @Override public void invalidMessage(int msgSeqNum, SessionRejectReason reason, String text) {
+                @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
                     queue.skip(msgSeqNum);
                     sessionReject(conn, msgSeqNum, reason, text);
                 }
@@ -139,7 +139,7 @@ public class Session {
 
                 @Override public void invalidMsgType(String msgType, int msgSeqNum) {
                     queue.skip(msgSeqNum);
-                    sessionReject(conn, msgSeqNum, SessionRejectReason.INVALID_MSG_TYPE, "MsgType(35): Invalid message type: " + msgType);
+                    sessionReject(conn, msgSeqNum, SessionRejectReasonValue.INVALID_MSG_TYPE, "MsgType(35): Invalid message type: " + msgType);
                 }
 
                 @Override public void garbledMessage(String text) {
@@ -282,7 +282,7 @@ public class Session {
                     }
 
                     @Override protected void error(Message message) {
-                        sessionReject(conn, message, SessionRejectReason.COMP_ID_PROBLEM, "Invalid SenderCompId(49): "
+                        sessionReject(conn, message, SessionRejectReasonValue.COMP_ID_PROBLEM, "Invalid SenderCompId(49): "
                                 + message.getSenderCompId());
                         terminate(conn, message, message.getSenderCompId());
                     }
@@ -294,7 +294,7 @@ public class Session {
 
                     @Override protected void error(Message message) {
                         String text = "OrigSendTime " + message.getOrigSendingTime() + " after " + message.getSendingTime();
-                        sessionReject(conn, message, SessionRejectReason.SENDING_TIME_ACCURACY_PROBLEM, text);
+                        sessionReject(conn, message, SessionRejectReasonValue.SENDING_TIME_ACCURACY_PROBLEM, text);
                         terminate(conn, message, text);
                     }
                 });
@@ -305,7 +305,7 @@ public class Session {
 
                     @Override protected void error(Message message) {
                         String text = "SendingTime is invalid: " + message.getSendingTime();
-                        sessionReject(conn, message, SessionRejectReason.SENDING_TIME_ACCURACY_PROBLEM, text);
+                        sessionReject(conn, message, SessionRejectReasonValue.SENDING_TIME_ACCURACY_PROBLEM, text);
                         terminate(conn, message, text);
                     }
                 });
@@ -315,7 +315,7 @@ public class Session {
                     }
 
                     @Override protected void error(Message message) {
-                        sessionReject(conn, message, SessionRejectReason.TAG_MISSING, "OrigSendingTime(122) is missing");
+                        sessionReject(conn, message, SessionRejectReasonValue.TAG_MISSING, "OrigSendingTime(122) is missing");
                     }
                 });
                 add(new AbstractMessageValidator() {
@@ -324,7 +324,7 @@ public class Session {
                     }
 
                     @Override protected void error(Message message) {
-                        sessionReject(conn, message, SessionRejectReason.COMP_ID_PROBLEM, "Third-party message routing is not supported");
+                        sessionReject(conn, message, SessionRejectReasonValue.COMP_ID_PROBLEM, "Third-party message routing is not supported");
                     }
                 });
                 add(new AbstractFieldsValidator() {
@@ -333,7 +333,7 @@ public class Session {
                     }
 
                     @Override protected void error(Message message, Field field) {
-                        sessionReject(conn, message, SessionRejectReason.INVALID_TAG, toString(field) + ": Invalid tag");
+                        sessionReject(conn, message, SessionRejectReasonValue.INVALID_TAG, toString(field) + ": Invalid tag");
                     }
                 });
                 add(new AbstractFieldsValidator() {
@@ -342,7 +342,7 @@ public class Session {
                     }
 
                     @Override protected void error(Message message, Field field) {
-                        sessionReject(conn, message, SessionRejectReason.INVALID_TAG_NUMBER, toString(field) + ": Invalid tag number");
+                        sessionReject(conn, message, SessionRejectReasonValue.INVALID_TAG_NUMBER, toString(field) + ": Invalid tag number");
                     }
                 });
                 add(new AbstractFieldsValidator() {
@@ -351,7 +351,7 @@ public class Session {
                     }
 
                     @Override protected void error(Message message, Field field) {
-                        sessionReject(conn, message, SessionRejectReason.TAG_MISSING, toString(field) + ": Tag missing");
+                        sessionReject(conn, message, SessionRejectReasonValue.TAG_MISSING, toString(field) + ": Tag missing");
                     }
                 });
             }
@@ -368,11 +368,11 @@ public class Session {
         return queue.hasSeqNumGap();
     }
 
-    private void sessionReject(Connection conn, Message message, SessionRejectReason reason, String text) {
+    private void sessionReject(Connection conn, Message message, SessionRejectReasonValue reason, String text) {
         sessionReject(conn, message.getMsgSeqNum(), reason, text);
     }
 
-    private void sessionReject(Connection conn, int msgSeqNum, SessionRejectReason reason, String text) {
+    private void sessionReject(Connection conn, int msgSeqNum, SessionRejectReasonValue reason, String text) {
         RejectMessage reject = new RejectMessage();
         reject.setRefSeqNo(msgSeqNum);
         reject.setSessionRejectReason(reason);

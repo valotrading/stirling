@@ -21,8 +21,8 @@ package fixengine.messages;
 public interface RequestMessage {
     String getOrigClOrdId();
     String getClOrdId();
-    OrdType getOrdType();
+    OrdTypeValue getOrdType();
     double getOrderQty();
     String getSymbol();
-    Side getSide();
+    SideValue getSide();
 }

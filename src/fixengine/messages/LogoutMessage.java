@@ -24,7 +24,7 @@ public class LogoutMessage extends AbstractMessage {
     private final StringField text = new StringField(Text.TAG, Required.NO);
 
     public LogoutMessage() {
-        this(new MessageHeader(MessageType.LOGOUT));
+        this(new MessageHeader(MsgTypeValue.LOGOUT));
     }
 
     public LogoutMessage(MessageHeader header) {

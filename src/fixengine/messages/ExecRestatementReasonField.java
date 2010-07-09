@@ -21,7 +21,7 @@ package fixengine.messages;
  * 
  * @author Pekka Enberg
  */
-public class ExecRestatementReasonField extends EnumField<ExecRestatementReason> {
+public class ExecRestatementReasonField extends EnumField<ExecRestatementReasonValue> {
     private static final Tag TAG = new Tag(378);
 
     public ExecRestatementReasonField(Required required) {
@@ -30,6 +30,6 @@ public class ExecRestatementReasonField extends EnumField<ExecRestatementReason>
 
     @Override
     public void parse(String value) {
-        this.value = ExecRestatementReason.parse(Integer.parseInt(value));
+        this.value = ExecRestatementReasonValue.parse(Integer.parseInt(value));
     }
 }

@@ -24,7 +24,7 @@ public class TestRequestMessage extends AbstractMessage {
     private final StringField testReqId = new StringField(TestReqID.TAG, Required.YES);
 
     public TestRequestMessage() {
-        this(new MessageHeader(MessageType.TEST_REQUEST));
+        this(new MessageHeader(MsgTypeValue.TEST_REQUEST));
     }
 
     public TestRequestMessage(MessageHeader header) {

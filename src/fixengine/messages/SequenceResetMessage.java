@@ -26,7 +26,7 @@ public class SequenceResetMessage extends AbstractMessage {
     private IntegerField newSeqNo = new IntegerField(NewSeqNo.TAG);
 
     public SequenceResetMessage() {
-        this(new MessageHeader(MessageType.SEQUENCE_RESET));
+        this(new MessageHeader(MsgTypeValue.SEQUENCE_RESET));
     }
 
     public SequenceResetMessage(MessageHeader header) {

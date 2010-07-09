@@ -81,7 +81,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReason.EMPTY_TAG, "TestReqID(112): Empty tag");
+            expectInvalidMessage(SessionRejectReasonValue.EMPTY_TAG, "TestReqID(112): Empty tag");
         }
     }
 
@@ -101,7 +101,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReason.EMPTY_TAG, "SenderCompID(49): Empty tag");
+            expectInvalidMessage(SessionRejectReasonValue.EMPTY_TAG, "SenderCompID(49): Empty tag");
         }
     }
 
@@ -116,7 +116,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReason.INVALID_VALUE_FORMAT, "SendingTime(52): Invalid value format");
+            expectInvalidMessage(SessionRejectReasonValue.INVALID_VALUE_FORMAT, "SendingTime(52): Invalid value format");
         }
     }
 
@@ -132,7 +132,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReason.INVALID_VALUE, "EncryptMethod(98): Invalid value");
+            expectInvalidMessage(SessionRejectReasonValue.INVALID_VALUE, "EncryptMethod(98): Invalid value");
         }
     }
 
@@ -148,7 +148,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReason.TAG_MULTIPLE_TIMES, "TestReqID(112): Tag multiple times");
+            expectInvalidMessage(SessionRejectReasonValue.TAG_MULTIPLE_TIMES, "TestReqID(112): Tag multiple times");
         }
     }
 
@@ -361,7 +361,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReason.INVALID_TAG_NUMBER, "Invalid tag number: 9898");
+            expectInvalidMessage(SessionRejectReasonValue.INVALID_TAG_NUMBER, "Invalid tag number: 9898");
         }
     }
 
@@ -377,7 +377,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReason.INVALID_TAG, "Tag not defined for this message: 88");
+            expectInvalidMessage(SessionRejectReasonValue.INVALID_TAG, "Tag not defined for this message: 88");
         }
     }
 
@@ -392,7 +392,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReason.OUT_OF_ORDER_TAG, "SendingTime(52): Out of order tag");
+            expectInvalidMessage(SessionRejectReasonValue.OUT_OF_ORDER_TAG, "SendingTime(52): Out of order tag");
         }
     }
 
@@ -407,7 +407,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReason.FIELD_DELIMITER_IN_VALUE, "TestReqID(112): Non-data value includes field delimiter (SOH character)");
+            expectInvalidMessage(SessionRejectReasonValue.FIELD_DELIMITER_IN_VALUE, "TestReqID(112): Non-data value includes field delimiter (SOH character)");
         }
     }
 
@@ -440,7 +440,7 @@ public class ParserSpec extends Specification<String> {
         }
     }
 
-    private void expectInvalidMessage(final SessionRejectReason reason, final String text) {
+    private void expectInvalidMessage(final SessionRejectReasonValue reason, final String text) {
         checking(new Expectations() {{
             one(callback).invalidMessage(1, reason, text);
         }});

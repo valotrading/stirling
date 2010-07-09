@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public class OrdRejReasonField extends EnumField<OrdRejReason> {
+public class OrdRejReasonField extends EnumField<OrdRejReasonValue> {
     private static final Tag TAG = new Tag(103);
 
     public OrdRejReasonField(Required required) {
@@ -27,6 +27,6 @@ public class OrdRejReasonField extends EnumField<OrdRejReason> {
 
     @Override
     public void parse(String value) {
-        this.value = OrdRejReason.parse(Integer.parseInt(value));
+        this.value = OrdRejReasonValue.parse(Integer.parseInt(value));
     }
 }

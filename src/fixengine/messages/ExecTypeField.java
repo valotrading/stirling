@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public class ExecTypeField extends EnumField<ExecType> {
+public class ExecTypeField extends EnumField<ExecTypeValue> {
     private static final Tag TAG = new Tag(150);
 
     public ExecTypeField() {
@@ -27,6 +27,6 @@ public class ExecTypeField extends EnumField<ExecType> {
 
     @Override
     public void parse(String value) {
-        this.value = ExecType.parse(value.charAt(0));
+        this.value = ExecTypeValue.parse(value.charAt(0));
     }
 }

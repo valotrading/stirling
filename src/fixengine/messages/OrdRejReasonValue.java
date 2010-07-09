@@ -18,38 +18,36 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum OrdStatus implements Formattable<OrdStatus> {
-    NEW('0'),
-    PARTIALLY_FILLED('1'),
-    FILLED('2'),
-    DONE_FOR_DAY('3'),
-    CANCELED('4'),
-    REPLACED('5'),
-    PENDING_CANCEL('6'),
-    STOPPED('7'),
-    REJECTED('8'),
-    SUSPENDED('9'),
-    PENDING_NEW('A'),
-    CALCULATED('B'),
-    EXPIRED('C'),
-    ACCEPTED_FOR_BIDDING('D'),
-    PENDING_REPLACE('E');
+public enum OrdRejReasonValue implements Formattable<OrdRejReasonValue> {
+    BROKER_EXCHANGE_OPTION(0),
+    UNKNOWN_SYMBOL(1),
+    EXCHANGE_CLOSED(2),
+    ORDER_EXCEEDS_LIMIT(3),
+    TOO_LATE_TO_ENTER(4),
+    UNKNOWN_ORDER(5),
+    DUPLICATE_ORDER(6),
+    DUPLICATE_OF_VERBALLY_COMMUNICATED_ORDER(7),
+    STALE_ORDER(8),
+    TRADE_ALONG_REQUIRED(9),
+    INVALID_INVESTOR_ID(10),
+    UNSUPPORTED_ORDER_CHARACTERISTIC(11),
+    SURVEILLANCE_OPTION(12);
 
-    private char value;
+    private int value;
     
-    OrdStatus(char value) {
+    OrdRejReasonValue(int value) {
         this.value = value;
     }
 
     @Override public String value() {
-        return Character.toString(value);
+        return Integer.toString(value);
     }
 
-    public static OrdStatus parse(char value) {
-        for (OrdStatus type : OrdStatus.values()) {
+    public static OrdRejReasonValue parse(int value) {
+        for (OrdRejReasonValue type : OrdRejReasonValue.values()) {
             if (type.value == value)
                 return type;
         }
-        throw new InvalidValueForTagException(Character.toString(value));
+        throw new InvalidValueForTagException(Integer.toString(value));
     }
 }

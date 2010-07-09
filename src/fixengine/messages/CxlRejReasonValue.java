@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum CxlRejReason implements Formattable<CxlRejReason> {
+public enum CxlRejReasonValue implements Formattable<CxlRejReasonValue> {
     /** Too late to cancel.  */
     TOO_LATE_TO_CANCEL(0),
 
@@ -42,7 +42,7 @@ public enum CxlRejReason implements Formattable<CxlRejReason> {
 
     private int value;
     
-    CxlRejReason(int value) {
+    CxlRejReasonValue(int value) {
         this.value = value;
     }
 
@@ -50,8 +50,8 @@ public enum CxlRejReason implements Formattable<CxlRejReason> {
         return Integer.toString(value);
     }
 
-    public static CxlRejReason parse(int value) {
-        for (CxlRejReason type : CxlRejReason.values()) {
+    public static CxlRejReasonValue parse(int value) {
+        for (CxlRejReasonValue type : CxlRejReasonValue.values()) {
             if (type.value == value)
                 return type;
         }

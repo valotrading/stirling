@@ -18,30 +18,19 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum ExecType implements Formattable<ExecType> {
-    NEW('0'),
-    PARTIAL_FILL('1'),
-    FILL('2'),
-    DONE_FOR_DAY('3'),
-    CANCELED('4'),
-    REPLACE('5'),
-    PENDING_CANCEL('6'),
-    STOPPED('7'),
-    REJECTED('8'),
-    SUSPENDED('9'),
-    PENDING_NEW('A'),
-    CALCULATED('B'),
-    EXPIRED('C'),
-    RESTATED('D'),
-    PENDING_REPLACE('E'),
-    TRADE('F'),
-    TRADE_CORRECT('G'),
-    TRADE_CANCEL('H'),
-    ORDER_STATUS('I');
+public enum HandlInstValue implements Formattable<HandlInstValue> {
+    /** Automated execution order, private, no Broker intervention */
+    AUTOMATED_ORDER_PRIVATE('1'),
+
+    /** Automated execution order, public, Broker intervention OK */
+    AUTOMATED_ORDER_PUBLIC('2'),
+
+    /** Manual order, best execution */
+    MANUAL_ORDER('3');
 
     private char value;
     
-    ExecType(char value) {
+    HandlInstValue(char value) {
         this.value = value;
     }
 
@@ -49,8 +38,8 @@ public enum ExecType implements Formattable<ExecType> {
         return Character.toString(value);
     }
 
-    public static ExecType parse(char value) {
-        for (ExecType type : ExecType.values()) {
+    public static HandlInstValue parse(char value) {
+        for (HandlInstValue type : HandlInstValue.values()) {
             if (type.value == value)
                 return type;
         }

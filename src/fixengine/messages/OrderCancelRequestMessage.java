@@ -41,7 +41,7 @@ public class OrderCancelRequestMessage extends AbstractMessage implements Reques
     private final SideField side = new SideField();
 
     public OrderCancelRequestMessage() {
-        this(new MessageHeader(MessageType.ORDER_CANCEL_REQUEST));
+        this(new MessageHeader(MsgTypeValue.ORDER_CANCEL_REQUEST));
     }
 
     public OrderCancelRequestMessage(MessageHeader header) {
@@ -93,11 +93,11 @@ public class OrderCancelRequestMessage extends AbstractMessage implements Reques
         this.maturityMonthYear.setValue(maturityMonthYear);
     }
 
-    public void setSide(Side side) {
+    public void setSide(SideValue side) {
         this.side.setValue(side);
     }
 
-    public Side getSide() {
+    public SideValue getSide() {
         return side.getValue();
     }
     
@@ -113,7 +113,7 @@ public class OrderCancelRequestMessage extends AbstractMessage implements Reques
         return orderQty.getValue();
     }
 
-    public OrdType getOrdType() {
+    public OrdTypeValue getOrdType() {
         return null;
     }
 

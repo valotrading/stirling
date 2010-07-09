@@ -18,32 +18,42 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum ExecRestatementReason implements Formattable<ExecRestatementReason> {
-    GT_CORPORATE_ACTION(0),
-    GT_RENEWAL_RESTATEMENT(1), /* (no corporate action) */
-    VERBAL_CHANGE(2),
-    REPRICING_OF_ORDER(3),
-    BROKER_OPTION(4),
-    PARTIAL_DECLINE_OF_ORDER_QTY(5), /* (e.g. exchange-initiated partial cancel) */
-    CANCEL_ON_TRADING_HALT(6),
-    CANCEL_ON_SYSTEM_FAILURE(7),
-    MARKET_OPTION(8);
+public enum ExecTypeValue implements Formattable<ExecTypeValue> {
+    NEW('0'),
+    PARTIAL_FILL('1'),
+    FILL('2'),
+    DONE_FOR_DAY('3'),
+    CANCELED('4'),
+    REPLACE('5'),
+    PENDING_CANCEL('6'),
+    STOPPED('7'),
+    REJECTED('8'),
+    SUSPENDED('9'),
+    PENDING_NEW('A'),
+    CALCULATED('B'),
+    EXPIRED('C'),
+    RESTATED('D'),
+    PENDING_REPLACE('E'),
+    TRADE('F'),
+    TRADE_CORRECT('G'),
+    TRADE_CANCEL('H'),
+    ORDER_STATUS('I');
 
-    private int value;
+    private char value;
     
-    ExecRestatementReason(int value) {
+    ExecTypeValue(char value) {
         this.value = value;
     }
 
     @Override public String value() {
-        return Integer.toString(value);
+        return Character.toString(value);
     }
 
-    public static ExecRestatementReason parse(int value) {
-        for (ExecRestatementReason type : ExecRestatementReason.values()) {
+    public static ExecTypeValue parse(char value) {
+        for (ExecTypeValue type : ExecTypeValue.values()) {
             if (type.value == value)
                 return type;
         }
-        throw new InvalidValueForTagException(Integer.toString(value));
+        throw new InvalidValueForTagException(Character.toString(value));
     }
 }

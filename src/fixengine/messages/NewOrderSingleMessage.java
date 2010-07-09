@@ -46,7 +46,7 @@ public class NewOrderSingleMessage extends AbstractMessage implements RequestMes
     private final SideField side = new SideField();
 
     public NewOrderSingleMessage() {
-        this(new MessageHeader(MessageType.NEW_ORDER_SINGLE));
+        this(new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE));
     }
 
     public NewOrderSingleMessage(MessageHeader header) {
@@ -88,7 +88,7 @@ public class NewOrderSingleMessage extends AbstractMessage implements RequestMes
         this.currency.setValue(currency);
     }
 
-    public void setHandlInst(HandlInst handlInst) {
+    public void setHandlInst(HandlInstValue handlInst) {
         this.handlInst.setValue(handlInst);
     }
 
@@ -96,11 +96,11 @@ public class NewOrderSingleMessage extends AbstractMessage implements RequestMes
         this.exDestination.setValue(exDestination);
     }
 
-    public void setSide(Side side) {
+    public void setSide(SideValue side) {
         this.side.setValue(side);
     }
 
-    public Side getSide() {
+    public SideValue getSide() {
         return side.getValue();
     }
 
@@ -108,11 +108,11 @@ public class NewOrderSingleMessage extends AbstractMessage implements RequestMes
         this.transactTime.setValue(transactTime);
     }
 
-    public void setOrdType(OrdType ordType) {
+    public void setOrdType(OrdTypeValue ordType) {
         this.ordType.setValue(ordType);
     }
 
-    public OrdType getOrdType() {
+    public OrdTypeValue getOrdType() {
         return ordType.getValue();
     }
 
@@ -144,7 +144,7 @@ public class NewOrderSingleMessage extends AbstractMessage implements RequestMes
         this.price.setValue(price);
     }
 
-    public void setCustomerOrFirm(CustomerOrFirm customerOrFirm) {
+    public void setCustomerOrFirm(CustomerOrFirmValue customerOrFirm) {
         this.customerOrFirm.setValue(customerOrFirm);
     }
 }

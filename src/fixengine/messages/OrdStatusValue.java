@@ -18,25 +18,38 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum CustomerOrFirm implements Formattable<CustomerOrFirm> {
-    CUSTOMER(0),
-    FIRM(1);
+public enum OrdStatusValue implements Formattable<OrdStatusValue> {
+    NEW('0'),
+    PARTIALLY_FILLED('1'),
+    FILLED('2'),
+    DONE_FOR_DAY('3'),
+    CANCELED('4'),
+    REPLACED('5'),
+    PENDING_CANCEL('6'),
+    STOPPED('7'),
+    REJECTED('8'),
+    SUSPENDED('9'),
+    PENDING_NEW('A'),
+    CALCULATED('B'),
+    EXPIRED('C'),
+    ACCEPTED_FOR_BIDDING('D'),
+    PENDING_REPLACE('E');
 
-    private int value;
+    private char value;
     
-    CustomerOrFirm(int value) {
+    OrdStatusValue(char value) {
         this.value = value;
     }
 
     @Override public String value() {
-        return Integer.toString(value);
+        return Character.toString(value);
     }
 
-    public static CustomerOrFirm parse(int value) {
-        for (CustomerOrFirm type : CustomerOrFirm.values()) {
+    public static OrdStatusValue parse(char value) {
+        for (OrdStatusValue type : OrdStatusValue.values()) {
             if (type.value == value)
                 return type;
         }
-        throw new InvalidValueForTagException(Integer.toString(value));
+        throw new InvalidValueForTagException(Character.toString(value));
     }
 }

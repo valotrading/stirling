@@ -18,10 +18,10 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public class EncryptMethodField extends EnumField<EncryptMethod> {
+public class EncryptMethodField extends EnumField<EncryptMethodValue> {
     private static final Tag TAG = new Tag(98);
 
-    public EncryptMethodField(EncryptMethod method) {
+    public EncryptMethodField(EncryptMethodValue method) {
         super(TAG, Required.YES);
         
         setValue(method);
@@ -29,6 +29,6 @@ public class EncryptMethodField extends EnumField<EncryptMethod> {
 
     @Override
     public void parse(String value) {
-        this.value = EncryptMethod.parse(Integer.parseInt(value));
+        this.value = EncryptMethodValue.parse(Integer.parseInt(value));
     }
 }

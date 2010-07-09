@@ -26,7 +26,7 @@ public class ResendRequestMessage extends AbstractMessage {
     private final IntegerField endSeqNo = new IntegerField(EndSeqNo.TAG);
 
     public ResendRequestMessage() {
-        this(new MessageHeader(MessageType.RESEND_REQUEST));
+        this(new MessageHeader(MsgTypeValue.RESEND_REQUEST));
     }
 
     public ResendRequestMessage(MessageHeader header) {
