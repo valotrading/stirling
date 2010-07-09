@@ -44,6 +44,7 @@ import fixengine.session.store.SessionStore;
 import fixengine.tags.BusinessRejectReason;
 import fixengine.tags.RefMsgType;
 import fixengine.tags.RefSeqNo;
+import fixengine.tags.SessionRejectReason;
 import fixengine.tags.TestReqID;
 import fixengine.tags.Text;
 
@@ -375,7 +376,7 @@ public class Session {
     private void sessionReject(Connection conn, int msgSeqNum, SessionRejectReasonValue reason, String text) {
         RejectMessage reject = new RejectMessage();
         reject.setRefSeqNo(msgSeqNum);
-        reject.setSessionRejectReason(reason);
+        reject.setEnum(SessionRejectReason.TAG, reason);
         reject.setText(text);
         send(conn, reject);
     }

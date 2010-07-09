@@ -15,25 +15,25 @@
  */
 package fixengine.tags;
 
-import fixengine.messages.BusinessRejectReasonValue;
+import fixengine.messages.CxlRejReasonValue;
 import fixengine.messages.EnumField;
 import fixengine.messages.Required;
 import fixengine.messages.Tag;
 
-public class BusinessRejectReason extends Tag<BusinessRejectReason.Field> {
-    public static final BusinessRejectReason TAG = new BusinessRejectReason();
+public class CxlRejReason extends Tag<CxlRejReason.Field> {
+    public static final CxlRejReason TAG = new CxlRejReason();
 
-    public BusinessRejectReason() {
-        super(380, Field.class);
+    public CxlRejReason() {
+        super(102, Field.class);
     }
 
-    public static class Field extends EnumField<BusinessRejectReasonValue> {
+    public static class Field extends EnumField<CxlRejReasonValue> {
         public Field(Tag<Field> tag) {
             super(tag, Required.YES);
         }
 
         @Override public void parse(String value) {
-            this.value = BusinessRejectReasonValue.parse(Integer.parseInt(value));
+            this.value = CxlRejReasonValue.parse(Integer.parseInt(value));
         }
     }
 }

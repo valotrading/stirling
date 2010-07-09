@@ -15,25 +15,25 @@
  */
 package fixengine.tags;
 
-import fixengine.messages.BusinessRejectReasonValue;
+import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.EnumField;
 import fixengine.messages.Required;
 import fixengine.messages.Tag;
 
-public class BusinessRejectReason extends Tag<BusinessRejectReason.Field> {
-    public static final BusinessRejectReason TAG = new BusinessRejectReason();
+public class EncryptMethod extends Tag<EncryptMethod.Field> {
+    public static final EncryptMethod TAG = new EncryptMethod();
 
-    public BusinessRejectReason() {
-        super(380, Field.class);
+    public EncryptMethod() {
+        super(98, Field.class);
     }
 
-    public static class Field extends EnumField<BusinessRejectReasonValue> {
+    public static class Field extends EnumField<EncryptMethodValue> {
         public Field(Tag<Field> tag) {
             super(tag, Required.YES);
         }
 
         @Override public void parse(String value) {
-            this.value = BusinessRejectReasonValue.parse(Integer.parseInt(value));
+            this.value = EncryptMethodValue.parse(Integer.parseInt(value));
         }
     }
 }

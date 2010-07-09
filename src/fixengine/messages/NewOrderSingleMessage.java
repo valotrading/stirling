@@ -19,11 +19,15 @@ import org.joda.time.DateTime;
 
 import fixengine.tags.ClOrdID;
 import fixengine.tags.Currency;
+import fixengine.tags.CustomerOrFirm;
 import fixengine.tags.ExDestination;
+import fixengine.tags.HandlInst;
 import fixengine.tags.MaturityMonthYear;
+import fixengine.tags.OrdType;
 import fixengine.tags.OrderQty;
 import fixengine.tags.Price;
 import fixengine.tags.SecurityType;
+import fixengine.tags.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TransactTime;
 
@@ -32,18 +36,14 @@ import fixengine.tags.TransactTime;
  */
 public class NewOrderSingleMessage extends AbstractMessage implements RequestMessage {
     private final StringField maturityMonthYear = new StringField(MaturityMonthYear.TAG, Required.NO);
-    private final CustomerOrFirmField customerOrFirm = new CustomerOrFirmField(Required.NO);
     private final StringField securityType = new StringField(SecurityType.TAG, Required.NO);
     private final StringField exDestination = new StringField(ExDestination.TAG);
     private final UtcTimestampField transactTime = new UtcTimestampField(TransactTime.TAG);
     private final StringField currency = new StringField(Currency.TAG, Required.NO);
-    private final HandlInstField handlInst = new HandlInstField();
     private final FloatField price = new FloatField(Price.TAG, Required.NO);
     private final FloatField orderQty = new FloatField(OrderQty.TAG);
     private final StringField clOrdId = new StringField(ClOrdID.TAG);
-    private final OrdTypeField ordType = new OrdTypeField();
     private final StringField symbol = new StringField(Symbol.TAG);
-    private final SideField side = new SideField();
 
     public NewOrderSingleMessage() {
         this(new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE));
@@ -54,16 +54,16 @@ public class NewOrderSingleMessage extends AbstractMessage implements RequestMes
 
         add(clOrdId);
         add(currency);
-        add(handlInst);
+        field(HandlInst.TAG);
         add(exDestination);
-        add(side);
+        field(Side.TAG);
         add(transactTime);
-        add(ordType);
+        field(OrdType.TAG);
         add(symbol);
         add(securityType);
         add(maturityMonthYear);
         add(orderQty);
-        add(customerOrFirm);
+        field(CustomerOrFirm.TAG, Required.NO);
         add(price);
     }
 
@@ -88,32 +88,12 @@ public class NewOrderSingleMessage extends AbstractMessage implements RequestMes
         this.currency.setValue(currency);
     }
 
-    public void setHandlInst(HandlInstValue handlInst) {
-        this.handlInst.setValue(handlInst);
-    }
-
     public void setExDestination(String exDestination) {
         this.exDestination.setValue(exDestination);
     }
 
-    public void setSide(SideValue side) {
-        this.side.setValue(side);
-    }
-
-    public SideValue getSide() {
-        return side.getValue();
-    }
-
     public void setTransactTime(DateTime transactTime) {
         this.transactTime.setValue(transactTime);
-    }
-
-    public void setOrdType(OrdTypeValue ordType) {
-        this.ordType.setValue(ordType);
-    }
-
-    public OrdTypeValue getOrdType() {
-        return ordType.getValue();
     }
 
     public void setSymbol(String symbol) {
@@ -144,7 +124,11 @@ public class NewOrderSingleMessage extends AbstractMessage implements RequestMes
         this.price.setValue(price);
     }
 
-    public void setCustomerOrFirm(CustomerOrFirmValue customerOrFirm) {
-        this.customerOrFirm.setValue(customerOrFirm);
+    @Override public SideValue getSide() {
+        return getEnum(Side.TAG);
+    }
+
+    @Override public OrdTypeValue getOrdType() {
+        return getEnum(OrdType.TAG);
     }
 }

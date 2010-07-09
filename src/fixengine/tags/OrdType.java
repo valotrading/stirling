@@ -15,25 +15,25 @@
  */
 package fixengine.tags;
 
-import fixengine.messages.BusinessRejectReasonValue;
+import fixengine.messages.OrdTypeValue;
 import fixengine.messages.EnumField;
 import fixengine.messages.Required;
 import fixengine.messages.Tag;
 
-public class BusinessRejectReason extends Tag<BusinessRejectReason.Field> {
-    public static final BusinessRejectReason TAG = new BusinessRejectReason();
+public class OrdType extends Tag<OrdType.Field> {
+    public static final OrdType TAG = new OrdType();
 
-    public BusinessRejectReason() {
-        super(380, Field.class);
+    public OrdType() {
+        super(40, Field.class);
     }
 
-    public static class Field extends EnumField<BusinessRejectReasonValue> {
+    public static class Field extends EnumField<OrdTypeValue> {
         public Field(Tag<Field> tag) {
             super(tag, Required.YES);
         }
 
         @Override public void parse(String value) {
-            this.value = BusinessRejectReasonValue.parse(Integer.parseInt(value));
+            this.value = OrdTypeValue.parse(value.charAt(0));
         }
     }
 }

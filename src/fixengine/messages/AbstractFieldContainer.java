@@ -80,4 +80,9 @@ public abstract class AbstractFieldContainer {
         UtcTimestampField field = (UtcTimestampField) fields.lookup(tag);
         return field.getValue();
     }
+
+    @SuppressWarnings("unchecked") public <T extends Formattable<T>> T getEnum(Tag<? extends EnumField<T>> tag) {
+        EnumField<T> field = (EnumField<T>) fields.lookup(tag);
+        return field.getValue();
+    }
 }

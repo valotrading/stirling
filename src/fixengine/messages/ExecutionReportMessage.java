@@ -21,44 +21,45 @@ import fixengine.tags.CumQty;
 import fixengine.tags.Currency;
 import fixengine.tags.ExDestination;
 import fixengine.tags.ExecID;
+import fixengine.tags.ExecRestatementReason;
 import fixengine.tags.ExecTransType;
+import fixengine.tags.ExecType;
 import fixengine.tags.LastMkt;
 import fixengine.tags.LastPx;
 import fixengine.tags.LastQty;
 import fixengine.tags.LeavesQty;
 import fixengine.tags.MaturityMonthYear;
+import fixengine.tags.OrdRejReason;
+import fixengine.tags.OrdStatus;
+import fixengine.tags.OrdType;
 import fixengine.tags.OrderID;
 import fixengine.tags.OrderQty;
 import fixengine.tags.OrigClOrdID;
 import fixengine.tags.Price;
 import fixengine.tags.SecurityType;
+import fixengine.tags.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.Text;
+import fixengine.tags.TimeInForce;
 import fixengine.tags.TransactTime;
 
 /**
  * @author Pekka Enberg 
  */
 public class ExecutionReportMessage extends AbstractMessage {
-    private final ExecRestatementReasonField execRestatementReason = new ExecRestatementReasonField(Required.NO);
     private final StringField maturityMonthYear = new StringField(MaturityMonthYear.TAG, Required.NO);
     private final StringField exDestination = new StringField(ExDestination.TAG, Required.NO);
-    private final OrdRejReasonField ordRejReason = new OrdRejReasonField(Required.NO);
     private final StringField securityType = new StringField(SecurityType.TAG, Required.NO);
     private final UtcTimestampField transactTime = new UtcTimestampField(TransactTime.TAG, Required.NO);
     private final StringField origClOrdId = new StringField(OrigClOrdID.TAG, Required.NO);
-    private final TimeInForceField timeInForce = new TimeInForceField(Required.NO);
     private final StringField execTransType = new StringField(ExecTransType.TAG);
     private final StringField currency = new StringField(Currency.TAG, Required.NO);
     private final StringField clOrdId = new StringField(ClOrdID.TAG, Required.NO);
     private final StringField lastMkt = new StringField(LastMkt.TAG, Required.NO);
     private final FloatField lastQty = new FloatField(LastQty.TAG, Required.NO);
-    private final OrdTypeField ordType = new OrdTypeField(Required.NO);
     private final FloatField lastPx = new FloatField(LastPx.TAG, Required.NO);
     private final FloatField leavesQty = new FloatField(LeavesQty.TAG);
-    private final OrdStatusField ordStatus = new OrdStatusField();
     private final FloatField price = new FloatField(Price.TAG, Required.NO);
-    private final ExecTypeField execType = new ExecTypeField();
     private final FloatField orderQty = new FloatField(OrderQty.TAG);
     private final StringField text = new StringField(Text.TAG, Required.NO);
     private final StringField orderId = new StringField(OrderID.TAG);
@@ -66,7 +67,6 @@ public class ExecutionReportMessage extends AbstractMessage {
     private final StringField execId = new StringField(ExecID.TAG);
     private final StringField symbol = new StringField(Symbol.TAG);
     private final FloatField avgPx = new FloatField(AvgPx.TAG);
-    private final SideField side = new SideField();
 
     public ExecutionReportMessage() {
         this(new MessageHeader(MsgTypeValue.EXECUTION_REPORT));
@@ -80,21 +80,21 @@ public class ExecutionReportMessage extends AbstractMessage {
         add(origClOrdId);
         add(execId);
         add(execTransType);
-        add(execType);
-        add(ordStatus);
-        add(ordRejReason);
-        add(execRestatementReason);
+        field(ExecType.TAG);
+        field(OrdStatus.TAG);
+        field(OrdRejReason.TAG, Required.NO);
+        field(ExecRestatementReason.TAG, Required.NO);
         add(symbol);
         add(securityType);
         add(maturityMonthYear);
-        add(side);
+        field(Side.TAG);
         add(orderQty);
         add(lastQty);
         add(lastPx);
         add(leavesQty);
-        add(ordType);
+        field(OrdType.TAG, Required.NO);
         add(price);
-        add(timeInForce);
+        field(TimeInForce.TAG, Required.NO);
         add(cumQty);
         add(avgPx);
         add(transactTime);
@@ -128,40 +128,12 @@ public class ExecutionReportMessage extends AbstractMessage {
         return text.getValue();
     }
 
-    public void setOrdStatus(OrdStatusValue ordStatus) {
-        this.ordStatus.setValue(ordStatus);
-    }
-
-    public OrdStatusValue getOrdStatus() {
-        return ordStatus.getValue();
-    }
-
     public void setExecId(String execId) {
         this.execId.setValue(execId);
     }
 
-    public void setExecType(ExecTypeValue execType) {
-        this.execType.setValue(execType);
-    }
-
-    public ExecTypeValue getExecType() {
-        return execType.getValue();
-    }
-
-    public ExecRestatementReasonValue getExecRestatementReason() {
-        return execRestatementReason.getValue();
-    }
-
     public void setSymbol(String symbol) {
         this.symbol.setValue(symbol);
-    }
-
-    public void setOrdType(OrdTypeValue ordType) {
-        this.ordType.setValue(ordType);
-    }
-
-    public void setSide(SideValue side) {
-        this.side.setValue(side);
     }
 
     public void setOrderQty(double orderQty) {

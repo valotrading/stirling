@@ -19,11 +19,14 @@ import org.joda.time.DateTime;
 
 import fixengine.tags.ClOrdID;
 import fixengine.tags.Currency;
+import fixengine.tags.HandlInst;
 import fixengine.tags.MaturityMonthYear;
+import fixengine.tags.OrdType;
 import fixengine.tags.OrderQty;
 import fixengine.tags.OrigClOrdID;
 import fixengine.tags.Price;
 import fixengine.tags.SecurityType;
+import fixengine.tags.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TransactTime;
 
@@ -39,13 +42,10 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
     private final UtcTimestampField transactTime = new UtcTimestampField(TransactTime.TAG);
     private final StringField currency = new StringField(Currency.TAG, Required.NO);
     private final StringField origClOrdId = new StringField(OrigClOrdID.TAG);
-    private final HandlInstField handlInst = new HandlInstField();
     private final FloatField price = new FloatField(Price.TAG, Required.NO);
     private final FloatField orderQty = new FloatField(OrderQty.TAG);
     private final StringField clOrdId = new StringField(ClOrdID.TAG);
-    private final OrdTypeField ordType = new OrdTypeField();
     private final StringField symbol = new StringField(Symbol.TAG);
-    private final SideField side = new SideField();
 
     public OrderModificationRequestMessage() {
         this(new MessageHeader(MsgTypeValue.ORDER_MODIFICATION_REQUEST));
@@ -56,14 +56,14 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
 
         add(origClOrdId);
         add(clOrdId);
-        add(handlInst);
+        field(HandlInst.TAG);
         add(symbol);
         add(securityType);
         add(maturityMonthYear);
-        add(side);
+        field(Side.TAG);
         add(transactTime);
         add(orderQty);
-        add(ordType);
+        field(OrdType.TAG);
         add(currency);
         add(price);
     }
@@ -84,10 +84,6 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
         return clOrdId.getValue();
     }
 
-    public void setHandlInst(HandlInstValue handlInst) {
-        this.handlInst.setValue(handlInst);
-    }
-
     public void setSymbol(String symbol) {
         this.symbol.setValue(symbol);
     }
@@ -104,14 +100,6 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
         this.maturityMonthYear.setValue(maturityMonthYear);
     }
 
-    public void setSide(SideValue side) {
-        this.side.setValue(side);
-    }
-
-    public SideValue getSide() {
-        return side.getValue();
-    }
-
     public void setTransactTime(DateTime transactTime) {
         this.transactTime.setValue(transactTime);
     }
@@ -124,10 +112,6 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
         return orderQty.getValue();
     }
 
-    public void setOrdType(OrdTypeValue ordType) {
-        this.ordType.setValue(ordType);
-    }
-
     public void setCurrency(String currency) {
         this.currency.setValue(currency);
     }
@@ -136,8 +120,12 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
         this.price.setValue(price);
     }
 
-    public OrdTypeValue getOrdType() {
-        return this.ordType.getValue();
+    @Override public OrdTypeValue getOrdType() {
+        return getEnum(OrdType.TAG);
+    }
+
+    @Override public SideValue getSide() {
+        return getEnum(Side.TAG);
     }
 
     @Override

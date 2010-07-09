@@ -17,13 +17,13 @@ package fixengine.messages;
 
 import fixengine.tags.RefSeqNo;
 import fixengine.tags.RefTagId;
+import fixengine.tags.SessionRejectReason;
 import fixengine.tags.Text;
 
 /**
  * @author Pekka Enberg
  */
 public class RejectMessage extends AbstractMessage {
-    private final SessionRejectReasonField sessionRejectReason = new SessionRejectReasonField(Required.NO); 
     private final IntegerField refSeqNo = new IntegerField(RefSeqNo.TAG, Required.YES);
     private final IntegerField refTagId = new IntegerField(RefTagId.TAG, Required.NO);
     private final StringField text = new StringField(Text.TAG, Required.NO);
@@ -37,7 +37,7 @@ public class RejectMessage extends AbstractMessage {
 
         add(refSeqNo);
         add(refTagId);
-        add(sessionRejectReason);
+        field(SessionRejectReason.TAG, Required.NO);
         add(text);
     }
 
@@ -48,14 +48,6 @@ public class RejectMessage extends AbstractMessage {
 
     public void setRefSeqNo(int refSeqNo) {
         this.refSeqNo.setValue(refSeqNo);
-    }
-
-    public void setSessionRejectReason(SessionRejectReasonValue reason) {
-        this.sessionRejectReason.setValue(reason);
-    }
-
-    public SessionRejectReasonValue getSessionRejectReason() {
-        return this.sessionRejectReason.getValue();
     }
 
     public void setText(String text) {

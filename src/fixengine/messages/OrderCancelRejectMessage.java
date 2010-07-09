@@ -16,6 +16,9 @@
 package fixengine.messages;
 
 import fixengine.tags.ClOrdID;
+import fixengine.tags.CxlRejReason;
+import fixengine.tags.CxlRejResponseTo;
+import fixengine.tags.OrdStatus;
 import fixengine.tags.OrderID;
 import fixengine.tags.OrigClOrdID;
 import fixengine.tags.Text;
@@ -24,10 +27,7 @@ import fixengine.tags.Text;
  * @author Pekka Enberg 
  */
 public class OrderCancelRejectMessage extends AbstractMessage {
-    private final CxlRejResponseToField cxlRejResponseTo = new CxlRejResponseToField(); 
-    private final CxlRejReasonField cxlRejReason = new CxlRejReasonField(Required.NO);
     private final StringField origClOrdId = new StringField(OrigClOrdID.TAG);
-    private final OrdStatusField ordStatus = new OrdStatusField();
     private final StringField text = new StringField(Text.TAG, Required.NO);
     private final StringField orderId = new StringField(OrderID.TAG);
     private final StringField clOrdId = new StringField(ClOrdID.TAG);
@@ -42,9 +42,9 @@ public class OrderCancelRejectMessage extends AbstractMessage {
         add(orderId);
         add(clOrdId);
         add(origClOrdId);
-        add(ordStatus);
-        add(cxlRejResponseTo);
-        add(cxlRejReason);
+        field(OrdStatus.TAG);
+        field(CxlRejResponseTo.TAG);
+        field(CxlRejReason.TAG, Required.NO);
         add(text);
     }
 
@@ -68,20 +68,8 @@ public class OrderCancelRejectMessage extends AbstractMessage {
         return origClOrdId.getValue();
     }
 
-    public void setOrdStatus(OrdStatusValue ordStatus) {
-        this.ordStatus.setValue(ordStatus);
-    }
-
-    public OrdStatusValue getOrdStatus() {
-        return ordStatus.getValue();
-    }
-
     public String getText() {
         return text.getValue();
-    }
-
-    public void setCxlRejResponseTo(CxlRejResponseToValue cxlRejResponseTo) {
-        this.cxlRejResponseTo.setValue(cxlRejResponseTo);
     }
 
     @Override

@@ -15,7 +15,7 @@
  */
 package fixengine.messages;
 
-import static fixengine.messages.EncryptMethodValue.NONE;
+import fixengine.tags.EncryptMethod;
 import fixengine.tags.HeartBtInt;
 import fixengine.tags.ResetSeqNumFlag;
 
@@ -32,10 +32,11 @@ public class LogonMessage extends AbstractMessage {
     public LogonMessage(MessageHeader header) {
         super(header);
 
-        add(new EncryptMethodField(NONE));
+        field(EncryptMethod.TAG);
         add(new IntegerField(HeartBtInt.TAG, 30));
-
         add(resetSeqNumFlag);
+
+        setEnum(EncryptMethod.TAG, EncryptMethodValue.NONE);
     }
 
     @Override
