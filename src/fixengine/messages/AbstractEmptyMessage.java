@@ -15,8 +15,6 @@
  */
 package fixengine.messages;
 
-import java.util.List;
-
 import lang.Objects;
 
 import org.joda.time.DateTime;
@@ -156,7 +154,7 @@ public abstract class AbstractEmptyMessage implements Message {
     }
 
     @Override
-    public List<Field> getFields() {
+    public Fields getFields() {
         throw new UnsupportedOperationException();
     }
 

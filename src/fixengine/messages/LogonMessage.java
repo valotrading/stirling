@@ -32,9 +32,10 @@ public class LogonMessage extends AbstractMessage {
         super(header);
 
         field(EncryptMethod.TAG);
-        add(new IntegerField(HeartBtInt.TAG, 30));
+        field(HeartBtInt.TAG);
         field(ResetSeqNumFlag.TAG, Required.NO);
 
+        setInteger(HeartBtInt.TAG, 30);
         setEnum(EncryptMethod.TAG, EncryptMethodValue.NONE);
     }
 

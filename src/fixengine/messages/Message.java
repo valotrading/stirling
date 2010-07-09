@@ -15,8 +15,6 @@
  */
 package fixengine.messages;
 
-import java.util.List;
-
 import org.joda.time.DateTime;
 
 import fixengine.Config;
@@ -51,6 +49,6 @@ public interface Message extends Parseable {
     boolean hasValidSenderCompId(Config config);
     boolean isTooLowSeqNum(int seqNo);
     boolean isOrigSendingTimeMissing();
-    List<Field> getFields();
+    Fields getFields();
     void validate();
 }

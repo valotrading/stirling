@@ -15,9 +15,6 @@
  */
 package fixengine.messages;
 
-import java.nio.ByteBuffer;
-import java.util.List;
-
 import lang.Objects;
 
 import org.joda.time.DateTime;
@@ -177,32 +174,15 @@ public abstract class AbstractMessage extends AbstractFieldContainer implements 
         return header.hasOrigSendTimeAfterSendingTime();
     }
 
-    @Override public void parse(ByteBuffer b) {
-        fields.parse(b);
-    }
-
-    @Override public void validate() {
-        fields.validate();
-    }
-
-    @Override
-    public List<Field> getFields() {
-        return fields.getFields();
-    }
-
     public String format() {
         MessageBuffer buffer = new MessageBuffer();
         buffer.append(new StringField(MsgType.TAG, header.getMsgType()));
         buffer.append(header.getFields().format());
-        buffer.append(fields.format());
+        buffer.append(getFields().format());
         buffer.prefix(new IntegerField(BodyLength.TAG, buffer.length()));
         buffer.prefix(new StringField(BeginString.TAG, header.getBeginString()));
         buffer.append(new StringField(CheckSum.TAG, CheckSum.format(buffer.checksum())));
         return buffer.toString();
-    }
-
-    protected void add(Field field) {
-        fields.add(field);
     }
 
     @Override
@@ -220,7 +200,7 @@ public abstract class AbstractMessage extends AbstractFieldContainer implements 
         StringBuilder result = new StringBuilder();
         result.append(new StringField(BeginString.TAG, header.getBeginString()).toString() + " ");
         result.append(new StringField(MsgType.TAG, header.getMsgType()).toString() + " ");
-        for (Field field : fields.getFields()) {
+        for (Field field : getFields()) {
             result.append(field.toString() + " ");
         }
         return result.toString();

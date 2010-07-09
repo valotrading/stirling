@@ -17,6 +17,7 @@ package fixengine.messages;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import fixengine.tags.MsgType;
@@ -24,15 +25,15 @@ import fixengine.tags.MsgType;
 /**
  * @author Pekka Enberg
  */
-public class Fields {
+public class Fields implements Iterable<Field> {
     private final List<Field> fields = new ArrayList<Field>();
 
     public void add(Field field) {
         fields.add(field);
     }
 
-    public List<Field> getFields() {
-        return fields;
+    @Override public Iterator<Field> iterator() {
+        return fields.iterator();
     }
 
     public Field lookup(Tag tag) {

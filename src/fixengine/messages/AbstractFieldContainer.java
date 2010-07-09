@@ -15,10 +15,12 @@
  */
 package fixengine.messages;
 
+import java.nio.ByteBuffer;
+
 import org.joda.time.DateTime;
 
 public abstract class AbstractFieldContainer {
-    protected final Fields fields = new Fields();
+    private final Fields fields = new Fields();
 
     protected void field(Tag<?> tag) {
         field(tag, Required.YES);
@@ -26,6 +28,22 @@ public abstract class AbstractFieldContainer {
 
     protected void field(Tag<?> tag, Required required) {
         fields.add(tag, required);
+    }
+
+    public Field lookup(Tag tag) {
+        return fields.lookup(tag);
+    }
+
+    public void parse(ByteBuffer b) {
+        fields.parse(b);
+    }
+
+    public void validate() {
+        fields.validate();
+    }
+
+    public Fields getFields() {
+        return fields;
     }
 
     public boolean hasValue(Tag<?> tag) {
