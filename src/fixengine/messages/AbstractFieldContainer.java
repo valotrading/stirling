@@ -53,6 +53,11 @@ public abstract class AbstractFieldContainer {
         field.setValue(value);
     }
 
+    @SuppressWarnings("unchecked") public <T extends Formattable<T>> void setEnum(Tag<? extends EnumField<T>> tag, T value) {
+        EnumField<T> field = (EnumField<T>) fields.lookup(tag);
+        field.setValue(value);
+    }
+
     public String getString(Tag<StringField> tag) {
         StringField field = (StringField) fields.lookup(tag);
         return field.getValue();

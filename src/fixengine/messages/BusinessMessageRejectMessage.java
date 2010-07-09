@@ -15,6 +15,7 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.BusinessRejectReason;
 import fixengine.tags.RefMsgType;
 import fixengine.tags.RefSeqNo;
 import fixengine.tags.Text;
@@ -23,8 +24,6 @@ import fixengine.tags.Text;
  * @author Pekka Enberg
  */
 public class BusinessMessageRejectMessage extends AbstractMessage {
-    private final BusinessRejectReasonField businessRejectReason = new BusinessRejectReasonField(); 
-
     public BusinessMessageRejectMessage() {
         this(new MessageHeader(MessageType.BUSINESS_MESSAGE_REJECT));
     }
@@ -34,16 +33,12 @@ public class BusinessMessageRejectMessage extends AbstractMessage {
 
         field(RefSeqNo.TAG, Required.NO);
         field(RefMsgType.TAG);
-        add(businessRejectReason);
+        field(BusinessRejectReason.TAG);
         field(Text.TAG, Required.NO);
     }
 
     @Override
     public void apply(MessageVisitor visitor) {
         visitor.visit(this);
-    }
-
-    public void setBusinessRejectReason(BusinessRejectReasonValue reason) {
-        this.businessRejectReason.setValue(reason);
     }
 }

@@ -19,10 +19,8 @@ package fixengine.messages;
  * @author Pekka Enberg
  */
 public class BusinessRejectReasonField extends EnumField<BusinessRejectReasonValue> {
-    private static final Tag TAG = new Tag(380);
-
-    public BusinessRejectReasonField() {
-        super(TAG, Required.YES);
+    public BusinessRejectReasonField(Tag<BusinessRejectReasonField> tag) {
+        super(tag, Required.YES);
     }
 
     @Override public void parse(String value) {
