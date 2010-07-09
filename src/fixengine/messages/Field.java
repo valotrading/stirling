@@ -33,7 +33,6 @@ public interface Field {
     boolean isMissing();
     boolean isParsed();
     boolean isEmpty();
-    boolean isUserDefined();
     String format();
     int length();
     String prettyName();
