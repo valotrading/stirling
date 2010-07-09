@@ -24,7 +24,6 @@ import fixengine.tags.Text;
  * @author Pekka Enberg
  */
 public class RejectMessage extends AbstractMessage {
-
     public RejectMessage() {
         this(new MessageHeader(MsgTypeValue.REJECT));
     }
@@ -38,24 +37,11 @@ public class RejectMessage extends AbstractMessage {
         field(Text.TAG, Required.NO);
     }
 
-    @Override
-    public void apply(MessageVisitor visitor) {
-        visitor.visit(this);
-    }
-
-    public void setRefSeqNo(int refSeqNo) {
-        setInteger(RefSeqNo.TAG, refSeqNo);
-    }
-
-    public void setText(String text) {
-        setString(Text.TAG, text);
-    }
-
-    public String getText() {
+    public String reason() {
         return getString(Text.TAG);
     }
 
-    public String reason() {
-        return getText();
+    @Override public void apply(MessageVisitor visitor) {
+        visitor.visit(this);
     }
 }

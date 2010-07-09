@@ -22,7 +22,6 @@ import fixengine.tags.NewSeqNo;
  * @author Pekka Enberg 
  */
 public class SequenceResetMessage extends AbstractMessage {
-
     public SequenceResetMessage() {
         this(new MessageHeader(MsgTypeValue.SEQUENCE_RESET));
     }
@@ -33,35 +32,18 @@ public class SequenceResetMessage extends AbstractMessage {
         field(GapFillFlag.TAG, Required.NO);
         field(NewSeqNo.TAG);
     }
-    
-    @Override
-    public void apply(MessageVisitor visitor) {
-        visitor.visit(this);
-    }
-
-    public void setGapFillFlag(boolean gapFillFlag) {
-        setBoolean(GapFillFlag.TAG, gapFillFlag);
-    }
-    
-    public boolean getGapFillFlag() {
-        return getBoolean(GapFillFlag.TAG);
-    }
-
-    public void setNewSeqNo(int newSeqNo) {
-        setInteger(NewSeqNo.TAG, newSeqNo);
-    }
-    
-    public int getNewSeqNo() {
-        return getInteger(NewSeqNo.TAG);
-    }
 
     public boolean isResetOk(int nextSeqNum) {
         /*
          * If the other end is forcing a sequence reset, don't care about
          * MsgSeqNum of the SequenceReset message.
          */
-        if (!getGapFillFlag())
+        if (!getBoolean(GapFillFlag.TAG))
             return true;
         return getMsgSeqNum() == nextSeqNum;
+    }
+
+    @Override public void apply(MessageVisitor visitor) {
+        visitor.visit(this);
     }
 }

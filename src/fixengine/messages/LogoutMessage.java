@@ -21,7 +21,6 @@ import fixengine.tags.Text;
  * @author Pekka Enberg 
  */
 public class LogoutMessage extends AbstractMessage {
-
     public LogoutMessage() {
         this(new MessageHeader(MsgTypeValue.LOGOUT));
     }
@@ -32,16 +31,7 @@ public class LogoutMessage extends AbstractMessage {
         field(Text.TAG, Required.NO);
     }
 
-    public void setText(String text) {
-        setString(Text.TAG, text);
-    }
-
-    public String getText() {
-        return getString(Text.TAG);
-    }
-    
-    @Override
-    public void apply(MessageVisitor visitor) {
+    @Override public void apply(MessageVisitor visitor) {
         visitor.visit(this);
     }
 }

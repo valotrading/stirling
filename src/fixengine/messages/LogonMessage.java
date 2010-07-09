@@ -43,8 +43,4 @@ public class LogonMessage extends AbstractMessage {
     public void apply(MessageVisitor visitor) {
         visitor.visit(this);
     }
-
-    public void setResetSeqNumFlag(boolean resetSeqNumFlag) {
-        setBoolean(ResetSeqNumFlag.TAG, resetSeqNumFlag);
-    }
 }

@@ -44,6 +44,8 @@ import fixengine.session.store.SessionStore;
 import fixengine.tags.BeginSeqNo;
 import fixengine.tags.BusinessRejectReason;
 import fixengine.tags.EndSeqNo;
+import fixengine.tags.GapFillFlag;
+import fixengine.tags.NewSeqNo;
 import fixengine.tags.RefMsgType;
 import fixengine.tags.RefSeqNo;
 import fixengine.tags.SessionRejectReason;
@@ -169,8 +171,8 @@ public class Session {
         message.setHeaderConfig(config);
         message.setSendingTime(timeSource.currentTime());
         message.setMsgSeqNum(seq.peek());
-        message.setNewSeqNo(seq.next());
-        message.setGapFillFlag(false);
+        message.setInteger(NewSeqNo.TAG, seq.next());
+        message.setBoolean(GapFillFlag.TAG, false);
         conn.send(silvertip.Message.fromString(message.format()));
         prevTxTimeMsec = System.currentTimeMillis();
         setOutgoingSeq(seq);
@@ -205,7 +207,7 @@ public class Session {
 
     private void testRequest(Connection conn) {
         TestRequestMessage req = new TestRequestMessage();
-        req.setTestReqId(Long.toString(++testReqId));
+        req.setString(TestReqID.TAG, Long.toString(++testReqId));
         send(conn, req);
     }
 
@@ -214,7 +216,7 @@ public class Session {
             @Override public void visit(TestRequestMessage message) {
                 queue.skip(message);
                 HeartbeatMessage heartbeat = new HeartbeatMessage();
-                heartbeat.setString(TestReqID.TAG, message.getTestReqId());
+                heartbeat.setString(TestReqID.TAG, message.getString(TestReqID.TAG));
                 send(conn, heartbeat);
             }
 
@@ -377,9 +379,9 @@ public class Session {
 
     private void sessionReject(Connection conn, int msgSeqNum, SessionRejectReasonValue reason, String text) {
         RejectMessage reject = new RejectMessage();
-        reject.setRefSeqNo(msgSeqNum);
+        reject.setInteger(RefSeqNo.TAG, msgSeqNum);
         reject.setEnum(SessionRejectReason.TAG, reason);
-        reject.setText(text);
+        reject.setString(Text.TAG, text);
         send(conn, reject);
     }
 
@@ -394,7 +396,7 @@ public class Session {
 
     private void terminate(Connection conn, Message message, String text) {
         LogoutMessage logout = new LogoutMessage();
-        logout.setText(text);
+        logout.setString(Text.TAG, text);
         send(conn, logout);
         conn.close();
     }
@@ -402,8 +404,8 @@ public class Session {
     private void fillSequenceGap(Connection conn, int newSeqNo) {
         SequenceResetMessage seqReset = new SequenceResetMessage();
         seqReset.setPossDupFlag(true);
-        seqReset.setGapFillFlag(true);
-        seqReset.setNewSeqNo(newSeqNo);
+        seqReset.setBoolean(GapFillFlag.TAG, true);
+        seqReset.setInteger(NewSeqNo.TAG, newSeqNo);
         send(conn, seqReset);
         outgoingSeq.reset(newSeqNo);
     }
@@ -419,6 +421,6 @@ public class Session {
     private void processSeqReset(SequenceResetMessage message) {
         if (checkSeqResetSeqNum() && !message.isResetOk(queue.nextSeqNum()))
             throw new InvalidSequenceResetException("Expected: " + queue.nextSeqNum() + ", but was: " + message.getMsgSeqNum());
-        queue.reset(message.getNewSeqNo());
+        queue.reset(message.getInteger(NewSeqNo.TAG));
     }
 }

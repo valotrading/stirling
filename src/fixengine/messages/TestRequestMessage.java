@@ -21,7 +21,6 @@ import fixengine.tags.TestReqID;
  * @author Pekka Enberg 
  */
 public class TestRequestMessage extends AbstractMessage {
-
     public TestRequestMessage() {
         this(new MessageHeader(MsgTypeValue.TEST_REQUEST));
     }
@@ -32,16 +31,7 @@ public class TestRequestMessage extends AbstractMessage {
         field(TestReqID.TAG);
     }
 
-    @Override
-    public void apply(MessageVisitor visitor) {
+    @Override public void apply(MessageVisitor visitor) {
         visitor.visit(this);
-    }
-
-    public void setTestReqId(String testReqId) {
-        setString(TestReqID.TAG, testReqId);
-    }
-
-    public String getTestReqId() {
-        return getString(TestReqID.TAG);
     }
 }
