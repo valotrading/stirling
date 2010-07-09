@@ -27,10 +27,6 @@ import fixengine.tags.Text;
  * @author Pekka Enberg 
  */
 public class OrderCancelRejectMessage extends AbstractMessage {
-    private final StringField origClOrdId = new StringField(OrigClOrdID.TAG);
-    private final StringField text = new StringField(Text.TAG, Required.NO);
-    private final StringField orderId = new StringField(OrderID.TAG);
-    private final StringField clOrdId = new StringField(ClOrdID.TAG);
 
     public OrderCancelRejectMessage() {
         this(new MessageHeader(MsgTypeValue.ORDER_CANCEL_REJECT));
@@ -39,41 +35,16 @@ public class OrderCancelRejectMessage extends AbstractMessage {
     public OrderCancelRejectMessage(MessageHeader header) {
         super(header);
 
-        add(orderId);
-        add(clOrdId);
-        add(origClOrdId);
+        field(OrderID.TAG);
+        field(ClOrdID.TAG);
+        field(OrigClOrdID.TAG);
         field(OrdStatus.TAG);
         field(CxlRejResponseTo.TAG);
         field(CxlRejReason.TAG, Required.NO);
-        add(text);
+        field(Text.TAG, Required.NO);
     }
 
-    public String getOrderId() {
-        return orderId.getValue();
-    }
-
-    public void setClOrdId(String clOrdId) {
-        this.clOrdId.setValue(clOrdId);
-    }
-
-    public String getClOrdId() {
-        return clOrdId.getValue();
-    }
-
-    public void setOrigClOrdId(String origClOrdId) {
-        this.origClOrdId.setValue(origClOrdId);
-    }
-
-    public String getOrigClOrdId() {
-        return origClOrdId.getValue();
-    }
-
-    public String getText() {
-        return text.getValue();
-    }
-
-    @Override
-    public void apply(MessageVisitor visitor) {
+    @Override public void apply(MessageVisitor visitor) {
         visitor.visit(this);
     }
 }

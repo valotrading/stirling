@@ -23,15 +23,15 @@ public class IntegerField extends AbstractField<Integer> {
         this(tag, null, Required.YES);
     }
 
-    protected IntegerField(Tag<IntegerField> tag, Integer value) {
+    public IntegerField(Tag<IntegerField> tag, Integer value) {
         this(tag, value, Required.YES);
     }
 
-    protected IntegerField(Tag<IntegerField> tag, Required required) {
+    public IntegerField(Tag<IntegerField> tag, Required required) {
         this(tag, null, required);
     }
 
-    protected IntegerField(Tag<IntegerField> tag, Integer value, Required required) {
+    public IntegerField(Tag<IntegerField> tag, Integer value, Required required) {
         super(tag, value, required);
     }
 

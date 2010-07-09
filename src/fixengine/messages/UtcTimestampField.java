@@ -35,7 +35,7 @@ public class UtcTimestampField extends AbstractField<DateTime> {
         super(tag, dateTime, Required.YES);
     }
 
-    protected UtcTimestampField(Tag tag, Required required) {
+    public UtcTimestampField(Tag tag, Required required) {
         super(tag, null, required);
     }
 

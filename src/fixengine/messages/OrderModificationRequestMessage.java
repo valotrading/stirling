@@ -15,8 +15,6 @@
  */
 package fixengine.messages;
 
-import org.joda.time.DateTime;
-
 import fixengine.tags.ClOrdID;
 import fixengine.tags.Currency;
 import fixengine.tags.HandlInst;
@@ -37,15 +35,6 @@ import fixengine.tags.TransactTime;
  * @author Pekka Enberg
  */
 public class OrderModificationRequestMessage extends AbstractMessage implements RequestMessage, CancelRequestMessage {
-    private final StringField maturityMonthYear = new StringField(MaturityMonthYear.TAG, Required.NO);
-    private final StringField securityType = new StringField(SecurityType.TAG, Required.NO);
-    private final UtcTimestampField transactTime = new UtcTimestampField(TransactTime.TAG);
-    private final StringField currency = new StringField(Currency.TAG, Required.NO);
-    private final StringField origClOrdId = new StringField(OrigClOrdID.TAG);
-    private final FloatField price = new FloatField(Price.TAG, Required.NO);
-    private final FloatField orderQty = new FloatField(OrderQty.TAG);
-    private final StringField clOrdId = new StringField(ClOrdID.TAG);
-    private final StringField symbol = new StringField(Symbol.TAG);
 
     public OrderModificationRequestMessage() {
         this(new MessageHeader(MsgTypeValue.ORDER_MODIFICATION_REQUEST));
@@ -54,70 +43,18 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
     public OrderModificationRequestMessage(MessageHeader header) {
         super(header);
 
-        add(origClOrdId);
-        add(clOrdId);
+        field(OrigClOrdID.TAG);
+        field(ClOrdID.TAG);
         field(HandlInst.TAG);
-        add(symbol);
-        add(securityType);
-        add(maturityMonthYear);
+        field(Symbol.TAG);
+        field(SecurityType.TAG, Required.NO);
+        field(MaturityMonthYear.TAG, Required.NO);
         field(Side.TAG);
-        add(transactTime);
-        add(orderQty);
+        field(TransactTime.TAG);
+        field(OrderQty.TAG);
         field(OrdType.TAG);
-        add(currency);
-        add(price);
-    }
-
-    public void setOrigClOrdId(String origClOrdId) {
-        this.origClOrdId.setValue(origClOrdId);
-    }
-
-    public String getOrigClOrdId() {
-        return origClOrdId.getValue();
-    }
-
-    public void setClOrdId(String clOrdId) {
-        this.clOrdId.setValue(clOrdId);
-    }
-
-    public String getClOrdId() {
-        return clOrdId.getValue();
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol.setValue(symbol);
-    }
-
-    public String getSymbol() {
-        return symbol.getValue();
-    }
-
-    public void setSecurityType(String securityType) {
-        this.securityType.setValue(securityType);
-    }
-
-    public void setMaturityMonthYear(String maturityMonthYear) {
-        this.maturityMonthYear.setValue(maturityMonthYear);
-    }
-
-    public void setTransactTime(DateTime transactTime) {
-        this.transactTime.setValue(transactTime);
-    }
-
-    public void setOrderQty(double orderQty) {
-        this.orderQty.setValue(orderQty);
-    }
-
-    public double getOrderQty() {
-        return orderQty.getValue();
-    }
-
-    public void setCurrency(String currency) {
-        this.currency.setValue(currency);
-    }
-    
-    public void setPrice(double price) {
-        this.price.setValue(price);
+        field(Currency.TAG, Required.NO);
+        field(Price.TAG, Required.NO);
     }
 
     @Override public OrdTypeValue getOrdType() {
@@ -128,8 +65,23 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
         return getEnum(Side.TAG);
     }
 
-    @Override
-    public void apply(MessageVisitor visitor) {
+    @Override public String getClOrdId() {
+        return getString(ClOrdID.TAG);
+    }
+
+    @Override public double getOrderQty() {
+        return getFloat(OrderQty.TAG);
+    }
+
+    @Override public String getOrigClOrdId() {
+        return getString(OrigClOrdID.TAG);
+    }
+
+    @Override public String getSymbol() {
+        return getString(Symbol.TAG);
+    }
+
+    @Override public void apply(MessageVisitor visitor) {
         visitor.visit(this);
     }
 }

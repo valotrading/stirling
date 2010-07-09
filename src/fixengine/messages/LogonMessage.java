@@ -23,7 +23,6 @@ import fixengine.tags.ResetSeqNumFlag;
  * @author Pekka Enberg 
  */
 public class LogonMessage extends AbstractMessage {
-    private BooleanField resetSeqNumFlag = new BooleanField(ResetSeqNumFlag.TAG, Required.NO);
 
     public LogonMessage() {
         this(new MessageHeader(MsgTypeValue.LOGON));
@@ -34,7 +33,7 @@ public class LogonMessage extends AbstractMessage {
 
         field(EncryptMethod.TAG);
         add(new IntegerField(HeartBtInt.TAG, 30));
-        add(resetSeqNumFlag);
+        field(ResetSeqNumFlag.TAG, Required.NO);
 
         setEnum(EncryptMethod.TAG, EncryptMethodValue.NONE);
     }
@@ -45,6 +44,6 @@ public class LogonMessage extends AbstractMessage {
     }
 
     public void setResetSeqNumFlag(boolean resetSeqNumFlag) {
-        this.resetSeqNumFlag.setValue(resetSeqNumFlag);
+        setBoolean(ResetSeqNumFlag.TAG, resetSeqNumFlag);
     }
 }

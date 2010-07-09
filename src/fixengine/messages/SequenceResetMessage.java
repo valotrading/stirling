@@ -22,8 +22,6 @@ import fixengine.tags.NewSeqNo;
  * @author Pekka Enberg 
  */
 public class SequenceResetMessage extends AbstractMessage {
-    private BooleanField gapFillFlag = new BooleanField(GapFillFlag.TAG, Required.NO);
-    private IntegerField newSeqNo = new IntegerField(NewSeqNo.TAG);
 
     public SequenceResetMessage() {
         this(new MessageHeader(MsgTypeValue.SEQUENCE_RESET));
@@ -32,8 +30,8 @@ public class SequenceResetMessage extends AbstractMessage {
     public SequenceResetMessage(MessageHeader header) {
         super(header);
         
-        add(gapFillFlag);
-        add(newSeqNo);
+        field(GapFillFlag.TAG, Required.NO);
+        field(NewSeqNo.TAG);
     }
     
     @Override
@@ -42,19 +40,19 @@ public class SequenceResetMessage extends AbstractMessage {
     }
 
     public void setGapFillFlag(boolean gapFillFlag) {
-        this.gapFillFlag.setValue(gapFillFlag);
+        setBoolean(GapFillFlag.TAG, gapFillFlag);
     }
     
     public boolean getGapFillFlag() {
-        return gapFillFlag.getValue();
+        return getBoolean(GapFillFlag.TAG);
     }
 
     public void setNewSeqNo(int newSeqNo) {
-        this.newSeqNo.setValue(newSeqNo);
+        setInteger(NewSeqNo.TAG, newSeqNo);
     }
     
     public int getNewSeqNo() {
-        return newSeqNo.getValue();
+        return getInteger(NewSeqNo.TAG);
     }
 
     public boolean isResetOk(int nextSeqNum) {

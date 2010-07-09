@@ -21,7 +21,6 @@ import fixengine.tags.Text;
  * @author Pekka Enberg 
  */
 public class LogoutMessage extends AbstractMessage {
-    private final StringField text = new StringField(Text.TAG, Required.NO);
 
     public LogoutMessage() {
         this(new MessageHeader(MsgTypeValue.LOGOUT));
@@ -30,15 +29,15 @@ public class LogoutMessage extends AbstractMessage {
     public LogoutMessage(MessageHeader header) {
         super(header);
 
-        add(text);
+        field(Text.TAG, Required.NO);
     }
 
     public void setText(String text) {
-        this.text.setValue(text);
+        setString(Text.TAG, text);
     }
 
     public String getText() {
-        return text.getValue();
+        return getString(Text.TAG);
     }
     
     @Override

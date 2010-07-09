@@ -21,7 +21,6 @@ import fixengine.tags.TestReqID;
  * @author Pekka Enberg 
  */
 public class TestRequestMessage extends AbstractMessage {
-    private final StringField testReqId = new StringField(TestReqID.TAG, Required.YES);
 
     public TestRequestMessage() {
         this(new MessageHeader(MsgTypeValue.TEST_REQUEST));
@@ -30,7 +29,7 @@ public class TestRequestMessage extends AbstractMessage {
     public TestRequestMessage(MessageHeader header) {
         super(header);
 
-        add(testReqId);
+        field(TestReqID.TAG);
     }
 
     @Override
@@ -39,10 +38,10 @@ public class TestRequestMessage extends AbstractMessage {
     }
 
     public void setTestReqId(String testReqId) {
-        this.testReqId.setValue(testReqId);
+        setString(TestReqID.TAG, testReqId);
     }
 
     public String getTestReqId() {
-        return testReqId.getValue();
+        return getString(TestReqID.TAG);
     }
 }

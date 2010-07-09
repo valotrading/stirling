@@ -41,7 +41,9 @@ import fixengine.messages.SessionRejectReasonValue;
 import fixengine.messages.TestRequestMessage;
 import fixengine.messages.Validator;
 import fixengine.session.store.SessionStore;
+import fixengine.tags.BeginSeqNo;
 import fixengine.tags.BusinessRejectReason;
+import fixengine.tags.EndSeqNo;
 import fixengine.tags.RefMsgType;
 import fixengine.tags.RefSeqNo;
 import fixengine.tags.SessionRejectReason;
@@ -219,7 +221,7 @@ public class Session {
             @Override public void visit(ResendRequestMessage message) {
                 queue.skip(message);
                 int newSeqNo = outgoingSeq.peek();
-                outgoingSeq.reset(message.getBeginSeqNo());
+                outgoingSeq.reset(message.getInteger(BeginSeqNo.TAG));
                 fillSequenceGap(conn, newSeqNo);
             }
 
@@ -409,8 +411,8 @@ public class Session {
     private void syncMessages(Connection conn) {
         int beginSeqNo = queue.nextSeqNum();
         ResendRequestMessage resendReq = new ResendRequestMessage();
-        resendReq.setBeginSeqNo(beginSeqNo);
-        resendReq.setEndSeqNo(0);
+        resendReq.setInteger(BeginSeqNo.TAG, beginSeqNo);
+        resendReq.setInteger(EndSeqNo.TAG, 0);
         send(conn, resendReq);
     }
 

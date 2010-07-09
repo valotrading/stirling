@@ -24,9 +24,6 @@ import fixengine.tags.Text;
  * @author Pekka Enberg
  */
 public class RejectMessage extends AbstractMessage {
-    private final IntegerField refSeqNo = new IntegerField(RefSeqNo.TAG, Required.YES);
-    private final IntegerField refTagId = new IntegerField(RefTagId.TAG, Required.NO);
-    private final StringField text = new StringField(Text.TAG, Required.NO);
 
     public RejectMessage() {
         this(new MessageHeader(MsgTypeValue.REJECT));
@@ -35,10 +32,10 @@ public class RejectMessage extends AbstractMessage {
     public RejectMessage(MessageHeader header) {
         super(header);
 
-        add(refSeqNo);
-        add(refTagId);
+        field(RefSeqNo.TAG);
+        field(RefTagId.TAG, Required.NO);
         field(SessionRejectReason.TAG, Required.NO);
-        add(text);
+        field(Text.TAG, Required.NO);
     }
 
     @Override
@@ -47,15 +44,15 @@ public class RejectMessage extends AbstractMessage {
     }
 
     public void setRefSeqNo(int refSeqNo) {
-        this.refSeqNo.setValue(refSeqNo);
+        setInteger(RefSeqNo.TAG, refSeqNo);
     }
 
     public void setText(String text) {
-        this.text.setValue(text);
+        setString(Text.TAG, text);
     }
 
     public String getText() {
-        return text.getValue();
+        return getString(Text.TAG);
     }
 
     public String reason() {

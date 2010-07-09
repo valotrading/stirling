@@ -27,7 +27,7 @@ public class BooleanField extends AbstractField<Boolean> {
         this(tag, null, required);
     }
 
-    protected BooleanField(Tag<BooleanField> tag, Boolean value, Required required) {
+    public BooleanField(Tag<BooleanField> tag, Boolean value, Required required) {
         super(tag, value, required);
     }
 

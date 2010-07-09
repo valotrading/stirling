@@ -23,11 +23,11 @@ public class StringField extends AbstractField<String> {
         this(tag, Required.YES);
     }
 
-    protected StringField(Tag<StringField> tag, String value) {
+    public StringField(Tag<StringField> tag, String value) {
         this(tag, value, Required.YES);
     }
 
-    protected StringField(Tag<StringField> tag, String value, Required required) {
+    public StringField(Tag<StringField> tag, String value, Required required) {
         super(tag, value, required);
     }
 

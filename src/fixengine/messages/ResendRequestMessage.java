@@ -22,8 +22,6 @@ import fixengine.tags.EndSeqNo;
  * @author Pekka Enberg 
  */
 public class ResendRequestMessage extends AbstractMessage {
-    private final IntegerField beginSeqNo = new IntegerField(BeginSeqNo.TAG);
-    private final IntegerField endSeqNo = new IntegerField(EndSeqNo.TAG);
 
     public ResendRequestMessage() {
         this(new MessageHeader(MsgTypeValue.RESEND_REQUEST));
@@ -32,24 +30,8 @@ public class ResendRequestMessage extends AbstractMessage {
     public ResendRequestMessage(MessageHeader header) {
         super(header);
 
-        add(beginSeqNo);
-        add(endSeqNo);
-    }
-
-    public void setBeginSeqNo(int beginSeqNo) {
-        this.beginSeqNo.setValue(beginSeqNo);
-    }
-
-    public void setEndSeqNo(int endSeqNo) {
-        this.endSeqNo.setValue(endSeqNo);
-    }
-
-    public int getBeginSeqNo() {
-        return beginSeqNo.getValue();
-    }
-
-    public int getEndSeqNo() {
-        return endSeqNo.getValue();
+        field(BeginSeqNo.TAG);
+        field(EndSeqNo.TAG);
     }
 
     @Override

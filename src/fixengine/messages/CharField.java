@@ -19,15 +19,15 @@ package fixengine.messages;
  * @author Pekka Enberg 
  */
 public class CharField extends AbstractField<Character> {
-    protected CharField(Tag tag) {
+    public CharField(Tag tag) {
         this(tag, null, Required.YES);
     }
 
-    protected CharField(Tag tag, Character value) {
+    public CharField(Tag tag, Character value) {
         this(tag, value, Required.YES);
     }
 
-    protected CharField(Tag tag, Character value, Required required) {
+    public CharField(Tag tag, Character value, Required required) {
         super(tag, value, required);
     }
 

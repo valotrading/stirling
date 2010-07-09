@@ -68,6 +68,11 @@ public abstract class AbstractFieldContainer {
         return field.getValue();
     }
 
+    public Double getFloat(Tag<FloatField> tag) {
+        FloatField field = (FloatField) fields.lookup(tag);
+        return field.getValue();
+    }
+
     public boolean getBoolean(Tag<BooleanField> tag) {
         BooleanField field = (BooleanField) fields.lookup(tag);
         Boolean result = field.getValue();

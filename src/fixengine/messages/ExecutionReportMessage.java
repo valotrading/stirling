@@ -47,26 +47,6 @@ import fixengine.tags.TransactTime;
  * @author Pekka Enberg 
  */
 public class ExecutionReportMessage extends AbstractMessage {
-    private final StringField maturityMonthYear = new StringField(MaturityMonthYear.TAG, Required.NO);
-    private final StringField exDestination = new StringField(ExDestination.TAG, Required.NO);
-    private final StringField securityType = new StringField(SecurityType.TAG, Required.NO);
-    private final UtcTimestampField transactTime = new UtcTimestampField(TransactTime.TAG, Required.NO);
-    private final StringField origClOrdId = new StringField(OrigClOrdID.TAG, Required.NO);
-    private final StringField execTransType = new StringField(ExecTransType.TAG);
-    private final StringField currency = new StringField(Currency.TAG, Required.NO);
-    private final StringField clOrdId = new StringField(ClOrdID.TAG, Required.NO);
-    private final StringField lastMkt = new StringField(LastMkt.TAG, Required.NO);
-    private final FloatField lastQty = new FloatField(LastQty.TAG, Required.NO);
-    private final FloatField lastPx = new FloatField(LastPx.TAG, Required.NO);
-    private final FloatField leavesQty = new FloatField(LeavesQty.TAG);
-    private final FloatField price = new FloatField(Price.TAG, Required.NO);
-    private final FloatField orderQty = new FloatField(OrderQty.TAG);
-    private final StringField text = new StringField(Text.TAG, Required.NO);
-    private final StringField orderId = new StringField(OrderID.TAG);
-    private final FloatField cumQty = new FloatField(CumQty.TAG);
-    private final StringField execId = new StringField(ExecID.TAG);
-    private final StringField symbol = new StringField(Symbol.TAG);
-    private final FloatField avgPx = new FloatField(AvgPx.TAG);
 
     public ExecutionReportMessage() {
         this(new MessageHeader(MsgTypeValue.EXECUTION_REPORT));
@@ -75,81 +55,33 @@ public class ExecutionReportMessage extends AbstractMessage {
     public ExecutionReportMessage(MessageHeader header) {
         super(header);
 
-        add(orderId);
-        add(clOrdId);
-        add(origClOrdId);
-        add(execId);
-        add(execTransType);
+        field(OrderID.TAG);
+        field(ClOrdID.TAG, Required.NO);
+        field(OrigClOrdID.TAG, Required.NO);
+        field(ExecID.TAG);
+        field(ExecTransType.TAG);
         field(ExecType.TAG);
         field(OrdStatus.TAG);
         field(OrdRejReason.TAG, Required.NO);
         field(ExecRestatementReason.TAG, Required.NO);
-        add(symbol);
-        add(securityType);
-        add(maturityMonthYear);
+        field(Symbol.TAG);
+        field(SecurityType.TAG, Required.NO);
+        field(MaturityMonthYear.TAG, Required.NO);
         field(Side.TAG);
-        add(orderQty);
-        add(lastQty);
-        add(lastPx);
-        add(leavesQty);
+        field(OrderQty.TAG);
+        field(LastQty.TAG, Required.NO);
+        field(LastPx.TAG, Required.NO);
+        field(LeavesQty.TAG);
         field(OrdType.TAG, Required.NO);
-        add(price);
+        field(Price.TAG, Required.NO);
         field(TimeInForce.TAG, Required.NO);
-        add(cumQty);
-        add(avgPx);
-        add(transactTime);
-        add(text);
-        add(exDestination);
-        add(lastMkt);
-        add(currency);
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId.setValue(orderId);
-    }
-
-    public void setClOrdId(String clOrdId) {
-        this.clOrdId.setValue(clOrdId);
-    }
-
-    public String getClOrdId() {
-        return clOrdId.getValue();
-    }
-
-    public void setOrigClOrdId(String origClOrdId) {
-        this.origClOrdId.setValue(origClOrdId);
-    }
-
-    public String getOrigClOrdId() {
-        return origClOrdId.getValue();
-    }
-
-    public String getText() {
-        return text.getValue();
-    }
-
-    public void setExecId(String execId) {
-        this.execId.setValue(execId);
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol.setValue(symbol);
-    }
-
-    public void setOrderQty(double orderQty) {
-        this.orderQty.setValue(orderQty);
-    }
-
-    public void setLeavesQty(double leavesQty) {
-        this.leavesQty.setValue(leavesQty);
-    }
-
-    public void setCumQty(double cumQty) {
-        this.cumQty.setValue(cumQty);
-    }
-
-    public void setAvgPx(double avgPx) {
-        this.avgPx.setValue(avgPx);
+        field(CumQty.TAG);
+        field(AvgPx.TAG);
+        field(TransactTime.TAG, Required.NO);
+        field(Text.TAG, Required.NO);
+        field(ExDestination.TAG, Required.NO);
+        field(LastMkt.TAG, Required.NO);
+        field(Currency.TAG, Required.NO);
     }
 
     @Override

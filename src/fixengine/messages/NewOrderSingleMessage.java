@@ -15,8 +15,6 @@
  */
 package fixengine.messages;
 
-import org.joda.time.DateTime;
-
 import fixengine.tags.ClOrdID;
 import fixengine.tags.Currency;
 import fixengine.tags.CustomerOrFirm;
@@ -35,15 +33,6 @@ import fixengine.tags.TransactTime;
  * @author Pekka Enberg 
  */
 public class NewOrderSingleMessage extends AbstractMessage implements RequestMessage {
-    private final StringField maturityMonthYear = new StringField(MaturityMonthYear.TAG, Required.NO);
-    private final StringField securityType = new StringField(SecurityType.TAG, Required.NO);
-    private final StringField exDestination = new StringField(ExDestination.TAG);
-    private final UtcTimestampField transactTime = new UtcTimestampField(TransactTime.TAG);
-    private final StringField currency = new StringField(Currency.TAG, Required.NO);
-    private final FloatField price = new FloatField(Price.TAG, Required.NO);
-    private final FloatField orderQty = new FloatField(OrderQty.TAG);
-    private final StringField clOrdId = new StringField(ClOrdID.TAG);
-    private final StringField symbol = new StringField(Symbol.TAG);
 
     public NewOrderSingleMessage() {
         this(new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE));
@@ -52,19 +41,19 @@ public class NewOrderSingleMessage extends AbstractMessage implements RequestMes
     public NewOrderSingleMessage(MessageHeader header) {
         super(header);
 
-        add(clOrdId);
-        add(currency);
+        field(ClOrdID.TAG);
+        field(Currency.TAG, Required.NO);
         field(HandlInst.TAG);
-        add(exDestination);
+        field(ExDestination.TAG);
         field(Side.TAG);
-        add(transactTime);
+        field(TransactTime.TAG);
         field(OrdType.TAG);
-        add(symbol);
-        add(securityType);
-        add(maturityMonthYear);
-        add(orderQty);
+        field(Symbol.TAG);
+        field(SecurityType.TAG, Required.NO);
+        field(MaturityMonthYear.TAG, Required.NO);
+        field(OrderQty.TAG);
         field(CustomerOrFirm.TAG, Required.NO);
-        add(price);
+        field(Price.TAG, Required.NO);
     }
 
     @Override
@@ -76,59 +65,23 @@ public class NewOrderSingleMessage extends AbstractMessage implements RequestMes
         return null;
     }
 
-    public void setClOrdId(String clOrdId) {
-        this.clOrdId.setValue(clOrdId);
-    }
-
-    public String getClOrdId() {
-        return clOrdId.getValue();
-    }
-
-    public void setCurrency(String currency) {
-        this.currency.setValue(currency);
-    }
-
-    public void setExDestination(String exDestination) {
-        this.exDestination.setValue(exDestination);
-    }
-
-    public void setTransactTime(DateTime transactTime) {
-        this.transactTime.setValue(transactTime);
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol.setValue(symbol);
-    }
-
-    public String getSymbol() {
-        return symbol.getValue();
-    }
-
-    public void setSecurityType(String securityType) {
-        this.securityType.setValue(securityType);
-    }
-
-    public void setMaturityMonthYear(String maturityMonthYear) {
-        this.maturityMonthYear.setValue(maturityMonthYear);
-    }
-
-    public void setOrderQty(double orderQty) {
-        this.orderQty.setValue(orderQty);
-    }
-
-    public double getOrderQty() {
-        return orderQty.getValue();
-    }
-
-    public void setPrice(double price) {
-        this.price.setValue(price);
-    }
-
     @Override public SideValue getSide() {
         return getEnum(Side.TAG);
     }
 
     @Override public OrdTypeValue getOrdType() {
         return getEnum(OrdType.TAG);
+    }
+
+    @Override public String getClOrdId() {
+        return getString(ClOrdID.TAG);
+    }
+
+    @Override public double getOrderQty() {
+        return getFloat(OrderQty.TAG);
+    }
+
+    @Override public String getSymbol() {
+        return getString(Symbol.TAG);
     }
 }
