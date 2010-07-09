@@ -84,11 +84,6 @@ public abstract class RepeatingGroup<T extends RepeatingGroupInstance> implement
     }
 
     @Override
-    public boolean isUnrecognized() {
-        return false;
-    }
-
-    @Override
     public boolean isUserDefined() {
         return false;
     }

@@ -340,15 +340,6 @@ public class Session {
                 });
                 add(new AbstractFieldsValidator() {
                     @Override protected boolean isValid(Field field) {
-                        return !field.isUnrecognized();
-                    }
-
-                    @Override protected void error(Message message, Field field) {
-                        sessionReject(conn, message, SessionRejectReasonValue.INVALID_TAG, toString(field) + ": Invalid tag");
-                    }
-                });
-                add(new AbstractFieldsValidator() {
-                    @Override protected boolean isValid(Field field) {
                         return !field.isUserDefined();
                     }
 

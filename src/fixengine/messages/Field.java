@@ -33,7 +33,6 @@ public interface Field {
     boolean isMissing();
     boolean isParsed();
     boolean isEmpty();
-    boolean isUnrecognized();
     boolean isUserDefined();
     boolean isDuplicate();
     String format();

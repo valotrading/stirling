@@ -111,11 +111,6 @@ public abstract class AbstractField<T> implements Field {
     }
 
     @Override
-    public boolean isUnrecognized() {
-	return false;
-    }
-
-    @Override
     public boolean isUserDefined() {
         return false;
     }
