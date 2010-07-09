@@ -34,7 +34,6 @@ public interface Field {
     boolean isParsed();
     boolean isEmpty();
     boolean isUserDefined();
-    boolean isDuplicate();
     String format();
     int length();
     String prettyName();

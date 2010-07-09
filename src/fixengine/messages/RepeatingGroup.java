@@ -89,11 +89,6 @@ public abstract class RepeatingGroup<T extends RepeatingGroupInstance> implement
     }
 
     @Override
-    public boolean isDuplicate() {
-        return false;
-    }
-
-    @Override
     public int checksum() {
         int result = instanceCount.checksum();
         for (T instance : instances) {

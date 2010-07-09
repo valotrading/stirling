@@ -116,11 +116,6 @@ public abstract class AbstractField<T> implements Field {
     }
 
     @Override
-    public boolean isDuplicate() {
-        return false;
-    }
-
-    @Override
     public boolean isMissing() {
         return required.equals(Required.YES) && !hasValue();
     }
