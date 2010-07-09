@@ -41,7 +41,10 @@ import fixengine.messages.SessionRejectReason;
 import fixengine.messages.TestRequestMessage;
 import fixengine.messages.Validator;
 import fixengine.session.store.SessionStore;
+import fixengine.tags.RefMsgType;
+import fixengine.tags.RefSeqNo;
 import fixengine.tags.TestReqID;
+import fixengine.tags.Text;
 
 /**
  * @author Karim Osman
@@ -149,7 +152,7 @@ public class Session {
 
     public void logon(Connection conn) {
         initiatedLogout = false;
-        send(conn, new LogonMessage(false));
+        send(conn, new LogonMessage());
     }
 
     public void logout(final Connection conn) {
@@ -378,10 +381,10 @@ public class Session {
 
     private void businessReject(Connection conn, String msgType, int msgSeqNum, BusinessRejectReason reason, String text) {
         BusinessMessageRejectMessage reject = new BusinessMessageRejectMessage();
-        reject.setRefSeqNo(msgSeqNum);
-        reject.setRefMsgType(msgType);
+        reject.setInteger(RefSeqNo.TAG, msgSeqNum);
+        reject.setString(RefMsgType.TAG, msgType);
         reject.setBusinessRejectReason(reason);
-        reject.setText(text);
+        reject.setString(Text.TAG, text);
         send(conn, reject);
     }
 

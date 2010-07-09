@@ -24,9 +24,6 @@ import fixengine.tags.Text;
  */
 public class BusinessMessageRejectMessage extends AbstractMessage {
     private final BusinessRejectReasonField businessRejectReason = new BusinessRejectReasonField(); 
-    private final IntegerField refSeqNo = new IntegerField(RefSeqNo.TAG, Required.NO);
-    private final StringField refMsgType = new StringField(RefMsgType.TAG);
-    private final StringField text = new StringField(Text.TAG, Required.NO);
 
     public BusinessMessageRejectMessage() {
         this(new MessageHeader(MessageType.BUSINESS_MESSAGE_REJECT));
@@ -35,10 +32,10 @@ public class BusinessMessageRejectMessage extends AbstractMessage {
     public BusinessMessageRejectMessage(MessageHeader header) {
         super(header);
 
-        add(refSeqNo);
-        add(refMsgType);
+        field(RefSeqNo.TAG, Required.NO);
+        field(RefMsgType.TAG);
         add(businessRejectReason);
-        add(text);
+        field(Text.TAG, Required.NO);
     }
 
     @Override
@@ -46,19 +43,7 @@ public class BusinessMessageRejectMessage extends AbstractMessage {
         visitor.visit(this);
     }
 
-    public void setRefSeqNo(int refSeqNo) {
-        this.refSeqNo.setValue(refSeqNo);
-    }
-
     public void setBusinessRejectReason(BusinessRejectReason reason) {
         this.businessRejectReason.setValue(reason);
-    }
-
-    public void setText(String text) {
-        this.text.setValue(text);
-    }
-
-    public void setRefMsgType(String refMsgType) {
-        this.refMsgType.setValue(refMsgType);
     }
 }
