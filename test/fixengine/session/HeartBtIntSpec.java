@@ -26,11 +26,11 @@ import fixengine.io.Timeout;
  * @author Pekka Enberg 
  */
 @RunWith(JDaveRunner.class)
-public class HeartBtIntSpec extends Specification<HeartBtInt> {
+public class HeartBtIntSpec extends Specification<HeartBtIntValue> {
     public class AnyHeartBtInt {
-        private HeartBtInt heartBtInt = new HeartBtInt(30);
+        private HeartBtIntValue heartBtInt = new HeartBtIntValue(30);
 
-        public HeartBtInt create() {
+        public HeartBtIntValue create() {
             return heartBtInt;
         }
 

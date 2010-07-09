@@ -34,9 +34,6 @@ public class LogonMessage extends AbstractMessage {
         field(EncryptMethod.TAG);
         field(HeartBtInt.TAG);
         field(ResetSeqNumFlag.TAG, Required.NO);
-
-        setInteger(HeartBtInt.TAG, 30);
-        setEnum(EncryptMethod.TAG, EncryptMethodValue.NONE);
     }
 
     @Override

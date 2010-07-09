@@ -27,6 +27,7 @@ import fixengine.messages.AbstractMessageValidator;
 import fixengine.messages.BusinessMessageRejectMessage;
 import fixengine.messages.BusinessRejectReasonValue;
 import fixengine.messages.DefaultMessageVisitor;
+import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.Field;
 import fixengine.messages.HeartbeatMessage;
 import fixengine.messages.LogonMessage;
@@ -43,8 +44,10 @@ import fixengine.messages.Validator;
 import fixengine.session.store.SessionStore;
 import fixengine.tags.BeginSeqNo;
 import fixengine.tags.BusinessRejectReason;
+import fixengine.tags.EncryptMethod;
 import fixengine.tags.EndSeqNo;
 import fixengine.tags.GapFillFlag;
+import fixengine.tags.HeartBtInt;
 import fixengine.tags.NewSeqNo;
 import fixengine.tags.RefMsgType;
 import fixengine.tags.RefSeqNo;
@@ -60,7 +63,7 @@ public class Session {
     protected Sequence outgoingSeq = new Sequence();
     protected TimeSource timeSource = new DefaultTimeSource();
 
-    protected final HeartBtInt heartBtInt;
+    protected final HeartBtIntValue heartBtInt;
     protected final Config config;
     protected final SessionStore store;
 
@@ -71,7 +74,7 @@ public class Session {
     private long prevTxTimeMsec = System.currentTimeMillis();
     private long prevRxTimeMsec = System.currentTimeMillis();
 
-    public Session(HeartBtInt heartBtInt, Config config, SessionStore store) {
+    public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store) {
         this.heartBtInt = heartBtInt;
         this.config = config;
         this.store = store;
@@ -158,7 +161,10 @@ public class Session {
 
     public void logon(Connection conn) {
         initiatedLogout = false;
-        send(conn, new LogonMessage());
+        LogonMessage message = new LogonMessage();
+        message.setInteger(HeartBtInt.TAG, 30);
+        message.setEnum(EncryptMethod.TAG, EncryptMethodValue.NONE);
+        send(conn, message);
     }
 
     public void logout(final Connection conn) {

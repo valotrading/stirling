@@ -25,7 +25,7 @@ import java.util.Scanner;
 import fixengine.Config;
 import fixengine.Version;
 import fixengine.session.Session;
-import fixengine.session.HeartBtInt;
+import fixengine.session.HeartBtIntValue;
 
 import fixengine.examples.console.ConsoleClient;
 import fixengine.messages.DefaultMessageVisitor;
@@ -72,8 +72,8 @@ public class Logon implements Command {
     }
   }
 
-  private HeartBtInt getHeartBtInt() {
-    return new HeartBtInt(30);
+  private HeartBtIntValue getHeartBtInt() {
+    return new HeartBtIntValue(30);
   }
 
   private Config getConfig() {

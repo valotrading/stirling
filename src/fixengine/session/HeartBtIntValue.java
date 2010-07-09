@@ -20,13 +20,13 @@ import fixengine.io.Timeout;
 /**
  * @author Pekka Enberg
  */
-public class HeartBtInt {
+public class HeartBtIntValue {
     /* HeartBtInt + "some reasonable transmission time"  */
     private static final double TX_TIME_FACTOR = 1.2;
 
     private int seconds;
 
-    public HeartBtInt(int seconds) {
+    public HeartBtIntValue(int seconds) {
         this.seconds = seconds;
     }
 
