@@ -34,6 +34,5 @@ public interface Field {
     boolean isParsed();
     boolean isEmpty();
     String format();
-    int length();
     String prettyName();
 }

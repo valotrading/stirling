@@ -93,15 +93,6 @@ public abstract class RepeatingGroup<T extends RepeatingGroupInstance> implement
     }
 
     @Override
-    public int length() {
-        int result = instanceCount.length();
-        for (T instance : instances) {
-            result += instance.length();
-        }
-        return result;
-    }
-
-    @Override
     public boolean isParsed() {
         return parsed;
     }

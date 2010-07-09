@@ -105,14 +105,6 @@ public class Fields implements Iterable<Field> {
         return result.toString();
     }
 
-    public int length() {
-        int length = 0;
-        for (Field field : fields) {
-            length += field.length();
-        }
-        return length;
-    }
-
     public int checksum() {
         int checksum = 0;
         for (Field field : fields) {

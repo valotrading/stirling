@@ -32,8 +32,4 @@ public class RepeatingGroupInstance {
     public int checksum() {
         return fields.checksum();
     }
-
-    public int length() {
-        return fields.length();
-    }
 }

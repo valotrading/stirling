@@ -54,14 +54,6 @@ public class FieldsSpec extends Specification<Fields> {
             specify(fields.lookup(tag), must.equal(field2));
         }
 
-        public void hasSumOfFieldLengthsAsTotalLength() {
-            checking(new Expectations() {{
-                one(field1).length(); will(returnValue(1));
-                one(field2).length(); will(returnValue(10));
-            }});
-            specify(fields.length(), must.equal(11));
-        }
-
         public void hasSumOfChecksumsAsTotalChecksum() {
             checking(new Expectations() {{
                 one(field1).checksum(); will(returnValue(1));
@@ -80,14 +72,6 @@ public class FieldsSpec extends Specification<Fields> {
 
         public void failsLookup() {
             specify(fields.lookup(new Tag(10)), must.equal(null));
-        }
-
-        public void hasZeroLength() {
-            specify(fields.length(), must.equal(0));
-        }
-
-        public void hasZeroChecksum() {
-            specify(fields.length(), must.equal(0));
         }
     }
 }
