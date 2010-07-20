@@ -24,7 +24,6 @@ public interface Field {
     void setRequired(Required required);
     String name();
     Tag tag();
-    int checksum();
     boolean hasValue();
     void parseValue(String s);
     boolean supports(Tag tag);

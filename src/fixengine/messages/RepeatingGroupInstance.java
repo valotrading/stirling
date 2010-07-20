@@ -28,8 +28,4 @@ public class RepeatingGroupInstance {
     public String format() {
         return fields.format();
     }
-
-    public int checksum() {
-        return fields.checksum();
-    }
 }

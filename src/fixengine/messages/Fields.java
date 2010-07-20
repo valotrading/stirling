@@ -105,14 +105,6 @@ public class Fields implements Iterable<Field> {
         return result.toString();
     }
 
-    public int checksum() {
-        int checksum = 0;
-        for (Field field : fields) {
-            checksum += field.checksum();
-        }
-        return checksum;
-    }
-
     public void validate() {
         for (Field field : fields) {
             if (field.isEmpty())

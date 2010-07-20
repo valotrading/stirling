@@ -53,14 +53,6 @@ public class FieldsSpec extends Specification<Fields> {
             }});
             specify(fields.lookup(tag), must.equal(field2));
         }
-
-        public void hasSumOfChecksumsAsTotalChecksum() {
-            checking(new Expectations() {{
-                one(field1).checksum(); will(returnValue(1));
-                one(field2).checksum(); will(returnValue(10));
-            }});
-            specify(fields.checksum(), must.equal(11));
-        }
     }
 
     public class Empty {

@@ -27,7 +27,6 @@ public abstract class AbstractField<T> implements Field {
     private final String name;
     private boolean defined;
     private final Tag tag;
-    private int checksum;
     private int length;
     protected T value;
 
@@ -73,10 +72,6 @@ public abstract class AbstractField<T> implements Field {
     @Override
     public Tag tag() {
         return tag;
-    }
-
-    public int checksum() {
-        return checksum;
     }
 
     public int length() {
