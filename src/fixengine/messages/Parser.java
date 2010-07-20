@@ -111,7 +111,7 @@ public class Parser {
 
     private static void trailer(ByteBuffer b, MessageHeader header) {
         int pos = b.position() - header.getMsgTypePosition();
-        int expected = checksum(b, b.position());
+        int expected = Checksums.checksum(b, b.position());
         StringField field;
         try {
             field = CheckSum.TAG.parse(b, null);
@@ -126,13 +126,5 @@ public class Parser {
         int checksum = Integer.parseInt(field.getValue());
         if (checksum != expected)
             throw new InvalidCheckSumException("CheckSum(10): Expected: " + expected + ", but was: " + checksum);
-    }
-
-    private static int checksum(ByteBuffer b, int end) {
-        int checksum = 0;
-        for (int i = 0; i < end; i++) {
-            checksum += b.get(i);
-        }
-        return checksum % 256;
     }
 }

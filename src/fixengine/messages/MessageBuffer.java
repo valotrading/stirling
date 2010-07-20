@@ -43,11 +43,7 @@ public class MessageBuffer {
     }
 
     public int checksum() {
-        int checksum = 0;
-        for (int i = 0; i < buffer.length(); i++) {
-            checksum += buffer.charAt(i);
-        }
-        return checksum % 256;
+        return Checksums.checksum(buffer);
     }
 
     @Override
