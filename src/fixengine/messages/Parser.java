@@ -78,7 +78,7 @@ public class Parser {
             field = BeginString.TAG.newField(Required.YES);
             field.parse(b);
         } catch (UnexpectedTagException e) {
-            throw new BeginStringMissingException(BeginString.TAG.prettyName() + ": is missing");
+            throw new GarbledMessageException(BeginString.TAG.prettyName() + ": is missing");
         }
         return field.getValue();
     }
@@ -90,12 +90,12 @@ public class Parser {
             field = BodyLength.TAG.newField(Required.YES);
             field.parse(b);
         } catch (UnexpectedTagException e) {
-            throw new MsgTypeMissingException(BodyLength.TAG.prettyName() + ": is missing");
+            throw new GarbledMessageException(BodyLength.TAG.prettyName() + ": is missing");
         }
         if (!field.isFormatValid())
-            throw new BodyLengthMissingException(BodyLength.TAG.prettyName() + ": Invalid value format");
+            throw new GarbledMessageException(BodyLength.TAG.prettyName() + ": Invalid value format");
         if (field.isEmpty())
-            throw new BodyLengthMissingException(BodyLength.TAG.prettyName() + ": Empty tag");
+            throw new GarbledMessageException(BodyLength.TAG.prettyName() + ": Empty tag");
         return field.getValue();
     }
 
@@ -106,10 +106,10 @@ public class Parser {
             field = MsgType.TAG.newField(Required.YES);
             field.parse(b);
         } catch (UnexpectedTagException e) {
-            throw new MsgTypeMissingException(MsgType.TAG.prettyName() + ": is missing");
+            throw new GarbledMessageException(MsgType.TAG.prettyName() + ": is missing");
         }
         if (field.isEmpty())
-            throw new MsgTypeMissingException(MsgType.TAG.prettyName() + ": Empty tag");
+            throw new GarbledMessageException(MsgType.TAG.prettyName() + ": Empty tag");
         return field.getValue();
     }
 
