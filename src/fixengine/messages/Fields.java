@@ -44,13 +44,7 @@ public class Fields implements Iterable<Field> {
             Field field = lookup(tag);
             if (field == null)
                 break;
-            if (field.isParsed())
-                throw new TagMultipleTimesException(field.prettyName() + ": Tag multiple times");
-            String value = parseValue(b, field);
-            if (!value.isEmpty())
-                field.parseValue(value);
-            else
-                field.parseValue(null);
+            field.parse(b);
             if (!field.isFormatValid())
                 throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
             if (!field.isValueValid())
@@ -75,17 +69,6 @@ public class Fields implements Iterable<Field> {
         if (tag.isUserDefined())
             throw new InvalidTagNumberException("Invalid tag number: " + tag.value());
         return tag;
-    }
-
-    private static String parseValue(ByteBuffer b, Field field) {
-        StringBuilder result = new StringBuilder();
-        for (;;) {
-            int ch = b.get();
-            if (ch == Field.DELIMITER)
-                break;
-            result.append((char) ch);
-        }
-        return result.toString();
     }
 
     public String format() {

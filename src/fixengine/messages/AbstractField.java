@@ -15,6 +15,8 @@
  */
 package fixengine.messages;
 
+import java.nio.ByteBuffer;
+
 import lang.Objects;
 
 /**
@@ -102,6 +104,27 @@ public abstract class AbstractField<T> implements Field {
     @Override
     public boolean isMissing() {
         return required.equals(Required.YES) && !hasValue();
+    }
+
+    public void parse(ByteBuffer b) {
+        if (isParsed())
+            throw new TagMultipleTimesException(prettyName() + ": Tag multiple times");
+        String value = parseValue(b, this);
+        if (!value.isEmpty())
+            parseValue(value);
+        else
+            parseValue(null);
+    }
+
+    private static String parseValue(ByteBuffer b, Field field) {
+        StringBuilder result = new StringBuilder();
+        for (;;) {
+            int ch = b.get();
+            if (ch == Field.DELIMITER)
+                break;
+            result.append((char) ch);
+        }
+        return result.toString();
     }
 
     public void parseValue(String value) {

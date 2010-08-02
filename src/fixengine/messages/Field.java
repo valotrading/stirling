@@ -15,6 +15,8 @@
  */
 package fixengine.messages;
 
+import java.nio.ByteBuffer;
+
 /**
  * @author Pekka Enberg
  */
@@ -23,7 +25,7 @@ public interface Field {
 
     void setRequired(Required required);
     boolean hasValue();
-    void parseValue(String s);
+    void parse(ByteBuffer b);
     boolean isFormatValid();
     boolean isValueValid();
     boolean isMissing();

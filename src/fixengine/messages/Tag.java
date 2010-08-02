@@ -67,11 +67,7 @@ public class Tag<T extends Field> {
         if (value != tag.value)
             throw new UnexpectedTagException(tag);
         T field = Classes.newInstance(type, Tag.class, tag);
-        String value = parseValue(b, field);
-        if (!value.isEmpty())
-            field.parseValue(value);
-        else
-            field.parseValue(null);
+        field.parse(b);
         return field;
     }
 
