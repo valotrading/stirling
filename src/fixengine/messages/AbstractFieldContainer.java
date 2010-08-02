@@ -30,7 +30,7 @@ public abstract class AbstractFieldContainer {
         fields.add(tag, required);
     }
 
-    public Field lookup(Tag tag) {
+    public Field lookup(int tag) {
         return fields.lookup(tag);
     }
 

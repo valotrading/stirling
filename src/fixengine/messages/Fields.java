@@ -26,13 +26,17 @@ import fixengine.tags.MsgType;
  * @author Pekka Enberg
  */
 public class Fields implements Iterable<Field> {
-    private final Map<Tag, Field> fields = new LinkedHashMap<Tag, Field>();
+    private final Map<Integer, Field> fields = new LinkedHashMap<Integer, Field>();
 
     @Override public Iterator<Field> iterator() {
         return fields.values().iterator();
     }
 
-    public Field lookup(Tag tag) {
+    public Field lookup(Tag<?> tag) {
+        return fields.get(tag.value());
+    }
+
+    public Field lookup(int tag) {
         return fields.get(tag);
     }
 
@@ -40,7 +44,7 @@ public class Fields implements Iterable<Field> {
         Field previous = new StringField(MsgType.TAG);
         for (;;) {
             b.mark();
-            Tag tag = parseTag(b, previous);
+            int tag = parseTag(b, previous);
             Field field = lookup(tag);
             if (field == null)
                 break;
@@ -54,7 +58,7 @@ public class Fields implements Iterable<Field> {
         b.reset();
     }
 
-    private static Tag parseTag(ByteBuffer b, Field previous) {
+    private static int parseTag(ByteBuffer b, Field previous) {
         StringBuilder result = new StringBuilder();
         for (;;) {
             int ch = b.get();
@@ -65,9 +69,9 @@ public class Fields implements Iterable<Field> {
         String s = result.toString();
         if (s.contains("" + Field.DELIMITER))
             throw new NonDataValueIncludesFieldDelimiterException(previous.prettyName() + ": Non-data value includes field delimiter (SOH character)");
-        Tag tag = new Tag(Integer.parseInt(s));
-        if (tag.isUserDefined())
-            throw new InvalidTagNumberException("Invalid tag number: " + tag.value());
+        int tag = Integer.parseInt(s);
+        if (Tag.isUserDefined(tag))
+            throw new InvalidTagNumberException("Invalid tag number: " + tag);
         return tag;
     }
 
@@ -87,6 +91,6 @@ public class Fields implements Iterable<Field> {
     }
 
     public void add(Tag<?> tag, Required required) {
-        this.fields.put(tag, tag.newField(required));
+        this.fields.put(tag.value(), tag.newField(required));
     }
 }

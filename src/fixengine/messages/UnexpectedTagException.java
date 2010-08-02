@@ -1,13 +1,13 @@
 package fixengine.messages;
 
 public class UnexpectedTagException extends Exception {
-    private final Tag<?> tag;
+    private final int tag;
 
-    public UnexpectedTagException(Tag<?> tag) {
+    public UnexpectedTagException(int tag) {
         this.tag = tag;
     }
 
-    public Tag<?> getTag() {
+    public int getTag() {
         return tag;
     }
 

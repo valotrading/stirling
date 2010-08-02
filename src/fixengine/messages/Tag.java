@@ -24,20 +24,16 @@ import lang.Objects;
  * @author Pekka Enberg 
  */
 public class Tag<T extends Field> {
-    private transient Class<T> type; // FIXME
+    private Class<T> type;
     private int value;
-
-    @Deprecated public Tag(int value) {
-        this(value, null);
-    }
 
     public Tag(int value, Class<T> type) {
         this.value = value;
         this.type = type;
     }
 
-    public boolean isUserDefined() {
-        return value() >= 5000;
+    public static boolean isUserDefined(int tag) {
+        return tag >= 5000;
     }
 
     public int length() {
@@ -62,16 +58,14 @@ public class Tag<T extends Field> {
         return field;
     }
 
-    public T parse(ByteBuffer b, Tag<?> previous) throws UnexpectedTagException {
-        Tag<?> tag = parseTag(b, previous);
-        if (value != tag.value)
+    public int parse(ByteBuffer b, Tag<?> previous) throws UnexpectedTagException {
+        int tag = parseTag(b, previous);
+        if (value != tag)
             throw new UnexpectedTagException(tag);
-        T field = Classes.newInstance(type, Tag.class, tag);
-        field.parse(b);
-        return field;
+        return tag;
     }
 
-    private static Tag parseTag(ByteBuffer b, Tag previous) {
+    private static int parseTag(ByteBuffer b, Tag previous) {
         StringBuilder result = new StringBuilder();
         for (;;) {
             int ch = b.get();
@@ -82,9 +76,9 @@ public class Tag<T extends Field> {
         String s = result.toString();
         if (s.contains("" + Field.DELIMITER))
             throw new NonDataValueIncludesFieldDelimiterException(previous.prettyName() + ": Non-data value includes field delimiter (SOH character)");
-        Tag tag = new Tag(Integer.parseInt(s));
-        if (tag.isUserDefined())
-            throw new InvalidTagNumberException("Invalid tag number: " + tag.value());
+        int tag = Integer.parseInt(s);
+        if (isUserDefined(tag))
+            throw new InvalidTagNumberException("Invalid tag number: " + tag);
         return tag;
     }
 

@@ -26,26 +26,20 @@ import org.junit.runner.RunWith;
 @RunWith(JDaveRunner.class)
 public class TagSpec extends Specification<Tag> {
     public class TagInNormalRange {
-        private final Tag tag = new Tag(4999);
-
         public void isNotUserDefined() {
-            specify(tag.isUserDefined(), must.equal(false));
+            specify(Tag.isUserDefined(4999), must.equal(false));
         }
     }
 
     public class TagInUserDefinedRange {
-        private final Tag tag = new Tag(5000);
-
         public void isUserDefined() {
-            specify(tag.isUserDefined(), must.equal(true));
+            specify(Tag.isUserDefined(5000), must.equal(true));
         }
     }
     
     public class TagInReservedRange {
-        private final Tag tag = new Tag(10000);
-
         public void isUserDefined() {
-            specify(tag.isUserDefined(), must.equal(true));
+            specify(Tag.isUserDefined(10000), must.equal(true));
         }
     }
 }

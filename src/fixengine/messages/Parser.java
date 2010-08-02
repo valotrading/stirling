@@ -74,7 +74,9 @@ public class Parser {
     private static String beginString(ByteBuffer b) {
         StringField field;
         try {
-            field = BeginString.TAG.parse(b, BeginString.TAG);
+            BeginString.TAG.parse(b, BeginString.TAG);
+            field = BeginString.TAG.newField(Required.YES);
+            field.parse(b);
         } catch (UnexpectedTagException e) {
             throw new BeginStringMissingException(BeginString.TAG.prettyName() + ": is missing");
         }
@@ -84,7 +86,9 @@ public class Parser {
     private static int bodyLength(ByteBuffer b) {
         IntegerField field;
         try {
-            field = BodyLength.TAG.parse(b, BeginString.TAG);
+            BodyLength.TAG.parse(b, BeginString.TAG);
+            field = BodyLength.TAG.newField(Required.YES);
+            field.parse(b);
         } catch (UnexpectedTagException e) {
             throw new MsgTypeMissingException(BodyLength.TAG.prettyName() + ": is missing");
         }
@@ -98,7 +102,9 @@ public class Parser {
     private static String msgType(ByteBuffer b) {
         StringField field;
         try {
-            field = MsgType.TAG.parse(b, BodyLength.TAG);
+            MsgType.TAG.parse(b, BodyLength.TAG);
+            field = MsgType.TAG.newField(Required.YES);
+            field.parse(b);
         } catch (UnexpectedTagException e) {
             throw new MsgTypeMissingException(MsgType.TAG.prettyName() + ": is missing");
         }
@@ -112,12 +118,14 @@ public class Parser {
         int expected = Checksums.checksum(b, b.position());
         StringField field;
         try {
-            field = CheckSum.TAG.parse(b, null);
+            CheckSum.TAG.parse(b, CheckSum.TAG);
+            field = MsgType.TAG.newField(Required.YES);
+            field.parse(b);
         } catch (UnexpectedTagException e) {
             Field f = header.lookup(e.getTag());
             if (f != null)
                 throw new OutOfOrderTagException(f.prettyName() + ": Out of order tag");
-            throw new InvalidTagException("Tag not defined for this message: " + e.getTag().value());
+            throw new InvalidTagException("Tag not defined for this message: " + e.getTag());
         }
         if (pos != header.getBodyLength())
             throw new InvalidBodyLengthException("BodyLength(9): Expected: " + header.getBodyLength() + ", but was: " + pos);
