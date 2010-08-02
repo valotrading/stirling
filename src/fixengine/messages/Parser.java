@@ -17,8 +17,6 @@ package fixengine.messages;
 
 import java.nio.ByteBuffer;
 
-import fixengine.tags.BeginString;
-import fixengine.tags.BodyLength;
 import fixengine.tags.CheckSum;
 import fixengine.tags.MsgSeqNum;
 import fixengine.tags.MsgType;
@@ -39,7 +37,7 @@ public class Parser {
     private static void parse(ByteBuffer b, Callback callback) {
         MessageHeader header = null;
         try {
-            header = parseHeaderBegin(b);
+            header = new MessageHeader();
             header.parse(b);
             header.validate();
             Message msg = header.newMessage();
@@ -56,61 +54,6 @@ public class Parser {
         } catch (ParseException e) {
             callback.invalidMessage(header.getInteger(MsgSeqNum.TAG), e.getReason(), e.getMessage());
         }
-    }
-
-    private static MessageHeader parseHeaderBegin(ByteBuffer b) {
-        MessageHeader header = new MessageHeader();
-        String beginString = beginString(b);
-        int bodyLength = bodyLength(b);
-        int msgTypePosition = b.position();
-        String msgTypeValue = msgType(b);
-        header.setBeginString(beginString);
-        header.setBodyLength(bodyLength);
-        header.setMsgType(msgTypeValue);
-        header.setMsgTypePosition(msgTypePosition);
-        return header;
-    }
-
-    private static String beginString(ByteBuffer b) {
-        StringField field;
-        try {
-            BeginString.TAG.parse(b, BeginString.TAG);
-            field = BeginString.TAG.newField(Required.YES);
-            field.parse(b);
-        } catch (UnexpectedTagException e) {
-            throw new GarbledMessageException(BeginString.TAG.prettyName() + ": is missing");
-        }
-        return field.getValue();
-    }
-
-    private static int bodyLength(ByteBuffer b) {
-        IntegerField field;
-        try {
-            BodyLength.TAG.parse(b, BeginString.TAG);
-            field = BodyLength.TAG.newField(Required.YES);
-            field.parse(b);
-        } catch (UnexpectedTagException e) {
-            throw new GarbledMessageException(BodyLength.TAG.prettyName() + ": is missing");
-        }
-        if (!field.isFormatValid())
-            throw new GarbledMessageException(BodyLength.TAG.prettyName() + ": Invalid value format");
-        if (field.isEmpty())
-            throw new GarbledMessageException(BodyLength.TAG.prettyName() + ": Empty tag");
-        return field.getValue();
-    }
-
-    private static String msgType(ByteBuffer b) {
-        StringField field;
-        try {
-            MsgType.TAG.parse(b, BodyLength.TAG);
-            field = MsgType.TAG.newField(Required.YES);
-            field.parse(b);
-        } catch (UnexpectedTagException e) {
-            throw new GarbledMessageException(MsgType.TAG.prettyName() + ": is missing");
-        }
-        if (field.isEmpty())
-            throw new GarbledMessageException(MsgType.TAG.prettyName() + ": Empty tag");
-        return field.getValue();
     }
 
     private static void trailer(ByteBuffer b, MessageHeader header) {

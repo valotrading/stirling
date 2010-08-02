@@ -225,10 +225,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            checking(new Expectations() {{
-                one(callback).message(with(new MessageMatcher(raw)));
-            }});
-            Parser.parse(silvertip.Message.fromString(raw), callback);
+            expectGarbledMessage("BeginString(8): Empty tag");
         }
     }
 

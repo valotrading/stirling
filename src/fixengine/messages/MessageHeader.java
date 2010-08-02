@@ -15,11 +15,16 @@
  */
 package fixengine.messages;
 
+import java.nio.ByteBuffer;
+
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
+import fixengine.tags.BeginString;
+import fixengine.tags.BodyLength;
 import fixengine.tags.DeliverToCompID;
 import fixengine.tags.MsgSeqNum;
+import fixengine.tags.MsgType;
 import fixengine.tags.OnBehalfOfCompID;
 import fixengine.tags.OrigSendingTime;
 import fixengine.tags.PossDupFlag;
@@ -32,12 +37,8 @@ import fixengine.tags.TargetCompID;
  * @author Pekka Enberg 
  */
 public class MessageHeader extends AbstractFieldContainer implements Parseable {
+    private final AbstractFieldContainer head = new AbstractFieldContainer() { };
     private static final Minutes MAX_TIME_DIFFERENCE = Minutes.TWO;
-
-    private String beginString;
-    private int bodyLength;
-    private String msgType;
-
     private int msgTypePosition;
 
     public MessageHeader(MsgTypeValue msgType) {
@@ -51,6 +52,9 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
     }
 
     public MessageHeader() {
+        head.field(BeginString.TAG);
+        head.field(BodyLength.TAG);
+        head.field(MsgType.TAG);
         field(SenderCompID.TAG);
         field(TargetCompID.TAG);
         field(OnBehalfOfCompID.TAG, Required.NO);
@@ -62,28 +66,50 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
         field(OrigSendingTime.TAG, Required.NO);
     }
 
+    @Override public void parse(ByteBuffer b) {
+        parseHeadField(b, BeginString.TAG, BeginString.TAG);
+        parseHeadField(b, BodyLength.TAG, BeginString.TAG);
+        msgTypePosition = b.position();
+        parseHeadField(b, MsgType.TAG, BodyLength.TAG);
+        super.parse(b);
+    }
+
+    private void parseHeadField(ByteBuffer b, Tag<?> tag, Tag<?> previous) {
+        try {
+            tag.parse(b, previous);
+            Field field = head.lookup(tag.value());
+            field.parse(b);
+            if (!field.isFormatValid())
+                throw new GarbledMessageException(tag.prettyName() + ": Invalid value format");
+            if (field.isEmpty())
+                throw new GarbledMessageException(tag.prettyName() + ": Empty tag");
+        } catch (UnexpectedTagException e) {
+            throw new GarbledMessageException(tag.prettyName() + ": is missing");
+        }
+    }
+
     public String getBeginString() {
-        return beginString;
+        return head.getString(BeginString.TAG);
     }
 
     public void setBeginString(String beginString) {
-      this.beginString = beginString;
+        head.setString(BeginString.TAG, beginString);
     }
 
     public int getBodyLength() {
-        return bodyLength;
+        return head.getInteger(BodyLength.TAG);
     }
 
     public void setBodyLength(int bodyLength) {
-        this.bodyLength = bodyLength;
+        head.setInteger(BodyLength.TAG, bodyLength);
     }
 
     public String getMsgType() {
-        return msgType;
+        return head.getString(MsgType.TAG);
     }
 
     public void setMsgType(String msgType) {
-        this.msgType = msgType;
+        head.setString(MsgType.TAG, msgType);
     }
 
     public boolean isPointToPoint() {
