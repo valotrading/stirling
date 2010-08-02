@@ -36,6 +36,6 @@ public abstract class AbstractFieldsValidator implements Validator<Message> {
     protected abstract void error(Message message, Field field);
 
     protected String toString(Field field) {
-        return field.name() + "(" + field.tag() + ")";
+        return field.prettyName();
     }
 }
