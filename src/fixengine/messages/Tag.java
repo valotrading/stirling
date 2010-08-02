@@ -88,17 +88,6 @@ public class Tag<T extends Field> {
         return tag;
     }
 
-    private static String parseValue(ByteBuffer b, Field field) {
-        StringBuilder result = new StringBuilder();
-        for (;;) {
-            int ch = b.get();
-            if (ch == Field.DELIMITER)
-                break;
-            result.append((char) ch);
-        }
-        return result.toString();
-    }
-
     public String prettyName() {
         return getClass().getSimpleName() + "(" + value + ")";
     }
