@@ -40,8 +40,6 @@ public class Parser {
         MessageHeader header = null;
         try {
             header = parseHeaderBegin(b);
-            if (header == null)
-                return;
             header.parse(b);
             header.validate();
             Message msg = header.newMessage();
