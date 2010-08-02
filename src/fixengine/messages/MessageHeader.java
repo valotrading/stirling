@@ -40,17 +40,17 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
 
     private int msgTypePosition;
 
-    public MessageHeader() {
-        this((String) null);
-    }
-
     public MessageHeader(MsgTypeValue msgType) {
         this(msgType.value());
     }
 
     public MessageHeader(String msgType) {
-        this.msgType = msgType;
+        this();
 
+        setMsgType(msgType);
+    }
+
+    public MessageHeader() {
         field(SenderCompID.TAG);
         field(TargetCompID.TAG);
         field(OnBehalfOfCompID.TAG, Required.NO);
