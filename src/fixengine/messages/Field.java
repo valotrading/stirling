@@ -24,7 +24,6 @@ public interface Field {
     void setRequired(Required required);
     boolean hasValue();
     void parseValue(String s);
-    boolean supports(Tag tag);
     boolean isFormatValid();
     boolean isValueValid();
     boolean isMissing();

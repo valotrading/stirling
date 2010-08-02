@@ -16,9 +16,9 @@
 package fixengine.messages;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import fixengine.tags.MsgType;
 
@@ -26,23 +26,14 @@ import fixengine.tags.MsgType;
  * @author Pekka Enberg
  */
 public class Fields implements Iterable<Field> {
-    private final List<Field> fields = new ArrayList<Field>();
-
-    public void add(Field field) {
-        fields.add(field);
-    }
+    private final Map<Tag, Field> fields = new LinkedHashMap<Tag, Field>();
 
     @Override public Iterator<Field> iterator() {
-        return fields.iterator();
+        return fields.values().iterator();
     }
 
     public Field lookup(Tag tag) {
-        for (Field field : fields) {
-            if (field.supports(tag)) {
-                return field;
-            }
-        }
-        return null;
+        return fields.get(tag);
     }
 
     public void parse(ByteBuffer b) {
@@ -99,20 +90,20 @@ public class Fields implements Iterable<Field> {
 
     public String format() {
         StringBuilder result = new StringBuilder();
-        for (Field field : fields) {
+        for (Field field : fields.values()) {
             result.append(field.format());
         }
         return result.toString();
     }
 
     public void validate() {
-        for (Field field : fields) {
+        for (Field field : fields.values()) {
             if (field.isEmpty())
                 throw new EmptyTagException(field.prettyName() + ": Empty tag");
         }
     }
 
     public void add(Tag<?> tag, Required required) {
-        this.fields.add(tag.newField(required));
+        this.fields.put(tag, tag.newField(required));
     }
 }

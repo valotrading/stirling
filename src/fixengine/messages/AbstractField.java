@@ -76,10 +76,6 @@ public abstract class AbstractField<T> implements Field {
         return length;
     }
 
-    public boolean supports(Tag tag) {
-        return tag.equals(this.tag);
-    }
-
     @Override
     public boolean isEmpty() {
         return !hasValue() && defined;
