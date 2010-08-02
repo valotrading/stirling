@@ -65,7 +65,7 @@ public class Tag<T extends Field> {
         return tag;
     }
 
-    private static int parseTag(ByteBuffer b, Tag previous) {
+    public static int parseTag(ByteBuffer b, Tag<?> previous) {
         StringBuilder result = new StringBuilder();
         for (;;) {
             int ch = b.get();

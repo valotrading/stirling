@@ -44,7 +44,7 @@ public class Fields implements Iterable<Field> {
         Tag<?> previous = MsgType.TAG;
         for (;;) {
             b.mark();
-            int tag = parseTag(b, previous);
+            int tag = Tag.parseTag(b, previous);
             Field field = lookup(tag);
             if (field == null)
                 break;
@@ -55,23 +55,6 @@ public class Fields implements Iterable<Field> {
                 throw new InvalidValueException(field.prettyName() + ": Invalid value");
         }
         b.reset();
-    }
-
-    private static int parseTag(ByteBuffer b, Tag<?> previous) {
-        StringBuilder result = new StringBuilder();
-        for (;;) {
-            int ch = b.get();
-            if (ch == '=')
-                break;
-            result.append((char) ch);
-        }
-        String s = result.toString();
-        if (s.contains("" + Field.DELIMITER))
-            throw new NonDataValueIncludesFieldDelimiterException(previous.prettyName() + ": Non-data value includes field delimiter (SOH character)");
-        int tag = Integer.parseInt(s);
-        if (Tag.isUserDefined(tag))
-            throw new InvalidTagNumberException("Invalid tag number: " + tag);
-        return tag;
     }
 
     public String format() {
