@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum SideValue implements Formattable<SideValue> {
+public enum SideValue implements Formattable {
     BUY('1'),
     SELL('2'),
     BUY_MINUS('3'),

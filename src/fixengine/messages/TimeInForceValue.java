@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum TimeInForceValue implements Formattable<TimeInForceValue> {
+public enum TimeInForceValue implements Formattable {
     DAY('0'),
     GOOD_TILL_CANCEL('1'),
     AT_THE_OPENING('2'),

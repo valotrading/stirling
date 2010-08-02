@@ -71,7 +71,7 @@ public abstract class AbstractFieldContainer {
         field.setValue(value);
     }
 
-    @SuppressWarnings("unchecked") public <T extends Formattable<T>> void setEnum(Tag<? extends EnumField<T>> tag, T value) {
+    @SuppressWarnings("unchecked") public <T extends Formattable> void setEnum(Tag<? extends EnumField<T>> tag, T value) {
         EnumField<T> field = (EnumField<T>) fields.lookup(tag);
         field.setValue(value);
     }
@@ -104,7 +104,7 @@ public abstract class AbstractFieldContainer {
         return field.getValue();
     }
 
-    @SuppressWarnings("unchecked") public <T extends Formattable<T>> T getEnum(Tag<? extends EnumField<T>> tag) {
+    @SuppressWarnings("unchecked") public <T extends Formattable> T getEnum(Tag<? extends EnumField<T>> tag) {
         EnumField<T> field = (EnumField<T>) fields.lookup(tag);
         return field.getValue();
     }

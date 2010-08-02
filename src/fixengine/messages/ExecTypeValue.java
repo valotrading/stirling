@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum ExecTypeValue implements Formattable<ExecTypeValue> {
+public enum ExecTypeValue implements Formattable {
     NEW('0'),
     PARTIAL_FILL('1'),
     FILL('2'),

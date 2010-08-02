@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum EncryptMethodValue implements Formattable<EncryptMethodValue> {
+public enum EncryptMethodValue implements Formattable {
     /** None / other */
     NONE(0),
 

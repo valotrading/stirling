@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum OrdStatusValue implements Formattable<OrdStatusValue> {
+public enum OrdStatusValue implements Formattable {
     NEW('0'),
     PARTIALLY_FILLED('1'),
     FILLED('2'),

@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public abstract class EnumField<T extends Formattable<T>> extends AbstractField<T> {
+public abstract class EnumField<T extends Formattable> extends AbstractField<T> {
     public EnumField(Tag<? extends EnumField<T>> tag, Required required) {
         super(tag, null, required);
     }

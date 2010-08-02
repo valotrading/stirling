@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum OrdTypeValue implements Formattable<OrdTypeValue> {
+public enum OrdTypeValue implements Formattable {
     MARKET('1'),
     LIMIT('2'),
     STOP('3'),

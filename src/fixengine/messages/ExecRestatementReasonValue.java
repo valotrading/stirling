@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum ExecRestatementReasonValue implements Formattable<ExecRestatementReasonValue> {
+public enum ExecRestatementReasonValue implements Formattable {
     GT_CORPORATE_ACTION(0),
     GT_RENEWAL_RESTATEMENT(1), /* (no corporate action) */
     VERBAL_CHANGE(2),

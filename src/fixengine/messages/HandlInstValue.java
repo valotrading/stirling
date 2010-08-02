@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum HandlInstValue implements Formattable<HandlInstValue> {
+public enum HandlInstValue implements Formattable {
     /** Automated execution order, private, no Broker intervention */
     AUTOMATED_ORDER_PRIVATE('1'),
 

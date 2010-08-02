@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum CustomerOrFirmValue implements Formattable<CustomerOrFirmValue> {
+public enum CustomerOrFirmValue implements Formattable {
     CUSTOMER(0),
     FIRM(1);
 

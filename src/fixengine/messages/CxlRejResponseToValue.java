@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum CxlRejResponseToValue implements Formattable<CxlRejResponseToValue> {
+public enum CxlRejResponseToValue implements Formattable {
     ORDER_CANCEL_REQUEST('1'),
     ORDER_MODIFICATION_REQUEST('2');
 

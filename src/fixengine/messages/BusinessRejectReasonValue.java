@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum BusinessRejectReasonValue implements Formattable<BusinessRejectReasonValue> {
+public enum BusinessRejectReasonValue implements Formattable {
     /** Other.  */
     OTHER(0),
     

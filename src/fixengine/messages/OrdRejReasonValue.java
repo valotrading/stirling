@@ -18,7 +18,7 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum OrdRejReasonValue implements Formattable<OrdRejReasonValue> {
+public enum OrdRejReasonValue implements Formattable {
     BROKER_EXCHANGE_OPTION(0),
     UNKNOWN_SYMBOL(1),
     EXCHANGE_CLOSED(2),

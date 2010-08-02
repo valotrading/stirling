@@ -15,6 +15,6 @@
  */
 package fixengine.messages;
 
-public interface Formattable<T> {
+public interface Formattable {
     String value();
 }
