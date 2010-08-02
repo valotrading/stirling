@@ -22,8 +22,6 @@ public interface Field {
     static final char DELIMITER = '\001';
 
     void setRequired(Required required);
-    String name();
-    Tag tag();
     boolean hasValue();
     void parseValue(String s);
     boolean supports(Tag tag);

@@ -64,12 +64,10 @@ public abstract class AbstractField<T> implements Field {
         return value;
     }
 
-    @Override
     public String name() {
         return name;
     }
 
-    @Override
     public Tag tag() {
         return tag;
     }
