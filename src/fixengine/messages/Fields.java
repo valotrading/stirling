@@ -41,24 +41,23 @@ public class Fields implements Iterable<Field> {
     }
 
     public void parse(ByteBuffer b) {
-        Field previous = new StringField(MsgType.TAG);
+        Tag<?> previous = MsgType.TAG;
         for (;;) {
             b.mark();
             int tag = parseTag(b, previous);
             Field field = lookup(tag);
             if (field == null)
                 break;
-            field.parse(b);
+            previous = field.parse(b);
             if (!field.isFormatValid())
                 throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
             if (!field.isValueValid())
                 throw new InvalidValueException(field.prettyName() + ": Invalid value");
-            previous = field;
         }
         b.reset();
     }
 
-    private static int parseTag(ByteBuffer b, Field previous) {
+    private static int parseTag(ByteBuffer b, Tag<?> previous) {
         StringBuilder result = new StringBuilder();
         for (;;) {
             int ch = b.get();

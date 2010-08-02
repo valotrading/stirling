@@ -25,7 +25,7 @@ public interface Field {
 
     void setRequired(Required required);
     boolean hasValue();
-    void parse(ByteBuffer b);
+    Tag<?> parse(ByteBuffer b);
     boolean isFormatValid();
     boolean isValueValid();
     boolean isMissing();
