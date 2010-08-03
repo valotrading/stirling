@@ -67,16 +67,16 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
     }
 
     @Override public void parse(ByteBuffer b) {
-        parseHeadField(b, BeginString.TAG, BeginString.TAG);
-        parseHeadField(b, BodyLength.TAG, BeginString.TAG);
+        parseHeadField(b, BeginString.TAG);
+        parseHeadField(b, BodyLength.TAG);
         msgTypePosition = b.position();
-        parseHeadField(b, MsgType.TAG, BodyLength.TAG);
+        parseHeadField(b, MsgType.TAG);
         super.parse(b);
     }
 
-    private void parseHeadField(ByteBuffer b, Tag<?> tag, Tag<?> previous) {
+    private void parseHeadField(ByteBuffer b, Tag<?> tag) {
         try {
-            tag.parse(b, previous);
+            tag.parse(b);
             Field field = head.lookup(tag.value());
             field.parse(b);
             if (!field.isFormatValid())

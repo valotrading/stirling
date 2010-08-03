@@ -106,7 +106,7 @@ public abstract class AbstractField<T> implements Field {
         return required.equals(Required.YES) && !hasValue();
     }
 
-    @Override public Tag<?> parse(ByteBuffer b) {
+    @Override public void parse(ByteBuffer b) {
         if (isParsed())
             throw new TagMultipleTimesException(prettyName() + ": Tag multiple times");
         String value = parseValue(b, this);
@@ -114,7 +114,6 @@ public abstract class AbstractField<T> implements Field {
             parseValue(value);
         else
             parseValue(null);
-        return tag;
     }
 
     private static String parseValue(ByteBuffer b, Field field) {

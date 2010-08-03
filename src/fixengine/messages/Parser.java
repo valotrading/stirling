@@ -61,7 +61,7 @@ public class Parser {
         int expected = Checksums.checksum(b, b.position());
         StringField field;
         try {
-            CheckSum.TAG.parse(b, CheckSum.TAG);
+            CheckSum.TAG.parse(b);
             field = MsgType.TAG.newField(Required.YES);
             field.parse(b);
         } catch (UnexpectedTagException e) {

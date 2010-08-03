@@ -58,14 +58,14 @@ public class Tag<T extends Field> {
         return field;
     }
 
-    public int parse(ByteBuffer b, Tag<?> previous) throws UnexpectedTagException {
-        int tag = parseTag(b, previous);
+    public int parse(ByteBuffer b) throws UnexpectedTagException {
+        int tag = parseTag(b);
         if (value != tag)
             throw new UnexpectedTagException(tag);
         return tag;
     }
 
-    public static int parseTag(ByteBuffer b, Tag<?> previous) {
+    public static int parseTag(ByteBuffer b) {
         StringBuilder result = new StringBuilder();
         for (;;) {
             int ch = b.get();
@@ -75,7 +75,7 @@ public class Tag<T extends Field> {
         }
         String s = result.toString();
         if (s.contains("" + Field.DELIMITER))
-            throw new NonDataValueIncludesFieldDelimiterException(previous.prettyName() + ": Non-data value includes field delimiter (SOH character)");
+            throw new NonDataValueIncludesFieldDelimiterException("Non-data value includes field delimiter (SOH character)");
         int tag = Integer.parseInt(s);
         if (isUserDefined(tag))
             throw new InvalidTagNumberException("Invalid tag number: " + tag);

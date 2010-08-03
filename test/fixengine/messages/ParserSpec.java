@@ -404,7 +404,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.FIELD_DELIMITER_IN_VALUE, "TestReqID(112): Non-data value includes field delimiter (SOH character)");
+            expectInvalidMessage(SessionRejectReasonValue.FIELD_DELIMITER_IN_VALUE, "Non-data value includes field delimiter (SOH character)");
         }
     }
 
