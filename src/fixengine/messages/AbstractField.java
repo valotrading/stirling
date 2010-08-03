@@ -103,7 +103,7 @@ public abstract class AbstractField<T> implements Field {
 
     @Override
     public boolean isMissing() {
-        return required.equals(Required.YES) && !hasValue();
+        return required.isRequired() && !hasValue();
     }
 
     @Override public void parse(ByteBuffer b) {
@@ -157,7 +157,7 @@ public abstract class AbstractField<T> implements Field {
     }
 
     private boolean isOptional() {
-        return required.equals(Required.NO);
+        return !required.isRequired();
     }
 
     protected abstract String value();

@@ -18,7 +18,17 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public enum Required {
-    YES,
-    NO
+public interface Required {
+    static final Required YES = new Required() {
+        @Override public boolean isRequired() {
+            return true;
+        }
+    };
+    static final Required NO = new Required() {
+        @Override public boolean isRequired() {
+            return false;
+        }
+    };
+
+    boolean isRequired();
 }
