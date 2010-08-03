@@ -1,0 +1,10 @@
+Known Bugs
+==========
+
+- Messages are not processed in-order. For example, if sequence reset follows
+  an invalid execution report, we reject the execution report instead of
+  processing the sequence reset first.
+
+- Message rejection doesn't work if MsgSeqNum is missing from standard header.
+
+- Conditionally required repeating groups are not supported.
