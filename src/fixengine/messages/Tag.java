@@ -65,6 +65,13 @@ public class Tag<T extends Field> {
         return tag;
     }
 
+    public static int peekTag(ByteBuffer b) {
+        b.mark();
+        int tag = Tag.parseTag(b);
+        b.reset();
+        return tag;
+    }
+
     public static int parseTag(ByteBuffer b) {
         StringBuilder result = new StringBuilder();
         for (;;) {

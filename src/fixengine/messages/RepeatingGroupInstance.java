@@ -3,8 +3,17 @@ package fixengine.messages;
 import java.nio.ByteBuffer;
 
 public class RepeatingGroupInstance extends AbstractFieldContainer implements Field {
+    private final Tag<?> delimiter;
+
     public RepeatingGroupInstance(Tag<?> delimiter) {
-        field(delimiter);
+        field(this.delimiter = delimiter);
+    }
+
+    @Override public void parse(ByteBuffer b) {
+        int tag = Tag.peekTag(b);
+        if (tag != delimiter.value())
+            throw new ParseException(fields.lookup(tag).prettyName() + ": Repeating group fields out of order", SessionRejectReasonValue.OUT_OF_ORDER_GROUP_FIELD);
+        fields.parse(b);
     }
 
     @Override public String format() {
@@ -33,10 +42,6 @@ public class RepeatingGroupInstance extends AbstractFieldContainer implements Fi
 
     @Override public boolean isValueValid() {
         return false;
-    }
-
-    @Override public void parse(ByteBuffer b) {
-        fields.parse(b);
     }
 
     @Override public String prettyName() {

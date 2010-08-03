@@ -410,7 +410,7 @@ public class ParserSpec extends Specification<String> {
                 .field(AllocTransType, "0")
                 .field(NoOrders, "1")
                 .field(ClOrdID, "12807331319412")
-                .field(Side, "2") 
+                .field(Side, "2")
                 .field(Symbol, "GOOG")
                 .field(Shares, "1000.00")
                 .field(AvgPx, "370.00")
@@ -429,6 +429,34 @@ public class ParserSpec extends Specification<String> {
                 one(callback).message(with(new MessageMatcher(raw)));
             }});
             Parser.parse(silvertip.Message.fromString(raw), callback);
+        }
+    }
+
+    public class RepeatingGroupOutOfOrder {
+        public String create() {
+            return raw = message("183", "J")
+                .field(MsgSeqNum, "1")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(AllocID, "12807331319411")
+                .field(AllocTransType, "0")
+                .field(NoOrders, "1")
+                .field(ClOrdID, "12807331319412")
+                .field(Side, "2")
+                .field(Symbol, "GOOG")
+                .field(Shares, "1000.00")
+                .field(AvgPx, "370.00")
+                .field(TradeDate, "20011004")
+                .field(NoAllocs, "2")
+                .field(AllocShares, "900.00")
+                .field(AllocAccount, "1234")
+                .field(AllocShares, "100.00")
+                .field(AllocAccount, "2345")
+                .field(CheckSum, "119")
+                .toString();
+        }
+
+        public void parse() {
+            expectInvalidMessage(SessionRejectReasonValue.OUT_OF_ORDER_GROUP_FIELD, "AllocShares(80): Repeating group fields out of order");
         }
     }
 

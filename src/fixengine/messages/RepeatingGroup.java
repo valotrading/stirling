@@ -38,9 +38,7 @@ public abstract class RepeatingGroup implements Field {
         field.parse(b);
         for (;;) {
             try {
-                b.mark();
-                int tag = Tag.parseTag(b);
-                b.reset();
+                int tag = Tag.peekTag(b);
                 RepeatingGroupInstance instance = newInstance();
                 if (instance.lookup(tag) == null)
                     break;
