@@ -18,17 +18,29 @@ package fixengine.messages;
 /**
  * @author Pekka Enberg 
  */
-public interface Required {
-    static final Required YES = new Required() {
+public abstract class Required {
+    public static final Required YES = new Required() {
         @Override public boolean isRequired() {
             return true;
         }
+
+        public boolean isConditional() {
+            return false;
+        };
     };
-    static final Required NO = new Required() {
+    public static final Required NO = new Required() {
         @Override public boolean isRequired() {
             return false;
         }
+
+        public boolean isConditional() {
+            return false;
+        };
     };
 
-    boolean isRequired();
+    public abstract boolean isRequired();
+
+    public boolean isConditional() {
+        return true;
+    }
 }

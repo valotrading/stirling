@@ -77,6 +77,10 @@ public abstract class RepeatingGroup implements Field {
         throw new UnsupportedOperationException();
     }
 
+    @Override public boolean isConditional() {
+        return false;
+    }
+
     @Override public boolean isParsed() {
         throw new UnsupportedOperationException();
     }

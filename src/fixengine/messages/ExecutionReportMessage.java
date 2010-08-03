@@ -73,7 +73,11 @@ public class ExecutionReportMessage extends AbstractMessage {
         field(LastPx.TAG, Required.NO);
         field(LeavesQty.TAG);
         field(OrdType.TAG, Required.NO);
-        field(Price.TAG, Required.NO);
+        field(Price.TAG, new Required() {
+            @Override public boolean isRequired() {
+                return OrdTypeValue.LIMIT.equals(getEnum(OrdType.TAG));
+            }
+        });
         field(TimeInForce.TAG, Required.NO);
         field(CumQty.TAG);
         field(AvgPx.TAG);

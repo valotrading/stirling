@@ -29,6 +29,7 @@ public interface Field {
     boolean isFormatValid();
     boolean isValueValid();
     boolean isMissing();
+    boolean isConditional();
     boolean isParsed();
     boolean isEmpty();
     String format();

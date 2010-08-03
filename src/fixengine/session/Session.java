@@ -340,11 +340,26 @@ public class Session {
                 });
                 add(new AbstractFieldsValidator() {
                     @Override protected boolean isValid(Field field) {
+                        if (field.isConditional()) {
+                            return true;
+                        }
                         return !field.isMissing();
                     }
 
                     @Override protected void error(Message message, Field field) {
                         sessionReject(conn, message, SessionRejectReasonValue.TAG_MISSING, toString(field) + ": Tag missing");
+                    }
+                });
+                add(new AbstractFieldsValidator() {
+                    @Override protected boolean isValid(Field field) {
+                        if (!field.isConditional()) {
+                            return true;
+                        }
+                        return !field.isMissing();
+                    }
+
+                    @Override protected void error(Message message, Field field) {
+                        businessReject(conn, message.getMsgType(), message.getMsgSeqNum(), BusinessRejectReasonValue.CONDITIONALLY_REQUIRED_FIELD_MISSING, toString(field) + ": Conditionally required field missing");
                     }
                 });
             }

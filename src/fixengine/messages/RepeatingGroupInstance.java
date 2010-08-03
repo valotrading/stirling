@@ -36,6 +36,10 @@ public class RepeatingGroupInstance extends AbstractFieldContainer implements Fi
         return false;
     }
 
+    @Override public boolean isConditional() {
+        return false;
+    }
+
     @Override public boolean isParsed() {
         return false;
     }
