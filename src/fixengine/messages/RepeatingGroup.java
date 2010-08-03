@@ -34,7 +34,8 @@ public abstract class RepeatingGroup implements Field {
     public abstract RepeatingGroupInstance newInstance();
 
     @Override public void parse(ByteBuffer b) {
-        count.newField(Required.NO).parse(b);
+        IntegerField field = count.newField(Required.NO);
+        field.parse(b);
         for (;;) {
             try {
                 b.mark();
@@ -49,6 +50,8 @@ public abstract class RepeatingGroup implements Field {
                 continue;
             }
         }
+        if (instances.size() != field.getValue())
+            throw new ParseException(count.prettyName() + ": Incorrect NumInGroup count for repeating group. Expected: " + field.getValue() + ", but was: " + instances.size(), SessionRejectReasonValue.NUM_IN_GROUP_MISMATCH);
     }
 
     @Override public String format() {

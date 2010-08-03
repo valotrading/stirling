@@ -432,10 +432,61 @@ public class ParserSpec extends Specification<String> {
         }
     }
 
-    // TODO:
+    public class TooFewInstancesInRepeatingGroup {
+        public String create() {
+            return raw = message("183", "J")
+                .field(MsgSeqNum, "1")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(AllocID, "12807331319411")
+                .field(AllocTransType, "0")
+                .field(NoOrders, "1")
+                .field(ClOrdID, "12807331319412")
+                .field(Side, "2")
+                .field(Symbol, "GOOG")
+                .field(Shares, "1000.00")
+                .field(AvgPx, "370.00")
+                .field(TradeDate, "20011004")
+                .field(NoAllocs, "3")
+                .field(AllocAccount, "1234")
+                .field(AllocShares, "900.00")
+                .field(AllocAccount, "2345")
+                .field(AllocShares, "100.00")
+                .field(CheckSum, "120")
+                .toString();
+        }
 
-    // - Too few entries in repeating group
-    // - Too many entries in repeating group
+        public void parse() {
+            expectInvalidMessage(SessionRejectReasonValue.NUM_IN_GROUP_MISMATCH, "NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 3, but was: 2");
+        }
+    }
+
+    public class TooManyInstancesInRepeatingGroup {
+        public String create() {
+            return raw = message("183", "J")
+                .field(MsgSeqNum, "1")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(AllocID, "12807331319411")
+                .field(AllocTransType, "0")
+                .field(NoOrders, "1")
+                .field(ClOrdID, "12807331319412")
+                .field(Side, "2")
+                .field(Symbol, "GOOG")
+                .field(Shares, "1000.00")
+                .field(AvgPx, "370.00")
+                .field(TradeDate, "20011004")
+                .field(NoAllocs, "1")
+                .field(AllocAccount, "1234")
+                .field(AllocShares, "900.00")
+                .field(AllocAccount, "2345")
+                .field(AllocShares, "100.00")
+                .field(CheckSum, "120")
+                .toString();
+        }
+
+        public void parse() {
+            expectInvalidMessage(SessionRejectReasonValue.NUM_IN_GROUP_MISMATCH, "NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 1, but was: 2");
+        }
+    }
 
     static FixMessageBuilder message() {
         return new FixMessageBuilder();
