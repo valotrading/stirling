@@ -100,11 +100,11 @@ public class ParserSpec extends Specification<String> {
 
     public class InvalidValueFormat {
         public String create() {
-            return raw = message("57", "0")
+            return raw = message("52", "0")
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "WRONG FORMAT")
                 .field(TestReqID, "1")
-                .field(CheckSum, "206")
+                .field(CheckSum, "227")
                 .toString();
         }
 
@@ -120,7 +120,7 @@ public class ParserSpec extends Specification<String> {
                 .field(SendingTime, "20100701-12:09:40")
                 .field(EncryptMethod, "7")
                 .field(HeartBtInt, "30")
-                .field(CheckSum, "248")
+                .field(CheckSum, "249")
                 .toString();
         }
 
@@ -131,7 +131,7 @@ public class ParserSpec extends Specification<String> {
 
     public class TagMultipleTimes {
         public String create() {
-            return raw = message("57", "0")
+            return raw = message("63", "0")
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(TestReqID, "1")
@@ -290,13 +290,13 @@ public class ParserSpec extends Specification<String> {
         public String create() {
             return raw = message()
                     .field(BeginString, "FIX.4.2")
-                    .field(BodyLength, "57")
+                    .field(BodyLength, "52")
                     .field(SenderCompID, "Sender")
                     .field(TargetCompID, "Target")
                     .field(MsgSeqNum, "1")
                     .field(SendingTime, "20100701-12:09:40")
                     .field(TestReqID, "1")
-                    .field(CheckSum, "33")
+                    .field(CheckSum, "243")
                     .toString();
         }
 
@@ -307,10 +307,10 @@ public class ParserSpec extends Specification<String> {
 
     public class InvalidMsgType {
         public String create() {
-            return raw = message("57", "ZZ")
+            return raw = message("52", "ZZ")
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
-                .field(CheckSum, "206")
+                .field(CheckSum, "74")
                 .toString();
         }
 
@@ -324,10 +324,10 @@ public class ParserSpec extends Specification<String> {
 
     public class UnsupportedMsgType {
         public String create() {
-            return raw = message("57", "P")
+            return raw = message("51", "P")
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
-                .field(CheckSum, "206")
+                .field(CheckSum, "229")
                 .toString();
         }
 
@@ -341,12 +341,12 @@ public class ParserSpec extends Specification<String> {
 
     public class InvalidTagNumber {
         public String create() {
-            return raw = message("57", "0")
+            return raw = message("68", "0")
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(TestReqID, "1")
                 .field(9898, "value")
-                .field(CheckSum, "206")
+                .field(CheckSum, "13")
                 .toString();
         }
 
@@ -357,12 +357,12 @@ public class ParserSpec extends Specification<String> {
 
     public class InvalidTag {
         public String create() {
-            return raw = message("57", "0")
+            return raw = message("62", "0")
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(88, "0")
                 .field(TestReqID, "1")
-                .field(CheckSum, "206")
+                .field(CheckSum, "168")
                 .toString();
         }
 
@@ -388,11 +388,11 @@ public class ParserSpec extends Specification<String> {
 
     public class SOHInValue {
         public String create() {
-            return raw = message("60", "0")
+            return raw = message("61", "0")
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(TestReqID, "1" + Field.DELIMITER + "000")
-                .field(CheckSum, "088")
+                .field(CheckSum, "90")
                 .toString();
         }
 
