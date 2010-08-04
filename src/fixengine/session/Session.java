@@ -69,6 +69,7 @@ public class Session {
 
     private long testReqId;
     private boolean initiatedLogout;
+    private boolean authenticated;
     private boolean available = true;
 
     private long prevTxTimeMsec = System.currentTimeMillis();
@@ -160,7 +161,7 @@ public class Session {
     }
 
     public void logon(Connection conn) {
-        initiatedLogout = false;
+        authenticated = initiatedLogout = false;
         LogonMessage message = new LogonMessage();
         message.setInteger(HeartBtInt.TAG, 30);
         message.setEnum(EncryptMethod.TAG, EncryptMethodValue.NONE);
@@ -218,40 +219,57 @@ public class Session {
     }
 
     private void process(final Connection conn, Message message, final MessageVisitor visitor) {
-        message.apply(new DefaultMessageVisitor() {
-            @Override public void visit(TestRequestMessage message) {
-                queue.skip(message);
-                HeartbeatMessage heartbeat = new HeartbeatMessage();
-                heartbeat.setString(TestReqID.TAG, message.getString(TestReqID.TAG));
-                send(conn, heartbeat);
-            }
-
-            @Override public void visit(ResendRequestMessage message) {
-                queue.skip(message);
-                int newSeqNo = outgoingSeq.peek();
-                outgoingSeq.reset(message.getInteger(BeginSeqNo.TAG));
-                fillSequenceGap(conn, newSeqNo);
-            }
-
-            @Override public void visit(SequenceResetMessage message) {
-                processSeqReset(message);
-            }
-
-            @Override public void visit(LogoutMessage message) {
-                queue.skip(message);
-                if (!initiatedLogout)
-                    send(conn, new LogoutMessage());
-                conn.close();
-            }
-
-            @Override public void defaultAction(Message message) {
-                queue.enqueue(message);
-                if (!isOutOfSync()) {
-                    while (!queue.isEmpty())
-                        queue.dequeue().apply(visitor);
+        if (authenticated) {
+            message.apply(new DefaultMessageVisitor() {
+                @Override public void visit(TestRequestMessage message) {
+                    queue.skip(message);
+                    HeartbeatMessage heartbeat = new HeartbeatMessage();
+                    heartbeat.setString(TestReqID.TAG, message.getString(TestReqID.TAG));
+                    send(conn, heartbeat);
                 }
-            }
-        });
+
+                @Override public void visit(ResendRequestMessage message) {
+                    queue.skip(message);
+                    int newSeqNo = outgoingSeq.peek();
+                    outgoingSeq.reset(message.getInteger(BeginSeqNo.TAG));
+                    fillSequenceGap(conn, newSeqNo);
+                }
+
+                @Override public void visit(SequenceResetMessage message) {
+                    processSeqReset(message);
+                }
+
+                @Override public void visit(LogoutMessage message) {
+                    queue.skip(message);
+                    if (!initiatedLogout)
+                        send(conn, new LogoutMessage());
+                    conn.close();
+                }
+
+                @Override public void defaultAction(Message message) {
+                    queue.enqueue(message);
+                    if (!isOutOfSync()) {
+                        while (!queue.isEmpty())
+                            queue.dequeue().apply(visitor);
+                    }
+                }
+            });
+        } else {
+            message.apply(new DefaultMessageVisitor() {
+                @Override public void visit(LogonMessage message) {
+                    authenticated = true;
+                    queue.enqueue(message);
+                    if (!isOutOfSync()) {
+                        while (!queue.isEmpty())
+                            queue.dequeue().apply(visitor);
+                    }
+                }
+
+                @Override public void defaultAction(Message message) {
+                    logout(conn);
+                }
+            });
+        }
     }
 
     private boolean validate(final Connection conn, Message message) {

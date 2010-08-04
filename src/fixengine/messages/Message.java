@@ -25,7 +25,9 @@ import fixengine.Config;
 public interface Message extends Parseable {
     void apply(MessageVisitor visitor);
     String format();
-    public void setBeginString(String beginString);
+    void setInteger(Tag<IntegerField> tag, Integer value);
+    <T extends Formattable> void setEnum(Tag<? extends EnumField<T>> tag, T value);
+    void setBeginString(String beginString);
     String getBeginString();
     String getMsgType();
     int getMsgSeqNum();
