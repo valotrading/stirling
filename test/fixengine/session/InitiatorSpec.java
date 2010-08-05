@@ -77,7 +77,8 @@ import fixengine.tags.TestReqID;
     private Connection connection;
     private Session session;
 
-    public class Logon_1B {
+    public class Logon {
+        /* Ref ID 1B: b. Send Logon message */
         public void valid() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
@@ -88,6 +89,7 @@ import fixengine.tags.TestReqID;
             });
         }
 
+        /* Ref ID 1B: c. Valid Logon message as response is received */
         public void validButMsgSeqNumIsTooHigh() throws Exception {
             server.expect(LOGON);
             server.respond(
@@ -104,6 +106,7 @@ import fixengine.tags.TestReqID;
             });
         }
 
+        /* Ref ID 1B: d. Invalid Logon message is received */
         public void invalid() throws Exception {
             server.expect(LOGON);
             server.respond(
@@ -121,6 +124,7 @@ import fixengine.tags.TestReqID;
             });
         }
 
+        /* Ref ID 1B: e. Receive any message other than a Logon message. */
         public void otherMessageThanLogon() throws Exception {
             server.expect(LOGON);
             server.respond(
@@ -136,7 +140,8 @@ import fixengine.tags.TestReqID;
         }
     }
 
-    public class ReceiveMessageStandardHeader_2 {
+    public class ReceiveMessageStandardHeader {
+        /* Ref ID 2: a. MsgSeqNum received as expected */
         public void msgSeqNumReceivedAsExpected() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
@@ -148,6 +153,7 @@ import fixengine.tags.TestReqID;
             });
         }
 
+        /* Ref ID 2: b. MsgSeqNum higher than expected */
         public void msgSeqNumHigherThanExpected() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
@@ -160,6 +166,7 @@ import fixengine.tags.TestReqID;
             });
         }
 
+        /* Ref ID 2: c. MsgSeqNum lower than expected without PossDupFlag set to Y */
         public void msgSeqNumLowerThanExpectedWithoutPossDupFlag() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
@@ -172,6 +179,7 @@ import fixengine.tags.TestReqID;
             });
         }
 
+        /* Ref ID 2: d. Garbled message received */
         public void garbledMessageReceived() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
@@ -193,6 +201,10 @@ import fixengine.tags.TestReqID;
             });
         }
 
+        /*
+         * Ref ID 2: e. PossDupFlag set to Y; OrigSendingTime specified is less
+         * than or equal to SendingTime and MsgSeqNum lower than expected.
+         */
         public void possDupFlagOrigSendingTimeLessThanSendingTime() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
@@ -215,6 +227,10 @@ import fixengine.tags.TestReqID;
             });
         }
 
+        /*
+         * Ref ID 2: f. PossDupFlag set to Y; OrigSendingTime specified is
+         * greater than SendingTime and MsgSeqNum as expected
+         */
         public void possDupFlagOrigSendingTimeGreaterThanSendingTime() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
@@ -238,6 +254,7 @@ import fixengine.tags.TestReqID;
             specify(session.getIncomingSeq().peek(), 4);
         }
 
+        /* Ref ID 2: g. PossDupFlag set to Y and OrigSendingTime not specified */
         public void possDupFlagOrigSendingTimeMissing() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
