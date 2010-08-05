@@ -311,6 +311,66 @@ import fixengine.tags.TestReqID;
                 }
             });
         }
+
+        /*
+         * Ref ID 2: j. SenderCompID and TargetCompID values received as
+         * expected and specified in testing profile.
+         */
+        public void senderAndTargetCompIDsReceivedAsExpected() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+
+        /*
+         * Ref ID 2: k. SenderCompID and TargetCompID values received did not
+         * match values expected and specified in testing profile.
+         */
+        public void senderCompIdDoesNotMatchExpectedValues() throws Exception {
+            server.expect(LOGON);
+            server.respond(
+                    new MessageBuilder(LOGON)
+                        .msgSeqNum(1)
+                        .setSenderCompID("SENDER")
+                        .integer(HeartBtInt.TAG, HEARTBEAT_INTERVAL)
+                        .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
+                    .build());
+            server.expect(REJECT);
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
+
+        /*
+         * Ref ID 2: k. SenderCompID and TargetCompID values received did not
+         * match values expected and specified in testing profile.
+         */
+        public void targetCompIdDoesNotMatchExpectedValues() throws Exception {
+            server.expect(LOGON);
+            server.respond(
+                    new MessageBuilder(LOGON)
+                        .msgSeqNum(1)
+                        .setTargetCompID("TARGET")
+                        .integer(HeartBtInt.TAG, HEARTBEAT_INTERVAL)
+                        .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
+                    .build());
+            server.expect(REJECT);
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
     }
 
     private void runInClient(Runnable command) throws Exception {
@@ -375,6 +435,16 @@ import fixengine.tags.TestReqID;
 
         public MessageBuilder setBeginString(String beginString) {
             message.setBeginString(beginString);
+            return this;
+        }
+
+        public MessageBuilder setSenderCompID(String senderCompID) {
+            message.setSenderCompId(senderCompID);
+            return this;
+        }
+
+        public MessageBuilder setTargetCompID(String targetCompID) {
+            message.setTargetCompId(targetCompID);
             return this;
         }
 

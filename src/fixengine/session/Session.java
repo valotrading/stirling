@@ -313,9 +313,18 @@ public class Session {
                     }
 
                     @Override protected void error(Message message) {
-                        sessionReject(conn, message, SessionRejectReasonValue.COMP_ID_PROBLEM, "Invalid SenderCompId(49): "
-                                + message.getSenderCompId());
+                        sessionReject(conn, message, SessionRejectReasonValue.COMP_ID_PROBLEM, "Invalid SenderCompID(49): " + message.getSenderCompId());
                         terminate(conn, message, message.getSenderCompId());
+                    }
+                });
+                add(new AbstractMessageValidator() {
+                    @Override protected boolean isValid(Message message) {
+                        return message.hasValidTargetCompId(config);
+                    }
+
+                    @Override protected void error(Message message) {
+                        sessionReject(conn, message, SessionRejectReasonValue.COMP_ID_PROBLEM, "Invalid TargetCompID(56): " + message.getTargetCompId());
+                        terminate(conn, message, message.getTargetCompId());
                     }
                 });
                 add(new AbstractMessageValidator() {

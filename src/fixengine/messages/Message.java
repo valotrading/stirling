@@ -36,6 +36,7 @@ public interface Message extends Parseable {
     void setSenderCompId(String senderCompId);
     void setTargetCompId(String targetCompId);
     String getSenderCompId();
+    String getTargetCompId();
     void setOnBehalfOfCompId(String onBehalfOfCompId);
     void setHeaderConfig(Config config);
     void setMsgSeqNum(int next);
@@ -51,6 +52,7 @@ public interface Message extends Parseable {
     boolean hasOrigSendingTime();
     boolean hasValidBeginString(Config config);
     boolean hasValidSenderCompId(Config config);
+    boolean hasValidTargetCompId(Config config);
     boolean isTooLowSeqNum(int seqNo);
     Fields getFields();
     void validate();
