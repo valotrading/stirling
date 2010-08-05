@@ -229,6 +229,28 @@ import fixengine.tags.TestReqID;
                         .msgSeqNum(3)
                     .build());
             server.expect(REJECT);
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 4);
+        }
+
+        public void possDupFlagOrigSendingTimeMissing() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .msgSeqNum(2)
+                    .build());
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .setPossDupFlag(true)
+                        .msgSeqNum(3)
+                    .build());
+            server.expect(REJECT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
