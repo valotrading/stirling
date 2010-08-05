@@ -70,10 +70,6 @@ public abstract class AbstractMessage extends AbstractFieldContainer implements 
         return header.getBeginString();
     }
 
-    public void setBodyLength(int bodyLength) {
-        header.setBodyLength(bodyLength);
-    }
-
     public void setSenderCompId(String senderCompId) {
         header.setString(SenderCompID.TAG, senderCompId);
     }

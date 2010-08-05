@@ -35,14 +35,6 @@ public class Timeout {
         this.unit = unit;
     }
 
-    public int delay() {
-        return delay;
-    }
-
-    public TimeUnit unit() {
-        return unit;
-    }
-
     public long delayMsec() {
       return delay * 1000L;
     }

@@ -27,10 +27,6 @@ public class IntegerField extends AbstractField<Integer> {
         this(tag, value, Required.YES);
     }
 
-    public IntegerField(Tag<IntegerField> tag, Required required) {
-        this(tag, null, required);
-    }
-
     public IntegerField(Tag<IntegerField> tag, Integer value, Required required) {
         super(tag, value, required);
     }

@@ -36,10 +36,6 @@ public abstract class AbstractFieldContainer {
         fields.add(group);
     }
 
-    public Field lookup(Tag tag) {
-        return fields.lookup(tag);
-    }
-
     public void validate() {
         fields.validate();
     }

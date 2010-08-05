@@ -34,13 +34,4 @@ public enum Version {
     public String value() {
         return value;
     }
-
-    public static boolean supports(String value) {
-        for (Version version : Version.values()) {
-            if (version.value().equals(value)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

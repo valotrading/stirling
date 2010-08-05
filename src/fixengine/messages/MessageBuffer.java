@@ -22,10 +22,6 @@ package fixengine.messages;
 public class MessageBuffer {
     private final StringBuilder buffer = new StringBuilder();
 
-    public void append(Fields fields) {
-        append(fields.format());
-    }
-
     public void append(Field field) {
         append(field.format());
     }

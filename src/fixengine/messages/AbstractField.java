@@ -32,10 +32,6 @@ public abstract class AbstractField<T> implements Field {
     private int length;
     protected T value;
 
-    public AbstractField(Tag tag) {
-        this(tag, null, Required.YES);
-    }
-
     public AbstractField(Tag tag, T value, Required required) {
         this.required = required;
         this.value = value;
@@ -72,10 +68,6 @@ public abstract class AbstractField<T> implements Field {
 
     public Tag tag() {
         return tag;
-    }
-
-    public int length() {
-        return length;
     }
 
     @Override

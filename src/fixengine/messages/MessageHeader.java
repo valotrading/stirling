@@ -104,10 +104,6 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
         return head.getInteger(BodyLength.TAG);
     }
 
-    public void setBodyLength(int bodyLength) {
-        head.setInteger(BodyLength.TAG, bodyLength);
-    }
-
     public String getMsgType() {
         return head.getString(MsgType.TAG);
     }
@@ -133,10 +129,6 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
             return true;
         }
         return !getDateTime(OrigSendingTime.TAG).isAfter(getDateTime(SendingTime.TAG));
-    }
-
-    public void setMsgTypePosition(int msgTypePosition) {
-        this.msgTypePosition = msgTypePosition;
     }
 
     public int getMsgTypePosition() {
