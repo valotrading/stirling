@@ -121,7 +121,7 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
             return true;
         }
         Minutes difference = Minutes.minutesBetween(currentTime, getDateTime(SendingTime.TAG));
-        return difference.isLessThan(MAX_TIME_DIFFERENCE);
+        return Math.abs(difference.getMinutes()) < MAX_TIME_DIFFERENCE.getMinutes();
     }
 
     public boolean hasOrigSendTimeAfterSendingTime() {

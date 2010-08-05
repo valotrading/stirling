@@ -393,7 +393,7 @@ import fixengine.tags.TestReqID;
             });
         }
 
-        /* Ref ID 2: l. BodyLength value received is incorrect. */
+        /* Ref ID 2: m. BodyLength value received is incorrect. */
         public void bodyLengthReceivedIsIncorrect() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
@@ -409,6 +409,48 @@ import fixengine.tags.TestReqID;
                 }
             });
             specify(session.getIncomingSeq().peek(), 2);
+        }
+
+        /*
+         * Ref ID 2: n. SendingTime value received is specified in UTC
+         * (Universal Time Coordinated also known as GMT) and is within a
+         * reasonable time (i.e. 2 minutes) of atomic clock-based time.
+         */
+        public void sendingTimeReceivedIsWithinReasonableTime() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .msgSeqNum(2)
+                    .build());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+
+        /*
+         * Ref ID 2: o. SendingTime value received is either not specified in
+         * UTC (Universal Time Coordinated also known as GMT) or is not within a
+         * reasonable time (i.e. 2 minutes) of atomic clock-based time.
+         */
+        public void sendingTimeReceivedIsNotWithinReasonableTime() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .msgSeqNum(2)
+                        .setSendingTime(new DateTime().minusMinutes(10))
+                    .build());
+            server.expect(REJECT);
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
         }
     }
 
@@ -487,6 +529,11 @@ import fixengine.tags.TestReqID;
 
         public MessageBuilder setBeginString(String beginString) {
             message.setBeginString(beginString);
+            return this;
+        }
+
+        public MessageBuilder setSendingTime(DateTime sendingTime) {
+            message.setSendingTime(sendingTime);
             return this;
         }
 
