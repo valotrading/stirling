@@ -35,6 +35,7 @@ import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 import lang.DefaultTimeSource;
 
+import org.joda.time.DateTime;
 import org.junit.runner.RunWith;
 
 import silvertip.Connection;
@@ -42,6 +43,7 @@ import silvertip.Events;
 import silvertip.protocols.FixMessageParser;
 import fixengine.Config;
 import fixengine.Version;
+import fixengine.messages.BooleanField;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.EnumField;
@@ -189,6 +191,28 @@ import fixengine.tags.TestReqID;
                 }
             });
         }
+
+        public void possDupFlag() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .msgSeqNum(2)
+                    .build());
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .setPossDupFlag(true)
+                        .setOrigSendingTime(new DateTime().minusMinutes(1))
+                        .msgSeqNum(2)
+                    .build());
+            server.respondLogout(3);
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
     }
 
     private void runInClient(Runnable command) throws Exception {
@@ -261,6 +285,16 @@ import fixengine.tags.TestReqID;
             return this;
         }
 
+        public MessageBuilder setPossDupFlag(boolean possDupFlag) {
+            message.setPossDupFlag(possDupFlag);
+            return this;
+        }
+
+        public MessageBuilder setOrigSendingTime(DateTime origSendingTime) {
+            message.setOrigSendingTime(origSendingTime);
+            return this;
+        }
+
         public MessageBuilder string(Tag<StringField> tag, String value) {
             message.setString(tag, value);
             return this;
@@ -268,6 +302,11 @@ import fixengine.tags.TestReqID;
 
         public MessageBuilder integer(Tag<IntegerField> tag, Integer value) {
             message.setInteger(tag, value);
+            return this;
+        }
+
+        public MessageBuilder bool(Tag<BooleanField> tag, boolean value) {
+            message.setBoolean(tag, value);
             return this;
         }
 
@@ -291,6 +330,7 @@ import fixengine.tags.TestReqID;
         private final List<Runnable> commands = new ArrayList<Runnable>();
         private Socket clientSocket;
         private int successCount;
+        private int failureCount;
         private final int port;
 
         private SimpleAcceptor(int port) {
@@ -298,7 +338,7 @@ import fixengine.tags.TestReqID;
         }
 
         public boolean passed() {
-            return successCount == commands.size();
+            return failureCount == 0 && successCount == commands.size();
         }
 
         public void respondLogon() {
@@ -310,6 +350,12 @@ import fixengine.tags.TestReqID;
                     .build());
         }
 
+        public void respondLogout(int msgSeqNum) {
+            server.respond(
+                    new MessageBuilder(LOGOUT)
+                        .msgSeqNum(msgSeqNum)
+                    .build());
+        }
 
         public void respond(final Message message) {
             this.commands.add(new Runnable() {
@@ -332,6 +378,8 @@ import fixengine.tags.TestReqID;
                         @Override public void message(Message m) {
                             if (m.getMsgType().equals(type.value()))
                                 successCount++;
+                            else
+                                failureCount++;
                         }
 
                         @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {

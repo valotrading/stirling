@@ -27,6 +27,7 @@ public interface Message extends Parseable {
     String format();
     void setString(Tag<StringField> tag, String value);
     void setInteger(Tag<IntegerField> tag, Integer value);
+    void setBoolean(Tag<BooleanField> tag, Boolean value);
     <T extends Formattable> void setEnum(Tag<? extends EnumField<T>> tag, T value);
     void setBeginString(String beginString);
     String getBeginString();
