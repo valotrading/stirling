@@ -274,6 +274,42 @@ import fixengine.tags.TestReqID;
                 }
             });
         }
+
+        /*
+         * Ref ID: 2: h. BeginString value received as expected and specified in
+         * testing profile and matches BeginString on outbound messages.
+         */
+        public void beginStringReceivedAsExpected() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+
+        /*
+         * Ref ID 2: i. BeginString value (e.g. "FIX.4.2") received did not match
+         * value expected and specified in testing profile or does not match
+         * BeginString on outbound messages.
+         */
+        public void beginStringReceivedDoesNotMatchExpectedValue() throws Exception {
+            server.expect(LOGON);
+            server.respond(
+                    new MessageBuilder(LOGON)
+                        .setBeginString("FIX.4.3")
+                        .msgSeqNum(1)
+                        .integer(HeartBtInt.TAG, HEARTBEAT_INTERVAL)
+                        .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
+                    .build());
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
     }
 
     private void runInClient(Runnable command) throws Exception {
