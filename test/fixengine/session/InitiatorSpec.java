@@ -15,6 +15,7 @@
  */
 package fixengine.session;
 
+import static fixengine.messages.MsgTypeValue.BUSINESS_MESSAGE_REJECT;
 import static fixengine.messages.MsgTypeValue.HEARTBEAT;
 import static fixengine.messages.MsgTypeValue.LOGON;
 import static fixengine.messages.MsgTypeValue.LOGOUT;
@@ -445,6 +446,69 @@ import fixengine.tags.TestReqID;
                     .build());
             server.expect(REJECT);
             server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /*
+         * Ref ID 2: p. MsgType value received is valid (defined in spec or
+         * classified as user-defined).
+         */
+        public void msgTypeValueReceivedIsValid() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .msgSeqNum(2)
+                    .build());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+
+        /*
+         * Ref ID 2: q. MsgType value received is not valid (defined in spec or
+         * classified as user- defined).
+         */
+        public void msgTypeValueReceivedIsNotValid() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    message("57", "ZZ")
+                    .field(MsgSeqNum.TAG, "2")
+                    .field(SendingTime.TAG, "20100701-12:09:40")
+                    .field(CheckSum.TAG, "206")
+                    .toString());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /*
+         * Ref ID 2: r. MsgType value received is valid (defined in spec or
+         * classified as user-defined) but not supported or registered in
+         * testing profile.
+         */
+        public void msgTypeValueReceivedIsValidButNotSupported() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    message("57", "P")
+                    .field(MsgSeqNum.TAG, "2")
+                    .field(SendingTime.TAG, "20100701-12:09:40")
+                    .field(CheckSum.TAG, "206")
+                    .toString());
+            server.expect(BUSINESS_MESSAGE_REJECT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
