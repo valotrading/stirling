@@ -137,9 +137,6 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
 
     public Message newMessage() {
         MsgTypeValue type = MsgTypeValue.parse(getMsgType());
-        if (type == null) {
-            throw new RuntimeException();
-        }
         return type.newMessage(this);
     }
 }
