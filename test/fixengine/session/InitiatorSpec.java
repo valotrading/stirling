@@ -516,6 +516,96 @@ import fixengine.tags.TestReqID;
             });
             specify(session.getIncomingSeq().peek(), 3);
         }
+
+        /*
+         * Ref ID 2: s. BeginString, BodyLength, and MsgType are first three
+         * fields of message.
+         */
+        public void firstThreeFieldsOfMessageAreValid() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .msgSeqNum(2)
+                    .build());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+
+        /*
+         * t. BeginString, BodyLength, and MsgType are not the first three
+         * fields of message.
+         */
+        public void beginStringIsNotTheFirstField() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    message()
+                    /* BeginString missing */
+                    .field(BodyLength.TAG, "10")
+                    .field(MsgType.TAG, "0")
+                    .field(MsgSeqNum.TAG, "2")
+                    .field(SendingTime.TAG, "20100701-12:09:40")
+                    .field(CheckSum.TAG, "165")
+                    .toString());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
+
+        /*
+         * t. BeginString, BodyLength, and MsgType are not the first three
+         * fields of message.
+         */
+        public void bodyLengthIsNotTheSecondField() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    message()
+                    .field(BeginString.TAG, "FIX.4.2")
+                    /* BodyLength missing */
+                    .field(MsgType.TAG, "0")
+                    .field(MsgSeqNum.TAG, "2")
+                    .field(SendingTime.TAG, "20100701-12:09:40")
+                    .field(CheckSum.TAG, "165")
+                    .toString());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
+
+        /*
+         * t. BeginString, BodyLength, and MsgType are not the first three
+         * fields of message.
+         */
+        public void msgTypeIsNotTheThirdField() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    message()
+                    .field(BeginString.TAG, "FIX.4.2")
+                    .field(BodyLength.TAG, "10")
+                    /* MsgType missing */
+                    .field(MsgSeqNum.TAG, "2")
+                    .field(SendingTime.TAG, "20100701-12:09:40")
+                    .field(CheckSum.TAG, "165")
+                    .toString());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
     }
 
     private void runInClient(Runnable command) throws Exception {
