@@ -17,11 +17,11 @@ package fixengine.messages;
 
 // FIXME: YYYYMMDD format validation is missing!
 public class LocalMktDateField extends StringField {
-    public LocalMktDateField(Tag tag) {
+    public LocalMktDateField(Tag<LocalMktDateField> tag) {
         this(tag, Required.YES);
     }
 
-    protected LocalMktDateField(Tag tag, Required required) {
+    protected LocalMktDateField(Tag<LocalMktDateField> tag, Required required) {
         super(tag, null, required);
     }
 }

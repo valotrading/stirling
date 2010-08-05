@@ -25,15 +25,15 @@ import java.util.regex.Pattern;
 public class FloatField extends AbstractField<Double> {
     private static final Pattern DECIMAL_PATTERN = Pattern.compile("-?\\d*(\\.\\d*)?");
 
-    public FloatField(Tag<FloatField> tag) {
+    public FloatField(Tag<? extends FloatField> tag) {
         this(tag, null, Required.YES);
     }
 
-    public FloatField(Tag<FloatField> tag, Required required) {
+    public FloatField(Tag<? extends FloatField> tag, Required required) {
         this(tag, null, required);
     }
 
-    public FloatField(Tag<FloatField> tag, Double value, Required required) {
+    public FloatField(Tag<? extends FloatField> tag, Double value, Required required) {
         super(tag, value, required);
     }
 

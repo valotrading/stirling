@@ -27,15 +27,15 @@ import org.joda.time.format.DateTimeFormatter;
 public class UtcTimestampField extends AbstractField<DateTime> {
     private static final String FORMAT = "yyyyMMdd-HH:mm:ss";
 
-    public UtcTimestampField(Tag tag) {
+    public UtcTimestampField(Tag<UtcTimestampField> tag) {
         this(tag, Required.YES);
     }
 
-    public UtcTimestampField(Tag tag, DateTime dateTime) {
+    public UtcTimestampField(Tag<UtcTimestampField> tag, DateTime dateTime) {
         super(tag, dateTime, Required.YES);
     }
 
-    public UtcTimestampField(Tag tag, Required required) {
+    public UtcTimestampField(Tag<UtcTimestampField> tag, Required required) {
         super(tag, null, required);
     }
 

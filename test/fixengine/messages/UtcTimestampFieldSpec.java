@@ -27,9 +27,9 @@ import org.junit.runner.RunWith;
  */
 @RunWith(JDaveRunner.class)
 public class UtcTimestampFieldSpec extends Specification<UtcTimestampField> {
+    @SuppressWarnings("unchecked") private final Tag<UtcTimestampField> tag = dummy(Tag.class);
     private static final DateTimeZone zoneUTC = DateTimeZone.UTC;
     private static final DateTime DATE_TIME = new DateTime(2008, 9, 11, 1, 2, 3, 0, zoneUTC);
-    private final Tag tag = dummy(Tag.class);
     private UtcTimestampField timestamp;
 
     public class TimestampFieldThatDoesHasValue {

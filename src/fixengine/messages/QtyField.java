@@ -16,11 +16,11 @@
 package fixengine.messages;
 
 public class QtyField extends FloatField {
-    public QtyField(Tag tag) {
+    public QtyField(Tag<QtyField> tag) {
         this(tag, null, Required.YES);
     }
 
-    protected QtyField(Tag tag, Double value, Required required) {
+    protected QtyField(Tag<QtyField> tag, Double value, Required required) {
         super(tag, value, required);
     }
 }

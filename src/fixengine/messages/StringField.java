@@ -19,19 +19,19 @@ package fixengine.messages;
  * @author Pekka Enberg 
  */
 public class StringField extends AbstractField<String> {
-    public StringField(Tag<StringField> tag) {
+    public StringField(Tag<? extends StringField> tag) {
         this(tag, Required.YES);
     }
 
-    public StringField(Tag<StringField> tag, String value) {
+    public StringField(Tag<? extends StringField> tag, String value) {
         this(tag, value, Required.YES);
     }
 
-    public StringField(Tag<StringField> tag, String value, Required required) {
+    public StringField(Tag<? extends StringField> tag, String value, Required required) {
         super(tag, value, required);
     }
 
-    public StringField(Tag<StringField> tag, Required required) {
+    public StringField(Tag<? extends StringField> tag, Required required) {
         super(tag, null, required);
     }
 

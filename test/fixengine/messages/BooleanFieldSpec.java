@@ -26,7 +26,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(JDaveRunner.class)
 public class BooleanFieldSpec extends Specification<BooleanField> {
-    private BooleanField field = new BooleanField(dummy(Tag.class));
+    @SuppressWarnings("unchecked") private BooleanField field = new BooleanField(dummy(Tag.class));
 
     public class AnyField {
         public BooleanField create() {

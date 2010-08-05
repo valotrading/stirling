@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
  * @author Pekka Enberg 
  */
 @RunWith(JDaveRunner.class)
-public class TagSpec extends Specification<Tag> {
+public class TagSpec extends Specification<Tag<?>> {
     public class TagInNormalRange {
         public void isNotUserDefined() {
             specify(Tag.isUserDefined(4999), must.equal(false));

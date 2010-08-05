@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(JDaveRunner.class)
 public class FloatFieldSpec extends Specification<FloatField> {
-    private FloatField field = new FloatField(dummy(Tag.class));
+    @SuppressWarnings("unchecked") private FloatField field = new FloatField(dummy(Tag.class));
 
     public class AnyField {
         public FloatField create() {

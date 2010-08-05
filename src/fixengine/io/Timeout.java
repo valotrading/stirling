@@ -15,7 +15,6 @@
  */
 package fixengine.io;
 
-import java.util.concurrent.TimeUnit;
 
 import lang.Objects;
 
@@ -23,16 +22,14 @@ import lang.Objects;
  * @author Pekka Enberg 
  */
 public class Timeout {
-    private final TimeUnit unit;
     private final int delay;
 
     public static Timeout seconds(int delay) {
-        return new Timeout(delay, TimeUnit.SECONDS);
+        return new Timeout(delay);
     }
 
-    private Timeout(int delay, TimeUnit unit) {
+    private Timeout(int delay) {
         this.delay = delay;
-        this.unit = unit;
     }
 
     public long delayMsec() {

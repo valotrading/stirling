@@ -28,11 +28,10 @@ public abstract class AbstractField<T> implements Field {
     private Required required;
     private final String name;
     private boolean defined;
-    private final Tag tag;
-    private int length;
+    private final Tag<?> tag;
     protected T value;
 
-    public AbstractField(Tag tag, T value, Required required) {
+    public AbstractField(Tag<?> tag, T value, Required required) {
         this.required = required;
         this.value = value;
         this.tag = tag;
@@ -66,7 +65,7 @@ public abstract class AbstractField<T> implements Field {
         return name;
     }
 
-    public Tag tag() {
+    public Tag<?> tag() {
         return tag;
     }
 

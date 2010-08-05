@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(JDaveRunner.class)
 public class IntegerFieldSpec extends Specification<IntegerField> {
-    private IntegerField field = new IntegerField(dummy(Tag.class));
+    @SuppressWarnings("unchecked") private IntegerField field = new IntegerField(dummy(Tag.class));
 
     public class AnyField {
         public IntegerField create() {
