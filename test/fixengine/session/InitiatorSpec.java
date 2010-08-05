@@ -19,6 +19,7 @@ import static fixengine.messages.MsgTypeValue.HEARTBEAT;
 import static fixengine.messages.MsgTypeValue.LOGON;
 import static fixengine.messages.MsgTypeValue.LOGOUT;
 import static fixengine.messages.MsgTypeValue.RESEND_REQUEST;
+import static fixengine.messages.MsgTypeValue.TEST_REQUEST;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,6 +53,7 @@ import fixengine.messages.MessageHeader;
 import fixengine.messages.MsgTypeValue;
 import fixengine.messages.Parser;
 import fixengine.messages.SessionRejectReasonValue;
+import fixengine.messages.StringField;
 import fixengine.messages.Tag;
 import fixengine.session.store.SessionStore;
 import fixengine.tags.EncryptMethod;
@@ -59,6 +61,7 @@ import fixengine.tags.HeartBtInt;
 import fixengine.tags.SenderCompID;
 import fixengine.tags.SendingTime;
 import fixengine.tags.TargetCompID;
+import fixengine.tags.TestReqID;
 
 @RunWith(JDaveRunner.class) public class InitiatorSpec extends Specification<Void> {
     private static final Version VERSION = Version.FIX_4_2;
@@ -74,12 +77,7 @@ import fixengine.tags.TargetCompID;
     public class Logon_1B {
         public void valid() throws Exception {
             server.expect(LOGON);
-            server.respond(
-                    new MessageBuilder(LOGON)
-                        .msgSeqNum(1)
-                        .integer(HeartBtInt.TAG, HEARTBEAT_INTERVAL)
-                        .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
-                    .build());
+            server.respondLogon();
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -127,6 +125,64 @@ import fixengine.tags.TargetCompID;
                         .msgSeqNum(1)
                     .build());
             server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+    }
+
+    public class ReceiveMessageStandardHeader_2 {
+        public void msgSeqNumReceivedAsExpected() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(new MessageBuilder(HEARTBEAT).msgSeqNum(2).build());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+
+        public void msgSeqNumHigherThanExpected() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(new MessageBuilder(HEARTBEAT).msgSeqNum(3).build());
+            server.expect(RESEND_REQUEST);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+
+        public void msgSeqNumLowerThanExpectedWithoutPossDupFlag() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(new MessageBuilder(HEARTBEAT).msgSeqNum(1).build());
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+
+        public void garbledMessageReceived() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .setBeginString("")
+                        .msgSeqNum(2)
+                    .build());
+            server.respond(
+                    new MessageBuilder(TEST_REQUEST)
+                        .msgSeqNum(2)
+                        .string(TestReqID.TAG, "12345678")
+                    .build());
+            server.expect(HEARTBEAT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -205,6 +261,11 @@ import fixengine.tags.TargetCompID;
             return this;
         }
 
+        public MessageBuilder string(Tag<StringField> tag, String value) {
+            message.setString(tag, value);
+            return this;
+        }
+
         public MessageBuilder integer(Tag<IntegerField> tag, Integer value) {
             message.setInteger(tag, value);
             return this;
@@ -239,6 +300,16 @@ import fixengine.tags.TargetCompID;
         public boolean passed() {
             return successCount == commands.size();
         }
+
+        public void respondLogon() {
+            server.respond(
+                    new MessageBuilder(LOGON)
+                        .msgSeqNum(1)
+                        .integer(HeartBtInt.TAG, HEARTBEAT_INTERVAL)
+                        .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
+                    .build());
+        }
+
 
         public void respond(final Message message) {
             this.commands.add(new Runnable() {
