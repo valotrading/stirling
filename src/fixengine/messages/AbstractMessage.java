@@ -162,11 +162,6 @@ public abstract class AbstractMessage extends AbstractFieldContainer implements 
     }
 
     @Override
-    public boolean isOrigSendingTimeMissing() {
-        return getPossDupFlag() && !hasOrigSendingTime();
-    }
-
-    @Override
     public boolean hasAccurateSendingTime(DateTime currentTime) {
         return header.hasAccurateSendingTime(currentTime);
     }

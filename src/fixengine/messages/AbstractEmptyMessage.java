@@ -149,11 +149,6 @@ public abstract class AbstractEmptyMessage implements Message {
     }
 
     @Override
-    public boolean isOrigSendingTimeMissing() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Fields getFields() {
         throw new UnsupportedOperationException();
     }

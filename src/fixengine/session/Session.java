@@ -340,15 +340,6 @@ public class Session {
                 });
                 add(new AbstractMessageValidator() {
                     @Override protected boolean isValid(Message message) {
-                        return !message.isOrigSendingTimeMissing();
-                    }
-
-                    @Override protected void error(Message message) {
-                        sessionReject(conn, message, SessionRejectReasonValue.TAG_MISSING, "OrigSendingTime(122) is missing");
-                    }
-                });
-                add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Message message) {
                         return message.isPointToPoint();
                     }
 

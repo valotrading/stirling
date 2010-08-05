@@ -63,7 +63,11 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
         field(PossDupFlag.TAG, Required.NO);
         field(PossResend.TAG, Required.NO);
         field(SendingTime.TAG);
-        field(OrigSendingTime.TAG, Required.NO);
+        field(OrigSendingTime.TAG, new Required() {
+            @Override public boolean isRequired() {
+                return hasValue(PossDupFlag.TAG);
+            }
+        });
     }
 
     @Override public void parse(ByteBuffer b) {

@@ -52,7 +52,6 @@ public interface Message extends Parseable {
     boolean hasValidBeginString(Config config);
     boolean hasValidSenderCompId(Config config);
     boolean isTooLowSeqNum(int seqNo);
-    boolean isOrigSendingTimeMissing();
     Fields getFields();
     void validate();
 }
