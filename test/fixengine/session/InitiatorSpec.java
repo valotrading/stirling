@@ -108,13 +108,14 @@ import fixengine.tags.TestReqID;
 
         /* Ref ID 1B: d. Invalid Logon message is received */
         public void invalid() throws Exception {
+            // TODO: Invalid MsgType
+            // TODO: Garbled message
             server.expect(LOGON);
             server.respond(
                     new MessageBuilder(LOGON)
-                        .setBeginString("FIX.5.0")
                         .msgSeqNum(1)
                         .integer(HeartBtInt.TAG, HEARTBEAT_INTERVAL)
-                        .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
+                        /* EncryptMethod(98) missing */
                     .build());
             server.expect(LOGOUT);
             runInClient(new Runnable() {

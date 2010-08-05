@@ -137,13 +137,15 @@ public class Session {
 
                 @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
                     queue.skip(msgSeqNum);
-                    sessionReject(conn, msgSeqNum, reason, text);
+                    if (authenticated)
+                        sessionReject(conn, msgSeqNum, reason, text);
+                    else
+                        logout(conn);
                 }
 
                 @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {
                     queue.skip(msgSeqNum);
-                    businessReject(conn, msgType, msgSeqNum, BusinessRejectReasonValue.UNKNOWN_MESSAGE_TYPE,
-                            "MsgType(35): Unknown message type: " + msgType);
+                    businessReject(conn, msgType, msgSeqNum, BusinessRejectReasonValue.UNKNOWN_MESSAGE_TYPE, "MsgType(35): Unknown message type: " + msgType);
                 }
 
                 @Override public void invalidMsgType(String msgType, int msgSeqNum) {
