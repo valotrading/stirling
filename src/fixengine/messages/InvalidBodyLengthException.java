@@ -19,8 +19,9 @@ package fixengine.messages;
  * @author Pekka Enberg 
  */
 public class InvalidBodyLengthException extends GarbledMessageException {
-    public InvalidBodyLengthException(String message) {
-        super(message);
+
+    public InvalidBodyLengthException() {
+        super("BodyLength(9): Invalid BodyLength");
     }
 
     private static final long serialVersionUID = 1L; 

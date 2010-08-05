@@ -39,22 +39,19 @@ public class Fields implements Iterable<Field> {
     }
 
     public void parse(ByteBuffer b) {
-        try {
-            for (;;) {
-                b.mark();
-                int tag = Tag.parseTag(b);
-                Field field = lookup(tag);
-                if (field == null) {
-                    break;
-                }
-                field.parse(b);
-                if (!field.isFormatValid())
-                    throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
-                if (!field.isValueValid())
-                    throw new InvalidValueException(field.prettyName() + ": Invalid value");
+        while (b.hasRemaining()) {
+            b.mark();
+            int tag = Tag.parseTag(b);
+            Field field = lookup(tag);
+            if (field == null) {
+                b.reset();
+                break;
             }
-        } finally {
-            b.reset();
+            field.parse(b);
+            if (!field.isFormatValid())
+                throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
+            if (!field.isValueValid())
+                throw new InvalidValueException(field.prettyName() + ": Invalid value");
         }
     }
 

@@ -169,6 +169,18 @@ public abstract class AbstractMessage extends AbstractFieldContainer implements 
 
     public void parse(ByteBuffer b) {
         fields.parse(b);
+        finishParse(b);
+    }
+
+    private void finishParse(ByteBuffer b) {
+        if (b.hasRemaining()) {
+            int tag = Tag.parseTag(b);
+            Field field = header.lookup(tag);
+            if (field != null) {
+                throw new OutOfOrderTagException(field.prettyName() + ": Out of order tag");
+            }
+            throw new InvalidTagException("Tag not defined for this message: " + tag);
+        }
     }
 
     public String format() {

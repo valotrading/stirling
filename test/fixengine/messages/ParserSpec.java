@@ -160,6 +160,24 @@ public class ParserSpec extends Specification<String> {
         }
     }
 
+    public class InvalidCheckSumAndInvalidHeaderTag {
+        public String create() {
+            return raw = message()
+                    .field(BeginString, "FIX.4.2")
+                    .field(BodyLength, "34")
+                    .field(MsgType, "0")
+                    .field(12345, "Sender")
+                    .field(TargetCompID, "Target")
+                    .field(TestReqID, "1")
+                    .field(CheckSum, "999")
+                    .toString();
+        }
+
+        public void parse() {
+            expectGarbledMessage("CheckSum(10): Expected: 132, but was: 999");
+        }
+    }
+
     public class BeginStringMissing {
         public String create() {
             return raw = message()
@@ -282,7 +300,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectGarbledMessage("BodyLength(9): Expected: 75, but was: 57");
+            expectGarbledMessage("BodyLength(9): Invalid BodyLength");
         }
     }
 
@@ -507,7 +525,7 @@ public class ParserSpec extends Specification<String> {
                 .field(AllocShares, "900.00")
                 .field(AllocAccount, "2345")
                 .field(AllocShares, "100.00")
-                .field(CheckSum, "120")
+                .field(CheckSum, "118")
                 .toString();
         }
 

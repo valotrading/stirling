@@ -17,9 +17,7 @@ package fixengine.messages;
 
 import java.nio.ByteBuffer;
 
-import fixengine.tags.CheckSum;
 import fixengine.tags.MsgSeqNum;
-import fixengine.tags.MsgType;
 
 public class Parser {
     public interface Callback {
@@ -43,7 +41,6 @@ public class Parser {
             Message msg = header.newMessage();
             msg.parse(b);
             msg.validate();
-            trailer(b, header);
             callback.message(msg);
         } catch (InvalidMsgTypeException e) {
             callback.invalidMsgType(header.getMsgType(), header.getInteger(MsgSeqNum.TAG));
@@ -54,26 +51,5 @@ public class Parser {
         } catch (ParseException e) {
             callback.invalidMessage(header.getInteger(MsgSeqNum.TAG), e.getReason(), e.getMessage());
         }
-    }
-
-    private static void trailer(ByteBuffer b, MessageHeader header) {
-        int pos = b.position() - header.getMsgTypePosition();
-        int expected = Checksums.checksum(b, b.position());
-        StringField field;
-        try {
-            CheckSum.TAG.parse(b);
-            field = MsgType.TAG.newField(Required.YES);
-            field.parse(b);
-        } catch (UnexpectedTagException e) {
-            Field f = header.lookup(e.getTag());
-            if (f != null)
-                throw new OutOfOrderTagException(f.prettyName() + ": Out of order tag");
-            throw new InvalidTagException("Tag not defined for this message: " + e.getTag());
-        }
-        if (pos != header.getBodyLength())
-            throw new InvalidBodyLengthException("BodyLength(9): Expected: " + header.getBodyLength() + ", but was: " + pos);
-        int checksum = Integer.parseInt(field.getValue());
-        if (checksum != expected)
-            throw new InvalidCheckSumException("CheckSum(10): Expected: " + expected + ", but was: " + checksum);
     }
 }

@@ -480,10 +480,10 @@ import fixengine.tags.TestReqID;
             server.expect(LOGON);
             server.respondLogon();
             server.respond(
-                    message("57", "ZZ")
+                    message("52", "ZZ")
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
-                    .field(CheckSum.TAG, "206")
+                    .field(CheckSum.TAG, "75")
                     .toString());
             server.expect(REJECT);
             runInClient(new Runnable() {
@@ -503,10 +503,10 @@ import fixengine.tags.TestReqID;
             server.expect(LOGON);
             server.respondLogon();
             server.respond(
-                    message("57", "P")
+                    message("51", "P")
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
-                    .field(CheckSum.TAG, "206")
+                    .field(CheckSum.TAG, "230")
                     .toString());
             server.expect(BUSINESS_MESSAGE_REJECT);
             runInClient(new Runnable() {

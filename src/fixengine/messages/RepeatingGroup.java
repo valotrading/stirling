@@ -36,7 +36,7 @@ public abstract class RepeatingGroup implements Field {
     @Override public void parse(ByteBuffer b) {
         IntegerField field = count.newField(Required.NO);
         field.parse(b);
-        for (;;) {
+        while (b.hasRemaining()) {
             try {
                 int tag = Tag.peekTag(b);
                 RepeatingGroupInstance instance = newInstance();
@@ -45,6 +45,7 @@ public abstract class RepeatingGroup implements Field {
                 instances.add(instance);
                 instance.parse(b);
             } catch (TagMultipleTimesException e) {
+                b.reset();
                 continue;
             }
         }

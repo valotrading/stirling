@@ -22,6 +22,7 @@ import org.joda.time.Minutes;
 
 import fixengine.tags.BeginString;
 import fixengine.tags.BodyLength;
+import fixengine.tags.CheckSum;
 import fixengine.tags.DeliverToCompID;
 import fixengine.tags.MsgSeqNum;
 import fixengine.tags.MsgType;
@@ -39,7 +40,6 @@ import fixengine.tags.TargetCompID;
 public class MessageHeader extends AbstractFieldContainer implements Parseable {
     private final AbstractFieldContainer head = new AbstractFieldContainer() { };
     private static final Minutes MAX_TIME_DIFFERENCE = Minutes.TWO;
-    private int msgTypePosition;
 
     public MessageHeader(MsgTypeValue msgType) {
         this(msgType.value());
@@ -73,9 +73,36 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
     @Override public void parse(ByteBuffer b) {
         parseHeadField(b, BeginString.TAG);
         parseHeadField(b, BodyLength.TAG);
-        msgTypePosition = b.position();
+        trailer(b);
         parseHeadField(b, MsgType.TAG);
         fields.parse(b);
+    }
+
+    private void trailer(ByteBuffer b) {
+        int checkSumPosition = b.position() + getBodyLength();
+        int parsedChecksum = parseChecksum(b, checkSumPosition);
+        int expectedChecksum = Checksums.checksum(b, checkSumPosition);
+        if (parsedChecksum != expectedChecksum) {
+            throw new InvalidCheckSumException("CheckSum(10): Expected: " + expectedChecksum + ", but was: " + parsedChecksum);
+        }
+        b.limit(checkSumPosition);
+    }
+
+    private static int parseChecksum(ByteBuffer b, int checkSumPosition) {
+        if (checkSumPosition > b.limit()) {
+            throw new InvalidBodyLengthException();
+        }
+        int origPosition = b.position();
+        b.position(checkSumPosition);
+        try {
+            CheckSum.TAG.parse(b);
+        } catch (UnexpectedTagException e) {
+            throw new InvalidBodyLengthException();
+        }
+        StringField field = CheckSum.TAG.newField(Required.YES);
+        field.parse(b);
+        b.position(origPosition);
+        return Integer.parseInt(field.getValue());
     }
 
     private void parseHeadField(ByteBuffer b, Tag<?> tag) {
@@ -129,10 +156,6 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
             return true;
         }
         return !getDateTime(OrigSendingTime.TAG).isAfter(getDateTime(SendingTime.TAG));
-    }
-
-    public int getMsgTypePosition() {
-        return msgTypePosition;
     }
 
     public Message newMessage() {

@@ -78,12 +78,11 @@ public class Tag<T extends Field> {
             int ch = b.get();
             if (ch == '=')
                 break;
+            else if (ch == Field.DELIMITER)
+                throw new NonDataValueIncludesFieldDelimiterException("Non-data value includes field delimiter (SOH character)");
             result.append((char) ch);
         }
-        String s = result.toString();
-        if (s.contains("" + Field.DELIMITER))
-            throw new NonDataValueIncludesFieldDelimiterException("Non-data value includes field delimiter (SOH character)");
-        int tag = Integer.parseInt(s);
+        int tag = Integer.parseInt(result.toString());
         if (isUserDefined(tag))
             throw new InvalidTagNumberException("Invalid tag number: " + tag);
         return tag;
