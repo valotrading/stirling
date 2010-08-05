@@ -18,9 +18,9 @@ package fixengine.session;
 import static fixengine.messages.MsgTypeValue.HEARTBEAT;
 import static fixengine.messages.MsgTypeValue.LOGON;
 import static fixengine.messages.MsgTypeValue.LOGOUT;
+import static fixengine.messages.MsgTypeValue.REJECT;
 import static fixengine.messages.MsgTypeValue.RESEND_REQUEST;
 import static fixengine.messages.MsgTypeValue.TEST_REQUEST;
-import static fixengine.messages.MsgTypeValue.REJECT;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,12 +55,18 @@ import fixengine.messages.Message;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MsgTypeValue;
 import fixengine.messages.Parser;
+import fixengine.messages.RawMessageBuilder;
 import fixengine.messages.SessionRejectReasonValue;
 import fixengine.messages.StringField;
 import fixengine.messages.Tag;
 import fixengine.session.store.SessionStore;
+import fixengine.tags.BeginString;
+import fixengine.tags.BodyLength;
+import fixengine.tags.CheckSum;
 import fixengine.tags.EncryptMethod;
 import fixengine.tags.HeartBtInt;
+import fixengine.tags.MsgSeqNum;
+import fixengine.tags.MsgType;
 import fixengine.tags.SenderCompID;
 import fixengine.tags.SendingTime;
 import fixengine.tags.TargetCompID;
@@ -371,6 +377,39 @@ import fixengine.tags.TestReqID;
             });
             specify(session.getIncomingSeq().peek(), 2);
         }
+
+        /* Ref ID 2: l. BodyLength value received is correct. */
+        public void bodyLengthReceivedIsCorrect() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .msgSeqNum(2)
+                    .build());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+
+        /* Ref ID 2: l. BodyLength value received is incorrect. */
+        public void bodyLengthReceivedIsIncorrect() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(message("75", "0")
+                    .field(MsgSeqNum.TAG, "2")
+                    .field(SendingTime.TAG, "20100701-12:09:40")
+                    .field(TestReqID.TAG, "1")
+                    .field(CheckSum.TAG, "206")
+                    .toString());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
     }
 
     private void runInClient(Runnable command) throws Exception {
@@ -419,6 +458,19 @@ import fixengine.tags.TestReqID;
                 conn.close();
             }
         });
+    }
+
+    static RawMessageBuilder message() {
+        return new RawMessageBuilder();
+    }
+
+    static RawMessageBuilder message(String bodyLength, String msgType) {
+        return message()
+                .field(BeginString.TAG, "FIX.4.2")
+                .field(BodyLength.TAG, bodyLength)
+                .field(MsgType.TAG, msgType)
+                .field(SenderCompID.TAG, "Sender")
+                .field(TargetCompID.TAG, "Target");
     }
 
     class MessageBuilder {
@@ -526,10 +578,14 @@ import fixengine.tags.TestReqID;
         }
 
         public void respond(final Message message) {
+            respond(message.format());
+        }
+
+        private void respond(final String raw) {
             this.commands.add(new Runnable() {
                 @Override public void run() {
                     try {
-                        clientSocket.getOutputStream().write(message.format().getBytes());
+                        clientSocket.getOutputStream().write(raw.getBytes());
                         successCount++;
                     } catch (IOException e) {
                         throw new RuntimeException(e);

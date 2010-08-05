@@ -516,33 +516,17 @@ public class ParserSpec extends Specification<String> {
         }
     }
 
-    static FixMessageBuilder message() {
-        return new FixMessageBuilder();
+    static RawMessageBuilder message() {
+        return new RawMessageBuilder();
     }
 
-    static FixMessageBuilder message(String bodyLength, String msgType) {
+    static RawMessageBuilder message(String bodyLength, String msgType) {
         return message()
                 .field(BeginString, "FIX.4.2")
                 .field(BodyLength, bodyLength)
                 .field(MsgType, msgType)
                 .field(SenderCompID, "Sender")
                 .field(TargetCompID, "Target");
-    }
-
-    static class FixMessageBuilder {
-        StringBuilder s = new StringBuilder();
-
-        public FixMessageBuilder field(int tag, String value) {
-            s.append(tag);
-            s.append('=');
-            s.append(value);
-            s.append(Field.DELIMITER);
-            return this;
-        }
-
-        @Override public String toString() {
-            return s.toString();
-        }
     }
 
     private void expectInvalidMessage(final SessionRejectReasonValue reason, final String text) {
