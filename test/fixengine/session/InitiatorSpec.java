@@ -20,6 +20,7 @@ import static fixengine.messages.MsgTypeValue.LOGON;
 import static fixengine.messages.MsgTypeValue.LOGOUT;
 import static fixengine.messages.MsgTypeValue.RESEND_REQUEST;
 import static fixengine.messages.MsgTypeValue.TEST_REQUEST;
+import static fixengine.messages.MsgTypeValue.REJECT;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -192,7 +193,7 @@ import fixengine.tags.TestReqID;
             });
         }
 
-        public void possDupFlag() throws Exception {
+        public void possDupFlagOrigSendingTimeLessThanSendingTime() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
             server.respond(
@@ -207,6 +208,27 @@ import fixengine.tags.TestReqID;
                     .build());
             server.respondLogout(3);
             server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+
+        public void possDupFlagOrigSendingTimeGreaterThanSendingTime() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .msgSeqNum(2)
+                    .build());
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .setPossDupFlag(true)
+                        .setOrigSendingTime(new DateTime().plusMinutes(1))
+                        .msgSeqNum(3)
+                    .build());
+            server.expect(REJECT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
