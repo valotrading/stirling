@@ -151,14 +151,8 @@ import fixengine.tags.TestReqID;
     public class ReceiveMessageStandardHeader {
         /* Ref ID 2: a. MsgSeqNum received as expected */
         public void msgSeqNumReceivedAsExpected() throws Exception {
-            server.expect(LOGON);
-            server.respondLogon();
-            server.respond(new MessageBuilder(HEARTBEAT).msgSeqNum(2).build());
-            runInClient(new Runnable() {
-                @Override public void run() {
-                    session.logon(connection);
-                }
-            });
+            logonHeartbeat();
+            specify(session.getIncomingSeq().peek(), 3);
         }
 
         /* Ref ID 2: b. MsgSeqNum higher than expected */
@@ -288,13 +282,7 @@ import fixengine.tags.TestReqID;
          * testing profile and matches BeginString on outbound messages.
          */
         public void beginStringReceivedAsExpected() throws Exception {
-            server.expect(LOGON);
-            server.respondLogon();
-            runInClient(new Runnable() {
-                @Override public void run() {
-                    session.logon(connection);
-                }
-            });
+            logonHeartbeat();
         }
 
         /*
@@ -324,13 +312,7 @@ import fixengine.tags.TestReqID;
          * expected and specified in testing profile.
          */
         public void senderAndTargetCompIDsReceivedAsExpected() throws Exception {
-            server.expect(LOGON);
-            server.respondLogon();
-            runInClient(new Runnable() {
-                @Override public void run() {
-                    session.logon(connection);
-                }
-            });
+            logonHeartbeat();
         }
 
         /*
@@ -381,17 +363,7 @@ import fixengine.tags.TestReqID;
 
         /* Ref ID 2: l. BodyLength value received is correct. */
         public void bodyLengthReceivedIsCorrect() throws Exception {
-            server.expect(LOGON);
-            server.respondLogon();
-            server.respond(
-                    new MessageBuilder(HEARTBEAT)
-                        .msgSeqNum(2)
-                    .build());
-            runInClient(new Runnable() {
-                @Override public void run() {
-                    session.logon(connection);
-                }
-            });
+            logonHeartbeat();
         }
 
         /* Ref ID 2: m. BodyLength value received is incorrect. */
@@ -418,17 +390,7 @@ import fixengine.tags.TestReqID;
          * reasonable time (i.e. 2 minutes) of atomic clock-based time.
          */
         public void sendingTimeReceivedIsWithinReasonableTime() throws Exception {
-            server.expect(LOGON);
-            server.respondLogon();
-            server.respond(
-                    new MessageBuilder(HEARTBEAT)
-                        .msgSeqNum(2)
-                    .build());
-            runInClient(new Runnable() {
-                @Override public void run() {
-                    session.logon(connection);
-                }
-            });
+            logonHeartbeat();
         }
 
         /*
@@ -459,17 +421,7 @@ import fixengine.tags.TestReqID;
          * classified as user-defined).
          */
         public void msgTypeValueReceivedIsValid() throws Exception {
-            server.expect(LOGON);
-            server.respondLogon();
-            server.respond(
-                    new MessageBuilder(HEARTBEAT)
-                        .msgSeqNum(2)
-                    .build());
-            runInClient(new Runnable() {
-                @Override public void run() {
-                    session.logon(connection);
-                }
-            });
+            logonHeartbeat();
         }
 
         /*
@@ -522,17 +474,7 @@ import fixengine.tags.TestReqID;
          * fields of message.
          */
         public void firstThreeFieldsOfMessageAreValid() throws Exception {
-            server.expect(LOGON);
-            server.respondLogon();
-            server.respond(
-                    new MessageBuilder(HEARTBEAT)
-                        .msgSeqNum(2)
-                    .build());
-            runInClient(new Runnable() {
-                @Override public void run() {
-                    session.logon(connection);
-                }
-            });
+            logonHeartbeat();
         }
 
         /*
@@ -606,6 +548,20 @@ import fixengine.tags.TestReqID;
             });
             specify(session.getIncomingSeq().peek(), 2);
         }
+    }
+
+    private void logonHeartbeat() throws Exception {
+        server.expect(LOGON);
+        server.respondLogon();
+        server.respond(
+                new MessageBuilder(HEARTBEAT)
+                    .msgSeqNum(2)
+                .build());
+        runInClient(new Runnable() {
+            @Override public void run() {
+                session.logon(connection);
+            }
+        });
     }
 
     private void runInClient(Runnable command) throws Exception {
