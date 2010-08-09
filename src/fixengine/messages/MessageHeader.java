@@ -37,9 +37,10 @@ import fixengine.tags.TargetCompID;
 /**
  * @author Pekka Enberg 
  */
-public class MessageHeader extends AbstractFieldContainer implements Parseable {
-    private final AbstractFieldContainer head = new AbstractFieldContainer() { };
+public class MessageHeader extends FieldContainer implements Parseable {
     private static final Minutes MAX_TIME_DIFFERENCE = Minutes.TWO;
+
+    private final FieldContainer head = new FieldContainer();
 
     public MessageHeader(MsgTypeValue msgType) {
         this(msgType.value());
@@ -75,7 +76,7 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
         parseHeadField(b, BodyLength.TAG);
         trailer(b);
         parseHeadField(b, MsgType.TAG);
-        fields.parse(b);
+        super.parse(b);
     }
 
     private void trailer(ByteBuffer b) {

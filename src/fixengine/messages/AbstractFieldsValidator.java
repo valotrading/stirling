@@ -22,7 +22,7 @@ package fixengine.messages;
 public abstract class AbstractFieldsValidator implements Validator<Message> {
     @Override
     public final boolean validate(Message message) {
-        for (Field field : message.getFields()) {
+        for (Field field : message) {
             if (!isValid(field)) {
                 error(message, field);
                 return false;

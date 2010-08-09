@@ -39,7 +39,7 @@ import fixengine.tags.TargetCompID;
 /**
  * @author Pekka Enberg
  */
-public abstract class AbstractMessage extends AbstractFieldContainer implements Message {
+public abstract class AbstractMessage extends FieldContainer implements Message {
     private final MessageHeader header;
 
     protected AbstractMessage(MsgTypeValue msgType) {
@@ -168,7 +168,7 @@ public abstract class AbstractMessage extends AbstractFieldContainer implements 
     }
 
     public void parse(ByteBuffer b) {
-        fields.parse(b);
+        super.parse(b);
         finishParse(b);
     }
 
@@ -186,8 +186,8 @@ public abstract class AbstractMessage extends AbstractFieldContainer implements 
     public String format() {
         MessageBuffer buffer = new MessageBuffer();
         buffer.append(new StringField(MsgType.TAG, header.getMsgType()));
-        buffer.append(header.getFields().format());
-        buffer.append(getFields().format());
+        buffer.append(header.format());
+        buffer.append(super.format());
         buffer.prefix(new IntegerField(BodyLength.TAG, buffer.length()));
         buffer.prefix(new StringField(BeginString.TAG, header.getBeginString()));
         buffer.append(new StringField(CheckSum.TAG, CheckSum.format(buffer.checksum())));
@@ -209,7 +209,7 @@ public abstract class AbstractMessage extends AbstractFieldContainer implements 
         StringBuilder result = new StringBuilder();
         result.append(new StringField(BeginString.TAG, header.getBeginString()).toString() + " ");
         result.append(new StringField(MsgType.TAG, header.getMsgType()).toString() + " ");
-        for (Field field : getFields()) {
+        for (Field field : this) {
             result.append(field.toString() + " ");
         }
         return result.toString();

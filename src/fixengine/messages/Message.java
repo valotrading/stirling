@@ -22,7 +22,7 @@ import fixengine.Config;
 /**
  * @author Pekka Enberg 
  */
-public interface Message extends Parseable {
+public interface Message extends Parseable, Iterable<Field>  {
     void apply(MessageVisitor visitor);
     String format();
     void setString(Tag<StringField> tag, String value);
@@ -54,6 +54,5 @@ public interface Message extends Parseable {
     boolean hasValidSenderCompId(Config config);
     boolean hasValidTargetCompId(Config config);
     boolean isTooLowSeqNum(int seqNo);
-    Fields getFields();
     void validate();
 }
