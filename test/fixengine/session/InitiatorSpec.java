@@ -398,7 +398,7 @@ import fixengine.tags.TestReqID;
         public void bodyLengthReceivedIsIncorrect() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
-            server.respond(message("75", "0")
+            server.respond(message("10", "0")
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(TestReqID.TAG, "1")
@@ -593,7 +593,7 @@ import fixengine.tags.TestReqID;
             server.respond(
                     message()
                     .field(BeginString.TAG, "FIX.4.2")
-                    .field(BodyLength.TAG, "10")
+                    .field(BodyLength.TAG, "26")
                     /* MsgType missing */
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")

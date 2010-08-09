@@ -98,6 +98,8 @@ public class MessageHeader extends AbstractFieldContainer implements Parseable {
             CheckSum.TAG.parse(b);
         } catch (UnexpectedTagException e) {
             throw new InvalidBodyLengthException();
+        } catch (ParseException e) {
+            throw new InvalidBodyLengthException();
         }
         StringField field = CheckSum.TAG.newField(Required.YES);
         field.parse(b);
