@@ -72,6 +72,7 @@ import fixengine.tags.SenderCompID;
 import fixengine.tags.SendingTime;
 import fixengine.tags.TargetCompID;
 import fixengine.tags.TestReqID;
+import fixengine.tags.RefSeqNo;
 
 @RunWith(JDaveRunner.class) public class InitiatorSpec extends Specification<Void> {
     private static final Version VERSION = Version.FIX_4_2;
@@ -729,6 +730,27 @@ import fixengine.tags.TestReqID;
                     session.logon(connection);
                 }
             });
+        }
+    }
+
+    public class ReceiveRejectMessage {
+        /* Ref ID 7: Valid reject message */
+        public void valid() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(REJECT)
+                        .msgSeqNum(2)
+                        .integer(RefSeqNo.TAG, 2)
+                    .build());
+            server.respondLogout(3);
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 4);
         }
     }
 
