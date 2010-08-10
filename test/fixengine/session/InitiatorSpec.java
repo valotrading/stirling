@@ -435,7 +435,7 @@ import fixengine.tags.TestReqID;
                     message("52", "ZZ")
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
-                    .field(CheckSum.TAG, "75")
+                    .field(CheckSum.TAG, "075")
                     .toString());
             server.expect(REJECT);
             runInClient(new Runnable() {
@@ -540,6 +540,120 @@ import fixengine.tags.TestReqID;
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.TAG, "165")
+                    .toString());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
+    }
+
+    public class ReceiveMessageStandardTrailer {
+        /* Ref ID 3: a. Valid CheckSum */
+        public void valid() throws Exception {
+            logonHeartbeat();
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 3: b. Invalid CheckSum */
+        public void invalid() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    message()
+                    .field(BeginString.TAG, "FIX.4.2")
+                    .field(BodyLength.TAG, "55")
+                    .field(MsgType.TAG, "0")
+                    .field(SenderCompID.TAG, "OPENFIX")
+                    .field(TargetCompID.TAG, "initiator")
+                    .field(MsgSeqNum.TAG, "2")
+                    .field(SendingTime.TAG, "20100810-07:25:02")
+                    .field(CheckSum.TAG, "100")
+                    .toString());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
+
+        /* Ref ID 3: c. Garbled message */
+        public void garbledMessage() throws Exception {
+            missingCheckSumField();
+        }
+
+        /* Ref ID 3: d. CheckSum is last field of message, value has length of
+         * 3, and is delimited by <SOH>. */
+        public void checkSumIsLastFieldOfMsgEtc() throws Exception {
+            logonHeartbeat();
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 3: e. CheckSum is not the last field of message. */
+        public void checkSumIsNotTheLastFieldOfMsg() throws Exception {
+            missingCheckSumField();
+        }
+
+        /* Ref ID 3: e. CheckSum value does not have length of 3. */
+        public void checkSumValueDoesNotHaveLengthOfThree() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    message()
+                    .field(BeginString.TAG, "FIX.4.2")
+                    .field(BodyLength.TAG, "56")
+                    .field(MsgType.TAG, "0")
+                    .field(SenderCompID.TAG, "acceptor")
+                    .field(TargetCompID.TAG, "initiator")
+                    .field(MsgSeqNum.TAG, "2")
+                    .field(SendingTime.TAG, "20100810-07:58:22")
+                    .field(CheckSum.TAG, "48")
+                    .toString());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
+
+        /* Ref ID 3: e. CheckSum is not delimited by <SOH>. */
+        public void checkSumIsNotDelimitedBySOH() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            String msg = message()
+                .field(BeginString.TAG, "FIX.4.2")
+                .field(BodyLength.TAG, "55")
+                .field(MsgType.TAG, "0")
+                .field(SenderCompID.TAG, "OPENFIX")
+                .field(TargetCompID.TAG, "initiator")
+                .field(MsgSeqNum.TAG, "2")
+                .field(SendingTime.TAG, "20100810-07:25:02")
+                .field(CheckSum.TAG, "239").toString();
+            server.respond(msg.substring(0, msg.length() - 1));
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
+
+        private void missingCheckSumField() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    message()
+                    .field(BeginString.TAG, "FIX.4.2")
+                    .field(BodyLength.TAG, "55")
+                    .field(MsgType.TAG, "0")
+                    .field(SenderCompID.TAG, "OPENFIX")
+                    .field(TargetCompID.TAG, "initiator")
+                    .field(MsgSeqNum.TAG, "2")
+                    .field(SendingTime.TAG, "20100810-07:25:02")
                     .toString());
             runInClient(new Runnable() {
                 @Override public void run() {

@@ -105,6 +105,9 @@ public class MessageHeader extends FieldContainer implements Parseable {
         StringField field = CheckSum.TAG.newField(Required.YES);
         field.parse(b);
         b.position(origPosition);
+        if (field.getValue().length() < 3) {
+            throw new InvalidCheckSumException("CheckSum(10): CheckSum must have a length of three: " + field.getValue());
+        }
         return Integer.parseInt(field.getValue());
     }
 
