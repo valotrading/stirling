@@ -89,7 +89,7 @@ public class ParserSpec extends Specification<String> {
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(TestReqID, "")
-                .field(CheckSum, "53")
+                .field(CheckSum, "053")
                 .toString();
         }
 
@@ -188,7 +188,7 @@ public class ParserSpec extends Specification<String> {
                     .field(MsgSeqNum, "1")
                     .field(SendingTime, "20100701-12:09:40")
                     .field(TestReqID, "1")
-                    .field(CheckSum, "33")
+                    .field(CheckSum, "033")
                     .toString();
         }
 
@@ -328,7 +328,7 @@ public class ParserSpec extends Specification<String> {
             return raw = message("52", "ZZ")
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
-                .field(CheckSum, "74")
+                .field(CheckSum, "074")
                 .toString();
         }
 
@@ -364,7 +364,7 @@ public class ParserSpec extends Specification<String> {
                 .field(SendingTime, "20100701-12:09:40")
                 .field(TestReqID, "1")
                 .field(9898, "value")
-                .field(CheckSum, "13")
+                .field(CheckSum, "013")
                 .toString();
         }
 
@@ -410,7 +410,7 @@ public class ParserSpec extends Specification<String> {
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(TestReqID, "1" + Field.DELIMITER + "000")
-                .field(CheckSum, "90")
+                .field(CheckSum, "090")
                 .toString();
         }
 
