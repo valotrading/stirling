@@ -478,7 +478,7 @@ import fixengine.tags.TestReqID;
         }
 
         /*
-         * t. BeginString, BodyLength, and MsgType are not the first three
+         * Ref ID 2: t. BeginString, BodyLength, and MsgType are not the first three
          * fields of message.
          */
         public void beginStringIsNotTheFirstField() throws Exception {
@@ -502,7 +502,7 @@ import fixengine.tags.TestReqID;
         }
 
         /*
-         * t. BeginString, BodyLength, and MsgType are not the first three
+         * Ref ID 2: t. BeginString, BodyLength, and MsgType are not the first three
          * fields of message.
          */
         public void bodyLengthIsNotTheSecondField() throws Exception {
@@ -526,7 +526,7 @@ import fixengine.tags.TestReqID;
         }
 
         /*
-         * t. BeginString, BodyLength, and MsgType are not the first three
+         * Ref ID 2: t. BeginString, BodyLength, and MsgType are not the first three
          * fields of message.
          */
         public void msgTypeIsNotTheThirdField() throws Exception {
