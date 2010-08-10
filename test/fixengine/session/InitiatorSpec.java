@@ -77,7 +77,7 @@ import fixengine.tags.TestReqID;
     private static final Version VERSION = Version.FIX_4_2;
     private static final String INITIATOR = "initiator";
     private static final String ACCEPTOR = "OPENFIX";
-    private static final int HEARTBEAT_INTERVAL = 30;
+    private static final int HEARTBEAT_INTERVAL = 1;
     private static final int PORT = 7001;
 
     private final SimpleAcceptor server = new SimpleAcceptor(PORT);
@@ -661,6 +661,33 @@ import fixengine.tags.TestReqID;
                 }
             });
             specify(session.getIncomingSeq().peek(), 2);
+        }
+    }
+
+    public class SendHeartbeatMessage {
+        /* Ref ID 4: a. No data sent during preset heartbeat interval
+         * (HeartBeatInt field). */
+        public void noDataSentDuringPresetHeartbeatInterval() throws Exception {
+            logonHeartbeatTestRequest();
+        }
+
+        /* Ref ID 4: b. A TestRequest message is received. */
+        public void testRequestMsgReceived() throws Exception {
+            logonHeartbeatTestRequest();
+        }
+
+        private void logonHeartbeatTestRequest() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.expect(HEARTBEAT);
+            server.expect(TEST_REQUEST);
+            server.respondLogout(3);
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
         }
     }
 
