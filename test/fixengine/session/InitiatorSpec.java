@@ -691,6 +691,25 @@ import fixengine.tags.TestReqID;
         }
     }
 
+    public class ReceiveHeartbeatMessage {
+        /* Ref ID 5: Valid Heartbeat message */
+        public void valid() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .msgSeqNum(2)
+                    .build(), HEARTBEAT_INTERVAL * 500L);
+            server.respondLogout(3);
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+    }
+
     private void logonHeartbeat() throws Exception {
         server.expect(LOGON);
         server.respondLogon();
@@ -748,7 +767,7 @@ import fixengine.tags.TestReqID;
             }
 
             public void idle(Connection conn) {
-                conn.close();
+                session.keepAlive(conn);
             }
         });
     }
@@ -877,6 +896,24 @@ import fixengine.tags.TestReqID;
 
         public void respond(final Message message) {
             respond(message.format());
+        }
+
+        public void respond(final Message message, final long delaySendingByMilliseconds) {
+            respond(message.format(), delaySendingByMilliseconds);
+        }
+
+        private void respond(final String raw, final long delaySendingByMilliseconds) {
+            this.commands.add(new Runnable() {
+                @Override public void run() {
+                    try {
+                        Thread.sleep(delaySendingByMilliseconds);
+                        clientSocket.getOutputStream().write(raw.getBytes());
+                        successCount++;
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
         }
 
         private void respond(final String raw) {
