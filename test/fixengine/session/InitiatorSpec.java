@@ -710,6 +710,28 @@ import fixengine.tags.TestReqID;
         }
     }
 
+    public class SendTestRequest {
+        /* Ref ID 6: No data received during preset heartbeat interval
+         * (HeatbeatInt field) + "some reasonable amount of time" (use 20% of
+         * HeartBeatInt field) */
+        public void noDataReceivedDuringPresetHeartbeatInterval() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(TEST_REQUEST)
+                        .msgSeqNum(2)
+                        .string(TestReqID.TAG, "12345678")
+                    .build());
+            // TODO: Verify that TestReqID of Heartbeat matches
+            server.expect(HEARTBEAT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+    }
+
     private void logonHeartbeat() throws Exception {
         server.expect(LOGON);
         server.respondLogon();
