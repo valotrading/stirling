@@ -688,7 +688,7 @@ import fixengine.tags.RefSeqNo;
                 @Override public void run() {
                     session.logon(connection);
                 }
-            });
+            }, true);
         }
     }
 
@@ -769,12 +769,16 @@ import fixengine.tags.RefSeqNo;
     }
 
     private void runInClient(Runnable command) throws Exception {
+        runInClient(command, false);
+    }
+
+    private void runInClient(Runnable command, boolean keepAlive) throws Exception {
         Thread serverThread = new Thread(server);
         serverThread.start();
         server.awaitForStart();
         Events events = Events.open(1000);
         session = newSession();
-        connection = openConnection(session);
+        connection = openConnection(session, keepAlive);
         events.register(connection);
         command.run();
         events.dispatch();
@@ -803,7 +807,7 @@ import fixengine.tags.RefSeqNo;
         return config;
     }
 
-    private Connection openConnection(final Session session) throws IOException {
+    private Connection openConnection(final Session session, final boolean keepAlive) throws IOException {
         return Connection.connect(new InetSocketAddress("localhost", PORT), new FixMessageParser(), new Connection.Callback() {
             public void messages(Connection conn, Iterator<silvertip.Message> messages) {
                 while (messages.hasNext())
@@ -811,7 +815,10 @@ import fixengine.tags.RefSeqNo;
             }
 
             public void idle(Connection conn) {
-                session.keepAlive(conn);
+                if (keepAlive)
+                    session.keepAlive(conn);
+                else
+                    conn.close();
             }
         });
     }
