@@ -76,6 +76,8 @@ import fixengine.tags.TestReqID;
 import fixengine.tags.RefSeqNo;
 import fixengine.tags.BeginSeqNo;
 import fixengine.tags.EndSeqNo;
+import fixengine.tags.NewSeqNo;
+import fixengine.tags.GapFillFlag;
 
 @RunWith(JDaveRunner.class) public class InitiatorSpec extends Specification<Void> {
     private static final Version VERSION = Version.FIX_4_2;
@@ -803,6 +805,109 @@ import fixengine.tags.EndSeqNo;
             });
             specify(session.getIncomingSeq().peek(), 3);
             specify(session.getOutgoingSeq().peek(), 3);
+        }
+    }
+
+    public class ReceiveSequenceReset {
+        /* Ref ID 10: a. Receive Sequence Reset (Gap Fill) message with NewSeqNo >
+         * MsgSeqNum and MsgSeqNo > than expected MsgSeqNum */
+        public void msgSeqNumGreaterThanExpectedSeqNum() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(SEQUENCE_RESET)
+                        .msgSeqNum(4)
+                        .bool(GapFillFlag.TAG, true)
+                        .integer(NewSeqNo.TAG, 3)
+                    .build());
+            server.expect(RESEND_REQUEST);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
+
+        /* Ref ID 10: b. Receive Sequence Reset (Gap Fill) message with NewSeqNo >
+         * MsgSeqNum and MsgSeqNum = to expected MsgSeqNum */
+        public void msgSeqNumEqualToExpectedSeqNumAndNewSeqNoGreaterThanMsgSeqNum() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(SEQUENCE_RESET)
+                        .msgSeqNum(2)
+                        .bool(GapFillFlag.TAG, true)
+                        .integer(NewSeqNo.TAG, 5)
+                    .build());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 5);
+        }
+
+        /* Ref ID 10: c. Receive Sequence Reset (Gap Fill) message with NewSeqNo >
+         * MsgSeqNum and MsgSeqNum < than expected MsgSeqNum and
+         * PossDupFlag = "Y" */
+        public void msgSeqNumSmallerThanExpectedSeqNumWithPossDupFlag() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(SEQUENCE_RESET)
+                        .msgSeqNum(1)
+                        .setPossDupFlag(true)
+                        .bool(GapFillFlag.TAG, true)
+                        .integer(NewSeqNo.TAG, 5)
+                    .build());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
+
+        /* Ref ID 10: d. Receive Sequence Reset (Gap Fill) message with NewSeqNo >
+         * MsgSeqNum and MsgSeqNum < than expected MsgSeqNum and without
+         * PossDupFlag = "Y" */
+        public void msgSeqNumSmallerThanExpectedSeqNumWithoutPossDupFlag() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(SEQUENCE_RESET)
+                        .msgSeqNum(1)
+                        .bool(GapFillFlag.TAG, true)
+                        .integer(NewSeqNo.TAG, 5)
+                    .build());
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
+
+        /* Ref ID 10: e. Receive Sequence Reset (Gap Fill) message with NewSeqNo <= MsgSeqNum
+         * and MsgSeqNum = to expected sequence number */
+        public void msgSeqNumEqualToExpectedSeqNumAndNewSeqNoSmallerOrEqualToMsgSeqNum() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(SEQUENCE_RESET)
+                        .msgSeqNum(2)
+                        .bool(GapFillFlag.TAG, true)
+                        .integer(NewSeqNo.TAG, 2)
+                    .build());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
         }
     }
 

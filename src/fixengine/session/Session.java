@@ -238,7 +238,7 @@ public class Session {
                 }
 
                 @Override public void visit(SequenceResetMessage message) {
-                    processSeqReset(message);
+                    processSeqReset(conn, message);
                 }
 
                 @Override public void visit(LogoutMessage message) {
@@ -441,9 +441,19 @@ public class Session {
         send(conn, resendReq);
     }
 
-    private void processSeqReset(SequenceResetMessage message) {
-        if (checkSeqResetSeqNum() && !message.isResetOk(queue.nextSeqNum()))
-            throw new InvalidSequenceResetException("Expected: " + queue.nextSeqNum() + ", but was: " + message.getMsgSeqNum());
-        queue.reset(message.getInteger(NewSeqNo.TAG));
+    private void processSeqReset(Connection conn, SequenceResetMessage message) {
+        int newSeqNo = message.getInteger(NewSeqNo.TAG);
+        if (checkSeqResetSeqNum() && !message.isResetOk(queue.nextSeqNum())) {
+            int beginSeqNo = queue.nextSeqNum();
+            ResendRequestMessage resendReq = new ResendRequestMessage();
+            resendReq.setInteger(BeginSeqNo.TAG, beginSeqNo);
+            resendReq.setInteger(EndSeqNo.TAG, message.getMsgSeqNum() - 1);
+            send(conn, resendReq);
+        } else if (newSeqNo <= message.getMsgSeqNum()) {
+            sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE,
+                "Attempt to lower sequence number, invalid value NewSeqNum(36)=" + newSeqNo);
+        } else {
+            queue.reset(newSeqNo);
+        }
     }
 }
