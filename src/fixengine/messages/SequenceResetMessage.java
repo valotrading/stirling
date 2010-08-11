@@ -15,6 +15,8 @@
  */
 package fixengine.messages;
 
+import org.joda.time.DateTime;
+
 import fixengine.tags.GapFillFlag;
 import fixengine.tags.NewSeqNo;
 
@@ -31,6 +33,12 @@ public class SequenceResetMessage extends AbstractMessage {
         
         field(GapFillFlag.TAG, Required.NO);
         field(NewSeqNo.TAG);
+    }
+
+    public void setSendingTime(DateTime sendingTime) {
+        super.setSendingTime(sendingTime);
+        if (getPossDupFlag() && !hasOrigSendingTime())
+            setOrigSendingTime(sendingTime);
     }
 
     public boolean isResetOk(int nextSeqNum) {
