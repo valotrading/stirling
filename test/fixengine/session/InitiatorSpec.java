@@ -785,6 +785,27 @@ import fixengine.tags.EndSeqNo;
         }
     }
 
+    public class SynchronizeSequenceNumbers {
+        /* Ref ID 9: Application failure */
+        public void applicationFailure() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.expect(HEARTBEAT);
+            server.expect(SEQUENCE_RESET);
+            server.respondLogout(2);
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                    session.heartbeat(connection);
+                    session.sequenceReset(connection, new Sequence());
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+            specify(session.getOutgoingSeq().peek(), 3);
+        }
+    }
+
     private void logonHeartbeat() throws Exception {
         server.expect(LOGON);
         server.respondLogon();
