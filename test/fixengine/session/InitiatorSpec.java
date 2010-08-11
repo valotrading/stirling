@@ -976,6 +976,22 @@ import fixengine.tags.GapFillFlag;
         }
     }
 
+    public class InitiateLogoutProcess {
+        /* Ref ID 12: Initiate logout */
+        public void initiateLogout() throws Exception {
+            // TODO: Generate a "warning" condition in test output if Logout
+            // has not been received within ten seconds.
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respondLogout(2);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+    }
+
     private void logonHeartbeat() throws Exception {
         server.expect(LOGON);
         server.respondLogon();
