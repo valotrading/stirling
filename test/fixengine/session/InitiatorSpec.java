@@ -808,7 +808,7 @@ import fixengine.tags.GapFillFlag;
         }
     }
 
-    public class ReceiveSequenceReset {
+    public class ReceiveSequenceResetWithGapFill {
         /* Ref ID 10: a. Receive Sequence Reset (Gap Fill) message with NewSeqNo >
          * MsgSeqNum and MsgSeqNo > than expected MsgSeqNum */
         public void msgSeqNumGreaterThanExpectedSeqNum() throws Exception {
@@ -908,6 +908,71 @@ import fixengine.tags.GapFillFlag;
                 }
             });
             specify(session.getIncomingSeq().peek(), 2);
+        }
+    }
+
+    public class ReceiveSequenceResetWithoutGapFill {
+        /* Ref ID 11: a. Receive Sequence Reset (reset) message with NewSeqNo >
+         * than expected sequence number */
+        public void newSeqNoGreaterThanExpectedMsgSeqNum() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(SEQUENCE_RESET)
+                        .msgSeqNum(2)
+                        .integer(NewSeqNo.TAG, 5)
+                    .build());
+            server.respondLogout(5);
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 6);
+        }
+
+        /* Ref ID 11: b. Receive Sequence Reset (reset) message with NewSeqNo =
+         * to expected sequence number */
+        public void newSeqNoEqualToMsgSeqNum() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(SEQUENCE_RESET)
+                        .msgSeqNum(2)
+                        .integer(NewSeqNo.TAG, 2)
+                    .build());
+            server.respondLogout(2);
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 11: c. Receive Sequence Reset (reset) message with NewSeqNo <
+         * than expected sequence number */
+        public void newSeqNoSmallerThanMsgSeqNum() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .msgSeqNum(2)
+                    .build());
+            server.respond(
+                    new MessageBuilder(SEQUENCE_RESET)
+                        .msgSeqNum(3)
+                        .integer(NewSeqNo.TAG, 2)
+                    .build());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
         }
     }
 

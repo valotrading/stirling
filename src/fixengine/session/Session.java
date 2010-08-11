@@ -449,9 +449,12 @@ public class Session {
             resendReq.setInteger(BeginSeqNo.TAG, beginSeqNo);
             resendReq.setInteger(EndSeqNo.TAG, message.getMsgSeqNum() - 1);
             send(conn, resendReq);
-        } else if (newSeqNo <= message.getMsgSeqNum()) {
+        } else if (newSeqNo <= message.getMsgSeqNum() && message.getBoolean(GapFillFlag.TAG)) {
             sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE,
                 "Attempt to lower sequence number, invalid value NewSeqNum(36)=" + newSeqNo);
+        } else if (newSeqNo < message.getMsgSeqNum() && !message.getBoolean(GapFillFlag.TAG)) {
+            sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE,
+                "Value is incorrect (out of range) for this tag, NewSeqNum(36)=" + newSeqNo);
         } else {
             queue.reset(newSeqNo);
         }
