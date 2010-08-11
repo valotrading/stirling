@@ -21,6 +21,7 @@ import static fixengine.messages.MsgTypeValue.LOGON;
 import static fixengine.messages.MsgTypeValue.LOGOUT;
 import static fixengine.messages.MsgTypeValue.REJECT;
 import static fixengine.messages.MsgTypeValue.RESEND_REQUEST;
+import static fixengine.messages.MsgTypeValue.SEQUENCE_RESET;
 import static fixengine.messages.MsgTypeValue.TEST_REQUEST;
 
 import java.io.IOException;
@@ -73,6 +74,8 @@ import fixengine.tags.SendingTime;
 import fixengine.tags.TargetCompID;
 import fixengine.tags.TestReqID;
 import fixengine.tags.RefSeqNo;
+import fixengine.tags.BeginSeqNo;
+import fixengine.tags.EndSeqNo;
 
 @RunWith(JDaveRunner.class) public class InitiatorSpec extends Specification<Void> {
     private static final Version VERSION = Version.FIX_4_2;
@@ -751,6 +754,34 @@ import fixengine.tags.RefSeqNo;
                 }
             });
             specify(session.getIncomingSeq().peek(), 4);
+        }
+    }
+
+    public class ReceiveResendRequestMessage {
+        /* TODO: The current implementation does not support resending of
+         * messages as specified in this test case, instead a SequenceReset is
+         * issued. Once message recovery is implemented this test case shall be
+         * rewritten. */
+        /* Ref ID 8: Valid Resend Request */
+        public void valid() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .msgSeqNum(2)
+                    .build());
+            server.respond(
+                    new MessageBuilder(RESEND_REQUEST)
+                        .msgSeqNum(3)
+                        .integer(BeginSeqNo.TAG, 1)
+                        .integer(EndSeqNo.TAG, 0)
+                    .build());
+            server.expect(SEQUENCE_RESET);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
         }
     }
 
