@@ -992,6 +992,35 @@ import fixengine.tags.GapFillFlag;
         }
     }
 
+    public class ReceiveLogoutMessage {
+        /* Ref ID 13: a. Receive valid Logout message in response to a
+         * solicited logout process */
+        public void receiveValidLogoutMsgSolicited() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                    session.logout(connection);
+                }
+            });
+        }
+
+        /* Ref ID 13: b. Receive valid Logout message unsolicited */
+        public void receiveValidLogoutMsgUnsolicited() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respondLogout(2);
+            server.expect(LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+    }
+
     private void logonHeartbeat() throws Exception {
         server.expect(LOGON);
         server.respondLogon();
