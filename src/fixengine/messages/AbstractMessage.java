@@ -176,7 +176,9 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
         if (b.hasRemaining()) {
             int tag = Tag.parseTag(b);
             Field field = header.lookup(tag);
-            if (field != null) {
+            if (CheckSum.TAG.value() == tag) {
+                throw new OutOfOrderTagException("CheckSum(10): Out of order tag");
+            } else if (field != null) {
                 throw new OutOfOrderTagException(field.prettyName() + ": Out of order tag");
             }
             throw new InvalidTagException("Tag not defined for this message: " + tag);

@@ -389,7 +389,7 @@ public class ParserSpec extends Specification<String> {
         }
     }
 
-    public class OutOfOrderTag {
+    public class HeaderFieldInBody {
         public String create() {
             return raw = message("60", "0")
                 .field(MsgSeqNum, "1")
@@ -401,6 +401,22 @@ public class ParserSpec extends Specification<String> {
 
         public void parse() {
             expectInvalidMessage(SessionRejectReasonValue.OUT_OF_ORDER_TAG, "SendingTime(52): Out of order tag");
+        }
+    }
+
+    public class TrailerFieldInBody {
+        public String create() {
+            return raw = message("64", "0")
+                .field(MsgSeqNum, "1")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(CheckSum, "206")
+                .field(TestReqID, "1")
+                .field(CheckSum, "003")
+                .toString();
+        }
+
+        public void parse() {
+            expectInvalidMessage(SessionRejectReasonValue.OUT_OF_ORDER_TAG, "CheckSum(10): Out of order tag");
         }
     }
 
