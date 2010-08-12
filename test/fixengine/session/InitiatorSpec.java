@@ -41,9 +41,6 @@ import lang.DefaultTimeSource;
 import org.joda.time.DateTime;
 import org.junit.runner.RunWith;
 
-import silvertip.Connection;
-import silvertip.Events;
-import silvertip.protocols.FixMessageParser;
 import fixengine.Config;
 import fixengine.Version;
 import fixengine.messages.BooleanField;
@@ -62,22 +59,37 @@ import fixengine.messages.SessionRejectReasonValue;
 import fixengine.messages.StringField;
 import fixengine.messages.Tag;
 import fixengine.session.store.SessionStore;
+import fixengine.tags.AllocAccount;
+import fixengine.tags.AllocID;
+import fixengine.tags.AllocShares;
+import fixengine.tags.AllocTransType;
+import fixengine.tags.AvgPx;
+import fixengine.tags.BeginSeqNo;
 import fixengine.tags.BeginString;
 import fixengine.tags.BodyLength;
 import fixengine.tags.CheckSum;
+import fixengine.tags.ClOrdID;
 import fixengine.tags.EncryptMethod;
+import fixengine.tags.EndSeqNo;
+import fixengine.tags.GapFillFlag;
 import fixengine.tags.HeartBtInt;
 import fixengine.tags.MsgSeqNum;
 import fixengine.tags.MsgType;
+import fixengine.tags.NewSeqNo;
+import fixengine.tags.NoAllocs;
+import fixengine.tags.NoOrders;
+import fixengine.tags.RefSeqNo;
 import fixengine.tags.SenderCompID;
 import fixengine.tags.SendingTime;
+import fixengine.tags.Shares;
+import fixengine.tags.Side;
+import fixengine.tags.Symbol;
 import fixengine.tags.TargetCompID;
 import fixengine.tags.TestReqID;
-import fixengine.tags.RefSeqNo;
-import fixengine.tags.BeginSeqNo;
-import fixengine.tags.EndSeqNo;
-import fixengine.tags.NewSeqNo;
-import fixengine.tags.GapFillFlag;
+import fixengine.tags.TradeDate;
+import silvertip.Connection;
+import silvertip.Events;
+import silvertip.protocols.FixMessageParser;
 
 @RunWith(JDaveRunner.class) public class InitiatorSpec extends Specification<Void> {
     private static final Version VERSION = Version.FIX_4_2;
@@ -1018,6 +1030,345 @@ import fixengine.tags.GapFillFlag;
                     session.logon(connection);
                 }
             });
+        }
+    }
+
+    public class ReceiveApplicationOrAdminMessage {
+        /* Ref ID 14: a. Receive field identifier (tag number) not defined in
+         * specification. Exception: undefined tag used in testing profile as
+         * user-defined. */
+        public void tagNotDefinedInSpecification() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(message("68", "0")
+                .field(MsgSeqNum.TAG, "2")
+                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(TestReqID.TAG, "1")
+                .field(9898, "value")
+                .field(CheckSum.TAG, "014")
+                .toString());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 14: b. Receive message with a required field identifier (tag
+         * number) missing. */
+        public void requiredFieldMissing() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(TEST_REQUEST)
+                        .msgSeqNum(2)
+                    .build());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 14: c. Receive message with field identifier (tag number)
+         * which is defined in the specification but not defined for this
+         * message type. Exception: undefined tag used is specified in testing
+         * profile as user-defined for this message type. */
+        public void tagDefinedInSpecificationButNotForThisMsgType() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(message("62", "0")
+                .field(MsgSeqNum.TAG, "2")
+                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(88, "0")
+                .field(TestReqID.TAG, "1")
+                .field(CheckSum.TAG, "169")
+                .toString());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 14: d. Receive message with field identifier (tag number)
+         * specified but no value (e.g. "55=<SOH>" vs. "55=IBM<SOH>"). */
+        public void fieldWithoutValue() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(TEST_REQUEST)
+                        .msgSeqNum(2)
+                        .string(TestReqID.TAG, "")
+                    .build());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 14: e. Receive message with incorrect value (out of range or
+         * not part of valid list of enumated values) for a particular field
+         * identifier (tag number). Exception: undefined enumerated values used
+         * are specified in testing profile as user-defined. */
+        public void fieldWithIncorrectValue() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(message("52", "0")
+                .field(MsgSeqNum.TAG, "2")
+                .field(SendingTime.TAG, "WRONG FORMAT")
+                .field(TestReqID.TAG, "1")
+                .field(CheckSum.TAG, "228")
+                .toString());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 14: f. Receive message with a value in an incorrect data
+         * format (syntax) for a particular field identifier (tag number). */
+        public void fieldWithIncorrectDataFormat() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(message("63", "A")
+                .field(MsgSeqNum.TAG, "2")
+                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(EncryptMethod.TAG, "7")
+                .field(HeartBtInt.TAG, "30")
+                .field(CheckSum.TAG, "250")
+                .toString());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 14: g. Receive a message in which the following is not true:
+         * Standard Header fields appear before Body fields which appear before
+         * Standard Trailer fields. */
+        public void standardHeaderFieldInBody() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(message("60", "0")
+                .field(MsgSeqNum.TAG, "2")
+                .field(TestReqID.TAG, "1000")
+                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(CheckSum.TAG, "089")
+                .toString());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 14: g. Receive a message in which the following is not true:
+         * Standard Header fields appear before Body fields which appear before
+         * Standard Trailer fields. */
+        public void standardTrailerFieldBeforeBody() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(message("64", "0")
+                .field(MsgSeqNum.TAG, "2")
+                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(CheckSum.TAG, "207")
+                .field(TestReqID.TAG, "1")
+                .field(CheckSum.TAG, "005")
+                .toString());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 14: h. Receive a message in which a field identifier (tag
+         * number) which is not part of a repeating group is specified more
+         * than once. */
+        public void duplicateFields() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(message("63", "0")
+                .field(MsgSeqNum.TAG, "2")
+                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(TestReqID.TAG, "1")
+                .field(TestReqID.TAG, "1")
+                .field(CheckSum.TAG, "207")
+                .toString());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 14: i. Receive a message with repeating groups in which the
+         * "count" field value for a repeating group is incorrect. */
+        public void tooManyInstancesInRepeatingGroup() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(message("183", "J")
+                .field(MsgSeqNum.TAG, "2")
+                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(AllocID.TAG, "12807331319411")
+                .field(AllocTransType.TAG, "0")
+                .field(NoOrders.TAG, "1")
+                .field(ClOrdID.TAG, "12807331319412")
+                .field(Side.TAG, "2")
+                .field(Symbol.TAG, "GOOG")
+                .field(Shares.TAG, "1000.00")
+                .field(AvgPx.TAG, "370.00")
+                .field(TradeDate.TAG, "20011004")
+                .field(NoAllocs.TAG, "1")
+                .field(AllocAccount.TAG, "1234")
+                .field(AllocShares.TAG, "900.00")
+                .field(AllocAccount.TAG, "2345")
+                .field(AllocShares.TAG, "100.00")
+                .field(CheckSum.TAG, "119")
+                .toString());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 14: i. Receive a message with repeating groups in which the
+         * "count" field value for a repeating group is incorrect. */
+        public void tooFewInstancesInRepeatingGroup() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(message("183", "J")
+                .field(MsgSeqNum.TAG, "2")
+                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(AllocID.TAG, "12807331319411")
+                .field(AllocTransType.TAG, "0")
+                .field(NoOrders.TAG, "1")
+                .field(ClOrdID.TAG, "12807331319412")
+                .field(Side.TAG, "2")
+                .field(Symbol.TAG, "GOOG")
+                .field(Shares.TAG, "1000.00")
+                .field(AvgPx.TAG, "370.00")
+                .field(TradeDate.TAG, "20011004")
+                .field(NoAllocs.TAG, "3")
+                .field(AllocAccount.TAG, "1234")
+                .field(AllocShares.TAG, "900.00")
+                .field(AllocAccount.TAG, "2345")
+                .field(AllocShares.TAG, "100.00")
+                .field(CheckSum.TAG, "121")
+                .toString());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 14: j. Receive a message with repeating groups in which the
+         * order of repeating group fields does not match specification. */
+        public void repeatingGroupFieldsOutOfOrder() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(message("183", "J")
+                .field(MsgSeqNum.TAG, "2")
+                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(AllocID.TAG, "12807331319411")
+                .field(AllocTransType.TAG, "0")
+                .field(NoOrders.TAG, "1")
+                .field(ClOrdID.TAG, "12807331319412")
+                .field(Side.TAG, "2")
+                .field(Symbol.TAG, "GOOG")
+                .field(Shares.TAG, "1000.00")
+                .field(AvgPx.TAG, "370.00")
+                .field(TradeDate.TAG, "20011004")
+                .field(NoAllocs.TAG, "2")
+                .field(AllocShares.TAG, "900.00")
+                .field(AllocAccount.TAG, "1234")
+                .field(AllocShares.TAG, "100.00")
+                .field(AllocAccount.TAG, "2345")
+                .field(CheckSum.TAG, "120")
+                .toString());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 14: k. Receive a message with a field of a data type other
+         * than "data" which contains one or more embedded <SOH> values. */
+        public void fieldValueWithEmbeddedSOHs() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(message("61", "0")
+                .field(MsgSeqNum.TAG, "2")
+                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(TestReqID.TAG, "1" + Field.DELIMITER + "000")
+                .field(CheckSum.TAG, "091")
+                .toString());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 14: l. Receive a message when application-level processing or
+         * system is not available (Optional). */
+        public void systemNotAvailable() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.expect(BUSINESS_MESSAGE_REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                    session.setAvailable(false);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
+
+        /* Ref ID 14: m. Receive a message in which a conditionally required
+         * field is missing. */
+        public void conditionallyRequiredFieldMissing() throws Exception {
+            // TODO
+        }
+
+        /* Ref ID 14: n. Receive a message in which a field identifier (tag
+         * number) appears in both cleartext and encrypted section but has
+         * different values. */
+        public void cleartextAndEncryptedSectionDiffer() throws Exception {
+            // TODO: Currently, FIX engine does not support encrypted sections.
         }
     }
 
