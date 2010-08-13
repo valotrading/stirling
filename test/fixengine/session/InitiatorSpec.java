@@ -16,6 +16,7 @@
 package fixengine.session;
 
 import static fixengine.messages.MsgTypeValue.BUSINESS_MESSAGE_REJECT;
+import static fixengine.messages.MsgTypeValue.EXECUTION_REPORT;
 import static fixengine.messages.MsgTypeValue.HEARTBEAT;
 import static fixengine.messages.MsgTypeValue.LOGON;
 import static fixengine.messages.MsgTypeValue.LOGOUT;
@@ -47,15 +48,20 @@ import fixengine.messages.BooleanField;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.EnumField;
+import fixengine.messages.ExecTypeValue;
 import fixengine.messages.Field;
+import fixengine.messages.FloatField;
 import fixengine.messages.Formattable;
 import fixengine.messages.IntegerField;
 import fixengine.messages.Message;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MsgTypeValue;
+import fixengine.messages.OrdStatusValue;
+import fixengine.messages.OrdTypeValue;
 import fixengine.messages.Parser;
 import fixengine.messages.RawMessageBuilder;
 import fixengine.messages.SessionRejectReasonValue;
+import fixengine.messages.SideValue;
 import fixengine.messages.StringField;
 import fixengine.messages.Tag;
 import fixengine.session.store.SessionStore;
@@ -69,15 +75,24 @@ import fixengine.tags.BeginString;
 import fixengine.tags.BodyLength;
 import fixengine.tags.CheckSum;
 import fixengine.tags.ClOrdID;
+import fixengine.tags.CumQty;
 import fixengine.tags.EncryptMethod;
 import fixengine.tags.EndSeqNo;
+import fixengine.tags.ExecID;
+import fixengine.tags.ExecTransType;
+import fixengine.tags.ExecType;
 import fixengine.tags.GapFillFlag;
 import fixengine.tags.HeartBtInt;
+import fixengine.tags.LeavesQty;
 import fixengine.tags.MsgSeqNum;
 import fixengine.tags.MsgType;
 import fixengine.tags.NewSeqNo;
 import fixengine.tags.NoAllocs;
 import fixengine.tags.NoOrders;
+import fixengine.tags.OrdStatus;
+import fixengine.tags.OrdType;
+import fixengine.tags.OrderID;
+import fixengine.tags.OrderQty;
 import fixengine.tags.RefSeqNo;
 import fixengine.tags.SenderCompID;
 import fixengine.tags.SendingTime;
@@ -87,6 +102,7 @@ import fixengine.tags.Symbol;
 import fixengine.tags.TargetCompID;
 import fixengine.tags.TestReqID;
 import fixengine.tags.TradeDate;
+
 import silvertip.Connection;
 import silvertip.Events;
 import silvertip.protocols.FixMessageParser;
@@ -1361,7 +1377,30 @@ import silvertip.protocols.FixMessageParser;
         /* Ref ID 14: m. Receive a message in which a conditionally required
          * field is missing. */
         public void conditionallyRequiredFieldMissing() throws Exception {
-            // TODO
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(new MessageBuilder(EXECUTION_REPORT)
+                .msgSeqNum(2)
+                .string(OrderID.TAG, "1278658351213-17")
+                .string(ExecID.TAG, "1278658351213-18")
+                .string(ExecTransType.TAG, "0")
+                .enumeration(ExecType.TAG, ExecTypeValue.NEW)
+                .enumeration(OrdStatus.TAG, OrdStatusValue.NEW)
+                .string(Symbol.TAG, "PALM")
+                .enumeration(Side.TAG, SideValue.BUY)
+                .float0(OrderQty.TAG, 1500.0)
+                .float0(LeavesQty.TAG, 1500.0)
+                .enumeration(OrdType.TAG, OrdTypeValue.LIMIT)
+                .float0(CumQty.TAG, .0)
+                .float0(AvgPx.TAG, .0)
+                .build());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
         }
 
         /* Ref ID 14: n. Receive a message in which a field identifier (tag
@@ -1508,6 +1547,11 @@ import silvertip.protocols.FixMessageParser;
 
         public MessageBuilder integer(Tag<IntegerField> tag, Integer value) {
             message.setInteger(tag, value);
+            return this;
+        }
+
+        public MessageBuilder float0(Tag<FloatField> tag, Double value) {
+            message.setFloat(tag, value);
             return this;
         }
 
