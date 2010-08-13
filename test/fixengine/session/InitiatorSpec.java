@@ -93,9 +93,11 @@ import fixengine.tags.OrdStatus;
 import fixengine.tags.OrdType;
 import fixengine.tags.OrderID;
 import fixengine.tags.OrderQty;
+import fixengine.tags.PossDupFlag;
 import fixengine.tags.RefSeqNo;
 import fixengine.tags.SenderCompID;
 import fixengine.tags.SendingTime;
+import fixengine.tags.OrigSendingTime;
 import fixengine.tags.Shares;
 import fixengine.tags.Side;
 import fixengine.tags.Symbol;
@@ -1408,6 +1410,87 @@ import silvertip.protocols.FixMessageParser;
          * different values. */
         public void cleartextAndEncryptedSectionDiffer() throws Exception {
             // TODO: Currently, FIX engine does not support encrypted sections.
+        }
+    }
+
+    public class SendAppAndAdminMsgsToTestNormalAndAbnormalBehavior {
+        /* Ref ID 15: Send more than one message of the same type with header
+         * and body fields ordered differently to verify acceptance. (Exclude
+         * those which have restrictions regarding order) */
+        public void reorderedHeaderFields() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(message("210", "J")
+                .field(MsgSeqNum.TAG, "2")
+                .field(PossDupFlag.TAG, "Y")
+                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(OrigSendingTime.TAG, "20100701-12:09:40")
+                .field(AllocID.TAG, "12807331319411")
+                .field(AllocTransType.TAG, "0")
+                .field(NoOrders.TAG, "1")
+                .field(ClOrdID.TAG, "12807331319412")
+                .field(Side.TAG, "2")
+                .field(Symbol.TAG, "GOOG")
+                .field(Shares.TAG, "1000.00")
+                .field(AvgPx.TAG, "370.00")
+                .field(TradeDate.TAG, "20011004")
+                .field(NoAllocs.TAG, "2")
+                .field(AllocAccount.TAG, "1234")
+                .field(AllocShares.TAG, "900.00")
+                .field(AllocAccount.TAG, "2345")
+                .field(AllocShares.TAG, "100.00")
+                .field(CheckSum.TAG, "156")
+                .toString());
+            server.respond(message("210", "J")
+                .field(MsgSeqNum.TAG, "3")
+                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(PossDupFlag.TAG, "Y")
+                .field(OrigSendingTime.TAG, "20100701-12:09:40")
+                .field(AllocID.TAG, "12807331319411")
+                .field(AllocTransType.TAG, "0")
+                .field(NoOrders.TAG, "1")
+                .field(ClOrdID.TAG, "12807331319412")
+                .field(Side.TAG, "2")
+                .field(Symbol.TAG, "GOOG")
+                .field(Shares.TAG, "1000.00")
+                .field(AvgPx.TAG, "370.00")
+                .field(TradeDate.TAG, "20011004")
+                .field(NoAllocs.TAG, "2")
+                .field(AllocAccount.TAG, "1234")
+                .field(AllocShares.TAG, "900.00")
+                .field(AllocAccount.TAG, "2345")
+                .field(AllocShares.TAG, "100.00")
+                .field(CheckSum.TAG, "157")
+                .toString());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 4);
+        }
+
+        public void reorderedBodyFields() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(SEQUENCE_RESET)
+                        .msgSeqNum(2)
+                        .bool(GapFillFlag.TAG, true)
+                        .integer(NewSeqNo.TAG, 2)
+                    .build());
+            server.respond(
+                    new MessageBuilder(SEQUENCE_RESET)
+                        .msgSeqNum(2)
+                        .integer(NewSeqNo.TAG, 2)
+                        .bool(GapFillFlag.TAG, true)
+                    .build());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
         }
     }
 

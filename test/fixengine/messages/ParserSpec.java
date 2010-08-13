@@ -437,9 +437,11 @@ public class ParserSpec extends Specification<String> {
 
     public class RepeatingGroup {
         public String create() {
-            return raw = message("183", "J")
+            return raw = message("210", "J")
                 .field(MsgSeqNum, "1")
+                .field(43, "Y")
                 .field(SendingTime, "20100701-12:09:40")
+                .field(122, "20100701-12:09:40")
                 .field(AllocID, "12807331319411")
                 .field(AllocTransType, "0")
                 .field(NoOrders, "1")
@@ -454,7 +456,7 @@ public class ParserSpec extends Specification<String> {
                 .field(AllocShares, "900.00")
                 .field(AllocAccount, "2345")
                 .field(AllocShares, "100.00")
-                .field(CheckSum, "119")
+                .field(CheckSum, "155")
                 .toString();
         }
 
