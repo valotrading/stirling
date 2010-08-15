@@ -1494,6 +1494,40 @@ import silvertip.protocols.FixMessageParser;
         }
     }
 
+    public class SupportThirdPartyAddressing {
+        /* Ref ID 18: a. Receive messages with OnBehalfOfCompID and
+         * DeliverToCompID values expected as specified in testing profile and
+         * with correct usage. */
+        public void valid() throws Exception {
+            respondWithNonPointToPointMsg();
+        }
+
+        /* Ref ID 18: b. Receive messages with OnBehalfOfCompID or
+         * DeliverToCompID values not specifed in testing profile or incorrect
+         * usage. */
+        public void invalid() throws Exception {
+            respondWithNonPointToPointMsg();
+        }
+
+        private void respondWithNonPointToPointMsg() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(HEARTBEAT)
+                        .setOnBehalfOfCompId("behalfOf")
+                        .setDeliverToCompId("deliverTo")
+                        .msgSeqNum(2)
+                    .build());
+            server.expect(REJECT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+    }
+
     private void logonHeartbeat() throws Exception {
         server.expect(LOGON);
         server.respondLogon();
@@ -1586,6 +1620,16 @@ import silvertip.protocols.FixMessageParser;
             header.setString(TargetCompID.TAG, INITIATOR);
             header.setDateTime(SendingTime.TAG, new DefaultTimeSource().currentTime());
             this.message = type.newMessage(header);
+        }
+
+        public MessageBuilder setOnBehalfOfCompId(String onBehalfOfCompId) {
+            message.setOnBehalfOfCompId(onBehalfOfCompId);
+            return this;
+        }
+
+        public MessageBuilder setDeliverToCompId(String deliverToCompId) {
+            message.setDeliverToCompId(deliverToCompId);
+            return this;
         }
 
         public MessageBuilder setBeginString(String beginString) {

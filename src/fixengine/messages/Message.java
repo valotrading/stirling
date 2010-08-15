@@ -39,6 +39,7 @@ public interface Message extends Parseable, Iterable<Field>  {
     String getSenderCompId();
     String getTargetCompId();
     void setOnBehalfOfCompId(String onBehalfOfCompId);
+    void setDeliverToCompId(String deliverToCompId);
     void setHeaderConfig(Config config);
     void setMsgSeqNum(int next);
     void setSendingTime(DateTime sendingTime);
