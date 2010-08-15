@@ -1,6 +1,13 @@
 Known Bugs
 ==========
 
+- Outgoing messages are not queued. See session level tst Ref ID 16.
+
+- Encryption is not handled at all. See session level test Ref ID 17.
+
+- Messages with PossResend = "Y" are not handled appropriately. See session
+  level tests Ref ID 19 and 20.
+
 - Messages are not processed in-order. For example, if sequence reset follows
   an invalid execution report, we reject the execution report instead of
   processing the sequence reset first.
