@@ -17,6 +17,10 @@ package fixengine.messages;
 
 import java.nio.ByteBuffer;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import lang.Objects;
 
 import org.joda.time.DateTime;
@@ -48,6 +52,16 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
 
     protected AbstractMessage(MessageHeader header) {
         this.header = header;
+    }
+
+    @Override public Iterator<Field> iterator() {
+        List<Field> result = new ArrayList<Field>();
+        Iterator<Field> fields = super.iterator();
+        while (fields.hasNext())
+            result.add(fields.next());
+        for (Field field : header)
+            result.add(field);
+        return result.iterator();
     }
 
     public abstract void apply(MessageVisitor visitor);
