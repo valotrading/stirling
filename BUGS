@@ -5,8 +5,7 @@ Known Bugs
 
 - Encryption is not handled at all. See session level test Ref ID 17.
 
-- Messages with PossResend = "Y" are not handled appropriately. See session
-  level tests Ref ID 19 and 20.
+- PossResend messages are ignored.
 
 - Messages are not processed in-order. For example, if sequence reset follows
   an invalid execution report, we reject the execution report instead of
