@@ -33,6 +33,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
 import jdave.Specification;
@@ -114,9 +115,9 @@ import silvertip.protocols.FixMessageParser;
     private static final String INITIATOR = "initiator";
     private static final String ACCEPTOR = "OPENFIX";
     private static final int HEARTBEAT_INTERVAL = 1;
-    private static final int PORT = 7001;
 
-    private final SimpleAcceptor server = new SimpleAcceptor(PORT);
+    private static final Random generator = new Random();
+    private final SimpleAcceptor server = new SimpleAcceptor(1024 + generator.nextInt(1024));
     private Connection connection;
     private Session session;
 
@@ -1552,7 +1553,7 @@ import silvertip.protocols.FixMessageParser;
         server.awaitForStart();
         Events events = Events.open(1000);
         session = newSession();
-        connection = openConnection(session, keepAlive);
+        connection = openConnection(session, server.getPort(), keepAlive);
         events.register(connection);
         command.run();
         events.dispatch();
@@ -1581,8 +1582,8 @@ import silvertip.protocols.FixMessageParser;
         return config;
     }
 
-    private Connection openConnection(final Session session, final boolean keepAlive) throws IOException {
-        return Connection.connect(new InetSocketAddress("localhost", PORT), new FixMessageParser(), new Connection.Callback() {
+    private Connection openConnection(final Session session, int port, final boolean keepAlive) throws IOException {
+        return Connection.connect(new InetSocketAddress("localhost", port), new FixMessageParser(), new Connection.Callback() {
             public void messages(Connection conn, Iterator<silvertip.Message> messages) {
                 while (messages.hasNext())
                     session.receive(conn, messages.next(), new DefaultMessageVisitor());
@@ -1714,6 +1715,10 @@ import silvertip.protocols.FixMessageParser;
             this.port = port;
         }
 
+        public int getPort() {
+            return port;
+        }
+
         public boolean passed() {
             return failureCount == 0 && successCount == commands.size();
         }
@@ -1808,7 +1813,7 @@ import silvertip.protocols.FixMessageParser;
                         try {
                             c = reader.read();
                         } catch (IOException e) {
-                            /* Ignore */
+                            throw new RuntimeException(e);
                         }
                         raw.append((char) c);
                         if (raw.toString().contains("10=")) {
@@ -1816,7 +1821,7 @@ import silvertip.protocols.FixMessageParser;
                                 try {
                                     c = reader.read();
                                 } catch (IOException e) {
-                                    /* Ignore */
+                                    throw new RuntimeException(e);
                                 }
                                 raw.append((char) c);
                             } while (c != Field.DELIMITER);
@@ -1840,10 +1845,11 @@ import silvertip.protocols.FixMessageParser;
             serverStarted.await();
         }
 
-        @Override public void run() {
+        @Override
+        public void run() {
             ServerSocket serverSocket = null;
             try {
-                serverSocket = new ServerSocket(port);
+                serverSocket = newSocket();
                 serverStarted.countDown();
                 clientSocket = serverSocket.accept();
                 for (Runnable c : commands) {
@@ -1860,6 +1866,14 @@ import silvertip.protocols.FixMessageParser;
                     }
                 }
                 serverStopped.countDown();
+            }
+        }
+
+        private ServerSocket newSocket() throws IOException {
+            try {
+                return new ServerSocket(port);
+            } finally {
+                serverStarted.countDown();
             }
         }
     }
