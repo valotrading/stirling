@@ -66,6 +66,10 @@ public abstract class RepeatingGroup implements Field {
         throw new UnsupportedOperationException();
     }
 
+    @Override public boolean hasSingleTag() {
+        return false;
+    }
+
     @Override public boolean isEmpty() {
         return false;
     }
@@ -88,6 +92,10 @@ public abstract class RepeatingGroup implements Field {
 
     @Override public boolean isValueValid() {
         return true;
+    }
+
+    @Override public Tag<?> tag() {
+        throw new UnsupportedOperationException();
     }
 
     @Override public String prettyName() {

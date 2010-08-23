@@ -24,6 +24,10 @@ public class RepeatingGroupInstance extends FieldContainer implements Field {
         return false;
     }
 
+    @Override public boolean hasSingleTag() {
+        return false;
+    }
+
     @Override public boolean isEmpty() {
         return false;
     }
@@ -46,6 +50,10 @@ public class RepeatingGroupInstance extends FieldContainer implements Field {
 
     @Override public boolean isValueValid() {
         return false;
+    }
+
+    @Override public Tag<?> tag() {
+        throw new UnsupportedOperationException();
     }
 
     @Override public String prettyName() {

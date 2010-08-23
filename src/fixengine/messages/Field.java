@@ -25,6 +25,7 @@ public interface Field {
 
     void setRequired(Required required);
     boolean hasValue();
+    boolean hasSingleTag();
     void parse(ByteBuffer b);
     boolean isFormatValid();
     boolean isValueValid();
@@ -32,6 +33,7 @@ public interface Field {
     boolean isConditional();
     boolean isParsed();
     boolean isEmpty();
+    Tag<?> tag();
     String format();
     String prettyName();
 }

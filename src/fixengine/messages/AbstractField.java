@@ -69,19 +69,20 @@ public abstract class AbstractField<T> implements Field {
         return tag;
     }
 
-    @Override
-    public boolean isEmpty() {
+    @Override public boolean isEmpty() {
         return !hasValue() && defined;
     }
 
-    @Override
-    public boolean isParsed() {
+    @Override public boolean isParsed() {
         return defined;
     }
     
-    @Override
-    public boolean hasValue() {
+    @Override public boolean hasValue() {
         return value != null;
+    }
+
+    @Override public boolean hasSingleTag() {
+        return true;
     }
 
     public boolean isFormatValid() {
@@ -92,8 +93,7 @@ public abstract class AbstractField<T> implements Field {
         return validValue;
     }
 
-    @Override
-    public boolean isMissing() {
+    @Override public boolean isMissing() {
         return required.isRequired() && !hasValue();
     }
 
@@ -157,13 +157,11 @@ public abstract class AbstractField<T> implements Field {
 
     protected abstract String value();
 
-    @Override
-    public boolean equals(Object obj) {
+    @Override public boolean equals(Object obj) {
         return Objects.equal(this, obj);
     }
     
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return Objects.hashCode(this);
     }
 
@@ -171,8 +169,7 @@ public abstract class AbstractField<T> implements Field {
         return name() + "(" + tag() + ")";
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         StringBuilder result = new StringBuilder();
         result.append(name());
         result.append("(");
