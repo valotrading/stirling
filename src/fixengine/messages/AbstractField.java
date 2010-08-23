@@ -144,9 +144,7 @@ public abstract class AbstractField<T> implements Field {
             value = value();
         }
         if (value == null) {
-            if (isOptional())
-                return "";
-            value = "";
+            return "";
         }
         return tag + "=" + value + DELIMITER;
     }
