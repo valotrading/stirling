@@ -66,7 +66,7 @@ public class MessageHeader extends FieldContainer implements Parseable {
         field(SendingTime.TAG);
         field(OrigSendingTime.TAG, new Required() {
             @Override public boolean isRequired() {
-                return hasValue(PossDupFlag.TAG);
+                return hasValue(PossDupFlag.TAG) && getBoolean(PossDupFlag.TAG);
             }
         });
     }
