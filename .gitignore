@@ -1,8 +1,9 @@
-/fixengine.jar
-/build
-/bin
 /.classpath
+/.clover
 /.project
 /.settings
+/bin
+/build
 /data
+/fixengine.jar
 /tags
