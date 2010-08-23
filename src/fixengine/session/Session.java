@@ -15,6 +15,7 @@
  */
 package fixengine.session;
 
+import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +50,7 @@ import fixengine.tags.EndSeqNo;
 import fixengine.tags.GapFillFlag;
 import fixengine.tags.HeartBtInt;
 import fixengine.tags.NewSeqNo;
+import fixengine.tags.OrigSendingTime;
 import fixengine.tags.RefMsgType;
 import fixengine.tags.RefSeqNo;
 import fixengine.tags.SessionRejectReason;
@@ -59,6 +61,8 @@ import fixengine.tags.Text;
  * @author Karim Osman
  */
 public class Session {
+    private static final long DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC = 10000;
+
     protected MessageQueue queue = new MessageQueue();
     protected Sequence outgoingSeq = new Sequence();
     protected TimeSource timeSource = new DefaultTimeSource();
@@ -66,6 +70,8 @@ public class Session {
     protected final HeartBtIntValue heartBtInt;
     protected final Config config;
     protected final SessionStore store;
+    protected final Logger logger;
+    protected final long logoutResponseTimeoutMsec;
 
     private long testReqId;
     private boolean initiatedLogout;
@@ -75,10 +81,19 @@ public class Session {
     private long prevTxTimeMsec = System.currentTimeMillis();
     private long prevRxTimeMsec = System.currentTimeMillis();
 
+    private boolean waitingForResponseToInitiatedLogout;
+    private long logoutInitiatedAtMsec;
+
     public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store) {
+        this(heartBtInt, config, store, Logger.getLogger("Session"), DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC);
+    }
+
+    public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, Logger logger, long logoutResponseTimeoutMsec) {
         this.heartBtInt = heartBtInt;
         this.config = config;
         this.store = store;
+        this.logger = logger;
+        this.logoutResponseTimeoutMsec = logoutResponseTimeoutMsec;
         store.load(this);
     }
 
@@ -137,24 +152,30 @@ public class Session {
 
                 @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
                     queue.skip(msgSeqNum);
-                    if (authenticated)
+                    if (authenticated) {
+                        logger.severe(text);
                         sessionReject(conn, msgSeqNum, reason, text);
-                    else
+                    } else {
+                        logger.severe(text);
                         logout(conn);
+                    }
                 }
 
                 @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {
+                    logger.warning("MsgType(35): Unknown message type: " + msgType);
                     queue.skip(msgSeqNum);
                     businessReject(conn, msgType, msgSeqNum, BusinessRejectReasonValue.UNKNOWN_MESSAGE_TYPE, "MsgType(35): Unknown message type: " + msgType);
                 }
 
                 @Override public void invalidMsgType(String msgType, int msgSeqNum) {
+                    logger.warning("MsgType(35): Invalid message type: " + msgType);
                     queue.skip(msgSeqNum);
                     sessionReject(conn, msgSeqNum, SessionRejectReasonValue.INVALID_MSG_TYPE, "MsgType(35): Invalid message type: " + msgType);
                 }
 
                 @Override public void garbledMessage(String text) {
                     /* Ignore the message. */
+                    logger.warning(text);
                 }
             });
         } finally {
@@ -173,6 +194,8 @@ public class Session {
     public void logout(final Connection conn) {
         send(conn, new LogoutMessage());
         initiatedLogout = true;
+        logoutInitiatedAtMsec = System.currentTimeMillis();
+        waitingForResponseToInitiatedLogout = true;
     }
 
     public void sequenceReset(Connection conn, Sequence seq) {
@@ -203,6 +226,14 @@ public class Session {
         if (curTimeMsec - prevRxTimeMsec > heartBtInt.testRequest().delayMsec()) {
             testRequest(conn);
             prevRxTimeMsec = System.currentTimeMillis();
+        }
+    }
+
+    public void processInitiatedLogout(Connection conn) {
+        if (waitingForResponseToInitiatedLogout && System.currentTimeMillis() - logoutInitiatedAtMsec > logoutResponseTimeoutMsec) {
+            logger.warning("Response to logout not received in " + logoutResponseTimeoutMsec / 1000 + " second(s), disconnecting");
+            waitingForResponseToInitiatedLogout = false;
+            conn.close();
         }
     }
 
@@ -245,6 +276,8 @@ public class Session {
                     queue.skip(message);
                     if (!initiatedLogout)
                         send(conn, new LogoutMessage());
+                    else
+                        waitingForResponseToInitiatedLogout = false;
                     conn.close();
                 }
 
@@ -268,6 +301,7 @@ public class Session {
                 }
 
                 @Override public void defaultAction(Message message) {
+                    logger.severe("first message is not a logon");
                     logout(conn);
                 }
             });
@@ -283,6 +317,7 @@ public class Session {
                     }
 
                     @Override protected void error(Message message) {
+                        logger.warning("Application not available");
                         businessReject(conn, message.getMsgType(), message.getMsgSeqNum(), BusinessRejectReasonValue.APPLICATION_NOT_AVAILABLE,
                                 "Application not available");
                     }
@@ -314,7 +349,7 @@ public class Session {
 
                     @Override protected void error(Message message) {
                         sessionReject(conn, message, SessionRejectReasonValue.COMP_ID_PROBLEM, "Invalid SenderCompID(49): " + message.getSenderCompId());
-                        terminate(conn, message, message.getSenderCompId());
+                        terminate(conn, message, "Invalid SenderCompID(49): " + message.getSenderCompId());
                     }
                 });
                 add(new AbstractMessageValidator() {
@@ -324,7 +359,7 @@ public class Session {
 
                     @Override protected void error(Message message) {
                         sessionReject(conn, message, SessionRejectReasonValue.COMP_ID_PROBLEM, "Invalid TargetCompID(56): " + message.getTargetCompId());
-                        terminate(conn, message, message.getTargetCompId());
+                        terminate(conn, message, "Invalid TargetCompID(56): " + message.getTargetCompId());
                     }
                 });
                 add(new AbstractMessageValidator() {
@@ -333,7 +368,7 @@ public class Session {
                     }
 
                     @Override protected void error(Message message) {
-                        String text = "OrigSendTime " + message.getOrigSendingTime() + " after " + message.getSendingTime();
+                        String text = "OrigSendingTime " + message.getOrigSendingTime() + " after " + message.getSendingTime();
                         sessionReject(conn, message, SessionRejectReasonValue.SENDING_TIME_ACCURACY_PROBLEM, text);
                         terminate(conn, message, text);
                     }
@@ -355,6 +390,7 @@ public class Session {
                     }
 
                     @Override protected void error(Message message) {
+                        logger.severe("Third-party message routing is not supported");
                         sessionReject(conn, message, SessionRejectReasonValue.COMP_ID_PROBLEM, "Third-party message routing is not supported");
                     }
                 });
@@ -367,7 +403,12 @@ public class Session {
                     }
 
                     @Override protected void error(Message message, Field field) {
-                        sessionReject(conn, message, SessionRejectReasonValue.TAG_MISSING, toString(field) + ": Tag missing");
+                        if (authenticated) {
+                            logger.severe(toString(field) + ": Tag missing");
+                            sessionReject(conn, message, SessionRejectReasonValue.TAG_MISSING, toString(field) + ": Tag missing");
+                        } else {
+                            terminate(conn, message, toString(field) + ": Tag missing");
+                        }
                     }
                 });
                 add(new AbstractFieldsValidator() {
@@ -379,7 +420,11 @@ public class Session {
                     }
 
                     @Override protected void error(Message message, Field field) {
-                        businessReject(conn, message.getMsgType(), message.getMsgSeqNum(), BusinessRejectReasonValue.CONDITIONALLY_REQUIRED_FIELD_MISSING, toString(field) + ": Conditionally required field missing");
+                        if (field.hasSingleTag() && OrigSendingTime.TAG.equals(field.tag())) {
+                            sessionReject(conn, message, SessionRejectReasonValue.TAG_MISSING, toString(field) + ": Required tag missing");
+                        } else {
+                            logger.severe(toString(field) + ": Conditionally required field missing");
+                            businessReject(conn, message.getMsgType(), message.getMsgSeqNum(), BusinessRejectReasonValue.CONDITIONALLY_REQUIRED_FIELD_MISSING, toString(field) + ": Conditionally required field missing"); }
                     }
                 });
             }
@@ -418,6 +463,7 @@ public class Session {
     }
 
     private void terminate(Connection conn, Message message, String text) {
+        logger.severe(text);
         LogoutMessage logout = new LogoutMessage();
         logout.setString(Text.TAG, text);
         send(conn, logout);
@@ -453,9 +499,12 @@ public class Session {
             sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE,
                 "Attempt to lower sequence number, invalid value NewSeqNum(36)=" + newSeqNo);
         } else if (newSeqNo < message.getMsgSeqNum() && !message.getBoolean(GapFillFlag.TAG)) {
+            logger.warning("Value is incorrect (out of range) for this tag, NewSeqNum(36)=" + newSeqNo);
             sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE,
                 "Value is incorrect (out of range) for this tag, NewSeqNum(36)=" + newSeqNo);
         } else {
+            if (newSeqNo == message.getMsgSeqNum() && !message.getBoolean(GapFillFlag.TAG))
+                logger.warning("NewSeqNo(36)=" + newSeqNo + " is equal to expected MsgSeqNum(34)=" + message.getMsgSeqNum());
             queue.reset(newSeqNo);
         }
     }

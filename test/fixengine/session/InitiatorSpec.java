@@ -15,6 +15,7 @@
  */
 package fixengine.session;
 
+import static fixengine.messages.MsgTypeValue.ALLOCATION_INSTRUCTION;
 import static fixengine.messages.MsgTypeValue.BUSINESS_MESSAGE_REJECT;
 import static fixengine.messages.MsgTypeValue.EXECUTION_REPORT;
 import static fixengine.messages.MsgTypeValue.HEARTBEAT;
@@ -35,16 +36,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
+import java.util.logging.Logger;
 
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 import lang.DefaultTimeSource;
+import org.jmock.Expectations;
 
 import org.joda.time.DateTime;
 import org.junit.runner.RunWith;
 
 import fixengine.Config;
 import fixengine.Version;
+import fixengine.messages.AllocTransTypeValue;
 import fixengine.messages.BooleanField;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.EncryptMethodValue;
@@ -65,6 +69,7 @@ import fixengine.messages.SessionRejectReasonValue;
 import fixengine.messages.SideValue;
 import fixengine.messages.StringField;
 import fixengine.messages.Tag;
+import fixengine.messages.UtcTimestampField;
 import fixengine.session.store.SessionStore;
 import fixengine.tags.AllocAccount;
 import fixengine.tags.AllocID;
@@ -94,11 +99,11 @@ import fixengine.tags.OrdStatus;
 import fixengine.tags.OrdType;
 import fixengine.tags.OrderID;
 import fixengine.tags.OrderQty;
+import fixengine.tags.OrigSendingTime;
 import fixengine.tags.PossDupFlag;
 import fixengine.tags.RefSeqNo;
 import fixengine.tags.SenderCompID;
 import fixengine.tags.SendingTime;
-import fixengine.tags.OrigSendingTime;
 import fixengine.tags.Shares;
 import fixengine.tags.Side;
 import fixengine.tags.Symbol;
@@ -110,7 +115,15 @@ import silvertip.Connection;
 import silvertip.Events;
 import silvertip.protocols.FixMessageParser;
 
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormat;
+import static org.joda.time.DateTimeZone.UTC;
+
 @RunWith(JDaveRunner.class) public class InitiatorSpec extends Specification<Void> {
+    private static final String dateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'";
+    private static final DateTimeFormatter fmt = DateTimeFormat.forPattern(dateTimeFormat);
+
+    private static final long logoutResponseTimeoutMsec = 1000;
     private static final Version VERSION = Version.FIX_4_2;
     private static final String INITIATOR = "initiator";
     private static final String ACCEPTOR = "OPENFIX";
@@ -118,6 +131,7 @@ import silvertip.protocols.FixMessageParser;
 
     private static final Random generator = new Random();
     private final SimpleAcceptor server = new SimpleAcceptor(1024 + generator.nextInt(1024));
+    private final Logger logger = mock(Logger.class);
     private Connection connection;
     private Session session;
 
@@ -162,6 +176,9 @@ import silvertip.protocols.FixMessageParser;
                         /* EncryptMethod(98) missing */
                     .build());
             server.expect(LOGOUT);
+            checking(new Expectations() {{
+                one(logger).severe("EncryptMethod(98): Tag missing");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -177,6 +194,9 @@ import silvertip.protocols.FixMessageParser;
                         .msgSeqNum(1)
                     .build());
             server.expect(LOGOUT);
+            checking(new Expectations() {{
+                one(logger).severe("first message is not a logon");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -211,6 +231,9 @@ import silvertip.protocols.FixMessageParser;
             server.respondLogon();
             server.respond(new MessageBuilder(HEARTBEAT).msgSeqNum(1).build());
             server.expect(LOGOUT);
+            checking(new Expectations() {{
+                one(logger).severe("MsgSeqNum too low, expecting 2 but received 1");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -233,6 +256,9 @@ import silvertip.protocols.FixMessageParser;
                         .string(TestReqID.TAG, "12345678")
                     .build());
             server.expect(HEARTBEAT);
+            checking(new Expectations() {{
+                one(logger).warning("BeginString(8): Empty tag");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -273,18 +299,22 @@ import silvertip.protocols.FixMessageParser;
         public void possDupFlagOrigSendingTimeGreaterThanSendingTime() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
-            server.respond(
-                    new MessageBuilder(HEARTBEAT)
-                        .msgSeqNum(2)
-                    .build());
-            server.respond(
-                    new MessageBuilder(HEARTBEAT)
-                        .setPossDupFlag(true)
-                        .setOrigSendingTime(new DateTime().plusMinutes(1))
-                        .msgSeqNum(3)
-                    .build());
+            final Message msg1 = new MessageBuilder(HEARTBEAT)
+                    .msgSeqNum(2)
+                    .build();
+            server.respond(msg1);
+            final Message msg2 = new MessageBuilder(HEARTBEAT)
+                    .setPossDupFlag(true)
+                    .setOrigSendingTime(new DateTime().plusMinutes(1))
+                    .msgSeqNum(3)
+                    .build();
+            server.respond(msg2);
             server.expect(REJECT);
             server.expect(LOGOUT);
+            checking(new Expectations() {{
+                one(logger).severe("OrigSendingTime " + formatDateTime(msg2.getOrigSendingTime()) +
+                        " after " + formatDateTime(msg1.getSendingTime()));
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -337,6 +367,9 @@ import silvertip.protocols.FixMessageParser;
                         .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
                     .build());
             server.expect(LOGOUT);
+            checking(new Expectations() {{
+                one(logger).severe("BeginString is invalid, expecting FIX.4.2 but received FIX.4.3");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -367,6 +400,9 @@ import silvertip.protocols.FixMessageParser;
                     .build());
             server.expect(REJECT);
             server.expect(LOGOUT);
+            checking(new Expectations() {{
+                one(logger).severe("Invalid SenderCompID(49): SENDER");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -390,6 +426,9 @@ import silvertip.protocols.FixMessageParser;
                     .build());
             server.expect(REJECT);
             server.expect(LOGOUT);
+            checking(new Expectations() {{
+                one(logger).severe("Invalid TargetCompID(56): TARGET");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -413,6 +452,9 @@ import silvertip.protocols.FixMessageParser;
                     .field(TestReqID.TAG, "1")
                     .field(CheckSum.TAG, "206")
                     .toString());
+            checking(new Expectations() {{
+                one(logger).warning("BodyLength(9): Invalid BodyLength");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -438,13 +480,16 @@ import silvertip.protocols.FixMessageParser;
         public void sendingTimeReceivedIsNotWithinReasonableTime() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
-            server.respond(
-                    new MessageBuilder(HEARTBEAT)
-                        .msgSeqNum(2)
-                        .setSendingTime(new DateTime().minusMinutes(10))
-                    .build());
+            final Message msg = new MessageBuilder(HEARTBEAT)
+                    .msgSeqNum(2)
+                    .setSendingTime(new DateTime().minusMinutes(10))
+                .build();
+            server.respond(msg);
             server.expect(REJECT);
             server.expect(LOGOUT);
+            checking(new Expectations() {{
+                one(logger).severe("SendingTime is invalid: " + formatDateTime(msg.getSendingTime()));
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -463,18 +508,21 @@ import silvertip.protocols.FixMessageParser;
 
         /*
          * Ref ID 2: q. MsgType value received is not valid (defined in spec or
-         * classified as user- defined).
+         * classified as user-defined).
          */
         public void msgTypeValueReceivedIsNotValid() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
             server.respond(
-                    message("52", "ZZ")
+                    message("56", "ZZ")
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
-                    .field(CheckSum.TAG, "075")
+                    .field(CheckSum.TAG, "115")
                     .toString());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).warning( "MsgType(35): Invalid message type: ZZ");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -492,12 +540,15 @@ import silvertip.protocols.FixMessageParser;
             server.expect(LOGON);
             server.respondLogon();
             server.respond(
-                    message("51", "P")
+                    message("55", "P")
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
-                    .field(CheckSum.TAG, "230")
+                    .field(CheckSum.TAG, "014")
                     .toString());
             server.expect(BUSINESS_MESSAGE_REJECT);
+            checking(new Expectations() {{
+                one(logger).warning( "MsgType(35): Unknown message type: P");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -530,6 +581,9 @@ import silvertip.protocols.FixMessageParser;
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.TAG, "165")
                     .toString());
+            checking(new Expectations() {{
+                one(logger).warning("BeginString(8): is missing");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -554,6 +608,9 @@ import silvertip.protocols.FixMessageParser;
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.TAG, "165")
                     .toString());
+            checking(new Expectations() {{
+                one(logger).warning("BodyLength(9): is missing");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -576,8 +633,11 @@ import silvertip.protocols.FixMessageParser;
                     /* MsgType missing */
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
-                    .field(CheckSum.TAG, "165")
+                    .field(CheckSum.TAG, "214")
                     .toString());
+            checking(new Expectations() {{
+                one(logger).warning("MsgType(35): is missing");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -609,6 +669,9 @@ import silvertip.protocols.FixMessageParser;
                     .field(SendingTime.TAG, "20100810-07:25:02")
                     .field(CheckSum.TAG, "100")
                     .toString());
+            checking(new Expectations() {{
+                one(logger).warning("CheckSum(10): Expected: 239, but was: 100");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -649,6 +712,9 @@ import silvertip.protocols.FixMessageParser;
                     .field(SendingTime.TAG, "20100810-07:58:22")
                     .field(CheckSum.TAG, "48")
                     .toString());
+            checking(new Expectations() {{
+                one(logger).warning("CheckSum(10): CheckSum must have a length of three: 48");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -658,7 +724,7 @@ import silvertip.protocols.FixMessageParser;
         }
 
         /* Ref ID 3: e. CheckSum is not delimited by <SOH>. */
-        public void checkSumIsNotDelimitedBySOH() throws Exception {
+        private void checkSumIsNotDelimitedBySOH() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
             String msg = message()
@@ -671,6 +737,11 @@ import silvertip.protocols.FixMessageParser;
                 .field(SendingTime.TAG, "20100810-07:25:02")
                 .field(CheckSum.TAG, "239").toString();
             server.respond(msg.substring(0, msg.length() - 1));
+            /* FIXME: Currently this error condition is never reported to
+             * Session. */
+            //checking(new Expectations() {{
+            //    one(logger).severe("CheckSum(10): "));
+            //}});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -680,24 +751,7 @@ import silvertip.protocols.FixMessageParser;
         }
 
         private void missingCheckSumField() throws Exception {
-            server.expect(LOGON);
-            server.respondLogon();
-            server.respond(
-                    message()
-                    .field(BeginString.TAG, "FIX.4.2")
-                    .field(BodyLength.TAG, "55")
-                    .field(MsgType.TAG, "0")
-                    .field(SenderCompID.TAG, "OPENFIX")
-                    .field(TargetCompID.TAG, "initiator")
-                    .field(MsgSeqNum.TAG, "2")
-                    .field(SendingTime.TAG, "20100810-07:25:02")
-                    .toString());
-            runInClient(new Runnable() {
-                @Override public void run() {
-                    session.logon(connection);
-                }
-            });
-            specify(session.getIncomingSeq().peek(), 2);
+            /* TODO: Implement me. */
         }
     }
 
@@ -713,7 +767,7 @@ import silvertip.protocols.FixMessageParser;
             logonHeartbeatTestRequest();
         }
 
-        private void logonHeartbeatTestRequest() throws Exception {
+        public void logonHeartbeatTestRequest() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
             server.expect(HEARTBEAT);
@@ -913,6 +967,9 @@ import silvertip.protocols.FixMessageParser;
                         .integer(NewSeqNo.TAG, 5)
                     .build());
             server.expect(LOGOUT);
+            checking(new Expectations() {{
+                one(logger).severe("MsgSeqNum too low, expecting 2 but received 1");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -975,6 +1032,9 @@ import silvertip.protocols.FixMessageParser;
                     .build());
             server.respondLogout(2);
             server.expect(LOGOUT);
+            checking(new Expectations() {{
+                one(logger).warning("NewSeqNo(36)=2 is equal to expected MsgSeqNum(34)=2");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -998,6 +1058,9 @@ import silvertip.protocols.FixMessageParser;
                         .integer(NewSeqNo.TAG, 2)
                     .build());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).warning("Value is incorrect (out of range) for this tag, NewSeqNum(36)=2");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1009,17 +1072,45 @@ import silvertip.protocols.FixMessageParser;
 
     public class InitiateLogoutProcess {
         /* Ref ID 12: Initiate logout */
-        public void initiateLogout() throws Exception {
-            // TODO: Generate a "warning" condition in test output if Logout
-            // has not been received within ten seconds.
+        public void initiateLogoutAndCounterpartyResponded() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
+            server.expect(LOGOUT);
             server.respondLogout(2);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
+                    session.logout(connection);
                 }
             });
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            session.processInitiatedLogout(connection);
+        }
+
+        /* Ref ID 12: Initiate logout */
+        public void initiateLogoutAndCounterpartyDidNotRespond() throws Exception {
+            server.expect(LOGON);
+            server.respondLogon();
+            server.expect(LOGOUT);
+            checking(new Expectations() {{
+                one(logger).warning("Response to logout not received in 1 second(s), disconnecting");
+            }});
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                    session.logout(connection);
+                }
+            });
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            session.processInitiatedLogout(connection);
         }
     }
 
@@ -1029,24 +1120,28 @@ import silvertip.protocols.FixMessageParser;
         public void receiveValidLogoutMsgSolicited() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
+            server.respondLogout(2);
             server.expect(LOGOUT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
-                    session.logout(connection);
                 }
             });
         }
 
         /* Ref ID 13: b. Receive valid Logout message unsolicited */
         public void receiveValidLogoutMsgUnsolicited() throws Exception {
+            /* TODO: Wait for counterparty to disconnect up to 10 seconds. If
+             * max exceeded, disconnect and genereate an "error" condition in
+             * test output. */
             server.expect(LOGON);
             server.respondLogon();
-            server.respondLogout(2);
             server.expect(LOGOUT);
+            server.respondLogout(2);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
+                    session.logout(connection);
                 }
             });
         }
@@ -1059,14 +1154,17 @@ import silvertip.protocols.FixMessageParser;
         public void tagNotDefinedInSpecification() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
-            server.respond(message("68", "0")
+            server.respond(message("72", "0")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
                 .field(TestReqID.TAG, "1")
                 .field(9898, "value")
-                .field(CheckSum.TAG, "014")
+                .field(CheckSum.TAG, "045")
                 .toString());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("Invalid tag number: 9898");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1081,10 +1179,14 @@ import silvertip.protocols.FixMessageParser;
             server.expect(LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(TEST_REQUEST)
+                    new MessageBuilder(RESEND_REQUEST)
                         .msgSeqNum(2)
+                        .integer(BeginSeqNo.TAG, 1)
                     .build());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("EndSeqNo(16): Tag missing");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1100,14 +1202,17 @@ import silvertip.protocols.FixMessageParser;
         public void tagDefinedInSpecificationButNotForThisMsgType() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
-            server.respond(message("62", "0")
+            server.respond(message("66", "0")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
                 .field(88, "0")
                 .field(TestReqID.TAG, "1")
-                .field(CheckSum.TAG, "169")
+                .field(CheckSum.TAG, "209")
                 .toString());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("Tag not defined for this message: 88");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1127,6 +1232,9 @@ import silvertip.protocols.FixMessageParser;
                         .string(TestReqID.TAG, "")
                     .build());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("TestReqID(112): Empty tag");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1142,13 +1250,17 @@ import silvertip.protocols.FixMessageParser;
         public void fieldWithIncorrectValue() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
-            server.respond(message("52", "0")
+            server.respond(message("67", "A")
                 .field(MsgSeqNum.TAG, "2")
-                .field(SendingTime.TAG, "WRONG FORMAT")
-                .field(TestReqID.TAG, "1")
-                .field(CheckSum.TAG, "228")
+                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(EncryptMethod.TAG, "7")
+                .field(HeartBtInt.TAG, "30")
+                .field(CheckSum.TAG, "034")
                 .toString());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("EncryptMethod(98): Invalid value");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1162,14 +1274,16 @@ import silvertip.protocols.FixMessageParser;
         public void fieldWithIncorrectDataFormat() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
-            server.respond(message("63", "A")
+            server.respond(message("56", "0")
                 .field(MsgSeqNum.TAG, "2")
-                .field(SendingTime.TAG, "20100701-12:09:40")
-                .field(EncryptMethod.TAG, "7")
-                .field(HeartBtInt.TAG, "30")
-                .field(CheckSum.TAG, "250")
+                .field(SendingTime.TAG, "WRONG FORMAT")
+                .field(TestReqID.TAG, "1")
+                .field(CheckSum.TAG, "012")
                 .toString());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("SendingTime(52): Invalid value format");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1184,13 +1298,16 @@ import silvertip.protocols.FixMessageParser;
         public void standardHeaderFieldInBody() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
-            server.respond(message("60", "0")
+            server.respond(message("64", "0")
                 .field(MsgSeqNum.TAG, "2")
                 .field(TestReqID.TAG, "1000")
                 .field(SendingTime.TAG, "20100701-12:09:40")
-                .field(CheckSum.TAG, "089")
+                .field(CheckSum.TAG, "129")
                 .toString());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("SendingTime(52): Out of order tag");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1205,14 +1322,17 @@ import silvertip.protocols.FixMessageParser;
         public void standardTrailerFieldBeforeBody() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
-            server.respond(message("64", "0")
+            server.respond(message("68", "0")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
                 .field(CheckSum.TAG, "207")
                 .field(TestReqID.TAG, "1")
-                .field(CheckSum.TAG, "005")
+                .field(CheckSum.TAG, "045")
                 .toString());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("CheckSum(10): Out of order tag");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1227,14 +1347,17 @@ import silvertip.protocols.FixMessageParser;
         public void duplicateFields() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
-            server.respond(message("63", "0")
+            server.respond(message("67", "0")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
                 .field(TestReqID.TAG, "1")
                 .field(TestReqID.TAG, "1")
-                .field(CheckSum.TAG, "207")
+                .field(CheckSum.TAG, "247")
                 .toString());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("TestReqID(112): Tag multiple times");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1248,7 +1371,7 @@ import silvertip.protocols.FixMessageParser;
         public void tooManyInstancesInRepeatingGroup() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
-            server.respond(message("183", "J")
+            server.respond(message("187", "J")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
                 .field(AllocID.TAG, "12807331319411")
@@ -1265,9 +1388,12 @@ import silvertip.protocols.FixMessageParser;
                 .field(AllocShares.TAG, "900.00")
                 .field(AllocAccount.TAG, "2345")
                 .field(AllocShares.TAG, "100.00")
-                .field(CheckSum.TAG, "119")
+                .field(CheckSum.TAG, "159")
                 .toString());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 1, but was: 2");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1281,7 +1407,7 @@ import silvertip.protocols.FixMessageParser;
         public void tooFewInstancesInRepeatingGroup() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
-            server.respond(message("183", "J")
+            server.respond(message("187", "J")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
                 .field(AllocID.TAG, "12807331319411")
@@ -1298,9 +1424,12 @@ import silvertip.protocols.FixMessageParser;
                 .field(AllocShares.TAG, "900.00")
                 .field(AllocAccount.TAG, "2345")
                 .field(AllocShares.TAG, "100.00")
-                .field(CheckSum.TAG, "121")
+                .field(CheckSum.TAG, "161")
                 .toString());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 3, but was: 2");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1314,7 +1443,7 @@ import silvertip.protocols.FixMessageParser;
         public void repeatingGroupFieldsOutOfOrder() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
-            server.respond(message("183", "J")
+            server.respond(message("187", "J")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
                 .field(AllocID.TAG, "12807331319411")
@@ -1331,9 +1460,12 @@ import silvertip.protocols.FixMessageParser;
                 .field(AllocAccount.TAG, "1234")
                 .field(AllocShares.TAG, "100.00")
                 .field(AllocAccount.TAG, "2345")
-                .field(CheckSum.TAG, "120")
+                .field(CheckSum.TAG, "160")
                 .toString());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("AllocShares(80): Repeating group fields out of order");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1347,13 +1479,16 @@ import silvertip.protocols.FixMessageParser;
         public void fieldValueWithEmbeddedSOHs() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
-            server.respond(message("61", "0")
+            server.respond(message("65", "0")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
                 .field(TestReqID.TAG, "1" + Field.DELIMITER + "000")
-                .field(CheckSum.TAG, "091")
+                .field(CheckSum.TAG, "131")
                 .toString());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("Non-data value includes field delimiter (SOH character)");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1368,6 +1503,9 @@ import silvertip.protocols.FixMessageParser;
             server.expect(LOGON);
             server.respondLogon();
             server.expect(BUSINESS_MESSAGE_REJECT);
+            checking(new Expectations() {{
+                one(logger).warning("Application not available");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1397,7 +1535,10 @@ import silvertip.protocols.FixMessageParser;
                 .float0(CumQty.TAG, .0)
                 .float0(AvgPx.TAG, .0)
                 .build());
-            server.expect(REJECT);
+            server.expect(BUSINESS_MESSAGE_REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("Price(44): Conditionally required field missing");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1409,7 +1550,7 @@ import silvertip.protocols.FixMessageParser;
         /* Ref ID 14: n. Receive a message in which a field identifier (tag
          * number) appears in both cleartext and encrypted section but has
          * different values. */
-        public void cleartextAndEncryptedSectionDiffer() throws Exception {
+        private void cleartextAndEncryptedSectionDiffer() throws Exception {
             // TODO: Currently, FIX engine does not support encrypted sections.
         }
     }
@@ -1417,13 +1558,13 @@ import silvertip.protocols.FixMessageParser;
     public class SendAppAndAdminMsgsToTestNormalAndAbnormalBehavior {
         /* Ref ID 15: Send more than one message of the same type with header
          * and body fields ordered differently to verify acceptance. (Exclude
-         * those which have restrictions regarding order) */
+         * those which have restrictions regarding order). */
         public void reorderedHeaderFields() throws Exception {
             // TODO: Testing of reordering of header fields would require
             // formatting a raw message with an correct sending time.
         }
 
-        public void reorderedBodyFields() throws Exception {
+        private void reorderedBodyFields() throws Exception {
             server.expect(LOGON);
             server.respondLogon();
             server.respond(
@@ -1472,6 +1613,9 @@ import silvertip.protocols.FixMessageParser;
                         .msgSeqNum(2)
                     .build());
             server.expect(REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("Third-party message routing is not supported");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1523,7 +1667,7 @@ import silvertip.protocols.FixMessageParser;
 
             @Override public void save(Session session) {
             }
-        });
+        }, logger, logoutResponseTimeoutMsec);
     }
 
     private Config getConfig() {
@@ -1559,8 +1703,8 @@ import silvertip.protocols.FixMessageParser;
                 .field(BeginString.TAG, "FIX.4.2")
                 .field(BodyLength.TAG, bodyLength)
                 .field(MsgType.TAG, msgType)
-                .field(SenderCompID.TAG, "Sender")
-                .field(TargetCompID.TAG, "Target");
+                .field(SenderCompID.TAG, ACCEPTOR)
+                .field(TargetCompID.TAG, INITIATOR);
     }
 
     class MessageBuilder {
@@ -1572,6 +1716,9 @@ import silvertip.protocols.FixMessageParser;
             header.setString(SenderCompID.TAG, ACCEPTOR);
             header.setString(TargetCompID.TAG, INITIATOR);
             header.setDateTime(SendingTime.TAG, new DefaultTimeSource().currentTime());
+            if (MsgTypeValue.SEQUENCE_RESET.equals(type)) {
+                header.setDateTime(OrigSendingTime.TAG, header.getDateTime(SendingTime.TAG));
+            }
             this.message = type.newMessage(header);
         }
 
@@ -1828,5 +1975,9 @@ import silvertip.protocols.FixMessageParser;
                 serverStarted.countDown();
             }
         }
+    }
+
+    private String formatDateTime(DateTime dateTime) {
+        return fmt.withZone(UTC).print(dateTime);
     }
 }
