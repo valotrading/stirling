@@ -73,7 +73,7 @@ import fixengine.messages.SessionRejectReasonValue;
 import fixengine.messages.SideValue;
 import fixengine.messages.StringField;
 import fixengine.messages.Tag;
-import fixengine.session.store.SessionStore;
+import fixengine.session.store.InMemorySessionStore;
 import fixengine.tags.AllocAccount;
 import fixengine.tags.AllocID;
 import fixengine.tags.AllocShares;
@@ -1652,16 +1652,7 @@ import fixengine.tags.TradeDate;
     }
 
     private Session newSession() {
-        return new Session(new HeartBtIntValue(HEARTBEAT_INTERVAL), getConfig(), new SessionStore() {
-            @Override public void load(Session session) {
-            }
-
-            @Override public void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq) {
-            }
-
-            @Override public void save(Session session) {
-            }
-        }, logger, logoutResponseTimeoutMsec);
+        return new Session(new HeartBtIntValue(HEARTBEAT_INTERVAL), getConfig(), new InMemorySessionStore(), logger, logoutResponseTimeoutMsec);
     }
 
     private Config getConfig() {
