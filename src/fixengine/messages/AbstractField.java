@@ -149,10 +149,6 @@ public abstract class AbstractField<T> implements Field {
         return tag + "=" + value + DELIMITER;
     }
 
-    private boolean isOptional() {
-        return !required.isRequired();
-    }
-
     protected abstract String value();
 
     @Override public boolean equals(Object obj) {

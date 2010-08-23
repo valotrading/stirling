@@ -15,7 +15,6 @@
  */
 package fixengine.session;
 
-import static fixengine.messages.MsgTypeValue.ALLOCATION_INSTRUCTION;
 import static fixengine.messages.MsgTypeValue.BUSINESS_MESSAGE_REJECT;
 import static fixengine.messages.MsgTypeValue.EXECUTION_REPORT;
 import static fixengine.messages.MsgTypeValue.HEARTBEAT;
@@ -25,6 +24,7 @@ import static fixengine.messages.MsgTypeValue.REJECT;
 import static fixengine.messages.MsgTypeValue.RESEND_REQUEST;
 import static fixengine.messages.MsgTypeValue.SEQUENCE_RESET;
 import static fixengine.messages.MsgTypeValue.TEST_REQUEST;
+import static org.joda.time.DateTimeZone.UTC;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,14 +41,18 @@ import java.util.logging.Logger;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 import lang.DefaultTimeSource;
-import org.jmock.Expectations;
 
+import org.jmock.Expectations;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.runner.RunWith;
 
+import silvertip.Connection;
+import silvertip.Events;
+import silvertip.protocols.FixMessageParser;
 import fixengine.Config;
 import fixengine.Version;
-import fixengine.messages.AllocTransTypeValue;
 import fixengine.messages.BooleanField;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.EncryptMethodValue;
@@ -69,7 +73,6 @@ import fixengine.messages.SessionRejectReasonValue;
 import fixengine.messages.SideValue;
 import fixengine.messages.StringField;
 import fixengine.messages.Tag;
-import fixengine.messages.UtcTimestampField;
 import fixengine.session.store.SessionStore;
 import fixengine.tags.AllocAccount;
 import fixengine.tags.AllocID;
@@ -100,7 +103,6 @@ import fixengine.tags.OrdType;
 import fixengine.tags.OrderID;
 import fixengine.tags.OrderQty;
 import fixengine.tags.OrigSendingTime;
-import fixengine.tags.PossDupFlag;
 import fixengine.tags.RefSeqNo;
 import fixengine.tags.SenderCompID;
 import fixengine.tags.SendingTime;
@@ -110,14 +112,6 @@ import fixengine.tags.Symbol;
 import fixengine.tags.TargetCompID;
 import fixengine.tags.TestReqID;
 import fixengine.tags.TradeDate;
-
-import silvertip.Connection;
-import silvertip.Events;
-import silvertip.protocols.FixMessageParser;
-
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormat;
-import static org.joda.time.DateTimeZone.UTC;
 
 @RunWith(JDaveRunner.class) public class InitiatorSpec extends Specification<Void> {
     private static final String dateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'";
