@@ -1419,56 +1419,8 @@ import silvertip.protocols.FixMessageParser;
          * and body fields ordered differently to verify acceptance. (Exclude
          * those which have restrictions regarding order) */
         public void reorderedHeaderFields() throws Exception {
-            server.expect(LOGON);
-            server.respondLogon();
-            server.respond(message("210", "J")
-                .field(MsgSeqNum.TAG, "2")
-                .field(PossDupFlag.TAG, "Y")
-                .field(SendingTime.TAG, "20100701-12:09:40")
-                .field(OrigSendingTime.TAG, "20100701-12:09:40")
-                .field(AllocID.TAG, "12807331319411")
-                .field(AllocTransType.TAG, "0")
-                .field(NoOrders.TAG, "1")
-                .field(ClOrdID.TAG, "12807331319412")
-                .field(Side.TAG, "2")
-                .field(Symbol.TAG, "GOOG")
-                .field(Shares.TAG, "1000.00")
-                .field(AvgPx.TAG, "370.00")
-                .field(TradeDate.TAG, "20011004")
-                .field(NoAllocs.TAG, "2")
-                .field(AllocAccount.TAG, "1234")
-                .field(AllocShares.TAG, "900.00")
-                .field(AllocAccount.TAG, "2345")
-                .field(AllocShares.TAG, "100.00")
-                .field(CheckSum.TAG, "156")
-                .toString());
-            server.respond(message("210", "J")
-                .field(MsgSeqNum.TAG, "3")
-                .field(SendingTime.TAG, "20100701-12:09:40")
-                .field(PossDupFlag.TAG, "Y")
-                .field(OrigSendingTime.TAG, "20100701-12:09:40")
-                .field(AllocID.TAG, "12807331319411")
-                .field(AllocTransType.TAG, "0")
-                .field(NoOrders.TAG, "1")
-                .field(ClOrdID.TAG, "12807331319412")
-                .field(Side.TAG, "2")
-                .field(Symbol.TAG, "GOOG")
-                .field(Shares.TAG, "1000.00")
-                .field(AvgPx.TAG, "370.00")
-                .field(TradeDate.TAG, "20011004")
-                .field(NoAllocs.TAG, "2")
-                .field(AllocAccount.TAG, "1234")
-                .field(AllocShares.TAG, "900.00")
-                .field(AllocAccount.TAG, "2345")
-                .field(AllocShares.TAG, "100.00")
-                .field(CheckSum.TAG, "157")
-                .toString());
-            runInClient(new Runnable() {
-                @Override public void run() {
-                    session.logon(connection);
-                }
-            });
-            specify(session.getIncomingSeq().peek(), 4);
+            // TODO: Testing of reordering of header fields would require
+            // formatting a raw message with an correct sending time.
         }
 
         public void reorderedBodyFields() throws Exception {
