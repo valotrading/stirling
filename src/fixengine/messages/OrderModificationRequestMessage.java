@@ -35,7 +35,6 @@ import fixengine.tags.TransactTime;
  * @author Pekka Enberg
  */
 public class OrderModificationRequestMessage extends AbstractMessage implements RequestMessage, CancelRequestMessage {
-
     public OrderModificationRequestMessage() {
         this(new MessageHeader(MsgTypeValue.ORDER_MODIFICATION_REQUEST));
     }
@@ -43,18 +42,7 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
     public OrderModificationRequestMessage(MessageHeader header) {
         super(header);
 
-        field(OrigClOrdID.TAG);
-        field(ClOrdID.TAG);
-        field(HandlInst.TAG);
-        field(Symbol.TAG);
-        field(SecurityType.TAG, Required.NO);
-        field(MaturityMonthYear.TAG, Required.NO);
-        field(Side.TAG);
-        field(TransactTime.TAG);
-        field(OrderQty.TAG);
-        field(OrdType.TAG);
-        field(Currency.TAG, Required.NO);
-        field(Price.TAG, Required.NO);
+        fields();
     }
 
     @Override public OrdTypeValue getOrdType() {
@@ -83,5 +71,20 @@ public class OrderModificationRequestMessage extends AbstractMessage implements 
 
     @Override public void apply(MessageVisitor visitor) {
         visitor.visit(this);
+    }
+
+    protected void fields() {
+        field(OrigClOrdID.TAG);
+        field(ClOrdID.TAG);
+        field(HandlInst.TAG);
+        field(Symbol.TAG);
+        field(SecurityType.TAG, Required.NO);
+        field(MaturityMonthYear.TAG, Required.NO);
+        field(Side.TAG);
+        field(TransactTime.TAG);
+        field(OrderQty.TAG);
+        field(OrdType.TAG);
+        field(Currency.TAG, Required.NO);
+        field(Price.TAG, Required.NO);
     }
 }
