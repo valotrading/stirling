@@ -36,14 +36,7 @@ public class OrderCancelRequestMessage extends AbstractMessage implements Reques
     public OrderCancelRequestMessage(MessageHeader header) {
         super(header);
 
-        field(OrigClOrdID.TAG);
-        field(ClOrdID.TAG);
-        field(Symbol.TAG);
-        field(SecurityType.TAG, Required.NO);
-        field(MaturityMonthYear.TAG, Required.NO);
-        field(Side.TAG);
-        field(TransactTime.TAG);
-        field(OrderQty.TAG);
+        fields();
     }
 
     @Override public SideValue getSide() {
@@ -72,5 +65,16 @@ public class OrderCancelRequestMessage extends AbstractMessage implements Reques
 
     @Override public void apply(MessageVisitor visitor) {
         visitor.visit(this);
+    }
+
+    protected void fields() {
+        field(OrigClOrdID.TAG);
+        field(ClOrdID.TAG);
+        field(Symbol.TAG);
+        field(SecurityType.TAG, Required.NO);
+        field(MaturityMonthYear.TAG, Required.NO);
+        field(Side.TAG);
+        field(TransactTime.TAG);
+        field(OrderQty.TAG);
     }
 }
