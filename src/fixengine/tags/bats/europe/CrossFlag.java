@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.tags;
+package fixengine.tags.bats.europe;
 
 import fixengine.messages.bats.europe.CrossFlagValue;
 import fixengine.messages.EnumField;
