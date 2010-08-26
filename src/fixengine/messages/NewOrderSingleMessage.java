@@ -41,19 +41,7 @@ public class NewOrderSingleMessage extends AbstractMessage implements RequestMes
     public NewOrderSingleMessage(MessageHeader header) {
         super(header);
 
-        field(ClOrdID.TAG);
-        field(Currency.TAG, Required.NO);
-        field(HandlInst.TAG);
-        field(ExDestination.TAG);
-        field(Side.TAG);
-        field(TransactTime.TAG);
-        field(OrdType.TAG);
-        field(Symbol.TAG);
-        field(SecurityType.TAG, Required.NO);
-        field(MaturityMonthYear.TAG, Required.NO);
-        field(OrderQty.TAG);
-        field(CustomerOrFirm.TAG, Required.NO);
-        field(Price.TAG, Required.NO);
+        fields();
     }
 
     @Override
@@ -83,5 +71,21 @@ public class NewOrderSingleMessage extends AbstractMessage implements RequestMes
 
     @Override public String getSymbol() {
         return getString(Symbol.TAG);
+    }
+
+    protected void fields() {
+        field(ClOrdID.TAG);
+        field(Currency.TAG, Required.NO);
+        field(HandlInst.TAG);
+        field(ExDestination.TAG);
+        field(Side.TAG);
+        field(TransactTime.TAG);
+        field(OrdType.TAG);
+        field(Symbol.TAG);
+        field(SecurityType.TAG, Required.NO);
+        field(MaturityMonthYear.TAG, Required.NO);
+        field(OrderQty.TAG);
+        field(CustomerOrFirm.TAG, Required.NO);
+        field(Price.TAG, Required.NO);
     }
 }
