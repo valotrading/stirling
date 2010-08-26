@@ -22,7 +22,7 @@ public enum TimeInForceValue implements Formattable {
     DAY('0'),
     GOOD_TILL_CANCEL('1'),
     AT_THE_OPENING('2'),
-    IMMEDIATE_OR_CANCE('3'),
+    IMMEDIATE_OR_CANCEL('3'),
     FILL_OR_KILL('4'),
     GOOD_TILL_CROSSING('5'),
     GOOD_TILL_DATE('6'),
