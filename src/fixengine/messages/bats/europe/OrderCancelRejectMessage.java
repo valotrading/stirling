@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 the original author or authors.
+ * Copyright 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,41 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.messages;
+package fixengine.messages.bats.europe;
 
+import fixengine.tags.Account;
 import fixengine.tags.ClOrdID;
-import fixengine.tags.CxlRejReason;
 import fixengine.tags.CxlRejResponseTo;
 import fixengine.tags.OrdStatus;
 import fixengine.tags.OrderID;
 import fixengine.tags.OrigClOrdID;
 import fixengine.tags.Text;
 
-/**
- * @author Pekka Enberg 
- */
-public class OrderCancelRejectMessage extends AbstractMessage {
-    public OrderCancelRejectMessage() {
-        this(new MessageHeader(MsgTypeValue.ORDER_CANCEL_REJECT));
-    }
+import fixengine.tags.bats.europe.CxlRejReason;
 
-    public OrderCancelRejectMessage(MessageHeader header) {
-        super(header);
-
-        fields();
-    }
-
-    @Override public void apply(MessageVisitor visitor) {
-        visitor.visit(this);
-    }
-
-    protected void fields() {
-        field(OrderID.TAG);
+public class OrderCancelRejectMessage extends fixengine.messages.OrderCancelRejectMessage {
+    @Override public void fields() {
+        field(Account.TAG);
         field(ClOrdID.TAG);
-        field(OrigClOrdID.TAG);
+        field(OrderID.TAG);
         field(OrdStatus.TAG);
+        field(OrigClOrdID.TAG);
+        field(Text.TAG);
+        field(CxlRejReason.TAG);
         field(CxlRejResponseTo.TAG);
-        field(CxlRejReason.TAG, Required.NO);
-        field(Text.TAG, Required.NO);
     }
 }
