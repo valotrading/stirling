@@ -46,11 +46,15 @@ public class Logon implements Command {
     try {
       Connection conn = Connection.connect(new InetSocketAddress(host(scanner), port(scanner)),
           new FixMessageParser(), new Connection.Callback() {
-            public void messages(Connection conn, Iterator<Message> messages) {
+          @Override public void messages(Connection conn, Iterator<Message> messages) {
             while (messages.hasNext()) client.getSession().receive(conn, messages.next(), new DefaultMessageVisitor());
           }
-          public void idle(Connection conn) {
+
+          @Override public void idle(Connection conn) {
             client.getSession().keepAlive(conn);
+          }
+
+          @Override public void closed(Connection conn) {
           }
         });
       client.setConnection(conn);

@@ -1674,16 +1674,19 @@ import fixengine.tags.TradeDate;
 
     private Connection openConnection(final Session session, int port, final boolean keepAlive) throws IOException {
         return Connection.connect(new InetSocketAddress("localhost", port), new FixMessageParser(), new Connection.Callback() {
-            public void messages(Connection conn, Iterator<silvertip.Message> messages) {
+            @Override public void messages(Connection conn, Iterator<silvertip.Message> messages) {
                 while (messages.hasNext())
                     session.receive(conn, messages.next(), new DefaultMessageVisitor());
             }
 
-            public void idle(Connection conn) {
+            @Override public void idle(Connection conn) {
                 if (keepAlive)
                     session.keepAlive(conn);
                 else
                     conn.close();
+            }
+
+            @Override public void closed(Connection conn) {
             }
         });
     }
