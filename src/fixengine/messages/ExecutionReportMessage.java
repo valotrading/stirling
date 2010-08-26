@@ -47,7 +47,6 @@ import fixengine.tags.TransactTime;
  * @author Pekka Enberg 
  */
 public class ExecutionReportMessage extends AbstractMessage {
-
     public ExecutionReportMessage() {
         this(new MessageHeader(MsgTypeValue.EXECUTION_REPORT));
     }
@@ -55,6 +54,14 @@ public class ExecutionReportMessage extends AbstractMessage {
     public ExecutionReportMessage(MessageHeader header) {
         super(header);
 
+        fields();
+    }
+
+    @Override public void apply(MessageVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    protected void fields() {
         field(OrderID.TAG);
         field(ClOrdID.TAG, Required.NO);
         field(OrigClOrdID.TAG, Required.NO);
@@ -86,10 +93,5 @@ public class ExecutionReportMessage extends AbstractMessage {
         field(ExDestination.TAG, Required.NO);
         field(LastMkt.TAG, Required.NO);
         field(Currency.TAG, Required.NO);
-    }
-
-    @Override
-    public void apply(MessageVisitor visitor) {
-        visitor.visit(this);
     }
 }
