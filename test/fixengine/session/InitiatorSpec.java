@@ -54,6 +54,7 @@ import silvertip.protocols.FixMessageParser;
 import fixengine.Config;
 import fixengine.Version;
 import fixengine.messages.BooleanField;
+import fixengine.messages.DefaultMessageFactory;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.EnumField;
@@ -1652,7 +1653,8 @@ import fixengine.tags.TradeDate;
     }
 
     private Session newSession() {
-        return new Session(new HeartBtIntValue(HEARTBEAT_INTERVAL), getConfig(), new InMemorySessionStore(), logger, logoutResponseTimeoutMsec);
+        return new Session(new HeartBtIntValue(HEARTBEAT_INTERVAL), getConfig(), new InMemorySessionStore(),
+            logger, logoutResponseTimeoutMsec, new DefaultMessageFactory());
     }
 
     private Config getConfig() {
@@ -1707,7 +1709,7 @@ import fixengine.tags.TradeDate;
             if (MsgTypeValue.SEQUENCE_RESET.equals(type)) {
                 header.setDateTime(OrigSendingTime.TAG, header.getDateTime(SendingTime.TAG));
             }
-            this.message = type.newMessage(header);
+            this.message = type.newMessage(new DefaultMessageFactory(), header);
         }
 
         public MessageBuilder setOnBehalfOfCompId(String onBehalfOfCompId) {

@@ -21,77 +21,20 @@ import org.apache.commons.lang.CharUtils;
  * @author Pekka Enberg
  */
 public enum MsgTypeValue {
-    HEARTBEAT("0") {
-        @Override public Message newMessage(MessageHeader header) {
-            return new HeartbeatMessage(header);
-        }
-    },
-    TEST_REQUEST("1") {
-        @Override public Message newMessage(MessageHeader header) {
-            return new TestRequestMessage(header);
-        }
-    },
-    RESEND_REQUEST("2") {
-        @Override public Message newMessage(MessageHeader header) {
-            return new ResendRequestMessage(header);
-        }
-    },
-    REJECT("3") {
-        @Override public Message newMessage(MessageHeader header) {
-            return new RejectMessage(header);
-        }
-    },
-    SEQUENCE_RESET("4") {
-        @Override public Message newMessage(MessageHeader header) {
-            return new SequenceResetMessage(header);
-        }
-    },
-    LOGOUT("5") {
-        @Override public Message newMessage(MessageHeader header) {
-            return new LogoutMessage(header);
-        }
-    },
-    EXECUTION_REPORT("8") {
-        @Override public Message newMessage(MessageHeader header) {
-            return new ExecutionReportMessage(header);
-        }
-    },
-    ORDER_CANCEL_REJECT("9") {
-        @Override public Message newMessage(MessageHeader header) {
-            return new OrderCancelRejectMessage(header);
-        }
-    },
-    LOGON("A") {
-        @Override public Message newMessage(MessageHeader header) {
-            return new LogonMessage(header);
-        }
-    },
-    NEW_ORDER_SINGLE("D") {
-        @Override public Message newMessage(MessageHeader header) {
-            return new NewOrderSingleMessage(header);
-        }
-    },
-    ORDER_CANCEL_REQUEST("F") {
-        @Override public Message newMessage(MessageHeader header) {
-            return new OrderCancelRequestMessage(header);
-        }
-    },
-    ORDER_MODIFICATION_REQUEST("G") {
-        @Override public Message newMessage(MessageHeader header) {
-            return new OrderModificationRequestMessage(header);
-        }
-    },
-    BUSINESS_MESSAGE_REJECT("j") {
-        @Override public Message newMessage(MessageHeader header) {
-            return new BusinessMessageRejectMessage(header);
-        }
-    },
-    ALLOCATION_INSTRUCTION("J") {
-        @Override
-        public Message newMessage(MessageHeader header) {
-            return new AllocationMessage(header);
-        }
-    };
+    HEARTBEAT("0"),
+    TEST_REQUEST("1"),
+    RESEND_REQUEST("2"),
+    REJECT("3"),
+    SEQUENCE_RESET("4"),
+    LOGOUT("5"),
+    EXECUTION_REPORT("8"),
+    ORDER_CANCEL_REJECT("9"),
+    LOGON("A"),
+    NEW_ORDER_SINGLE("D"),
+    ORDER_CANCEL_REQUEST("F"),
+    ORDER_MODIFICATION_REQUEST("G"),
+    BUSINESS_MESSAGE_REJECT("j"),
+    ALLOCATION_INSTRUCTION("J");
 
     private String value;
 
@@ -99,7 +42,9 @@ public enum MsgTypeValue {
         this.value = value;
     }
 
-    public abstract Message newMessage(MessageHeader header);
+    public Message newMessage(MessageFactory factory, MessageHeader header) {
+        return factory.create(this, header);
+    }
 
     public String value() {
         return value;

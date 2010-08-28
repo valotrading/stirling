@@ -29,16 +29,24 @@ public class Parser {
     }
 
     public static void parse(silvertip.Message m, Callback callback) {
-        parse(m.toByteBuffer(), callback);
+        parse(new DefaultMessageFactory(), m, callback);
     }
 
     private static void parse(ByteBuffer b, Callback callback) {
+        parse(new DefaultMessageFactory(), b, callback);
+    }
+
+    public static void parse(MessageFactory messageFactory, silvertip.Message m, Callback callback) {
+        parse(messageFactory, m.toByteBuffer(), callback);
+    }
+
+    private static void parse(MessageFactory messageFactory, ByteBuffer b, Callback callback) {
         MessageHeader header = null;
         try {
             header = new MessageHeader();
             header.parse(b);
             header.validate();
-            Message msg = header.newMessage();
+            Message msg = header.newMessage(messageFactory);
             msg.parse(b);
             msg.validate();
             callback.message(msg);
