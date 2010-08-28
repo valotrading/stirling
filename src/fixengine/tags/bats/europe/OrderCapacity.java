@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.tags;
+package fixengine.tags.bats.europe;
 
-import fixengine.messages.OrderCapacityValue;
+import fixengine.messages.bats.europe.OrderCapacityValue;
 
 import fixengine.messages.EnumField;
 import fixengine.messages.Required;

@@ -22,11 +22,9 @@ import fixengine.tags.ClOrdID;
 import fixengine.tags.ClearingAccount;
 import fixengine.tags.ClearingFirm;
 import fixengine.tags.Currency;
-import fixengine.tags.DisplayIndicator;
 import fixengine.tags.ExpireTime;
 import fixengine.tags.MaxFloor;
 import fixengine.tags.MinQty;
-import fixengine.tags.OrderCapacity;
 import fixengine.tags.OrderQty;
 import fixengine.tags.PegDifference;
 import fixengine.tags.Price;
@@ -34,6 +32,7 @@ import fixengine.tags.SecurityExchange;
 import fixengine.tags.SecurityType;
 import fixengine.tags.Symbol;
 
+import fixengine.tags.bats.europe.DisplayIndicator;
 import fixengine.tags.bats.europe.ExecInst;
 import fixengine.tags.bats.europe.IDSource;
 import fixengine.tags.bats.europe.MaxRemovePct;
@@ -45,6 +44,7 @@ import fixengine.tags.bats.europe.RoutingInst;
 import fixengine.tags.bats.europe.SecurityID;
 import fixengine.tags.bats.europe.Side;
 import fixengine.tags.bats.europe.TimeInForce;
+import fixengine.tags.bats.europe.OrderCapacity;
 
 public class NewOrderSingleMessage extends fixengine.messages.NewOrderSingleMessage {
     @Override protected void fields() {
