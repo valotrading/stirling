@@ -34,6 +34,9 @@ import silvertip.Connection;
 import silvertip.Message;
 import silvertip.protocols.FixMessageParser;
 
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+
 /**
  * @author Karim Osman
  */
@@ -42,12 +45,30 @@ public class Logon implements Command {
   private static final String SENDER_COMP_ID = "initiator";
   private static final String TARGET_COMP_ID = "OPENFIX";
 
+  private static final Logger logger = Logger.getLogger("ConsoleClient");
+
+  static {
+    logger.setUseParentHandlers(false);
+    try {
+      logger.addHandler(new FileHandler("fixengine.log"));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   public void execute(final ConsoleClient client, Scanner scanner) throws CommandArgException {
     try {
       Connection conn = Connection.connect(new InetSocketAddress(host(scanner), port(scanner)),
           new FixMessageParser(), new Connection.Callback() {
           @Override public void messages(Connection conn, Iterator<Message> messages) {
-            while (messages.hasNext()) client.getSession().receive(conn, messages.next(), new DefaultMessageVisitor());
+            while (messages.hasNext()) {
+              Message msg = messages.next();
+              client.getSession().receive(conn, msg, new DefaultMessageVisitor() {
+                @Override public void defaultAction(fixengine.messages.Message message) {
+                  logger.info(message.toString());
+                }
+              });
+            }
           }
 
           @Override public void idle(Connection conn) {
