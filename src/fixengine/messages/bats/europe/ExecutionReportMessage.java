@@ -15,6 +15,7 @@
  */
 package fixengine.messages.bats.europe;
 
+import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
 
 import fixengine.messages.bats.europe.ExecTransTypeValue;
@@ -60,6 +61,14 @@ import fixengine.tags.bats.europe.MTFAccessFee;
 import fixengine.tags.bats.europe.CentralCounterparty;
 
 public class ExecutionReportMessage extends fixengine.messages.ExecutionReportMessage {
+    public ExecutionReportMessage() {
+      super();
+    }
+
+    public ExecutionReportMessage(MessageHeader header) {
+        super(header);
+    }
+
     @Override public void fields() {
         field(Account.TAG, Required.NO);
         field(ClOrdID.TAG);

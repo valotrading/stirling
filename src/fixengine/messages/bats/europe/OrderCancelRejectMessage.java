@@ -15,6 +15,8 @@
  */
 package fixengine.messages.bats.europe;
 
+import fixengine.messages.MessageHeader;
+
 import fixengine.tags.Account;
 import fixengine.tags.ClOrdID;
 import fixengine.tags.CxlRejResponseTo;
@@ -26,6 +28,14 @@ import fixengine.tags.Text;
 import fixengine.tags.bats.europe.CxlRejReason;
 
 public class OrderCancelRejectMessage extends fixengine.messages.OrderCancelRejectMessage {
+    public OrderCancelRejectMessage() {
+        super();
+    }
+
+    public OrderCancelRejectMessage(MessageHeader header) {
+        super(header);
+    }
+
     @Override public void fields() {
         field(Account.TAG);
         field(ClOrdID.TAG);

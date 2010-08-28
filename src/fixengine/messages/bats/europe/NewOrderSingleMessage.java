@@ -15,6 +15,7 @@
  */
 package fixengine.messages.bats.europe;
 
+import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
 
 import fixengine.tags.Account;
@@ -47,6 +48,14 @@ import fixengine.tags.bats.europe.TimeInForce;
 import fixengine.tags.bats.europe.OrderCapacity;
 
 public class NewOrderSingleMessage extends fixengine.messages.NewOrderSingleMessage {
+    public NewOrderSingleMessage() {
+        super();
+    }
+
+    public NewOrderSingleMessage(MessageHeader header) {
+        super(header);
+    }
+
     @Override protected void fields() {
         field(Account.TAG, Required.NO);
         field(ClOrdID.TAG);

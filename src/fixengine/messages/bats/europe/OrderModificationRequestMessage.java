@@ -15,6 +15,7 @@
  */
 package fixengine.messages.bats.europe;
 
+import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
 
 import fixengine.tags.Account;
@@ -33,6 +34,14 @@ import fixengine.tags.bats.europe.Side;
 import fixengine.tags.bats.europe.CancelOrigOnReject;
 
 public class OrderModificationRequestMessage extends fixengine.messages.OrderModificationRequestMessage {
+    public OrderModificationRequestMessage() {
+        super();
+    }
+
+    public OrderModificationRequestMessage(MessageHeader header) {
+        super(header);
+    }
+
     @Override protected void fields() {
         field(Account.TAG, Required.NO);
         field(ClOrdID.TAG);
