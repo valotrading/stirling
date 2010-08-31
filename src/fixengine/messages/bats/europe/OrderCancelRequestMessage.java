@@ -48,13 +48,21 @@ public class OrderCancelRequestMessage extends fixengine.messages.OrderCancelReq
                 return getEnum(IDSource.TAG).equals(IDSourceValue.ISIN);
             }
         });
-        field(IDSource.TAG);
+        field(IDSource.TAG, new Required() {
+            @Override public boolean isRequired() {
+                return !hasValue(Symbol.TAG);
+            }
+        });
         field(OrderID.TAG);
         field(OrderQty.TAG);
         field(OrigClOrdID.TAG);
-        field(SecurityID.TAG);
+        field(SecurityID.TAG, new Required() {
+            @Override public boolean isRequired() {
+                return hasValue(IDSource.TAG);
+            }
+        });
         field(Side.TAG);
-        field(Symbol.TAG);
+        field(Symbol.TAG, Required.NO);
         field(SecurityExchange.TAG, new Required() {
             @Override public boolean isRequired() {
                 return getEnum(IDSource.TAG).equals(IDSourceValue.ISIN);

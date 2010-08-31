@@ -30,7 +30,6 @@ import fixengine.tags.OrderQty;
 import fixengine.tags.PegDifference;
 import fixengine.tags.Price;
 import fixengine.tags.SecurityExchange;
-import fixengine.tags.SecurityType;
 import fixengine.tags.Symbol;
 
 import fixengine.tags.bats.europe.DisplayIndicator;
@@ -64,18 +63,30 @@ public class NewOrderSingleMessage extends fixengine.messages.NewOrderSingleMess
                 return getEnum(IDSource.TAG).equals(IDSourceValue.ISIN);
             }
         });
-        field(ExecInst.TAG);
-        field(IDSource.TAG);
+        field(ExecInst.TAG, Required.NO);
+        field(IDSource.TAG, new Required() {
+            @Override public boolean isRequired() {
+                return !hasValue(Symbol.TAG);
+            }
+        });
         field(OrderQty.TAG);
         field(OrdType.TAG);
-        field(Price.TAG);
-        field(OrderCapacity.TAG);
-        field(SecurityType.TAG);
+        field(Price.TAG, new Required() {
+            @Override public boolean isRequired() {
+                return getEnum(OrdType.TAG).equals(OrdTypeValue.LIMIT);
+            }
+        });
+        field(OrderCapacity.TAG, Required.NO);
+        field(SecurityID.TAG, new Required() {
+            @Override public boolean isRequired() {
+                return hasValue(IDSource.TAG);
+            }
+        });
         field(Side.TAG);
-        field(Symbol.TAG);
-        field(TimeInForce.TAG);
+        field(Symbol.TAG, Required.NO);
+        field(TimeInForce.TAG, Required.NO);
         field(MinQty.TAG, Required.NO);
-        field(MaxFloor.TAG);
+        field(MaxFloor.TAG, Required.NO);
         field(ExpireTime.TAG, new Required() {
             @Override public boolean isRequired() {
                 return getEnum(TimeInForce.TAG).equals(TimeInForceValue.GOOD_TILL_DATE);
@@ -87,11 +98,11 @@ public class NewOrderSingleMessage extends fixengine.messages.NewOrderSingleMess
             }
         });
         field(PegDifference.TAG, Required.NO);
-        field(ClearingFirm.TAG);
+        field(ClearingFirm.TAG, Required.NO);
         field(ClearingAccount.TAG, Required.NO);
-        field(PreventParticipantMatch.TAG);
-        field(RoutingInst.TAG);
-        field(DisplayIndicator.TAG);
+        field(PreventParticipantMatch.TAG, Required.NO);
+        field(RoutingInst.TAG, Required.NO);
+        field(DisplayIndicator.TAG, Required.NO);
         field(MaxRemovePct.TAG, new Required() {
             @Override public boolean isRequired() {
                 return getEnum(RoutingInst.TAG).equals(RoutingInstValue.POST_ONLY_AT_LIMIT);

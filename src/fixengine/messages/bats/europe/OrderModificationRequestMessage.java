@@ -24,6 +24,7 @@ import fixengine.tags.Currency;
 import fixengine.tags.OrderID;
 import fixengine.tags.OrderQty;
 import fixengine.tags.OrigClOrdID;
+import fixengine.tags.Price;
 import fixengine.tags.SecurityExchange;
 import fixengine.tags.Symbol;
 
@@ -50,19 +51,32 @@ public class OrderModificationRequestMessage extends fixengine.messages.OrderMod
                 return getEnum(IDSource.TAG).equals(IDSourceValue.ISIN);
             }
         });
-        field(IDSource.TAG);
+        field(IDSource.TAG, new Required() {
+            @Override public boolean isRequired() {
+                return !hasValue(Symbol.TAG);
+            }
+        });
         field(OrderID.TAG);
         field(OrderQty.TAG);
         field(OrdType.TAG);
         field(OrigClOrdID.TAG);
-        field(SecurityID.TAG);
+        field(Price.TAG, new Required() {
+            @Override public boolean isRequired() {
+                return getEnum(OrdType.TAG).equals(OrdTypeValue.LIMIT);
+            }
+        });
+        field(SecurityID.TAG, new Required() {
+            @Override public boolean isRequired() {
+                return hasValue(IDSource.TAG);
+            }
+        });
         field(Side.TAG);
-        field(Symbol.TAG);
+        field(Symbol.TAG, Required.NO);
         field(SecurityExchange.TAG, new Required() {
             @Override public boolean isRequired() {
                 return getEnum(IDSource.TAG).equals(IDSourceValue.ISIN);
             }
         });
-        field(CancelOrigOnReject.TAG);
+        field(CancelOrigOnReject.TAG, Required.NO);
     }
 }
