@@ -137,5 +137,6 @@ public class ConsoleClient {
     commands.put("profile", new Profile());
     commands.put("new-order-single", new NewOrderSingle());
     commands.put("cancel-order", new CancelOrder());
+    commands.put("update-order", new UpdateOrder());
   }
 }
