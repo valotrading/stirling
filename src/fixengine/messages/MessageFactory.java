@@ -18,36 +18,4 @@ package fixengine.messages;
 public interface MessageFactory {
     Message create(MsgTypeValue type);
     Message create(MsgTypeValue type, MessageHeader header);
-/*
-    LogonMessage logonMessage();
-    LogonMessage logonMessage(MessageHeader header);
-
-    LogoutMessage logoutMessage();
-    LogoutMessage logoutMessage(MessageHeader header);
-
-    HeartbeatMessage heartbeatMessage();
-    HeartbeatMessage heartbeatMessage(MessageHeader header);
-
-    ResendRequestMessage resendRequestMessage();
-    ResendRequestMessage resendRequestMessage(MessageHeader header);
-
-    SequenceResetMessage sequenceResetMessage();
-    SequenceResetMessage sequenceResetMessage(MessageHeader header);
-
-    TestRequestMessage testRequestMessage();
-    TestRequestMessage testRequestMessage(MessageHeader header);
-
-    RejectMessage rejectMessage();
-    RejectMessage rejectMessage(MessageHeader header);
-
-    BusinessMessageRejectMessage businessMessageRejectMessage();
-    BusinessMessageRejectMessage businessMessageRejectMessage(MessageHeader header);
-
-    ExecutionReportMessage executionReportMessage(MessageHeader header);
-    OrderCancelRejectMessage orderCancelRejectMessage(MessageHeader header);
-    NewOrderSingleMessage newOrderSingleMessage(MessageHeader header);
-    OrderCancelRequestMessage orderCancelRequestMessage(MessageHeader header);
-    OrderModificationRequestMessage orderModificationRequestMessage(MessageHeader header);
-    AllocationMessage allocationMessage(MessageHeader header);
-*/
 }
