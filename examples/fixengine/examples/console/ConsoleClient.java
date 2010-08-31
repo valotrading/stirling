@@ -135,5 +135,6 @@ public class ConsoleClient {
     commands.put("available", new Available());
     commands.put("unavailable", new Unavailable());
     commands.put("profile", new Profile());
+    commands.put("new-order-single", new NewOrderSingle());
   }
 }
