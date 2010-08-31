@@ -101,6 +101,10 @@ public class Session {
         this(heartBtInt, config, store, Logger.getLogger("Session"), DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC, new DefaultMessageFactory());
     }
 
+    public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, MessageFactory messageFactory) {
+        this(heartBtInt, config, store, Logger.getLogger("Session"), DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC, messageFactory);
+    }
+
     public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, Logger logger,
             long logoutResponseTimeoutMsec, MessageFactory messageFactory) {
         this.heartBtInt = heartBtInt;

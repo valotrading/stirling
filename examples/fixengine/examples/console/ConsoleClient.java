@@ -25,6 +25,9 @@ import fixengine.session.Session;
 import fixengine.session.store.MongoSessionStore;
 import fixengine.session.store.SessionStore;
 
+import fixengine.messages.DefaultMessageFactory;
+import fixengine.messages.MessageFactory;
+
 import silvertip.CommandLine;
 import silvertip.Connection;
 import silvertip.Events;
@@ -43,6 +46,7 @@ public class ConsoleClient {
   private Connection conn;
   private Session session;
   private Events events;
+  private MessageFactory messageFactory = new DefaultMessageFactory();
 
   public static void main(String[] args) throws Exception {
     Console console = System.console();
@@ -66,6 +70,14 @@ public class ConsoleClient {
 
   public SessionStore getSessionStore() {
     return sessionStore;
+  }
+
+  public MessageFactory getMessageFactory() {
+    return messageFactory;
+  }
+
+  public void setMessageFactory(MessageFactory messageFactory) {
+    this.messageFactory = messageFactory;
   }
 
   public Connection getConnection() {
@@ -122,5 +134,6 @@ public class ConsoleClient {
     commands.put("storeseq", new StoreSequence());
     commands.put("available", new Available());
     commands.put("unavailable", new Unavailable());
+    commands.put("profile", new Profile());
   }
 }
