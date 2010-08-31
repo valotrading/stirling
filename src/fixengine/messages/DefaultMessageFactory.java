@@ -81,4 +81,8 @@ public class DefaultMessageFactory implements MessageFactory {
         }
         throw new RuntimeException("unknown message type: " + type);
     }
+
+    @Override public String getTagsPackage() {
+      return "fixengine.tags";
+    }
 }

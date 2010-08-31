@@ -57,4 +57,8 @@ public class MessageFactory extends fixengine.messages.DefaultMessageFactory {
         }
         return super.create(type);
     }
+
+    @Override public String getTagsPackage() {
+      return "fixengine.tags.bats.europe";
+    }
 }
