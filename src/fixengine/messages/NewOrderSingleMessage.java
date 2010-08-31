@@ -28,6 +28,7 @@ import fixengine.tags.SecurityType;
 import fixengine.tags.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TransactTime;
+import fixengine.tags.TimeInForce;
 
 /**
  * @author Pekka Enberg 
@@ -87,5 +88,6 @@ public class NewOrderSingleMessage extends AbstractMessage implements RequestMes
         field(OrderQty.TAG);
         field(CustomerOrFirm.TAG, Required.NO);
         field(Price.TAG, Required.NO);
+        field(TimeInForce.TAG, Required.NO);
     }
 }
