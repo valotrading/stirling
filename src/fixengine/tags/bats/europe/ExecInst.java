@@ -24,7 +24,7 @@ public class ExecInst extends Tag<ExecInst.Field> {
     public static final ExecInst TAG = new ExecInst();
 
     public ExecInst() {
-        super(59, Field.class);
+        super(18, Field.class);
     }
 
     public static class Field extends EnumField<ExecInstValue> {
