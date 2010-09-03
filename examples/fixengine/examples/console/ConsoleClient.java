@@ -28,6 +28,8 @@ import fixengine.session.store.SessionStore;
 import fixengine.messages.DefaultMessageFactory;
 import fixengine.messages.MessageFactory;
 
+import fixengine.Version;
+
 import silvertip.CommandLine;
 import silvertip.Connection;
 import silvertip.Events;
@@ -38,6 +40,10 @@ import fixengine.examples.console.commands.*;
  * @author Karim Osman
  */
 public class ConsoleClient {
+  private static final Version VERSION = Version.FIX_4_2;
+  private static final String SENDER_COMP_ID = "initiator";
+  private static final String TARGET_COMP_ID = "OPENFIX";
+
   private final Map<String, Command> commands = new HashMap<String, Command>();
   private final Map<String, String> orderIDs = new HashMap<String, String>();
 
@@ -47,6 +53,15 @@ public class ConsoleClient {
   private Connection conn;
   private Session session;
   private Events events;
+
+  private fixengine.Config config = new fixengine.Config() {
+    {
+      setVersion(VERSION);
+      setSenderCompId(SENDER_COMP_ID);
+      setTargetCompId(TARGET_COMP_ID);
+    }
+  };
+
   private MessageFactory messageFactory = new DefaultMessageFactory();
 
   public static void main(String[] args) throws Exception {
@@ -95,6 +110,14 @@ public class ConsoleClient {
 
   public void setSession(Session session) {
     this.session = session;
+  }
+
+  public void setConfig(fixengine.Config config) {
+    this.config = config;
+  }
+
+  public fixengine.Config getConfig() {
+    return config;
   }
 
   public String findOrderID(String clOrdID) {
@@ -147,5 +170,6 @@ public class ConsoleClient {
     commands.put("new-order-single", new NewOrderSingle());
     commands.put("cancel-order", new CancelOrder());
     commands.put("update-order", new UpdateOrder());
+    commands.put("config", new Config());
   }
 }

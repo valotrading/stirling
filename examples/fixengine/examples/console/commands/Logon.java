@@ -46,10 +46,6 @@ import java.util.logging.Logger;
  * @author Karim Osman
  */
 public class Logon implements Command {
-  private static final Version VERSION = Version.FIX_4_2;
-  private static final String SENDER_COMP_ID = "initiator";
-  private static final String TARGET_COMP_ID = "OPENFIX";
-
   private static final Logger logger = Logger.getLogger("ConsoleClient");
 
   static {
@@ -86,7 +82,7 @@ public class Logon implements Command {
           }
         });
       client.setConnection(conn);
-      Session session = new Session(getHeartBtInt(), getConfig(), client.getSessionStore(), client.getMessageFactory()) {
+      Session session = new Session(getHeartBtInt(), client.getConfig(), client.getSessionStore(), client.getMessageFactory()) {
         @Override
         protected boolean checkSeqResetSeqNum() {
           /* Do not verify that the sequence numbers of SeqReset messages as
@@ -106,14 +102,6 @@ public class Logon implements Command {
 
   private HeartBtIntValue getHeartBtInt() {
     return new HeartBtIntValue(30);
-  }
-
-  private Config getConfig() {
-    Config config = new Config();
-    config.setSenderCompId(SENDER_COMP_ID);
-    config.setTargetCompId(TARGET_COMP_ID);
-    config.setVersion(VERSION);
-    return config;
   }
 
   private InetAddress host(Scanner scanner) throws CommandArgException {
