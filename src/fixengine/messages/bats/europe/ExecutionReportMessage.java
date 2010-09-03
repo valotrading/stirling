@@ -45,7 +45,6 @@ import fixengine.tags.OrigClOrdID;
 import fixengine.tags.Price;
 import fixengine.tags.SecondaryOrderID;
 import fixengine.tags.SecurityExchange;
-import fixengine.tags.SendingTime;
 import fixengine.tags.Symbol;
 import fixengine.tags.Text;
 
@@ -94,7 +93,6 @@ public class ExecutionReportMessage extends fixengine.messages.ExecutionReportMe
         field(Price.TAG);
         field(AvgPx.TAG, Required.NO);
         field(SecurityID.TAG, Required.NO);
-        field(SendingTime.TAG);
         field(Side.TAG);
         field(Symbol.TAG, Required.NO);
         field(Text.TAG, Required.NO);
