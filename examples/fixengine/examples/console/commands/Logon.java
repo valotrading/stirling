@@ -79,7 +79,7 @@ public class Logon implements Command {
           }
         });
       client.setConnection(conn);
-      Session session = new Session(getHeartBtInt(), getConfig(), client.getSessionStore()) {
+      Session session = new Session(getHeartBtInt(), getConfig(), client.getSessionStore(), client.getMessageFactory()) {
         @Override
         protected boolean checkSeqResetSeqNum() {
           /* Do not verify that the sequence numbers of SeqReset messages as
