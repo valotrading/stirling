@@ -99,7 +99,7 @@ public class ExecutionReportMessage extends fixengine.messages.ExecutionReportMe
         field(TimeInForce.TAG);
         field(TransactTime.TAG);
         field(OrdRejReason.TAG, Required.NO);
-        field(MaxFloor.TAG);
+        field(MaxFloor.TAG, Required.NO);
         field(ExpireTime.TAG, new Required() {
             @Override public boolean isRequired() {
                 return getEnum(TimeInForce.TAG).equals(TimeInForceValue.GOOD_TILL_DATE);
