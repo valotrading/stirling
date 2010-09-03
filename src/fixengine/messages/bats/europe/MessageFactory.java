@@ -55,7 +55,7 @@ public class MessageFactory extends fixengine.messages.DefaultMessageFactory {
         case ORDER_MODIFICATION_REQUEST:
             return new OrderModificationRequestMessage(header);
         }
-        return super.create(type);
+        return super.create(type, header);
     }
 
     @Override public String getTagsPackage() {
