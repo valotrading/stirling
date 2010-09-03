@@ -21,6 +21,7 @@ import fixengine.messages.Required;
 import fixengine.messages.bats.europe.ExecTransTypeValue;
 
 import fixengine.tags.Account;
+import fixengine.tags.AvgPx;
 import fixengine.tags.ClOrdID;
 import fixengine.tags.ClearingAccount;
 import fixengine.tags.ClearingFirm;
@@ -91,6 +92,7 @@ public class ExecutionReportMessage extends fixengine.messages.ExecutionReportMe
         field(OrdStatus.TAG);
         field(OrigClOrdID.TAG, Required.NO);
         field(Price.TAG);
+        field(AvgPx.TAG, Required.NO);
         field(SecurityID.TAG, Required.NO);
         field(SendingTime.TAG);
         field(Side.TAG);
