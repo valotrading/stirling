@@ -48,18 +48,18 @@ import fixengine.tags.SecurityExchange;
 import fixengine.tags.SendingTime;
 import fixengine.tags.Symbol;
 import fixengine.tags.Text;
-import fixengine.tags.TransactTime;
 
+import fixengine.tags.bats.europe.CentralCounterparty;
 import fixengine.tags.bats.europe.ExecInst;
 import fixengine.tags.bats.europe.ExecTransType;
 import fixengine.tags.bats.europe.ExecType;
 import fixengine.tags.bats.europe.IDSource;
+import fixengine.tags.bats.europe.MTFAccessFee;
 import fixengine.tags.bats.europe.SecurityID;
 import fixengine.tags.bats.europe.Side;
 import fixengine.tags.bats.europe.TimeInForce;
 import fixengine.tags.bats.europe.TradeLiquidityIndicator;
-import fixengine.tags.bats.europe.MTFAccessFee;
-import fixengine.tags.bats.europe.CentralCounterparty;
+import fixengine.tags.bats.europe.TransactTime;
 
 public class ExecutionReportMessage extends fixengine.messages.ExecutionReportMessage {
     public ExecutionReportMessage() {
