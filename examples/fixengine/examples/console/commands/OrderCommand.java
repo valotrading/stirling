@@ -175,8 +175,8 @@ public abstract class OrderCommand implements Command {
 
     @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
       try {
-        AbstractField<Float> f = (AbstractField<Float>) msg.lookup(tagClass(field).newInstance());
-        f.setValue(Float.valueOf(value(field)));
+        AbstractField<Double> f = (AbstractField<Double>) msg.lookup(tagClass(field).newInstance());
+        f.setValue(Double.valueOf(value(field)));
       } catch (Exception e) {
         throw new RuntimeException(e);
       }
