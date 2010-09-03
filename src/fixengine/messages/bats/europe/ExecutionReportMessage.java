@@ -96,13 +96,13 @@ public class ExecutionReportMessage extends fixengine.messages.ExecutionReportMe
         field(Side.TAG);
         field(Symbol.TAG, Required.NO);
         field(Text.TAG, Required.NO);
-        field(TimeInForce.TAG);
+        field(TimeInForce.TAG, Required.NO);
         field(TransactTime.TAG);
         field(OrdRejReason.TAG, Required.NO);
         field(MaxFloor.TAG, Required.NO);
         field(ExpireTime.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(TimeInForce.TAG).equals(TimeInForceValue.GOOD_TILL_DATE);
+                return TimeInForceValue.GOOD_TILL_DATE.equals(getEnum(TimeInForce.TAG));
             }
         });
         field(ExecType.TAG);
