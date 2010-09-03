@@ -24,4 +24,8 @@ public class NewOrderSingle extends OrderCommand {
   @Override protected Message newMessage(ConsoleClient client) {
     return client.getMessageFactory().create(NEW_ORDER_SINGLE);
   }
+
+  @Override protected boolean isModifyingOrderMessage() {
+    return false;
+  }
 }

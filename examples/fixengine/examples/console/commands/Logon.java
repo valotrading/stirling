@@ -28,7 +28,12 @@ import fixengine.session.Session;
 import fixengine.session.HeartBtIntValue;
 
 import fixengine.examples.console.ConsoleClient;
+
 import fixengine.messages.DefaultMessageVisitor;
+import fixengine.messages.MsgTypeValue;
+
+import fixengine.tags.ClOrdID;
+import fixengine.tags.OrderID;
 
 import silvertip.Connection;
 import silvertip.Message;
@@ -65,6 +70,8 @@ public class Logon implements Command {
               Message msg = messages.next();
               client.getSession().receive(conn, msg, new DefaultMessageVisitor() {
                 @Override public void defaultAction(fixengine.messages.Message message) {
+                  if (message.getMsgType().equals(MsgTypeValue.EXECUTION_REPORT.value()))
+                    client.setOrderID(message.getString(ClOrdID.TAG), message.getString(OrderID.TAG));
                   logger.info(message.toString());
                 }
               });

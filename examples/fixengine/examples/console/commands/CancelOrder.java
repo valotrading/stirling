@@ -24,4 +24,8 @@ public class CancelOrder extends OrderCommand {
   @Override protected Message newMessage(ConsoleClient client) {
     return client.getMessageFactory().create(ORDER_CANCEL_REQUEST);
   }
+
+  @Override protected boolean isModifyingOrderMessage() {
+    return true;
+  }
 }

@@ -26,6 +26,9 @@ import fixengine.messages.Tag;
 import fixengine.messages.MessageFactory;
 import fixengine.messages.AbstractField;
 
+import fixengine.tags.OrigClOrdID;
+import fixengine.tags.OrderID;
+
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -52,12 +55,27 @@ public abstract class OrderCommand implements Command {
       setFields(message, scanner, profileTagsPackage);
       if (client.getSession() != null)
         client.getSession().send(client.getConnection(), message);
+      if (isModifyingOrderMessage())
+        setMessageOrderID(message, client);
     } catch (Exception e) {
       throw new CommandArgException("failed to set field: " + e.getMessage());
     }
   }
 
+  private void setMessageOrderID(Message msg, ConsoleClient client) {
+    String orderID = client.findOrderID(origClientOrderID(msg));
+    if (orderID == null)
+      throw new RuntimeException("cannot find OrderID for OrigClOrdID: " + origClientOrderID(msg));
+    msg.setString(OrderID.TAG, orderID);
+  }
+
+  private String origClientOrderID(Message msg) {
+    return msg.getString(OrigClOrdID.TAG);
+  }
+
   protected abstract Message newMessage(ConsoleClient client);
+
+  protected abstract boolean isModifyingOrderMessage();
 
   private void setFields(Message message, Scanner scanner, String profileTagsPackage) {
     while (scanner.hasNext()) {

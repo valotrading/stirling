@@ -39,6 +39,7 @@ import fixengine.examples.console.commands.*;
  */
 public class ConsoleClient {
   private final Map<String, Command> commands = new HashMap<String, Command>();
+  private final Map<String, String> orderIDs = new HashMap<String, String>();
 
   private final Console console;
   private final SessionStore sessionStore;
@@ -94,6 +95,14 @@ public class ConsoleClient {
 
   public void setSession(Session session) {
     this.session = session;
+  }
+
+  public String findOrderID(String clOrdID) {
+    return orderIDs.get(clOrdID);
+  }
+
+  public void setOrderID(String clOrdID, String orderID) {
+    orderIDs.put(clOrdID, orderID);
   }
 
   public Events getEvents() {

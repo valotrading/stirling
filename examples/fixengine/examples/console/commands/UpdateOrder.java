@@ -24,4 +24,8 @@ public class UpdateOrder extends OrderCommand {
   @Override protected Message newMessage(ConsoleClient client) {
     return client.getMessageFactory().create(ORDER_MODIFICATION_REQUEST);
   }
+
+  @Override protected boolean isModifyingOrderMessage() {
+    return true;
+  }
 }
