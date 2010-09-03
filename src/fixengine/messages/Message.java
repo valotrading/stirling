@@ -26,6 +26,7 @@ public interface Message extends Parseable, Iterable<Field>  {
     void apply(MessageVisitor visitor);
     String format();
     Field lookup(Tag<?> tag);
+    String getString(Tag<StringField> tag);
     void setString(Tag<StringField> tag, String value);
     void setInteger(Tag<IntegerField> tag, Integer value);
     void setFloat(Tag<FloatField> tag, Double value);
