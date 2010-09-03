@@ -20,7 +20,9 @@ package fixengine;
  */
 public class Config {
     private String senderCompId;
+    private String senderSubID;
     private String targetCompId;
+    private String targetSubID;
     private Version version;
 
     public String getSenderCompId() {
@@ -32,12 +34,30 @@ public class Config {
         return this;
     }
 
+    public String getSenderSubID() {
+        return senderSubID;
+    }
+
+    public Config setSenderSubID(String senderSubID) {
+        this.senderSubID = senderSubID;
+        return this;
+    }
+
     public String getTargetCompId() {
         return targetCompId;
     }
 
     public Config setTargetCompId(String targetCompId) {
         this.targetCompId = targetCompId;
+        return this;
+    }
+
+    public String getTargetSubID() {
+        return targetSubID;
+    }
+
+    public Config setTargetSubID(String targetSubID) {
+        this.targetSubID = targetSubID;
         return this;
     }
 
