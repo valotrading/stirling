@@ -37,8 +37,10 @@ import fixengine.tags.OrigSendingTime;
 import fixengine.tags.PossDupFlag;
 import fixengine.tags.PossResend;
 import fixengine.tags.SenderCompID;
+import fixengine.tags.SenderSubID;
 import fixengine.tags.SendingTime;
 import fixengine.tags.TargetCompID;
+import fixengine.tags.TargetSubID;
 
 /**
  * @author Pekka Enberg
@@ -68,8 +70,14 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
 
     public void setHeaderConfig(Config config) {
         setBeginString(config.getVersion().value());
+
         setSenderCompId(config.getSenderCompId());
+        if (config.getSenderSubID() != null)
+          setSenderSubID(config.getSenderSubID());
+
         setTargetCompId(config.getTargetCompId());
+        if (config.getTargetSubID() != null)
+          setTargetSubID(config.getTargetSubID());
     }
 
     public String getMsgType() {
@@ -88,12 +96,20 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
         header.setString(SenderCompID.TAG, senderCompId);
     }
 
+    public void setSenderSubID(String senderSubID) {
+        header.setString(SenderSubID.TAG, senderSubID);
+    }
+
     public String getSenderCompId() {
         return header.getString(SenderCompID.TAG);
     }
 
     public void setTargetCompId(String targetCompId) {
         header.setString(TargetCompID.TAG, targetCompId);
+    }
+
+    public void setTargetSubID(String targetSubID) {
+        header.setString(TargetSubID.TAG, targetSubID);
     }
 
     public String getTargetCompId() {
