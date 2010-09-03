@@ -37,6 +37,10 @@ public enum ExecTypeValue implements Formattable {
         return Character.toString(value);
     }
 
+    public boolean isTrade() {
+      return this == FILL || this == PARTIAL_FILL;
+    }
+
     public static ExecTypeValue parse(char value) {
         for (ExecTypeValue type : ExecTypeValue.values()) {
             if (type.value == value)

@@ -117,24 +117,24 @@ public class ExecutionReportMessage extends fixengine.messages.ExecutionReportMe
         });
         field(NoContraBrokers.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(ExecTransType.TAG).equals(ExecTransTypeValue.NEW);
+                return getEnum(ExecType.TAG).isTrade();
             }
         });
         field(ClearingFirm.TAG, Required.NO);
         field(ClearingAccount.TAG, Required.NO);
         field(CentralCounterparty.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(ExecTransType.TAG).equals(ExecTransTypeValue.NEW);
+                return getEnum(ExecType.TAG).isTrade();
             }
         });
         field(MTFAccessFee.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(ExecTransType.TAG).equals(ExecTransTypeValue.NEW);
+                return getEnum(ExecType.TAG).isTrade();
             }
         });
         field(TradeLiquidityIndicator.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(ExecTransType.TAG).equals(ExecTransTypeValue.NEW);
+                return getEnum(ExecType.TAG).isTrade();
             }
         });
     }
