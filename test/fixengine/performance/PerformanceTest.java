@@ -112,8 +112,8 @@ public class PerformanceTest implements Runnable {
                         } catch (SocketException e) {
                             throw new RuntimeException(e);
                         }
-                        return new Connection(channel, new FixMessageParser(), new Connection.Callback() {
-                            @Override public void messages(Connection conn, Iterator<Message> messages) {
+                        return new Connection<Message>(channel, new FixMessageParser(), new Connection.Callback<Message>() {
+                            @Override public void messages(Connection<Message> conn, Iterator<Message> messages) {
                                 while (messages.hasNext()) {
                                     messages.next();
                                     rx[count++] = System.nanoTime();
@@ -124,10 +124,10 @@ public class PerformanceTest implements Runnable {
                                 }
                             }
 
-                            @Override public void idle(Connection conn) {
+                            @Override public void idle(Connection<Message> conn) {
                             }
 
-                            @Override public void closed(Connection conn) {
+                            @Override public void closed(Connection<Message> conn) {
                                 events.stop();
                             }
                         });
@@ -160,18 +160,18 @@ public class PerformanceTest implements Runnable {
                 } catch (SocketException e) {
                     throw new RuntimeException(e);
                 }
-                Connection conn = new Connection(channel, new FixMessageParser(),
-                        new Connection.Callback() {
-                            @Override public void messages(Connection conn, Iterator<Message> messages) {
+                Connection conn = new Connection<Message>(channel, new FixMessageParser(),
+                        new Connection.Callback<Message>() {
+                            @Override public void messages(Connection<Message> conn, Iterator<Message> messages) {
                                 while (messages.hasNext())
                                     session.receive(conn, messages.next(), new DefaultMessageVisitor());
                             }
 
-                            @Override public void idle(Connection conn) {
+                            @Override public void idle(Connection<Message> conn) {
                                 session.keepAlive(conn);
                             }
 
-                            @Override public void closed(Connection conn) {
+                            @Override public void closed(Connection<Message> conn) {
                             }
                         });
                 session.logon(conn);

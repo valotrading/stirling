@@ -1666,20 +1666,20 @@ import fixengine.tags.TradeDate;
     }
 
     private Connection openConnection(final Session session, int port, final boolean keepAlive) throws IOException {
-        return Connection.connect(new InetSocketAddress("localhost", port), new FixMessageParser(), new Connection.Callback() {
-            @Override public void messages(Connection conn, Iterator<silvertip.Message> messages) {
+        return Connection.connect(new InetSocketAddress("localhost", port), new FixMessageParser(), new Connection.Callback<silvertip.Message>() {
+            @Override public void messages(Connection<silvertip.Message> conn, Iterator<silvertip.Message> messages) {
                 while (messages.hasNext())
                     session.receive(conn, messages.next(), new DefaultMessageVisitor());
             }
 
-            @Override public void idle(Connection conn) {
+            @Override public void idle(Connection<silvertip.Message> conn) {
                 if (keepAlive)
                     session.keepAlive(conn);
                 else
                     conn.close();
             }
 
-            @Override public void closed(Connection conn) {
+            @Override public void closed(Connection<silvertip.Message> conn) {
             }
         });
     }

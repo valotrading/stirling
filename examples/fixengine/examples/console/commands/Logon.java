@@ -60,8 +60,8 @@ public class Logon implements Command {
   public void execute(final ConsoleClient client, Scanner scanner) throws CommandArgException {
     try {
       Connection conn = Connection.connect(new InetSocketAddress(host(scanner), port(scanner)),
-          new FixMessageParser(), new Connection.Callback() {
-          @Override public void messages(Connection conn, Iterator<Message> messages) {
+          new FixMessageParser(), new Connection.Callback<Message>() {
+          @Override public void messages(Connection<Message> conn, Iterator<Message> messages) {
             while (messages.hasNext()) {
               Message msg = messages.next();
               client.getSession().receive(conn, msg, new DefaultMessageVisitor() {
@@ -74,11 +74,11 @@ public class Logon implements Command {
             }
           }
 
-          @Override public void idle(Connection conn) {
+          @Override public void idle(Connection<Message> conn) {
             client.getSession().keepAlive(conn);
           }
 
-          @Override public void closed(Connection conn) {
+          @Override public void closed(Connection<Message> conn) {
           }
         });
       client.setConnection(conn);
