@@ -174,9 +174,11 @@ public class PerformanceTest implements Runnable {
                             @Override public void closed(Connection<Message> conn) {
                             }
                         });
+                int txCount = 0;
+                tx[txCount++] = System.nanoTime();
                 session.logon(conn);
-                for (int i = 0; i < NUM_MESSAGES; i++) {
-                    tx[i] = System.nanoTime();
+                while (txCount < NUM_MESSAGES) {
+                    tx[txCount++] = System.nanoTime();
                     NewOrderSingleMessage message = new NewOrderSingleMessage();
                     session.send(conn, message);
                 }
