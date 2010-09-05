@@ -2,5 +2,6 @@
 
 OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseG1GC"
 #DEBUG_OPTS="-XX:+PrintCompilation"
+JARS=$(find lib -name *.jar | tr "\n" ":")
 
-java $OPTS $DEBUG_OPTS -cp build/main:build/test:lib/silvertip-0.1.1.jar:lib/joda-time-1.5.2.jar fixengine.performance.PerformanceTest
+java $OPTS $DEBUG_OPTS -cp build/main:build/test:$JARS fixengine.performance.PerformanceTest
