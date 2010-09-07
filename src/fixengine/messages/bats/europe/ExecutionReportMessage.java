@@ -90,7 +90,7 @@ public class ExecutionReportMessage extends fixengine.messages.ExecutionReportMe
         field(OrderQty.TAG);
         field(OrdStatus.TAG);
         field(OrigClOrdID.TAG, Required.NO);
-        field(Price.TAG);
+        field(Price.TAG, Required.NO);
         field(AvgPx.TAG, Required.NO);
         field(SecurityID.TAG, Required.NO);
         field(Side.TAG);
