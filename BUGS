@@ -25,3 +25,7 @@ Known Bugs
   listed in the BATS Europe FIX profile.
 
 - Rename LastQty to LastShares as conforming to FIX version 4.2.
+
+- UtcTimestampField should support values formatted as follows:
+  YYYYMMDD-HH:MM:SS and YYYYMMDD-HH:MM:SS.sss. Currently, only the former is
+  supported.
