@@ -16,6 +16,7 @@
 package fixengine.messages.bats.europe;
 
 import fixengine.messages.MessageHeader;
+import fixengine.messages.Required;
 
 import fixengine.tags.Account;
 import fixengine.tags.ClOrdID;
@@ -37,7 +38,7 @@ public class OrderCancelRejectMessage extends fixengine.messages.OrderCancelReje
     }
 
     @Override public void fields() {
-        field(Account.TAG);
+        field(Account.TAG, Required.NO);
         field(ClOrdID.TAG);
         field(OrderID.TAG);
         field(OrdStatus.TAG);
