@@ -15,11 +15,11 @@
  */
 package fixengine.tags.bats.europe;
 
-import fixengine.messages.FloatField;
+import fixengine.messages.IntegerField;
 import fixengine.messages.Tag;
 
-public class MaxRemovePct extends Tag<FloatField> {
+public class MaxRemovePct extends Tag<IntegerField> {
     public static final MaxRemovePct TAG = new MaxRemovePct();
 
-    public MaxRemovePct() { super(9618, FloatField.class); }
+    public MaxRemovePct() { super(9618, IntegerField.class); }
 }
