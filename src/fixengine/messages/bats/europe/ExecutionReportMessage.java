@@ -36,12 +36,14 @@ import fixengine.tags.LastPx;
 import fixengine.tags.LastQty;
 import fixengine.tags.LeavesQty;
 import fixengine.tags.MaxFloor;
+import fixengine.tags.MinQty;
 import fixengine.tags.NoContraBrokers;
 import fixengine.tags.OrdRejReason;
 import fixengine.tags.OrdStatus;
 import fixengine.tags.OrderID;
 import fixengine.tags.OrderQty;
 import fixengine.tags.OrigClOrdID;
+import fixengine.tags.PegDifference;
 import fixengine.tags.Price;
 import fixengine.tags.SecondaryOrderID;
 import fixengine.tags.SecurityExchange;
@@ -54,6 +56,7 @@ import fixengine.tags.bats.europe.ExecTransType;
 import fixengine.tags.bats.europe.ExecType;
 import fixengine.tags.bats.europe.IDSource;
 import fixengine.tags.bats.europe.MTFAccessFee;
+import fixengine.tags.bats.europe.MaxRemovePct;
 import fixengine.tags.bats.europe.SecurityID;
 import fixengine.tags.bats.europe.Side;
 import fixengine.tags.bats.europe.TimeInForce;
@@ -133,5 +136,8 @@ public class ExecutionReportMessage extends fixengine.messages.ExecutionReportMe
                 return getEnum(ExecType.TAG).isTrade();
             }
         });
+        field(MaxRemovePct.TAG, Required.NO);
+        field(MinQty.TAG, Required.NO);
+        field(PegDifference.TAG, Required.NO);
     }
 }
