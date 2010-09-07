@@ -43,6 +43,8 @@ public class FieldContainer implements Iterable<Field> {
             int tag = Tag.parseTag(b);
             Field field = lookup(tag);
             if (field == null) {
+                if (Tag.isUserDefined(tag))
+                    throw new InvalidTagNumberException("Invalid tag number: " + tag);
                 b.reset();
                 break;
             }

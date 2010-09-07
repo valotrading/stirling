@@ -82,10 +82,7 @@ public class Tag<T extends Field> {
                 throw new NonDataValueIncludesFieldDelimiterException("Non-data value includes field delimiter (SOH character)");
             result.append((char) ch);
         }
-        int tag = Integer.parseInt(result.toString());
-        if (isUserDefined(tag))
-            throw new InvalidTagNumberException("Invalid tag number: " + tag);
-        return tag;
+        return Integer.parseInt(result.toString());
     }
 
     public String prettyName() {
