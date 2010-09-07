@@ -24,7 +24,8 @@ public enum TradeLiquidityIndicatorValue implements Formattable {
     ADDED_LIQUIDITY_TO_DARK("AD"),                /* Added Liquidity to the BATS Dark Pool */
     REMOVED_LIQUIDITY_FROM_DARK("RD"),            /* Remove Liquidity from the BATS Dark Pool */
     ADDED_LIQUIDITY_TO_DARK_SELF_CROSS("AM"),     /* Added Liquidity to the BATS Dark Self Cross */
-    REMOVED_LIQUIDITY_FROM_DARK_SELF_CROSS("RM"); /* Removed Licensed from the BATS Dark Self Cross */
+    REMOVED_LIQUIDITY_FROM_DARK_SELF_CROSS("RM"), /* Removed Licensed from the BATS Dark Self Cross */
+    ROUTED_TO_ANOTHER_MARKET("X");                /* Routed to Another Market */
 
     private String value;
 
