@@ -72,7 +72,7 @@ public class ExecutionReportMessage extends fixengine.messages.ExecutionReportMe
         super(header);
     }
 
-    @Override public void fields() {
+    @Override protected void fields() {
         field(Account.TAG, Required.NO);
         field(ClOrdID.TAG);
         field(CumQty.TAG);
