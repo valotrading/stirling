@@ -122,11 +122,7 @@ public class ExecutionReportMessage extends fixengine.messages.ExecutionReportMe
         });
         field(ClearingFirm.TAG, Required.NO);
         field(ClearingAccount.TAG, Required.NO);
-        field(CentralCounterparty.TAG, new Required() {
-            @Override public boolean isRequired() {
-                return getEnum(ExecType.TAG).isTrade();
-            }
-        });
+        field(CentralCounterparty.TAG, Required.NO);
         field(MTFAccessFee.TAG, new Required() {
             @Override public boolean isRequired() {
                 return getEnum(ExecType.TAG).isTrade();
