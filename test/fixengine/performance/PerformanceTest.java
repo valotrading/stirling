@@ -36,6 +36,8 @@ import fixengine.session.HeartBtIntValue;
 import fixengine.session.Session;
 import fixengine.session.store.InMemorySessionStore;
 import fixengine.session.store.SessionStore;
+import fixengine.messages.MessageHeader;
+import fixengine.messages.MsgTypeValue;
 
 public class PerformanceTest implements Runnable {
     private static final Random generator = new Random();
@@ -179,7 +181,8 @@ public class PerformanceTest implements Runnable {
                 session.logon(conn);
                 while (txCount < NUM_MESSAGES) {
                     tx[txCount++] = System.nanoTime();
-                    NewOrderSingleMessage message = new NewOrderSingleMessage();
+                    MessageHeader header = new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE);
+                    NewOrderSingleMessage message = new NewOrderSingleMessage(header);
                     session.send(conn, message);
                 }
                 events.register(conn);
