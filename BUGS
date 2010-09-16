@@ -29,3 +29,5 @@ Known Bugs
 - UtcTimestampField should support values formatted as follows:
   YYYYMMDD-HH:MM:SS and YYYYMMDD-HH:MM:SS.sss. Currently, only the former is
   supported.
+
+- FIX type of OrigTime to UtcTimestamp.
