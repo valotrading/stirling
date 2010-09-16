@@ -15,31 +15,15 @@
  */
 package fixengine.messages.bats.europe;
 
-import fixengine.messages.Message;
 import fixengine.messages.MsgTypeValue;
-import fixengine.messages.MessageHeader;
-
-import static fixengine.messages.MsgTypeValue.EXECUTION_REPORT;
-import static fixengine.messages.MsgTypeValue.NEW_ORDER_SINGLE;
-import static fixengine.messages.MsgTypeValue.ORDER_CANCEL_REJECT;
-import static fixengine.messages.MsgTypeValue.ORDER_CANCEL_REQUEST;
-import static fixengine.messages.MsgTypeValue.ORDER_MODIFICATION_REQUEST;
 
 public class MessageFactory extends fixengine.messages.DefaultMessageFactory {
-    @Override public Message create(MsgTypeValue type, MessageHeader header) {
-        switch (type) {
-        case EXECUTION_REPORT:
-            return new ExecutionReportMessage(header);
-        case ORDER_CANCEL_REJECT:
-            return new OrderCancelRejectMessage(header);
-        case NEW_ORDER_SINGLE:
-            return new NewOrderSingleMessage(header);
-        case ORDER_CANCEL_REQUEST:
-            return new OrderCancelRequestMessage(header);
-        case ORDER_MODIFICATION_REQUEST:
-            return new OrderModificationRequestMessage(header);
-        }
-        return super.create(type, header);
+    public MessageFactory() {
+        message(MsgTypeValue.EXECUTION_REPORT, ExecutionReportMessage.class);
+        message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelRejectMessage.class);
+        message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingleMessage.class);
+        message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequestMessage.class);
+        message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequestMessage.class);
     }
 
     @Override public String getTagsPackage() {

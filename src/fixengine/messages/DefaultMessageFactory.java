@@ -15,46 +15,59 @@
  */
 package fixengine.messages;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import java.lang.reflect.Constructor;
+
 public class DefaultMessageFactory implements MessageFactory {
+    private Map<MsgTypeValue, Class<? extends Message>> messageTypes = new HashMap<MsgTypeValue, Class<? extends Message>>();
+
+    public DefaultMessageFactory() {
+        message(MsgTypeValue.LOGON, LogonMessage.class);
+        message(MsgTypeValue.LOGOUT, LogoutMessage.class);
+        message(MsgTypeValue.HEARTBEAT, HeartbeatMessage.class);
+        message(MsgTypeValue.RESEND_REQUEST, ResendRequestMessage.class);
+        message(MsgTypeValue.SEQUENCE_RESET, SequenceResetMessage.class);
+        message(MsgTypeValue.TEST_REQUEST, TestRequestMessage.class);
+        message(MsgTypeValue.REJECT, RejectMessage.class);
+        message(MsgTypeValue.BUSINESS_MESSAGE_REJECT, BusinessMessageRejectMessage.class);
+        message(MsgTypeValue.EXECUTION_REPORT, ExecutionReportMessage.class);
+        message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelRejectMessage.class);
+        message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingleMessage.class);
+        message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequestMessage.class);
+        message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequestMessage.class);
+        message(MsgTypeValue.ALLOCATION_INSTRUCTION, AllocationMessage.class);
+    }
+
     @Override public Message create(MsgTypeValue type) {
         return create(type, new MessageHeader(type));
     }
 
     @Override public Message create(MsgTypeValue type, MessageHeader header) {
-        switch (type) {
-        case LOGON:
-            return new LogonMessage(header);
-        case LOGOUT:
-            return new LogoutMessage(header);
-        case HEARTBEAT:
-            return new HeartbeatMessage(header);
-        case RESEND_REQUEST:
-            return new ResendRequestMessage(header);
-        case SEQUENCE_RESET:
-            return new SequenceResetMessage(header);
-        case TEST_REQUEST:
-            return new TestRequestMessage(header);
-        case REJECT:
-            return new RejectMessage(header);
-        case BUSINESS_MESSAGE_REJECT:
-            return new BusinessMessageRejectMessage(header);
-        case EXECUTION_REPORT:
-            return new ExecutionReportMessage(header);
-        case ORDER_CANCEL_REJECT:
-            return new OrderCancelRejectMessage(header);
-        case NEW_ORDER_SINGLE:
-            return new NewOrderSingleMessage(header);
-        case ORDER_CANCEL_REQUEST:
-            return new OrderCancelRequestMessage(header);
-        case ORDER_MODIFICATION_REQUEST:
-            return new OrderModificationRequestMessage(header);
-        case ALLOCATION_INSTRUCTION:
-            return new AllocationMessage(header);
+        try {
+            return constructor(type).newInstance(header);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        throw new RuntimeException("unknown message type: " + type);
     }
 
     @Override public String getTagsPackage() {
       return "fixengine.tags";
     }
+
+    protected void message(MsgTypeValue type, Class<? extends Message> clazz) {
+        messageTypes.put(type, clazz);
+    }
+
+    private Constructor<? extends Message> constructor(MsgTypeValue type) throws NoSuchMethodException {
+        return messageClass(type).getDeclaredConstructor(MessageHeader.class);
+    }
+
+    private Class<? extends Message> messageClass(MsgTypeValue type) {
+        if (!messageTypes.containsKey(type))
+            throw new RuntimeException("unknown message type: " + type);
+        return messageTypes.get(type);
+    }
+
 }
