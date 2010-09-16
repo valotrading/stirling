@@ -18,6 +18,7 @@ package fixengine.messages;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.CharUtils;
 import java.lang.reflect.Constructor;
 
 public class DefaultMessageFactory implements MessageFactory {
@@ -45,6 +46,10 @@ public class DefaultMessageFactory implements MessageFactory {
     }
 
     @Override public Message create(MsgTypeValue type, MessageHeader header) {
+        if (!isValid(type.value()))
+            throw new InvalidMsgTypeException("MsgType(35): Invalid message type: " + type.value());
+        if (!messageTypes.containsKey(type))
+            throw new UnsupportedMsgTypeException("MsgType(35): Unknown message type: " + type.value());
         try {
             return constructor(type).newInstance(header);
         } catch (Exception e) {
@@ -65,9 +70,32 @@ public class DefaultMessageFactory implements MessageFactory {
     }
 
     private Class<? extends Message> messageClass(MsgTypeValue type) {
-        if (!messageTypes.containsKey(type))
-            throw new RuntimeException("unknown message type: " + type);
         return messageTypes.get(type);
     }
 
+    private static boolean isValid(String msgType) {
+        if (msgType.length() == 1) {
+            return isValidSingle(msgType);
+        } else if (msgType.length() == 2) {
+            return isValidWide(msgType);
+        }
+        return false;
+    }
+
+    private static boolean isValidSingle(String msgType) {
+        char first = msgType.charAt(0);
+        return CharUtils.isAsciiAlphanumeric(first);
+    }
+
+    private static boolean isValidWide(String msgType) {
+        char first = msgType.charAt(0);
+        if (first != 'A')
+            return false;
+
+        char second = msgType.charAt(1);
+        if (!CharUtils.isAsciiAlphaUpper(second))
+            return false;
+
+        return second >= 'A' && second <= 'I';
+    }
 }
