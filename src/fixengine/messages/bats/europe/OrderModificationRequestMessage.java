@@ -35,10 +35,6 @@ import fixengine.tags.bats.europe.Side;
 import fixengine.tags.bats.europe.CancelOrigOnReject;
 
 public class OrderModificationRequestMessage extends fixengine.messages.OrderModificationRequestMessage {
-    public OrderModificationRequestMessage() {
-        super();
-    }
-
     public OrderModificationRequestMessage(MessageHeader header) {
         super(header);
     }

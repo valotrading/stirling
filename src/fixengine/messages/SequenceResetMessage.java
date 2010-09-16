@@ -24,10 +24,6 @@ import fixengine.tags.NewSeqNo;
  * @author Pekka Enberg 
  */
 public class SequenceResetMessage extends AbstractMessage {
-    public SequenceResetMessage() {
-        this(new MessageHeader(MsgTypeValue.SEQUENCE_RESET));
-    }
-
     public SequenceResetMessage(MessageHeader header) {
         super(header);
         

@@ -64,10 +64,6 @@ import fixengine.tags.bats.europe.TradeLiquidityIndicator;
 import fixengine.tags.bats.europe.TransactTime;
 
 public class ExecutionReportMessage extends fixengine.messages.ExecutionReportMessage {
-    public ExecutionReportMessage() {
-      super();
-    }
-
     public ExecutionReportMessage(MessageHeader header) {
         super(header);
     }

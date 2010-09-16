@@ -32,10 +32,6 @@ import fixengine.tags.bats.europe.SecurityID;
 import fixengine.tags.bats.europe.Side;
 
 public class OrderCancelRequestMessage extends fixengine.messages.OrderCancelRequestMessage {
-    public OrderCancelRequestMessage() {
-        super();
-    }
-
     public OrderCancelRequestMessage(MessageHeader header) {
         super(header);
     }

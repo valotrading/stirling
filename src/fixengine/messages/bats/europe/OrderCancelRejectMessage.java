@@ -29,10 +29,6 @@ import fixengine.tags.Text;
 import fixengine.tags.bats.europe.CxlRejReason;
 
 public class OrderCancelRejectMessage extends fixengine.messages.OrderCancelRejectMessage {
-    public OrderCancelRejectMessage() {
-        super();
-    }
-
     public OrderCancelRejectMessage(MessageHeader header) {
         super(header);
     }

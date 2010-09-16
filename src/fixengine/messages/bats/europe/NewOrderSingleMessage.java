@@ -47,10 +47,6 @@ import fixengine.tags.bats.europe.TimeInForce;
 import fixengine.tags.bats.europe.OrderCapacity;
 
 public class NewOrderSingleMessage extends fixengine.messages.NewOrderSingleMessage {
-    public NewOrderSingleMessage() {
-        super();
-    }
-
     public NewOrderSingleMessage(MessageHeader header) {
         super(header);
     }

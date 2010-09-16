@@ -24,10 +24,6 @@ import fixengine.tags.Text;
  * @author Pekka Enberg
  */
 public class BusinessMessageRejectMessage extends AbstractMessage {
-    public BusinessMessageRejectMessage() {
-        this(new MessageHeader(MsgTypeValue.BUSINESS_MESSAGE_REJECT));
-    }
-
     public BusinessMessageRejectMessage(MessageHeader header) {
         super(header);
 

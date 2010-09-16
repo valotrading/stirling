@@ -21,10 +21,6 @@ import fixengine.tags.TestReqID;
  * @author Pekka Enberg 
  */
 public class TestRequestMessage extends AbstractMessage {
-    public TestRequestMessage() {
-        this(new MessageHeader(MsgTypeValue.TEST_REQUEST));
-    }
-
     public TestRequestMessage(MessageHeader header) {
         super(header);
 

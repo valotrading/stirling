@@ -24,10 +24,6 @@ import fixengine.tags.Text;
  * @author Pekka Enberg
  */
 public class RejectMessage extends AbstractMessage {
-    public RejectMessage() {
-        this(new MessageHeader(MsgTypeValue.REJECT));
-    }
-
     public RejectMessage(MessageHeader header) {
         super(header);
 

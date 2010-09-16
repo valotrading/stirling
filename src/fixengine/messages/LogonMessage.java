@@ -23,11 +23,6 @@ import fixengine.tags.ResetSeqNumFlag;
  * @author Pekka Enberg 
  */
 public class LogonMessage extends AbstractMessage {
-
-    public LogonMessage() {
-        this(new MessageHeader(MsgTypeValue.LOGON));
-    }
-
     public LogonMessage(MessageHeader header) {
         super(header);
 

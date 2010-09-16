@@ -21,10 +21,6 @@ import fixengine.tags.Text;
  * @author Pekka Enberg 
  */
 public class LogoutMessage extends AbstractMessage {
-    public LogoutMessage() {
-        this(new MessageHeader(MsgTypeValue.LOGOUT));
-    }
-
     public LogoutMessage(MessageHeader header) {
         super(header);
 

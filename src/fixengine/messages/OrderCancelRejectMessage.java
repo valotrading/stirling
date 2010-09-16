@@ -27,10 +27,6 @@ import fixengine.tags.Text;
  * @author Pekka Enberg 
  */
 public class OrderCancelRejectMessage extends AbstractMessage {
-    public OrderCancelRejectMessage() {
-        this(new MessageHeader(MsgTypeValue.ORDER_CANCEL_REJECT));
-    }
-
     public OrderCancelRejectMessage(MessageHeader header) {
         super(header);
 

@@ -22,11 +22,6 @@ import fixengine.tags.EndSeqNo;
  * @author Pekka Enberg 
  */
 public class ResendRequestMessage extends AbstractMessage {
-
-    public ResendRequestMessage() {
-        this(new MessageHeader(MsgTypeValue.RESEND_REQUEST));
-    }
-
     public ResendRequestMessage(MessageHeader header) {
         super(header);
 

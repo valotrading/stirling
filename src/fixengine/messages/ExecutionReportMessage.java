@@ -47,10 +47,6 @@ import fixengine.tags.TransactTime;
  * @author Pekka Enberg 
  */
 public class ExecutionReportMessage extends AbstractMessage {
-    public ExecutionReportMessage() {
-        this(new MessageHeader(MsgTypeValue.EXECUTION_REPORT));
-    }
-
     public ExecutionReportMessage(MessageHeader header) {
         super(header);
 

@@ -34,11 +34,6 @@ import fixengine.tags.TimeInForce;
  * @author Pekka Enberg 
  */
 public class NewOrderSingleMessage extends AbstractMessage implements RequestMessage {
-
-    public NewOrderSingleMessage() {
-        this(new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE));
-    }
-
     public NewOrderSingleMessage(MessageHeader header) {
         super(header);
 

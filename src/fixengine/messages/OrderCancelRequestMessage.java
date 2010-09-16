@@ -29,10 +29,6 @@ import fixengine.tags.TransactTime;
  * @author Pekka Enberg 
  */
 public class OrderCancelRequestMessage extends AbstractMessage implements RequestMessage, CancelRequestMessage {
-    public OrderCancelRequestMessage() {
-        this(new MessageHeader(MsgTypeValue.ORDER_CANCEL_REQUEST));
-    }
-
     public OrderCancelRequestMessage(MessageHeader header) {
         super(header);
 

@@ -21,10 +21,6 @@ import fixengine.tags.TestReqID;
  * @author Pekka Enberg 
  */
 public class HeartbeatMessage extends AbstractMessage {
-    public HeartbeatMessage() {
-        this(new MessageHeader(MsgTypeValue.HEARTBEAT));
-    }
-
     public HeartbeatMessage(MessageHeader header) {
         super(header);
 
