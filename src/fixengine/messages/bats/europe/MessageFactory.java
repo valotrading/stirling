@@ -26,22 +26,6 @@ import static fixengine.messages.MsgTypeValue.ORDER_CANCEL_REQUEST;
 import static fixengine.messages.MsgTypeValue.ORDER_MODIFICATION_REQUEST;
 
 public class MessageFactory extends fixengine.messages.DefaultMessageFactory {
-    @Override public Message create(MsgTypeValue type) {
-        switch (type) {
-        case EXECUTION_REPORT:
-            return new ExecutionReportMessage();
-        case ORDER_CANCEL_REJECT:
-            return new OrderCancelRejectMessage();
-        case NEW_ORDER_SINGLE:
-            return new NewOrderSingleMessage();
-        case ORDER_CANCEL_REQUEST:
-            return new OrderCancelRequestMessage();
-        case ORDER_MODIFICATION_REQUEST:
-            return new OrderModificationRequestMessage();
-        }
-        return super.create(type);
-    }
-
     @Override public Message create(MsgTypeValue type, MessageHeader header) {
         switch (type) {
         case EXECUTION_REPORT:
