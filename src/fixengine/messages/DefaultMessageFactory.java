@@ -17,35 +17,7 @@ package fixengine.messages;
 
 public class DefaultMessageFactory implements MessageFactory {
     @Override public Message create(MsgTypeValue type) {
-        switch (type) {
-        case LOGON:
-            return new LogonMessage();
-        case LOGOUT:
-            return new LogoutMessage();
-        case HEARTBEAT:
-            return new HeartbeatMessage();
-        case RESEND_REQUEST:
-            return new ResendRequestMessage();
-        case SEQUENCE_RESET:
-            return new SequenceResetMessage();
-        case TEST_REQUEST:
-            return new TestRequestMessage();
-        case REJECT:
-            return new RejectMessage();
-        case BUSINESS_MESSAGE_REJECT:
-            return new BusinessMessageRejectMessage();
-        case EXECUTION_REPORT:
-            return new ExecutionReportMessage();
-        case ORDER_CANCEL_REJECT:
-            return new OrderCancelRejectMessage();
-        case NEW_ORDER_SINGLE:
-            return new NewOrderSingleMessage();
-        case ORDER_CANCEL_REQUEST:
-            return new OrderCancelRequestMessage();
-        case ORDER_MODIFICATION_REQUEST:
-            return new OrderModificationRequestMessage();
-        }
-        throw new RuntimeException("unknown message type: " + type);
+        return create(type, new MessageHeader(type));
     }
 
     @Override public Message create(MsgTypeValue type, MessageHeader header) {
