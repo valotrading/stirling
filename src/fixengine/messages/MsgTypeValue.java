@@ -15,74 +15,22 @@
  */
 package fixengine.messages;
 
-import org.apache.commons.lang.CharUtils;
-
 /**
  * @author Pekka Enberg
  */
-public enum MsgTypeValue {
-    HEARTBEAT("0"),
-    TEST_REQUEST("1"),
-    RESEND_REQUEST("2"),
-    REJECT("3"),
-    SEQUENCE_RESET("4"),
-    LOGOUT("5"),
-    EXECUTION_REPORT("8"),
-    ORDER_CANCEL_REJECT("9"),
-    LOGON("A"),
-    NEW_ORDER_SINGLE("D"),
-    ORDER_CANCEL_REQUEST("F"),
-    ORDER_MODIFICATION_REQUEST("G"),
-    BUSINESS_MESSAGE_REJECT("j"),
-    ALLOCATION_INSTRUCTION("J");
-
-    private String value;
-
-    MsgTypeValue(String value) {
-        this.value = value;
-    }
-
-    public Message newMessage(MessageFactory factory, MessageHeader header) {
-        return factory.create(this, header);
-    }
-
-    public String value() {
-        return value;
-    }
-
-    public static MsgTypeValue parse(String value) {
-        if (!isValid(value))
-            throw new InvalidMsgTypeException("MsgType(35): Invalid message type: " + value);
-        for (MsgTypeValue type : MsgTypeValue.values()) {
-            if (type.value.equals(value))
-                return type;
-        }
-        throw new UnsupportedMsgTypeException("MsgType(35): Unknown message type: " + value);
-    }
-
-    private static boolean isValid(String msgType) {
-        if (msgType.length() == 1) {
-            return isValidSingle(msgType);
-        } else if (msgType.length() == 2) {
-            return isValidWide(msgType);
-        }
-        return false;
-    }
-
-    private static boolean isValidSingle(String msgType) {
-        char first = msgType.charAt(0);
-        return CharUtils.isAsciiAlphanumeric(first);
-    }
-
-    private static boolean isValidWide(String msgType) {
-        char first = msgType.charAt(0);
-        if (first != 'A')
-            return false;
-
-        char second = msgType.charAt(1);
-        if (!CharUtils.isAsciiAlphaUpper(second))
-            return false;
-
-        return second >= 'A' && second <= 'I';
-    }
+public class MsgTypeValue {
+    public static final String HEARTBEAT = "0";
+    public static final String TEST_REQUEST = "1";
+    public static final String RESEND_REQUEST = "2";
+    public static final String REJECT = "3";
+    public static final String SEQUENCE_RESET = "4";
+    public static final String LOGOUT = "5";
+    public static final String EXECUTION_REPORT = "8";
+    public static final String ORDER_CANCEL_REJECT = "9";
+    public static final String LOGON = "A";
+    public static final String NEW_ORDER_SINGLE = "D";
+    public static final String ORDER_CANCEL_REQUEST = "F";
+    public static final String ORDER_MODIFICATION_REQUEST = "G";
+    public static final String BUSINESS_MESSAGE_REJECT = "j";
+    public static final String ALLOCATION_INSTRUCTION = "J";
 }

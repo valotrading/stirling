@@ -44,10 +44,6 @@ public class MessageHeader extends FieldContainer implements Parseable {
 
     private final FieldContainer head = new FieldContainer();
 
-    public MessageHeader(MsgTypeValue msgType) {
-        this(msgType.value());
-    }
-
     public MessageHeader(String msgType) {
         this();
 
@@ -169,7 +165,6 @@ public class MessageHeader extends FieldContainer implements Parseable {
     }
 
     public Message newMessage(MessageFactory messageFactory) {
-        MsgTypeValue type = MsgTypeValue.parse(getMsgType());
-        return type.newMessage(messageFactory, this);
+        return messageFactory.create(getMsgType(), this);
     }
 }

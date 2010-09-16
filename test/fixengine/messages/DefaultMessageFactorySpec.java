@@ -36,8 +36,8 @@ public class DefaultMessageFactorySpec extends Specification<DefaultMessageFacto
 
     public class ValidOneCharacterMsgTypes {
         public void areValid() {
-            specify(factory.create(MsgTypeValue.parse("0")).getMsgType(), MsgTypeValue.HEARTBEAT.value());
-            specify(factory.create(MsgTypeValue.parse("9")).getMsgType(), MsgTypeValue.ORDER_CANCEL_REJECT.value());
+            specify(factory.create("0").getMsgType(), MsgTypeValue.HEARTBEAT);
+            specify(factory.create("9").getMsgType(), MsgTypeValue.ORDER_CANCEL_REJECT);
         }
     }
 
@@ -73,7 +73,7 @@ public class DefaultMessageFactorySpec extends Specification<DefaultMessageFacto
     Block create(final String value) {
         return new Block() {
             @Override public void run() throws Throwable {
-                factory.create(MsgTypeValue.parse(value));
+                factory.create(value);
             }
         };
     }

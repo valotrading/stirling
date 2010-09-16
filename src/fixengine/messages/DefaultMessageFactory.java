@@ -22,7 +22,7 @@ import org.apache.commons.lang.CharUtils;
 import java.lang.reflect.Constructor;
 
 public class DefaultMessageFactory implements MessageFactory {
-    private Map<MsgTypeValue, Class<? extends Message>> messageTypes = new HashMap<MsgTypeValue, Class<? extends Message>>();
+    private Map<String, Class<? extends Message>> messageTypes = new HashMap<String, Class<? extends Message>>();
 
     public DefaultMessageFactory() {
         message(MsgTypeValue.LOGON, LogonMessage.class);
@@ -41,17 +41,17 @@ public class DefaultMessageFactory implements MessageFactory {
         message(MsgTypeValue.ALLOCATION_INSTRUCTION, AllocationMessage.class);
     }
 
-    @Override public Message create(MsgTypeValue type) {
-        return create(type, new MessageHeader(type));
+    @Override public Message create(String msgType) {
+        return create(msgType, new MessageHeader(msgType));
     }
 
-    @Override public Message create(MsgTypeValue type, MessageHeader header) {
-        if (!isValid(type.value()))
-            throw new InvalidMsgTypeException("MsgType(35): Invalid message type: " + type.value());
-        if (!messageTypes.containsKey(type))
-            throw new UnsupportedMsgTypeException("MsgType(35): Unknown message type: " + type.value());
+    @Override public Message create(String msgType, MessageHeader header) {
+        if (!isValid(msgType))
+            throw new InvalidMsgTypeException("MsgType(35): Invalid message type: " + msgType);
+        if (!messageTypes.containsKey(msgType))
+            throw new UnsupportedMsgTypeException("MsgType(35): Unknown message type: " + msgType);
         try {
-            return constructor(type).newInstance(header);
+            return constructor(msgType).newInstance(header);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -61,16 +61,16 @@ public class DefaultMessageFactory implements MessageFactory {
       return "fixengine.tags";
     }
 
-    protected void message(MsgTypeValue type, Class<? extends Message> clazz) {
-        messageTypes.put(type, clazz);
+    protected void message(String msgType, Class<? extends Message> clazz) {
+        messageTypes.put(msgType, clazz);
     }
 
-    private Constructor<? extends Message> constructor(MsgTypeValue type) throws NoSuchMethodException {
-        return messageClass(type).getDeclaredConstructor(MessageHeader.class);
+    private Constructor<? extends Message> constructor(String msgType) throws NoSuchMethodException {
+        return messageClass(msgType).getDeclaredConstructor(MessageHeader.class);
     }
 
-    private Class<? extends Message> messageClass(MsgTypeValue type) {
-        return messageTypes.get(type);
+    private Class<? extends Message> messageClass(String msgType) {
+        return messageTypes.get(msgType);
     }
 
     private static boolean isValid(String msgType) {

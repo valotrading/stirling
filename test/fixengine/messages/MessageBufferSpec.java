@@ -43,7 +43,7 @@ public class MessageBufferSpec extends Specification<MessageBuffer> {
 
     public class BufferThatHasAppendedTag {
         public MessageBuffer create() {
-            buffer.append(new StringField(MsgType.TAG, MsgTypeValue.LOGON.value()));
+            buffer.append(new StringField(MsgType.TAG, MsgTypeValue.LOGON));
             return buffer;
         }
 

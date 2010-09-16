@@ -16,7 +16,7 @@
 package fixengine.messages;
 
 public interface MessageFactory {
-    Message create(MsgTypeValue type);
-    Message create(MsgTypeValue type, MessageHeader header);
+    Message create(String msgType);
+    Message create(String msgType, MessageHeader header);
     String getTagsPackage();
 }

@@ -15,15 +15,6 @@
  */
 package fixengine.session;
 
-import static fixengine.messages.MsgTypeValue.BUSINESS_MESSAGE_REJECT;
-import static fixengine.messages.MsgTypeValue.EXECUTION_REPORT;
-import static fixengine.messages.MsgTypeValue.HEARTBEAT;
-import static fixengine.messages.MsgTypeValue.LOGON;
-import static fixengine.messages.MsgTypeValue.LOGOUT;
-import static fixengine.messages.MsgTypeValue.REJECT;
-import static fixengine.messages.MsgTypeValue.RESEND_REQUEST;
-import static fixengine.messages.MsgTypeValue.SEQUENCE_RESET;
-import static fixengine.messages.MsgTypeValue.TEST_REQUEST;
 import static org.joda.time.DateTimeZone.UTC;
 
 import java.io.IOException;
@@ -133,7 +124,7 @@ import fixengine.tags.TradeDate;
     public class Logon {
         /* Ref ID 1B: b. Send Logon message */
         public void valid() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             runInClient(new Runnable() {
                 @Override public void run() {
@@ -144,14 +135,14 @@ import fixengine.tags.TradeDate;
 
         /* Ref ID 1B: c. Valid Logon message as response is received */
         public void validButMsgSeqNumIsTooHigh() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respond(
-                    new MessageBuilder(LOGON)
+                    new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(2)
                         .integer(HeartBtInt.TAG, HEARTBEAT_INTERVAL)
                         .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
                     .build());
-            server.expect(RESEND_REQUEST);
+            server.expect(MsgTypeValue.RESEND_REQUEST);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -163,14 +154,14 @@ import fixengine.tags.TradeDate;
         public void invalid() throws Exception {
             // TODO: Invalid MsgType
             // TODO: Garbled message
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respond(
-                    new MessageBuilder(LOGON)
+                    new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
                         .integer(HeartBtInt.TAG, HEARTBEAT_INTERVAL)
                         /* EncryptMethod(98) missing */
                     .build());
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             checking(new Expectations() {{
                 one(logger).severe("EncryptMethod(98): Tag missing");
             }});
@@ -183,12 +174,12 @@ import fixengine.tags.TradeDate;
 
         /* Ref ID 1B: e. Receive any message other than a Logon message. */
         public void otherMessageThanLogon() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respond(
-                    new MessageBuilder(HEARTBEAT)
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
                         .msgSeqNum(1)
                     .build());
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             checking(new Expectations() {{
                 one(logger).severe("first message is not a logon");
             }});
@@ -209,10 +200,10 @@ import fixengine.tags.TradeDate;
 
         /* Ref ID 2: b. MsgSeqNum higher than expected */
         public void msgSeqNumHigherThanExpected() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
-            server.respond(new MessageBuilder(HEARTBEAT).msgSeqNum(3).build());
-            server.expect(RESEND_REQUEST);
+            server.respond(new MessageBuilder(MsgTypeValue.HEARTBEAT).msgSeqNum(3).build());
+            server.expect(MsgTypeValue.RESEND_REQUEST);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -222,10 +213,10 @@ import fixengine.tags.TradeDate;
 
         /* Ref ID 2: c. MsgSeqNum lower than expected without PossDupFlag set to Y */
         public void msgSeqNumLowerThanExpectedWithoutPossDupFlag() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
-            server.respond(new MessageBuilder(HEARTBEAT).msgSeqNum(1).build());
-            server.expect(LOGOUT);
+            server.respond(new MessageBuilder(MsgTypeValue.HEARTBEAT).msgSeqNum(1).build());
+            server.expect(MsgTypeValue.LOGOUT);
             checking(new Expectations() {{
                 one(logger).severe("MsgSeqNum too low, expecting 2 but received 1");
             }});
@@ -238,19 +229,19 @@ import fixengine.tags.TradeDate;
 
         /* Ref ID 2: d. Garbled message received */
         public void garbledMessageReceived() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(HEARTBEAT)
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
                         .setBeginString("")
                         .msgSeqNum(2)
                     .build());
             server.respond(
-                    new MessageBuilder(TEST_REQUEST)
+                    new MessageBuilder(MsgTypeValue.TEST_REQUEST)
                         .msgSeqNum(2)
                         .string(TestReqID.TAG, "12345678")
                     .build());
-            server.expect(HEARTBEAT);
+            server.expect(MsgTypeValue.HEARTBEAT);
             checking(new Expectations() {{
                 one(logger).warning("BeginString(8): Empty tag");
             }});
@@ -266,20 +257,20 @@ import fixengine.tags.TradeDate;
          * than or equal to SendingTime and MsgSeqNum lower than expected.
          */
         public void possDupFlagOrigSendingTimeLessThanSendingTime() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(HEARTBEAT)
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
                         .msgSeqNum(2)
                     .build());
             server.respond(
-                    new MessageBuilder(HEARTBEAT)
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
                         .setPossDupFlag(true)
                         .setOrigSendingTime(new DateTime().minusMinutes(1))
                         .msgSeqNum(2)
                     .build());
             server.respondLogout(3);
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -292,20 +283,20 @@ import fixengine.tags.TradeDate;
          * greater than SendingTime and MsgSeqNum as expected
          */
         public void possDupFlagOrigSendingTimeGreaterThanSendingTime() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
-            final Message msg1 = new MessageBuilder(HEARTBEAT)
+            final Message msg1 = new MessageBuilder(MsgTypeValue.HEARTBEAT)
                     .msgSeqNum(2)
                     .build();
             server.respond(msg1);
-            final Message msg2 = new MessageBuilder(HEARTBEAT)
+            final Message msg2 = new MessageBuilder(MsgTypeValue.HEARTBEAT)
                     .setPossDupFlag(true)
                     .setOrigSendingTime(new DateTime().plusMinutes(1))
                     .msgSeqNum(3)
                     .build();
             server.respond(msg2);
-            server.expect(REJECT);
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.REJECT);
+            server.expect(MsgTypeValue.LOGOUT);
             checking(new Expectations() {{
                 one(logger).severe("OrigSendingTime " + formatDateTime(msg2.getOrigSendingTime()) +
                         " after " + formatDateTime(msg1.getSendingTime()));
@@ -320,18 +311,18 @@ import fixengine.tags.TradeDate;
 
         /* Ref ID 2: g. PossDupFlag set to Y and OrigSendingTime not specified */
         public void possDupFlagOrigSendingTimeMissing() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(HEARTBEAT)
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
                         .msgSeqNum(2)
                     .build());
             server.respond(
-                    new MessageBuilder(HEARTBEAT)
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
                         .setPossDupFlag(true)
                         .msgSeqNum(3)
                     .build());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -353,15 +344,15 @@ import fixengine.tags.TradeDate;
          * BeginString on outbound messages.
          */
         public void beginStringReceivedDoesNotMatchExpectedValue() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respond(
-                    new MessageBuilder(LOGON)
+                    new MessageBuilder(MsgTypeValue.LOGON)
                         .setBeginString("FIX.4.3")
                         .msgSeqNum(1)
                         .integer(HeartBtInt.TAG, HEARTBEAT_INTERVAL)
                         .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
                     .build());
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             checking(new Expectations() {{
                 one(logger).severe("BeginString is invalid, expecting FIX.4.2 but received FIX.4.3");
             }});
@@ -385,16 +376,16 @@ import fixengine.tags.TradeDate;
          * match values expected and specified in testing profile.
          */
         public void senderCompIdDoesNotMatchExpectedValues() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respond(
-                    new MessageBuilder(LOGON)
+                    new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
                         .setSenderCompID("SENDER")
                         .integer(HeartBtInt.TAG, HEARTBEAT_INTERVAL)
                         .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
                     .build());
-            server.expect(REJECT);
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.REJECT);
+            server.expect(MsgTypeValue.LOGOUT);
             checking(new Expectations() {{
                 one(logger).severe("Invalid SenderCompID(49): SENDER");
             }});
@@ -411,16 +402,16 @@ import fixengine.tags.TradeDate;
          * match values expected and specified in testing profile.
          */
         public void targetCompIdDoesNotMatchExpectedValues() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respond(
-                    new MessageBuilder(LOGON)
+                    new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
                         .setTargetCompID("TARGET")
                         .integer(HeartBtInt.TAG, HEARTBEAT_INTERVAL)
                         .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
                     .build());
-            server.expect(REJECT);
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.REJECT);
+            server.expect(MsgTypeValue.LOGOUT);
             checking(new Expectations() {{
                 one(logger).severe("Invalid TargetCompID(56): TARGET");
             }});
@@ -439,7 +430,7 @@ import fixengine.tags.TradeDate;
 
         /* Ref ID 2: m. BodyLength value received is incorrect. */
         public void bodyLengthReceivedIsIncorrect() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(message("10", "0")
                     .field(MsgSeqNum.TAG, "2")
@@ -473,15 +464,15 @@ import fixengine.tags.TradeDate;
          * reasonable time (i.e. 2 minutes) of atomic clock-based time.
          */
         public void sendingTimeReceivedIsNotWithinReasonableTime() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
-            final Message msg = new MessageBuilder(HEARTBEAT)
+            final Message msg = new MessageBuilder(MsgTypeValue.HEARTBEAT)
                     .msgSeqNum(2)
                     .setSendingTime(new DateTime().minusMinutes(10))
                 .build();
             server.respond(msg);
-            server.expect(REJECT);
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.REJECT);
+            server.expect(MsgTypeValue.LOGOUT);
             checking(new Expectations() {{
                 one(logger).severe("SendingTime is invalid: " + formatDateTime(msg.getSendingTime()));
             }});
@@ -506,7 +497,7 @@ import fixengine.tags.TradeDate;
          * classified as user-defined).
          */
         public void msgTypeValueReceivedIsNotValid() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
                     message("56", "ZZ")
@@ -514,7 +505,7 @@ import fixengine.tags.TradeDate;
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.TAG, "115")
                     .toString());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).warning( "MsgType(35): Invalid message type: ZZ");
             }});
@@ -532,7 +523,7 @@ import fixengine.tags.TradeDate;
          * testing profile.
          */
         public void msgTypeValueReceivedIsValidButNotSupported() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
                     message("55", "P")
@@ -540,7 +531,7 @@ import fixengine.tags.TradeDate;
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.TAG, "014")
                     .toString());
-            server.expect(BUSINESS_MESSAGE_REJECT);
+            server.expect(MsgTypeValue.BUSINESS_MESSAGE_REJECT);
             checking(new Expectations() {{
                 one(logger).warning( "MsgType(35): Unknown message type: P");
             }});
@@ -565,7 +556,7 @@ import fixengine.tags.TradeDate;
          * fields of message.
          */
         public void beginStringIsNotTheFirstField() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
                     message()
@@ -592,7 +583,7 @@ import fixengine.tags.TradeDate;
          * fields of message.
          */
         public void bodyLengthIsNotTheSecondField() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
                     message()
@@ -619,7 +610,7 @@ import fixengine.tags.TradeDate;
          * fields of message.
          */
         public void msgTypeIsNotTheThirdField() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
                     message()
@@ -651,7 +642,7 @@ import fixengine.tags.TradeDate;
 
         /* Ref ID 3: b. Invalid CheckSum */
         public void invalid() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
                     message()
@@ -694,7 +685,7 @@ import fixengine.tags.TradeDate;
 
         /* Ref ID 3: e. CheckSum value does not have length of 3. */
         public void checkSumValueDoesNotHaveLengthOfThree() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
                     message()
@@ -720,7 +711,7 @@ import fixengine.tags.TradeDate;
 
         /* Ref ID 3: e. CheckSum is not delimited by <SOH>. */
         private void checkSumIsNotDelimitedBySOH() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             String msg = message()
                 .field(BeginString.TAG, "FIX.4.2")
@@ -763,12 +754,12 @@ import fixengine.tags.TradeDate;
         }
 
         public void logonHeartbeatTestRequest() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
-            server.expect(HEARTBEAT);
-            server.expect(TEST_REQUEST);
+            server.expect(MsgTypeValue.HEARTBEAT);
+            server.expect(MsgTypeValue.TEST_REQUEST);
             server.respondLogout(3);
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -780,14 +771,14 @@ import fixengine.tags.TradeDate;
     public class ReceiveHeartbeatMessage {
         /* Ref ID 5: Valid Heartbeat message */
         public void valid() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(HEARTBEAT)
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
                         .msgSeqNum(2)
                     .build(), HEARTBEAT_INTERVAL * 500L);
             server.respondLogout(3);
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -801,15 +792,15 @@ import fixengine.tags.TradeDate;
          * (HeatbeatInt field) + "some reasonable amount of time" (use 20% of
          * HeartBeatInt field) */
         public void noDataReceivedDuringPresetHeartbeatInterval() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(TEST_REQUEST)
+                    new MessageBuilder(MsgTypeValue.TEST_REQUEST)
                         .msgSeqNum(2)
                         .string(TestReqID.TAG, "12345678")
                     .build());
             // TODO: Verify that TestReqID of Heartbeat matches
-            server.expect(HEARTBEAT);
+            server.expect(MsgTypeValue.HEARTBEAT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -821,15 +812,15 @@ import fixengine.tags.TradeDate;
     public class ReceiveRejectMessage {
         /* Ref ID 7: Valid reject message */
         public void valid() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(REJECT)
+                    new MessageBuilder(MsgTypeValue.REJECT)
                         .msgSeqNum(2)
                         .integer(RefSeqNo.TAG, 2)
                     .build());
             server.respondLogout(3);
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -846,19 +837,19 @@ import fixengine.tags.TradeDate;
          * rewritten. */
         /* Ref ID 8: Valid Resend Request */
         public void valid() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(HEARTBEAT)
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
                         .msgSeqNum(2)
                     .build());
             server.respond(
-                    new MessageBuilder(RESEND_REQUEST)
+                    new MessageBuilder(MsgTypeValue.RESEND_REQUEST)
                         .msgSeqNum(3)
                         .integer(BeginSeqNo.TAG, 1)
                         .integer(EndSeqNo.TAG, 0)
                     .build());
-            server.expect(SEQUENCE_RESET);
+            server.expect(MsgTypeValue.SEQUENCE_RESET);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -870,12 +861,12 @@ import fixengine.tags.TradeDate;
     public class SynchronizeSequenceNumbers {
         /* Ref ID 9: Application failure */
         public void applicationFailure() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
-            server.expect(HEARTBEAT);
-            server.expect(SEQUENCE_RESET);
+            server.expect(MsgTypeValue.HEARTBEAT);
+            server.expect(MsgTypeValue.SEQUENCE_RESET);
             server.respondLogout(2);
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -892,15 +883,15 @@ import fixengine.tags.TradeDate;
         /* Ref ID 10: a. Receive Sequence Reset (Gap Fill) message with NewSeqNo >
          * MsgSeqNum and MsgSeqNo > than expected MsgSeqNum */
         public void msgSeqNumGreaterThanExpectedSeqNum() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(SEQUENCE_RESET)
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(4)
                         .bool(GapFillFlag.TAG, true)
                         .integer(NewSeqNo.TAG, 3)
                     .build());
-            server.expect(RESEND_REQUEST);
+            server.expect(MsgTypeValue.RESEND_REQUEST);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -912,10 +903,10 @@ import fixengine.tags.TradeDate;
         /* Ref ID 10: b. Receive Sequence Reset (Gap Fill) message with NewSeqNo >
          * MsgSeqNum and MsgSeqNum = to expected MsgSeqNum */
         public void msgSeqNumEqualToExpectedSeqNumAndNewSeqNoGreaterThanMsgSeqNum() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(SEQUENCE_RESET)
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(2)
                         .bool(GapFillFlag.TAG, true)
                         .integer(NewSeqNo.TAG, 5)
@@ -932,10 +923,10 @@ import fixengine.tags.TradeDate;
          * MsgSeqNum and MsgSeqNum < than expected MsgSeqNum and
          * PossDupFlag = "Y" */
         public void msgSeqNumSmallerThanExpectedSeqNumWithPossDupFlag() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(SEQUENCE_RESET)
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(1)
                         .setPossDupFlag(true)
                         .bool(GapFillFlag.TAG, true)
@@ -953,15 +944,15 @@ import fixengine.tags.TradeDate;
          * MsgSeqNum and MsgSeqNum < than expected MsgSeqNum and without
          * PossDupFlag = "Y" */
         public void msgSeqNumSmallerThanExpectedSeqNumWithoutPossDupFlag() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(SEQUENCE_RESET)
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(1)
                         .bool(GapFillFlag.TAG, true)
                         .integer(NewSeqNo.TAG, 5)
                     .build());
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             checking(new Expectations() {{
                 one(logger).severe("MsgSeqNum too low, expecting 2 but received 1");
             }});
@@ -976,15 +967,15 @@ import fixengine.tags.TradeDate;
         /* Ref ID 10: e. Receive Sequence Reset (Gap Fill) message with NewSeqNo <= MsgSeqNum
          * and MsgSeqNum = to expected sequence number */
         public void msgSeqNumEqualToExpectedSeqNumAndNewSeqNoSmallerOrEqualToMsgSeqNum() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(SEQUENCE_RESET)
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(2)
                         .bool(GapFillFlag.TAG, true)
                         .integer(NewSeqNo.TAG, 2)
                     .build());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -998,15 +989,15 @@ import fixengine.tags.TradeDate;
         /* Ref ID 11: a. Receive Sequence Reset (reset) message with NewSeqNo >
          * than expected sequence number */
         public void newSeqNoGreaterThanExpectedMsgSeqNum() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(SEQUENCE_RESET)
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(2)
                         .integer(NewSeqNo.TAG, 5)
                     .build());
             server.respondLogout(5);
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1018,15 +1009,15 @@ import fixengine.tags.TradeDate;
         /* Ref ID 11: b. Receive Sequence Reset (reset) message with NewSeqNo =
          * to expected sequence number */
         public void newSeqNoEqualToMsgSeqNum() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(SEQUENCE_RESET)
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(2)
                         .integer(NewSeqNo.TAG, 2)
                     .build());
             server.respondLogout(2);
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             checking(new Expectations() {{
                 one(logger).warning("NewSeqNo(36)=2 is equal to expected MsgSeqNum(34)=2");
             }});
@@ -1041,18 +1032,18 @@ import fixengine.tags.TradeDate;
         /* Ref ID 11: c. Receive Sequence Reset (reset) message with NewSeqNo <
          * than expected sequence number */
         public void newSeqNoSmallerThanMsgSeqNum() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(HEARTBEAT)
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
                         .msgSeqNum(2)
                     .build());
             server.respond(
-                    new MessageBuilder(SEQUENCE_RESET)
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(3)
                         .integer(NewSeqNo.TAG, 2)
                     .build());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).warning("Value is incorrect (out of range) for this tag, NewSeqNum(36)=2");
             }});
@@ -1068,9 +1059,9 @@ import fixengine.tags.TradeDate;
     public class InitiateLogoutProcess {
         /* Ref ID 12: Initiate logout */
         public void initiateLogoutAndCounterpartyResponded() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             server.respondLogout(2);
             runInClient(new Runnable() {
                 @Override public void run() {
@@ -1088,9 +1079,9 @@ import fixengine.tags.TradeDate;
 
         /* Ref ID 12: Initiate logout */
         public void initiateLogoutAndCounterpartyDidNotRespond() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             checking(new Expectations() {{
                 one(logger).warning("Response to logout not received in 1 second(s), disconnecting");
             }});
@@ -1113,10 +1104,10 @@ import fixengine.tags.TradeDate;
         /* Ref ID 13: a. Receive valid Logout message in response to a
          * solicited logout process */
         public void receiveValidLogoutMsgSolicited() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respondLogout(2);
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -1129,9 +1120,9 @@ import fixengine.tags.TradeDate;
             /* TODO: Wait for counterparty to disconnect up to 10 seconds. If
              * max exceeded, disconnect and genereate an "error" condition in
              * test output. */
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
-            server.expect(LOGOUT);
+            server.expect(MsgTypeValue.LOGOUT);
             server.respondLogout(2);
             runInClient(new Runnable() {
                 @Override public void run() {
@@ -1147,7 +1138,7 @@ import fixengine.tags.TradeDate;
          * specification. Exception: undefined tag used in testing profile as
          * user-defined. */
         public void tagNotDefinedInSpecification() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(message("72", "0")
                 .field(MsgSeqNum.TAG, "2")
@@ -1156,7 +1147,7 @@ import fixengine.tags.TradeDate;
                 .field(9898, "value")
                 .field(CheckSum.TAG, "045")
                 .toString());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).severe("Invalid tag number: 9898");
             }});
@@ -1171,14 +1162,14 @@ import fixengine.tags.TradeDate;
         /* Ref ID 14: b. Receive message with a required field identifier (tag
          * number) missing. */
         public void requiredFieldMissing() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(RESEND_REQUEST)
+                    new MessageBuilder(MsgTypeValue.RESEND_REQUEST)
                         .msgSeqNum(2)
                         .integer(BeginSeqNo.TAG, 1)
                     .build());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).severe("EndSeqNo(16): Tag missing");
             }});
@@ -1195,7 +1186,7 @@ import fixengine.tags.TradeDate;
          * message type. Exception: undefined tag used is specified in testing
          * profile as user-defined for this message type. */
         public void tagDefinedInSpecificationButNotForThisMsgType() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(message("66", "0")
                 .field(MsgSeqNum.TAG, "2")
@@ -1204,7 +1195,7 @@ import fixengine.tags.TradeDate;
                 .field(TestReqID.TAG, "1")
                 .field(CheckSum.TAG, "209")
                 .toString());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).severe("Tag not defined for this message: 88");
             }});
@@ -1219,14 +1210,14 @@ import fixengine.tags.TradeDate;
         /* Ref ID 14: d. Receive message with field identifier (tag number)
          * specified but no value (e.g. "55=<SOH>" vs. "55=IBM<SOH>"). */
         public void fieldWithoutValue() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(TEST_REQUEST)
+                    new MessageBuilder(MsgTypeValue.TEST_REQUEST)
                         .msgSeqNum(2)
                         .string(TestReqID.TAG, "")
                     .build());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).severe("TestReqID(112): Empty tag");
             }});
@@ -1243,7 +1234,7 @@ import fixengine.tags.TradeDate;
          * identifier (tag number). Exception: undefined enumerated values used
          * are specified in testing profile as user-defined. */
         public void fieldWithIncorrectValue() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(message("67", "A")
                 .field(MsgSeqNum.TAG, "2")
@@ -1252,7 +1243,7 @@ import fixengine.tags.TradeDate;
                 .field(HeartBtInt.TAG, "30")
                 .field(CheckSum.TAG, "034")
                 .toString());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).severe("EncryptMethod(98): Invalid value");
             }});
@@ -1267,7 +1258,7 @@ import fixengine.tags.TradeDate;
         /* Ref ID 14: f. Receive message with a value in an incorrect data
          * format (syntax) for a particular field identifier (tag number). */
         public void fieldWithIncorrectDataFormat() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(message("56", "0")
                 .field(MsgSeqNum.TAG, "2")
@@ -1275,7 +1266,7 @@ import fixengine.tags.TradeDate;
                 .field(TestReqID.TAG, "1")
                 .field(CheckSum.TAG, "012")
                 .toString());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).severe("SendingTime(52): Invalid value format");
             }});
@@ -1291,7 +1282,7 @@ import fixengine.tags.TradeDate;
          * Standard Header fields appear before Body fields which appear before
          * Standard Trailer fields. */
         public void standardHeaderFieldInBody() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(message("64", "0")
                 .field(MsgSeqNum.TAG, "2")
@@ -1299,7 +1290,7 @@ import fixengine.tags.TradeDate;
                 .field(SendingTime.TAG, "20100701-12:09:40")
                 .field(CheckSum.TAG, "129")
                 .toString());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).severe("SendingTime(52): Out of order tag");
             }});
@@ -1315,7 +1306,7 @@ import fixengine.tags.TradeDate;
          * Standard Header fields appear before Body fields which appear before
          * Standard Trailer fields. */
         public void standardTrailerFieldBeforeBody() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(message("68", "0")
                 .field(MsgSeqNum.TAG, "2")
@@ -1324,7 +1315,7 @@ import fixengine.tags.TradeDate;
                 .field(TestReqID.TAG, "1")
                 .field(CheckSum.TAG, "045")
                 .toString());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).severe("CheckSum(10): Out of order tag");
             }});
@@ -1340,7 +1331,7 @@ import fixengine.tags.TradeDate;
          * number) which is not part of a repeating group is specified more
          * than once. */
         public void duplicateFields() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(message("67", "0")
                 .field(MsgSeqNum.TAG, "2")
@@ -1349,7 +1340,7 @@ import fixengine.tags.TradeDate;
                 .field(TestReqID.TAG, "1")
                 .field(CheckSum.TAG, "247")
                 .toString());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).severe("TestReqID(112): Tag multiple times");
             }});
@@ -1364,7 +1355,7 @@ import fixengine.tags.TradeDate;
         /* Ref ID 14: i. Receive a message with repeating groups in which the
          * "count" field value for a repeating group is incorrect. */
         public void tooManyInstancesInRepeatingGroup() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(message("187", "J")
                 .field(MsgSeqNum.TAG, "2")
@@ -1385,7 +1376,7 @@ import fixengine.tags.TradeDate;
                 .field(AllocShares.TAG, "100.00")
                 .field(CheckSum.TAG, "159")
                 .toString());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).severe("NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 1, but was: 2");
             }});
@@ -1400,7 +1391,7 @@ import fixengine.tags.TradeDate;
         /* Ref ID 14: i. Receive a message with repeating groups in which the
          * "count" field value for a repeating group is incorrect. */
         public void tooFewInstancesInRepeatingGroup() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(message("187", "J")
                 .field(MsgSeqNum.TAG, "2")
@@ -1421,7 +1412,7 @@ import fixengine.tags.TradeDate;
                 .field(AllocShares.TAG, "100.00")
                 .field(CheckSum.TAG, "161")
                 .toString());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).severe("NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 3, but was: 2");
             }});
@@ -1436,7 +1427,7 @@ import fixengine.tags.TradeDate;
         /* Ref ID 14: j. Receive a message with repeating groups in which the
          * order of repeating group fields does not match specification. */
         public void repeatingGroupFieldsOutOfOrder() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(message("187", "J")
                 .field(MsgSeqNum.TAG, "2")
@@ -1457,7 +1448,7 @@ import fixengine.tags.TradeDate;
                 .field(AllocAccount.TAG, "2345")
                 .field(CheckSum.TAG, "160")
                 .toString());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).severe("AllocShares(80): Repeating group fields out of order");
             }});
@@ -1472,7 +1463,7 @@ import fixengine.tags.TradeDate;
         /* Ref ID 14: k. Receive a message with a field of a data type other
          * than "data" which contains one or more embedded <SOH> values. */
         public void fieldValueWithEmbeddedSOHs() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(message("65", "0")
                 .field(MsgSeqNum.TAG, "2")
@@ -1480,7 +1471,7 @@ import fixengine.tags.TradeDate;
                 .field(TestReqID.TAG, "1" + Field.DELIMITER + "000")
                 .field(CheckSum.TAG, "131")
                 .toString());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).severe("Non-data value includes field delimiter (SOH character)");
             }});
@@ -1495,9 +1486,9 @@ import fixengine.tags.TradeDate;
         /* Ref ID 14: l. Receive a message when application-level processing or
          * system is not available (Optional). */
         public void systemNotAvailable() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
-            server.expect(BUSINESS_MESSAGE_REJECT);
+            server.expect(MsgTypeValue.BUSINESS_MESSAGE_REJECT);
             checking(new Expectations() {{
                 one(logger).warning("Application not available");
             }});
@@ -1513,9 +1504,9 @@ import fixengine.tags.TradeDate;
         /* Ref ID 14: m. Receive a message in which a conditionally required
          * field is missing. */
         public void conditionallyRequiredFieldMissing() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
-            server.respond(new MessageBuilder(EXECUTION_REPORT)
+            server.respond(new MessageBuilder(MsgTypeValue.EXECUTION_REPORT)
                 .msgSeqNum(2)
                 .string(OrderID.TAG, "1278658351213-17")
                 .string(ExecID.TAG, "1278658351213-18")
@@ -1530,7 +1521,7 @@ import fixengine.tags.TradeDate;
                 .float0(CumQty.TAG, .0)
                 .float0(AvgPx.TAG, .0)
                 .build());
-            server.expect(BUSINESS_MESSAGE_REJECT);
+            server.expect(MsgTypeValue.BUSINESS_MESSAGE_REJECT);
             checking(new Expectations() {{
                 one(logger).severe("Price(44): Conditionally required field missing");
             }});
@@ -1560,16 +1551,16 @@ import fixengine.tags.TradeDate;
         }
 
         private void reorderedBodyFields() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(SEQUENCE_RESET)
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(2)
                         .bool(GapFillFlag.TAG, true)
                         .integer(NewSeqNo.TAG, 2)
                     .build());
             server.respond(
-                    new MessageBuilder(SEQUENCE_RESET)
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(2)
                         .integer(NewSeqNo.TAG, 2)
                         .bool(GapFillFlag.TAG, true)
@@ -1599,15 +1590,15 @@ import fixengine.tags.TradeDate;
         }
 
         private void respondWithNonPointToPointMsg() throws Exception {
-            server.expect(LOGON);
+            server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
-                    new MessageBuilder(HEARTBEAT)
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
                         .setOnBehalfOfCompId("behalfOf")
                         .setDeliverToCompId("deliverTo")
                         .msgSeqNum(2)
                     .build());
-            server.expect(REJECT);
+            server.expect(MsgTypeValue.REJECT);
             checking(new Expectations() {{
                 one(logger).severe("Third-party message routing is not supported");
             }});
@@ -1621,10 +1612,10 @@ import fixengine.tags.TradeDate;
     }
 
     private void logonHeartbeat() throws Exception {
-        server.expect(LOGON);
+        server.expect(MsgTypeValue.LOGON);
         server.respondLogon();
         server.respond(
-                new MessageBuilder(HEARTBEAT)
+                new MessageBuilder(MsgTypeValue.HEARTBEAT)
                     .msgSeqNum(2)
                 .build());
         runInClient(new Runnable() {
@@ -1700,7 +1691,7 @@ import fixengine.tags.TradeDate;
     class MessageBuilder {
         private final Message message;
 
-        public MessageBuilder(MsgTypeValue type) {
+        public MessageBuilder(String type) {
             MessageHeader header = new MessageHeader(type);
             header.setBeginString(VERSION.value());
             header.setString(SenderCompID.TAG, ACCEPTOR);
@@ -1709,7 +1700,7 @@ import fixengine.tags.TradeDate;
             if (MsgTypeValue.SEQUENCE_RESET.equals(type)) {
                 header.setDateTime(OrigSendingTime.TAG, header.getDateTime(SendingTime.TAG));
             }
-            this.message = type.newMessage(new DefaultMessageFactory(), header);
+            this.message = new DefaultMessageFactory().create(type, header);
         }
 
         public MessageBuilder setOnBehalfOfCompId(String onBehalfOfCompId) {
@@ -1814,7 +1805,7 @@ import fixengine.tags.TradeDate;
 
         public void respondLogon() {
             server.respond(
-                    new MessageBuilder(LOGON)
+                    new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
                         .integer(HeartBtInt.TAG, HEARTBEAT_INTERVAL)
                         .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
@@ -1823,7 +1814,7 @@ import fixengine.tags.TradeDate;
 
         public void respondLogout(int msgSeqNum) {
             server.respond(
-                    new MessageBuilder(LOGOUT)
+                    new MessageBuilder(MsgTypeValue.LOGOUT)
                         .msgSeqNum(msgSeqNum)
                     .build());
         }
@@ -1863,13 +1854,13 @@ import fixengine.tags.TradeDate;
             });
         }
 
-        public void expect(final MsgTypeValue type) {
+        public void expect(final String type) {
             this.commands.add(new Runnable() {
                 @Override public void run() {
                     StringBuilder raw = parse();
                     Parser.parse(new silvertip.Message(raw.toString().getBytes()), new Parser.Callback() {
                         @Override public void message(Message m) {
-                            if (m.getMsgType().equals(type.value()))
+                            if (m.getMsgType().equals(type))
                                 successCount++;
                             else
                                 failureCount++;

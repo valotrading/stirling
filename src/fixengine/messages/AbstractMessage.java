@@ -48,7 +48,7 @@ import fixengine.tags.TargetSubID;
 public abstract class AbstractMessage extends FieldContainer implements Message {
     private final MessageHeader header;
 
-    protected AbstractMessage(MsgTypeValue msgType) {
+    protected AbstractMessage(String msgType) {
         this(new MessageHeader(msgType));
     }
 

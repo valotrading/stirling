@@ -66,7 +66,7 @@ public class Logon implements Command {
               Message msg = messages.next();
               client.getSession().receive(conn, msg, new DefaultMessageVisitor() {
                 @Override public void defaultAction(fixengine.messages.Message message) {
-                  if (message.getMsgType().equals(MsgTypeValue.EXECUTION_REPORT.value()))
+                  if (message.getMsgType().equals(MsgTypeValue.EXECUTION_REPORT))
                     client.setOrderID(message.getString(ClOrdID.TAG), message.getString(OrderID.TAG));
                   logger.info(message.toString());
                 }
