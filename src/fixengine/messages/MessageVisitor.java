@@ -33,4 +33,5 @@ public interface MessageVisitor {
     void visit(SequenceResetMessage message);
     void visit(TestRequestMessage message);
     void visit(AllocationMessage message);
+    void visit(UserDefinedMessage message);
 }
