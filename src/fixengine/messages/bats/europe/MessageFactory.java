@@ -15,8 +15,6 @@
  */
 package fixengine.messages.bats.europe;
 
-import fixengine.messages.MsgTypeValue;
-
 public class MessageFactory extends fixengine.messages.DefaultMessageFactory {
     public MessageFactory() {
         message(MsgTypeValue.EXECUTION_REPORT, ExecutionReportMessage.class);
@@ -24,6 +22,7 @@ public class MessageFactory extends fixengine.messages.DefaultMessageFactory {
         message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingleMessage.class);
         message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequestMessage.class);
         message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequestMessage.class);
+        message(MsgTypeValue.TRADE_CANCEL_CORRECT, OrderModificationRequestMessage.class);
     }
 
     @Override public String getTagsPackage() {
