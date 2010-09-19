@@ -73,7 +73,7 @@ public class DefaultMessageFactory implements MessageFactory {
         return messageTypes.get(msgType);
     }
 
-    private static boolean isValid(String msgType) {
+    private boolean isValid(String msgType) {
         if (msgType.length() == 1) {
             return isValidSingle(msgType);
         } else if (msgType.length() == 2) {
@@ -82,12 +82,12 @@ public class DefaultMessageFactory implements MessageFactory {
         return false;
     }
 
-    private static boolean isValidSingle(String msgType) {
+    private boolean isValidSingle(String msgType) {
         char first = msgType.charAt(0);
         return CharUtils.isAsciiAlphanumeric(first);
     }
 
-    private static boolean isValidWide(String msgType) {
+    private boolean isValidWide(String msgType) {
         char first = msgType.charAt(0);
         if (first != 'A')
             return false;
