@@ -73,7 +73,7 @@ public class DefaultMessageFactory implements MessageFactory {
         return messageTypes.get(msgType);
     }
 
-    private boolean isValid(String msgType) {
+    protected boolean isValid(String msgType) {
         if (msgType.length() == 1) {
             return isValidSingle(msgType);
         } else if (msgType.length() == 2) {

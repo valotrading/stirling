@@ -26,6 +26,12 @@ public class MessageFactory extends fixengine.messages.DefaultMessageFactory {
     }
 
     @Override public String getTagsPackage() {
-      return "fixengine.tags.bats.europe";
+        return "fixengine.tags.bats.europe";
+    }
+
+    @Override protected boolean isValid(String msgType) {
+        if (msgType.length() == 3 && msgType.equals(MsgTypeValue.TRADE_CANCEL_CORRECT))
+            return true;
+        return super.isValid(msgType);
     }
 }
