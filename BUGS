@@ -14,12 +14,3 @@ Known Bugs
 - Message rejection doesn't work if MsgSeqNum is missing from standard header.
 
 - Conditionally required repeating groups are not supported.
-
-- BATS Europe: PreventParticipantMatch is a StringField but should be a EnumField.
-
-- BATS Europe: OrdStatus should be made BATS specific.
-
-- BATS Europe: OrdRejReason should be made BATS specific.
-
-- Missing enums in OrderCapacity. Currently only those values are defined
-  listed in the BATS Europe FIX profile.
