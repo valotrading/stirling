@@ -32,8 +32,9 @@ import fixengine.tags.LastShares;
 import fixengine.tags.OrderID;
 import fixengine.tags.OrigTime;
 import fixengine.tags.SecurityExchange;
-import fixengine.tags.Symbol;
 import fixengine.tags.Side;
+import fixengine.tags.Symbol;
+import fixengine.tags.TransactTime;
 
 import fixengine.tags.bats.europe.CorrectedPrice;
 import fixengine.tags.bats.europe.ExecTransType;
@@ -41,7 +42,6 @@ import fixengine.tags.bats.europe.ExecTransType;
 import fixengine.tags.bats.europe.IDSource;
 import fixengine.tags.bats.europe.SecurityID;
 import fixengine.tags.bats.europe.TradeLiquidityIndicator;
-import fixengine.tags.bats.europe.TransactTime;
 
 import fixengine.messages.bats.europe.ExecTransTypeValue;
 import fixengine.messages.bats.europe.MsgTypeValue;
