@@ -15,11 +15,11 @@
  */
 package fixengine.tags;
 
-import fixengine.messages.StringField;
+import fixengine.messages.UtcTimestampField;
 import fixengine.messages.Tag;
 
-public class OrigTime extends Tag<StringField> {
+public class OrigTime extends Tag<UtcTimestampField> {
     public static final OrigTime TAG = new OrigTime();
 
-    public OrigTime() { super(42, StringField.class); }
+    public OrigTime() { super(42, UtcTimestampField.class); }
 }

@@ -23,5 +23,3 @@ Known Bugs
 
 - Missing enums in OrderCapacity. Currently only those values are defined
   listed in the BATS Europe FIX profile.
-
-- FIX type of OrigTime to UtcTimestamp.
