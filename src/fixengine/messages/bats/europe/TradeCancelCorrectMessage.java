@@ -28,7 +28,7 @@ import fixengine.tags.Currency;
 import fixengine.tags.ExecID;
 import fixengine.tags.ExecRefID;
 import fixengine.tags.LastPx;
-import fixengine.tags.LastQty;
+import fixengine.tags.LastShares;
 import fixengine.tags.OrderID;
 import fixengine.tags.OrigTime;
 import fixengine.tags.SecurityExchange;
@@ -66,7 +66,7 @@ public class TradeCancelCorrectMessage extends UserDefinedMessage {
         field(ExecTransType.TAG);
         field(IDSource.TAG, Required.NO);
         field(LastPx.TAG);
-        field(LastQty.TAG);
+        field(LastShares.TAG);
         field(OrderID.TAG);
         field(OrigTime.TAG);
         field(SecurityID.TAG, Required.NO);

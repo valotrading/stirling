@@ -33,7 +33,7 @@ import fixengine.tags.ExecRefID;
 import fixengine.tags.ExecRestatementReason;
 import fixengine.tags.ExpireTime;
 import fixengine.tags.LastPx;
-import fixengine.tags.LastQty;
+import fixengine.tags.LastShares;
 import fixengine.tags.LeavesQty;
 import fixengine.tags.MaxFloor;
 import fixengine.tags.MinQty;
@@ -84,7 +84,7 @@ public class ExecutionReportMessage extends fixengine.messages.ExecutionReportMe
         field(ExecTransType.TAG);
         field(IDSource.TAG, Required.NO);
         field(LastPx.TAG);
-        field(LastQty.TAG);
+        field(LastShares.TAG);
         field(OrderID.TAG);
         field(OrderQty.TAG);
         field(OrdStatus.TAG);

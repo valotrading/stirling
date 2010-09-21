@@ -26,7 +26,7 @@ import fixengine.tags.ExecTransType;
 import fixengine.tags.ExecType;
 import fixengine.tags.LastMkt;
 import fixengine.tags.LastPx;
-import fixengine.tags.LastQty;
+import fixengine.tags.LastShares;
 import fixengine.tags.LeavesQty;
 import fixengine.tags.MaturityMonthYear;
 import fixengine.tags.OrdRejReason;
@@ -72,7 +72,7 @@ public class ExecutionReportMessage extends AbstractMessage {
         field(MaturityMonthYear.TAG, Required.NO);
         field(Side.TAG);
         field(OrderQty.TAG);
-        field(LastQty.TAG, Required.NO);
+        field(LastShares.TAG, Required.NO);
         field(LastPx.TAG, Required.NO);
         field(LeavesQty.TAG);
         field(OrdType.TAG, Required.NO);

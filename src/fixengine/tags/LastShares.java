@@ -18,8 +18,8 @@ package fixengine.tags;
 import fixengine.messages.FloatField;
 import fixengine.messages.Tag;
 
-public class LastQty extends Tag<FloatField> {
-    public static final LastQty TAG = new LastQty();
+public class LastShares extends Tag<FloatField> {
+    public static final LastShares TAG = new LastShares();
 
-    public LastQty() { super(32, FloatField.class); }
+    public LastShares() { super(32, FloatField.class); }
 }
