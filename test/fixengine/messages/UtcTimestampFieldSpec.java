@@ -29,7 +29,6 @@ import org.junit.runner.RunWith;
 public class UtcTimestampFieldSpec extends Specification<UtcTimestampField> {
     @SuppressWarnings("unchecked") private final Tag<UtcTimestampField> tag = dummy(Tag.class);
     private static final DateTimeZone zoneUTC = DateTimeZone.UTC;
-    private static final DateTime DATE_TIME = new DateTime(2008, 9, 11, 1, 2, 3, 0, zoneUTC);
     private UtcTimestampField timestamp;
 
     public class TimestampFieldThatDoesHasValue {
@@ -58,7 +57,9 @@ public class UtcTimestampFieldSpec extends Specification<UtcTimestampField> {
         }
     }
 
-    public class TimestampFieldThatHasParsedValue {
+    public class TimestampFieldThatHasParsedValueWithoutMilliseconds {
+        private final DateTime DATE_TIME = new DateTime(2008, 9, 11, 1, 2, 3, 0, zoneUTC);
+
         public UtcTimestampField create() {
             timestamp = new UtcTimestampField(tag);
             timestamp.parseValue("20080911-01:02:03");
@@ -72,4 +73,23 @@ public class UtcTimestampFieldSpec extends Specification<UtcTimestampField> {
         public void parsesStringTimestampToDateTimeValue() {
             specify(timestamp.dateValue(), must.equal(DATE_TIME));
         }
-    }}
+    }
+
+    public class TimestampFieldThatHasParsedValueWithMilliseconds {
+        private final DateTime DATE_TIME = new DateTime(2008, 9, 11, 1, 2, 3, 456, zoneUTC);
+
+        public UtcTimestampField create() {
+            timestamp = new UtcTimestampField(tag);
+            timestamp.parseValue("20080911-01:02:03.456");
+            return timestamp;
+        }
+
+        public void formatsToTheSameTimestamp() {
+            specify(timestamp.value(), must.equal("20080911-01:02:03.456"));
+        }
+
+        public void parsesStringTimestampToDateTimeValue() {
+            specify(timestamp.dateValue(), must.equal(DATE_TIME));
+        }
+    }
+}
