@@ -434,8 +434,8 @@ public class Session {
                         return !field.isMissing();
                     }
 
-                    @Override protected void error(Message message, Field field) {
-                        if (authenticated) {
+                    @Override protected void error(Session session, Message message, Field field) {
+                        if (session.isAuthenticated()) {
                             logger.severe(toString(field) + ": Tag missing");
                             sessionReject(conn, message, SessionRejectReasonValue.TAG_MISSING, toString(field) + ": Tag missing");
                         } else {
@@ -451,7 +451,7 @@ public class Session {
                         return !field.isMissing();
                     }
 
-                    @Override protected void error(Message message, Field field) {
+                    @Override protected void error(Session session, Message message, Field field) {
                         if (field.hasSingleTag() && OrigSendingTime.TAG.equals(field.tag())) {
                             sessionReject(conn, message, SessionRejectReasonValue.TAG_MISSING, toString(field) + ": Required tag missing");
                         } else {
