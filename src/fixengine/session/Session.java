@@ -345,11 +345,12 @@ public class Session {
     }
 
     private boolean validate(final Connection conn, final Message message) {
-        ErrorHandler handler = new ErrorHandler() {
+        return MessageValidator.validate(this, message, new ErrorHandler() {
             @Override public void sessionReject(SessionRejectReasonValue reason, String text, ErrorLevel level, boolean terminate) {
                 logError(text, level);
                 Session.this.sessionReject(conn, message, reason, text);
-                if (terminate) Session.this.terminate(conn, message, text);
+                if (terminate)
+                    Session.this.terminate(conn, message, text);
             }
 
             @Override public void businessReject(BusinessRejectReasonValue reason, String text, ErrorLevel level) {
@@ -363,13 +364,16 @@ public class Session {
             }
 
             private void logError(String text, ErrorLevel level) {
-                if (level == ErrorLevel.WARNING)
+                switch (level) {
+                case WARNING:
                     logger.warning(text);
-                else if (level == ErrorLevel.ERROR)
+                    break;
+                case ERROR:
                     logger.severe(text);
+                    break;
+                }
             }
-        };
-        return MessageValidator.validate(this, message, handler);
+        });
     }
 
     private boolean isOutOfSync() {
