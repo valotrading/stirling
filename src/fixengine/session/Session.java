@@ -343,8 +343,8 @@ public class Session {
         }
     }
 
-    private boolean validate(final Connection conn, final Message message) {
-        List<Validator<Message>> validators = new ArrayList<Validator<Message>>() {
+    private List<Validator<Message>> createValidators() {
+        return new ArrayList<Validator<Message>>() {
             {
                 add(new AbstractMessageValidator() {
                     @Override protected boolean isValid(Session session, Message message) {
@@ -457,6 +457,9 @@ public class Session {
             }
             private static final long serialVersionUID = 1L;
         };
+    }
+
+    private boolean validate(final Connection conn, final Message message) {
         ErrorHandler handler = new ErrorHandler() {
             @Override public void sessionReject(SessionRejectReasonValue reason, String text, ErrorLevel level, boolean terminate) {
                 logError(text, level);
@@ -481,6 +484,7 @@ public class Session {
                     logger.severe(text);
             }
         };
+        List<Validator<Message>> validators = createValidators();
         for (Validator<Message> validator : validators) {
             if (!validator.validate(this, message, handler))
                 return false;
