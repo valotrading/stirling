@@ -95,12 +95,11 @@ public class Session {
     private boolean authenticated;
     private boolean available = true;
 
-    private long prevTxTimeMsec = System.currentTimeMillis();
-    private long prevRxTimeMsec = System.currentTimeMillis();
+    private DateTime prevTxTime = timeSource.currentTime();
+    private DateTime prevRxTime = timeSource.currentTime();
 
     private boolean waitingForResponseToInitiatedLogout;
-    private long logoutInitiatedAtMsec;
-
+    private DateTime logoutInitiatedAt;
 
     public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store) {
         this(heartBtInt, config, store, Logger.getLogger("Session"), DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC, new DefaultMessageFactory());
@@ -156,12 +155,12 @@ public class Session {
         message.setMsgSeqNum(outgoingSeq.next());
         message.setSendingTime(timeSource.currentTime());
         conn.send(silvertip.Message.fromString(message.format()));
-        prevTxTimeMsec = System.currentTimeMillis();
+        prevTxTime = timeSource.currentTime();
         store.save(this);
     }
 
     public void receive(final Connection conn, silvertip.Message message, final MessageVisitor visitor) {
-        prevRxTimeMsec = System.currentTimeMillis();
+        prevRxTime = timeSource.currentTime();
         try {
             Parser.parse(messageFactory, message, new Parser.Callback() {
                 @Override public void message(Message message) {
@@ -226,7 +225,7 @@ public class Session {
     public void logout(final Connection conn) {
         send(conn, (LogoutMessage) messageFactory.create(LOGOUT));
         initiatedLogout = true;
-        logoutInitiatedAtMsec = System.currentTimeMillis();
+        logoutInitiatedAt = timeSource.currentTime();
         waitingForResponseToInitiatedLogout = true;
     }
 
@@ -238,7 +237,7 @@ public class Session {
         message.setInteger(NewSeqNo.TAG, seq.next());
         message.setBoolean(GapFillFlag.TAG, false);
         conn.send(silvertip.Message.fromString(message.format()));
-        prevTxTimeMsec = System.currentTimeMillis();
+        prevTxTime = timeSource.currentTime();
         setOutgoingSeq(seq);
         store.save(this);
     }
@@ -252,25 +251,29 @@ public class Session {
     }
 
     public void keepAlive(Connection conn) {
-        long curTimeMsec = System.currentTimeMillis();
-
-        if (curTimeMsec - prevTxTimeMsec > heartBtInt.heartbeat().delayMsec()) {
+        if (isTimedOut(prevTxTime, heartBtInt.heartbeat().delayMsec())) {
             heartbeat(conn);
-            prevTxTimeMsec = System.currentTimeMillis();
+            prevTxTime = timeSource.currentTime();
         }
 
-        if (curTimeMsec - prevRxTimeMsec > heartBtInt.testRequest().delayMsec()) {
+        if (isTimedOut(prevRxTime, heartBtInt.testRequest().delayMsec())) {
             testRequest(conn);
-            prevRxTimeMsec = System.currentTimeMillis();
+            prevRxTime = timeSource.currentTime();
         }
     }
 
     public void processInitiatedLogout(Connection conn) {
-        if (waitingForResponseToInitiatedLogout && System.currentTimeMillis() - logoutInitiatedAtMsec > logoutResponseTimeoutMsec) {
+        if (waitingForResponseToInitiatedLogout && isTimedOut(logoutInitiatedAt, logoutResponseTimeoutMsec)) {
             logger.warning("Response to logout not received in " + logoutResponseTimeoutMsec / 1000 + " second(s), disconnecting");
             waitingForResponseToInitiatedLogout = false;
             conn.close();
         }
+    }
+
+    private boolean isTimedOut(DateTime dateTime, long timeoutMsec) {
+        DateTime now = timeSource.currentTime();
+        DateTime timeOutAt = dateTime.plusMillis((int)timeoutMsec);
+        return now.isAfter(timeOutAt);
     }
 
     public void heartbeat(Connection conn) {
