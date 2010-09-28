@@ -38,6 +38,7 @@ import fixengine.messages.LogoutMessage;
 import fixengine.messages.Message;
 import fixengine.messages.MessageFactory;
 import fixengine.messages.MessageVisitor;
+import fixengine.messages.MessageValidator;
 import fixengine.messages.Parser;
 import fixengine.messages.RejectMessage;
 import fixengine.messages.ResendRequestMessage;
@@ -343,122 +344,6 @@ public class Session {
         }
     }
 
-    private List<Validator<Message>> createValidators() {
-        return new ArrayList<Validator<Message>>() {
-            {
-                add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Session session, Message message) {
-                        return session.isAvailable();
-                    }
-
-                    @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                        handler.businessReject(BusinessRejectReasonValue.APPLICATION_NOT_AVAILABLE, "Application not available", ErrorLevel.WARNING);
-                    }
-                });
-                add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Session session, Message message) {
-                        return !message.isTooLowSeqNum(session.getIncomingSeq().peek());
-                    }
-
-                    @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                        handler.terminate("MsgSeqNum too low, expecting " + session.getIncomingSeq().peek() + " but received " + message.getMsgSeqNum());
-                    }
-                });
-                add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Session session, Message message) {
-                        return message.hasValidBeginString(session.getConfig());
-                    }
-
-                    @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                        handler.terminate("BeginString is invalid, expecting " + session.getConfig().getVersion().value() + " but received " + message.getBeginString());
-                    }
-                });
-                add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Session session, Message message) {
-                        return message.hasValidSenderCompId(session.getConfig());
-                    }
-
-                    @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                        handler.sessionReject(SessionRejectReasonValue.COMP_ID_PROBLEM, "Invalid SenderCompID(49): " + message.getSenderCompId(), ErrorLevel.ERROR, true);
-                    }
-                });
-                add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Session session, Message message) {
-                        return message.hasValidTargetCompId(session.getConfig());
-                    }
-
-                    @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                        handler.sessionReject(SessionRejectReasonValue.COMP_ID_PROBLEM, "Invalid TargetCompID(56): " + message.getTargetCompId(), ErrorLevel.ERROR, true);
-                    }
-                });
-                add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Session session, Message message) {
-                        return message.hasOrigSendTimeAfterSendingTime();
-                    }
-
-                    @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                        String text = "OrigSendingTime " + message.getOrigSendingTime() + " after " + message.getSendingTime();
-                        handler.sessionReject(SessionRejectReasonValue.SENDING_TIME_ACCURACY_PROBLEM, text, ErrorLevel.ERROR, true);
-                    }
-                });
-                add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Session session, Message message) {
-                        return message.hasAccurateSendingTime(session.currentTime());
-                    }
-
-                    @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                        String text = "SendingTime is invalid: " + message.getSendingTime();
-                        handler.sessionReject(SessionRejectReasonValue.SENDING_TIME_ACCURACY_PROBLEM, text, ErrorLevel.ERROR, true);
-                    }
-                });
-                add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Session session, Message message) {
-                        return message.isPointToPoint();
-                    }
-
-                    @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                        String text = "Third-party message routing is not supported";
-                        handler.sessionReject(SessionRejectReasonValue.COMP_ID_PROBLEM, text, ErrorLevel.ERROR, false);
-                    }
-                });
-                add(new AbstractFieldsValidator() {
-                    @Override protected boolean isValid(Session session, Field field) {
-                        if (field.isConditional()) {
-                            return true;
-                        }
-                        return !field.isMissing();
-                    }
-
-                    @Override protected void error(Session session, Message message, Field field, ErrorHandler handler) {
-                        if (session.isAuthenticated()) {
-                            String text = toString(field) + ": Tag missing";
-                            handler.sessionReject(SessionRejectReasonValue.TAG_MISSING, text, ErrorLevel.ERROR, false);
-                        } else {
-                            handler.terminate(toString(field) + ": Tag missing");
-                        }
-                    }
-                });
-                add(new AbstractFieldsValidator() {
-                    @Override protected boolean isValid(Session session, Field field) {
-                        if (!field.isConditional()) {
-                            return true;
-                        }
-                        return !field.isMissing();
-                    }
-
-                    @Override protected void error(Session session, Message message, Field field, ErrorHandler handler) {
-                        if (field.hasSingleTag() && OrigSendingTime.TAG.equals(field.tag())) {
-                            handler.sessionReject(SessionRejectReasonValue.TAG_MISSING, toString(field) + ": Required tag missing", ErrorLevel.ERROR, false);
-                        } else {
-                            handler.businessReject(BusinessRejectReasonValue.CONDITIONALLY_REQUIRED_FIELD_MISSING, toString(field) + ": Conditionally required field missing", ErrorLevel.ERROR);
-                        }
-                    }
-                });
-            }
-            private static final long serialVersionUID = 1L;
-        };
-    }
-
     private boolean validate(final Connection conn, final Message message) {
         ErrorHandler handler = new ErrorHandler() {
             @Override public void sessionReject(SessionRejectReasonValue reason, String text, ErrorLevel level, boolean terminate) {
@@ -484,12 +369,7 @@ public class Session {
                     logger.severe(text);
             }
         };
-        List<Validator<Message>> validators = createValidators();
-        for (Validator<Message> validator : validators) {
-            if (!validator.validate(this, message, handler))
-                return false;
-        }
-        return true;
+        return MessageValidator.validate(this, message, handler);
     }
 
     private boolean isOutOfSync() {
