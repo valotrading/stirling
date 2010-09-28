@@ -348,7 +348,7 @@ public class Session {
                         return session.isAvailable();
                     }
 
-                    @Override protected void error(Message message) {
+                    @Override protected void error(Session session, Message message) {
                         logger.warning("Application not available");
                         businessReject(conn, message.getMsgType(), message.getMsgSeqNum(), BusinessRejectReasonValue.APPLICATION_NOT_AVAILABLE,
                                 "Application not available");
@@ -359,7 +359,7 @@ public class Session {
                         return !message.isTooLowSeqNum(session.getIncomingSeq().peek());
                     }
 
-                    @Override protected void error(Message message) {
+                    @Override protected void error(Session session, Message message) {
                         terminate(conn, message, "MsgSeqNum too low, expecting " + queue.nextSeqNum() + " but received "
                                 + message.getMsgSeqNum());
                     }
@@ -369,7 +369,7 @@ public class Session {
                         return message.hasValidBeginString(session.getConfig());
                     }
 
-                    @Override protected void error(Message message) {
+                    @Override protected void error(Session session, Message message) {
                         terminate(conn, message, "BeginString is invalid, expecting " + config.getVersion().value() + " but received "
                                 + message.getBeginString());
                     }
@@ -379,7 +379,7 @@ public class Session {
                         return message.hasValidSenderCompId(session.getConfig());
                     }
 
-                    @Override protected void error(Message message) {
+                    @Override protected void error(Session session, Message message) {
                         sessionReject(conn, message, SessionRejectReasonValue.COMP_ID_PROBLEM, "Invalid SenderCompID(49): " + message.getSenderCompId());
                         terminate(conn, message, "Invalid SenderCompID(49): " + message.getSenderCompId());
                     }
@@ -389,7 +389,7 @@ public class Session {
                         return message.hasValidTargetCompId(session.getConfig());
                     }
 
-                    @Override protected void error(Message message) {
+                    @Override protected void error(Session session, Message message) {
                         sessionReject(conn, message, SessionRejectReasonValue.COMP_ID_PROBLEM, "Invalid TargetCompID(56): " + message.getTargetCompId());
                         terminate(conn, message, "Invalid TargetCompID(56): " + message.getTargetCompId());
                     }
@@ -399,7 +399,7 @@ public class Session {
                         return message.hasOrigSendTimeAfterSendingTime();
                     }
 
-                    @Override protected void error(Message message) {
+                    @Override protected void error(Session session, Message message) {
                         String text = "OrigSendingTime " + message.getOrigSendingTime() + " after " + message.getSendingTime();
                         sessionReject(conn, message, SessionRejectReasonValue.SENDING_TIME_ACCURACY_PROBLEM, text);
                         terminate(conn, message, text);
@@ -410,7 +410,7 @@ public class Session {
                         return message.hasAccurateSendingTime(session.currentTime());
                     }
 
-                    @Override protected void error(Message message) {
+                    @Override protected void error(Session session, Message message) {
                         String text = "SendingTime is invalid: " + message.getSendingTime();
                         sessionReject(conn, message, SessionRejectReasonValue.SENDING_TIME_ACCURACY_PROBLEM, text);
                         terminate(conn, message, text);
@@ -421,7 +421,7 @@ public class Session {
                         return message.isPointToPoint();
                     }
 
-                    @Override protected void error(Message message) {
+                    @Override protected void error(Session session, Message message) {
                         logger.severe("Third-party message routing is not supported");
                         sessionReject(conn, message, SessionRejectReasonValue.COMP_ID_PROBLEM, "Third-party message routing is not supported");
                     }

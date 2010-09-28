@@ -24,7 +24,7 @@ public abstract class AbstractMessageValidator implements Validator<Message> {
     @Override
     public boolean validate(Session session, Message message) {
         if (!isValid(session, message)) {
-            error(message);
+            error(session, message);
             return false;
         }
         return true;
@@ -32,5 +32,5 @@ public abstract class AbstractMessageValidator implements Validator<Message> {
 
     protected abstract boolean isValid(Session session, Message message);
 
-    protected abstract void error(Message message);
+    protected abstract void error(Session session, Message message);
 }
