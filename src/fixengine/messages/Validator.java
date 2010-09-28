@@ -21,5 +21,15 @@ import fixengine.session.Session;
  * @author Pekka Enberg 
  */
 public interface Validator<T> {
-    boolean validate(Session session, T obj);
+    public enum ErrorLevel {
+      WARNING, ERROR
+    };
+
+    public interface ErrorHandler {
+        void sessionReject(SessionRejectReasonValue reason, String text, ErrorLevel level, boolean terminate);
+        void businessReject(BusinessRejectReasonValue reason, String text, ErrorLevel level);
+        void terminate(String text);
+    };
+
+    boolean validate(Session session, T obj, ErrorHandler handler);
 }

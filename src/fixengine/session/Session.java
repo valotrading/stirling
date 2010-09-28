@@ -69,6 +69,9 @@ import static fixengine.messages.MsgTypeValue.TEST_REQUEST;
 import static fixengine.messages.MsgTypeValue.REJECT;
 import static fixengine.messages.MsgTypeValue.BUSINESS_MESSAGE_REJECT;
 
+import fixengine.messages.Validator.ErrorLevel;
+import fixengine.messages.Validator.ErrorHandler;
+
 /**
  * @author Karim Osman
  */
@@ -462,8 +465,13 @@ public class Session {
             }
             private static final long serialVersionUID = 1L;
         };
+        ErrorHandler handler = new ErrorHandler() {
+            @Override public void sessionReject(SessionRejectReasonValue reason, String text, ErrorLevel level, boolean terminate) { }
+            @Override public void businessReject(BusinessRejectReasonValue reason, String text, ErrorLevel level) { }
+            @Override public void terminate(String text) { }
+        };
         for (Validator<Message> validator : validators) {
-            if (!validator.validate(this, message))
+            if (!validator.validate(this, message, handler))
                 return false;
         }
         return true;

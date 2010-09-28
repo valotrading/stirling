@@ -22,7 +22,7 @@ import fixengine.session.Session;
  */
 public abstract class AbstractMessageValidator implements Validator<Message> {
     @Override
-    public boolean validate(Session session, Message message) {
+    public boolean validate(Session session, Message message, ErrorHandler handler) {
         if (!isValid(session, message)) {
             error(session, message);
             return false;
