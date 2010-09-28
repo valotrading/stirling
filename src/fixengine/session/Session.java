@@ -143,6 +143,10 @@ public class Session {
         return timeSource.currentTime();
     }
 
+    public boolean isAuthenticated() {
+        return authenticated;
+    }
+
     public void send(Connection conn, Message message) {
         message.setHeaderConfig(config);
         message.setMsgSeqNum(outgoingSeq.next());
