@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import lang.DefaultTimeSource;
 import lang.TimeSource;
 import silvertip.Connection;
@@ -136,6 +137,10 @@ public class Session {
 
     public void setIncomingSeq(Sequence seq) {
         queue.reset(seq.peek());
+    }
+
+    public DateTime currentTime() {
+        return timeSource.currentTime();
     }
 
     public void send(Connection conn, Message message) {
