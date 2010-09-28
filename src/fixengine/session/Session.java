@@ -234,6 +234,10 @@ public class Session {
         this.available = available;
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
     public void keepAlive(Connection conn) {
         long curTimeMsec = System.currentTimeMillis();
 
