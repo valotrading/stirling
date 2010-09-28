@@ -343,7 +343,7 @@ public class Session {
         }
     }
 
-    private boolean validate(final Connection conn, Message message) {
+    private boolean validate(final Connection conn, final Message message) {
         List<Validator<Message>> validators = new ArrayList<Validator<Message>>() {
             {
                 add(new AbstractMessageValidator() {
@@ -352,9 +352,7 @@ public class Session {
                     }
 
                     @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                        logger.warning("Application not available");
-                        businessReject(conn, message.getMsgType(), message.getMsgSeqNum(), BusinessRejectReasonValue.APPLICATION_NOT_AVAILABLE,
-                                "Application not available");
+                        handler.businessReject(BusinessRejectReasonValue.APPLICATION_NOT_AVAILABLE, "Application not available", ErrorLevel.WARNING);
                     }
                 });
                 add(new AbstractMessageValidator() {
@@ -363,8 +361,7 @@ public class Session {
                     }
 
                     @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                        terminate(conn, message, "MsgSeqNum too low, expecting " + queue.nextSeqNum() + " but received "
-                                + message.getMsgSeqNum());
+                        handler.terminate("MsgSeqNum too low, expecting " + session.getIncomingSeq().peek() + " but received " + message.getMsgSeqNum());
                     }
                 });
                 add(new AbstractMessageValidator() {
@@ -373,8 +370,7 @@ public class Session {
                     }
 
                     @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                        terminate(conn, message, "BeginString is invalid, expecting " + config.getVersion().value() + " but received "
-                                + message.getBeginString());
+                        handler.terminate("BeginString is invalid, expecting " + session.getConfig().getVersion().value() + " but received " + message.getBeginString());
                     }
                 });
                 add(new AbstractMessageValidator() {
@@ -383,8 +379,7 @@ public class Session {
                     }
 
                     @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                        sessionReject(conn, message, SessionRejectReasonValue.COMP_ID_PROBLEM, "Invalid SenderCompID(49): " + message.getSenderCompId());
-                        terminate(conn, message, "Invalid SenderCompID(49): " + message.getSenderCompId());
+                        handler.sessionReject(SessionRejectReasonValue.COMP_ID_PROBLEM, "Invalid SenderCompID(49): " + message.getSenderCompId(), ErrorLevel.ERROR, true);
                     }
                 });
                 add(new AbstractMessageValidator() {
@@ -393,8 +388,7 @@ public class Session {
                     }
 
                     @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                        sessionReject(conn, message, SessionRejectReasonValue.COMP_ID_PROBLEM, "Invalid TargetCompID(56): " + message.getTargetCompId());
-                        terminate(conn, message, "Invalid TargetCompID(56): " + message.getTargetCompId());
+                        handler.sessionReject(SessionRejectReasonValue.COMP_ID_PROBLEM, "Invalid TargetCompID(56): " + message.getTargetCompId(), ErrorLevel.ERROR, true);
                     }
                 });
                 add(new AbstractMessageValidator() {
@@ -404,8 +398,7 @@ public class Session {
 
                     @Override protected void error(Session session, Message message, ErrorHandler handler) {
                         String text = "OrigSendingTime " + message.getOrigSendingTime() + " after " + message.getSendingTime();
-                        sessionReject(conn, message, SessionRejectReasonValue.SENDING_TIME_ACCURACY_PROBLEM, text);
-                        terminate(conn, message, text);
+                        handler.sessionReject(SessionRejectReasonValue.SENDING_TIME_ACCURACY_PROBLEM, text, ErrorLevel.ERROR, true);
                     }
                 });
                 add(new AbstractMessageValidator() {
@@ -415,8 +408,7 @@ public class Session {
 
                     @Override protected void error(Session session, Message message, ErrorHandler handler) {
                         String text = "SendingTime is invalid: " + message.getSendingTime();
-                        sessionReject(conn, message, SessionRejectReasonValue.SENDING_TIME_ACCURACY_PROBLEM, text);
-                        terminate(conn, message, text);
+                        handler.sessionReject(SessionRejectReasonValue.SENDING_TIME_ACCURACY_PROBLEM, text, ErrorLevel.ERROR, true);
                     }
                 });
                 add(new AbstractMessageValidator() {
@@ -425,8 +417,8 @@ public class Session {
                     }
 
                     @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                        logger.severe("Third-party message routing is not supported");
-                        sessionReject(conn, message, SessionRejectReasonValue.COMP_ID_PROBLEM, "Third-party message routing is not supported");
+                        String text = "Third-party message routing is not supported";
+                        handler.sessionReject(SessionRejectReasonValue.COMP_ID_PROBLEM, text, ErrorLevel.ERROR, false);
                     }
                 });
                 add(new AbstractFieldsValidator() {
@@ -439,10 +431,10 @@ public class Session {
 
                     @Override protected void error(Session session, Message message, Field field, ErrorHandler handler) {
                         if (session.isAuthenticated()) {
-                            logger.severe(toString(field) + ": Tag missing");
-                            sessionReject(conn, message, SessionRejectReasonValue.TAG_MISSING, toString(field) + ": Tag missing");
+                            String text = toString(field) + ": Tag missing";
+                            handler.sessionReject(SessionRejectReasonValue.TAG_MISSING, text, ErrorLevel.ERROR, false);
                         } else {
-                            terminate(conn, message, toString(field) + ": Tag missing");
+                            handler.terminate(toString(field) + ": Tag missing");
                         }
                     }
                 });
@@ -456,19 +448,38 @@ public class Session {
 
                     @Override protected void error(Session session, Message message, Field field, ErrorHandler handler) {
                         if (field.hasSingleTag() && OrigSendingTime.TAG.equals(field.tag())) {
-                            sessionReject(conn, message, SessionRejectReasonValue.TAG_MISSING, toString(field) + ": Required tag missing");
+                            handler.sessionReject(SessionRejectReasonValue.TAG_MISSING, toString(field) + ": Required tag missing", ErrorLevel.ERROR, false);
                         } else {
-                            logger.severe(toString(field) + ": Conditionally required field missing");
-                            businessReject(conn, message.getMsgType(), message.getMsgSeqNum(), BusinessRejectReasonValue.CONDITIONALLY_REQUIRED_FIELD_MISSING, toString(field) + ": Conditionally required field missing"); }
+                            handler.businessReject(BusinessRejectReasonValue.CONDITIONALLY_REQUIRED_FIELD_MISSING, toString(field) + ": Conditionally required field missing", ErrorLevel.ERROR);
+                        }
                     }
                 });
             }
             private static final long serialVersionUID = 1L;
         };
         ErrorHandler handler = new ErrorHandler() {
-            @Override public void sessionReject(SessionRejectReasonValue reason, String text, ErrorLevel level, boolean terminate) { }
-            @Override public void businessReject(BusinessRejectReasonValue reason, String text, ErrorLevel level) { }
-            @Override public void terminate(String text) { }
+            @Override public void sessionReject(SessionRejectReasonValue reason, String text, ErrorLevel level, boolean terminate) {
+                logError(text, level);
+                Session.this.sessionReject(conn, message, reason, text);
+                if (terminate) Session.this.terminate(conn, message, text);
+            }
+
+            @Override public void businessReject(BusinessRejectReasonValue reason, String text, ErrorLevel level) {
+                logError(text, level);
+                Session.this.businessReject(conn, message.getMsgType(), message.getMsgSeqNum(), reason, text);
+            }
+
+            @Override public void terminate(String text) {
+                logError(text, ErrorLevel.ERROR);
+                Session.this.terminate(conn, message, text);
+            }
+
+            private void logError(String text, ErrorLevel level) {
+                if (level == ErrorLevel.WARNING)
+                    logger.warning(text);
+                else if (level == ErrorLevel.ERROR)
+                    logger.severe(text);
+            }
         };
         for (Validator<Message> validator : validators) {
             if (!validator.validate(this, message, handler))
@@ -503,7 +514,6 @@ public class Session {
     }
 
     private void terminate(Connection conn, Message message, String text) {
-        logger.severe(text);
         LogoutMessage logout = (LogoutMessage) messageFactory.create(LOGOUT);
         logout.setString(Text.TAG, text);
         send(conn, logout);

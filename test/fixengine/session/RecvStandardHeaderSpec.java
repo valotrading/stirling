@@ -172,6 +172,9 @@ import fixengine.tags.TestReqID;
                         .msgSeqNum(3)
                     .build());
             server.expect(MsgTypeValue.REJECT);
+            checking(new Expectations() {{
+                one(logger).severe("OrigSendingTime(122): Required tag missing");
+            }});
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
