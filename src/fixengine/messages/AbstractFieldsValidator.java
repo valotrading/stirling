@@ -25,7 +25,7 @@ public abstract class AbstractFieldsValidator implements Validator<Message> {
     public final boolean validate(Session session, Message message, ErrorHandler handler) {
         for (Field field : message) {
             if (!isValid(session, field)) {
-                error(session, message, field);
+                error(session, message, field, handler);
                 return false;
             }
         }
@@ -34,7 +34,7 @@ public abstract class AbstractFieldsValidator implements Validator<Message> {
 
     protected abstract boolean isValid(Session session, Field field);
 
-    protected abstract void error(Session session, Message message, Field field);
+    protected abstract void error(Session session, Message message, Field field, ErrorHandler handler);
 
     protected String toString(Field field) {
         return field.prettyName();
