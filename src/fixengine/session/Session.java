@@ -340,8 +340,8 @@ public class Session {
         List<Validator<Message>> validators = new ArrayList<Validator<Message>>() {
             {
                 add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Message message) {
-                        return available;
+                    @Override protected boolean isValid(Session session, Message message) {
+                        return session.isAvailable();
                     }
 
                     @Override protected void error(Message message) {
@@ -351,8 +351,8 @@ public class Session {
                     }
                 });
                 add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Message message) {
-                        return !message.isTooLowSeqNum(queue.nextSeqNum());
+                    @Override protected boolean isValid(Session session, Message message) {
+                        return !message.isTooLowSeqNum(session.getIncomingSeq().peek());
                     }
 
                     @Override protected void error(Message message) {
@@ -361,8 +361,8 @@ public class Session {
                     }
                 });
                 add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Message message) {
-                        return message.hasValidBeginString(config);
+                    @Override protected boolean isValid(Session session, Message message) {
+                        return message.hasValidBeginString(session.getConfig());
                     }
 
                     @Override protected void error(Message message) {
@@ -371,8 +371,8 @@ public class Session {
                     }
                 });
                 add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Message message) {
-                        return message.hasValidSenderCompId(config);
+                    @Override protected boolean isValid(Session session, Message message) {
+                        return message.hasValidSenderCompId(session.getConfig());
                     }
 
                     @Override protected void error(Message message) {
@@ -381,8 +381,8 @@ public class Session {
                     }
                 });
                 add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Message message) {
-                        return message.hasValidTargetCompId(config);
+                    @Override protected boolean isValid(Session session, Message message) {
+                        return message.hasValidTargetCompId(session.getConfig());
                     }
 
                     @Override protected void error(Message message) {
@@ -391,7 +391,7 @@ public class Session {
                     }
                 });
                 add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Message message) {
+                    @Override protected boolean isValid(Session session, Message message) {
                         return message.hasOrigSendTimeAfterSendingTime();
                     }
 
@@ -402,8 +402,8 @@ public class Session {
                     }
                 });
                 add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Message message) {
-                        return message.hasAccurateSendingTime(timeSource.currentTime());
+                    @Override protected boolean isValid(Session session, Message message) {
+                        return message.hasAccurateSendingTime(session.currentTime());
                     }
 
                     @Override protected void error(Message message) {
@@ -413,7 +413,7 @@ public class Session {
                     }
                 });
                 add(new AbstractMessageValidator() {
-                    @Override protected boolean isValid(Message message) {
+                    @Override protected boolean isValid(Session session, Message message) {
                         return message.isPointToPoint();
                     }
 
@@ -423,7 +423,7 @@ public class Session {
                     }
                 });
                 add(new AbstractFieldsValidator() {
-                    @Override protected boolean isValid(Field field) {
+                    @Override protected boolean isValid(Session session, Field field) {
                         if (field.isConditional()) {
                             return true;
                         }
@@ -440,7 +440,7 @@ public class Session {
                     }
                 });
                 add(new AbstractFieldsValidator() {
-                    @Override protected boolean isValid(Field field) {
+                    @Override protected boolean isValid(Session session, Field field) {
                         if (!field.isConditional()) {
                             return true;
                         }
@@ -459,7 +459,7 @@ public class Session {
             private static final long serialVersionUID = 1L;
         };
         for (Validator<Message> validator : validators) {
-            if (!validator.validate(message))
+            if (!validator.validate(this, message))
                 return false;
         }
         return true;

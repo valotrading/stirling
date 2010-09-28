@@ -15,20 +15,22 @@
  */
 package fixengine.messages;
 
+import fixengine.session.Session;
+
 /**
  * @author Pekka Enberg 
  */
 public abstract class AbstractMessageValidator implements Validator<Message> {
     @Override
-    public boolean validate(Message message) {
-        if (!isValid(message)) {
+    public boolean validate(Session session, Message message) {
+        if (!isValid(session, message)) {
             error(message);
             return false;
         }
         return true;
     }
 
-    protected abstract boolean isValid(Message message);
+    protected abstract boolean isValid(Session session, Message message);
 
     protected abstract void error(Message message);
 }

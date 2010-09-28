@@ -15,9 +15,11 @@
  */
 package fixengine.messages;
 
+import fixengine.session.Session;
+
 /**
  * @author Pekka Enberg 
  */
 public interface Validator<T> {
-    boolean validate(T obj);
+    boolean validate(Session session, T obj);
 }

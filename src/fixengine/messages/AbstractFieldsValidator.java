@@ -15,15 +15,16 @@
  */
 package fixengine.messages;
 
+import fixengine.session.Session;
 
 /**
  * @author Pekka Enberg 
  */
 public abstract class AbstractFieldsValidator implements Validator<Message> {
     @Override
-    public final boolean validate(Message message) {
+    public final boolean validate(Session session, Message message) {
         for (Field field : message) {
-            if (!isValid(field)) {
+            if (!isValid(session, field)) {
                 error(message, field);
                 return false;
             }
@@ -31,7 +32,7 @@ public abstract class AbstractFieldsValidator implements Validator<Message> {
         return true;
     }
 
-    protected abstract boolean isValid(Field field);
+    protected abstract boolean isValid(Session session, Field field);
 
     protected abstract void error(Message message, Field field);
 
