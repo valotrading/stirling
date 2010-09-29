@@ -412,11 +412,14 @@ public class InitiatorSpecification extends Specification<Session> {
     }
 
     private Session newSession() {
-        return new Session(new HeartBtIntValue(HEARTBEAT_INTERVAL), getConfig(), new InMemorySessionStore(),
-            logger, new DefaultMessageFactory()){
+        return new Session(new HeartBtIntValue(HEARTBEAT_INTERVAL), getConfig(), new InMemorySessionStore(), new DefaultMessageFactory()){
             @Override
             protected long getLogoutResponseTimeoutMsec() {
                 return logoutResponseTimeoutMsec;
+            }
+            @Override
+            protected Logger getLogger() {
+                return logger;
             }
         };
     }

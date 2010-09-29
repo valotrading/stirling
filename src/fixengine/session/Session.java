@@ -72,6 +72,7 @@ import fixengine.tags.Text;
  */
 public class Session {
     private static final long DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC = 10000;
+    private static final Logger LOG = Logger.getLogger("Session");
 
     protected MessageQueue queue = new MessageQueue();
     protected Sequence outgoingSeq = new Sequence();
@@ -80,7 +81,6 @@ public class Session {
     protected final HeartBtIntValue heartBtInt;
     protected final Config config;
     protected final SessionStore store;
-    protected final Logger logger;
     protected final MessageFactory messageFactory;
 
     private long testReqId;
@@ -95,19 +95,13 @@ public class Session {
     private DateTime logoutInitiatedAt;
 
     public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store) {
-        this(heartBtInt, config, store, Logger.getLogger("Session"), new DefaultMessageFactory());
+        this(heartBtInt, config, store, new DefaultMessageFactory());
     }
 
     public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, MessageFactory messageFactory) {
-        this(heartBtInt, config, store, Logger.getLogger("Session"), messageFactory);
-    }
-
-    public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, Logger logger,
-            MessageFactory messageFactory) {
         this.heartBtInt = heartBtInt;
         this.config = config;
         this.store = store;
-        this.logger = logger;
         this.messageFactory = messageFactory;
         store.load(this);
     }
@@ -176,29 +170,29 @@ public class Session {
                 @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
                     queue.skip(msgSeqNum);
                     if (authenticated) {
-                        logger.severe(text);
+                        getLogger().severe(text);
                         sessionReject(conn, msgSeqNum, reason, text);
                     } else {
-                        logger.severe(text);
+                        getLogger().severe(text);
                         logout(conn);
                     }
                 }
 
                 @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {
-                    logger.warning("MsgType(35): Unknown message type: " + msgType);
+                    getLogger().warning("MsgType(35): Unknown message type: " + msgType);
                     queue.skip(msgSeqNum);
                     businessReject(conn, msgType, msgSeqNum, BusinessRejectReasonValue.UNKNOWN_MESSAGE_TYPE, "MsgType(35): Unknown message type: " + msgType);
                 }
 
                 @Override public void invalidMsgType(String msgType, int msgSeqNum) {
-                    logger.warning("MsgType(35): Invalid message type: " + msgType);
+                    getLogger().warning("MsgType(35): Invalid message type: " + msgType);
                     queue.skip(msgSeqNum);
                     sessionReject(conn, msgSeqNum, SessionRejectReasonValue.INVALID_MSG_TYPE, "MsgType(35): Invalid message type: " + msgType);
                 }
 
                 @Override public void garbledMessage(String text) {
                     /* Ignore the message. */
-                    logger.warning(text);
+                    getLogger().warning(text);
                 }
             });
         } finally {
@@ -256,7 +250,7 @@ public class Session {
 
     public void processInitiatedLogout(Connection conn) {
         if (waitingForResponseToInitiatedLogout && isTimedOut(logoutInitiatedAt, getLogoutResponseTimeoutMsec())) {
-            logger.warning("Response to logout not received in " + getLogoutResponseTimeoutMsec() / 1000
+            getLogger().warning("Response to logout not received in " + getLogoutResponseTimeoutMsec() / 1000
                     + " second(s), disconnecting");
             waitingForResponseToInitiatedLogout = false;
             conn.close();
@@ -275,6 +269,10 @@ public class Session {
 
     protected long getLogoutResponseTimeoutMsec() {
         return DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC;
+    }
+
+    protected Logger getLogger() {
+        return LOG;
     }
 
     protected boolean checkSeqResetSeqNum() {
@@ -337,7 +335,7 @@ public class Session {
                 }
 
                 @Override public void defaultAction(Message message) {
-                    logger.severe("first message is not a logon");
+                    getLogger().severe("first message is not a logon");
                     logout(conn);
                 }
             });
@@ -366,10 +364,10 @@ public class Session {
             private void logError(String text, ErrorLevel level) {
                 switch (level) {
                 case WARNING:
-                    logger.warning(text);
+                    getLogger().warning(text);
                     break;
                 case ERROR:
-                    logger.severe(text);
+                    getLogger().severe(text);
                     break;
                 }
             }
@@ -437,12 +435,12 @@ public class Session {
             sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE,
                 "Attempt to lower sequence number, invalid value NewSeqNum(36)=" + newSeqNo);
         } else if (newSeqNo < message.getMsgSeqNum() && !message.getBoolean(GapFillFlag.TAG)) {
-            logger.warning("Value is incorrect (out of range) for this tag, NewSeqNum(36)=" + newSeqNo);
+            getLogger().warning("Value is incorrect (out of range) for this tag, NewSeqNum(36)=" + newSeqNo);
             sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE,
                 "Value is incorrect (out of range) for this tag, NewSeqNum(36)=" + newSeqNo);
         } else {
             if (newSeqNo == message.getMsgSeqNum() && !message.getBoolean(GapFillFlag.TAG))
-                logger.warning("NewSeqNo(36)=" + newSeqNo + " is equal to expected MsgSeqNum(34)=" + message.getMsgSeqNum());
+                getLogger().warning("NewSeqNo(36)=" + newSeqNo + " is equal to expected MsgSeqNum(34)=" + message.getMsgSeqNum());
             queue.reset(newSeqNo);
         }
     }
