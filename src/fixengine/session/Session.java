@@ -15,37 +15,44 @@
  */
 package fixengine.session;
 
-import java.util.logging.Logger;
-import java.util.ArrayList;
-import java.util.List;
+import static fixengine.messages.MsgTypeValue.BUSINESS_MESSAGE_REJECT;
+import static fixengine.messages.MsgTypeValue.HEARTBEAT;
+import static fixengine.messages.MsgTypeValue.LOGON;
+import static fixengine.messages.MsgTypeValue.LOGOUT;
+import static fixengine.messages.MsgTypeValue.REJECT;
+import static fixengine.messages.MsgTypeValue.RESEND_REQUEST;
+import static fixengine.messages.MsgTypeValue.SEQUENCE_RESET;
+import static fixengine.messages.MsgTypeValue.TEST_REQUEST;
 
-import org.joda.time.DateTime;
+import java.util.logging.Logger;
+
 import lang.DefaultTimeSource;
 import lang.TimeSource;
+
+import org.joda.time.DateTime;
+
 import silvertip.Connection;
 import fixengine.Config;
-import fixengine.messages.AbstractFieldsValidator;
-import fixengine.messages.AbstractMessageValidator;
 import fixengine.messages.BusinessMessageRejectMessage;
 import fixengine.messages.BusinessRejectReasonValue;
 import fixengine.messages.DefaultMessageFactory;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.EncryptMethodValue;
-import fixengine.messages.Field;
 import fixengine.messages.HeartbeatMessage;
 import fixengine.messages.LogonMessage;
 import fixengine.messages.LogoutMessage;
 import fixengine.messages.Message;
 import fixengine.messages.MessageFactory;
-import fixengine.messages.MessageVisitor;
 import fixengine.messages.MessageValidator;
+import fixengine.messages.MessageVisitor;
 import fixengine.messages.Parser;
 import fixengine.messages.RejectMessage;
 import fixengine.messages.ResendRequestMessage;
 import fixengine.messages.SequenceResetMessage;
 import fixengine.messages.SessionRejectReasonValue;
 import fixengine.messages.TestRequestMessage;
-import fixengine.messages.Validator;
+import fixengine.messages.Validator.ErrorHandler;
+import fixengine.messages.Validator.ErrorLevel;
 import fixengine.session.store.SessionStore;
 import fixengine.tags.BeginSeqNo;
 import fixengine.tags.BusinessRejectReason;
@@ -54,24 +61,11 @@ import fixengine.tags.EndSeqNo;
 import fixengine.tags.GapFillFlag;
 import fixengine.tags.HeartBtInt;
 import fixengine.tags.NewSeqNo;
-import fixengine.tags.OrigSendingTime;
 import fixengine.tags.RefMsgType;
 import fixengine.tags.RefSeqNo;
 import fixengine.tags.SessionRejectReason;
 import fixengine.tags.TestReqID;
 import fixengine.tags.Text;
-
-import static fixengine.messages.MsgTypeValue.HEARTBEAT;
-import static fixengine.messages.MsgTypeValue.LOGON;
-import static fixengine.messages.MsgTypeValue.LOGOUT;
-import static fixengine.messages.MsgTypeValue.RESEND_REQUEST;
-import static fixengine.messages.MsgTypeValue.SEQUENCE_RESET;
-import static fixengine.messages.MsgTypeValue.TEST_REQUEST;
-import static fixengine.messages.MsgTypeValue.REJECT;
-import static fixengine.messages.MsgTypeValue.BUSINESS_MESSAGE_REJECT;
-
-import fixengine.messages.Validator.ErrorLevel;
-import fixengine.messages.Validator.ErrorHandler;
 
 /**
  * @author Karim Osman
