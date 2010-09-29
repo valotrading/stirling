@@ -81,7 +81,6 @@ public class Session {
     protected final Config config;
     protected final SessionStore store;
     protected final Logger logger;
-    protected final long logoutResponseTimeoutMsec;
     protected final MessageFactory messageFactory;
 
     private long testReqId;
@@ -96,20 +95,19 @@ public class Session {
     private DateTime logoutInitiatedAt;
 
     public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store) {
-        this(heartBtInt, config, store, Logger.getLogger("Session"), DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC, new DefaultMessageFactory());
+        this(heartBtInt, config, store, Logger.getLogger("Session"), new DefaultMessageFactory());
     }
 
     public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, MessageFactory messageFactory) {
-        this(heartBtInt, config, store, Logger.getLogger("Session"), DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC, messageFactory);
+        this(heartBtInt, config, store, Logger.getLogger("Session"), messageFactory);
     }
 
     public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, Logger logger,
-            long logoutResponseTimeoutMsec, MessageFactory messageFactory) {
+            MessageFactory messageFactory) {
         this.heartBtInt = heartBtInt;
         this.config = config;
         this.store = store;
         this.logger = logger;
-        this.logoutResponseTimeoutMsec = logoutResponseTimeoutMsec;
         this.messageFactory = messageFactory;
         store.load(this);
     }
@@ -257,8 +255,9 @@ public class Session {
     }
 
     public void processInitiatedLogout(Connection conn) {
-        if (waitingForResponseToInitiatedLogout && isTimedOut(logoutInitiatedAt, logoutResponseTimeoutMsec)) {
-            logger.warning("Response to logout not received in " + logoutResponseTimeoutMsec / 1000 + " second(s), disconnecting");
+        if (waitingForResponseToInitiatedLogout && isTimedOut(logoutInitiatedAt, getLogoutResponseTimeoutMsec())) {
+            logger.warning("Response to logout not received in " + getLogoutResponseTimeoutMsec() / 1000
+                    + " second(s), disconnecting");
             waitingForResponseToInitiatedLogout = false;
             conn.close();
         }
@@ -272,6 +271,10 @@ public class Session {
 
     public void heartbeat(Connection conn) {
         send(conn, (HeartbeatMessage) messageFactory.create(HEARTBEAT));
+    }
+
+    protected long getLogoutResponseTimeoutMsec() {
+        return DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC;
     }
 
     protected boolean checkSeqResetSeqNum() {
