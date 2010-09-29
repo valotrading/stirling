@@ -94,10 +94,6 @@ public class Session {
     private boolean waitingForResponseToInitiatedLogout;
     private DateTime logoutInitiatedAt;
 
-    public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store) {
-        this(heartBtInt, config, store, new DefaultMessageFactory());
-    }
-
     public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, MessageFactory messageFactory) {
         this.heartBtInt = heartBtInt;
         this.config = config;
