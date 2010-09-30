@@ -30,7 +30,7 @@ import fixengine.messages.MsgTypeValue;
             server.respond(
                     new MessageBuilder(MsgTypeValue.HEARTBEAT)
                         .msgSeqNum(2)
-                    .build(), HEARTBEAT_INTERVAL * 500L);
+                    .build(), HEARTBEAT_INTERVAL_MSEC / 2);
             server.respondLogout(3);
             server.expect(MsgTypeValue.LOGOUT);
             runInClient(new Runnable() {

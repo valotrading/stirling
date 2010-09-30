@@ -80,7 +80,7 @@ public class InitiatorSpecification extends Specification<Session> {
 
     private static final Random generator = new Random();
 
-    protected static final int HEARTBEAT_INTERVAL = 1;
+    protected static final long HEARTBEAT_INTERVAL_MSEC = 1000;
     protected final SimpleAcceptor server = new SimpleAcceptor(1024 + generator.nextInt(1024));
     protected final Logger logger = mock(Logger.class);
     protected Connection connection;
@@ -260,7 +260,7 @@ public class InitiatorSpecification extends Specification<Session> {
             server.respond(
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
-                        .integer(HeartBtInt.TAG, HEARTBEAT_INTERVAL)
+                        .integer(HeartBtInt.TAG, (int) HEARTBEAT_INTERVAL_MSEC / 1000)
                         .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
                     .build());
         }
@@ -412,7 +412,7 @@ public class InitiatorSpecification extends Specification<Session> {
     }
 
     private Session newSession() {
-        return new Session(HeartBtIntValue.seconds(HEARTBEAT_INTERVAL), getConfig(), new InMemorySessionStore(), new DefaultMessageFactory()){
+        return new Session(HeartBtIntValue.milliseconds(HEARTBEAT_INTERVAL_MSEC), getConfig(), new InMemorySessionStore(), new DefaultMessageFactory()){
             @Override
             protected long getLogoutResponseTimeoutMsec() {
                 return LOGOUT_RESPONSE_TIMEOUT_MSEC;
