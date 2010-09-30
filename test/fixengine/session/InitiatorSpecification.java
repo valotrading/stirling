@@ -73,7 +73,7 @@ public class InitiatorSpecification extends Specification<Session> {
     private static final String dateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'";
     private static final DateTimeFormatter fmt = DateTimeFormat.forPattern(dateTimeFormat);
 
-    private static final long logoutResponseTimeoutMsec = 1000;
+    protected static final long LOGOUT_RESPONSE_TIMEOUT_MSEC = 1000;
     private static final Version VERSION = Version.FIX_4_2;
     private static final String INITIATOR = "initiator";
     private static final String ACCEPTOR = "OPENFIX";
@@ -415,7 +415,7 @@ public class InitiatorSpecification extends Specification<Session> {
         return new Session(new HeartBtIntValue(HEARTBEAT_INTERVAL), getConfig(), new InMemorySessionStore(), new DefaultMessageFactory()){
             @Override
             protected long getLogoutResponseTimeoutMsec() {
-                return logoutResponseTimeoutMsec;
+                return LOGOUT_RESPONSE_TIMEOUT_MSEC;
             }
             @Override
             protected Logger getLogger() {
