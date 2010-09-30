@@ -199,7 +199,7 @@ public class PerformanceTest implements Runnable {
     }
 
     protected HeartBtIntValue getHeartBtIntValue() {
-        return new HeartBtIntValue(30);
+        return HeartBtIntValue.seconds(30);
     }
 
     protected Config getConfig() {

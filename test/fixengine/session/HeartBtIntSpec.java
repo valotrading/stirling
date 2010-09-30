@@ -28,7 +28,7 @@ import fixengine.io.Timeout;
 @RunWith(JDaveRunner.class)
 public class HeartBtIntSpec extends Specification<HeartBtIntValue> {
     public class AnyHeartBtInt {
-        private HeartBtIntValue heartBtInt = new HeartBtIntValue(30);
+        private HeartBtIntValue heartBtInt = HeartBtIntValue.seconds(30);
 
         public HeartBtIntValue create() {
             return heartBtInt;

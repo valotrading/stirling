@@ -21,20 +21,28 @@ import fixengine.io.Timeout;
  * @author Pekka Enberg
  */
 public class HeartBtIntValue {
-    /* HeartBtInt + "some reasonable transmission time"  */
+    /* HeartBtInt + "some reasonable transmission time" */
     private static final double TX_TIME_FACTOR = 1.2;
 
-    private int seconds;
+    private long millis;
 
-    public HeartBtIntValue(int seconds) {
-        this.seconds = seconds;
+    public static HeartBtIntValue seconds(int seconds) {
+        return new HeartBtIntValue(seconds * 1000);
+    }
+
+    public static HeartBtIntValue milliseconds(long millis) {
+        return new HeartBtIntValue(millis);
+    }
+
+    private HeartBtIntValue(long millis) {
+        this.millis = millis;
     }
 
     public Timeout heartbeat() {
-        return Timeout.seconds(seconds);
+        return Timeout.milliseconds(millis);
     }
 
     public Timeout testRequest() {
-        return Timeout.seconds((int) (seconds * TX_TIME_FACTOR));
+        return Timeout.milliseconds((long) (millis * TX_TIME_FACTOR));
     }
 }

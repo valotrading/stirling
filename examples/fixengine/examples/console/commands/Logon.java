@@ -101,7 +101,7 @@ public class Logon implements Command {
   }
 
   private HeartBtIntValue getHeartBtInt() {
-    return new HeartBtIntValue(30);
+    return HeartBtIntValue.seconds(30);
   }
 
   private InetAddress host(Scanner scanner) throws CommandArgException {
