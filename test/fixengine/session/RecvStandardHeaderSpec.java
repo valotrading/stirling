@@ -201,7 +201,7 @@ import fixengine.tags.TestReqID;
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .setBeginString("FIX.4.3")
                         .msgSeqNum(1)
-                        .integer(HeartBtInt.TAG, (int) HEARTBEAT_INTERVAL_MSEC / 1000)
+                        .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
                         .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
                     .build());
             server.expect(MsgTypeValue.LOGOUT);
@@ -233,7 +233,7 @@ import fixengine.tags.TestReqID;
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
                         .setSenderCompID("SENDER")
-                        .integer(HeartBtInt.TAG, (int) HEARTBEAT_INTERVAL_MSEC / 1000)
+                        .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
                         .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
                     .build());
             server.expect(MsgTypeValue.REJECT);
@@ -259,7 +259,7 @@ import fixengine.tags.TestReqID;
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
                         .setTargetCompID("TARGET")
-                        .integer(HeartBtInt.TAG, (int) HEARTBEAT_INTERVAL_MSEC / 1000)
+                        .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
                         .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
                     .build());
             server.expect(MsgTypeValue.REJECT);

@@ -85,8 +85,20 @@ public class InitiatorSpecification extends Specification<Session> {
     protected final Logger logger = mock(Logger.class);
     protected Connection connection;
     protected Session session;
-
     private long sessionTimeShift;
+    private long heartBeatIntervalMSec = 1000;
+
+    protected void setHeartBeatInterval(long intervalInMSec) {
+        heartBeatIntervalMSec = intervalInMSec;
+    }
+
+    protected long getHearbeatIntervalInMillis() {
+        return heartBeatIntervalMSec;
+    }
+
+    protected int getHeartbeatIntervalInSeconds() {
+        return (int) (heartBeatIntervalMSec/1000);
+    }
 
     protected void shiftSessionTimeBy(long millis) {
         sessionTimeShift += millis;
@@ -97,10 +109,14 @@ public class InitiatorSpecification extends Specification<Session> {
     }
 
     protected void runInClient(Runnable command, boolean keepAlive) throws Exception {
+        runInClient(command, keepAlive, 1000);
+    }
+
+    protected void runInClient(Runnable command, boolean keepAlive, long eventsIdleMSec) throws Exception {
         Thread serverThread = new Thread(server);
         serverThread.start();
         server.awaitForStart();
-        Events events = Events.open(1000);
+        Events events = Events.open(eventsIdleMSec);
         session = newSession();
         connection = openConnection(session, server.getPort(), keepAlive);
         events.register(connection);
@@ -260,7 +276,7 @@ public class InitiatorSpecification extends Specification<Session> {
             server.respond(
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
-                        .integer(HeartBtInt.TAG, (int) HEARTBEAT_INTERVAL_MSEC / 1000)
+                        .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
                         .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
                     .build());
         }
@@ -412,7 +428,7 @@ public class InitiatorSpecification extends Specification<Session> {
     }
 
     private Session newSession() {
-        return new Session(HeartBtIntValue.milliseconds(HEARTBEAT_INTERVAL_MSEC), getConfig(), new InMemorySessionStore(), new DefaultMessageFactory()){
+        return new Session(HeartBtIntValue.milliseconds(getHearbeatIntervalInMillis()), getConfig(), new InMemorySessionStore(), new DefaultMessageFactory()){
             @Override
             protected long getLogoutResponseTimeoutMsec() {
                 return LOGOUT_RESPONSE_TIMEOUT_MSEC;

@@ -44,7 +44,7 @@ import fixengine.tags.HeartBtInt;
             server.respond(
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(2)
-                        .integer(HeartBtInt.TAG, (int) HEARTBEAT_INTERVAL_MSEC/1000)
+                        .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
                         .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
                     .build());
             server.expect(MsgTypeValue.RESEND_REQUEST);
@@ -63,7 +63,7 @@ import fixengine.tags.HeartBtInt;
             server.respond(
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
-                        .integer(HeartBtInt.TAG, (int) HEARTBEAT_INTERVAL_MSEC/1000)
+                        .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
                         /* EncryptMethod(98) missing */
                     .build());
             server.expect(MsgTypeValue.LOGOUT);
