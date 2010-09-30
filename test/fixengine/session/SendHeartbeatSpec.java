@@ -35,6 +35,7 @@ import fixengine.messages.MsgTypeValue;
         }
 
         public void logonHeartbeatTestRequest() throws Exception {
+            setHeartBeatInterval(50);
             server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.expect(MsgTypeValue.HEARTBEAT);
@@ -45,7 +46,7 @@ import fixengine.messages.MsgTypeValue;
                 @Override public void run() {
                     session.logon(connection);
                 }
-            }, true);
+            }, true, 2);
         }
     }
 }
