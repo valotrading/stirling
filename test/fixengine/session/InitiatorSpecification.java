@@ -15,7 +15,7 @@
  */
 package fixengine.session;
 
-import jdave.Specification;
+import static org.joda.time.DateTimeZone.UTC;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,23 +28,19 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Logger;
+
+import jdave.Specification;
 import lang.DefaultTimeSource;
 
-import static org.joda.time.DateTimeZone.UTC;
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.DateTime;
 
 import silvertip.Connection;
 import silvertip.Events;
 import silvertip.protocols.FixMessageParser;
-
 import fixengine.Config;
 import fixengine.Version;
-
-import fixengine.session.store.SessionStore;
-import fixengine.session.store.InMemorySessionStore;
-
 import fixengine.messages.BooleanField;
 import fixengine.messages.DefaultMessageFactory;
 import fixengine.messages.DefaultMessageVisitor;
@@ -57,13 +53,12 @@ import fixengine.messages.IntegerField;
 import fixengine.messages.Message;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MsgTypeValue;
-import fixengine.messages.MsgTypeValue;
 import fixengine.messages.Parser;
 import fixengine.messages.RawMessageBuilder;
 import fixengine.messages.SessionRejectReasonValue;
 import fixengine.messages.StringField;
 import fixengine.messages.Tag;
-
+import fixengine.session.store.InMemorySessionStore;
 import fixengine.tags.BeginString;
 import fixengine.tags.BodyLength;
 import fixengine.tags.EncryptMethod;
@@ -91,6 +86,11 @@ public class InitiatorSpecification extends Specification<Session> {
     protected Connection connection;
     protected Session session;
 
+    private long sessionTimeShift;
+
+    protected void shiftSessionTimeBy(long millis) {
+        sessionTimeShift += millis;
+    }
 
     protected void runInClient(Runnable command) throws Exception {
         runInClient(command, false);
@@ -420,6 +420,10 @@ public class InitiatorSpecification extends Specification<Session> {
             @Override
             protected Logger getLogger() {
                 return logger;
+            }
+            @Override
+            public DateTime currentTime() {
+                return super.currentTime().plus(sessionTimeShift);
             }
         };
     }
