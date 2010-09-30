@@ -22,18 +22,22 @@ import lang.Objects;
  * @author Pekka Enberg 
  */
 public class Timeout {
-    private final int delay;
+    private final long delayMsec;
 
-    public static Timeout seconds(int delay) {
-        return new Timeout(delay);
+    public static Timeout seconds(int delaySec) {
+        return new Timeout(delaySec*1000l);
     }
 
-    private Timeout(int delay) {
-        this.delay = delay;
+    public static Timeout milliseconds(long delayMsec) {
+        return new Timeout(delayMsec);
+    }
+
+    private Timeout(long delay) {
+        this.delayMsec = delay;
     }
 
     public long delayMsec() {
-      return delay * 1000L;
+      return delayMsec;
     }
     
     @Override
