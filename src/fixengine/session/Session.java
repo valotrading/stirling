@@ -76,20 +76,20 @@ public class Session {
 
     protected MessageQueue queue = new MessageQueue();
     protected Sequence outgoingSeq = new Sequence();
-    protected TimeSource timeSource = new DefaultTimeSource();
 
     protected final HeartBtIntValue heartBtInt;
     protected final Config config;
     protected final SessionStore store;
     protected final MessageFactory messageFactory;
 
+    private TimeSource timeSource = new DefaultTimeSource();
     private long testReqId;
     private boolean initiatedLogout;
     private boolean authenticated;
     private boolean available = true;
 
-    private DateTime prevTxTime = timeSource.currentTime();
-    private DateTime prevRxTime = timeSource.currentTime();
+    private DateTime prevTxTime = currentTime();
+    private DateTime prevRxTime = currentTime();
 
     private boolean waitingForResponseToInitiatedLogout;
     private DateTime logoutInitiatedAt;
@@ -135,14 +135,14 @@ public class Session {
     public void send(Connection conn, Message message) {
         message.setHeaderConfig(config);
         message.setMsgSeqNum(outgoingSeq.next());
-        message.setSendingTime(timeSource.currentTime());
+        message.setSendingTime(currentTime());
         conn.send(silvertip.Message.fromString(message.format()));
-        prevTxTime = timeSource.currentTime();
+        prevTxTime = currentTime();
         store.save(this);
     }
 
     public void receive(final Connection conn, silvertip.Message message, final MessageVisitor visitor) {
-        prevRxTime = timeSource.currentTime();
+        prevRxTime = currentTime();
         try {
             Parser.parse(messageFactory, message, new Parser.Callback() {
                 @Override public void message(Message message) {
@@ -207,19 +207,19 @@ public class Session {
     public void logout(final Connection conn) {
         send(conn, (LogoutMessage) messageFactory.create(LOGOUT));
         initiatedLogout = true;
-        logoutInitiatedAt = timeSource.currentTime();
+        logoutInitiatedAt = currentTime();
         waitingForResponseToInitiatedLogout = true;
     }
 
     public void sequenceReset(Connection conn, Sequence seq) {
         SequenceResetMessage message = (SequenceResetMessage) messageFactory.create(SEQUENCE_RESET);
         message.setHeaderConfig(config);
-        message.setSendingTime(timeSource.currentTime());
+        message.setSendingTime(currentTime());
         message.setMsgSeqNum(seq.peek());
         message.setInteger(NewSeqNo.TAG, seq.next());
         message.setBoolean(GapFillFlag.TAG, false);
         conn.send(silvertip.Message.fromString(message.format()));
-        prevTxTime = timeSource.currentTime();
+        prevTxTime = currentTime();
         setOutgoingSeq(seq);
         store.save(this);
     }
@@ -235,12 +235,12 @@ public class Session {
     public void keepAlive(Connection conn) {
         if (isTimedOut(prevTxTime, heartBtInt.heartbeat().delayMsec())) {
             heartbeat(conn);
-            prevTxTime = timeSource.currentTime();
+            prevTxTime = currentTime();
         }
 
         if (isTimedOut(prevRxTime, heartBtInt.testRequest().delayMsec())) {
             testRequest(conn);
-            prevRxTime = timeSource.currentTime();
+            prevRxTime = currentTime();
         }
     }
 
@@ -254,7 +254,7 @@ public class Session {
     }
 
     private boolean isTimedOut(DateTime dateTime, long timeoutMsec) {
-        DateTime now = timeSource.currentTime();
+        DateTime now = currentTime();
         DateTime timeOutAt = dateTime.plusMillis((int)timeoutMsec);
         return now.isAfter(timeOutAt);
     }
