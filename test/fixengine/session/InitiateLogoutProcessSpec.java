@@ -15,8 +15,8 @@
  */
 package fixengine.session;
 
-import jdave.Specification;
 import jdave.junit4.JDaveRunner;
+
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 
@@ -36,11 +36,7 @@ import fixengine.messages.MsgTypeValue;
                     session.logout(connection);
                 }
             });
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            shiftSessionTimeBy(LOGOUT_RESPONSE_TIMEOUT_MSEC+1);
             session.processInitiatedLogout(connection);
         }
 
@@ -50,7 +46,7 @@ import fixengine.messages.MsgTypeValue;
             server.respondLogon();
             server.expect(MsgTypeValue.LOGOUT);
             checking(new Expectations() {{
-                one(logger).warning("Response to logout not received in 1 second(s), disconnecting");
+                one(logger).warning("Response to logout not received in "+LOGOUT_RESPONSE_TIMEOUT_MSEC/1000+" second(s), disconnecting");
             }});
             runInClient(new Runnable() {
                 @Override public void run() {
@@ -58,11 +54,7 @@ import fixengine.messages.MsgTypeValue;
                     session.logout(connection);
                 }
             });
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            shiftSessionTimeBy(LOGOUT_RESPONSE_TIMEOUT_MSEC+1);
             session.processInitiatedLogout(connection);
         }
     }
