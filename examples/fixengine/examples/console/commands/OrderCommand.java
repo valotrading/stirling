@@ -15,6 +15,13 @@
  */
 package fixengine.examples.console.commands;
 
+import java.lang.reflect.ParameterizedType;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+
+import fixengine.examples.console.ConsoleClient;
+import fixengine.messages.AbstractField;
 import fixengine.messages.EnumField;
 import fixengine.messages.Field;
 import fixengine.messages.FloatField;
@@ -22,21 +29,8 @@ import fixengine.messages.IntegerField;
 import fixengine.messages.Message;
 import fixengine.messages.StringField;
 import fixengine.messages.Tag;
-
-import fixengine.messages.MessageFactory;
-import fixengine.messages.AbstractField;
-
-import fixengine.tags.OrigClOrdID;
 import fixengine.tags.OrderID;
-
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
-
-import fixengine.examples.console.ConsoleClient;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Constructor;
+import fixengine.tags.OrigClOrdID;
 
 public abstract class OrderCommand implements Command {
   private static final Set<Class<? extends Parser>> parserClasses = new HashSet<Class<? extends Parser>>();

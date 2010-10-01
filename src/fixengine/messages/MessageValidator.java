@@ -18,11 +18,9 @@ package fixengine.messages;
 import java.util.ArrayList;
 import java.util.List;
 
+import fixengine.messages.Validator.ErrorHandler;
 import fixengine.session.Session;
 import fixengine.tags.OrigSendingTime;
-
-import fixengine.messages.Validator.ErrorLevel;
-import fixengine.messages.Validator.ErrorHandler;
 
 public class MessageValidator {
     private static final List<Validator<Message>> validators = new ArrayList<Validator<Message>>() {

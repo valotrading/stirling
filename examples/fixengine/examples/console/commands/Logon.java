@@ -21,26 +21,19 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.Iterator;
 import java.util.Scanner;
-
-import fixengine.Config;
-import fixengine.Version;
-import fixengine.session.Session;
-import fixengine.session.HeartBtIntValue;
-
-import fixengine.examples.console.ConsoleClient;
-
-import fixengine.messages.DefaultMessageVisitor;
-import fixengine.messages.MsgTypeValue;
-
-import fixengine.tags.ClOrdID;
-import fixengine.tags.OrderID;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 import silvertip.Connection;
 import silvertip.Message;
 import silvertip.protocols.FixMessageParser;
-
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
+import fixengine.examples.console.ConsoleClient;
+import fixengine.messages.DefaultMessageVisitor;
+import fixengine.messages.MsgTypeValue;
+import fixengine.session.HeartBtIntValue;
+import fixengine.session.Session;
+import fixengine.tags.ClOrdID;
+import fixengine.tags.OrderID;
 
 /**
  * @author Karim Osman

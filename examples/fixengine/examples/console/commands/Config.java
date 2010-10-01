@@ -17,12 +17,8 @@ package fixengine.examples.console.commands;
 
 import java.util.Scanner;
 
-import fixengine.examples.console.ConsoleClient;
-
-import fixengine.messages.bats.europe.MessageFactory;
-import fixengine.messages.DefaultMessageFactory;
-
 import fixengine.Version;
+import fixengine.examples.console.ConsoleClient;
 
 public class Config implements Command {
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {

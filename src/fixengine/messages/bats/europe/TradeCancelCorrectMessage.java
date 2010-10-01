@@ -16,11 +16,9 @@
 package fixengine.messages.bats.europe;
 
 import fixengine.messages.MessageHeader;
+import fixengine.messages.MessageVisitor;
 import fixengine.messages.Required;
 import fixengine.messages.UserDefinedMessage;
-
-import fixengine.messages.MessageVisitor;
-
 import fixengine.tags.ClOrdID;
 import fixengine.tags.ClearingAccount;
 import fixengine.tags.ClearingFirm;
@@ -35,16 +33,11 @@ import fixengine.tags.SecurityExchange;
 import fixengine.tags.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TransactTime;
-
 import fixengine.tags.bats.europe.CorrectedPrice;
-import fixengine.tags.bats.europe.ExecTransType;
 import fixengine.tags.bats.europe.ExecTransType;
 import fixengine.tags.bats.europe.IDSource;
 import fixengine.tags.bats.europe.SecurityID;
 import fixengine.tags.bats.europe.TradeLiquidityIndicator;
-
-import fixengine.messages.bats.europe.ExecTransTypeValue;
-import fixengine.messages.bats.europe.MsgTypeValue;
 
 public class TradeCancelCorrectMessage extends UserDefinedMessage {
     public TradeCancelCorrectMessage() {

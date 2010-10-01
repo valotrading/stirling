@@ -35,7 +35,6 @@ import silvertip.Connection;
 import fixengine.Config;
 import fixengine.messages.BusinessMessageRejectMessage;
 import fixengine.messages.BusinessRejectReasonValue;
-import fixengine.messages.DefaultMessageFactory;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.HeartbeatMessage;

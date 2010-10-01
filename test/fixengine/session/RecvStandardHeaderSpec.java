@@ -16,19 +16,14 @@
 package fixengine.session;
 
 import jdave.junit4.JDaveRunner;
+
 import org.jmock.Expectations;
+import org.joda.time.DateTime;
 import org.junit.runner.RunWith;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
-import static org.joda.time.DateTimeZone.UTC;
-
 import fixengine.messages.EncryptMethodValue;
-import fixengine.messages.MsgTypeValue;
 import fixengine.messages.Message;
-
+import fixengine.messages.MsgTypeValue;
 import fixengine.tags.BeginString;
 import fixengine.tags.BodyLength;
 import fixengine.tags.CheckSum;

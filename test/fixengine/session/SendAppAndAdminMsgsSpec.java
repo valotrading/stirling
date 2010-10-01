@@ -16,13 +16,10 @@
 package fixengine.session;
 
 import jdave.junit4.JDaveRunner;
-import org.jmock.Expectations;
+
 import org.junit.runner.RunWith;
 
 import fixengine.messages.MsgTypeValue;
-
-import fixengine.tags.BeginSeqNo;
-import fixengine.tags.EndSeqNo;
 import fixengine.tags.GapFillFlag;
 import fixengine.tags.NewSeqNo;
 
