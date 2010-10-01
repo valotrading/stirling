@@ -1,16 +1,16 @@
 Known Bugs
 ==========
 
-- Outgoing messages are not queued. See session level test Ref ID 16.
-
-- Encryption is not handled at all. See session level test Ref ID 17.
-
-- PossResend messages are ignored.
-
 - Messages are not processed in-order. For example, if sequence reset follows
   an invalid execution report, we reject the execution report instead of
   processing the sequence reset first.
 
+- Outgoing messages are not queued. See session level test Ref ID 16.
+
 - Message rejection doesn't work if MsgSeqNum is missing from standard header.
 
+- PossResend messages are ignored.
+
 - Conditionally required repeating groups are not supported.
+
+- Encryption is not handled at all. See session level test Ref ID 17.
