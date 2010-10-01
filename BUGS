@@ -9,6 +9,8 @@ Known Bugs
 
 - Message rejection doesn't work if MsgSeqNum is missing from standard header.
 
+- PerformanceTest doesn't use external data store which skews results.
+
 - PossResend messages are ignored.
 
 - Conditionally required repeating groups are not supported.
