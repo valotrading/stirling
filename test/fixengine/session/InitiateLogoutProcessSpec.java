@@ -17,7 +17,6 @@ package fixengine.session;
 
 import jdave.junit4.JDaveRunner;
 
-import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 
 import fixengine.messages.MsgTypeValue;
@@ -45,9 +44,7 @@ import fixengine.messages.MsgTypeValue;
             server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.expect(MsgTypeValue.LOGOUT);
-            checking(new Expectations() {{
-                one(logger).warning("Response to logout not received in "+LOGOUT_RESPONSE_TIMEOUT_MSEC/1000+" second(s), disconnecting");
-            }});
+            checking(expectLogWarning("Response to logout not received in "+LOGOUT_RESPONSE_TIMEOUT_MSEC/1000+" second(s), disconnecting"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

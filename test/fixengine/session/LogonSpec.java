@@ -16,12 +16,11 @@
 package fixengine.session;
 
 import jdave.junit4.JDaveRunner;
-import org.jmock.Expectations;
+
 import org.junit.runner.RunWith;
 
 import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.MsgTypeValue;
-
 import fixengine.tags.EncryptMethod;
 import fixengine.tags.HeartBtInt;
 
@@ -67,9 +66,7 @@ import fixengine.tags.HeartBtInt;
                         /* EncryptMethod(98) missing */
                     .build());
             server.expect(MsgTypeValue.LOGOUT);
-            checking(new Expectations() {{
-                one(logger).severe("EncryptMethod(98): Tag missing");
-            }});
+            checking(expectLogSevere("EncryptMethod(98): Tag missing"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -85,9 +82,7 @@ import fixengine.tags.HeartBtInt;
                         .msgSeqNum(1)
                     .build());
             server.expect(MsgTypeValue.LOGOUT);
-            checking(new Expectations() {{
-                one(logger).severe("first message is not a logon");
-            }});
+            checking(expectLogSevere("first message is not a logon"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

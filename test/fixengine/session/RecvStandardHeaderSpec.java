@@ -17,7 +17,6 @@ package fixengine.session;
 
 import jdave.junit4.JDaveRunner;
 
-import org.jmock.Expectations;
 import org.joda.time.DateTime;
 import org.junit.runner.RunWith;
 
@@ -61,9 +60,7 @@ import fixengine.tags.TestReqID;
             server.respondLogon();
             server.respond(new MessageBuilder(MsgTypeValue.HEARTBEAT).msgSeqNum(1).build());
             server.expect(MsgTypeValue.LOGOUT);
-            checking(new Expectations() {{
-                one(logger).severe("MsgSeqNum too low, expecting 2 but received 1");
-            }});
+            checking(expectLogSevere("MsgSeqNum too low, expecting 2 but received 1"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -86,9 +83,7 @@ import fixengine.tags.TestReqID;
                         .string(TestReqID.TAG, "12345678")
                     .build());
             server.expect(MsgTypeValue.HEARTBEAT);
-            checking(new Expectations() {{
-                one(logger).warning("BeginString(8): Empty tag");
-            }});
+            checking(expectLogWarning("BeginString(8): Empty tag"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -141,10 +136,8 @@ import fixengine.tags.TestReqID;
             server.respond(msg2);
             server.expect(MsgTypeValue.REJECT);
             server.expect(MsgTypeValue.LOGOUT);
-            checking(new Expectations() {{
-                one(logger).severe("OrigSendingTime " + formatDateTime(msg2.getOrigSendingTime()) +
-                        " after " + formatDateTime(msg1.getSendingTime()));
-            }});
+            checking(expectLogSevere("OrigSendingTime " + formatDateTime(msg2.getOrigSendingTime()) +
+                        " after " + formatDateTime(msg1.getSendingTime())));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -167,9 +160,7 @@ import fixengine.tags.TestReqID;
                         .msgSeqNum(3)
                     .build());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("OrigSendingTime(122): Required tag missing");
-            }});
+            checking(expectLogSevere("OrigSendingTime(122): Required tag missing"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -200,9 +191,7 @@ import fixengine.tags.TestReqID;
                         .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
                     .build());
             server.expect(MsgTypeValue.LOGOUT);
-            checking(new Expectations() {{
-                one(logger).severe("BeginString is invalid, expecting FIX.4.2 but received FIX.4.3");
-            }});
+            checking(expectLogSevere("BeginString is invalid, expecting FIX.4.2 but received FIX.4.3"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -233,9 +222,7 @@ import fixengine.tags.TestReqID;
                     .build());
             server.expect(MsgTypeValue.REJECT);
             server.expect(MsgTypeValue.LOGOUT);
-            checking(new Expectations() {{
-                one(logger).severe("Invalid SenderCompID(49): SENDER");
-            }});
+            checking(expectLogSevere("Invalid SenderCompID(49): SENDER"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -259,9 +246,7 @@ import fixengine.tags.TestReqID;
                     .build());
             server.expect(MsgTypeValue.REJECT);
             server.expect(MsgTypeValue.LOGOUT);
-            checking(new Expectations() {{
-                one(logger).severe("Invalid TargetCompID(56): TARGET");
-            }});
+            checking(expectLogSevere("Invalid TargetCompID(56): TARGET"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -285,9 +270,7 @@ import fixengine.tags.TestReqID;
                     .field(TestReqID.TAG, "1")
                     .field(CheckSum.TAG, "206")
                     .toString());
-            checking(new Expectations() {{
-                one(logger).warning("BodyLength(9): Invalid BodyLength");
-            }});
+            checking(expectLogWarning("BodyLength(9): Invalid BodyLength"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -320,9 +303,7 @@ import fixengine.tags.TestReqID;
             server.respond(msg);
             server.expect(MsgTypeValue.REJECT);
             server.expect(MsgTypeValue.LOGOUT);
-            checking(new Expectations() {{
-                one(logger).severe("SendingTime is invalid: " + formatDateTime(msg.getSendingTime()));
-            }});
+            checking(expectLogSevere("SendingTime is invalid: " + formatDateTime(msg.getSendingTime())));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -353,9 +334,7 @@ import fixengine.tags.TestReqID;
                     .field(CheckSum.TAG, "115")
                     .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).warning( "MsgType(35): Invalid message type: ZZ");
-            }});
+            checking(expectLogWarning("MsgType(35): Invalid message type: ZZ"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -379,9 +358,7 @@ import fixengine.tags.TestReqID;
                     .field(CheckSum.TAG, "014")
                     .toString());
             server.expect(MsgTypeValue.BUSINESS_MESSAGE_REJECT);
-            checking(new Expectations() {{
-                one(logger).warning( "MsgType(35): Unknown message type: P");
-            }});
+            checking(expectLogWarning("MsgType(35): Unknown message type: P"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -414,9 +391,7 @@ import fixengine.tags.TestReqID;
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.TAG, "165")
                     .toString());
-            checking(new Expectations() {{
-                one(logger).warning("BeginString(8): is missing");
-            }});
+            checking(expectLogWarning("BeginString(8): is missing"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -441,9 +416,7 @@ import fixengine.tags.TestReqID;
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.TAG, "165")
                     .toString());
-            checking(new Expectations() {{
-                one(logger).warning("BodyLength(9): is missing");
-            }});
+            checking(expectLogWarning("BodyLength(9): is missing"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -468,9 +441,7 @@ import fixengine.tags.TestReqID;
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.TAG, "214")
                     .toString());
-            checking(new Expectations() {{
-                one(logger).warning("MsgType(35): is missing");
-            }});
+            checking(expectLogWarning("MsgType(35): is missing"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

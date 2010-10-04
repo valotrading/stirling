@@ -16,7 +16,7 @@
 package fixengine.session;
 
 import jdave.junit4.JDaveRunner;
-import org.jmock.Expectations;
+
 import org.junit.runner.RunWith;
 
 import fixengine.messages.MsgTypeValue;
@@ -56,9 +56,7 @@ import fixengine.tags.NewSeqNo;
                     .build());
             server.respondLogout(2);
             server.expect(MsgTypeValue.LOGOUT);
-            checking(new Expectations() {{
-                one(logger).warning("NewSeqNo(36)=2 is equal to expected MsgSeqNum(34)=2");
-            }});
+            checking(expectLogWarning("NewSeqNo(36)=2 is equal to expected MsgSeqNum(34)=2"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -82,9 +80,7 @@ import fixengine.tags.NewSeqNo;
                         .integer(NewSeqNo.TAG, 2)
                     .build());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).warning("Value is incorrect (out of range) for this tag, NewSeqNum(36)=2");
-            }});
+            checking(expectLogWarning("Value is incorrect (out of range) for this tag, NewSeqNum(36)=2"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

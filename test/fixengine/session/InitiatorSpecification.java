@@ -32,6 +32,8 @@ import java.util.logging.Logger;
 import jdave.Specification;
 import lang.DefaultTimeSource;
 
+import org.jmock.Expectations;
+import org.jmock.internal.ExpectationBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -82,11 +84,23 @@ public class InitiatorSpecification extends Specification<Session> {
 
     protected static final long HEARTBEAT_INTERVAL_MSEC = 1000;
     protected final SimpleAcceptor server = new SimpleAcceptor(1024 + generator.nextInt(1024));
-    protected final Logger logger = mock(Logger.class);
     protected Connection connection;
     protected Session session;
+    private final Logger logger = mock(Logger.class);
     private long sessionTimeShift;
     private long heartBeatIntervalMSec = 1000;
+
+    protected ExpectationBuilder expectLogSevere(final String message) {
+        return new Expectations() {{
+            one(logger).severe(message);
+        }};
+    }
+
+    protected ExpectationBuilder expectLogWarning(final String message) {
+        return new Expectations() {{
+            one(logger).warning(message);
+        }};
+    }
 
     protected void setHeartBeatInterval(long intervalInMSec) {
         heartBeatIntervalMSec = intervalInMSec;

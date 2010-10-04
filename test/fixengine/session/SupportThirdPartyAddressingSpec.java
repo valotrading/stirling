@@ -16,7 +16,7 @@
 package fixengine.session;
 
 import jdave.junit4.JDaveRunner;
-import org.jmock.Expectations;
+
 import org.junit.runner.RunWith;
 
 import fixengine.messages.MsgTypeValue;
@@ -47,9 +47,7 @@ import fixengine.messages.MsgTypeValue;
                         .msgSeqNum(2)
                     .build());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("Third-party message routing is not supported");
-            }});
+            checking(expectLogSevere("Third-party message routing is not supported"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

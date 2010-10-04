@@ -16,11 +16,10 @@
 package fixengine.session;
 
 import jdave.junit4.JDaveRunner;
-import org.jmock.Expectations;
+
 import org.junit.runner.RunWith;
 
 import fixengine.messages.MsgTypeValue;
-
 import fixengine.tags.BeginString;
 import fixengine.tags.BodyLength;
 import fixengine.tags.CheckSum;
@@ -53,9 +52,7 @@ import fixengine.tags.TargetCompID;
                     .field(SendingTime.TAG, "20100810-07:25:02")
                     .field(CheckSum.TAG, "100")
                     .toString());
-            checking(new Expectations() {{
-                one(logger).warning("CheckSum(10): Expected: 239, but was: 100");
-            }});
+            checking(expectLogWarning("CheckSum(10): Expected: 239, but was: 100"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -96,9 +93,7 @@ import fixengine.tags.TargetCompID;
                     .field(SendingTime.TAG, "20100810-07:58:22")
                     .field(CheckSum.TAG, "48")
                     .toString());
-            checking(new Expectations() {{
-                one(logger).warning("CheckSum(10): CheckSum must have a length of three: 48");
-            }});
+            checking(expectLogWarning("CheckSum(10): CheckSum must have a length of three: 48"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

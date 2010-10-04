@@ -16,7 +16,7 @@
 package fixengine.session;
 
 import jdave.junit4.JDaveRunner;
-import org.jmock.Expectations;
+
 import org.junit.runner.RunWith;
 
 import fixengine.messages.MsgTypeValue;
@@ -98,9 +98,7 @@ import fixengine.tags.NewSeqNo;
                         .integer(NewSeqNo.TAG, 5)
                     .build());
             server.expect(MsgTypeValue.LOGOUT);
-            checking(new Expectations() {{
-                one(logger).severe("MsgSeqNum too low, expecting 2 but received 1");
-            }});
+            checking(expectLogSevere("MsgSeqNum too low, expecting 2 but received 1"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

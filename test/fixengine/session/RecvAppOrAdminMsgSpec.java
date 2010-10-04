@@ -16,7 +16,7 @@
 package fixengine.session;
 
 import jdave.junit4.JDaveRunner;
-import org.jmock.Expectations;
+
 import org.junit.runner.RunWith;
 
 import fixengine.messages.ExecTypeValue;
@@ -25,7 +25,6 @@ import fixengine.messages.MsgTypeValue;
 import fixengine.messages.OrdStatusValue;
 import fixengine.messages.OrdTypeValue;
 import fixengine.messages.SideValue;
-
 import fixengine.tags.AllocAccount;
 import fixengine.tags.AllocID;
 import fixengine.tags.AllocShares;
@@ -71,9 +70,7 @@ import fixengine.tags.TradeDate;
                 .field(CheckSum.TAG, "045")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("Invalid tag number: 9898");
-            }});
+            checking(expectLogSevere("Invalid tag number: 9898"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -93,9 +90,7 @@ import fixengine.tags.TradeDate;
                         .integer(BeginSeqNo.TAG, 1)
                     .build());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("EndSeqNo(16): Tag missing");
-            }});
+            checking(expectLogSevere("EndSeqNo(16): Tag missing"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -119,9 +114,7 @@ import fixengine.tags.TradeDate;
                 .field(CheckSum.TAG, "209")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("Tag not defined for this message: 88");
-            }});
+            checking(expectLogSevere("Tag not defined for this message: 88"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -141,9 +134,7 @@ import fixengine.tags.TradeDate;
                         .string(TestReqID.TAG, "")
                     .build());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("TestReqID(112): Empty tag");
-            }});
+            checking(expectLogSevere("TestReqID(112): Empty tag"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -167,9 +158,7 @@ import fixengine.tags.TradeDate;
                 .field(CheckSum.TAG, "034")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("EncryptMethod(98): Invalid value");
-            }});
+            checking(expectLogSevere("EncryptMethod(98): Invalid value"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -190,9 +179,7 @@ import fixengine.tags.TradeDate;
                 .field(CheckSum.TAG, "012")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("SendingTime(52): Invalid value format");
-            }});
+            checking(expectLogSevere("SendingTime(52): Invalid value format"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -214,9 +201,7 @@ import fixengine.tags.TradeDate;
                 .field(CheckSum.TAG, "129")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("SendingTime(52): Out of order tag");
-            }});
+            checking(expectLogSevere("SendingTime(52): Out of order tag"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -239,9 +224,7 @@ import fixengine.tags.TradeDate;
                 .field(CheckSum.TAG, "045")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("CheckSum(10): Out of order tag");
-            }});
+            checking(expectLogSevere("CheckSum(10): Out of order tag"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -264,9 +247,7 @@ import fixengine.tags.TradeDate;
                 .field(CheckSum.TAG, "247")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("TestReqID(112): Tag multiple times");
-            }});
+            checking(expectLogSevere("TestReqID(112): Tag multiple times"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -300,9 +281,7 @@ import fixengine.tags.TradeDate;
                 .field(CheckSum.TAG, "159")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 1, but was: 2");
-            }});
+            checking(expectLogSevere("NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 1, but was: 2"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -336,9 +315,7 @@ import fixengine.tags.TradeDate;
                 .field(CheckSum.TAG, "161")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 3, but was: 2");
-            }});
+            checking(expectLogSevere("NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 3, but was: 2"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -372,9 +349,7 @@ import fixengine.tags.TradeDate;
                 .field(CheckSum.TAG, "160")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("AllocShares(80): Repeating group fields out of order");
-            }});
+            checking(expectLogSevere("AllocShares(80): Repeating group fields out of order"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -395,9 +370,7 @@ import fixengine.tags.TradeDate;
                 .field(CheckSum.TAG, "131")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("Non-data value includes field delimiter (SOH character)");
-            }});
+            checking(expectLogSevere("Non-data value includes field delimiter (SOH character)"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -412,9 +385,7 @@ import fixengine.tags.TradeDate;
             server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.expect(MsgTypeValue.BUSINESS_MESSAGE_REJECT);
-            checking(new Expectations() {{
-                one(logger).warning("Application not available");
-            }});
+            checking(expectLogWarning("Application not available"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -445,9 +416,7 @@ import fixengine.tags.TradeDate;
                 .float0(AvgPx.TAG, .0)
                 .build());
             server.expect(MsgTypeValue.BUSINESS_MESSAGE_REJECT);
-            checking(new Expectations() {{
-                one(logger).severe("Price(44): Conditionally required field missing");
-            }});
+            checking(expectLogSevere("Price(44): Conditionally required field missing"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
