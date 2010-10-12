@@ -61,7 +61,7 @@
     <jar destfile="${library}" basedir="${main.build}"/>
   </target>
   <target name="test" depends="compile-test">
-    <junit printsummary="no" haltonfailure="true">
+    <junit printsummary="no" haltonfailure="true" showoutput="true">
       <classpath refid="test.path.id"/>
       <batchtest>
         <formatter type="plain" usefile="false"/>
