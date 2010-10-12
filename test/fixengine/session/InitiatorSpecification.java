@@ -341,6 +341,8 @@ public class InitiatorSpecification extends Specification<Session> {
             this.commands.add(new Runnable() {
                 @Override public void run() {
                     StringBuilder raw = parse();
+                    if (raw.length() == 0)
+                        return;
                     Parser.parse(new silvertip.Message(raw.toString().getBytes()), new Parser.Callback() {
                         @Override public void message(Message m) {
                             if (m.getMsgType().equals(type))
@@ -378,6 +380,8 @@ public class InitiatorSpecification extends Specification<Session> {
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
+                        if (c == -1)
+                            break;
                         raw.append((char) c);
                         if (raw.toString().contains("10=")) {
                             do {
