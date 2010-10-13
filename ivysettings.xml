@@ -1,5 +1,6 @@
 <ivysettings>
   <settings defaultResolver="main"/>
+  <caches useOrigin="true" />
   <property name="local-maven2-pattern"
     value="${user.home}/.m2/repository/[organisation]/[module]/[revision]/[module]-[revision](-[classifier]).[ext]"
     override="false"/>
