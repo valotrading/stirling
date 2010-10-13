@@ -110,6 +110,8 @@ public class Session {
 
                     if (validate(conn, message))
                         process(conn, message, visitor);
+                    else if (!message.hasMsgSeqNum())
+                        return;
                     else
                         queue.skip(message);
 

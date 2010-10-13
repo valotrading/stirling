@@ -59,4 +59,5 @@ public interface Message extends Parseable, Iterable<Field>  {
     boolean hasValidTargetCompId(Config config);
     boolean isTooLowSeqNum(int seqNo);
     void validate();
+    boolean hasMsgSeqNum();
 }

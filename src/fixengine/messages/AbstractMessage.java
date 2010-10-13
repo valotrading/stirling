@@ -188,6 +188,11 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
     }
 
     @Override
+    public boolean hasMsgSeqNum() {
+        return header.hasValue(MsgSeqNum.TAG);
+    }
+
+    @Override
     public boolean hasAccurateSendingTime(DateTime currentTime) {
         return header.hasAccurateSendingTime(currentTime);
     }
