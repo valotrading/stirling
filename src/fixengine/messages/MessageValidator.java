@@ -27,20 +27,20 @@ public class MessageValidator {
         {
             add(new AbstractMessageValidator() {
                 @Override protected boolean isValid(Session session, Message message) {
-                    return session.isAvailable();
-                }
-
-                @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                    handler.businessReject(BusinessRejectReasonValue.APPLICATION_NOT_AVAILABLE, "Application not available", ErrorLevel.WARNING);
-                }
-            });
-            add(new AbstractMessageValidator() {
-                @Override protected boolean isValid(Session session, Message message) {
                     return message.hasMsgSeqNum();
                 }
 
                 @Override protected void error(Session session, Message message, ErrorHandler handler) {
                     handler.terminate("MsgSeqNum(35) is missing");
+                }
+            });
+            add(new AbstractMessageValidator() {
+                @Override protected boolean isValid(Session session, Message message) {
+                    return session.isAvailable();
+                }
+
+                @Override protected void error(Session session, Message message, ErrorHandler handler) {
+                    handler.businessReject(BusinessRejectReasonValue.APPLICATION_NOT_AVAILABLE, "Application not available", ErrorLevel.WARNING);
                 }
             });
             add(new AbstractMessageValidator() {
