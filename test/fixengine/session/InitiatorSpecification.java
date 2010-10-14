@@ -77,8 +77,8 @@ public class InitiatorSpecification extends Specification<Session> {
 
     protected static final long LOGOUT_RESPONSE_TIMEOUT_MSEC = 1000;
     private static final Version VERSION = Version.FIX_4_2;
-    protected static final String INITIATOR = "initiator";
-    protected static final String ACCEPTOR = "OPENFIX";
+    private static final String INITIATOR = "initiator";
+    private static final String ACCEPTOR = "OPENFIX";
 
     private static final Random generator = new Random();
 
