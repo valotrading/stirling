@@ -26,6 +26,7 @@ public class Parser {
         void unsupportedMsgType(String msgType, int msgSeqNum);
         void invalidMsgType(String msgType, int msgSeqNum);
         void garbledMessage(String text);
+        void msgSeqNumMissing(String text);
     }
 
     public static void parse(silvertip.Message m, Callback callback) {
@@ -50,6 +51,8 @@ public class Parser {
             msg.parse(b);
             msg.validate();
             callback.message(msg);
+        } catch (MsgSeqNumMissingException e) {
+            callback.msgSeqNumMissing(e.getMessage());
         } catch (InvalidMsgTypeException e) {
             callback.invalidMsgType(header.getMsgType(), header.getInteger(MsgSeqNum.TAG));
         } catch (UnsupportedMsgTypeException e) {

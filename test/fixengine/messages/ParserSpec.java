@@ -46,6 +46,27 @@ public class ParserSpec extends Specification<String> {
         }
     }
 
+    public class MsgSeqNumMissing {
+        public String create() {
+            return raw = message()
+                .field(BeginString, "FIX.4.2")
+                .field(BodyLength, "46")
+                .field(MsgType, "0")
+                .field(SenderCompID, "Sender")
+                .field(TargetCompID, "Target")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(CheckSum, "243")
+                .toString();
+        }
+
+        public void parse() {
+            checking(new Expectations() {{
+                one(callback).msgSeqNumMissing("MsgSeqNum(34) is missing");
+            }});
+            Parser.parse(silvertip.Message.fromString(raw), callback);
+        }
+    }
+
     public class OptionalFieldMissing {
         public String create() {
             return raw = message("51", "0")

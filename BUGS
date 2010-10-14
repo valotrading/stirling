@@ -7,8 +7,6 @@ Known Bugs
 
 - Outgoing messages are not queued. See session level test Ref ID 16.
 
-- Message rejection doesn't work if MsgSeqNum is missing from standard header.
-
 - Logic should be included in the FIX engine to recognize the possible infinite
   resend loop, which may be encountered in this situation.
 

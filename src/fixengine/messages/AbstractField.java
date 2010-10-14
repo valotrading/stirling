@@ -111,7 +111,7 @@ public abstract class AbstractField<T> implements Field {
             parseValue(null);
     }
 
-    private static String parseValue(ByteBuffer b, Field field) {
+    public static String parseValue(ByteBuffer b, Field field) {
         StringBuilder result = new StringBuilder();
         for (;;) {
             int ch = b.get();

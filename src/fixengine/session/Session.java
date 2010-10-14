@@ -150,6 +150,11 @@ public class Session {
                     /* Ignore the message. */
                     getLogger().warning(text);
                 }
+
+                @Override public void msgSeqNumMissing(String text) {
+                    getLogger().severe(text);
+                    terminate(conn, null, text);
+                }
             });
         } finally {
             store.save(this);

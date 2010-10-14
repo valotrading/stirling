@@ -76,7 +76,37 @@ public class MessageHeader extends FieldContainer implements Parseable {
         parseHeadField(b, BodyLength.TAG);
         trailer(b);
         parseHeadField(b, MsgType.TAG);
+        if (!containsMsgSeqNum(b))
+            throw new MsgSeqNumMissingException("MsgSeqNum(34) is missing");
         super.parse(b);
+    }
+
+    private boolean containsMsgSeqNum(ByteBuffer b) {
+        try {
+            b.mark();
+            while (b.hasRemaining()) {
+                try {
+                    int tag = Tag.parseTag(b);
+                    String value = AbstractField.parseValue(b, null);
+                    if (tag == MsgSeqNum.TAG.value())
+                        return isMsgSeqNumValueValid(value);
+                } catch (NonDataValueIncludesFieldDelimiterException e) {
+                    /* Ignore tag that cannot be parsed due to delimiter in tag */
+                }
+            }
+            return false;
+        } finally {
+            b.reset();
+        }
+    }
+
+    private boolean isMsgSeqNumValueValid(String value) {
+        try {
+            Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 
     private void trailer(ByteBuffer b) {
