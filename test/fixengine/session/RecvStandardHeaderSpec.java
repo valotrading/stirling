@@ -475,32 +475,5 @@ import fixengine.tags.TestReqID;
             });
             specify(session.getIncomingSeq().peek(), 2);
         }
-
-        public void msgSeqNumMissingWhenSystemIsNotAvailable() throws Exception {
-            server.expect(MsgTypeValue.LOGON);
-            server.respondLogon();
-            server.respond(
-                    message()
-                    .field(BeginString.TAG, "FIX.4.2")
-                    .field(BodyLength.TAG, "50")
-                    .field(MsgType.TAG, "0")
-                    /* MsgSeqNum missing */
-                    .field(SenderCompID.TAG, ACCEPTOR)
-                    .field(TargetCompID.TAG, INITIATOR)
-                    .field(SendingTime.TAG, "20100701-12:09:40")
-                    .field(CheckSum.TAG, "018")
-                    .toString());
-            server.expect(MsgTypeValue.BUSINESS_MESSAGE_REJECT);
-            server.expect(MsgTypeValue.LOGOUT);
-            checking(expectLogWarning("Application not available"));
-            checking(expectLogSevere("MsgSeqNum(35) is missing"));
-            runInClient(new Runnable() {
-                @Override public void run() {
-                    session.logon(connection);
-                    session.setAvailable(false);
-                }
-            });
-            specify(session.getIncomingSeq().peek(), 2);
-        }
     }
 }
