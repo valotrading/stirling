@@ -104,14 +104,14 @@ public abstract class AbstractField<T> implements Field {
     @Override public void parse(ByteBuffer b) {
         if (isParsed())
             throw new TagMultipleTimesException(prettyName() + ": Tag multiple times");
-        String value = parseValue(b, this);
+        String value = parseValue(b);
         if (!value.isEmpty())
             parseValue(value);
         else
-            parseValue(null);
+            parseValue((String) null);
     }
 
-    public static String parseValue(ByteBuffer b, Field field) {
+    public static String parseValue(ByteBuffer b) {
         StringBuilder result = new StringBuilder();
         for (;;) {
             int ch = b.get();

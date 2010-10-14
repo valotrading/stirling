@@ -87,7 +87,7 @@ public class MessageHeader extends FieldContainer implements Parseable {
             while (b.hasRemaining()) {
                 try {
                     int tag = Tag.parseTag(b);
-                    String value = AbstractField.parseValue(b, null);
+                    String value = AbstractField.parseValue(b);
                     if (tag == MsgSeqNum.TAG.value())
                         return isMsgSeqNumValueValid(value);
                 } catch (NonDataValueIncludesFieldDelimiterException e) {
