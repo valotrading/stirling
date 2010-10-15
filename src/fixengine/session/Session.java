@@ -153,7 +153,7 @@ public class Session {
 
                 @Override public void msgSeqNumMissing(String text) {
                     getLogger().severe(text);
-                    terminate(conn, null, text);
+                    terminate(conn, text);
                 }
             });
         } finally {
@@ -167,7 +167,7 @@ public class Session {
                 logError(text, level);
                 Session.this.sessionReject(conn, message, reason, text);
                 if (terminate)
-                    Session.this.terminate(conn, message, text);
+                    Session.this.terminate(conn, text);
             }
 
             @Override public void businessReject(BusinessRejectReasonValue reason, String text, ErrorLevel level) {
@@ -177,7 +177,7 @@ public class Session {
 
             @Override public void terminate(String text) {
                 logError(text, ErrorLevel.ERROR);
-                Session.this.terminate(conn, message, text);
+                Session.this.terminate(conn, text);
             }
 
             private void logError(String text, ErrorLevel level) {
@@ -314,7 +314,7 @@ public class Session {
         send(conn, reject);
     }
 
-    private void terminate(Connection conn, Message message, String text) {
+    private void terminate(Connection conn, String text) {
         LogoutMessage logout = (LogoutMessage) messageFactory.create(LOGOUT);
         logout.setString(Text.TAG, text);
         send(conn, logout);
