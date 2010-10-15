@@ -120,7 +120,7 @@ public class Session {
                      * after each received message.
                      */
                     if (!conn.isClosed() && isOutOfSync() && message.getMsgSeqNum() != expected)
-                        syncMessages(conn);
+                        sendResendRequest(conn, queue.nextSeqNum(), 0);
                 }
 
                 @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
@@ -250,16 +250,15 @@ public class Session {
         }
     }
 
-    private boolean isOutOfSync() {
-        return queue.hasSeqNumGap();
-    }
-
-    private void syncMessages(Connection conn) {
-        int beginSeqNo = queue.nextSeqNum();
+    private void sendResendRequest(Connection conn, int beginSeqNo, int endSeqNo) {
         ResendRequestMessage resendReq = (ResendRequestMessage) messageFactory.create(RESEND_REQUEST);
         resendReq.setInteger(BeginSeqNo.TAG, beginSeqNo);
-        resendReq.setInteger(EndSeqNo.TAG, 0);
+        resendReq.setInteger(EndSeqNo.TAG, endSeqNo);
         send(conn, resendReq);
+    }
+
+    private boolean isOutOfSync() {
+        return queue.hasSeqNumGap();
     }
 
     private void fillSequenceGap(Connection conn, int newSeqNo) {
@@ -274,11 +273,7 @@ public class Session {
     private void processSeqReset(Connection conn, SequenceResetMessage message) {
         int newSeqNo = message.getInteger(NewSeqNo.TAG);
         if (checkSeqResetSeqNum() && !message.isResetOk(queue.nextSeqNum())) {
-            int beginSeqNo = queue.nextSeqNum();
-            ResendRequestMessage resendReq = (ResendRequestMessage) messageFactory.create(RESEND_REQUEST);
-            resendReq.setInteger(BeginSeqNo.TAG, beginSeqNo);
-            resendReq.setInteger(EndSeqNo.TAG, message.getMsgSeqNum() - 1);
-            send(conn, resendReq);
+            sendResendRequest(conn, queue.nextSeqNum(), message.getMsgSeqNum() - 1);
         } else if (newSeqNo <= message.getMsgSeqNum() && message.getBoolean(GapFillFlag.TAG)) {
             sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE,
                 "Attempt to lower sequence number, invalid value NewSeqNum(36)=" + newSeqNo);
