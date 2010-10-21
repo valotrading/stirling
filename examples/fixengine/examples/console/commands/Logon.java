@@ -86,8 +86,8 @@ public class Logon implements Command {
         }
       };
       client.setSession(session);
-      session.logon(conn);
       client.getEvents().register(conn);
+      session.logon(conn);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
