@@ -73,6 +73,9 @@ public class Logon implements Command {
 
           @Override public void closed(Connection<Message> conn) {
           }
+
+          @Override public void garbledMessage(String message, byte[] data) {
+          }
         });
       client.setConnection(conn);
       Session session = new Session(getHeartBtInt(), client.getConfig(), client.getSessionStore(), client.getMessageFactory()) {

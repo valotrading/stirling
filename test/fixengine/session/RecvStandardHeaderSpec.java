@@ -85,7 +85,7 @@ import fixengine.tags.TestReqID;
                         .string(TestReqID.TAG, "12345678")
                     .build());
             server.expect(MsgTypeValue.HEARTBEAT);
-            checking(expectLogWarning("BeginString(8): Empty tag"));
+            checking(expectLogWarning("BeginString(8) is empty"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -272,7 +272,7 @@ import fixengine.tags.TestReqID;
                     .field(TestReqID.TAG, "1")
                     .field(CheckSum.TAG, "206")
                     .toString());
-            checking(expectLogWarning("BodyLength(9): Invalid BodyLength"));
+            checking(expectLogWarning("Expected tag not found: CheckSum(10)"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -393,7 +393,7 @@ import fixengine.tags.TestReqID;
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.TAG, "165")
                     .toString());
-            checking(expectLogWarning("BeginString(8): is missing"));
+            checking(expectLogWarning("Expected tag not found: BeginString(8)"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -418,7 +418,7 @@ import fixengine.tags.TestReqID;
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.TAG, "165")
                     .toString());
-            checking(expectLogWarning("BodyLength(9): is missing"));
+            checking(expectLogWarning("Expected tag not found: BodyLength(9)"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -443,7 +443,7 @@ import fixengine.tags.TestReqID;
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.TAG, "214")
                     .toString());
-            checking(expectLogWarning("MsgType(35): is missing"));
+            checking(expectLogWarning("Expected tag not found: MsgType(35)"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

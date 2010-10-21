@@ -133,6 +133,9 @@ public class PerformanceTest implements Runnable {
                             @Override public void closed(Connection<Message> conn) {
                                 events.stop();
                             }
+
+                            @Override public void garbledMessage(String message, byte[] data) {
+                            }
                         });
                     }
                 });
@@ -175,6 +178,9 @@ public class PerformanceTest implements Runnable {
                             }
 
                             @Override public void closed(Connection<Message> conn) {
+                            }
+
+                            @Override public void garbledMessage(String message, byte[] data) {
                             }
                         });
                 int txCount = 0;

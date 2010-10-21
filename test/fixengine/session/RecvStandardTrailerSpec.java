@@ -52,7 +52,7 @@ import fixengine.tags.TargetCompID;
                     .field(SendingTime.TAG, "20100810-07:25:02")
                     .field(CheckSum.TAG, "100")
                     .toString());
-            checking(expectLogWarning("CheckSum(10): Expected: 239, but was: 100"));
+            checking(expectLogWarning("CheckSum(10) mismatch, expected=239, actual=100"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -93,7 +93,7 @@ import fixengine.tags.TargetCompID;
                     .field(SendingTime.TAG, "20100810-07:58:22")
                     .field(CheckSum.TAG, "48")
                     .toString());
-            checking(expectLogWarning("CheckSum(10): CheckSum must have a length of three: 48"));
+            checking(expectLogWarning("CheckSum(10) has invalid length: 48"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

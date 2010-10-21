@@ -489,6 +489,10 @@ public class InitiatorSpecification extends Specification<Session> {
 
             @Override public void closed(Connection<silvertip.Message> conn) {
             }
+
+            @Override public void garbledMessage(String message, byte[] data) {
+                logger.warning(message);
+            }
         });
     }
 }
