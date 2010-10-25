@@ -58,13 +58,6 @@ public class Tag<T extends Field> {
         return field;
     }
 
-    public int parse(ByteBuffer b) throws UnexpectedTagException {
-        int tag = parseTag(b);
-        if (value != tag)
-            throw new UnexpectedTagException(tag);
-        return tag;
-    }
-
     public static int peekTag(ByteBuffer b) {
         b.mark();
         int tag = Tag.parseTag(b);
