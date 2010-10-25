@@ -146,11 +146,6 @@ public class Session {
                     sessionReject(conn, msgSeqNum, SessionRejectReasonValue.INVALID_MSG_TYPE, "MsgType(35): Invalid message type: " + msgType);
                 }
 
-                @Override public void garbledMessage(String text) {
-                    /* Ignore the message. */
-                    getLogger().warning(text);
-                }
-
                 @Override public void msgSeqNumMissing(String text) {
                     getLogger().severe(text);
                     terminate(conn, text);

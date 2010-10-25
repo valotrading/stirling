@@ -25,7 +25,6 @@ public class Parser {
         void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text);
         void unsupportedMsgType(String msgType, int msgSeqNum);
         void invalidMsgType(String msgType, int msgSeqNum);
-        void garbledMessage(String text);
         void msgSeqNumMissing(String text);
     }
 
@@ -57,8 +56,6 @@ public class Parser {
             callback.invalidMsgType(header.getMsgType(), header.getInteger(MsgSeqNum.TAG));
         } catch (UnsupportedMsgTypeException e) {
             callback.unsupportedMsgType(header.getMsgType(), header.getInteger(MsgSeqNum.TAG));
-        } catch (GarbledMessageException e) {
-            callback.garbledMessage(e.getMessage());
         } catch (ParseException e) {
             callback.invalidMessage(header.getInteger(MsgSeqNum.TAG), e.getReason(), e.getMessage());
         }

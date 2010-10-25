@@ -112,47 +112,23 @@ public class MessageHeader extends FieldContainer implements Parseable {
     private void trailer(ByteBuffer b) {
         int checkSumPosition = b.position() + getBodyLength();
         int parsedChecksum = parseChecksum(b, checkSumPosition);
-        int expectedChecksum = Checksums.checksum(b, checkSumPosition);
-        if (parsedChecksum != expectedChecksum) {
-            throw new InvalidCheckSumException("CheckSum(10): Expected: " + expectedChecksum + ", but was: " + parsedChecksum);
-        }
         b.limit(checkSumPosition);
     }
 
     private static int parseChecksum(ByteBuffer b, int checkSumPosition) {
-        if (checkSumPosition > b.limit()) {
-            throw new InvalidBodyLengthException();
-        }
         int origPosition = b.position();
         b.position(checkSumPosition);
-        try {
-            CheckSum.TAG.parse(b);
-        } catch (UnexpectedTagException e) {
-            throw new InvalidBodyLengthException();
-        } catch (ParseException e) {
-            throw new InvalidBodyLengthException();
-        }
+        Tag.parseTag(b);
         StringField field = CheckSum.TAG.newField(Required.YES);
         field.parse(b);
         b.position(origPosition);
-        if (field.getValue().length() < 3) {
-            throw new InvalidCheckSumException("CheckSum(10): CheckSum must have a length of three: " + field.getValue());
-        }
         return Integer.parseInt(field.getValue());
     }
 
     private void parseHeadField(ByteBuffer b, Tag<?> tag) {
-        try {
-            tag.parse(b);
-            Field field = head.lookup(tag.value());
-            field.parse(b);
-            if (!field.isFormatValid())
-                throw new GarbledMessageException(tag.prettyName() + ": Invalid value format");
-            if (field.isEmpty())
-                throw new GarbledMessageException(tag.prettyName() + ": Empty tag");
-        } catch (UnexpectedTagException e) {
-            throw new GarbledMessageException(tag.prettyName() + ": is missing");
-        }
+        Tag.parseTag(b);
+        Field field = head.lookup(tag.value());
+        field.parse(b);
     }
 
     public String getBeginString() {
