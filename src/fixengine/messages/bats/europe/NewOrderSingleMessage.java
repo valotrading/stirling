@@ -16,6 +16,7 @@
 package fixengine.messages.bats.europe;
 
 import fixengine.messages.MessageHeader;
+import fixengine.messages.OrdTypeValue;
 import fixengine.messages.Required;
 
 import fixengine.tags.Account;
@@ -31,12 +32,12 @@ import fixengine.tags.PegDifference;
 import fixengine.tags.Price;
 import fixengine.tags.SecurityExchange;
 import fixengine.tags.Symbol;
+import fixengine.tags.OrdType;
 
 import fixengine.tags.bats.europe.DisplayIndicator;
 import fixengine.tags.bats.europe.ExecInst;
 import fixengine.tags.bats.europe.IDSource;
 import fixengine.tags.bats.europe.MaxRemovePct;
-import fixengine.tags.bats.europe.OrdType;
 import fixengine.tags.bats.europe.OrigCompID;
 import fixengine.tags.bats.europe.OrigSubID;
 import fixengine.tags.bats.europe.PreventParticipantMatch;
