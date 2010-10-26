@@ -15,19 +15,18 @@
  */
 package fixengine.tags;
 
-import lang.Integers;
 import fixengine.messages.StringField;
 import fixengine.messages.Tag;
 
 /**
- * @author Pekka Enberg 
+ * @author Pekka Enberg
  */
 public class CheckSum extends Tag<StringField> {
     public static final CheckSum TAG = new CheckSum();
 
     public CheckSum() { super(10, StringField.class); }
-    
+
     public static String format(int checksum) {
-        return Integers.zfill(checksum, 3);
+        return String.format("%03d", checksum);
     }
 }
