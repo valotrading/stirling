@@ -17,6 +17,7 @@ package fixengine.messages.bats.europe;
 
 import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
+import fixengine.messages.SideValue;
 
 import fixengine.tags.Account;
 import fixengine.tags.ClOrdID;
@@ -26,10 +27,10 @@ import fixengine.tags.OrderQty;
 import fixengine.tags.OrigClOrdID;
 import fixengine.tags.SecurityExchange;
 import fixengine.tags.Symbol;
+import fixengine.tags.Side;
 
 import fixengine.tags.bats.europe.IDSource;
 import fixengine.tags.bats.europe.SecurityID;
-import fixengine.tags.bats.europe.Side;
 
 public class OrderCancelRequestMessage extends fixengine.messages.OrderCancelRequestMessage {
     public OrderCancelRequestMessage(MessageHeader header) {

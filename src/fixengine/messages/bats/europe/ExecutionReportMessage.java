@@ -17,8 +17,7 @@ package fixengine.messages.bats.europe;
 
 import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
-
-import fixengine.messages.bats.europe.ExecTransTypeValue;
+import fixengine.messages.SideValue;
 
 import fixengine.tags.Account;
 import fixengine.tags.AvgPx;
@@ -47,6 +46,7 @@ import fixengine.tags.PegDifference;
 import fixengine.tags.Price;
 import fixengine.tags.SecondaryOrderID;
 import fixengine.tags.SecurityExchange;
+import fixengine.tags.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.Text;
 import fixengine.tags.TransactTime;
@@ -59,7 +59,6 @@ import fixengine.tags.bats.europe.IDSource;
 import fixengine.tags.bats.europe.MTFAccessFee;
 import fixengine.tags.bats.europe.MaxRemovePct;
 import fixengine.tags.bats.europe.SecurityID;
-import fixengine.tags.bats.europe.Side;
 import fixengine.tags.bats.europe.TimeInForce;
 import fixengine.tags.bats.europe.TradeLiquidityIndicator;
 
