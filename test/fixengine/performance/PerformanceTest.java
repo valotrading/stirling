@@ -185,6 +185,7 @@ public class PerformanceTest implements Runnable {
                         });
                 int txCount = 0;
                 tx[txCount++] = System.nanoTime();
+                events.register(conn);
                 session.logon(conn);
                 while (txCount < NUM_MESSAGES) {
                     tx[txCount++] = System.nanoTime();
@@ -192,7 +193,6 @@ public class PerformanceTest implements Runnable {
                     NewOrderSingleMessage message = new NewOrderSingleMessage(header);
                     session.send(conn, message);
                 }
-                events.register(conn);
                 events.dispatch();
             } catch (IOException e) {
                 throw new RuntimeException(e);
