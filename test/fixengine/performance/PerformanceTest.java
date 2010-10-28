@@ -24,7 +24,7 @@ import java.util.Random;
 
 import silvertip.Connection;
 import silvertip.Events;
-import silvertip.Message;
+import silvertip.FixMessage;
 import silvertip.Server;
 import silvertip.Server.ConnectionFactory;
 import silvertip.protocols.FixMessageParser;
@@ -115,8 +115,8 @@ public class PerformanceTest implements Runnable {
                         } catch (SocketException e) {
                             throw new RuntimeException(e);
                         }
-                        return new Connection<Message>(channel, new FixMessageParser(), new Connection.Callback<Message>() {
-                            @Override public void messages(Connection<Message> conn, Iterator<Message> messages) {
+                        return new Connection<FixMessage>(channel, new FixMessageParser(), new Connection.Callback<FixMessage>() {
+                            @Override public void messages(Connection<FixMessage> conn, Iterator<FixMessage> messages) {
                                 while (messages.hasNext()) {
                                     messages.next();
                                     rx[count++] = System.nanoTime();
@@ -127,10 +127,10 @@ public class PerformanceTest implements Runnable {
                                 }
                             }
 
-                            @Override public void idle(Connection<Message> conn) {
+                            @Override public void idle(Connection<FixMessage> conn) {
                             }
 
-                            @Override public void closed(Connection<Message> conn) {
+                            @Override public void closed(Connection<FixMessage> conn) {
                                 events.stop();
                             }
 
@@ -166,18 +166,18 @@ public class PerformanceTest implements Runnable {
                 } catch (SocketException e) {
                     throw new RuntimeException(e);
                 }
-                Connection conn = new Connection<Message>(channel, new FixMessageParser(),
-                        new Connection.Callback<Message>() {
-                            @Override public void messages(Connection<Message> conn, Iterator<Message> messages) {
+                Connection conn = new Connection<FixMessage>(channel, new FixMessageParser(),
+                        new Connection.Callback<FixMessage>() {
+                            @Override public void messages(Connection<FixMessage> conn, Iterator<FixMessage> messages) {
                                 while (messages.hasNext())
                                     session.receive(conn, messages.next(), new DefaultMessageVisitor());
                             }
 
-                            @Override public void idle(Connection<Message> conn) {
+                            @Override public void idle(Connection<FixMessage> conn) {
                                 session.keepAlive(conn);
                             }
 
-                            @Override public void closed(Connection<Message> conn) {
+                            @Override public void closed(Connection<FixMessage> conn) {
                             }
 
                             @Override public void garbledMessage(String message, byte[] data) {

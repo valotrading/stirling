@@ -101,7 +101,7 @@ public class Session {
         store.load(this);
     }
 
-    public void receive(final Connection conn, silvertip.Message message, final MessageVisitor visitor) {
+    public void receive(final Connection conn, silvertip.FixMessage message, final MessageVisitor visitor) {
         prevRxTime = currentTime();
         try {
             Parser.parse(messageFactory, message, new Parser.Callback() {
@@ -333,7 +333,7 @@ public class Session {
         message.setMsgSeqNum(seq.peek());
         message.setInteger(NewSeqNo.TAG, seq.next());
         message.setBoolean(GapFillFlag.TAG, false);
-        conn.send(silvertip.Message.fromString(message.format()));
+        conn.send(silvertip.FixMessage.fromString(message.format()));
         prevTxTime = currentTime();
         setOutgoingSeq(seq);
         store.save(this);
@@ -365,7 +365,7 @@ public class Session {
         message.setHeaderConfig(config);
         message.setMsgSeqNum(outgoingSeq.next());
         message.setSendingTime(currentTime());
-        conn.send(silvertip.Message.fromString(message.format()));
+        conn.send(silvertip.FixMessage.fromString(message.format()));
         prevTxTime = currentTime();
         store.save(this);
     }

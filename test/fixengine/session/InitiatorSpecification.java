@@ -343,7 +343,7 @@ public class InitiatorSpecification extends Specification<Session> {
                     StringBuilder raw = parse();
                     if (raw.length() == 0)
                         return;
-                    Parser.parse(new silvertip.Message(raw.toString().getBytes()), new Parser.Callback() {
+                    Parser.parse(new silvertip.FixMessage(raw.toString().getBytes(), type), new Parser.Callback() {
                         @Override public void message(Message m) {
                             if (m.getMsgType().equals(type))
                                 successCount++;
@@ -471,20 +471,20 @@ public class InitiatorSpecification extends Specification<Session> {
     }
 
     private Connection openConnection(final Session session, int port, final boolean keepAlive) throws IOException {
-        return Connection.connect(new InetSocketAddress("localhost", port), new FixMessageParser(), new Connection.Callback<silvertip.Message>() {
-            @Override public void messages(Connection<silvertip.Message> conn, Iterator<silvertip.Message> messages) {
+        return Connection.connect(new InetSocketAddress("localhost", port), new FixMessageParser(), new Connection.Callback<silvertip.FixMessage>() {
+            @Override public void messages(Connection<silvertip.FixMessage> conn, Iterator<silvertip.FixMessage> messages) {
                 while (messages.hasNext())
                     session.receive(conn, messages.next(), new DefaultMessageVisitor());
             }
 
-            @Override public void idle(Connection<silvertip.Message> conn) {
+            @Override public void idle(Connection<silvertip.FixMessage> conn) {
                 if (keepAlive)
                     session.keepAlive(conn);
                 else
                     conn.close();
             }
 
-            @Override public void closed(Connection<silvertip.Message> conn) {
+            @Override public void closed(Connection<silvertip.FixMessage> conn) {
             }
 
             @Override public void garbledMessage(String message, byte[] data) {

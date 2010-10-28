@@ -25,7 +25,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 import silvertip.Connection;
-import silvertip.Message;
+import silvertip.FixMessage;
 import silvertip.protocols.FixMessageParser;
 import fixengine.examples.console.ConsoleClient;
 import fixengine.messages.DefaultMessageVisitor;
@@ -53,10 +53,10 @@ public class Logon implements Command {
   public void execute(final ConsoleClient client, Scanner scanner) throws CommandArgException {
     try {
       Connection conn = Connection.connect(new InetSocketAddress(host(scanner), port(scanner)),
-          new FixMessageParser(), new Connection.Callback<Message>() {
-          @Override public void messages(Connection<Message> conn, Iterator<Message> messages) {
+          new FixMessageParser(), new Connection.Callback<FixMessage>() {
+          @Override public void messages(Connection<FixMessage> conn, Iterator<FixMessage> messages) {
             while (messages.hasNext()) {
-              Message msg = messages.next();
+              FixMessage msg = messages.next();
               client.getSession().receive(conn, msg, new DefaultMessageVisitor() {
                 @Override public void defaultAction(fixengine.messages.Message message) {
                   if (message.getMsgType().equals(MsgTypeValue.EXECUTION_REPORT))
@@ -67,11 +67,11 @@ public class Logon implements Command {
             }
           }
 
-          @Override public void idle(Connection<Message> conn) {
+          @Override public void idle(Connection<FixMessage> conn) {
             client.getSession().keepAlive(conn);
           }
 
-          @Override public void closed(Connection<Message> conn) {
+          @Override public void closed(Connection<FixMessage> conn) {
           }
 
           @Override public void garbledMessage(String message, byte[] data) {
