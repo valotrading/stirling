@@ -1,10 +1,6 @@
 Known Bugs
 ==========
 
-- Messages are not processed in-order. For example, if sequence reset follows
-  an invalid execution report, we reject the execution report instead of
-  processing the sequence reset first.
-
 - Outgoing messages are not queued. See session level test Ref ID 16.
 
 - Logic should be included in the FIX engine to recognize the possible infinite
