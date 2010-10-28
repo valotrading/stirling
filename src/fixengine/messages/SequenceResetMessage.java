@@ -47,6 +47,10 @@ public class SequenceResetMessage extends AbstractMessage {
         return getMsgSeqNum() == nextSeqNum;
     }
 
+    public int getNewSeqNo() {
+        return getInteger(NewSeqNo.TAG);
+    }
+
     @Override public void apply(MessageVisitor visitor) {
         visitor.visit(this);
     }
