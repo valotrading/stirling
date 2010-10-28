@@ -37,16 +37,6 @@ public class SequenceResetMessage extends AbstractMessage {
             setOrigSendingTime(sendingTime);
     }
 
-    public boolean isResetOk(int nextSeqNum) {
-        /*
-         * If the other end is forcing a sequence reset, don't care about
-         * MsgSeqNum of the SequenceReset message.
-         */
-        if (!getBoolean(GapFillFlag.TAG))
-            return true;
-        return getMsgSeqNum() == nextSeqNum;
-    }
-
     public int getNewSeqNo() {
         return getInteger(NewSeqNo.TAG);
     }
