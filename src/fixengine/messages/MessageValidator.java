@@ -36,15 +36,6 @@ public class MessageValidator {
             });
             add(new AbstractMessageValidator() {
                 @Override protected boolean isValid(Session session, Message message) {
-                    return !message.isTooLowSeqNum(session.getIncomingSeq().peek());
-                }
-
-                @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                    handler.terminate("MsgSeqNum too low, expecting " + session.getIncomingSeq().peek() + " but received " + message.getMsgSeqNum());
-                }
-            });
-            add(new AbstractMessageValidator() {
-                @Override protected boolean isValid(Session session, Message message) {
                     return message.hasValidBeginString(session.getConfig());
                 }
 

@@ -40,7 +40,7 @@ import fixengine.messages.MsgTypeValue;
             server.respondLogon();
             server.expect(MsgTypeValue.HEARTBEAT);
             server.expect(MsgTypeValue.TEST_REQUEST);
-            server.respondLogout(3);
+            server.respondLogout(2);
             server.expect(MsgTypeValue.LOGOUT);
             runInClient(new Runnable() {
                 @Override public void run() {

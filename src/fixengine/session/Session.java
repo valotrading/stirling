@@ -31,7 +31,6 @@ import lang.TimeSource;
 
 import org.joda.time.DateTime;
 
-import silvertip.Connection;
 import fixengine.Config;
 import fixengine.messages.BusinessMessageRejectMessage;
 import fixengine.messages.BusinessRejectReasonValue;
@@ -44,8 +43,8 @@ import fixengine.messages.Message;
 import fixengine.messages.MessageFactory;
 import fixengine.messages.MessageValidator;
 import fixengine.messages.MessageVisitor;
-import fixengine.messages.Parser;
 import fixengine.messages.ParseException;
+import fixengine.messages.Parser;
 import fixengine.messages.RejectMessage;
 import fixengine.messages.ResendRequestMessage;
 import fixengine.messages.SequenceResetMessage;
@@ -61,11 +60,13 @@ import fixengine.tags.EndSeqNo;
 import fixengine.tags.GapFillFlag;
 import fixengine.tags.HeartBtInt;
 import fixengine.tags.NewSeqNo;
+import fixengine.tags.PossDupFlag;
 import fixengine.tags.RefMsgType;
 import fixengine.tags.RefSeqNo;
 import fixengine.tags.SessionRejectReason;
 import fixengine.tags.TestReqID;
 import fixengine.tags.Text;
+import silvertip.Connection;
 
 /**
  * @author Karim Osman
@@ -74,7 +75,7 @@ public class Session {
     private static final long DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC = 10000;
     private static final Logger LOG = Logger.getLogger("Session");
 
-    protected MessageQueue queue = new MessageQueue();
+    protected FixMessageQueue queue = new FixMessageQueue();
     protected Sequence outgoingSeq = new Sequence();
 
     protected final HeartBtIntValue heartBtInt;
@@ -108,23 +109,90 @@ public class Session {
             if (!parseMsgSeqNum(conn, message)) {
                 return;
             }
-            Parser.parse(messageFactory, message, new Parser.Callback() {
-                @Override public void message(Message message) {
-                    int expected = queue.nextSeqNum();
 
+            int expectedMsgSeqNum = queue.nextSeqNum();
+
+            if (message.getMsgType().equals(SEQUENCE_RESET)) {
+                try {
+                    if (processSequenceReset(conn, Parser.parseSequenceReset(message), expectedMsgSeqNum)) {
+                        return;
+                    }
+                } catch (ParseException e) {
+                    /* Ignore invalid Sequence Reset message and place it to
+                     * queue for rejecting it later.
+                     */
+                }
+            }
+
+            queue.enqueue(message);
+
+            if (expectedMsgSeqNum != message.getMsgSeqNum()) {
+                processOutOfSyncMessageQueue(conn, message, expectedMsgSeqNum);
+            } else if (!conn.isClosed()) {
+                processInSyncMessageQueue(conn, visitor);
+            }
+        } finally {
+            store.save(this);
+        }
+    }
+
+    private boolean processSequenceReset(Connection conn, SequenceResetMessage message, int expectedMsgSeqNum) {
+        if (message.getBoolean(GapFillFlag.TAG)) {
+            return processSequenceResetGapFill(conn, message, expectedMsgSeqNum);
+        } else {
+            return processSequenceResetReset(conn, message, expectedMsgSeqNum);
+        }
+    }
+
+    private boolean processSequenceResetGapFill(Connection conn, SequenceResetMessage message, int expectedMsgSeqNum) {
+        if (message.getMsgSeqNum() > expectedMsgSeqNum) {
+            sendResendRequest(conn, expectedMsgSeqNum, 0);
+            return true;
+        }
+
+        if (message.getMsgSeqNum() < expectedMsgSeqNum) {
+            if (!message.getPossDupFlag()) {
+                String text = "MsgSeqNum too low, expecting " + expectedMsgSeqNum + " but received " + message.getMsgSeqNum();
+                getLogger().severe(text);
+                terminate(conn, text);
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean processSequenceResetReset(Connection conn, SequenceResetMessage message, int expectedMsgSeqNum) {
+        if (message.getNewSeqNo() == message.getMsgSeqNum()) {
+            getLogger().warning("NewSeqNo(36)=" + message.getNewSeqNo() + " is equal to expected MsgSeqNum(34)=" + message.getMsgSeqNum());
+        } else if (message.getNewSeqNo() < message.getMsgSeqNum()) {
+            String text = "Value is incorrect (out of range) for this tag, NewSeqNum(36)=" + message.getNewSeqNo();
+            getLogger().warning(text);
+            sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE, text);
+        } else {
+            queue.reset(message.getNewSeqNo());
+        }
+        return true;
+    }
+
+    private void processOutOfSyncMessageQueue(final Connection conn, silvertip.FixMessage message, int expectedMsgSeqNum) {
+        if (message.getMsgSeqNum() > expectedMsgSeqNum) {
+            sendResendRequest(conn, queue.nextSeqNum(), 0);
+        } else {
+            String text = "MsgSeqNum too low, expecting " + expectedMsgSeqNum + " but received " + message.getMsgSeqNum();
+            getLogger().severe(text);
+            terminate(conn, text);
+        }
+    }
+
+    private void processInSyncMessageQueue(final Connection conn, final MessageVisitor visitor) {
+        while (!queue.isEmpty()) {
+            Parser.parse(messageFactory, queue.dequeue(), new Parser.Callback() {
+                @Override public void message(Message message) {
                     if (validate(conn, message))
                         process(conn, message, visitor);
                     else
                         queue.skip(message);
-
-                    /*
-                     * We're out-of-sync if there's a gap in the sequence
-                     * numbers. However, if the other side is in the middle of
-                     * resending the missing messages, don't attempt to sync
-                     * after each received message.
-                     */
-                    if (!conn.isClosed() && isOutOfSync() && message.getMsgSeqNum() != expected)
-                        sendResendRequest(conn, queue.nextSeqNum(), 0);
                 }
 
                 @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
@@ -155,8 +223,6 @@ public class Session {
                     terminate(conn, text);
                 }
             });
-        } finally {
-            store.save(this);
         }
     }
 
@@ -235,22 +301,14 @@ public class Session {
                 }
 
                 @Override public void defaultAction(Message message) {
-                    queue.enqueue(message);
-                    if (!isOutOfSync()) {
-                        while (!queue.isEmpty())
-                            queue.dequeue().apply(visitor);
-                    }
+                    message.apply(visitor);
                 }
             });
         } else {
             message.apply(new DefaultMessageVisitor() {
                 @Override public void visit(LogonMessage message) {
                     authenticated = true;
-                    queue.enqueue(message);
-                    if (!isOutOfSync()) {
-                        while (!queue.isEmpty())
-                            queue.dequeue().apply(visitor);
-                    }
+                    message.apply(visitor);
                 }
 
                 @Override public void defaultAction(Message message) {
@@ -283,18 +341,10 @@ public class Session {
 
     private void processSeqReset(Connection conn, SequenceResetMessage message) {
         int newSeqNo = message.getInteger(NewSeqNo.TAG);
-        if (checkSeqResetSeqNum() && !message.isResetOk(queue.nextSeqNum())) {
-            sendResendRequest(conn, queue.nextSeqNum(), message.getMsgSeqNum() - 1);
-        } else if (newSeqNo <= message.getMsgSeqNum() && message.getBoolean(GapFillFlag.TAG)) {
+        if (newSeqNo <= message.getMsgSeqNum()) {
             sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE,
                 "Attempt to lower sequence number, invalid value NewSeqNum(36)=" + newSeqNo);
-        } else if (newSeqNo < message.getMsgSeqNum() && !message.getBoolean(GapFillFlag.TAG)) {
-            getLogger().warning("Value is incorrect (out of range) for this tag, NewSeqNum(36)=" + newSeqNo);
-            sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE,
-                "Value is incorrect (out of range) for this tag, NewSeqNum(36)=" + newSeqNo);
         } else {
-            if (newSeqNo == message.getMsgSeqNum() && !message.getBoolean(GapFillFlag.TAG))
-                getLogger().warning("NewSeqNo(36)=" + newSeqNo + " is equal to expected MsgSeqNum(34)=" + message.getMsgSeqNum());
             queue.reset(newSeqNo);
         }
     }

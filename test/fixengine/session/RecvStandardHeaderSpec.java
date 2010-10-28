@@ -108,9 +108,9 @@ import fixengine.tags.TestReqID;
                     new MessageBuilder(MsgTypeValue.HEARTBEAT)
                         .setPossDupFlag(true)
                         .setOrigSendingTime(new DateTime().minusMinutes(1))
-                        .msgSeqNum(2)
+                        .msgSeqNum(3)
                     .build());
-            server.respondLogout(3);
+            server.respondLogout(4);
             server.expect(MsgTypeValue.LOGOUT);
             runInClient(new Runnable() {
                 @Override public void run() {

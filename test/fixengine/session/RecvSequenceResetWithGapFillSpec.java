@@ -124,7 +124,7 @@ import fixengine.tags.NewSeqNo;
                     session.logon(connection);
                 }
             });
-            specify(session.getIncomingSeq().peek(), 2);
+            specify(session.getIncomingSeq().peek(), 3);
         }
     }
 }
