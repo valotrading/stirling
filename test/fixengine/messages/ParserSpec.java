@@ -24,14 +24,18 @@ import org.hamcrest.Description;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 
+import silvertip.FixMessage;
+
 @RunWith(JDaveRunner.class)
 public class ParserSpec extends Specification<String> {
     private Parser.Callback callback = mock(Parser.Callback.class);
     private String raw;
 
     public class FullMessage {
+        private final String msgType = "0";
+
         public String create() {
-            return raw = message("57", "0")
+            return raw = message("57", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(TestReqID, "1")
@@ -43,20 +47,22 @@ public class ParserSpec extends Specification<String> {
             checking(new Expectations() {{
                 one(callback).message(with(new MessageMatcher(raw)));
             }});
-            Parser.parse(silvertip.Message.fromString(raw), callback);
+            Parser.parse(FixMessage.fromString(raw, msgType), callback);
         }
 
         public void parseMsgSeqNum() {
-            specify(Parser.parseMsgSeqNum(silvertip.Message.fromString(raw)), 1);
+            specify(Parser.parseMsgSeqNum(FixMessage.fromString(raw, msgType)), 1);
         }
     }
 
     public class MsgSeqNumMissing {
+        private final String msgType = "0";
+
         public String create() {
             return raw = message()
                 .field(BeginString, "FIX.4.2")
                 .field(BodyLength, "46")
-                .field(MsgType, "0")
+                .field(MsgType, msgType)
                 .field(SenderCompID, "Sender")
                 .field(TargetCompID, "Target")
                 .field(SendingTime, "20100701-12:09:40")
@@ -68,21 +74,23 @@ public class ParserSpec extends Specification<String> {
             checking(new Expectations() {{
                 one(callback).msgSeqNumMissing("MsgSeqNum(34) is missing");
             }});
-            Parser.parse(silvertip.Message.fromString(raw), callback);
+            Parser.parse(FixMessage.fromString(raw, msgType), callback);
         }
 
         public void parseMsgSeqNum() {
             specify(new Block() {
                 @Override public void run() {
-                    Parser.parseMsgSeqNum(silvertip.Message.fromString(raw));
+                    Parser.parseMsgSeqNum(FixMessage.fromString(raw, msgType));
                 }
             }, must.raise(ParseException.class, "MsgSeqNum(34) is missing"));
         }
     }
 
     public class MsgSeqNumHasInvalidFormat {
+        private final String msgType = "0";
+
         public String create() {
-            return raw = message("57", "0")
+            return raw = message("57", msgType)
                 .field(MsgSeqNum, "X")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(TestReqID, "1")
@@ -93,15 +101,17 @@ public class ParserSpec extends Specification<String> {
         public void parseMsgSeqNum() {
             specify(new Block() {
                 @Override public void run() {
-                    Parser.parseMsgSeqNum(silvertip.Message.fromString(raw));
+                    Parser.parseMsgSeqNum(FixMessage.fromString(raw, msgType));
                 }
             }, must.raise(InvalidValueFormatException.class, "MsgSeqNum(34) has invalid value format: X"));
         }
     }
 
     public class OptionalFieldMissing {
+        private final String msgType = "0";
+
         public String create() {
-            return raw = message("51", "0")
+            return raw = message("51", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(CheckSum, "197")
@@ -112,13 +122,15 @@ public class ParserSpec extends Specification<String> {
             checking(new Expectations() {{
                 one(callback).message(with(new MessageMatcher(raw)));
             }});
-            Parser.parse(silvertip.Message.fromString(raw), callback);
+            Parser.parse(FixMessage.fromString(raw, msgType), callback);
         }
     }
 
     public class EmptyTag {
+        private final String msgType = "0";
+
         public String create() {
-            return raw = message("56", "0")
+            return raw = message("56", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(TestReqID, "")
@@ -127,16 +139,18 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.EMPTY_TAG, "TestReqID(112): Empty tag");
+            expectInvalidMessage(SessionRejectReasonValue.EMPTY_TAG, "TestReqID(112): Empty tag", msgType);
         }
     }
 
     public class EmptyTagBeforeMsgSeqNum {
+        private final String msgType = "0";
+
         public String create() {
             return raw = message()
                 .field(BeginString, "FIX.4.2")
                 .field(BodyLength, "50")
-                .field(MsgType, "0")
+                .field(MsgType, msgType)
                 .field(SenderCompID, "")
                 .field(TargetCompID, "Target")
                 .field(MsgSeqNum, "1")
@@ -147,13 +161,15 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.EMPTY_TAG, "SenderCompID(49): Empty tag");
+            expectInvalidMessage(SessionRejectReasonValue.EMPTY_TAG, "SenderCompID(49): Empty tag", msgType);
         }
     }
 
     public class InvalidValueFormat {
+        private final String msgType = "0";
+
         public String create() {
-            return raw = message("52", "0")
+            return raw = message("52", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "WRONG FORMAT")
                 .field(TestReqID, "1")
@@ -162,13 +178,15 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.INVALID_VALUE_FORMAT, "SendingTime(52): Invalid value format");
+            expectInvalidMessage(SessionRejectReasonValue.INVALID_VALUE_FORMAT, "SendingTime(52): Invalid value format", msgType);
         }
     }
 
     public class InvalidValue {
+        private final String msgType = "A";
+
         public String create() {
-            return raw = message("63", "A")
+            return raw = message("63", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(EncryptMethod, "7")
@@ -178,13 +196,15 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.INVALID_VALUE, "EncryptMethod(98): Invalid value");
+            expectInvalidMessage(SessionRejectReasonValue.INVALID_VALUE, "EncryptMethod(98): Invalid value", msgType);
         }
     }
 
     public class TagMultipleTimes {
+        private final String msgType = "0";
+
         public String create() {
-            return raw = message("63", "0")
+            return raw = message("63", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(TestReqID, "1")
@@ -194,13 +214,15 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.TAG_MULTIPLE_TIMES, "TestReqID(112): Tag multiple times");
+            expectInvalidMessage(SessionRejectReasonValue.TAG_MULTIPLE_TIMES, "TestReqID(112): Tag multiple times", msgType);
         }
     }
 
     public class InvalidMsgType {
+        private final String msgType = "ZZ";
+
         public String create() {
-            return raw = message("52", "ZZ")
+            return raw = message("52", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(CheckSum, "074")
@@ -209,15 +231,17 @@ public class ParserSpec extends Specification<String> {
 
         public void parse() {
             checking(new Expectations() {{
-                one(callback).invalidMsgType("ZZ", 1);
+                one(callback).invalidMsgType(msgType, 1);
             }});
-            Parser.parse(silvertip.Message.fromString(raw), callback);
+            Parser.parse(FixMessage.fromString(raw, msgType), callback);
         }
     }
 
     public class UnsupportedMsgType {
+        private final String msgType = "P";
+
         public String create() {
-            return raw = message("51", "P")
+            return raw = message("51", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(CheckSum, "229")
@@ -226,15 +250,17 @@ public class ParserSpec extends Specification<String> {
 
         public void parse() {
             checking(new Expectations() {{
-                one(callback).unsupportedMsgType("P", 1);
+                one(callback).unsupportedMsgType(msgType, 1);
             }});
-            Parser.parse(silvertip.Message.fromString(raw), callback);
+            Parser.parse(FixMessage.fromString(raw, msgType), callback);
         }
     }
 
     public class InvalidTagNumber {
+        private final String msgType = "0";
+
         public String create() {
-            return raw = message("68", "0")
+            return raw = message("68", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(TestReqID, "1")
@@ -244,13 +270,15 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.INVALID_TAG_NUMBER, "Invalid tag number: 9898");
+            expectInvalidMessage(SessionRejectReasonValue.INVALID_TAG_NUMBER, "Invalid tag number: 9898", msgType);
         }
     }
 
     public class InvalidTag {
+        private final String msgType = "0";
+
         public String create() {
-            return raw = message("62", "0")
+            return raw = message("62", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(88, "0")
@@ -260,13 +288,15 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.INVALID_TAG, "Tag not defined for this message: 88");
+            expectInvalidMessage(SessionRejectReasonValue.INVALID_TAG, "Tag not defined for this message: 88", msgType);
         }
     }
 
     public class HeaderFieldInBody {
+        private final String msgType = "0";
+
         public String create() {
-            return raw = message("60", "0")
+            return raw = message("60", msgType)
                 .field(MsgSeqNum, "1")
                 .field(TestReqID, "1000")
                 .field(SendingTime, "20100701-12:09:40")
@@ -275,13 +305,15 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.OUT_OF_ORDER_TAG, "SendingTime(52): Out of order tag");
+            expectInvalidMessage(SessionRejectReasonValue.OUT_OF_ORDER_TAG, "SendingTime(52): Out of order tag", msgType);
         }
     }
 
     public class TrailerFieldInBody {
+        private final String msgType = "0";
+
         public String create() {
-            return raw = message("64", "0")
+            return raw = message("64", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(CheckSum, "206")
@@ -291,13 +323,15 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.OUT_OF_ORDER_TAG, "CheckSum(10): Out of order tag");
+            expectInvalidMessage(SessionRejectReasonValue.OUT_OF_ORDER_TAG, "CheckSum(10): Out of order tag", msgType);
         }
     }
 
     public class SOHInValue {
+        private final String msgType = "0";
+
         public String create() {
-            return raw = message("61", "0")
+            return raw = message("61", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(TestReqID, "1" + Field.DELIMITER + "000")
@@ -306,13 +340,15 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.FIELD_DELIMITER_IN_VALUE, "Non-data value includes field delimiter (SOH character)");
+            expectInvalidMessage(SessionRejectReasonValue.FIELD_DELIMITER_IN_VALUE, "Non-data value includes field delimiter (SOH character)", msgType);
         }
     }
 
     public class RepeatingGroup {
+        private final String msgType = "J";
+
         public String create() {
-            return raw = message("210", "J")
+            return raw = message("210", msgType)
                 .field(MsgSeqNum, "1")
                 .field(43, "Y")
                 .field(SendingTime, "20100701-12:09:40")
@@ -339,13 +375,15 @@ public class ParserSpec extends Specification<String> {
             checking(new Expectations() {{
                 one(callback).message(with(new MessageMatcher(raw)));
             }});
-            Parser.parse(silvertip.Message.fromString(raw), callback);
+            Parser.parse(FixMessage.fromString(raw, msgType), callback);
         }
     }
 
     public class RepeatingGroupOutOfOrder {
+        private final String msgType = "J";
+
         public String create() {
-            return raw = message("183", "J")
+            return raw = message("183", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(AllocID, "12807331319411")
@@ -367,13 +405,15 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.OUT_OF_ORDER_GROUP_FIELD, "AllocShares(80): Repeating group fields out of order");
+            expectInvalidMessage(SessionRejectReasonValue.OUT_OF_ORDER_GROUP_FIELD, "AllocShares(80): Repeating group fields out of order", msgType);
         }
     }
 
     public class TooFewInstancesInRepeatingGroup {
+        private final String msgType = "J";
+
         public String create() {
-            return raw = message("183", "J")
+            return raw = message("183", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(AllocID, "12807331319411")
@@ -395,13 +435,15 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.NUM_IN_GROUP_MISMATCH, "NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 3, but was: 2");
+            expectInvalidMessage(SessionRejectReasonValue.NUM_IN_GROUP_MISMATCH, "NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 3, but was: 2", msgType);
         }
     }
 
     public class TooManyInstancesInRepeatingGroup {
+        private final String msgType = "J";
+
         public String create() {
-            return raw = message("183", "J")
+            return raw = message("183", msgType)
                 .field(MsgSeqNum, "1")
                 .field(SendingTime, "20100701-12:09:40")
                 .field(AllocID, "12807331319411")
@@ -423,7 +465,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.NUM_IN_GROUP_MISMATCH, "NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 1, but was: 2");
+            expectInvalidMessage(SessionRejectReasonValue.NUM_IN_GROUP_MISMATCH, "NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 1, but was: 2", msgType);
         }
     }
 
@@ -440,11 +482,11 @@ public class ParserSpec extends Specification<String> {
                 .field(TargetCompID, "Target");
     }
 
-    private void expectInvalidMessage(final SessionRejectReasonValue reason, final String text) {
+    private void expectInvalidMessage(final SessionRejectReasonValue reason, final String text, String msgType) {
         checking(new Expectations() {{
             one(callback).invalidMessage(1, reason, text);
         }});
-        Parser.parse(silvertip.Message.fromString(raw), callback);
+        Parser.parse(FixMessage.fromString(raw, msgType), callback);
     }
 
     class MessageMatcher extends BaseMatcher<Message> {

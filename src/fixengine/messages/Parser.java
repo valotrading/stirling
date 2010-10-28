@@ -18,6 +18,7 @@ package fixengine.messages;
 import java.nio.ByteBuffer;
 
 import fixengine.tags.MsgSeqNum;
+import silvertip.FixMessage;
 
 public class Parser {
     public interface Callback {
@@ -28,7 +29,7 @@ public class Parser {
         void msgSeqNumMissing(String text);
     }
 
-    public static void parse(silvertip.Message m, Callback callback) {
+    public static void parse(FixMessage m, Callback callback) {
         parse(new DefaultMessageFactory(), m, callback);
     }
 
@@ -36,7 +37,7 @@ public class Parser {
         parse(new DefaultMessageFactory(), b, callback);
     }
 
-    public static void parse(MessageFactory messageFactory, silvertip.Message m, Callback callback) {
+    public static void parse(MessageFactory messageFactory, FixMessage m, Callback callback) {
         parse(messageFactory, m.toByteBuffer(), callback);
     }
 
@@ -61,7 +62,7 @@ public class Parser {
         }
     }
 
-    public static int parseMsgSeqNum(silvertip.Message message) {
+    public static int parseMsgSeqNum(FixMessage message) {
         String value = parseField(message, MsgSeqNum.TAG);
         IntegerField field = new IntegerField(MsgSeqNum.TAG);
         field.parse(value);
@@ -70,7 +71,7 @@ public class Parser {
         return field.intValue();
     }
 
-    private static String parseField(silvertip.Message message, Tag tagToFind) {
+    private static String parseField(FixMessage message, Tag tagToFind) {
         ByteBuffer b = message.toByteBuffer();
         while (b.hasRemaining()) {
             try {
@@ -85,7 +86,7 @@ public class Parser {
         throw new ParseException(tagToFind.prettyName() + " is missing");
     }
 
-    public static SequenceResetMessage parseSequenceReset(silvertip.Message message) {
+    public static SequenceResetMessage parseSequenceReset(FixMessage message) {
         ByteBuffer b = message.toByteBuffer();
         MessageHeader header = new MessageHeader();
         header.parse(b);
