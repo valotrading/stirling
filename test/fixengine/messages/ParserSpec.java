@@ -15,6 +15,7 @@
  */
 package fixengine.messages;
 
+import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
@@ -44,6 +45,10 @@ public class ParserSpec extends Specification<String> {
             }});
             Parser.parse(silvertip.Message.fromString(raw), callback);
         }
+
+        public void parseMsgSeqNum() {
+            specify(Parser.parseMsgSeqNum(silvertip.Message.fromString(raw)), 1);
+        }
     }
 
     public class MsgSeqNumMissing {
@@ -64,6 +69,33 @@ public class ParserSpec extends Specification<String> {
                 one(callback).msgSeqNumMissing("MsgSeqNum(34) is missing");
             }});
             Parser.parse(silvertip.Message.fromString(raw), callback);
+        }
+
+        public void parseMsgSeqNum() {
+            specify(new Block() {
+                @Override public void run() {
+                    Parser.parseMsgSeqNum(silvertip.Message.fromString(raw));
+                }
+            }, must.raise(ParseException.class, "MsgSeqNum(34) is missing"));
+        }
+    }
+
+    public class MsgSeqNumHasInvalidFormat {
+        public String create() {
+            return raw = message("57", "0")
+                .field(MsgSeqNum, "X")
+                .field(SendingTime, "20100701-12:09:40")
+                .field(TestReqID, "1")
+                .field(CheckSum, "206")
+                .toString();
+        }
+
+        public void parseMsgSeqNum() {
+            specify(new Block() {
+                @Override public void run() {
+                    Parser.parseMsgSeqNum(silvertip.Message.fromString(raw));
+                }
+            }, must.raise(InvalidValueFormatException.class, "MsgSeqNum(34) has invalid value format: X"));
         }
     }
 

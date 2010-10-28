@@ -60,4 +60,28 @@ public class Parser {
             callback.invalidMessage(header.getInteger(MsgSeqNum.TAG), e.getReason(), e.getMessage());
         }
     }
+
+    public static int parseMsgSeqNum(silvertip.Message message) {
+        String value = parseField(message, MsgSeqNum.TAG);
+        IntegerField field = new IntegerField(MsgSeqNum.TAG);
+        field.parse(value);
+        if (!field.isFormatValid())
+            throw new InvalidValueFormatException(MsgSeqNum.TAG.prettyName() + " has invalid value format: " + value);
+        return field.intValue();
+    }
+
+    private static String parseField(silvertip.Message message, Tag tagToFind) {
+        ByteBuffer b = message.toByteBuffer();
+        while (b.hasRemaining()) {
+            try {
+                int tag = Tag.parseTag(b);
+                String value = AbstractField.parseValue(b);
+                if (tag == tagToFind.value())
+                  return value;
+            } catch (NonDataValueIncludesFieldDelimiterException e) {
+                /* Ignore tag that cannot be parsed due to delimiter in tag */
+            }
+        }
+        throw new ParseException(tagToFind.prettyName() + " is missing");
+    }
 }
