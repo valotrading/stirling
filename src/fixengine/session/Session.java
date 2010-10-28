@@ -45,6 +45,7 @@ import fixengine.messages.MessageFactory;
 import fixengine.messages.MessageValidator;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.Parser;
+import fixengine.messages.ParseException;
 import fixengine.messages.RejectMessage;
 import fixengine.messages.ResendRequestMessage;
 import fixengine.messages.SequenceResetMessage;
@@ -104,6 +105,9 @@ public class Session {
     public void receive(final Connection conn, silvertip.FixMessage message, final MessageVisitor visitor) {
         prevRxTime = currentTime();
         try {
+            if (!parseMsgSeqNum(conn, message)) {
+                return;
+            }
             Parser.parse(messageFactory, message, new Parser.Callback() {
                 @Override public void message(Message message) {
                     int expected = queue.nextSeqNum();
@@ -153,6 +157,18 @@ public class Session {
             });
         } finally {
             store.save(this);
+        }
+    }
+
+    private boolean parseMsgSeqNum(Connection conn, silvertip.FixMessage message) {
+        try {
+            int msgSeqNum = Parser.parseMsgSeqNum(message);
+            message.setMsgSeqNum(msgSeqNum);
+            return true;
+        } catch (ParseException e) {
+            getLogger().severe(e.getMessage());
+            terminate(conn, e.getMessage());
+            return false;
         }
     }
 
