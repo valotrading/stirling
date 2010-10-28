@@ -15,6 +15,7 @@
  */
 package fixengine.messages;
 
+import org.joda.time.DateTime;
 import java.nio.ByteBuffer;
 
 import fixengine.tags.MsgSeqNum;
@@ -33,15 +34,15 @@ public class Parser {
         parse(new DefaultMessageFactory(), m, callback);
     }
 
-    private static void parse(ByteBuffer b, Callback callback) {
-        parse(new DefaultMessageFactory(), b, callback);
+    private static void parse(ByteBuffer b, Callback callback, DateTime receiveTime) {
+        parse(new DefaultMessageFactory(), b, callback, receiveTime);
     }
 
     public static void parse(MessageFactory messageFactory, FixMessage m, Callback callback) {
-        parse(messageFactory, m.toByteBuffer(), callback);
+        parse(messageFactory, m.toByteBuffer(), callback, m.getReceiveTime());
     }
 
-    private static void parse(MessageFactory messageFactory, ByteBuffer b, Callback callback) {
+    private static void parse(MessageFactory messageFactory, ByteBuffer b, Callback callback, DateTime receiveTime) {
         MessageHeader header = null;
         try {
             header = new MessageHeader();
@@ -50,6 +51,7 @@ public class Parser {
             Message msg = header.newMessage(messageFactory);
             msg.parse(b);
             msg.validate();
+            msg.setReceiveTime(receiveTime);
             callback.message(msg);
         } catch (MsgSeqNumMissingException e) {
             callback.msgSeqNumMissing(e.getMessage());

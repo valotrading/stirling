@@ -47,6 +47,7 @@ import fixengine.tags.TargetSubID;
  */
 public abstract class AbstractMessage extends FieldContainer implements Message {
     private final MessageHeader header;
+    private DateTime receiveTime;
 
     protected AbstractMessage(String msgType) {
         this(new MessageHeader(msgType));
@@ -136,6 +137,10 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
         header.setDateTime(SendingTime.TAG, sendingTime);
     }
 
+    @Override public void setReceiveTime(DateTime receiveTime) {
+        this.receiveTime = receiveTime;
+    }
+
     public DateTime getSendingTime() {
         return header.getDateTime(SendingTime.TAG);
     }
@@ -188,8 +193,8 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
     }
 
     @Override
-    public boolean hasAccurateSendingTime(DateTime currentTime) {
-        return header.hasAccurateSendingTime(currentTime);
+    public boolean hasAccurateSendingTime() {
+        return header.hasAccurateSendingTime(receiveTime);
     }
 
     @Override

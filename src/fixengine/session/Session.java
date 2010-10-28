@@ -124,6 +124,7 @@ public class Session {
                 }
             }
 
+            message.setReceiveTime(currentTime());
             queue.enqueue(message);
 
             if (expectedMsgSeqNum != message.getMsgSeqNum()) {

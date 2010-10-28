@@ -73,7 +73,7 @@ public class MessageValidator {
             });
             add(new AbstractMessageValidator() {
                 @Override protected boolean isValid(Session session, Message message) {
-                    return message.hasAccurateSendingTime(session.currentTime());
+                    return message.hasAccurateSendingTime();
                 }
 
                 @Override protected void error(Session session, Message message, ErrorHandler handler) {

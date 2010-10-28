@@ -45,13 +45,14 @@ public interface Message extends Parseable, Iterable<Field>  {
     void setHeaderConfig(Config config);
     void setMsgSeqNum(int next);
     void setSendingTime(DateTime sendingTime);
+    void setReceiveTime(DateTime receiveTime);
     void setOrigSendingTime(DateTime origSendingTime);
     void setPossDupFlag(boolean possDupFlag);
     DateTime getSendingTime();
     DateTime getOrigSendingTime();
     boolean getPossDupFlag();
     boolean isPointToPoint();
-    boolean hasAccurateSendingTime(DateTime currentTime);
+    boolean hasAccurateSendingTime();
     boolean hasOrigSendTimeAfterSendingTime();
     boolean hasOrigSendingTime();
     boolean hasValidBeginString(Config config);
