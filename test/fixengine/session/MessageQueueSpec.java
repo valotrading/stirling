@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 the original author or authors.
+ * Copyright 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,13 +21,9 @@ import jdave.junit4.JDaveRunner;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 
-import fixengine.messages.Message;
+import silvertip.FixMessage;
 
-/**
- * @author Pekka Enberg 
- */
-@RunWith(JDaveRunner.class)
-public class MessageQueueSpec extends Specification<MessageQueue> {
+@RunWith(JDaveRunner.class) public class MessageQueueSpec extends Specification<MessageQueue> {
     private MessageQueue queue = new MessageQueue();
 
     public class EmptyQueue {
@@ -45,8 +41,8 @@ public class MessageQueueSpec extends Specification<MessageQueue> {
     }
 
     public class QueueThatHasInOrderMessages {
-        private Message message1 = mock(Message.class, "message1");
-        private Message message2 = mock(Message.class, "message2");
+        private FixMessage message1 = mock(FixMessage.class, "message1");
+        private FixMessage message2 = mock(FixMessage.class, "message2");
 
         public MessageQueue create() {
             checking(new Expectations() {{
@@ -73,7 +69,7 @@ public class MessageQueueSpec extends Specification<MessageQueue> {
     }
 
     public class QueueThatHasMissingMessage {
-        private Message outOfOrderMsg = mock(Message.class);
+        private FixMessage outOfOrderMsg = mock(FixMessage.class);
 
         public MessageQueue create() {
             checking(new Expectations() {{
@@ -97,8 +93,8 @@ public class MessageQueueSpec extends Specification<MessageQueue> {
     }
 
     public class QueueThatHasOutOfOrderMessages {
-        private Message message2 = mock(Message.class, "message2");
-        private Message message1 = mock(Message.class, "message1");
+        private FixMessage message2 = mock(FixMessage.class, "message2");
+        private FixMessage message1 = mock(FixMessage.class, "message1");
 
         public MessageQueue create() {
             checking(new Expectations() {{
@@ -129,8 +125,8 @@ public class MessageQueueSpec extends Specification<MessageQueue> {
     }
 
     public class QueueThatIsReset {
-        private Message message2 = mock(Message.class, "message2");
-        private Message message1 = mock(Message.class, "message1");
+        private FixMessage message2 = mock(FixMessage.class, "message2");
+        private FixMessage message1 = mock(FixMessage.class, "message1");
 
         public MessageQueue create() {
             checking(new Expectations() {{

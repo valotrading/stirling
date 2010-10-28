@@ -76,7 +76,7 @@ public class Session {
     private static final long DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC = 10000;
     private static final Logger LOG = Logger.getLogger("Session");
 
-    protected FixMessageQueue queue = new FixMessageQueue();
+    protected MessageQueue queue = new MessageQueue();
     protected Sequence outgoingSeq = new Sequence();
 
     protected final HeartBtIntValue heartBtInt;

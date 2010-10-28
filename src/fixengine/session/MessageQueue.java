@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 the original author or authors.
+ * Copyright 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,17 +18,13 @@ package fixengine.session;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import fixengine.messages.FixMessageComparator;
 import fixengine.messages.Message;
-import fixengine.messages.MessageComparator;
 
-/**
- * Note: this class is <b>not thread-safe</b>! The callers are expected to take
- * care of locking.
- * 
- * @author Pekka Enberg
- */
+import silvertip.FixMessage;
+
 public class MessageQueue {
-    private SortedSet<Message> queue = new TreeSet<Message>(new MessageComparator());
+    private SortedSet<FixMessage> queue = new TreeSet<FixMessage>(new FixMessageComparator());
     private Sequence sequence = new Sequence();
     private int maxSeqNum;
 
@@ -36,7 +32,7 @@ public class MessageQueue {
         skip(message.getMsgSeqNum());
     }
 
-    public void enqueue(Message message) {
+    public void enqueue(FixMessage message) {
         queue.add(message);
         skip(message.getMsgSeqNum());
     }
@@ -48,8 +44,8 @@ public class MessageQueue {
         maxSeqNum = Math.max(msgSeqNum, maxSeqNum);
     }
 
-    public Message dequeue() {
-        Message result = queue.first();
+    public FixMessage dequeue() {
+        FixMessage result = queue.first();
         queue.remove(result);
         return result;
     }
