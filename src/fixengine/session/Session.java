@@ -111,11 +111,9 @@ public class Session {
                 return;
             }
 
-            int expectedMsgSeqNum = queue.nextSeqNum();
-
             if (message.getMsgType().equals(SEQUENCE_RESET)) {
                 try {
-                    if (processSequenceReset(conn, Parser.parseSequenceReset(message), expectedMsgSeqNum)) {
+                    if (processSequenceReset(conn, Parser.parseSequenceReset(message))) {
                         return;
                     }
                 } catch (ParseException e) {
@@ -126,11 +124,14 @@ public class Session {
             }
 
             message.setReceiveTime(currentTime());
+
+            if (queue.nextSeqNum() != message.getMsgSeqNum()) {
+                processOutOfSyncMessageQueue(conn, message);
+            }
+
             queue.enqueue(message);
 
-            if (expectedMsgSeqNum != message.getMsgSeqNum()) {
-                processOutOfSyncMessageQueue(conn, message, expectedMsgSeqNum);
-            } else if (!conn.isClosed()) {
+            if (!conn.isClosed()) {
                 processInSyncMessageQueue(conn, visitor);
             }
         } finally {
@@ -138,23 +139,23 @@ public class Session {
         }
     }
 
-    private boolean processSequenceReset(Connection conn, SequenceResetMessage message, int expectedMsgSeqNum) {
+    private boolean processSequenceReset(Connection conn, SequenceResetMessage message) {
         if (message.getBoolean(GapFillFlag.TAG)) {
-            return processSequenceResetGapFill(conn, message, expectedMsgSeqNum);
+            return processSequenceResetGapFill(conn, message);
         } else {
-            return processSequenceResetReset(conn, message, expectedMsgSeqNum);
+            return processSequenceResetReset(conn, message);
         }
     }
 
-    private boolean processSequenceResetGapFill(Connection conn, SequenceResetMessage message, int expectedMsgSeqNum) {
-        if (message.getMsgSeqNum() > expectedMsgSeqNum) {
-            sendResendRequest(conn, expectedMsgSeqNum, 0);
+    private boolean processSequenceResetGapFill(Connection conn, SequenceResetMessage message) {
+        if (message.getMsgSeqNum() > queue.nextSeqNum()) {
+            sendResendRequest(conn, queue.nextSeqNum(), 0);
             return true;
         }
 
-        if (message.getMsgSeqNum() < expectedMsgSeqNum) {
+        if (message.getMsgSeqNum() < queue.nextSeqNum()) {
             if (!message.getPossDupFlag()) {
-                String text = "MsgSeqNum too low, expecting " + expectedMsgSeqNum + " but received " + message.getMsgSeqNum();
+                String text = "MsgSeqNum too low, expecting " + queue.nextSeqNum() + " but received " + message.getMsgSeqNum();
                 getLogger().severe(text);
                 terminate(conn, text);
             }
@@ -164,7 +165,7 @@ public class Session {
         return false;
     }
 
-    private boolean processSequenceResetReset(Connection conn, SequenceResetMessage message, int expectedMsgSeqNum) {
+    private boolean processSequenceResetReset(Connection conn, SequenceResetMessage message) {
         if (message.getNewSeqNo() == message.getMsgSeqNum()) {
             getLogger().warning("NewSeqNo(36)=" + message.getNewSeqNo() + " is equal to expected MsgSeqNum(34)=" + message.getMsgSeqNum());
         } else if (message.getNewSeqNo() < message.getMsgSeqNum()) {
@@ -177,11 +178,11 @@ public class Session {
         return true;
     }
 
-    private void processOutOfSyncMessageQueue(final Connection conn, FixMessage message, int expectedMsgSeqNum) {
-        if (message.getMsgSeqNum() > expectedMsgSeqNum) {
+    private void processOutOfSyncMessageQueue(final Connection conn, FixMessage message) {
+        if (message.getMsgSeqNum() > queue.nextSeqNum()) {
             sendResendRequest(conn, queue.nextSeqNum(), 0);
         } else {
-            String text = "MsgSeqNum too low, expecting " + expectedMsgSeqNum + " but received " + message.getMsgSeqNum();
+            String text = "MsgSeqNum too low, expecting " + queue.nextSeqNum() + " but received " + message.getMsgSeqNum();
             getLogger().severe(text);
             terminate(conn, text);
         }
