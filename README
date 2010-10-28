@@ -1,0 +1,9 @@
+== xTCH Encoder/Decoder
+
+A simple library for decoding protocoles that are similar to INET's low-latency
+market data (ITCH) and order entry (OUCH) protocols.
+
+== References
+
+1. Nasdaq OMX Trading Specifications; http://www.nasdaqtrader.com/Trader.aspx?id=TradingSpecs
+
