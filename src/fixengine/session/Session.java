@@ -66,8 +66,9 @@ import fixengine.tags.RefSeqNo;
 import fixengine.tags.SessionRejectReason;
 import fixengine.tags.TestReqID;
 import fixengine.tags.Text;
-import silvertip.Connection;
 
+import silvertip.Connection;
+import silvertip.FixMessage;
 /**
  * @author Karim Osman
  */
@@ -103,7 +104,7 @@ public class Session {
         store.load(this);
     }
 
-    public void receive(final Connection conn, silvertip.FixMessage message, final MessageVisitor visitor) {
+    public void receive(final Connection conn, FixMessage message, final MessageVisitor visitor) {
         prevRxTime = currentTime();
         try {
             if (!parseMsgSeqNum(conn, message)) {
@@ -176,7 +177,7 @@ public class Session {
         return true;
     }
 
-    private void processOutOfSyncMessageQueue(final Connection conn, silvertip.FixMessage message, int expectedMsgSeqNum) {
+    private void processOutOfSyncMessageQueue(final Connection conn, FixMessage message, int expectedMsgSeqNum) {
         if (message.getMsgSeqNum() > expectedMsgSeqNum) {
             sendResendRequest(conn, queue.nextSeqNum(), 0);
         } else {
@@ -227,7 +228,7 @@ public class Session {
         }
     }
 
-    private boolean parseMsgSeqNum(Connection conn, silvertip.FixMessage message) {
+    private boolean parseMsgSeqNum(Connection conn, FixMessage message) {
         try {
             int msgSeqNum = Parser.parseMsgSeqNum(message);
             message.setMsgSeqNum(msgSeqNum);
@@ -400,7 +401,7 @@ public class Session {
         message.setMsgSeqNum(seq.peek());
         message.setInteger(NewSeqNo.TAG, seq.next());
         message.setBoolean(GapFillFlag.TAG, false);
-        conn.send(silvertip.FixMessage.fromString(message.format()));
+        conn.send(FixMessage.fromString(message.format()));
         prevTxTime = currentTime();
         setOutgoingSeq(seq);
         store.save(this);
@@ -432,7 +433,7 @@ public class Session {
         message.setHeaderConfig(config);
         message.setMsgSeqNum(outgoingSeq.next());
         message.setSendingTime(currentTime());
-        conn.send(silvertip.FixMessage.fromString(message.format()));
+        conn.send(FixMessage.fromString(message.format()));
         prevTxTime = currentTime();
         store.save(this);
     }
