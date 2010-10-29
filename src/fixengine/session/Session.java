@@ -104,7 +104,7 @@ public class Session {
         store.load(this);
     }
 
-    public void receive(final Connection conn, FixMessage message, final MessageVisitor visitor) {
+    public void receive(final Connection conn, final FixMessage message, final MessageVisitor visitor) {
         prevRxTime = currentTime();
         try {
             if (!parseMsgSeqNum(conn, message)) {
@@ -112,30 +112,44 @@ public class Session {
             }
 
             if (message.getMsgType().equals(SEQUENCE_RESET)) {
-                try {
-                    if (processSequenceReset(conn, Parser.parseSequenceReset(message))) {
-                        return;
+                Parser.parse(messageFactory, message, new Parser.Callback() {
+                    @Override public void message(Message sequenceReset) {
+                        if (!processSequenceReset(conn, (SequenceResetMessage) sequenceReset))
+                            processMessage(conn, message, visitor);
                     }
-                } catch (ParseException e) {
-                    /* Ignore invalid Sequence Reset message and place it to
-                     * queue for rejecting it later.
-                     */
-                }
+
+                    @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
+                    }
+
+                    @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {
+                    }
+
+                    @Override public void invalidMsgType(String msgType, int msgSeqNum) {
+                    }
+
+                    @Override public void msgSeqNumMissing(String text) {
+                    }
+                });
+            } else {
+                processMessage(conn, message, visitor);
             }
 
-            message.setReceiveTime(currentTime());
-
-            if (queue.nextSeqNum() != message.getMsgSeqNum()) {
-                processOutOfSyncMessageQueue(conn, message);
-            }
-
-            queue.enqueue(message);
-
-            if (!conn.isClosed()) {
-                processInSyncMessageQueue(conn, visitor);
-            }
         } finally {
             store.save(this);
+        }
+    }
+
+    private void processMessage(final Connection conn, FixMessage message, MessageVisitor visitor) {
+        message.setReceiveTime(currentTime());
+
+        if (queue.nextSeqNum() != message.getMsgSeqNum()) {
+            processOutOfSyncMessageQueue(conn, message);
+        }
+
+        queue.enqueue(message);
+
+        if (!conn.isClosed()) {
+            processInSyncMessageQueue(conn, visitor);
         }
     }
 
