@@ -126,9 +126,6 @@ public class Session {
 
                     @Override public void invalidMsgType(String msgType, int msgSeqNum) {
                     }
-
-                    @Override public void msgSeqNumMissing(String text) {
-                    }
                 });
             } else {
                 processMessage(conn, message, visitor);
@@ -233,11 +230,6 @@ public class Session {
                     getLogger().warning("MsgType(35): Invalid message type: " + msgType);
                     queue.skip(msgSeqNum);
                     sessionReject(conn, msgSeqNum, SessionRejectReasonValue.INVALID_MSG_TYPE, "MsgType(35): Invalid message type: " + msgType);
-                }
-
-                @Override public void msgSeqNumMissing(String text) {
-                    getLogger().severe(text);
-                    terminate(conn, text);
                 }
             });
         }

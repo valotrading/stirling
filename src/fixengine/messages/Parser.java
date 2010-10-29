@@ -27,7 +27,6 @@ public class Parser {
         void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text);
         void unsupportedMsgType(String msgType, int msgSeqNum);
         void invalidMsgType(String msgType, int msgSeqNum);
-        void msgSeqNumMissing(String text);
     }
 
     public static void parse(FixMessage m, Callback callback) {
@@ -53,8 +52,6 @@ public class Parser {
             msg.validate();
             msg.setReceiveTime(receiveTime);
             callback.message(msg);
-        } catch (MsgSeqNumMissingException e) {
-            callback.msgSeqNumMissing(e.getMessage());
         } catch (InvalidMsgTypeException e) {
             callback.invalidMsgType(header.getMsgType(), header.getInteger(MsgSeqNum.TAG));
         } catch (UnsupportedMsgTypeException e) {

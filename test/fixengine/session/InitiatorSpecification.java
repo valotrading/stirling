@@ -359,9 +359,6 @@ public class InitiatorSpecification extends Specification<Session> {
 
                         @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
                         }
-
-                        @Override public void msgSeqNumMissing(String text) {
-                        }
                     });
                 }
 

@@ -70,13 +70,6 @@ public class ParserSpec extends Specification<String> {
                 .toString();
         }
 
-        public void parse() {
-            checking(new Expectations() {{
-                one(callback).msgSeqNumMissing("MsgSeqNum(34) is missing");
-            }});
-            Parser.parse(FixMessage.fromString(raw, msgType), callback);
-        }
-
         public void parseMsgSeqNum() {
             specify(new Block() {
                 @Override public void run() {
