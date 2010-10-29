@@ -87,13 +87,4 @@ public class Parser {
         }
         throw new ParseException(tagToFind.prettyName() + " is missing");
     }
-
-    public static SequenceResetMessage parseSequenceReset(FixMessage message) {
-        ByteBuffer b = message.toByteBuffer();
-        MessageHeader header = new MessageHeader();
-        header.parse(b);
-        SequenceResetMessage msg = new SequenceResetMessage(header);
-        msg.parse(b);
-        return msg;
-    }
 }
