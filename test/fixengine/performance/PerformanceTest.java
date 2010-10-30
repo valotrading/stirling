@@ -166,7 +166,7 @@ public class PerformanceTest implements Runnable {
                 } catch (SocketException e) {
                     throw new RuntimeException(e);
                 }
-                Connection conn = new Connection<FixMessage>(channel, new FixMessageParser(),
+                final Connection conn = new Connection<FixMessage>(channel, new FixMessageParser(),
                         new Connection.Callback<FixMessage>() {
                             @Override public void messages(Connection<FixMessage> conn, Iterator<FixMessage> messages) {
                                 while (messages.hasNext())
@@ -183,18 +183,24 @@ public class PerformanceTest implements Runnable {
                             @Override public void garbledMessage(String message, byte[] data) {
                             }
                         });
-                int txCount = 0;
-                tx[txCount++] = System.nanoTime();
                 events.register(conn);
-                session.logon(conn);
-                while (txCount < NUM_MESSAGES) {
-                    tx[txCount++] = System.nanoTime();
-                    MessageHeader header = new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE);
-                    NewOrderSingleMessage message = new NewOrderSingleMessage(header);
-                    session.send(conn, message);
-                }
+                Thread worker = new Thread(new Runnable() {
+                    @Override public void run() {
+                        int txCount = 0;
+                        tx[txCount++] = System.nanoTime();
+                        session.logon(conn);
+                        while (txCount < NUM_MESSAGES) {
+                            tx[txCount++] = System.nanoTime();
+                            MessageHeader header = new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE);
+                            NewOrderSingleMessage message = new NewOrderSingleMessage(header);
+                            session.send(conn, message);
+                        }
+                    }
+                });
+                worker.start();
                 events.dispatch();
-            } catch (IOException e) {
+                worker.join();
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
