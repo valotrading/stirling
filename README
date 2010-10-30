@@ -1,9 +1,14 @@
-== xTCH Encoder/Decoder
+== xTCH encoder/decoder
 
-A simple library for decoding protocoles that are similar to INET's low-latency
-market data (ITCH) and order entry (OUCH) protocols.
+xTCH is a library for encoding and decoding protocols similar to the NASDAQ
+Stock Market's INET low-latency market data (ITCH) and order entry (OUCH)
+protocols [1]. xTCH also introduces session management for the supported
+protocol profiles.
+
+== Protocol Profiles
+
+Currently, xTCH supports only a subset of Soup TCP 2.0.
 
 == References
 
 1. Nasdaq OMX Trading Specifications; http://www.nasdaqtrader.com/Trader.aspx?id=TradingSpecs
-
