@@ -69,12 +69,14 @@ import fixengine.tags.Text;
 
 import silvertip.Connection;
 import silvertip.FixMessage;
+
 /**
  * @author Karim Osman
  */
 public class Session {
     private static final long DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC = 10000;
     private static final Logger LOG = Logger.getLogger("Session");
+    private static final int MAX_CONSECUTIVE_RESEND_REQUESTS = 2;
 
     protected MessageQueue queue = new MessageQueue();
     protected Sequence outgoingSeq = new Sequence();
@@ -184,6 +186,10 @@ public class Session {
 
     private void processOutOfSyncMessageQueue(final Connection conn, FixMessage message) {
         if (message.getMsgSeqNum() > queue.nextSeqNum()) {
+            if (queue.getNumConsecutiveSeqNumMismatches() > 2) {
+                terminate(conn, "Maximun resend requests (" + MAX_CONSECUTIVE_RESEND_REQUESTS + ") exceeded");
+                return;
+            }
             sendResendRequest(conn, queue.nextSeqNum(), 0);
         } else {
             String text = "MsgSeqNum too low, expecting " + queue.nextSeqNum() + " but received " + message.getMsgSeqNum();

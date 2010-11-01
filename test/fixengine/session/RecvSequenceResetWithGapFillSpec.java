@@ -126,5 +126,91 @@ import fixengine.tags.NewSeqNo;
             });
             specify(session.getIncomingSeq().peek(), 3);
         }
+
+        public void detectPossibleInfiniteResendLoopWithMessagesOtherThanSequenceReset() throws Exception {
+            server.expect(MsgTypeValue.LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
+                        .msgSeqNum(3)
+                    .build());
+            server.expect(MsgTypeValue.RESEND_REQUEST);
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
+                        .msgSeqNum(4)
+                    .build());
+            server.expect(MsgTypeValue.RESEND_REQUEST);
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
+                        .msgSeqNum(5)
+                    .build());
+            server.expect(MsgTypeValue.LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
+
+        public void detectPossibleInfiniteResendLoopWithSequenceReset() throws Exception {
+            server.expect(MsgTypeValue.LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
+                        .msgSeqNum(3)
+                        .bool(GapFillFlag.TAG, true)
+                        .integer(NewSeqNo.TAG, 2)
+                    .build());
+            server.expect(MsgTypeValue.RESEND_REQUEST);
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
+                        .msgSeqNum(4)
+                        .bool(GapFillFlag.TAG, true)
+                        .integer(NewSeqNo.TAG, 2)
+                    .build());
+            server.expect(MsgTypeValue.RESEND_REQUEST);
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
+                        .msgSeqNum(5)
+                        .bool(GapFillFlag.TAG, true)
+                        .integer(NewSeqNo.TAG, 2)
+                    .build());
+            server.expect(MsgTypeValue.LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
+
+        public void detectPossibleInfiniteResendLoop() throws Exception {
+            server.expect(MsgTypeValue.LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
+                        .msgSeqNum(3)
+                    .build());
+            server.expect(MsgTypeValue.RESEND_REQUEST);
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
+                        .msgSeqNum(4)
+                        .bool(GapFillFlag.TAG, true)
+                        .integer(NewSeqNo.TAG, 2)
+                    .build());
+            server.expect(MsgTypeValue.RESEND_REQUEST);
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
+                        .msgSeqNum(5)
+                    .build());
+            server.expect(MsgTypeValue.LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 2);
+        }
     }
 }
