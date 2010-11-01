@@ -139,13 +139,12 @@ public class Session {
     private void processMessage(final Connection conn, FixMessage message, MessageVisitor visitor) {
         message.setReceiveTime(currentTime());
 
-        if (queue.nextSeqNum() != message.getMsgSeqNum()) {
-            processOutOfSyncMessageQueue(conn, message);
-        }
-
+        int expectedMsgSeqNum = queue.nextSeqNum();
         queue.enqueue(message);
 
-        if (!conn.isClosed()) {
+        if (message.getMsgSeqNum() != expectedMsgSeqNum) {
+            processOutOfSyncMessageQueue(conn, message);
+        } else if (!conn.isClosed()) {
             processInSyncMessageQueue(conn, visitor);
         }
     }
