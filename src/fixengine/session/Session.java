@@ -158,11 +158,6 @@ public class Session {
     }
 
     private boolean processSequenceResetGapFill(Connection conn, SequenceResetMessage message) {
-        if (message.getMsgSeqNum() > queue.nextSeqNum()) {
-            sendResendRequest(conn, queue.nextSeqNum(), 0);
-            return true;
-        }
-
         if (message.getMsgSeqNum() < queue.nextSeqNum()) {
             if (!message.getPossDupFlag()) {
                 String text = "MsgSeqNum too low, expecting " + queue.nextSeqNum() + " but received " + message.getMsgSeqNum();
@@ -171,7 +166,6 @@ public class Session {
             }
             return true;
         }
-
         return false;
     }
 
