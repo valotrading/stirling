@@ -151,4 +151,26 @@ import silvertip.FixMessage;
             specify(queue.nextSeqNum(), must.equal(2));
         }
     }
+
+    public class QueueThatHasConsecutiveSeqNumMismatches {
+        private FixMessage message1 = mock(FixMessage.class, "message1");
+        private FixMessage message2 = mock(FixMessage.class, "message2");
+        private FixMessage message3 = mock(FixMessage.class, "message3");
+
+        public MessageQueue create() {
+            checking(new Expectations() {{
+                allowing(message1).getMsgSeqNum(); will(returnValue(2));
+                allowing(message2).getMsgSeqNum(); will(returnValue(2));
+                allowing(message3).getMsgSeqNum(); will(returnValue(2));
+            }});
+            queue.enqueue(message1);
+            queue.enqueue(message2);
+            queue.enqueue(message3);
+            return queue;
+        }
+
+        public void hasConsecutiveSeqNumMismatches() {
+            specify(queue.getNumConsecutiveSeqNumMismatches(), must.equal(3));
+        }
+    }
 }

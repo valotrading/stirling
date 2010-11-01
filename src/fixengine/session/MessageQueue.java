@@ -27,6 +27,7 @@ public class MessageQueue {
     private SortedSet<FixMessage> queue = new TreeSet<FixMessage>(new FixMessageComparator());
     private Sequence sequence = new Sequence();
     private int maxSeqNum;
+    private int numConsecutiveSeqNumMismatches;
 
     public void skip(Message message) {
         skip(message.getMsgSeqNum());
@@ -40,6 +41,9 @@ public class MessageQueue {
     public void skip(int msgSeqNum) {
         if (msgSeqNum == sequence.peek()) {
             sequence.next();
+            numConsecutiveSeqNumMismatches = 0;
+        } else {
+            numConsecutiveSeqNumMismatches++;
         }
         maxSeqNum = Math.max(msgSeqNum, maxSeqNum);
     }
@@ -67,5 +71,9 @@ public class MessageQueue {
 
     public boolean isEmpty() {
         return queue.isEmpty();
+    }
+
+    public int getNumConsecutiveSeqNumMismatches() {
+        return numConsecutiveSeqNumMismatches;
     }
 }
