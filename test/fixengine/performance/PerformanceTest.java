@@ -24,14 +24,14 @@ import java.util.Random;
 
 import silvertip.Connection;
 import silvertip.Events;
-import silvertip.FixMessage;
+import fixengine.messages.FixMessage;
 import silvertip.Server;
 import silvertip.Server.ConnectionFactory;
-import silvertip.protocols.FixMessageParser;
 import fixengine.Config;
 import fixengine.Version;
 import fixengine.messages.DefaultMessageFactory;
 import fixengine.messages.DefaultMessageVisitor;
+import fixengine.messages.FixMessageParser;
 import fixengine.messages.NewOrderSingleMessage;
 import fixengine.session.HeartBtIntValue;
 import fixengine.session.Session;

@@ -21,7 +21,7 @@ import jdave.junit4.JDaveRunner;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 
-import silvertip.FixMessage;
+import fixengine.messages.FixMessage;
 
 @RunWith(JDaveRunner.class) public class MessageQueueSpec extends Specification<MessageQueue> {
     private MessageQueue queue = new MessageQueue();

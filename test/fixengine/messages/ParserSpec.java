@@ -24,7 +24,7 @@ import org.hamcrest.Description;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 
-import silvertip.FixMessage;
+import fixengine.messages.FixMessage;
 
 @RunWith(JDaveRunner.class)
 public class ParserSpec extends Specification<String> {

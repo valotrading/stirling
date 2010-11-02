@@ -25,10 +25,10 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 import silvertip.Connection;
-import silvertip.FixMessage;
-import silvertip.protocols.FixMessageParser;
+import fixengine.messages.FixMessage;
 import fixengine.examples.console.ConsoleClient;
 import fixengine.messages.DefaultMessageVisitor;
+import fixengine.messages.FixMessageParser;
 import fixengine.messages.MsgTypeValue;
 import fixengine.session.HeartBtIntValue;
 import fixengine.session.Session;

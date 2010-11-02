@@ -40,7 +40,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 import silvertip.Connection;
 import silvertip.Events;
-import silvertip.protocols.FixMessageParser;
 import fixengine.Config;
 import fixengine.Version;
 import fixengine.messages.BooleanField;
@@ -49,6 +48,7 @@ import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.EnumField;
 import fixengine.messages.Field;
+import fixengine.messages.FixMessageParser;
 import fixengine.messages.FloatField;
 import fixengine.messages.Formattable;
 import fixengine.messages.IntegerField;
@@ -348,7 +348,7 @@ public class InitiatorSpecification extends Specification<Session> {
                     StringBuilder raw = parse();
                     if (raw.length() == 0)
                         return;
-                    Parser.parse(new silvertip.FixMessage(raw.toString().getBytes(), type), new Parser.Callback() {
+                    Parser.parse(new fixengine.messages.FixMessage(raw.toString().getBytes(), type), new Parser.Callback() {
                         @Override public void message(Message m) {
                             if (m.getMsgType().equals(type))
                                 successCount++;
@@ -473,20 +473,20 @@ public class InitiatorSpecification extends Specification<Session> {
     }
 
     private Connection openConnection(final Session session, final MessageVisitor messageVisitor, int port, final boolean keepAlive) throws IOException {
-        return Connection.connect(new InetSocketAddress("localhost", port), new FixMessageParser(), new Connection.Callback<silvertip.FixMessage>() {
-            @Override public void messages(Connection<silvertip.FixMessage> conn, Iterator<silvertip.FixMessage> messages) {
+        return Connection.connect(new InetSocketAddress("localhost", port), new FixMessageParser(), new Connection.Callback<fixengine.messages.FixMessage>() {
+            @Override public void messages(Connection<fixengine.messages.FixMessage> conn, Iterator<fixengine.messages.FixMessage> messages) {
                 while (messages.hasNext())
                     session.receive(conn, messages.next(), messageVisitor);
             }
 
-            @Override public void idle(Connection<silvertip.FixMessage> conn) {
+            @Override public void idle(Connection<fixengine.messages.FixMessage> conn) {
                 if (keepAlive)
                     session.keepAlive(conn);
                 else
                     conn.close();
             }
 
-            @Override public void closed(Connection<silvertip.FixMessage> conn) {
+            @Override public void closed(Connection<fixengine.messages.FixMessage> conn) {
             }
 
             @Override public void garbledMessage(String message, byte[] data) {

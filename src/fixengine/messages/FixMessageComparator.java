@@ -15,7 +15,7 @@
  */
 package fixengine.messages;
 
-import silvertip.FixMessage;
+import fixengine.messages.FixMessage;
 import java.util.Comparator;
 
 public class FixMessageComparator implements Comparator<FixMessage> {

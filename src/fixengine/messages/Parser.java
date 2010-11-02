@@ -19,7 +19,7 @@ import org.joda.time.DateTime;
 import java.nio.ByteBuffer;
 
 import fixengine.tags.MsgSeqNum;
-import silvertip.FixMessage;
+import fixengine.messages.FixMessage;
 
 public class Parser {
     public interface Callback {

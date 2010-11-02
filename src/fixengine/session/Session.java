@@ -68,7 +68,7 @@ import fixengine.tags.TestReqID;
 import fixengine.tags.Text;
 
 import silvertip.Connection;
-import silvertip.FixMessage;
+import fixengine.messages.FixMessage;
 
 /**
  * @author Karim Osman
