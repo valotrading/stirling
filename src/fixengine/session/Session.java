@@ -77,7 +77,7 @@ public class Session {
     private static final Logger LOG = Logger.getLogger("Session");
     private static final int MAX_CONSECUTIVE_RESEND_REQUESTS = 2;
 
-    protected MessageQueue<FixMessage> queue = new MessageQueue<FixMessage>();
+    protected MessageQueue<FixMessage> incomingQueue = new MessageQueue<FixMessage>();
     protected Sequence outgoingSeq = new Sequence();
 
     protected final HeartBtIntValue heartBtInt;
@@ -140,8 +140,8 @@ public class Session {
     private void processMessage(final Connection conn, FixMessage message, MessageVisitor visitor) {
         message.setReceiveTime(currentTime());
 
-        int expectedMsgSeqNum = queue.nextSeqNum();
-        queue.enqueue(message);
+        int expectedMsgSeqNum = incomingQueue.nextSeqNum();
+        incomingQueue.enqueue(message);
 
         if (message.getMsgSeqNum() != expectedMsgSeqNum) {
             processOutOfSyncMessageQueue(conn, message);
@@ -159,9 +159,9 @@ public class Session {
     }
 
     private boolean processSequenceResetGapFill(Connection conn, SequenceResetMessage message) {
-        if (message.getMsgSeqNum() < queue.nextSeqNum()) {
+        if (message.getMsgSeqNum() < incomingQueue.nextSeqNum()) {
             if (!message.getPossDupFlag()) {
-                String text = "MsgSeqNum too low, expecting " + queue.nextSeqNum() + " but received " + message.getMsgSeqNum();
+                String text = "MsgSeqNum too low, expecting " + incomingQueue.nextSeqNum() + " but received " + message.getMsgSeqNum();
                 getLogger().severe(text);
                 terminate(conn, text);
             }
@@ -178,37 +178,37 @@ public class Session {
             getLogger().warning(text);
             sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE, text);
         } else {
-            queue.reset(message.getNewSeqNo());
+            incomingQueue.reset(message.getNewSeqNo());
         }
         return true;
     }
 
     private void processOutOfSyncMessageQueue(final Connection conn, FixMessage message) {
-        if (message.getMsgSeqNum() > queue.nextSeqNum()) {
-            if (queue.getOutOfOrderCount() > MAX_CONSECUTIVE_RESEND_REQUESTS) {
+        if (message.getMsgSeqNum() > incomingQueue.nextSeqNum()) {
+            if (incomingQueue.getOutOfOrderCount() > MAX_CONSECUTIVE_RESEND_REQUESTS) {
                 terminate(conn, "Maximum resend requests (" + MAX_CONSECUTIVE_RESEND_REQUESTS + ") exceeded");
                 return;
             }
-            sendResendRequest(conn, queue.nextSeqNum(), 0);
+            sendResendRequest(conn, incomingQueue.nextSeqNum(), 0);
         } else {
-            String text = "MsgSeqNum too low, expecting " + queue.nextSeqNum() + " but received " + message.getMsgSeqNum();
+            String text = "MsgSeqNum too low, expecting " + incomingQueue.nextSeqNum() + " but received " + message.getMsgSeqNum();
             getLogger().severe(text);
             terminate(conn, text);
         }
     }
 
     private void processInSyncMessageQueue(final Connection conn, final MessageVisitor visitor) {
-        while (!queue.isEmpty()) {
-            Parser.parse(messageFactory, queue.dequeue(), new Parser.Callback() {
+        while (!incomingQueue.isEmpty()) {
+            Parser.parse(messageFactory, incomingQueue.dequeue(), new Parser.Callback() {
                 @Override public void message(Message message) {
                     if (validate(conn, message))
                         process(conn, message, visitor);
                     else
-                        queue.skip(message.getMsgSeqNum());
+                        incomingQueue.skip(message.getMsgSeqNum());
                 }
 
                 @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
-                    queue.skip(msgSeqNum);
+                    incomingQueue.skip(msgSeqNum);
                     if (authenticated) {
                         getLogger().severe(text);
                         sessionReject(conn, msgSeqNum, reason, text);
@@ -220,13 +220,13 @@ public class Session {
 
                 @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {
                     getLogger().warning("MsgType(35): Unknown message type: " + msgType);
-                    queue.skip(msgSeqNum);
+                    incomingQueue.skip(msgSeqNum);
                     businessReject(conn, msgType, msgSeqNum, BusinessRejectReasonValue.UNKNOWN_MESSAGE_TYPE, "MsgType(35): Unknown message type: " + msgType);
                 }
 
                 @Override public void invalidMsgType(String msgType, int msgSeqNum) {
                     getLogger().warning("MsgType(35): Invalid message type: " + msgType);
-                    queue.skip(msgSeqNum);
+                    incomingQueue.skip(msgSeqNum);
                     sessionReject(conn, msgSeqNum, SessionRejectReasonValue.INVALID_MSG_TYPE, "MsgType(35): Invalid message type: " + msgType);
                 }
             });
@@ -281,14 +281,14 @@ public class Session {
         if (authenticated) {
             message.apply(new DefaultMessageVisitor() {
                 @Override public void visit(TestRequestMessage message) {
-                    queue.skip(message.getMsgSeqNum());
+                    incomingQueue.skip(message.getMsgSeqNum());
                     HeartbeatMessage heartbeat = (HeartbeatMessage) messageFactory.create(HEARTBEAT);
                     heartbeat.setString(TestReqID.TAG, message.getString(TestReqID.TAG));
                     send(conn, heartbeat);
                 }
 
                 @Override public void visit(ResendRequestMessage message) {
-                    queue.skip(message.getMsgSeqNum());
+                    incomingQueue.skip(message.getMsgSeqNum());
                     int newSeqNo = outgoingSeq.peek();
                     outgoingSeq.reset(message.getInteger(BeginSeqNo.TAG));
                     fillSequenceGap(conn, newSeqNo);
@@ -299,7 +299,7 @@ public class Session {
                 }
 
                 @Override public void visit(LogoutMessage message) {
-                    queue.skip(message.getMsgSeqNum());
+                    incomingQueue.skip(message.getMsgSeqNum());
                     if (!initiatedLogout)
                         send(conn, (LogoutMessage) messageFactory.create(LOGOUT));
                     else
@@ -334,7 +334,7 @@ public class Session {
     }
 
     private boolean isOutOfSync() {
-        return queue.hasSeqNumGap();
+        return incomingQueue.hasSeqNumGap();
     }
 
     private void fillSequenceGap(Connection conn, int newSeqNo) {
@@ -352,7 +352,7 @@ public class Session {
             sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE,
                 "Attempt to lower sequence number, invalid value NewSeqNum(36)=" + newSeqNo);
         } else {
-            queue.reset(newSeqNo);
+            incomingQueue.reset(newSeqNo);
         }
     }
 
@@ -472,12 +472,12 @@ public class Session {
 
     public Sequence getIncomingSeq() {
         Sequence seq = new Sequence();
-        seq.reset(queue.nextSeqNum());
+        seq.reset(incomingQueue.nextSeqNum());
         return seq;
     }
 
     public void setIncomingSeq(Sequence seq) {
-        queue.reset(seq.peek());
+        incomingQueue.reset(seq.peek());
     }
 
     public DateTime currentTime() {
