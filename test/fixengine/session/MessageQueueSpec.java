@@ -41,14 +41,10 @@ import fixengine.messages.FixMessage;
     }
 
     public class QueueThatHasInOrderMessages {
-        private FixMessage message1 = mock(FixMessage.class, "message1");
-        private FixMessage message2 = mock(FixMessage.class, "message2");
+        private FixMessage message1 = message(1);
+        private FixMessage message2 = message(2);
 
         public MessageQueue create() {
-            checking(new Expectations() {{
-                allowing(message1).getMsgSeqNum(); will(returnValue(1));
-                allowing(message2).getMsgSeqNum(); will(returnValue(2));
-            }});
             queue.enqueue(message1);
             queue.enqueue(message2);
             return queue;
@@ -69,12 +65,9 @@ import fixengine.messages.FixMessage;
     }
 
     public class QueueThatHasMissingMessage {
-        private FixMessage outOfOrderMsg = mock(FixMessage.class);
+        private FixMessage outOfOrderMsg = message(2);
 
         public MessageQueue create() {
-            checking(new Expectations() {{
-                allowing(outOfOrderMsg).getMsgSeqNum(); will(returnValue(2));
-            }});
             queue.enqueue(outOfOrderMsg);
             return queue;
         }
@@ -93,14 +86,10 @@ import fixengine.messages.FixMessage;
     }
 
     public class QueueThatHasOutOfOrderMessages {
-        private FixMessage message2 = mock(FixMessage.class, "message2");
-        private FixMessage message1 = mock(FixMessage.class, "message1");
+        private FixMessage message2 = message(2);
+        private FixMessage message1 = message(1);
 
         public MessageQueue create() {
-            checking(new Expectations() {{
-                allowing(message2).getMsgSeqNum(); will(returnValue(2));
-                allowing(message1).getMsgSeqNum(); will(returnValue(1));
-            }});
             queue.enqueue(message2);
             queue.enqueue(message1);
             return queue;
@@ -125,14 +114,10 @@ import fixengine.messages.FixMessage;
     }
 
     public class QueueThatIsReset {
-        private FixMessage message2 = mock(FixMessage.class, "message2");
-        private FixMessage message1 = mock(FixMessage.class, "message1");
+        private FixMessage message2 = message(2);
+        private FixMessage message1 = message(1);
 
         public MessageQueue create() {
-            checking(new Expectations() {{
-                allowing(message2).getMsgSeqNum(); will(returnValue(2));
-                allowing(message1).getMsgSeqNum(); will(returnValue(1));
-            }});
             queue.enqueue(message2);
             queue.enqueue(message1);
             queue.reset(2);
@@ -153,16 +138,11 @@ import fixengine.messages.FixMessage;
     }
 
     public class QueueThatHasConsecutiveSeqNumMismatches {
-        private FixMessage message1 = mock(FixMessage.class, "message1");
-        private FixMessage message2 = mock(FixMessage.class, "message2");
-        private FixMessage message3 = mock(FixMessage.class, "message3");
+        private FixMessage message1 = message(2);
+        private FixMessage message2 = message(2);
+        private FixMessage message3 = message(2);
 
         public MessageQueue create() {
-            checking(new Expectations() {{
-                allowing(message1).getMsgSeqNum(); will(returnValue(2));
-                allowing(message2).getMsgSeqNum(); will(returnValue(2));
-                allowing(message3).getMsgSeqNum(); will(returnValue(2));
-            }});
             queue.enqueue(message1);
             queue.enqueue(message2);
             queue.enqueue(message3);
@@ -172,5 +152,13 @@ import fixengine.messages.FixMessage;
         public void hasConsecutiveSeqNumMismatches() {
             specify(queue.getOutOfOrderCount(), must.equal(3));
         }
+    }
+
+    private static final String MSG_TYPE = "0";
+
+    private FixMessage message(int msgSeqNum) {
+        FixMessage msg = FixMessage.fromString(Integer.toString(msgSeqNum), MSG_TYPE);
+        msg.setMsgSeqNum(msgSeqNum);
+        return msg;
     }
 }

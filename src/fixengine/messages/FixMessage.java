@@ -18,7 +18,7 @@ package fixengine.messages;
 import java.nio.ByteBuffer;
 import org.joda.time.DateTime;
 
-public class FixMessage extends silvertip.Message {
+public class FixMessage extends silvertip.Message implements Comparable<FixMessage> {
   private String msgType;
   private int msgSeqNum;
   private DateTime receiveTime;
@@ -51,5 +51,9 @@ public class FixMessage extends silvertip.Message {
 
   public void setReceiveTime(DateTime receiveTime) {
     this.receiveTime = receiveTime;
+  }
+
+  @Override public int compareTo(FixMessage message) {
+    return getMsgSeqNum() - message.getMsgSeqNum();
   }
 }

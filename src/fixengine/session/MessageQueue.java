@@ -18,11 +18,10 @@ package fixengine.session;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import fixengine.messages.FixMessageComparator;
 import fixengine.messages.FixMessage;
 
 public class MessageQueue {
-    private SortedSet<FixMessage> queue = new TreeSet<FixMessage>(new FixMessageComparator());
+    private SortedSet<FixMessage> queue = new TreeSet<FixMessage>();
     private Sequence sequence = new Sequence();
     private int maxSeqNum;
     private int outOfOrderCount;
