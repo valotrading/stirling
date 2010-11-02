@@ -186,7 +186,7 @@ public class Session {
 
     private void processOutOfSyncMessageQueue(final Connection conn, FixMessage message) {
         if (message.getMsgSeqNum() > queue.nextSeqNum()) {
-            if (queue.getNumConsecutiveSeqNumMismatches() > 2) {
+            if (queue.getNumConsecutiveSeqNumMismatches() > MAX_CONSECUTIVE_RESEND_REQUESTS) {
                 terminate(conn, "Maximun resend requests (" + MAX_CONSECUTIVE_RESEND_REQUESTS + ") exceeded");
                 return;
             }
