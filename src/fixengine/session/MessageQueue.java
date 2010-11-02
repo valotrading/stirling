@@ -18,15 +18,15 @@ package fixengine.session;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import fixengine.messages.FixMessage;
+import fixengine.messages.SequencedMessage;
 
-public class MessageQueue {
-    private SortedSet<FixMessage> queue = new TreeSet<FixMessage>();
+public class MessageQueue<T extends SequencedMessage> {
+    private SortedSet<T> queue = new TreeSet<T>();
     private Sequence sequence = new Sequence();
     private int maxSeqNum;
     private int outOfOrderCount;
 
-    public void enqueue(FixMessage message) {
+    public void enqueue(T message) {
         queue.add(message);
         skip(message.getMsgSeqNum());
     }
@@ -41,8 +41,8 @@ public class MessageQueue {
         maxSeqNum = Math.max(msgSeqNum, maxSeqNum);
     }
 
-    public FixMessage dequeue() {
-        FixMessage result = queue.first();
+    public T dequeue() {
+        T result = queue.first();
         queue.remove(result);
         return result;
     }

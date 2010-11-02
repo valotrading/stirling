@@ -77,7 +77,7 @@ public class Session {
     private static final Logger LOG = Logger.getLogger("Session");
     private static final int MAX_CONSECUTIVE_RESEND_REQUESTS = 2;
 
-    protected MessageQueue queue = new MessageQueue();
+    protected MessageQueue<FixMessage> queue = new MessageQueue<FixMessage>();
     protected Sequence outgoingSeq = new Sequence();
 
     protected final HeartBtIntValue heartBtInt;

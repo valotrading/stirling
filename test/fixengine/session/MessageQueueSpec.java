@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 import fixengine.messages.FixMessage;
 
 @RunWith(JDaveRunner.class) public class MessageQueueSpec extends Specification<MessageQueue> {
-    private MessageQueue queue = new MessageQueue();
+    private MessageQueue<FixMessage> queue = new MessageQueue<FixMessage>();
 
     public class EmptyQueue {
         public MessageQueue create() {
