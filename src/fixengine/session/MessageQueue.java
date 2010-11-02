@@ -19,8 +19,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import fixengine.messages.FixMessageComparator;
-import fixengine.messages.Message;
-
 import fixengine.messages.FixMessage;
 
 public class MessageQueue {
@@ -28,10 +26,6 @@ public class MessageQueue {
     private Sequence sequence = new Sequence();
     private int maxSeqNum;
     private int outOfOrderCount;
-
-    public void skip(Message message) {
-        skip(message.getMsgSeqNum());
-    }
 
     public void enqueue(FixMessage message) {
         queue.add(message);

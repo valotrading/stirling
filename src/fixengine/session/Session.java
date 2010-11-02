@@ -204,7 +204,7 @@ public class Session {
                     if (validate(conn, message))
                         process(conn, message, visitor);
                     else
-                        queue.skip(message);
+                        queue.skip(message.getMsgSeqNum());
                 }
 
                 @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
@@ -281,14 +281,14 @@ public class Session {
         if (authenticated) {
             message.apply(new DefaultMessageVisitor() {
                 @Override public void visit(TestRequestMessage message) {
-                    queue.skip(message);
+                    queue.skip(message.getMsgSeqNum());
                     HeartbeatMessage heartbeat = (HeartbeatMessage) messageFactory.create(HEARTBEAT);
                     heartbeat.setString(TestReqID.TAG, message.getString(TestReqID.TAG));
                     send(conn, heartbeat);
                 }
 
                 @Override public void visit(ResendRequestMessage message) {
-                    queue.skip(message);
+                    queue.skip(message.getMsgSeqNum());
                     int newSeqNo = outgoingSeq.peek();
                     outgoingSeq.reset(message.getInteger(BeginSeqNo.TAG));
                     fillSequenceGap(conn, newSeqNo);
@@ -299,7 +299,7 @@ public class Session {
                 }
 
                 @Override public void visit(LogoutMessage message) {
-                    queue.skip(message);
+                    queue.skip(message.getMsgSeqNum());
                     if (!initiatedLogout)
                         send(conn, (LogoutMessage) messageFactory.create(LOGOUT));
                     else
