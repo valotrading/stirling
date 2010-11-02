@@ -21,10 +21,10 @@ import jdave.junit4.JDaveRunner;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 
-import fixengine.messages.FixMessage;
+import fixengine.messages.SequencedMessage;
 
 @RunWith(JDaveRunner.class) public class MessageQueueSpec extends Specification<MessageQueue> {
-    private MessageQueue<FixMessage> queue = new MessageQueue<FixMessage>();
+    private MessageQueue<Message> queue = new MessageQueue<Message>();
 
     public class EmptyQueue {
         public MessageQueue create() {
@@ -41,8 +41,8 @@ import fixengine.messages.FixMessage;
     }
 
     public class QueueThatHasInOrderMessages {
-        private FixMessage message1 = message(1);
-        private FixMessage message2 = message(2);
+        private Message message1 = new Message(1);
+        private Message message2 = new Message(2);
 
         public MessageQueue create() {
             queue.enqueue(message1);
@@ -65,7 +65,7 @@ import fixengine.messages.FixMessage;
     }
 
     public class QueueThatHasMissingMessage {
-        private FixMessage outOfOrderMsg = message(2);
+        private Message outOfOrderMsg = new Message(2);
 
         public MessageQueue create() {
             queue.enqueue(outOfOrderMsg);
@@ -86,8 +86,8 @@ import fixengine.messages.FixMessage;
     }
 
     public class QueueThatHasOutOfOrderMessages {
-        private FixMessage message2 = message(2);
-        private FixMessage message1 = message(1);
+        private Message message2 = new Message(2);
+        private Message message1 = new Message(1);
 
         public MessageQueue create() {
             queue.enqueue(message2);
@@ -114,8 +114,8 @@ import fixengine.messages.FixMessage;
     }
 
     public class QueueThatIsReset {
-        private FixMessage message2 = message(2);
-        private FixMessage message1 = message(1);
+        private Message message2 = new Message(2);
+        private Message message1 = new Message(1);
 
         public MessageQueue create() {
             queue.enqueue(message2);
@@ -138,9 +138,9 @@ import fixengine.messages.FixMessage;
     }
 
     public class QueueThatHasConsecutiveSeqNumMismatches {
-        private FixMessage message1 = message(2);
-        private FixMessage message2 = message(2);
-        private FixMessage message3 = message(2);
+        private Message message1 = new Message(2);
+        private Message message2 = new Message(2);
+        private Message message3 = new Message(2);
 
         public MessageQueue create() {
             queue.enqueue(message1);
@@ -154,11 +154,19 @@ import fixengine.messages.FixMessage;
         }
     }
 
-    private static final String MSG_TYPE = "0";
+    private class Message implements SequencedMessage<Message> {
+        private final int msgSeqNum;
 
-    private FixMessage message(int msgSeqNum) {
-        FixMessage msg = FixMessage.fromString(Integer.toString(msgSeqNum), MSG_TYPE);
-        msg.setMsgSeqNum(msgSeqNum);
-        return msg;
+        public Message(int msgSeqNum) {
+            this.msgSeqNum = msgSeqNum;
+        }
+
+        @Override public int getMsgSeqNum() {
+            return msgSeqNum;
+        }
+
+        @Override public int compareTo(Message message) {
+            return getMsgSeqNum() - message.getMsgSeqNum();
+        }
     }
 }
