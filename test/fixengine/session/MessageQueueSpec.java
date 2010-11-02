@@ -170,7 +170,7 @@ import fixengine.messages.FixMessage;
         }
 
         public void hasConsecutiveSeqNumMismatches() {
-            specify(queue.getNumConsecutiveSeqNumMismatches(), must.equal(3));
+            specify(queue.getOutOfOrderCount(), must.equal(3));
         }
     }
 }

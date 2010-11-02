@@ -60,7 +60,6 @@ import fixengine.tags.EndSeqNo;
 import fixengine.tags.GapFillFlag;
 import fixengine.tags.HeartBtInt;
 import fixengine.tags.NewSeqNo;
-import fixengine.tags.PossDupFlag;
 import fixengine.tags.RefMsgType;
 import fixengine.tags.RefSeqNo;
 import fixengine.tags.SessionRejectReason;
@@ -186,8 +185,8 @@ public class Session {
 
     private void processOutOfSyncMessageQueue(final Connection conn, FixMessage message) {
         if (message.getMsgSeqNum() > queue.nextSeqNum()) {
-            if (queue.getNumConsecutiveSeqNumMismatches() > MAX_CONSECUTIVE_RESEND_REQUESTS) {
-                terminate(conn, "Maximun resend requests (" + MAX_CONSECUTIVE_RESEND_REQUESTS + ") exceeded");
+            if (queue.getOutOfOrderCount() > MAX_CONSECUTIVE_RESEND_REQUESTS) {
+                terminate(conn, "Maximum resend requests (" + MAX_CONSECUTIVE_RESEND_REQUESTS + ") exceeded");
                 return;
             }
             sendResendRequest(conn, queue.nextSeqNum(), 0);
