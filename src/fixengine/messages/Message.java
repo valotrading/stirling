@@ -22,7 +22,7 @@ import fixengine.Config;
 /**
  * @author Pekka Enberg 
  */
-public interface Message extends Parseable, Iterable<Field>  {
+public interface Message extends Parseable, Iterable<Field>, SequencedMessage<Message>  {
     void apply(MessageVisitor visitor);
     String format();
     Field lookup(Tag<?> tag);

@@ -129,7 +129,7 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
         header.setInteger(MsgSeqNum.TAG, msgSeqNum);
     }
 
-    public int getMsgSeqNum() {
+    @Override public int getMsgSeqNum() {
         return header.getInteger(MsgSeqNum.TAG);
     }
 
@@ -250,5 +250,9 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
             result.append(field.toString() + " ");
         }
         return result.toString();
+    }
+
+    @Override public int compareTo(Message message) {
+        return getMsgSeqNum() - message.getMsgSeqNum();
     }
 }
