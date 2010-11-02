@@ -54,6 +54,7 @@ import fixengine.messages.Formattable;
 import fixengine.messages.IntegerField;
 import fixengine.messages.Message;
 import fixengine.messages.MessageHeader;
+import fixengine.messages.MessageVisitor;
 import fixengine.messages.MsgTypeValue;
 import fixengine.messages.Parser;
 import fixengine.messages.RawMessageBuilder;
@@ -127,12 +128,16 @@ public class InitiatorSpecification extends Specification<Session> {
     }
 
     protected void runInClient(Runnable command, boolean keepAlive, long eventsIdleMSec) throws Exception {
+        runInClient(command, new DefaultMessageVisitor(), keepAlive, 1000);
+    }
+
+    protected void runInClient(Runnable command, MessageVisitor visitor, boolean keepAlive, long eventsIdleMSec) throws Exception {
         Thread serverThread = new Thread(server);
         serverThread.start();
         server.awaitForStart();
         Events events = Events.open(eventsIdleMSec);
         session = newSession();
-        connection = openConnection(session, server.getPort(), keepAlive);
+        connection = openConnection(session, visitor, server.getPort(), keepAlive);
         events.register(connection);
         command.run();
         events.dispatch();
@@ -467,11 +472,11 @@ public class InitiatorSpecification extends Specification<Session> {
         return config;
     }
 
-    private Connection openConnection(final Session session, int port, final boolean keepAlive) throws IOException {
+    private Connection openConnection(final Session session, final MessageVisitor messageVisitor, int port, final boolean keepAlive) throws IOException {
         return Connection.connect(new InetSocketAddress("localhost", port), new FixMessageParser(), new Connection.Callback<silvertip.FixMessage>() {
             @Override public void messages(Connection<silvertip.FixMessage> conn, Iterator<silvertip.FixMessage> messages) {
                 while (messages.hasNext())
-                    session.receive(conn, messages.next(), new DefaultMessageVisitor());
+                    session.receive(conn, messages.next(), messageVisitor);
             }
 
             @Override public void idle(Connection<silvertip.FixMessage> conn) {

@@ -20,8 +20,10 @@ import jdave.junit4.JDaveRunner;
 import org.joda.time.DateTime;
 import org.junit.runner.RunWith;
 
+import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.Message;
+import fixengine.messages.MessageVisitor;
 import fixengine.messages.MsgTypeValue;
 import fixengine.tags.BeginString;
 import fixengine.tags.BodyLength;
@@ -49,11 +51,18 @@ import fixengine.tags.TestReqID;
             server.respondLogon();
             server.respond(new MessageBuilder(MsgTypeValue.HEARTBEAT).msgSeqNum(3).build());
             server.expect(MsgTypeValue.RESEND_REQUEST);
+            MessageVisitor visitor = new DefaultMessageVisitor() {
+                @Override public void defaultAction(Message message) {
+                    if (message.getMsgType().equals(MsgTypeValue.HEARTBEAT))
+                        fail("message should not be processed due to out-of-sync message queue");
+                }
+            };
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
                 }
-            });
+            }, visitor, false, 1000);
+            specify(session.getIncomingSeq().peek(), 2);
         }
 
         /* Ref ID 2: c. MsgSeqNum lower than expected without PossDupFlag set to Y */
