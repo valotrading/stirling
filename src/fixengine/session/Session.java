@@ -78,6 +78,8 @@ public class Session {
     private static final int MAX_CONSECUTIVE_RESEND_REQUESTS = 2;
 
     protected MessageQueue<FixMessage> incomingQueue = new MessageQueue<FixMessage>();
+    protected MessageQueue<Message> outgoingQueue = new MessageQueue<Message>();
+
     protected Sequence outgoingSeq = new Sequence();
 
     protected final HeartBtIntValue heartBtInt;
@@ -437,9 +439,15 @@ public class Session {
     public void send(Connection conn, Message message) {
         message.setHeaderConfig(config);
         message.setMsgSeqNum(outgoingSeq.next());
-        message.setSendingTime(currentTime());
-        conn.send(FixMessage.fromString(message.format()));
-        prevTxTime = currentTime();
+        outgoingQueue.enqueue(message);
+        if (!conn.isClosed()) {
+            while (!outgoingQueue.isEmpty()) {
+                Message msg = outgoingQueue.dequeue();
+                msg.setSendingTime(currentTime());
+                conn.send(FixMessage.fromString(msg.format()));
+                prevTxTime = currentTime();
+            }
+        }
         store.save(this);
     }
 

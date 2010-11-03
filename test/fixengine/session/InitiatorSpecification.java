@@ -86,10 +86,18 @@ public class InitiatorSpecification extends Specification<Session> {
     protected static final long HEARTBEAT_INTERVAL_MSEC = 1000;
     protected final SimpleAcceptor server = new SimpleAcceptor(1024 + generator.nextInt(1024));
     protected Connection connection;
-    protected Session session;
+    protected TestSession session;
     private final Logger logger = mock(Logger.class);
     private long sessionTimeShift;
     private long heartBeatIntervalMSec = 1000;
+
+    private Config config = new Config() {
+        {
+            setSenderCompId(INITIATOR);
+            setTargetCompId(ACCEPTOR);
+            setVersion(VERSION);
+        }
+    };
 
     protected ExpectationBuilder expectLogSevere(final String message) {
         return new Expectations() {{
@@ -136,7 +144,7 @@ public class InitiatorSpecification extends Specification<Session> {
         serverThread.start();
         server.awaitForStart();
         Events events = Events.open(eventsIdleMSec);
-        session = newSession();
+        session = new TestSession();
         connection = openConnection(session, visitor, server.getPort(), keepAlive);
         events.register(connection);
         command.run();
@@ -447,32 +455,7 @@ public class InitiatorSpecification extends Specification<Session> {
         }
     }
 
-    private Session newSession() {
-        return new Session(HeartBtIntValue.milliseconds(getHearbeatIntervalInMillis()), getConfig(), new InMemorySessionStore(), new DefaultMessageFactory()){
-            @Override
-            protected long getLogoutResponseTimeoutMsec() {
-                return LOGOUT_RESPONSE_TIMEOUT_MSEC;
-            }
-            @Override
-            protected Logger getLogger() {
-                return logger;
-            }
-            @Override
-            public DateTime currentTime() {
-                return super.currentTime().plus(sessionTimeShift);
-            }
-        };
-    }
-
-    private Config getConfig() {
-        Config config = new Config();
-        config.setSenderCompId(INITIATOR);
-        config.setTargetCompId(ACCEPTOR);
-        config.setVersion(VERSION);
-        return config;
-    }
-
-    private Connection openConnection(final Session session, final MessageVisitor messageVisitor, int port, final boolean keepAlive) throws IOException {
+    protected Connection openConnection(final Session session, final MessageVisitor messageVisitor, int port, final boolean keepAlive) throws IOException {
         return Connection.connect(new InetSocketAddress("localhost", port), new FixMessageParser(), new Connection.Callback<fixengine.messages.FixMessage>() {
             @Override public void messages(Connection<fixengine.messages.FixMessage> conn, Iterator<fixengine.messages.FixMessage> messages) {
                 while (messages.hasNext())
@@ -493,5 +476,29 @@ public class InitiatorSpecification extends Specification<Session> {
                 logger.warning(message);
             }
         });
+    }
+
+    protected class TestSession extends Session {
+        protected TestSession() {
+            super(HeartBtIntValue.milliseconds(getHearbeatIntervalInMillis()), InitiatorSpecification.this.config,
+                new InMemorySessionStore(), new DefaultMessageFactory());
+        }
+
+        protected MessageQueue<Message> getOutgoingMsgQueue() {
+            return outgoingQueue;
+        }
+
+        @Override protected long getLogoutResponseTimeoutMsec() {
+            return LOGOUT_RESPONSE_TIMEOUT_MSEC;
+        }
+
+        @Override protected Logger getLogger() {
+            return logger;
+        }
+
+        @Override public DateTime currentTime() {
+            return super.currentTime().plus(sessionTimeShift);
+        }
+
     }
 }
