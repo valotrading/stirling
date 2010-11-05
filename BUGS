@@ -1,8 +1,6 @@
 Known Bugs
 ==========
 
-- Outgoing messages are not queued. See session level test Ref ID 16.
-
 - PerformanceTest doesn't use external data store which skews results.
 
 - PossResend messages are ignored.
