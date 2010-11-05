@@ -18,5 +18,5 @@ package fixengine.messages;
 public interface MessageFactory {
     Message create(String msgType);
     Message create(String msgType, MessageHeader header);
-    String getTagsPackage();
+    Tag<?> createTag(String tagName);
 }

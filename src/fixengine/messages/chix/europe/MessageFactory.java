@@ -26,7 +26,7 @@ public class MessageFactory extends fixengine.messages.DefaultMessageFactory {
         message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequestMessage.class);
     }
 
-    @Override public String getTagsPackage() {
+    @Override protected String getTagsPackage() {
         return "fixengine.tags.chix.europe";
     }
 }

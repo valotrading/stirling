@@ -27,6 +27,7 @@ import fixengine.messages.Field;
 import fixengine.messages.FloatField;
 import fixengine.messages.IntegerField;
 import fixengine.messages.Message;
+import fixengine.messages.MessageFactory;
 import fixengine.messages.StringField;
 import fixengine.messages.Tag;
 import fixengine.tags.OrderID;
@@ -45,8 +46,7 @@ public abstract class OrderCommand implements Command {
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
     try {
       Message message = newMessage(client);
-      String profileTagsPackage = client.getMessageFactory().getTagsPackage();
-      setFields(message, scanner, profileTagsPackage);
+      setFields(message, scanner, client.getMessageFactory());
       if (client.getSession() != null)
         client.getSession().send(client.getConnection(), message);
       if (isModifyingOrderMessage())
@@ -71,25 +71,25 @@ public abstract class OrderCommand implements Command {
 
   protected abstract boolean isModifyingOrderMessage();
 
-  private void setFields(Message message, Scanner scanner, String profileTagsPackage) {
+  private void setFields(Message message, Scanner scanner, MessageFactory messageFactory) {
     while (scanner.hasNext()) {
       String field = scanner.next();
-      findParserForField(field, profileTagsPackage).setField(message, field);
+      findParserForField(field, messageFactory).setField(message, field);
     }
   }
 
-  private Parser findParserForField(String field, String profileTagsPackage) {
+  private Parser findParserForField(String field, MessageFactory messageFactory) {
     for (Class<? extends Parser> parserClass : parserClasses) {
-      Parser parser = newParser(parserClass, profileTagsPackage);
+      Parser parser = newParser(parserClass, messageFactory);
       if (parser.matches(field))
         return parser;
     }
     throw new RuntimeException("cannot parse field: " + field);
   }
 
-  private Parser newParser(Class<? extends Parser> clazz, String profileTagsPackage) {
+  private Parser newParser(Class<? extends Parser> clazz, MessageFactory messageFactory) {
     try {
-      return clazz.getDeclaredConstructor(String.class).newInstance(profileTagsPackage);
+      return clazz.getDeclaredConstructor(MessageFactory.class).newInstance(messageFactory);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -104,11 +104,10 @@ public abstract class OrderCommand implements Command {
   }
 
   private static abstract class AbstractFieldParser implements Parser {
-    private static final String DEFAULT_TAGS_PACKAGE = "fixengine.tags";
-    private final String profileTagsPackage;
+    private final MessageFactory messageFactory;
 
-    protected AbstractFieldParser(String profileTagsPackage) {
-      this.profileTagsPackage = profileTagsPackage;
+    protected AbstractFieldParser(MessageFactory messageFactory) {
+      this.messageFactory = messageFactory;
     }
 
     @Override public boolean matches(String field) {
@@ -117,16 +116,8 @@ public abstract class OrderCommand implements Command {
       return false;
     }
 
-    @SuppressWarnings("unchecked") protected Class<Tag<?>> tagClass(String field) {
-      try {
-        try {
-          return (Class<Tag<?>>) Class.forName(profileTagsPackage + "." + tag(field));
-        } catch (ClassNotFoundException e) {
-          return (Class<Tag<?>>) Class.forName(DEFAULT_TAGS_PACKAGE + "." + tag(field));
-        }
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
+    @SuppressWarnings("unchecked") protected Class<? extends Tag> tagClass(String field) {
+      return messageFactory.createTag(tag(field)).getClass();
     }
 
     protected abstract Class<? extends Field> getFieldClass();
@@ -162,8 +153,8 @@ public abstract class OrderCommand implements Command {
   }
 
   private static class StringFieldParser extends AbstractFieldParser {
-    public StringFieldParser(String profileTagsPackage) {
-      super(profileTagsPackage);
+    public StringFieldParser(MessageFactory messageFactory) {
+      super(messageFactory);
     }
 
     @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
@@ -181,8 +172,8 @@ public abstract class OrderCommand implements Command {
   }
 
   private static class FloatFieldParser extends AbstractFieldParser {
-    public FloatFieldParser(String profileTagsPackage) {
-      super(profileTagsPackage);
+    public FloatFieldParser(MessageFactory messageFactory) {
+      super(messageFactory);
     }
 
     @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
@@ -200,8 +191,8 @@ public abstract class OrderCommand implements Command {
   }
 
   private static class IntegerFieldParser extends AbstractFieldParser {
-    public IntegerFieldParser(String profileTagsPackage) {
-      super(profileTagsPackage);
+    public IntegerFieldParser(MessageFactory messageFactory) {
+      super(messageFactory);
     }
 
     @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
@@ -219,8 +210,8 @@ public abstract class OrderCommand implements Command {
   }
 
   private static class EnumFieldParser extends AbstractFieldParser {
-    public EnumFieldParser(String profileTagsPackage) {
-      super(profileTagsPackage);
+    public EnumFieldParser(MessageFactory messageFactory) {
+      super(messageFactory);
     }
 
     @Override public boolean matches(String field) {

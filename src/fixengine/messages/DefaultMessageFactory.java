@@ -57,7 +57,31 @@ public class DefaultMessageFactory implements MessageFactory {
         }
     }
 
-    @Override public String getTagsPackage() {
+    @Override public Tag<?> createTag(String tagName) {
+        try {
+            return tagClass(tagName).newInstance();
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Tag not found: " + tagName);
+        }
+    }
+
+    @SuppressWarnings("unchecked") private Class<Tag<?>> tagClass(String tagName) {
+        try {
+            try {
+                return (Class<Tag<?>>) Class.forName(getTagsPackage() + "." + tagName);
+            } catch (ClassNotFoundException e) {
+                return (Class<Tag<?>>) Class.forName(getDefaultTagsPackage() + "." + tagName);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected String getTagsPackage() {
+      return getDefaultTagsPackage();
+    }
+
+    private String getDefaultTagsPackage() {
       return "fixengine.tags";
     }
 
