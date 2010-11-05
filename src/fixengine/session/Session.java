@@ -290,10 +290,20 @@ public class Session {
                 }
 
                 @Override public void visit(ResendRequestMessage message) {
-                    incomingQueue.skip(message.getMsgSeqNum());
-                    int newSeqNo = outgoingSeq.peek();
-                    outgoingSeq.reset(message.getInteger(BeginSeqNo.TAG));
-                    fillSequenceGap(conn, newSeqNo);
+                    if (outgoingQueue.isEmpty()) {
+                        incomingQueue.skip(message.getMsgSeqNum());
+                        int newSeqNo = outgoingSeq.peek();
+                        outgoingSeq.reset(message.getInteger(BeginSeqNo.TAG));
+                        fillSequenceGap(conn, newSeqNo);
+                    } else {
+                        while (!outgoingQueue.isEmpty()) {
+                            Message msg = outgoingQueue.dequeue();
+                            msg.setPossDupFlag(true);
+                            msg.setSendingTime(currentTime());
+                            conn.send(FixMessage.fromString(msg.format()));
+                            prevTxTime = currentTime();
+                        }
+                    }
                 }
 
                 @Override public void visit(SequenceResetMessage message) {
@@ -391,7 +401,16 @@ public class Session {
         LogonMessage message = (LogonMessage) messageFactory.create(LOGON);
         message.setInteger(HeartBtInt.TAG, 30);
         message.setEnum(EncryptMethod.TAG, EncryptMethodValue.NONE);
-        send(conn, message);
+        sendOutOfQueue(conn, message);
+    }
+
+    private void sendOutOfQueue(Connection conn, Message message) {
+        message.setHeaderConfig(config);
+        message.setMsgSeqNum(outgoingSeq.next());
+        message.setSendingTime(currentTime());
+        conn.send(FixMessage.fromString(message.format()));
+        prevTxTime = currentTime();
+        store.save(this);
     }
 
     public void logout(final Connection conn) {
@@ -440,7 +459,7 @@ public class Session {
         message.setHeaderConfig(config);
         message.setMsgSeqNum(outgoingSeq.next());
         outgoingQueue.enqueue(message);
-        if (!conn.isClosed()) {
+        if (conn != null && !conn.isClosed()) {
             while (!outgoingQueue.isEmpty()) {
                 Message msg = outgoingQueue.dequeue();
                 msg.setSendingTime(currentTime());

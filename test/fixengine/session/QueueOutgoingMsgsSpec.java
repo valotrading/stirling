@@ -16,18 +16,20 @@
 package fixengine.session;
 
 import jdave.junit4.JDaveRunner;
+
 import org.junit.runner.RunWith;
 
 import fixengine.messages.DefaultMessageVisitor;
+import fixengine.messages.Message;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MsgTypeValue;
 import fixengine.messages.NewOrderSingleMessage;
-
-import silvertip.Connection;
+import fixengine.tags.BeginSeqNo;
+import fixengine.tags.EndSeqNo;
 
 @RunWith(JDaveRunner.class) public class QueueOutgoingMsgsSpec extends InitiatorSpecification {
     public class InitializedSession {
-        /* Ref ID 16: Message to send/queue while disconnected. */
+        /* Ref ID 16: a. Message to send/queue while disconnected. */
         public void messageToSendQueuedWhileDisconnected() throws Exception {
             runInClient(new Runnable() {
                 @Override public void run() {
@@ -41,8 +43,38 @@ import silvertip.Connection;
             specify(session.getOutgoingMsgQueue().isEmpty(), false);
         }
 
-        /* Ref ID 16: Re-connect with queued messages. */
+        /* Ref ID 16: b. Re-connect with queued messages. Steps (2) and (3) are
+         * not covered as messages are not expected to be lost. */
         public void reconnectWithQueuedMessages() throws Exception {
+            server.expect(MsgTypeValue.LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.RESEND_REQUEST)
+                        .msgSeqNum(2)
+                        .integer(BeginSeqNo.TAG, 1)
+                        .integer(EndSeqNo.TAG, 3)
+                    .build());
+            server.expect(MsgTypeValue.NEW_ORDER_SINGLE);
+            server.expect(MsgTypeValue.NEW_ORDER_SINGLE);
+            server.expect(MsgTypeValue.NEW_ORDER_SINGLE);
+            runInClient(
+                new Runnable() {
+                    @Override public void run() {
+                        session.send(connection, message(1));
+                        session.send(connection, message(2));
+                        session.send(connection, message(3));
+                    }
+                }, new Runnable() {
+                    @Override public void run() {
+                        session.logon(connection);
+                    }
+                }, new DefaultMessageVisitor(), false, 1000);
+        }
+
+        private NewOrderSingleMessage message(int msgSeqNum) {
+            NewOrderSingleMessage message = new NewOrderSingleMessage(new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE));
+            message.setMsgSeqNum(msgSeqNum);
+            return message;
         }
     }
 }

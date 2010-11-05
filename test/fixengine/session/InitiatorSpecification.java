@@ -140,14 +140,19 @@ public class InitiatorSpecification extends Specification<Session> {
     }
 
     protected void runInClient(Runnable command, MessageVisitor visitor, boolean keepAlive, long eventsIdleMSec) throws Exception {
+        runInClient(new Runnable() { @Override public void run() { } }, command, visitor, keepAlive, eventsIdleMSec);
+    }
+
+    protected void runInClient(Runnable beforeConnecting, Runnable afterConnected, MessageVisitor visitor, boolean keepAlive, long eventsIdleMSec) throws Exception {
         Thread serverThread = new Thread(server);
         serverThread.start();
         server.awaitForStart();
         Events events = Events.open(eventsIdleMSec);
         session = new TestSession();
+        beforeConnecting.run();
         connection = openConnection(session, visitor, server.getPort(), keepAlive);
         events.register(connection);
-        command.run();
+        afterConnected.run();
         events.dispatch();
         server.stop();
         specify(server.passed());
