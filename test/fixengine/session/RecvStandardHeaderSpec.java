@@ -79,6 +79,26 @@ import fixengine.tags.TestReqID;
             });
         }
 
+        public void msgSeqNumLowerThanExpectedWithPossDupFlag() throws Exception {
+            server.expect(MsgTypeValue.LOGON);
+            server.respondLogon();
+            server.respond(
+                      new MessageBuilder(MsgTypeValue.HEARTBEAT)
+                          .msgSeqNum(1)
+                          .setPossDupFlag(true)
+                          .setOrigSendingTime(new DateTime().minusMinutes(1))
+                      .build());
+            server.respond(
+                      new MessageBuilder(MsgTypeValue.HEARTBEAT)
+                          .msgSeqNum(2)
+                      .build());
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+
         /* Ref ID 2: d. Garbled message received */
         public void garbledMessageReceived() throws Exception {
             server.expect(MsgTypeValue.LOGON);

@@ -185,7 +185,7 @@ public class Session {
         return true;
     }
 
-    private void processOutOfSyncMessageQueue(final Connection conn, FixMessage message) {
+    private void processOutOfSyncMessageQueue(final Connection conn, final FixMessage message) {
         if (message.getMsgSeqNum() > incomingQueue.nextSeqNum()) {
             if (incomingQueue.getOutOfOrderCount() > MAX_CONSECUTIVE_RESEND_REQUESTS) {
                 terminate(conn, "Maximum resend requests (" + MAX_CONSECUTIVE_RESEND_REQUESTS + ") exceeded");
@@ -193,10 +193,32 @@ public class Session {
             }
             sendResendRequest(conn, incomingQueue.nextSeqNum(), 0);
         } else {
-            String text = "MsgSeqNum too low, expecting " + incomingQueue.nextSeqNum() + " but received " + message.getMsgSeqNum();
-            getLogger().severe(text);
-            terminate(conn, text);
+            Parser.parse(messageFactory, message, new Parser.Callback() {
+                @Override public void message(Message msg) {
+                    if (!msg.getPossDupFlag()) {
+                        terminateOnMsgSeqNumTooLow(conn, message);
+                    }
+                }
+
+                @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
+                    terminateOnMsgSeqNumTooLow(conn, message);
+                }
+
+                @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {
+                    terminateOnMsgSeqNumTooLow(conn, message);
+                }
+
+                @Override public void invalidMsgType(String msgType, int msgSeqNum) {
+                    terminateOnMsgSeqNumTooLow(conn, message);
+                }
+            });
         }
+    }
+
+    private void terminateOnMsgSeqNumTooLow(Connection conn, FixMessage message) {
+        String text = "MsgSeqNum too low, expecting " + incomingQueue.nextSeqNum() + " but received " + message.getMsgSeqNum();
+        getLogger().severe(text);
+        terminate(conn, text);
     }
 
     private void processInSyncMessageQueue(final Connection conn, final MessageVisitor visitor) {
