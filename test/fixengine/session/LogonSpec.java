@@ -22,7 +22,9 @@ import org.junit.runner.RunWith;
 import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.MsgTypeValue;
 import fixengine.tags.EncryptMethod;
+import fixengine.tags.GapFillFlag;
 import fixengine.tags.HeartBtInt;
+import fixengine.tags.NewSeqNo;
 
 @RunWith(JDaveRunner.class) public class LogonSpec extends InitiatorSpecification {
     public class InitializedSession {
@@ -83,6 +85,28 @@ import fixengine.tags.HeartBtInt;
                     .build());
             server.expect(MsgTypeValue.LOGOUT);
             checking(expectLogSevere("first message is not a logon"));
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+        }
+
+        public void validWithMsgSeqNumGreaterThanExpected() throws Exception {
+            server.expect(MsgTypeValue.LOGON);
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.LOGON)
+                        .msgSeqNum(2)
+                        .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
+                        .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
+                    .build());
+            server.expect(MsgTypeValue.RESEND_REQUEST);
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
+                        .msgSeqNum(1)
+                        .bool(GapFillFlag.TAG, true)
+                        .integer(NewSeqNo.TAG, 4)
+                    .build());
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

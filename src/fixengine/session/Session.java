@@ -146,6 +146,9 @@ public class Session {
         incomingQueue.enqueue(message);
 
         if (message.getMsgSeqNum() != expectedMsgSeqNum) {
+            if (!authenticated) {
+                processInSyncMessageQueue(conn, visitor);
+            }
             processOutOfSyncMessageQueue(conn, message);
         } else if (!conn.isClosed()) {
             processInSyncMessageQueue(conn, visitor);
