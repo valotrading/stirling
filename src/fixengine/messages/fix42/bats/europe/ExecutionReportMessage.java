@@ -50,9 +50,9 @@ import fixengine.tags.TransactTime;
 
 import fixengine.tags.fix42.ClearingAccount;
 import fixengine.tags.fix42.ClearingFirm;
+import fixengine.tags.fix42.ExecTransType;
 import fixengine.tags.fix42.bats.europe.CentralCounterparty;
 import fixengine.tags.fix42.bats.europe.ExecInst;
-import fixengine.tags.fix42.bats.europe.ExecTransType;
 import fixengine.tags.fix42.bats.europe.ExecType;
 import fixengine.tags.fix42.bats.europe.IDSource;
 import fixengine.tags.fix42.bats.europe.MTFAccessFee;
@@ -60,6 +60,8 @@ import fixengine.tags.fix42.bats.europe.MaxRemovePct;
 import fixengine.tags.fix42.bats.europe.SecurityID;
 import fixengine.tags.fix42.bats.europe.TimeInForce;
 import fixengine.tags.fix42.bats.europe.TradeLiquidityIndicator;
+
+import fixengine.messages.fix42.ExecTransTypeValue;
 
 public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionReportMessage {
     public ExecutionReportMessage(MessageHeader header) {

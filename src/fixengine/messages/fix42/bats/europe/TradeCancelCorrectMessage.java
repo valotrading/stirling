@@ -19,6 +19,8 @@ import fixengine.messages.MessageHeader;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.Required;
 import fixengine.messages.UserDefinedMessage;
+import fixengine.messages.fix42.ExecTransTypeValue;
+
 import fixengine.tags.ClOrdID;
 import fixengine.tags.Currency;
 import fixengine.tags.ExecID;
@@ -33,8 +35,8 @@ import fixengine.tags.Symbol;
 import fixengine.tags.TransactTime;
 import fixengine.tags.fix42.ClearingAccount;
 import fixengine.tags.fix42.ClearingFirm;
+import fixengine.tags.fix42.ExecTransType;
 import fixengine.tags.fix42.bats.europe.CorrectedPrice;
-import fixengine.tags.fix42.bats.europe.ExecTransType;
 import fixengine.tags.fix42.bats.europe.IDSource;
 import fixengine.tags.fix42.bats.europe.SecurityID;
 import fixengine.tags.fix42.bats.europe.TradeLiquidityIndicator;
