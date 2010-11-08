@@ -22,7 +22,6 @@ import org.joda.time.Minutes;
 
 import fixengine.tags.BeginString;
 import fixengine.tags.BodyLength;
-import fixengine.tags.CheckSum;
 import fixengine.tags.DeliverToCompID;
 import fixengine.tags.MsgSeqNum;
 import fixengine.tags.MsgType;
@@ -81,18 +80,7 @@ public class MessageHeader extends FieldContainer implements Parseable {
 
     private void trailer(ByteBuffer b) {
         int checkSumPosition = b.position() + getBodyLength();
-        int parsedChecksum = parseChecksum(b, checkSumPosition);
         b.limit(checkSumPosition);
-    }
-
-    private static int parseChecksum(ByteBuffer b, int checkSumPosition) {
-        int origPosition = b.position();
-        b.position(checkSumPosition);
-        Tag.parseTag(b);
-        StringField field = CheckSum.TAG.newField(Required.YES);
-        field.parse(b);
-        b.position(origPosition);
-        return Integer.parseInt(field.getValue());
     }
 
     private void parseHeadField(ByteBuffer b, Tag<?> tag) {
