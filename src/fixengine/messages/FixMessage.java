@@ -15,7 +15,6 @@
  */
 package fixengine.messages;
 
-import java.nio.ByteBuffer;
 import org.joda.time.DateTime;
 
 public class FixMessage extends silvertip.Message implements SequencedMessage<FixMessage> {

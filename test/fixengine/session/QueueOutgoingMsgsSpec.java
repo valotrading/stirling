@@ -20,7 +20,6 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
 import fixengine.messages.DefaultMessageVisitor;
-import fixengine.messages.Message;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MsgTypeValue;
 import fixengine.messages.NewOrderSingleMessage;

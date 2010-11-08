@@ -18,7 +18,6 @@ package fixengine.session;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
-import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 
 import fixengine.messages.SequencedMessage;

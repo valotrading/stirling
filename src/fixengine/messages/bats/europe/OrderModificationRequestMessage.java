@@ -18,7 +18,6 @@ package fixengine.messages.bats.europe;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.OrdTypeValue;
 import fixengine.messages.Required;
-import fixengine.messages.SideValue;
 
 import fixengine.tags.Account;
 import fixengine.tags.ClOrdID;

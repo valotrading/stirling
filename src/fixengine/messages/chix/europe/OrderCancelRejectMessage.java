@@ -16,9 +16,7 @@
 package fixengine.messages.chix.europe;
 
 import fixengine.messages.MessageHeader;
-import fixengine.messages.Required;
 
-import fixengine.tags.Account;
 import fixengine.tags.ClOrdID;
 import fixengine.tags.OrdStatus;
 import fixengine.tags.OrderID;

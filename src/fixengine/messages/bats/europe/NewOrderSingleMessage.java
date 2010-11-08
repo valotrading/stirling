@@ -17,7 +17,6 @@ package fixengine.messages.bats.europe;
 
 import fixengine.messages.MessageHeader;
 import fixengine.messages.OrdTypeValue;
-import fixengine.messages.OrderCapacityValue;
 import fixengine.messages.Required;
 
 import fixengine.tags.Account;

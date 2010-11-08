@@ -27,7 +27,6 @@ import fixengine.tags.MaxFloor;
 import fixengine.tags.MinQty;
 import fixengine.tags.OrdType;
 import fixengine.tags.OrderCapacity;
-import fixengine.tags.OrderCapacity;
 import fixengine.tags.OrderQty;
 import fixengine.tags.OrigClOrdID;
 import fixengine.tags.PegDifference;

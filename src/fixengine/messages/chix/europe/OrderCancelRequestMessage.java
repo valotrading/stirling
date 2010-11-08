@@ -16,7 +16,6 @@
 package fixengine.messages.chix.europe;
 
 import fixengine.messages.MessageHeader;
-import fixengine.messages.Required;
 
 import fixengine.tags.ClOrdID;
 import fixengine.tags.OrderQty;
