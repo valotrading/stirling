@@ -16,6 +16,7 @@
 package fixengine.messages;
 
 import fixengine.messages.fix42.AllocationMessage;
+import fixengine.messages.fix42.DontKnowTradeMessage;
 import fixengine.messages.fix42.ExecutionReportMessage;
 import fixengine.messages.fix42.LogonMessage;
 import fixengine.messages.fix42.NewOrderSingleMessage;
@@ -41,5 +42,6 @@ public interface MessageVisitor {
     void visit(SequenceResetMessage message);
     void visit(TestRequestMessage message);
     void visit(AllocationMessage message);
+    void visit(DontKnowTradeMessage message);
     void visit(UserDefinedMessage message);
 }

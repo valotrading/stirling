@@ -16,6 +16,7 @@
 package fixengine.messages;
 
 import fixengine.messages.fix42.AllocationMessage;
+import fixengine.messages.fix42.DontKnowTradeMessage;
 import fixengine.messages.fix42.ExecutionReportMessage;
 import fixengine.messages.fix42.LogonMessage;
 import fixengine.messages.fix42.NewOrderSingleMessage;
@@ -80,6 +81,10 @@ public class DefaultMessageVisitor implements MessageVisitor {
     }
 
     @Override public void visit(AllocationMessage message) {
+        defaultAction(message);
+    }
+
+    @Override public void visit(DontKnowTradeMessage message) {
         defaultAction(message);
     }
 
