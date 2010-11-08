@@ -15,11 +15,26 @@
  */
 package fixengine.tags.fix42;
 
-import fixengine.messages.StringField;
+import fixengine.messages.EnumField;
+import fixengine.messages.Required;
 import fixengine.messages.Tag;
 
-public class ExecTransType extends Tag<StringField> {
+import fixengine.messages.fix42.ExecTransTypeValue;
+
+public class ExecTransType extends Tag<ExecTransType.Field> {
     public static final ExecTransType TAG = new ExecTransType();
 
-    public ExecTransType() { super(20, StringField.class); }
+    public ExecTransType() {
+        super(40, Field.class);
+    }
+
+    public static class Field extends EnumField<ExecTransTypeValue> {
+        public Field(Tag<Field> tag) {
+            super(tag, Required.YES);
+        }
+
+        @Override public void parse(String value) {
+            this.value = ExecTransTypeValue.parse(value.charAt(0));
+        }
+    }
 }

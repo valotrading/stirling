@@ -25,6 +25,7 @@ import fixengine.messages.MsgTypeValue;
 import fixengine.messages.OrdStatusValue;
 import fixengine.messages.OrdTypeValue;
 import fixengine.messages.SideValue;
+import fixengine.messages.fix42.ExecTransTypeValue;
 import fixengine.tags.AllocAccount;
 import fixengine.tags.AllocID;
 import fixengine.tags.AvgPx;
@@ -404,7 +405,7 @@ import fixengine.tags.fix42.ExecTransType;
                 .msgSeqNum(2)
                 .string(OrderID.TAG, "1278658351213-17")
                 .string(ExecID.TAG, "1278658351213-18")
-                .string(ExecTransType.TAG, "0")
+                .enumeration(ExecTransType.TAG, ExecTransTypeValue.NEW)
                 .enumeration(ExecType.TAG, ExecTypeValue.NEW)
                 .enumeration(OrdStatus.TAG, OrdStatusValue.NEW)
                 .string(Symbol.TAG, "PALM")
