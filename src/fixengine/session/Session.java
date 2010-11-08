@@ -370,10 +370,6 @@ public class Session {
         send(conn, resendReq);
     }
 
-    private boolean isOutOfSync() {
-        return incomingQueue.hasSeqNumGap();
-    }
-
     private void fillSequenceGap(Connection conn, int newSeqNo) {
         SequenceResetMessage seqReset = (SequenceResetMessage) messageFactory.create(SEQUENCE_RESET);
         seqReset.setPossDupFlag(true);
