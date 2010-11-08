@@ -33,10 +33,6 @@ public class Parser {
         parse(new DefaultMessageFactory(), m, callback);
     }
 
-    private static void parse(ByteBuffer b, Callback callback, DateTime receiveTime) {
-        parse(new DefaultMessageFactory(), b, callback, receiveTime);
-    }
-
     public static void parse(MessageFactory messageFactory, FixMessage m, Callback callback) {
         parse(messageFactory, m.toByteBuffer(), callback, m.getReceiveTime());
     }
