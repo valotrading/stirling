@@ -95,9 +95,6 @@ public abstract class OrderCommand implements Command {
     }
   }
 
-  private void setField(Message message, String field) {
-  }
-
   private interface Parser {
     boolean matches(String field);
     void setField(Message msg, String field);
