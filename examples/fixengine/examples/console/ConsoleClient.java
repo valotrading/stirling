@@ -25,8 +25,8 @@ import fixengine.session.Session;
 import fixengine.session.store.MongoSessionStore;
 import fixengine.session.store.SessionStore;
 
-import fixengine.messages.DefaultMessageFactory;
 import fixengine.messages.MessageFactory;
+import fixengine.messages.fix42.DefaultMessageFactory;
 
 import fixengine.Version;
 

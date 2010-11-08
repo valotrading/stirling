@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.tags;
+package fixengine.tags.fix42;
 
 import fixengine.messages.EnumField;
 import fixengine.messages.Required;
 import fixengine.messages.Tag;
-import fixengine.messages.fix42.ExecRestatementReasonValue;
+import fixengine.messages.fix42.AllocTransTypeValue;
 
-public class ExecRestatementReason extends Tag<ExecRestatementReason.Field> {
-    public static final ExecRestatementReason TAG = new ExecRestatementReason();
+public class AllocTransType extends Tag<AllocTransType.Field> {
+    public static final AllocTransType TAG = new AllocTransType();
 
-    public ExecRestatementReason() {
-        super(378, Field.class);
+    public AllocTransType() {
+        super(71, Field.class);
     }
 
-    public static class Field extends EnumField<ExecRestatementReasonValue> {
+    public static class Field extends EnumField<AllocTransTypeValue> {
         public Field(Tag<Field> tag) {
             super(tag, Required.YES);
         }
 
         @Override public void parse(String value) {
-            this.value = ExecRestatementReasonValue.parse(Integer.parseInt(value));
+            this.value = AllocTransTypeValue.parse(value.charAt(0));
         }
     }
 }

@@ -27,8 +27,6 @@ import fixengine.messages.OrdTypeValue;
 import fixengine.messages.SideValue;
 import fixengine.tags.AllocAccount;
 import fixengine.tags.AllocID;
-import fixengine.tags.AllocShares;
-import fixengine.tags.AllocTransType;
 import fixengine.tags.AvgPx;
 import fixengine.tags.BeginSeqNo;
 import fixengine.tags.CheckSum;
@@ -36,7 +34,6 @@ import fixengine.tags.ClOrdID;
 import fixengine.tags.CumQty;
 import fixengine.tags.EncryptMethod;
 import fixengine.tags.ExecID;
-import fixengine.tags.ExecTransType;
 import fixengine.tags.ExecType;
 import fixengine.tags.HeartBtInt;
 import fixengine.tags.LeavesQty;
@@ -53,6 +50,9 @@ import fixengine.tags.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TestReqID;
 import fixengine.tags.TradeDate;
+import fixengine.tags.fix42.AllocShares;
+import fixengine.tags.fix42.AllocTransType;
+import fixengine.tags.fix42.ExecTransType;
 
 @RunWith(JDaveRunner.class) public class RecvAppOrAdminMsgSpec extends InitiatorSpecification {
     public class InitializedSession {

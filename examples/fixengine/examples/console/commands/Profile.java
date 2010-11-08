@@ -19,8 +19,8 @@ import java.util.Scanner;
 
 import fixengine.examples.console.ConsoleClient;
 
-import fixengine.messages.bats.europe.MessageFactory;
-import fixengine.messages.DefaultMessageFactory;
+import fixengine.messages.fix42.DefaultMessageFactory;
+import fixengine.messages.fix42.bats.europe.MessageFactory;
 
 public class Profile implements Command {
   private static final String DEFAULT_PROFILE = "default";

@@ -29,16 +29,16 @@ import silvertip.Server;
 import silvertip.Server.ConnectionFactory;
 import fixengine.Config;
 import fixengine.Version;
-import fixengine.messages.DefaultMessageFactory;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.FixMessageParser;
-import fixengine.messages.NewOrderSingleMessage;
 import fixengine.session.HeartBtIntValue;
 import fixengine.session.Session;
 import fixengine.session.store.InMemorySessionStore;
 import fixengine.session.store.SessionStore;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MsgTypeValue;
+import fixengine.messages.fix42.DefaultMessageFactory;
+import fixengine.messages.fix42.NewOrderSingleMessage;
 
 public class PerformanceTest implements Runnable {
     private static final Random generator = new Random();

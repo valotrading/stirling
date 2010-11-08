@@ -20,6 +20,7 @@ import java.nio.ByteBuffer;
 
 import fixengine.tags.MsgSeqNum;
 import fixengine.messages.FixMessage;
+import fixengine.messages.fix42.DefaultMessageFactory;
 
 public class Parser {
     public interface Callback {

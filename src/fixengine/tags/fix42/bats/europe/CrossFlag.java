@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.tags;
+package fixengine.tags.fix42.bats.europe;
 
+import fixengine.messages.fix42.bats.europe.CrossFlagValue;
 import fixengine.messages.EnumField;
 import fixengine.messages.Required;
 import fixengine.messages.Tag;
-import fixengine.messages.fix42.ExecRestatementReasonValue;
 
-public class ExecRestatementReason extends Tag<ExecRestatementReason.Field> {
-    public static final ExecRestatementReason TAG = new ExecRestatementReason();
+public class CrossFlag extends Tag<CrossFlag.Field> {
+    public static final CrossFlag TAG = new CrossFlag();
 
-    public ExecRestatementReason() {
-        super(378, Field.class);
+    public CrossFlag() {
+        super(7740, Field.class);
     }
 
-    public static class Field extends EnumField<ExecRestatementReasonValue> {
+    public static class Field extends EnumField<CrossFlagValue> {
         public Field(Tag<Field> tag) {
             super(tag, Required.YES);
         }
 
         @Override public void parse(String value) {
-            this.value = ExecRestatementReasonValue.parse(Integer.parseInt(value));
+            this.value = CrossFlagValue.parse(value.charAt(0));
         }
     }
 }

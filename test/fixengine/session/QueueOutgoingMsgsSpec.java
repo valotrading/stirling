@@ -22,7 +22,7 @@ import org.junit.runner.RunWith;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MsgTypeValue;
-import fixengine.messages.NewOrderSingleMessage;
+import fixengine.messages.fix42.NewOrderSingleMessage;
 import fixengine.tags.BeginSeqNo;
 import fixengine.tags.EndSeqNo;
 

@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.tags;
+package fixengine.tags.fix42.bats.europe;
 
+import fixengine.messages.fix42.bats.europe.ExecInstValue;
 import fixengine.messages.EnumField;
 import fixengine.messages.Required;
 import fixengine.messages.Tag;
-import fixengine.messages.fix42.ExecRestatementReasonValue;
 
-public class ExecRestatementReason extends Tag<ExecRestatementReason.Field> {
-    public static final ExecRestatementReason TAG = new ExecRestatementReason();
+public class ExecInst extends Tag<ExecInst.Field> {
+    public static final ExecInst TAG = new ExecInst();
 
-    public ExecRestatementReason() {
-        super(378, Field.class);
+    public ExecInst() {
+        super(18, Field.class);
     }
 
-    public static class Field extends EnumField<ExecRestatementReasonValue> {
+    public static class Field extends EnumField<ExecInstValue> {
         public Field(Tag<Field> tag) {
             super(tag, Required.YES);
         }
 
         @Override public void parse(String value) {
-            this.value = ExecRestatementReasonValue.parse(Integer.parseInt(value));
+            this.value = ExecInstValue.parse(value.charAt(0));
         }
     }
 }

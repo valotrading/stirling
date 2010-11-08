@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.tags;
+package fixengine.tags.fix42.bats.europe;
 
+import fixengine.messages.fix42.bats.europe.TradeLiquidityIndicatorValue;
 import fixengine.messages.EnumField;
 import fixengine.messages.Required;
 import fixengine.messages.Tag;
-import fixengine.messages.fix42.ExecRestatementReasonValue;
 
-public class ExecRestatementReason extends Tag<ExecRestatementReason.Field> {
-    public static final ExecRestatementReason TAG = new ExecRestatementReason();
+public class TradeLiquidityIndicator extends Tag<TradeLiquidityIndicator.Field> {
+    public static final TradeLiquidityIndicator TAG = new TradeLiquidityIndicator();
 
-    public ExecRestatementReason() {
-        super(378, Field.class);
+    public TradeLiquidityIndicator() {
+        super(9730, Field.class);
     }
 
-    public static class Field extends EnumField<ExecRestatementReasonValue> {
+    public static class Field extends EnumField<TradeLiquidityIndicatorValue> {
         public Field(Tag<Field> tag) {
             super(tag, Required.YES);
         }
 
         @Override public void parse(String value) {
-            this.value = ExecRestatementReasonValue.parse(Integer.parseInt(value));
+            this.value = TradeLiquidityIndicatorValue.parse(value);
         }
     }
 }

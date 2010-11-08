@@ -15,6 +15,14 @@
  */
 package fixengine.messages;
 
+import fixengine.messages.fix42.AllocationMessage;
+import fixengine.messages.fix42.ExecutionReportMessage;
+import fixengine.messages.fix42.LogonMessage;
+import fixengine.messages.fix42.NewOrderSingleMessage;
+import fixengine.messages.fix42.OrderCancelRejectMessage;
+import fixengine.messages.fix42.OrderCancelRequestMessage;
+import fixengine.messages.fix42.OrderModificationRequestMessage;
+
 /**
  * @author Pekka Enberg 
  */

@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.tags;
+package fixengine.tags.fix42.bats.europe;
 
+import fixengine.messages.fix42.bats.europe.CentralCounterpartyValue;
 import fixengine.messages.EnumField;
 import fixengine.messages.Required;
 import fixengine.messages.Tag;
-import fixengine.messages.fix42.ExecRestatementReasonValue;
 
-public class ExecRestatementReason extends Tag<ExecRestatementReason.Field> {
-    public static final ExecRestatementReason TAG = new ExecRestatementReason();
+public class CentralCounterparty extends Tag<CentralCounterparty.Field> {
+    public static final CentralCounterparty TAG = new CentralCounterparty();
 
-    public ExecRestatementReason() {
-        super(378, Field.class);
+    public CentralCounterparty() {
+        super(7772, Field.class);
     }
 
-    public static class Field extends EnumField<ExecRestatementReasonValue> {
+    public static class Field extends EnumField<CentralCounterpartyValue> {
         public Field(Tag<Field> tag) {
             super(tag, Required.YES);
         }
 
         @Override public void parse(String value) {
-            this.value = ExecRestatementReasonValue.parse(Integer.parseInt(value));
+            this.value = CentralCounterpartyValue.parse(value);
         }
     }
 }

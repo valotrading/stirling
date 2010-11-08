@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.tags;
+package fixengine.tags.fix42;
 
 import fixengine.messages.EnumField;
 import fixengine.messages.Required;
 import fixengine.messages.Tag;
-import fixengine.messages.fix42.ExecRestatementReasonValue;
+import fixengine.messages.fix42.CustomerOrFirmValue;
 
-public class ExecRestatementReason extends Tag<ExecRestatementReason.Field> {
-    public static final ExecRestatementReason TAG = new ExecRestatementReason();
+public class CustomerOrFirm extends Tag<CustomerOrFirm.Field> {
+    public static final CustomerOrFirm TAG = new CustomerOrFirm();
 
-    public ExecRestatementReason() {
-        super(378, Field.class);
+    public CustomerOrFirm() {
+        super(204, Field.class);
     }
 
-    public static class Field extends EnumField<ExecRestatementReasonValue> {
+    public static class Field extends EnumField<CustomerOrFirmValue> {
         public Field(Tag<Field> tag) {
             super(tag, Required.YES);
         }
 
         @Override public void parse(String value) {
-            this.value = ExecRestatementReasonValue.parse(Integer.parseInt(value));
+            this.value = CustomerOrFirmValue.parse(Integer.parseInt(value));
         }
     }
 }
