@@ -24,7 +24,7 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
         message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingleMessage.class);
         message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequestMessage.class);
         message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequestMessage.class);
-        message(MsgTypeValue.DONT_KNOW_TRADE, OrderModificationRequestMessage.class);
+        message(MsgTypeValue.DONT_KNOW_TRADE, DontKnowTradeMessage.class);
     }
 
     @Override protected String getTagsPackage() {
