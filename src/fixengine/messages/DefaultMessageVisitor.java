@@ -23,6 +23,7 @@ import fixengine.messages.fix42.NewOrderSingleMessage;
 import fixengine.messages.fix42.OrderCancelRejectMessage;
 import fixengine.messages.fix42.OrderCancelRequestMessage;
 import fixengine.messages.fix42.OrderModificationRequestMessage;
+import fixengine.messages.fix42.OrderStatusRequestMessage;
 
 /**
  * @author Pekka Enberg
@@ -92,6 +93,11 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
+    @Override public void visit(OrderStatusRequestMessage message) {
+        defaultAction(message);
+    }
+
     public void defaultAction(Message message) {
     }
+
 }

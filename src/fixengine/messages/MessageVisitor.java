@@ -23,6 +23,7 @@ import fixengine.messages.fix42.NewOrderSingleMessage;
 import fixengine.messages.fix42.OrderCancelRejectMessage;
 import fixengine.messages.fix42.OrderCancelRequestMessage;
 import fixengine.messages.fix42.OrderModificationRequestMessage;
+import fixengine.messages.fix42.OrderStatusRequestMessage;
 
 /**
  * @author Pekka Enberg 
@@ -44,4 +45,5 @@ public interface MessageVisitor {
     void visit(AllocationMessage message);
     void visit(DontKnowTradeMessage message);
     void visit(UserDefinedMessage message);
+    void visit(OrderStatusRequestMessage message);
 }

@@ -31,6 +31,7 @@ public class MsgTypeValue {
     public static final String NEW_ORDER_SINGLE = "D";
     public static final String ORDER_CANCEL_REQUEST = "F";
     public static final String ORDER_MODIFICATION_REQUEST = "G";
+    public static final String ORDER_STATUS_REQUEST = "H";
     public static final String BUSINESS_MESSAGE_REJECT = "j";
     public static final String ALLOCATION_INSTRUCTION = "J";
     public static final String DONT_KNOW_TRADE = "Q";
