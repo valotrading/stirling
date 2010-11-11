@@ -12,8 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
-package fixengine.messages;
+ */ package fixengine.messages;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -99,6 +98,10 @@ public abstract class RepeatingGroup implements Field {
     }
 
     @Override public String prettyName() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override public Required isRequired() {
         throw new UnsupportedOperationException();
     }
 

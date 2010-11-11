@@ -60,6 +60,10 @@ public class RepeatingGroupInstance extends FieldContainer implements Field {
         return "";
     }
 
+    @Override public Required isRequired() {
+        throw new UnsupportedOperationException();
+    }
+
     @Override public void setRequired(Required required) {
         throw new UnsupportedOperationException();
     }

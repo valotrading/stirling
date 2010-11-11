@@ -49,6 +49,10 @@ public abstract class AbstractField<T> implements Field {
         return s.substring(0, s.length() - 5);
     }
 
+    @Override public Required isRequired() {
+        return required;
+    }
+
     @Override public void setRequired(Required required) {
         this.required = required;
     }
