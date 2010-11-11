@@ -26,7 +26,7 @@ import fixengine.tags.ResetSeqNumFlag;
 /**
  * @author Pekka Enberg 
  */
-public class LogonMessage extends AbstractMessage {
+public class LogonMessage extends AbstractMessage implements fixengine.messages.LogonMessage {
     public LogonMessage(MessageHeader header) {
         super(header);
 

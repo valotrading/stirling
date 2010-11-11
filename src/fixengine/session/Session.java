@@ -31,12 +31,15 @@ import lang.TimeSource;
 
 import org.joda.time.DateTime;
 
+import silvertip.Connection;
 import fixengine.Config;
 import fixengine.messages.BusinessMessageRejectMessage;
 import fixengine.messages.BusinessRejectReasonValue;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.EncryptMethodValue;
+import fixengine.messages.FixMessage;
 import fixengine.messages.HeartbeatMessage;
+import fixengine.messages.LogonMessage;
 import fixengine.messages.LogoutMessage;
 import fixengine.messages.Message;
 import fixengine.messages.MessageFactory;
@@ -51,7 +54,6 @@ import fixengine.messages.SessionRejectReasonValue;
 import fixengine.messages.TestRequestMessage;
 import fixengine.messages.Validator.ErrorHandler;
 import fixengine.messages.Validator.ErrorLevel;
-import fixengine.messages.fix42.LogonMessage;
 import fixengine.session.store.SessionStore;
 import fixengine.tags.BeginSeqNo;
 import fixengine.tags.BusinessRejectReason;
@@ -65,9 +67,6 @@ import fixengine.tags.RefSeqNo;
 import fixengine.tags.SessionRejectReason;
 import fixengine.tags.TestReqID;
 import fixengine.tags.Text;
-
-import silvertip.Connection;
-import fixengine.messages.FixMessage;
 
 /**
  * @author Karim Osman
