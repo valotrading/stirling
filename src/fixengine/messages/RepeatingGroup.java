@@ -21,6 +21,7 @@ import java.util.List;
 public abstract class RepeatingGroup implements Field {
     private final List<RepeatingGroupInstance> instances = new ArrayList<RepeatingGroupInstance>();
     private final Tag<IntegerField> count;
+    private Required required;
 
     public RepeatingGroup(Tag<IntegerField> count) {
         this.count = count;
@@ -102,10 +103,10 @@ public abstract class RepeatingGroup implements Field {
     }
 
     @Override public Required isRequired() {
-        throw new UnsupportedOperationException();
+        return required;
     }
 
     @Override public void setRequired(Required required) {
-        throw new UnsupportedOperationException();
+        this.required = required;
     }
 }
