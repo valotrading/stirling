@@ -21,21 +21,20 @@ import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
-@RunWith(JDaveRunner.class) public class AlphaSpec extends Specification<Alpha> {
-  private final int BUFFER_SIZE = 1024;
+import xtch.types.AbstractTypeSpec;
 
+@RunWith(JDaveRunner.class) public class AlphaSpec extends AbstractTypeSpec<Alpha> {
   public class Initialized {
     public void encodeAndDecode() {
-      ByteBuffer buffer = encode('+');
-      specify(Alpha.TYPE.decode(buffer, 1) == '+');
-    }
-
-    private ByteBuffer encode(Character value) {
-      ByteBuffer buffer = ByteBuffer.allocate(BUFFER_SIZE);
-      Alpha.TYPE.encode(buffer, value, 1);
-      buffer.position(0);
-      return buffer;
+      assertEncodeAndDecode('+');
     }
   }
-}
 
+  @Override protected void encode(ByteBuffer buffer, Object value) {
+    Alpha.TYPE.encode(buffer, (Character) value, 1);
+  }
+
+  @Override protected Character decode(ByteBuffer buffer) {
+    return Alpha.TYPE.decode(buffer, 1);
+  }
+}
