@@ -5,8 +5,6 @@ Known Bugs
 
 - PossResend messages are ignored.
 
-- Conditionally required repeating groups are not supported.
-
 - Encryption is not handled at all. See session level test Ref ID 17.
 
 - Chi-X Europe: If the PossResend flag has been set, the ExecID must be used

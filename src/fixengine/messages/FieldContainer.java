@@ -75,8 +75,9 @@ public class FieldContainer implements Iterable<Field> {
         this.fields.put(tag.value(), tag.newField(required));
     }
 
-    public void add(RepeatingGroup group) {
-        this.fields.put(group.countTag().value(), group);
+    public void add(RepeatingGroup group, Required required) {
+        group.setRequired(required);
+        fields.put(group.countTag().value(), group);
     }
 
     protected void field(Tag<?> tag) {
@@ -87,8 +88,12 @@ public class FieldContainer implements Iterable<Field> {
         add(tag, required);
     }
 
+    protected void group(RepeatingGroup group, Required required) {
+        add(group, required);
+    }
+
     protected void group(RepeatingGroup group) {
-        add(group);
+        group(group, Required.YES);
     }
 
     public boolean hasValue(Tag<?> tag) {

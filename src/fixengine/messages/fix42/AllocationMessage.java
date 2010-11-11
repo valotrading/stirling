@@ -20,6 +20,7 @@ import fixengine.messages.MessageHeader;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.RepeatingGroup;
 import fixengine.messages.RepeatingGroupInstance;
+import fixengine.messages.Required;
 import fixengine.tags.AllocAccount;
 import fixengine.tags.AllocID;
 import fixengine.tags.AvgPx;
@@ -47,14 +48,14 @@ public class AllocationMessage extends AbstractMessage {
         field(AvgPx.TAG);
         field(TradeDate.TAG);
         group(new RepeatingGroup(NoAllocs.TAG) {
-            @Override public RepeatingGroupInstance newInstance() {
+            @Override protected RepeatingGroupInstance newInstance() {
                 return new RepeatingGroupInstance(AllocAccount.TAG) {
                     {
                         field(AllocShares.TAG);
                     }
                 };
             }
-        });
+        }, Required.NO);
     }
 
     @Override public void apply(MessageVisitor visitor) {

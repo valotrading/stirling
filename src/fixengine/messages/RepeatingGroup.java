@@ -20,22 +20,23 @@ import java.util.List;
 
 public abstract class RepeatingGroup implements Field {
     private final List<RepeatingGroupInstance> instances = new ArrayList<RepeatingGroupInstance>();
-    private final Tag<IntegerField> count;
+    private final Tag<IntegerField> countTag;
+    private IntegerField countField;
     private Required required;
 
-    public RepeatingGroup(Tag<IntegerField> count) {
-        this.count = count;
+    public RepeatingGroup(Tag<IntegerField> countTag) {
+        this.countTag = countTag;
+        this.countField = countTag.newField(Required.NO);
     }
 
     public Tag<?> countTag() {
-        return count;
+        return countTag;
     }
 
-    public abstract RepeatingGroupInstance newInstance();
+    protected abstract RepeatingGroupInstance newInstance();
 
     @Override public void parse(ByteBuffer b) {
-        IntegerField field = count.newField(Required.NO);
-        field.parse(b);
+        countField.parse(b);
         while (b.hasRemaining()) {
             try {
                 int tag = Tag.peekTag(b);
@@ -49,21 +50,24 @@ public abstract class RepeatingGroup implements Field {
                 continue;
             }
         }
-        if (instances.size() != field.getValue())
-            throw new ParseException(count.prettyName() + ": Incorrect NumInGroup count for repeating group. Expected: " + field.getValue() + ", but was: " + instances.size(), SessionRejectReasonValue.NUM_IN_GROUP_MISMATCH);
+        if (instances.size() != countField.getValue())
+            throw new ParseException(countTag.prettyName() + ": Incorrect NumInGroup count for repeating group. Expected: " + countField.getValue() +
+                ", but was: " + instances.size(), SessionRejectReasonValue.NUM_IN_GROUP_MISMATCH);
     }
 
     @Override public String format() {
         StringBuilder result = new StringBuilder();
-        result.append(new IntegerField(count, instances.size()).format());
-        for (RepeatingGroupInstance instance : instances) {
-            result.append(instance.format());
+        if (isParsed()) {
+            result.append(new IntegerField(countTag, instances.size()).format());
+            for (RepeatingGroupInstance instance : instances) {
+                result.append(instance.format());
+            }
         }
         return result.toString();
     }
 
     @Override public boolean hasValue() {
-        throw new UnsupportedOperationException();
+        return countField.hasValue();
     }
 
     @Override public boolean hasSingleTag() {
@@ -71,7 +75,7 @@ public abstract class RepeatingGroup implements Field {
     }
 
     @Override public boolean isEmpty() {
-        return false;
+        return countField.isEmpty();
     }
 
     @Override public boolean isFormatValid() {
@@ -79,7 +83,7 @@ public abstract class RepeatingGroup implements Field {
     }
 
     @Override public boolean isMissing() {
-        throw new UnsupportedOperationException();
+        return required.isRequired() && !hasValue();
     }
 
     @Override public boolean isConditional() {
@@ -87,7 +91,7 @@ public abstract class RepeatingGroup implements Field {
     }
 
     @Override public boolean isParsed() {
-        throw new UnsupportedOperationException();
+        return countField.isParsed();
     }
 
     @Override public boolean isValueValid() {
@@ -108,5 +112,19 @@ public abstract class RepeatingGroup implements Field {
 
     @Override public void setRequired(Required required) {
         this.required = required;
+    }
+
+    @Override public String toString() {
+        StringBuilder result = new StringBuilder();
+        if (isParsed()) {
+            result.append(new IntegerField(countTag, instances.size()).toString());
+            if (instances.size() > 0) {
+                result.append(" ");
+            }
+            for (RepeatingGroupInstance instance : instances) {
+                result.append(instance.toString() + " ");
+            }
+        }
+        return result.toString();
     }
 }
