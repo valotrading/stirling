@@ -247,6 +247,9 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
         result.append(new StringField(BeginString.TAG, header.getBeginString()).toString() + " ");
         result.append(new StringField(MsgType.TAG, header.getMsgType()).toString() + " ");
         for (Field field : this) {
+            String s = field.toString();
+            if (s.isEmpty())
+                continue;
             result.append(field.toString() + " ");
         }
         return result.toString();
