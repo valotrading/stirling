@@ -49,13 +49,19 @@
   </target>
   <target name="all" depends="compile-main, compile-test, compile-examples"/>
   <target name="compile-main" depends="init">
-    <javac srcdir="${main.src}" destdir="${main.build}" classpathref="lib.path.id" debug="true"/>
+    <javac srcdir="${main.src}" destdir="${main.build}" classpathref="lib.path.id" debug="true">
+      <compilerarg value="-Xlint:unchecked"/>
+    </javac> 
   </target>
   <target name="compile-test" depends="compile-main">
-    <javac srcdir="${test.src}" destdir="${test.build}" classpathref="test.path.id" debug="true"/>
+    <javac srcdir="${test.src}" destdir="${test.build}" classpathref="test.path.id" debug="true">
+      <compilerarg value="-Xlint:unchecked"/>
+    </javac> 
   </target>
   <target name="compile-examples" depends="compile-main">
-    <javac srcdir="${examples.src}" destdir="${examples.build}" classpathref="examples.path.id" debug="true"/>
+    <javac srcdir="${examples.src}" destdir="${examples.build}" classpathref="examples.path.id" debug="true">
+      <compilerarg value="-Xlint:unchecked"/>
+    </javac> 
   </target>
   <target name="dist" depends="compile-main">
     <jar destfile="${library}" basedir="${main.build}"/>
