@@ -61,5 +61,6 @@ public class RepeatingGroupInstance extends FieldContainer implements Field {
     }
 
     @Override public void setRequired(Required required) {
+        throw new UnsupportedOperationException();
     }
 }
