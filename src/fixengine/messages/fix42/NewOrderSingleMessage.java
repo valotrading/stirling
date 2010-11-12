@@ -15,12 +15,9 @@
  */
 package fixengine.messages.fix42;
 
-import fixengine.messages.AbstractMessage;
+import fixengine.messages.AbstractNewOrderSingleMessage;
 import fixengine.messages.MessageHeader;
-import fixengine.messages.MessageVisitor;
-import fixengine.messages.OrdTypeValue;
 import fixengine.messages.Required;
-import fixengine.messages.SideValue;
 import fixengine.tags.ClOrdID;
 import fixengine.tags.Currency;
 import fixengine.tags.ExDestination;
@@ -39,40 +36,9 @@ import fixengine.tags.fix42.CustomerOrFirm;
 /**
  * @author Pekka Enberg 
  */
-public class NewOrderSingleMessage extends AbstractMessage implements fixengine.messages.NewOrderSingleMessage {
+public class NewOrderSingleMessage extends AbstractNewOrderSingleMessage {
     public NewOrderSingleMessage(MessageHeader header) {
         super(header);
-
-        fields();
-    }
-
-    @Override
-    public void apply(MessageVisitor visitor) {
-        visitor.visit(this);
-    }
-
-    public String getOrigClOrdId() {
-        return null;
-    }
-
-    @Override public SideValue getSide() {
-        return getEnum(Side.TAG);
-    }
-
-    @Override public OrdTypeValue getOrdType() {
-        return getEnum(OrdType.TAG);
-    }
-
-    @Override public String getClOrdId() {
-        return getString(ClOrdID.TAG);
-    }
-
-    @Override public double getOrderQty() {
-        return getFloat(OrderQty.TAG);
-    }
-
-    @Override public String getSymbol() {
-        return getString(Symbol.TAG);
     }
 
     protected void fields() {
