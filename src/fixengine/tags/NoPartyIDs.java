@@ -18,8 +18,8 @@ package fixengine.tags;
 import fixengine.messages.IntegerField;
 import fixengine.messages.Tag;
 
-public class NoPartyIds extends Tag<IntegerField> {
-    public static final NoPartyIds TAG = new NoPartyIds();
+public class NoPartyIDs extends Tag<IntegerField> {
+    public static final NoPartyIDs TAG = new NoPartyIDs();
 
-    public NoPartyIds() { super(453, IntegerField.class); }
+    public NoPartyIDs() { super(453, IntegerField.class); }
 }
