@@ -19,7 +19,6 @@ import fixengine.messages.AbstractMessage;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.OrdTypeValue;
-import fixengine.messages.RequestMessage;
 import fixengine.messages.Required;
 import fixengine.messages.SideValue;
 import fixengine.tags.ClOrdID;
@@ -33,14 +32,14 @@ import fixengine.tags.Price;
 import fixengine.tags.SecurityType;
 import fixengine.tags.Side;
 import fixengine.tags.Symbol;
-import fixengine.tags.TransactTime;
 import fixengine.tags.TimeInForce;
+import fixengine.tags.TransactTime;
 import fixengine.tags.fix42.CustomerOrFirm;
 
 /**
  * @author Pekka Enberg 
  */
-public class NewOrderSingleMessage extends AbstractMessage implements RequestMessage {
+public class NewOrderSingleMessage extends AbstractMessage implements fixengine.messages.NewOrderSingleMessage {
     public NewOrderSingleMessage(MessageHeader header) {
         super(header);
 
