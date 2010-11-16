@@ -25,29 +25,14 @@ public class Price extends AbstractType<Double> {
 
   @Override public void encode(ByteBuffer buffer, Double value, int length) {
     long integer = value.longValue();
-    writeAsLittleEndian(buffer, integer);
+    write32bitsAsLittleEndian(buffer, integer);
 
     long fractional = (long) ((double) (value - integer) * FRAC_TO_INT_FACTOR);
-    writeAsLittleEndian(buffer, fractional);
+    write32bitsAsLittleEndian(buffer, fractional);
   }
 
   @Override public Double decode(ByteBuffer buffer, int length) {
-    return readAsLittleEndian(buffer) + (double) readAsLittleEndian(buffer) / (double) FRAC_TO_INT_FACTOR;
+    return read32bitsAsLittleEndian(buffer) + (double) read32bitsAsLittleEndian(buffer) / (double) FRAC_TO_INT_FACTOR;
   }
 
-  private void writeAsLittleEndian(ByteBuffer buffer, long value) {
-    buffer.put((byte) (value >> 0  & 0xff));
-    buffer.put((byte) (value >> 8  & 0xff));
-    buffer.put((byte) (value >> 16 & 0xff));
-    buffer.put((byte) (value >> 24 & 0xff));
-  }
-
-  private long readAsLittleEndian(ByteBuffer buffer) {
-    long result = 0;
-    result |= (buffer.get() & 0xff) << 0;
-    result |= (buffer.get() & 0xff) << 8;
-    result |= (buffer.get() & 0xff) << 16;
-    result |= (buffer.get() & 0xff) << 24;
-    return result;
-  }
 }

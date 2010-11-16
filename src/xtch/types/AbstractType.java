@@ -25,4 +25,20 @@ public abstract class AbstractType<T> implements Type<T> {
     buffer.put(bytes);
     return buffer.array();
   }
+
+  protected void write32bitsAsLittleEndian(ByteBuffer buffer, long value) {
+    buffer.put((byte) (value >> 0  & 0xff));
+    buffer.put((byte) (value >> 8  & 0xff));
+    buffer.put((byte) (value >> 16 & 0xff));
+    buffer.put((byte) (value >> 24 & 0xff));
+  }
+
+  protected long read32bitsAsLittleEndian(ByteBuffer buffer) {
+    long result = 0;
+    result |= (buffer.get() & 0xff) << 0;
+    result |= (buffer.get() & 0xff) << 8;
+    result |= (buffer.get() & 0xff) << 16;
+    result |= (buffer.get() & 0xff) << 24;
+    return result;
+  }
 }
