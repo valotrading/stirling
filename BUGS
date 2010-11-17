@@ -1,8 +1,6 @@
 Known Bugs
 ==========
 
-- PerformanceTest doesn't use external data store which skews results.
-
 - PossResend messages are ignored.
 
 - Encryption is not handled at all. See session level test Ref ID 17.
