@@ -33,6 +33,7 @@ import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.FixMessageParser;
 import fixengine.session.HeartBtIntValue;
 import fixengine.session.Session;
+import fixengine.session.store.MongoSessionStore;
 import fixengine.session.store.InMemorySessionStore;
 import fixengine.session.store.SessionStore;
 import fixengine.messages.MessageHeader;
@@ -43,12 +44,35 @@ import fixengine.messages.fix42.NewOrderSingleMessage;
 public class PerformanceTest implements Runnable {
     private static final Random generator = new Random();
     private static final int NUM_MESSAGES = 500000;
+    private SessionStore sessionStore;
     private long rx[];
     private long tx[];
 
-    public static void main(String[] args) {
-        PerformanceTest perf = new PerformanceTest();
-        perf.run();
+    public static void main(String[] args) throws Exception {
+        if (args.length < 1) {
+            System.err.println("Usage: PerformanceTest [memory|mongo]");
+            return;
+        }
+        SessionStore sessionStore = getSessionStore(args[0]);
+        if (sessionStore == null) {
+            System.out.println("Unknown session store: '" + args[0] + "'");
+        } else {
+            PerformanceTest perf = new PerformanceTest(sessionStore);
+            perf.run();
+        }
+    }
+
+    private static SessionStore getSessionStore(String name) throws Exception {
+        if (name.equals("memory"))
+            return new InMemorySessionStore();
+        else if (name.equals("mongo"))
+            return new MongoSessionStore("localhost", 27017);
+        else
+            return null;
+    }
+
+    private PerformanceTest(SessionStore sessionStore) {
+        this.sessionStore = sessionStore;
     }
 
     @Override public void run() {
@@ -157,7 +181,7 @@ public class PerformanceTest implements Runnable {
         @Override public void run() {
             try {
                 Events events = Events.open(30000);
-                final Session session = new Session(getHeartBtIntValue(), getConfig(), getSessionStore(), getMessageFactory());
+                final Session session = new Session(getHeartBtIntValue(), getConfig(), sessionStore, getMessageFactory());
                 SocketChannel channel = SocketChannel.open();
                 channel.connect(new InetSocketAddress("localhost", port));
                 channel.configureBlocking(false);
@@ -220,9 +244,5 @@ public class PerformanceTest implements Runnable {
         config.setTargetCompId("acceptor");
         config.setVersion(Version.FIX_4_2);
         return config;
-    }
-
-    protected SessionStore getSessionStore() {
-        return new InMemorySessionStore();
     }
 }
