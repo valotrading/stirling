@@ -11,4 +11,8 @@ Currently, xTCH supports only a subset of Soup TCP 2.0.
 
 == References
 
-1. Nasdaq OMX Trading Specifications; http://www.nasdaqtrader.com/Trader.aspx?id=TradingSpecs
+1. Nasdaq OMX Trading Specifications;
+   http://www.nasdaqtrader.com/Trader.aspx?id=TradingSpecs
+
+2. Turquoise Techical Specification (TQ301), Issue 1.4;
+   http://www.tradeturquoise.com/doclibrary/TQ301_Trading_Gateway_NATIVE.pdf
