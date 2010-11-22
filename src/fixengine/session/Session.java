@@ -430,7 +430,7 @@ public class Session {
         message.setSendingTime(currentTime());
         conn.send(FixMessage.fromString(message.format()));
         prevTxTime = currentTime();
-        store.save(this);
+        store.save(this, message);
     }
 
     public void logout(final Connection conn) {
@@ -450,7 +450,7 @@ public class Session {
         conn.send(FixMessage.fromString(message.format()));
         prevTxTime = currentTime();
         setOutgoingSeq(seq);
-        store.save(this);
+        store.save(this, message);
     }
 
     public void keepAlive(Connection conn) {
@@ -487,7 +487,7 @@ public class Session {
                 prevTxTime = currentTime();
             }
         }
-        store.save(this);
+        store.save(this, message);
     }
 
     public void processInitiatedLogout(Connection conn) {
