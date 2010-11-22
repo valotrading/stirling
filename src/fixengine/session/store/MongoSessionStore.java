@@ -21,6 +21,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 
 import fixengine.Config;
+import fixengine.messages.Message;
 import fixengine.session.Sequence;
 import fixengine.session.Session;
 
@@ -36,6 +37,11 @@ public class MongoSessionStore implements SessionStore {
 
     public void save(Session session) {
         sessions().update(sessionQuery(session), sessionDoc(session), true, false);
+    }
+
+    @Override public void save(Session session, Message message) {
+        save(session);
+        messages().insert(messageDoc(message));
     }
 
     public void load(Session session) {
@@ -56,6 +62,10 @@ public class MongoSessionStore implements SessionStore {
         return db.getCollection("sessions");
     }
 
+    private DBCollection messages() {
+        return db.getCollection("messages");
+    }
+
     private BasicDBObject sessionQuery(Session session) {
         Config config = session.getConfig();
         return sessionQuery(config.getSenderCompId(), config.getTargetCompId());
@@ -71,6 +81,13 @@ public class MongoSessionStore implements SessionStore {
     private BasicDBObject sessionDoc(Session session) {
         Config config = session.getConfig();
         return sessionDoc(config.getSenderCompId(), config.getTargetCompId(), session.getIncomingSeq(), session.getOutgoingSeq());
+    }
+
+    private BasicDBObject messageDoc(Message message) {
+        BasicDBObject doc = new BasicDBObject();
+        doc.put("msgSeqNum", message.getMsgSeqNum());
+        doc.put("data", message.format());
+        return doc;
     }
 
     private BasicDBObject sessionDoc(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq) {

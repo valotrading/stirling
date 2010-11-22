@@ -15,14 +15,16 @@
  */
 package fixengine.session.store;
 
-import fixengine.session.Session;
+import fixengine.messages.Message;
 import fixengine.session.Sequence;
+import fixengine.session.Session;
 
 /**
  * @author Karim Osman
  */
 public interface SessionStore {
     void save(Session session);
+    void save(Session session, Message message);
     void load(Session session);
     void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq);
 }
