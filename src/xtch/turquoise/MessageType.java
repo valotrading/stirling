@@ -19,6 +19,7 @@ public class MessageType {
   public static final MessageType TYPE = new MessageType();
 
   public static final String LOGON = "A";
+  public static final String LOGON_REPLY = "B";
 
   private MessageType() {
   }

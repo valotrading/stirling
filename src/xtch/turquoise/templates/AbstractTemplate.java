@@ -22,22 +22,12 @@ import xtch.turquoise.Fields;
 import xtch.turquoise.MessageType;
 import xtch.turquoise.messages.TurquoiseMessage;
 
-/** 
- * Template for Logon message as specified in section 7.3.1 of [2].
- */
-public class Logon extends AbstractTemplate {
-  public static final Logon TEMPLATE = new Logon();
-
-  public Logon() {
-    super(MessageType.LOGON);
-    add(Fields.COMP_ID);
-    add(Fields.PASSWORD);
-    add(Fields.NEW_PASSWORD);
-    add(Fields.MESSAGE_VERSION);
+public abstract class AbstractTemplate extends MessageTemplate<TurquoiseMessage> {
+  protected AbstractTemplate(String messageType) {
+    super(messageType);
   }
 
   @Override public void encode(ByteBuffer buffer, TurquoiseMessage message) {
-    super.encode(buffer, message);
     buffer.put((byte) '\n');
   }
 
@@ -45,3 +35,4 @@ public class Logon extends AbstractTemplate {
     return new TurquoiseMessage(this);
   }
 }
+
