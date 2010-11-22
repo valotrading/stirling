@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 import xtch.types.AbstractTypeSpec;
 
 public class UnsignedInt16Spec extends AbstractTypeSpec<UnsignedInt16> {
-  public class InitializedUnsignedInt16 {
+  public class Initialized {
     public void encodeValue() {
       byte[] actual = encode(65535);
       byte[] expected = toByteArray(0xff, 0xff); 

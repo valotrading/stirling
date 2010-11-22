@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 import xtch.types.AbstractTypeSpec;
 
 public class SignedInt32Spec extends AbstractTypeSpec<SignedInt32> {
-  public class InitializedSignedInt32 {
+  public class Initialized {
     public void encodeValue() {
       byte[] actual = encode(-2147483647);
       byte[] expected = toByteArray(0x01, 0x00, 0x00, 0x80); 

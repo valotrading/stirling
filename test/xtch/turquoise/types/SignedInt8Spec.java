@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 import xtch.types.AbstractTypeSpec;
 
 public class SignedInt8Spec extends AbstractTypeSpec<SignedInt8> {
-  public class InitializedSignedInt8 {
+  public class Initialized {
     public void encodeValue() {
       byte[] actual = encode(-127);
       byte[] expected = toByteArray(0x81); 

@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 import xtch.types.AbstractTypeSpec;
 
 public class UnsignedInt32Spec extends AbstractTypeSpec<UnsignedInt32> {
-  public class InitializedUnsignedInt32 {
+  public class Initialized {
     public void encodeValue() {
       byte[] actual = encode(4294967294L);
       byte[] expected = toByteArray(0xfe, 0xff, 0xff, 0xff); 
