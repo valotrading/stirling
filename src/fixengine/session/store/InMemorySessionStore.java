@@ -15,12 +15,48 @@
  */
 package fixengine.session.store;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import fixengine.messages.FixMessage;
 import fixengine.messages.Message;
+import fixengine.messages.Parser;
+import fixengine.messages.SessionRejectReasonValue;
 import fixengine.session.Sequence;
 import fixengine.session.Session;
 
 public class InMemorySessionStore implements SessionStore {
+    private List<Message> messages = new ArrayList<Message>();
+
     @Override public void load(Session session) {
+    }
+
+    @Override public List<Message> load(Session session, int beginSeqNo, int endSeqNo) {
+        final List<Message> messages = new ArrayList<Message>();
+        for (Message message : this.messages) {
+            if (message.getMsgSeqNum() < beginSeqNo)
+                continue;
+            if (endSeqNo > 0 && message.getMsgSeqNum() > endSeqNo)
+                continue;
+            Parser.parse(session.getMessageFactory(), FixMessage.fromString(message.format(), message.getMsgType()), new Parser.Callback() {
+                @Override public void message(Message message) {
+                    messages.add(message);
+                }
+
+                @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
+                    throw new RuntimeException("Invalid message: " + text);
+                }
+
+                @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {
+                    throw new RuntimeException("Unsupported message type: " + msgType);
+                }
+
+                @Override public void invalidMsgType(String msgType, int msgSeqNum) {
+                    throw new RuntimeException("Invalid message type: " + msgType);
+                }
+            });
+        }
+        return messages;
     }
 
     @Override public void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq) {
@@ -30,5 +66,10 @@ public class InMemorySessionStore implements SessionStore {
     }
 
     @Override public void save(Session session, Message message) {
+        messages.add(message);
+    }
+
+    @Override public void clear(String senderCompId, String targetCompId) {
+        messages.clear();
     }
 }

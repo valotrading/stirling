@@ -62,6 +62,8 @@ import fixengine.messages.StringField;
 import fixengine.messages.Tag;
 import fixengine.messages.fix42.DefaultMessageFactory;
 import fixengine.session.store.InMemorySessionStore;
+import fixengine.session.store.MongoSessionStore;
+import fixengine.session.store.SessionStore;
 import fixengine.tags.BeginString;
 import fixengine.tags.BodyLength;
 import fixengine.tags.EncryptMethod;
@@ -483,10 +485,20 @@ public class InitiatorSpecification extends Specification<Session> {
         });
     }
 
+    private SessionStore getSessionStore() throws Exception {
+        String value = System.getProperty("session.store");
+        if ("mongo".equals(value)) {
+            SessionStore store = new MongoSessionStore("localhost", 27017);
+            store.clear(INITIATOR, ACCEPTOR);
+            return store;
+        }
+        return new InMemorySessionStore();
+    }
+
     protected class TestSession extends Session {
-        protected TestSession() {
+        protected TestSession() throws Exception {
             super(HeartBtIntValue.milliseconds(getHearbeatIntervalInMillis()), InitiatorSpecification.this.config,
-                new InMemorySessionStore(), new DefaultMessageFactory());
+                getSessionStore(), new DefaultMessageFactory());
         }
 
         protected MessageQueue<Message> getOutgoingMsgQueue() {
@@ -504,6 +516,5 @@ public class InitiatorSpecification extends Specification<Session> {
         @Override public DateTime currentTime() {
             return super.currentTime().plus(sessionTimeShift);
         }
-
     }
 }

@@ -7,6 +7,11 @@
   <property name="ivy.home" value="${user.home}/.ant"/>
   <property name="ivy.jar.dir" value="${ivy.home}/lib"/>
   <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar"/>
+  <condition property="session.store" value="memory">
+    <not>
+      <isset property="session.store"/>
+    </not>
+  </condition>
   <target name="download-ivy" unless="offline">
     <mkdir dir="${ivy.jar.dir}"/>
     <get src="http://repo2.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"
@@ -68,6 +73,7 @@
   </target>
   <target name="test" depends="compile-test">
     <junit printsummary="no" haltonfailure="true" showoutput="true">
+      <sysproperty key="session.store" value="${session.store}"/>
       <classpath refid="test.path.id"/>
       <batchtest>
         <formatter type="plain" usefile="false"/>

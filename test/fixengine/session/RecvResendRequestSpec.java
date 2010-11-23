@@ -25,10 +25,6 @@ import fixengine.tags.EndSeqNo;
 
 @RunWith(JDaveRunner.class) public class RecvResendRequestSpec extends InitiatorSpecification {
     public class InitializedSession {
-        /* TODO: The current implementation does not support resending of
-         * messages as specified in this test case, instead a SequenceReset is
-         * issued. Once message recovery is implemented this test case shall be
-         * rewritten. */
         /* Ref ID 8: Valid Resend Request */
         public void valid() throws Exception {
             server.expect(MsgTypeValue.LOGON);
@@ -40,13 +36,25 @@ import fixengine.tags.EndSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.RESEND_REQUEST)
                         .msgSeqNum(3)
-                        .integer(BeginSeqNo.TAG, 1)
+                        .integer(BeginSeqNo.TAG, 2)
                         .integer(EndSeqNo.TAG, 0)
                     .build());
-            server.expect(MsgTypeValue.SEQUENCE_RESET);
+            server.expect(MsgTypeValue.HEARTBEAT);
+            server.expect(MsgTypeValue.HEARTBEAT);
+            server.expect(MsgTypeValue.HEARTBEAT);
+            server.expect(MsgTypeValue.HEARTBEAT);
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.RESEND_REQUEST)
+                        .msgSeqNum(4)
+                        .integer(BeginSeqNo.TAG, 2)
+                        .integer(EndSeqNo.TAG, 2)
+                    .build());
+            server.expect(MsgTypeValue.HEARTBEAT);
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
+                    session.heartbeat(connection);
+                    session.heartbeat(connection);
                 }
             });
         }

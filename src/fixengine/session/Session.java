@@ -316,9 +316,10 @@ public class Session {
                 @Override public void visit(ResendRequestMessage message) {
                     if (outgoingQueue.isEmpty()) {
                         incomingQueue.skip(message.getMsgSeqNum());
-                        int newSeqNo = outgoingSeq.peek();
-                        outgoingSeq.reset(message.getInteger(BeginSeqNo.TAG));
-                        fillSequenceGap(conn, newSeqNo);
+                        int beginSeqNo = message.getInteger(BeginSeqNo.TAG);
+                        int endSeqNo = message.getInteger(EndSeqNo.TAG);
+                        for (Message msg : store.load(Session.this, beginSeqNo, endSeqNo))
+                            send(conn, msg);
                     } else {
                         while (!outgoingQueue.isEmpty()) {
                             Message msg = outgoingQueue.dequeue();
