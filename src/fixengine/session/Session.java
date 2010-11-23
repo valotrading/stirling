@@ -543,6 +543,10 @@ public class Session {
         return available;
     }
 
+    public MessageFactory getMessageFactory() {
+        return messageFactory;
+    }
+
     protected long getLogoutResponseTimeoutMsec() {
         return DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC;
     }
