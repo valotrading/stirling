@@ -96,6 +96,7 @@ public class MongoSessionStore implements SessionStore {
         BasicDBObject doc = new BasicDBObject();
         doc.put("senderCompId", message.getSenderCompId());
         doc.put("targetCompId", message.getTargetCompId());
+        doc.put("msgType", message.getMsgType());
         doc.put("msgSeqNum", message.getMsgSeqNum());
         doc.put("data", message.format());
         return doc;
