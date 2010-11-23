@@ -59,7 +59,6 @@ import fixengine.tags.NewSeqNo;
         /* Ref ID 1B: d. Invalid Logon message is received */
         public void invalid() throws Exception {
             // TODO: Invalid MsgType
-            // TODO: Garbled message
             server.expect(MsgTypeValue.LOGON);
             server.respond(
                     new MessageBuilder(MsgTypeValue.LOGON)
