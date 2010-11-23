@@ -83,19 +83,21 @@ public class MongoSessionStore implements SessionStore {
         return sessionDoc(config.getSenderCompId(), config.getTargetCompId(), session.getIncomingSeq(), session.getOutgoingSeq());
     }
 
-    private BasicDBObject messageDoc(Message message) {
-        BasicDBObject doc = new BasicDBObject();
-        doc.put("msgSeqNum", message.getMsgSeqNum());
-        doc.put("data", message.format());
-        return doc;
-    }
-
     private BasicDBObject sessionDoc(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq) {
         BasicDBObject doc = new BasicDBObject();
         doc.put("outgoingSeq", outgoingSeq.peek());
         doc.put("incomingSeq", incomingSeq.peek());
         doc.put("senderCompId", senderCompId);
         doc.put("targetCompId", targetCompId);
+        return doc;
+    }
+
+    private BasicDBObject messageDoc(Message message) {
+        BasicDBObject doc = new BasicDBObject();
+        doc.put("senderCompId", message.getSenderCompId());
+        doc.put("targetCompId", message.getTargetCompId());
+        doc.put("msgSeqNum", message.getMsgSeqNum());
+        doc.put("data", message.format());
         return doc;
     }
 
