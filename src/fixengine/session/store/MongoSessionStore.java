@@ -46,9 +46,9 @@ public class MongoSessionStore implements SessionStore {
         sessions().update(sessionQuery(session), sessionDoc(session), true, false);
     }
 
-    @Override public void save(Session session, Message message) {
+    @Override public void saveOutgoingMessage(Session session, Message message) {
         save(session);
-        messages().insert(messageDoc(message));
+        outgoingMessages().insert(messageDoc(message));
     }
 
     public void load(Session session) {
@@ -61,7 +61,7 @@ public class MongoSessionStore implements SessionStore {
 
     @Override public List<Message> load(Session session, int beginSeqNo, int endSeqNo) {
         final List<Message> messages = new ArrayList<Message>();
-        DBCursor cursor = messages().find(messageQuery(session));
+        DBCursor cursor = outgoingMessages().find(messageQuery(session));
         while (cursor.hasNext()) {
             BasicDBObject doc = (BasicDBObject) cursor.next();
             int msgSeqNum = doc.getInt("msgSeqNum");
@@ -97,10 +97,10 @@ public class MongoSessionStore implements SessionStore {
     }
 
     @Override public void clear(String senderCompId, String targetCompId) {
-        DBCursor cursor = messages().find(messageQuery(senderCompId, targetCompId));
+        DBCursor cursor = outgoingMessages().find(messageQuery(senderCompId, targetCompId));
         while (cursor.hasNext()) {
             BasicDBObject doc = (BasicDBObject) cursor.next();
-            messages().remove(doc);
+            outgoingMessages().remove(doc);
         }
         cursor = sessions().find(sessionQuery(senderCompId, targetCompId));
         while (cursor.hasNext()) {
@@ -113,8 +113,8 @@ public class MongoSessionStore implements SessionStore {
         return db.getCollection("sessions");
     }
 
-    private DBCollection messages() {
-        return db.getCollection("messages");
+    private DBCollection outgoingMessages() {
+        return db.getCollection("outgoingMessages");
     }
 
     private BasicDBObject sessionQuery(Session session) {

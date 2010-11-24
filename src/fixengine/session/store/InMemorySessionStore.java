@@ -65,7 +65,7 @@ public class InMemorySessionStore implements SessionStore {
     @Override public void save(Session session) {
     }
 
-    @Override public void save(Session session, Message message) {
+    @Override public void saveOutgoingMessage(Session session, Message message) {
         messages.add(message);
     }
 
