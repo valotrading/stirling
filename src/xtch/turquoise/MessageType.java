@@ -20,6 +20,7 @@ public class MessageType {
 
   public static final String LOGON = "A";
   public static final String LOGON_REPLY = "B";
+  public static final String LOGOUT = "5";
 
   private MessageType() {
   }
