@@ -30,6 +30,7 @@ public class Logon extends AbstractTemplate {
 
   public Logon() {
     super(MessageType.LOGON);
+    add(MessageHeader.TEMPLATE);
     add(Fields.COMP_ID);
     add(Fields.PASSWORD);
     add(Fields.NEW_PASSWORD);

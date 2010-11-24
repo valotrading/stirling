@@ -30,6 +30,7 @@ public class LogonReply extends AbstractTemplate {
 
   public LogonReply() {
     super(MessageType.LOGON_REPLY);
+    add(MessageHeader.TEMPLATE);
     add(Fields.REJECT_CODE);
     add(Fields.PASSWORD_EXPIRY_DAY_COUNT);
   }
