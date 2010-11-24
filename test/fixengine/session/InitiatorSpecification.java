@@ -43,6 +43,7 @@ import silvertip.Events;
 import fixengine.Config;
 import fixengine.Version;
 import fixengine.messages.BooleanField;
+import fixengine.messages.DefaultMessageComparator;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.EnumField;
@@ -248,6 +249,11 @@ public class InitiatorSpecification extends Specification<Session> {
 
         public MessageBuilder setOrigSendingTime(DateTime origSendingTime) {
             message.setOrigSendingTime(origSendingTime);
+            return this;
+        }
+
+        public MessageBuilder setPossResend(boolean possResend) {
+            message.setPossResend(possResend);
             return this;
         }
 
@@ -498,7 +504,7 @@ public class InitiatorSpecification extends Specification<Session> {
     protected class TestSession extends Session {
         protected TestSession() throws Exception {
             super(HeartBtIntValue.milliseconds(getHearbeatIntervalInMillis()), InitiatorSpecification.this.config,
-                getSessionStore(), new DefaultMessageFactory());
+                getSessionStore(), new DefaultMessageFactory(), new DefaultMessageComparator());
         }
 
         protected MessageQueue<Message> getOutgoingMsgQueue() {

@@ -78,4 +78,12 @@ public class InMemorySessionStore implements SessionStore {
         incomingMessages.clear();
         outgoingMessages.clear();
     }
+
+    @Override public boolean isDuplicate(Session session, Message message) {
+        for (Message storedMessage : incomingMessages) {
+            if (session.getMessageComparator().equals(storedMessage, message))
+                return true;
+        }
+        return false;
+    }
 }

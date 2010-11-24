@@ -42,6 +42,7 @@ import fixengine.messages.HeartbeatMessage;
 import fixengine.messages.LogonMessage;
 import fixengine.messages.LogoutMessage;
 import fixengine.messages.Message;
+import fixengine.messages.MessageComparator;
 import fixengine.messages.MessageFactory;
 import fixengine.messages.MessageValidator;
 import fixengine.messages.MessageVisitor;
@@ -85,6 +86,7 @@ public class Session {
     protected final Config config;
     protected final SessionStore store;
     protected final MessageFactory messageFactory;
+    protected final MessageComparator messageComparator;
 
     private TimeSource timeSource = new DefaultTimeSource();
     private long testReqId;
@@ -98,11 +100,12 @@ public class Session {
     private boolean waitingForResponseToInitiatedLogout;
     private DateTime logoutInitiatedAt;
 
-    public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, MessageFactory messageFactory) {
+    public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, MessageFactory messageFactory, MessageComparator messageComparator) {
         this.heartBtInt = heartBtInt;
         this.config = config;
         this.store = store;
         this.messageFactory = messageFactory;
+        this.messageComparator = messageComparator;
         store.load(this);
     }
 
@@ -304,10 +307,10 @@ public class Session {
     }
 
     private void process(final Connection conn, Message message, final MessageVisitor visitor) {
-        store.saveIncomingMessage(this, message);
         if (authenticated) {
             message.apply(new DefaultMessageVisitor() {
                 @Override public void visit(TestRequestMessage message) {
+                    store.saveIncomingMessage(Session.this, message);
                     incomingQueue.skip(message.getMsgSeqNum());
                     HeartbeatMessage heartbeat = (HeartbeatMessage) messageFactory.create(HEARTBEAT);
                     heartbeat.setString(TestReqID.TAG, message.getString(TestReqID.TAG));
@@ -315,6 +318,7 @@ public class Session {
                 }
 
                 @Override public void visit(ResendRequestMessage message) {
+                    store.saveIncomingMessage(Session.this, message);
                     if (outgoingQueue.isEmpty()) {
                         incomingQueue.skip(message.getMsgSeqNum());
                         int beginSeqNo = message.getInteger(BeginSeqNo.TAG);
@@ -333,10 +337,12 @@ public class Session {
                 }
 
                 @Override public void visit(SequenceResetMessage message) {
+                    store.saveIncomingMessage(Session.this, message);
                     processSeqReset(conn, message);
                 }
 
                 @Override public void visit(LogoutMessage message) {
+                    store.saveIncomingMessage(Session.this, message);
                     incomingQueue.skip(message.getMsgSeqNum());
                     if (!initiatedLogout)
                         send(conn, (LogoutMessage) messageFactory.create(LOGOUT));
@@ -346,7 +352,12 @@ public class Session {
                 }
 
                 @Override public void defaultAction(Message message) {
-                    message.apply(visitor);
+                    if (message.getPossResend() && store.isDuplicate(Session.this, message)) {
+                        store.saveIncomingMessage(Session.this, message);
+                    } else {
+                        store.saveIncomingMessage(Session.this, message);
+                        message.apply(visitor);
+                    }
                 }
             });
         } else {
@@ -547,6 +558,10 @@ public class Session {
 
     public MessageFactory getMessageFactory() {
         return messageFactory;
+    }
+
+    public MessageComparator getMessageComparator() {
+        return messageComparator;
     }
 
     protected long getLogoutResponseTimeoutMsec() {

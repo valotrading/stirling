@@ -30,6 +30,7 @@ import silvertip.Server.ConnectionFactory;
 import fixengine.Config;
 import fixengine.Version;
 import fixengine.messages.DefaultMessageVisitor;
+import fixengine.messages.DefaultMessageComparator;
 import fixengine.messages.FixMessageParser;
 import fixengine.session.HeartBtIntValue;
 import fixengine.session.Session;
@@ -181,7 +182,7 @@ public class PerformanceTest implements Runnable {
         @Override public void run() {
             try {
                 Events events = Events.open(30000);
-                final Session session = new Session(getHeartBtIntValue(), getConfig(), sessionStore, getMessageFactory());
+                final Session session = new Session(getHeartBtIntValue(), getConfig(), sessionStore, getMessageFactory(), new DefaultMessageComparator());
                 SocketChannel channel = SocketChannel.open();
                 channel.connect(new InetSocketAddress("localhost", port));
                 channel.configureBlocking(false);

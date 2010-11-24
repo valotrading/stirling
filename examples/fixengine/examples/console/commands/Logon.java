@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import silvertip.Connection;
 import fixengine.messages.FixMessage;
 import fixengine.examples.console.ConsoleClient;
+import fixengine.messages.DefaultMessageComparator;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.FixMessageParser;
 import fixengine.messages.MsgTypeValue;
@@ -78,7 +79,7 @@ public class Logon implements Command {
           }
         });
       client.setConnection(conn);
-      Session session = new Session(getHeartBtInt(), client.getConfig(), client.getSessionStore(), client.getMessageFactory()) {
+      Session session = new Session(getHeartBtInt(), client.getConfig(), client.getSessionStore(), client.getMessageFactory(), new DefaultMessageComparator()) {
         @Override
         protected boolean checkSeqResetSeqNum() {
           /* Do not verify that the sequence numbers of SeqReset messages as

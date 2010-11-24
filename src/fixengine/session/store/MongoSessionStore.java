@@ -65,32 +65,14 @@ public class MongoSessionStore implements SessionStore {
     }
 
     @Override public List<Message> load(Session session, int beginSeqNo, int endSeqNo) {
-        final List<Message> messages = new ArrayList<Message>();
-        DBCursor cursor = outgoingMessages().find(messageQuery(session));
-        while (cursor.hasNext()) {
-            BasicDBObject doc = (BasicDBObject) cursor.next();
-            int msgSeqNum = doc.getInt("msgSeqNum");
+        List<Message> messages = new ArrayList<Message>();
+        for (Message message : load(session, outgoingMessages())) {
+            int msgSeqNum = message.getMsgSeqNum();
             if (msgSeqNum < beginSeqNo)
                 continue;
             if (endSeqNo > 0 && msgSeqNum > endSeqNo)
                 continue;
-            Parser.parse(session.getMessageFactory(), message(doc), new Parser.Callback() {
-                @Override public void message(Message message) {
-                    messages.add(message);
-                }
-
-                @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
-                    throw new RuntimeException("Invalid message: " + text);
-                }
-
-                @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {
-                    throw new RuntimeException("Unsupported message type: " + msgType);
-                }
-
-                @Override public void invalidMsgType(String msgType, int msgSeqNum) {
-                    throw new RuntimeException("Invalid message type: " + msgType);
-                }
-            });
+            messages.add(message);
         }
         return messages;
     }
@@ -113,6 +95,40 @@ public class MongoSessionStore implements SessionStore {
             BasicDBObject doc = (BasicDBObject) cursor.next();
             collection.remove(doc);
         }
+    }
+
+    @Override public boolean isDuplicate(Session session, Message message) {
+        for (Message storedMessage : load(session, incomingMessages())) {
+            if (session.getMessageComparator().equals(storedMessage, message))
+                return true;
+        }
+        return false;
+    }
+
+    private List<Message> load(Session session, DBCollection collection) {
+        final List<Message> messages = new ArrayList<Message>();
+        DBCursor cursor = collection.find(messageQuery(session));
+        while (cursor.hasNext()) {
+            BasicDBObject doc = (BasicDBObject) cursor.next();
+            Parser.parse(session.getMessageFactory(), message(doc), new Parser.Callback() {
+                @Override public void message(Message message) {
+                    messages.add(message);
+                }
+
+                @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
+                    throw new RuntimeException("Invalid message: " + text);
+                }
+
+                @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {
+                    throw new RuntimeException("Unsupported message type: " + msgType);
+                }
+
+                @Override public void invalidMsgType(String msgType, int msgSeqNum) {
+                    throw new RuntimeException("Invalid message type: " + msgType);
+                }
+            });
+        }
+        return messages;
     }
 
     private DBCollection sessions() {

@@ -32,4 +32,5 @@ public interface SessionStore {
     List<Message> load(Session session, int beginSeqNo, int endSeqNo);
     void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq);
     void clear(String senderCompId, String targetCompId);
+    boolean isDuplicate(Session session, Message message);
 }

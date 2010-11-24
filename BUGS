@@ -1,10 +1,4 @@
 Known Bugs
 ==========
 
-- PossResend messages are ignored.
-
 - Encryption is not handled at all. See session level test Ref ID 17.
-
-- Chi-X Europe: If the PossResend flag has been set, the ExecID must be used
-  for identifying possible duplicate Execution Reports as required by Chi-X FIX
-  4.2 Application Notes, section 5.2.2.5.
