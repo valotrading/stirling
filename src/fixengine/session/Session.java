@@ -304,6 +304,7 @@ public class Session {
     }
 
     private void process(final Connection conn, Message message, final MessageVisitor visitor) {
+        store.saveIncomingMessage(this, message);
         if (authenticated) {
             message.apply(new DefaultMessageVisitor() {
                 @Override public void visit(TestRequestMessage message) {
