@@ -48,6 +48,7 @@ public interface Message extends Parseable, Iterable<Field>, SequencedMessage<Me
     void setReceiveTime(DateTime receiveTime);
     void setOrigSendingTime(DateTime origSendingTime);
     void setPossDupFlag(boolean possDupFlag);
+    void setPossResend(boolean possResend);
     DateTime getSendingTime();
     DateTime getOrigSendingTime();
     boolean getPossDupFlag();

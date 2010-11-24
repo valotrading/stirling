@@ -169,6 +169,10 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
         return header.getBoolean(PossResend.TAG);
     }
 
+    @Override public void setPossResend(boolean possResend) {
+        header.setBoolean(PossResend.TAG, possResend);
+    }
+
     public boolean hasValidTargetCompId(Config config) {
         return config.getSenderCompId().equals(getTargetCompId());
     }
