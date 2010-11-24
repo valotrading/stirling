@@ -52,6 +52,7 @@ public interface Message extends Parseable, Iterable<Field>, SequencedMessage<Me
     DateTime getSendingTime();
     DateTime getOrigSendingTime();
     boolean getPossDupFlag();
+    boolean getPossResend();
     boolean isPointToPoint();
     boolean hasAccurateSendingTime();
     boolean hasOrigSendTimeAfterSendingTime();
