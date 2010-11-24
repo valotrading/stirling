@@ -7,9 +7,9 @@
   <property name="ivy.home" value="${user.home}/.ant"/>
   <property name="ivy.jar.dir" value="${ivy.home}/lib"/>
   <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar"/>
-  <condition property="session.store" value="memory">
+  <condition property="fixengine.session.store" value="memory">
     <not>
-      <isset property="session.store"/>
+      <isset property="fixengine.session.store"/>
     </not>
   </condition>
   <target name="download-ivy" unless="offline">
@@ -73,7 +73,7 @@
   </target>
   <target name="test" depends="compile-test">
     <junit printsummary="no" haltonfailure="true" showoutput="true">
-      <sysproperty key="session.store" value="${session.store}"/>
+      <sysproperty key="fixengine.session.store" value="${fixengine.session.store}"/>
       <classpath refid="test.path.id"/>
       <batchtest>
         <formatter type="plain" usefile="false"/>

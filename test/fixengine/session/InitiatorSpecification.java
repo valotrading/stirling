@@ -486,7 +486,7 @@ public class InitiatorSpecification extends Specification<Session> {
     }
 
     private SessionStore getSessionStore() throws Exception {
-        String value = System.getProperty("session.store");
+        String value = System.getProperty("fixengine.session.store");
         if ("mongo".equals(value)) {
             SessionStore store = new MongoSessionStore("localhost", 27017);
             store.clear(INITIATOR, ACCEPTOR);
