@@ -26,14 +26,15 @@ import fixengine.session.Sequence;
 import fixengine.session.Session;
 
 public class InMemorySessionStore implements SessionStore {
-    private List<Message> messages = new ArrayList<Message>();
+    private List<Message> outgoingMessages = new ArrayList<Message>();
+    private List<Message> incomingMessages = new ArrayList<Message>();
 
     @Override public void load(Session session) {
     }
 
     @Override public List<Message> load(Session session, int beginSeqNo, int endSeqNo) {
         final List<Message> messages = new ArrayList<Message>();
-        for (Message message : this.messages) {
+        for (Message message : outgoingMessages) {
             if (message.getMsgSeqNum() < beginSeqNo)
                 continue;
             if (endSeqNo > 0 && message.getMsgSeqNum() > endSeqNo)
@@ -66,10 +67,15 @@ public class InMemorySessionStore implements SessionStore {
     }
 
     @Override public void saveOutgoingMessage(Session session, Message message) {
-        messages.add(message);
+        outgoingMessages.add(message);
+    }
+
+    @Override public void saveIncomingMessage(Session session, Message message) {
+        incomingMessages.add(message);
     }
 
     @Override public void clear(String senderCompId, String targetCompId) {
-        messages.clear();
+        incomingMessages.clear();
+        outgoingMessages.clear();
     }
 }

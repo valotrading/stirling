@@ -48,7 +48,12 @@ public class MongoSessionStore implements SessionStore {
 
     @Override public void saveOutgoingMessage(Session session, Message message) {
         save(session);
-        outgoingMessages().insert(messageDoc(message));
+        outgoingMessages().insert(messageDoc(session, message));
+    }
+
+    @Override public void saveIncomingMessage(Session session, Message message) {
+        save(session);
+        incomingMessages().insert(messageDoc(session, message));
     }
 
     public void load(Session session) {
@@ -97,15 +102,16 @@ public class MongoSessionStore implements SessionStore {
     }
 
     @Override public void clear(String senderCompId, String targetCompId) {
-        DBCursor cursor = outgoingMessages().find(messageQuery(senderCompId, targetCompId));
+        clear(outgoingMessages(), messageQuery(senderCompId, targetCompId));
+        clear(incomingMessages(), messageQuery(senderCompId, targetCompId));
+        clear(sessions(), sessionQuery(senderCompId, targetCompId));
+    }
+
+    private void clear(DBCollection collection, BasicDBObject query) {
+        DBCursor cursor = collection.find(query);
         while (cursor.hasNext()) {
             BasicDBObject doc = (BasicDBObject) cursor.next();
-            outgoingMessages().remove(doc);
-        }
-        cursor = sessions().find(sessionQuery(senderCompId, targetCompId));
-        while (cursor.hasNext()) {
-            BasicDBObject doc = (BasicDBObject) cursor.next();
-            sessions().remove(doc);
+            collection.remove(doc);
         }
     }
 
@@ -115,6 +121,10 @@ public class MongoSessionStore implements SessionStore {
 
     private DBCollection outgoingMessages() {
         return db.getCollection("outgoingMessages");
+    }
+
+    private DBCollection incomingMessages() {
+        return db.getCollection("incomingMessages");
     }
 
     private BasicDBObject sessionQuery(Session session) {
@@ -143,10 +153,10 @@ public class MongoSessionStore implements SessionStore {
         return doc;
     }
 
-    private BasicDBObject messageDoc(Message message) {
+    private BasicDBObject messageDoc(Session session, Message message) {
         BasicDBObject doc = new BasicDBObject();
-        doc.put("senderCompId", message.getSenderCompId());
-        doc.put("targetCompId", message.getTargetCompId());
+        doc.put("senderCompId", session.getConfig().getSenderCompId());
+        doc.put("targetCompId", session.getConfig().getTargetCompId());
         doc.put("msgType", message.getMsgType());
         doc.put("msgSeqNum", message.getMsgSeqNum());
         doc.put("data", message.format());
