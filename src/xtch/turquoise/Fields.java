@@ -35,6 +35,7 @@ public class Fields {
   public static final Field<String> LOGOUT_REASON = new StringField("LogoutReason", 20);
   public static final Field<Integer> APP_ID = new SignedInt8Field("AppID");
   public static final Field<Integer> LAST_MSG_SEQ_NUM = new SignedInt32Field("LastMsgSeqNum");
+  public static final Field<Integer> RESPONSE_TYPE = new SignedInt8Field("ResponseType");
   
   private static class AlphaField extends Field<Character> {
     protected AlphaField(String name) {
