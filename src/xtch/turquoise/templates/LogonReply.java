@@ -28,7 +28,7 @@ import xtch.turquoise.messages.TurquoiseMessage;
 public class LogonReply extends AbstractTemplate {
   public static final LogonReply TEMPLATE = new LogonReply();
 
-  public LogonReply() {
+  private LogonReply() {
     super(MessageType.LOGON_REPLY);
     add(MessageHeader.TEMPLATE);
     add(Fields.REJECT_CODE);
