@@ -28,7 +28,7 @@ import xtch.turquoise.messages.TurquoiseMessage;
 public class Logout extends AbstractTemplate {
   public static final Logout TEMPLATE = new Logout();
 
-  public Logout() {
+  private Logout() {
     super(MessageType.LOGOUT);
     add(MessageHeader.TEMPLATE);
     add(Fields.LOGOUT_REASON);
