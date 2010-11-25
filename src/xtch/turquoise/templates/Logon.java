@@ -28,7 +28,7 @@ import xtch.turquoise.messages.TurquoiseMessage;
 public class Logon extends AbstractTemplate {
   public static final Logon TEMPLATE = new Logon();
 
-  public Logon() {
+  private Logon() {
     super(MessageType.LOGON);
     add(MessageHeader.TEMPLATE);
     add(Fields.COMP_ID);
