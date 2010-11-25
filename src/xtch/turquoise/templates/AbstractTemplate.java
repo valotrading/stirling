@@ -28,6 +28,7 @@ public abstract class AbstractTemplate extends MessageTemplate<TurquoiseMessage>
   }
 
   @Override public void encode(ByteBuffer buffer, TurquoiseMessage message) {
+    super.encode(buffer, message);
     buffer.put((byte) '\n');
   }
 
