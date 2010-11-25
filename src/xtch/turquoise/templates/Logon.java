@@ -36,13 +36,4 @@ public class Logon extends AbstractTemplate {
     add(Fields.NEW_PASSWORD);
     add(Fields.MESSAGE_VERSION);
   }
-
-  @Override public void encode(ByteBuffer buffer, TurquoiseMessage message) {
-    super.encode(buffer, message);
-    buffer.put((byte) '\n');
-  }
-
-  @Override protected TurquoiseMessage newFieldContainer() { 
-    return new TurquoiseMessage(this);
-  }
 }
