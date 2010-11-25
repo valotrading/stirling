@@ -36,6 +36,9 @@ public class Fields {
   public static final Field<Integer> APP_ID = new SignedInt8Field("AppID");
   public static final Field<Integer> LAST_MSG_SEQ_NUM = new SignedInt32Field("LastMsgSeqNum");
   public static final Field<Integer> RESPONSE_TYPE = new SignedInt8Field("ResponseType");
+  public static final Field<String> REJECT_REASON = new StringField("RejectReason", 30);
+  public static final Field<Character> REJECTED_MESSAGE_TYPE = new AlphaField("RejectedMessageType");
+  public static final Field<Character> CLIENT_ORDER_ID = new AlphaField("ClientOrderID");
   
   private static class AlphaField extends Field<Character> {
     protected AlphaField(String name) {
