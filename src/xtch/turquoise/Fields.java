@@ -33,6 +33,8 @@ public class Fields {
   public static final Field<Integer> REJECT_CODE = new SignedInt32Field("RejectCode");
   public static final Field<String> PASSWORD_EXPIRY_DAY_COUNT = new StringField("PasswordExpiryDayCount", 30);
   public static final Field<String> LOGOUT_REASON = new StringField("LogoutReason", 20);
+  public static final Field<Integer> APP_ID = new SignedInt8Field("AppID");
+  public static final Field<Integer> LAST_MSG_SEQ_NUM = new SignedInt32Field("LastMsgSeqNum");
   
   private static class AlphaField extends Field<Character> {
     protected AlphaField(String name) {
