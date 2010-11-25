@@ -13,16 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.turquoise;
+package xtch.turquoise.templates;
 
-public class MessageType {
-  public static final MessageType TYPE = new MessageType();
+import java.nio.ByteBuffer;
 
-  public static final String LOGON = "A";
-  public static final String LOGON_REPLY = "B";
-  public static final String LOGOUT = "5";
-  public static final String HEARTBEAT = "0";
+import xtch.templates.MessageTemplate;
+import xtch.turquoise.Fields;
+import xtch.turquoise.MessageType;
+import xtch.turquoise.messages.TurquoiseMessage;
 
-  private MessageType() {
+/** 
+ * Template for Heartbeat message as specified in section 7.3.4 of [2].
+ */
+public class Heartbeat extends AbstractTemplate {
+  public static final Heartbeat TEMPLATE = new Heartbeat();
+
+  private Heartbeat() {
+    super(MessageType.HEARTBEAT);
   }
 }
