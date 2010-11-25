@@ -33,13 +33,4 @@ public class Logout extends AbstractTemplate {
     add(MessageHeader.TEMPLATE);
     add(Fields.LOGOUT_REASON);
   }
-
-  @Override public void encode(ByteBuffer buffer, TurquoiseMessage message) {
-    super.encode(buffer, message);
-    buffer.put((byte) '\n');
-  }
-
-  @Override protected TurquoiseMessage newFieldContainer() { 
-    return new TurquoiseMessage(this);
-  }
 }
