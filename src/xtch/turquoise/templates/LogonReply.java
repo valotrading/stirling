@@ -34,13 +34,4 @@ public class LogonReply extends AbstractTemplate {
     add(Fields.REJECT_CODE);
     add(Fields.PASSWORD_EXPIRY_DAY_COUNT);
   }
-
-  @Override public void encode(ByteBuffer buffer, TurquoiseMessage message) {
-    super.encode(buffer, message);
-    buffer.put((byte) '\n');
-  }
-
-  @Override protected TurquoiseMessage newFieldContainer() { 
-    return new TurquoiseMessage(this);
-  }
 }
