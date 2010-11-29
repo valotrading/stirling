@@ -15,14 +15,17 @@
  */
 package xtch.turquoise;
 
+import java.math.BigInteger;
+
 import xtch.elements.Field;
 import xtch.turquoise.types.Alpha;
-import xtch.turquoise.types.Price;
 import xtch.turquoise.types.AsciiString;
+import xtch.turquoise.types.Price;
 import xtch.turquoise.types.SignedInt32;
 import xtch.turquoise.types.SignedInt8;
 import xtch.turquoise.types.UnsignedInt16;
 import xtch.turquoise.types.UnsignedInt32;
+import xtch.turquoise.types.UnsignedInt64;
 
 public class Fields {
   public static final Field<Integer> START_OF_MESSAGE = new SignedInt8Field("StartOfMessage");
@@ -65,7 +68,22 @@ public class Fields {
   public static final Field<String> ORDER_ID = new StringField("OrderID", 12);
   public static final Field<Integer> MASS_CANCEL_TYPE = new SignedInt8Field("MassCancelType");
   public static final Field<String> SEGMENT = new StringField("Segment", 4);
-  
+  public static final Field<Integer> SEQUENCE_NO = new SignedInt32Field("SequenceNo");
+  public static final Field<String> EXECUTION_ID = new StringField("ExecutionID", 12);
+  public static final Field<Character> EXEC_TYPE = new AlphaField("ExecType");
+  public static final Field<String> EXECUTION_REPORT_REF_ID = new StringField("ExecutionReportRefID", 12);
+  public static final Field<Integer> ORDER_STATUS = new SignedInt8Field("OrderStatus");
+  public static final Field<Integer> ORDER_REJECT_CODE = new SignedInt32Field("OrderRejectCode");
+  public static final Field<Double> EXECUTED_PRICE = new PriceField("ExecutedPrice");
+  public static final Field<Integer> EXECUTED_QTY = new SignedInt32Field("ExecutedQty");
+  public static final Field<Integer> LEAVES_QTY = new SignedInt32Field("LeavesQty");
+  public static final Field<BigInteger> SECONDARY_ORDER_ID = new UnsignedInt64Field("SecondaryOrderID");
+  public static final Field<String> COUNTERPARTY = new StringField("Counterparty", 11);
+  public static final Field<Character> TRADE_LIQUIDITY_INDICATOR = new AlphaField("TradeLiquidityIndicator");
+  public static final Field<BigInteger> TRADE_MATCH_ID = new UnsignedInt64Field("TradeMatchID");
+  public static final Field<BigInteger> TRANSACT_TIME = new UnsignedInt64Field("TransactTime");
+  public static final Field<Integer> TYPE_OF_TRADE = new SignedInt8Field("TypeOfTrade");
+
   private static class PriceField extends Field<Double> {
     protected PriceField(String name) {
       super(name, Price.TYPE, 8);
@@ -105,6 +123,12 @@ public class Fields {
   private static class UnsignedInt32Field extends Field<Long> {
     protected UnsignedInt32Field(String name) {
       super(name, UnsignedInt32.TYPE, 4);
+    }
+  }
+
+  private static class UnsignedInt64Field extends Field<BigInteger> {
+    protected UnsignedInt64Field(String name) {
+      super(name, UnsignedInt64.TYPE, 8);
     }
   }
 }
