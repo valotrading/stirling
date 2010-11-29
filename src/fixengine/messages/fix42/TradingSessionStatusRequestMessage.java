@@ -18,7 +18,6 @@ package fixengine.messages.fix42;
 import fixengine.messages.AbstractMessage;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MessageVisitor;
-import fixengine.messages.Required;
 
 import fixengine.tags.fix42.SubscriptionRequestType;
 import fixengine.tags.fix42.TradSesMethod;

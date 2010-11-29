@@ -19,17 +19,12 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 import org.jmock.Expectations;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
 
-import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.ExecTypeValue;
-import fixengine.messages.Message;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.MsgTypeValue;
 import fixengine.messages.OrdStatusValue;
 import fixengine.messages.OrdTypeValue;
-import fixengine.messages.MessageComparator;
 import fixengine.messages.SideValue;
 import fixengine.messages.fix42.ExecTransTypeValue;
 import fixengine.messages.fix42.ExecutionReportMessage;
