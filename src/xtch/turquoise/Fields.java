@@ -17,10 +17,12 @@ package xtch.turquoise;
 
 import xtch.elements.Field;
 import xtch.turquoise.types.Alpha;
+import xtch.turquoise.types.Price;
 import xtch.turquoise.types.AsciiString;
 import xtch.turquoise.types.SignedInt32;
 import xtch.turquoise.types.SignedInt8;
 import xtch.turquoise.types.UnsignedInt16;
+import xtch.turquoise.types.UnsignedInt32;
 
 public class Fields {
   public static final Field<Integer> START_OF_MESSAGE = new SignedInt8Field("StartOfMessage");
@@ -38,7 +40,33 @@ public class Fields {
   public static final Field<Integer> RESPONSE_TYPE = new SignedInt8Field("ResponseType");
   public static final Field<String> REJECT_REASON = new StringField("RejectReason", 30);
   public static final Field<Character> REJECTED_MESSAGE_TYPE = new AlphaField("RejectedMessageType");
-  public static final Field<Character> CLIENT_ORDER_ID = new AlphaField("ClientOrderID");
+  public static final Field<String> CLIENT_ORDER_ID = new StringField("ClientOrderID", 20);
+  public static final Field<String> TRADER_ID = new StringField("TraderID", 11);
+  public static final Field<String> ACCOUNT = new StringField("Account", 10);
+  public static final Field<Integer> CLEARING_ACCOUNT = new SignedInt8Field("ClearingAccount");
+  public static final Field<String> COMMON_SYMBOL = new StringField("CommonSymbol", 6);
+  public static final Field<Integer> ORDER_TYPE = new SignedInt8Field("OrderType");
+  public static final Field<Integer> TIME_IN_FORCE = new SignedInt8Field("TimeInForce");
+  public static final Field<Long> EXPIRE_DATE_TIME = new UnsignedInt32Field("ExpireDateTime");
+  public static final Field<Integer> SIDE = new SignedInt8Field("Side");
+  public static final Field<Integer> ORDER_QTY = new SignedInt32Field("OrderQty");
+  public static final Field<Integer> DISPLAY_QTY = new SignedInt32Field("DisplayQty");
+  public static final Field<Double> LIMIT_PRICE = new PriceField("LimitPrice");
+  public static final Field<Integer> CAPACITY = new SignedInt8Field("Capacity");
+  public static final Field<Integer> AUTO_CANCEL = new SignedInt8Field("AutoCancel");
+  public static final Field<Integer> ORDER_SUB_TYPE = new SignedInt8Field("OrderSubType");
+  public static final Field<Integer> RESERVED_FIELD_1 = new SignedInt8Field("ReservedField1");
+  public static final Field<Double> RESERVED_FIELD_2 = new PriceField("ReservedField2");
+  public static final Field<Integer> TARGET_BOOK = new SignedInt8Field("TargetBook");
+  public static final Field<Integer> EXEC_INSTRUCTION = new SignedInt8Field("ExecInstruction");
+  public static final Field<Integer> MIN_QTY = new SignedInt32Field("MinQty");
+  public static final Field<String> RESERVED_FIELD_3 = new StringField("ReservedField3", 4);
+  
+  private static class PriceField extends Field<Double> {
+    protected PriceField(String name) {
+      super(name, Price.TYPE, 8);
+    }
+  }
   
   private static class AlphaField extends Field<Character> {
     protected AlphaField(String name) {
@@ -67,6 +95,12 @@ public class Fields {
   private static class SignedInt32Field extends Field<Integer> {
     protected SignedInt32Field(String name) {
       super(name, SignedInt32.TYPE, 4);
+    }
+  }
+
+  private static class UnsignedInt32Field extends Field<Long> {
+    protected UnsignedInt32Field(String name) {
+      super(name, UnsignedInt32.TYPE, 4);
     }
   }
 }
