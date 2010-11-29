@@ -84,6 +84,8 @@ public class Fields {
   public static final Field<BigInteger> TRANSACT_TIME = new UnsignedInt64Field("TransactTime");
   public static final Field<Integer> TYPE_OF_TRADE = new SignedInt8Field("TypeOfTrade");
   public static final Field<Integer> CANCEL_REJECT_REASON = new SignedInt32Field("CancelRejectReason");
+  public static final Field<Integer> MASS_CANCEL_RESPONSE = new SignedInt8Field("MassCancelResponse");
+  public static final Field<Integer> MASS_CANCEL_REJECT_REASON = new SignedInt32Field("MassCancelRejectReason");
 
   private static class PriceField extends Field<Double> {
     protected PriceField(String name) {
