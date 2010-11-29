@@ -382,15 +382,6 @@ public class Session {
         send(conn, resendReq);
     }
 
-    private void fillSequenceGap(Connection conn, int newSeqNo) {
-        SequenceResetMessage seqReset = (SequenceResetMessage) messageFactory.create(SEQUENCE_RESET);
-        seqReset.setPossDupFlag(true);
-        seqReset.setBoolean(GapFillFlag.TAG, true);
-        seqReset.setInteger(NewSeqNo.TAG, newSeqNo);
-        send(conn, seqReset);
-        outgoingSeq.reset(newSeqNo);
-    }
-
     private void processSeqReset(Connection conn, SequenceResetMessage message) {
         int newSeqNo = message.getInteger(NewSeqNo.TAG);
         if (newSeqNo <= message.getMsgSeqNum()) {
