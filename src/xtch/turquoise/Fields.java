@@ -61,6 +61,8 @@ public class Fields {
   public static final Field<Integer> EXEC_INSTRUCTION = new SignedInt8Field("ExecInstruction");
   public static final Field<Integer> MIN_QTY = new SignedInt32Field("MinQty");
   public static final Field<String> RESERVED_FIELD_3 = new StringField("ReservedField3", 4);
+  public static final Field<String> ORIGINAL_CLIENT_ORDER_ID = new StringField("ClientOrderID", 20);
+  public static final Field<String> ORDER_ID = new StringField("OrderID", 12);
   
   private static class PriceField extends Field<Double> {
     protected PriceField(String name) {
