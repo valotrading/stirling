@@ -21,7 +21,7 @@ import xtch.turquoise.Fields;
 import xtch.turquoise.MessageType;
 
 /** 
- * Template for Logout message as specified in section 7.3.8 of [2].
+ * Template for Reject message as specified in section 7.3.8 of [2].
  */
 public class Reject extends AbstractTemplate {
   public static final Reject TEMPLATE = new Reject();
