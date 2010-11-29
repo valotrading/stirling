@@ -43,7 +43,6 @@ import fixengine.tags.Symbol;
 import fixengine.tags.fix42.ExecTransType;
 
 @RunWith(JDaveRunner.class) public class TestPossResendHandlingSpec extends InitiatorSpecification {
-    private static final String DUPLICATE_EXEC_ID = "1278658351213-18";
     private final MessageVisitor visitor = mock(MessageVisitor.class);
 
     public class InitializedSession {
