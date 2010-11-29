@@ -44,4 +44,5 @@ public interface MessageVisitor {
     void visit(DontKnowTradeMessage message);
     void visit(UserDefinedMessage message);
     void visit(OrderStatusRequestMessage message);
+    void visit(TradingSessionStatusRequestMessage message);
 }
