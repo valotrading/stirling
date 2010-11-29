@@ -15,12 +15,8 @@
  */
 package xtch.turquoise.templates;
 
-import java.nio.ByteBuffer;
-
-import xtch.templates.MessageTemplate;
 import xtch.turquoise.Fields;
 import xtch.turquoise.MessageType;
-import xtch.turquoise.messages.TurquoiseMessage;
 
 /** 
  * Template for Logon message as specified in section 7.3.1 of [2].
