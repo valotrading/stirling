@@ -63,6 +63,8 @@ public class Fields {
   public static final Field<String> RESERVED_FIELD_3 = new StringField("ReservedField3", 4);
   public static final Field<String> ORIGINAL_CLIENT_ORDER_ID = new StringField("ClientOrderID", 20);
   public static final Field<String> ORDER_ID = new StringField("OrderID", 12);
+  public static final Field<Integer> MASS_CANCEL_TYPE = new SignedInt8Field("MassCancelType");
+  public static final Field<String> SEGMENT = new StringField("Segment", 4);
   
   private static class PriceField extends Field<Double> {
     protected PriceField(String name) {
