@@ -15,12 +15,12 @@
  */
 package fixengine.messages;
 
-public class NumInGroupField extends FloatField {
+public class NumInGroupField extends IntegerField {
     public NumInGroupField(Tag<NumInGroupField> tag) {
         this(tag, null, Required.YES);
     }
 
-    protected NumInGroupField(Tag<NumInGroupField> tag, Double value, Required required) {
+    protected NumInGroupField(Tag<NumInGroupField> tag, Integer value, Required required) {
         super(tag, value, required);
     }
 }
