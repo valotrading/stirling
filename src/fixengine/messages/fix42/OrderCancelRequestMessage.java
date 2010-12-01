@@ -16,6 +16,7 @@
 package fixengine.messages.fix42;
 
 import fixengine.messages.AbstractMessage;
+import fixengine.messages.CancelRequestMessage;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.OrdTypeValue;
