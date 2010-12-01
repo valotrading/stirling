@@ -7,7 +7,10 @@ protocol profiles.
 
 == Protocol Profiles
 
-Currently, xTCH supports only a subset of Soup TCP 2.0.
+Currently, xTCH supports the following profiles:
+
+  - Soup TCP 2.0 (subset)
+  - Turquoise Native API
 
 == References
 
