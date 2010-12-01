@@ -15,34 +15,21 @@
  */
 package xtch.soup.templates;
 
-import java.nio.ByteBuffer;
-
 import xtch.soup.Elements;
 import xtch.soup.PacketType;
-import xtch.soup.messages.SoupTCP2Message;
-import xtch.templates.MessageTemplate;
 
 /** 
  * Template for Login Request message as specified in Soup TCP 2.0, section
  * 2.3.1. 
  */
-public class LoginRequest extends MessageTemplate<SoupTCP2Message> {
+public class LoginRequest extends AbstractTemplate {
   public static final LoginRequest TEMPLATE = new LoginRequest();
 
-  public LoginRequest() {
+  private LoginRequest() {
     super(PacketType.LOGIN_REQUEST);
     add(Elements.USERNAME);
     add(Elements.PASSWORD);
     add(Elements.SESSION);
     add(Elements.SEQUENCE_NUMBER);
-  }
-
-  @Override public void encode(ByteBuffer buffer, SoupTCP2Message message) {
-    super.encode(buffer, message);
-    buffer.put((byte) '\n');
-  }
-
-  @Override protected SoupTCP2Message newFieldContainer() { 
-    return new SoupTCP2Message(this);
   }
 }
