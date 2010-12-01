@@ -34,6 +34,7 @@ import fixengine.tags.SenderSubID;
 import fixengine.tags.SendingTime;
 import fixengine.tags.TargetCompID;
 import fixengine.tags.TargetSubID;
+import fixengine.tags.SenderLocationID;
 
 /**
  * @author Pekka Enberg 
@@ -68,6 +69,7 @@ public class MessageHeader extends FieldContainer implements Parseable {
                 return hasValue(PossDupFlag.TAG) && getBoolean(PossDupFlag.TAG);
             }
         });
+        field(SenderLocationID.TAG, Required.NO);
     }
 
     @Override public void parse(ByteBuffer b) {
