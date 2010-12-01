@@ -16,11 +16,9 @@
 package fixengine.messages.fix42;
 
 import fixengine.messages.AbstractMessage;
-import fixengine.messages.CancelRequestMessage;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.OrdTypeValue;
-import fixengine.messages.RequestMessage;
 import fixengine.messages.Required;
 import fixengine.messages.SideValue;
 import fixengine.tags.ClOrdID;
@@ -36,7 +34,7 @@ import fixengine.tags.TransactTime;
 /**
  * @author Pekka Enberg 
  */
-public class OrderCancelRequestMessage extends AbstractMessage implements RequestMessage, CancelRequestMessage {
+public class OrderCancelRequestMessage extends AbstractMessage implements fixengine.messages.OrderCancelRequestMessage {
     public OrderCancelRequestMessage(MessageHeader header) {
         super(header);
 
