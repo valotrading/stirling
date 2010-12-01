@@ -20,11 +20,11 @@ import java.util.List;
 
 public abstract class RepeatingGroup implements Field {
     private final List<RepeatingGroupInstance> instances = new ArrayList<RepeatingGroupInstance>();
-    private final Tag<IntegerField> countTag;
+    private final Tag<? extends IntegerField> countTag;
     private IntegerField countField;
     private Required required;
 
-    public RepeatingGroup(Tag<IntegerField> countTag) {
+    public RepeatingGroup(Tag<? extends IntegerField> countTag) {
         this.countTag = countTag;
         this.countField = countTag.newField(Required.NO);
     }
