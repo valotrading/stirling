@@ -15,7 +15,7 @@
  */
 package fixengine.messages;
 
-public interface CancelRequestMessage {
+public interface CancelRequestMessage extends RequestMessage {
     String getOrigClOrdId();
     String getClOrdId();
 }
