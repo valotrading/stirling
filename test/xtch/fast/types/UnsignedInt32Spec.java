@@ -17,11 +17,13 @@ package xtch.fast.types;
 
 import java.nio.ByteBuffer;
 
+import jdave.Block;
+import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
 import xtch.types.AbstractTypeSpec;
 
-public class UnsignedInt32Spec extends AbstractTypeSpec<UnsignedInt32> {
+@RunWith(JDaveRunner.class) public class UnsignedInt32Spec extends AbstractTypeSpec<UnsignedInt32> {
   public class Initialized {
     public void encodeValue() {
       byte[] actual = encode(22714L);

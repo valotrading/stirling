@@ -17,8 +17,6 @@ package xtch.fast.types;
 
 import java.nio.ByteBuffer;
 
-import xtch.types.Type;
-
 /** 
  * A 32-bit unsigned integer message element type as specified in FAST
  * Specification version 1.1, section 10.6.1.2. 
