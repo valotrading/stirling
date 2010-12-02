@@ -23,7 +23,7 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
 @RunWith(JDaveRunner.class) public abstract class AbstractTypeSpec<T> extends Specification<T> {
-  private final int BUFFER_SIZE = 1024;
+  protected final int BUFFER_SIZE = 1024;
 
   protected byte[] toByteArray(int... data) {
     byte[] bytes = new byte[data.length];
