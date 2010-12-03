@@ -8,6 +8,7 @@
     <chain name="main">
       <ibiblio name="public" m2compatible="true"/>
       <ibiblio name="laughingpanda" root="http://www.laughingpanda.org/maven2/" m2compatible="true"/>
+      <ibiblio name="Scala-Tools Maven2 Repository" root="http://scala-tools.org/repo-releases" m2compatible="true"/>
       <filesystem name="local-maven-2" m2compatible="true" local="true">
         <ivy pattern="${local-maven2-pattern}"/>
         <artifact pattern="${local-maven2-pattern}"/>

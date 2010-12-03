@@ -1,4 +1,31 @@
 <project name="fixengine" default="all" xmlns:ivy="antlib:org.apache.ivy.ant">
+  <!-- Properties and paths -->
+  <property name="lib.dir" value="lib"/>
+  <property name="build" location="build"/>
+  <property name="main.src" location="src"/>
+  <property name="main.build" location="${build}/main"/>
+  <property name="examples.src" location="examples"/>
+  <property name="examples.build" location="${build}/examples"/>
+  <property name="test.src" location="test"/>
+  <property name="test.build" location="${build}/test"/>
+  <property name="library" value="${basedir}/fixengine.jar"/>
+  <path id="lib.path.id">
+    <fileset dir="${lib.dir}" includes="*.jar"/>
+  </path>
+  <path id="examples.path.id">
+    <fileset dir="${lib.dir}"/>
+    <pathelement location="${main.build}"/>
+    <pathelement location="${examples.build}"/>
+  </path>
+  <path id="test.path.id">
+    <path refid="lib.path.id"/>
+    <pathelement location="${main.build}"/>
+    <pathelement location="${test.build}"/>
+  </path>
+  <!-- Scala for Ant -->
+  <taskdef resource="scala/tools/ant/antlib.xml">
+    <classpath refid="lib.path.id"/>
+  </taskdef>
   <!-- Automatic installation of Ivy -->
   <property name="ivy.install.version" value="2.2.0"/>
   <condition property="ivy.home" value="${env.IVY_HOME}">
@@ -24,28 +51,6 @@
     <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
   </target>
   <!-- Bread and butter -->
-  <property name="lib.dir" value="lib"/>
-  <property name="build" location="build"/>
-  <property name="main.src" location="src"/>
-  <property name="main.build" location="${build}/main"/>
-  <property name="examples.src" location="examples"/>
-  <property name="examples.build" location="${build}/examples"/>
-  <property name="test.src" location="test"/>
-  <property name="test.build" location="${build}/test"/>
-  <property name="library" value="${basedir}/fixengine.jar"/>
-  <path id="lib.path.id">
-    <fileset dir="${lib.dir}" includes="*.jar"/>
-  </path>
-  <path id="examples.path.id">
-    <fileset dir="${lib.dir}"/>
-    <pathelement location="${main.build}"/>
-    <pathelement location="${examples.build}"/>
-  </path>
-  <path id="test.path.id">
-    <path refid="lib.path.id"/>
-    <pathelement location="${main.build}"/>
-    <pathelement location="${test.build}"/>
-  </path>
   <target name="init" depends="init-ivy">
     <ivy:retrieve/>
     <mkdir dir="${main.build}"/>
@@ -54,6 +59,10 @@
   </target>
   <target name="all" depends="compile-main, compile-test, compile-examples"/>
   <target name="compile-main" depends="init">
+    <scalac srcdir="${main.src}" destdir="${main.build}" classpathref="lib.path.id">
+      <include name="**/*.scala"/>
+      <include name="**/*.java"/>
+    </scalac>
     <javac srcdir="${main.src}" destdir="${main.build}" classpathref="lib.path.id" debug="true">
       <compilerarg value="-Xlint:unchecked"/>
     </javac>
