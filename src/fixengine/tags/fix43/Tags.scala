@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.tags.fix43;
+package fixengine.tags.fix43
 
-import fixengine.messages.StringField;
-import fixengine.messages.Tag;
+import fixengine.messages.{MessageTag, Value}
+import java.lang.Character
 
-public class SecurityIDSource extends Tag<StringField> {
-    public static final SecurityIDSource TAG = new SecurityIDSource();
-
-    public SecurityIDSource() { super(22, StringField.class); }
+object SecurityIDSource extends MessageTag[Character](22) {
+  val Tag = this
+  val ISIN = Value('4')
+  val ExchangeSymbol = Value('8')
 }

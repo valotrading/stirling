@@ -67,7 +67,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix44.NewOrderSing
         field(ExecInst.TAG, Required.NO);
         field(HandlInst.TAG, Required.NO);
         field(Symbol.TAG);
-        field(SecurityIDSource.TAG, Required.NO);
+        field(SecurityIDSource.Tag(), Required.NO);
         field(SecurityID.TAG, Required.NO);
         field(OrderQty.TAG, Required.NO);
         field(OrdType.TAG);
