@@ -63,7 +63,7 @@
   </target>
   <target name="all" depends="compile-main, compile-test, compile-examples"/>
   <target name="compile-main" depends="init">
-    <scalac srcdir="${main.src}" destdir="${main.build}" classpathref="main.path.id">
+    <scalac srcdir="${main.src}" destdir="${main.build}" classpathref="main.path.id" deprecation="true">
       <include name="**/*.scala"/>
       <include name="**/*.java"/>
     </scalac>
