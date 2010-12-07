@@ -26,7 +26,7 @@ import fixengine.tags.SecurityID;
 import fixengine.tags.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TransactTime;
-import fixengine.tags.fix44.burgundy.SecurityIDSource;
+import fixengine.tags.fix43.SecurityIDSource;
 
 public class OrderCancelRequestMessage extends AbstractOrderCancelRequestMessage {
     public OrderCancelRequestMessage(MessageHeader header) {
@@ -40,7 +40,7 @@ public class OrderCancelRequestMessage extends AbstractOrderCancelRequestMessage
         field(OrigClOrdID.TAG);
         field(Side.TAG);
         field(Symbol.TAG);
-        field(SecurityIDSource.TAG, Required.NO);
+        field(SecurityIDSource.Tag(), Required.NO);
         field(SecurityID.TAG, Required.NO);
         field(TransactTime.TAG);
     }

@@ -64,7 +64,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix44.NewOrderSing
         field(Account.TAG, Required.NO);
         field(ClOrdID.TAG);
         field(Currency.TAG, Required.NO);
-        field(ExecInst.TAG, Required.NO);
+        field(ExecInst.Tag(), Required.NO);
         field(HandlInst.TAG, Required.NO);
         field(Symbol.TAG);
         field(SecurityIDSource.Tag(), Required.NO);
@@ -77,7 +77,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix44.NewOrderSing
         field(TimeInForce.TAG, Required.NO);
         field(TransactTime.TAG);
         field(MinQty.TAG, Required.NO);
-        field(DisplayMethod.TAG, Required.NO);
+        field(DisplayMethod.Tag(), Required.NO);
         field(DisplayLowQty.TAG, Required.NO);
         field(DisplayHighQty.TAG, Required.NO);
         field(DisplayMinIncr.TAG, Required.NO);
@@ -97,13 +97,13 @@ public class NewOrderSingleMessage extends fixengine.messages.fix44.NewOrderSing
                 return new RepeatingGroupInstance(PartyID.TAG) {
                     {
                         field(PartyIDSource.TAG);
-                        field(PartyRole.TAG, Required.NO);
+                        field(PartyRole.Tag(), Required.NO);
                     }
                 };
             }
         }, Required.NO);
         field(OrderCapacity.TAG, Required.NO);
-        field(OrderRestrictions.TAG, Required.NO);
+        field(OrderRestrictions.Tag(), Required.NO);
         field(AccountType.TAG, Required.NO);
     }
 }
