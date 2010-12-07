@@ -12,6 +12,10 @@
   <path id="lib.path.id">
     <fileset dir="${lib.dir}" includes="*.jar"/>
   </path>
+  <path id="main.path.id">
+    <fileset dir="${lib.dir}" includes="*.jar"/>
+    <pathelement location="${main.build}"/>
+  </path>
   <path id="examples.path.id">
     <fileset dir="${lib.dir}"/>
     <pathelement location="${main.build}"/>
@@ -59,11 +63,11 @@
   </target>
   <target name="all" depends="compile-main, compile-test, compile-examples"/>
   <target name="compile-main" depends="init">
-    <scalac srcdir="${main.src}" destdir="${main.build}" classpathref="lib.path.id">
+    <scalac srcdir="${main.src}" destdir="${main.build}" classpathref="main.path.id">
       <include name="**/*.scala"/>
       <include name="**/*.java"/>
     </scalac>
-    <javac srcdir="${main.src}" destdir="${main.build}" classpathref="lib.path.id" debug="true">
+    <javac srcdir="${main.src}" destdir="${main.build}" classpathref="main.path.id" debug="true">
       <compilerarg value="-Xlint:unchecked"/>
     </javac>
   </target>
