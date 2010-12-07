@@ -21,6 +21,7 @@ import fixengine.messages.RepeatingGroupInstance;
 import fixengine.messages.Required;
 import fixengine.tags.Account;
 import fixengine.tags.ClOrdID;
+import fixengine.tags.ExecInst;
 import fixengine.tags.HandlInst;
 import fixengine.tags.OrdType;
 import fixengine.tags.OrderQty;
@@ -44,7 +45,6 @@ import fixengine.tags.fix44.TrdRegTimestamp;
 import fixengine.tags.fix44.TrdRegTimestampOrigin;
 import fixengine.tags.fix44.TrdRegTimestampType;
 import fixengine.tags.fix44.Username;
-import fixengine.tags.fix44.burgundy.ExecInst;
 
 public class NewOrderMultiLegMessage extends fixengine.messages.fix44.NewOrderMultiLegOrderMessage {
     public NewOrderMultiLegMessage(MessageHeader header) {
