@@ -67,17 +67,17 @@
       <include name="**/*.scala"/>
       <include name="**/*.java"/>
     </scalac>
-    <javac srcdir="${main.src}" destdir="${main.build}" classpathref="main.path.id" debug="true">
+    <javac srcdir="${main.src}" destdir="${main.build}" classpathref="main.path.id" debug="true" includeantruntime="false">
       <compilerarg value="-Xlint:unchecked"/>
     </javac>
   </target>
   <target name="compile-test" depends="compile-main">
-    <javac srcdir="${test.src}" destdir="${test.build}" classpathref="test.path.id" debug="true">
+    <javac srcdir="${test.src}" destdir="${test.build}" classpathref="test.path.id" debug="true" includeantruntime="false">
       <compilerarg value="-Xlint:unchecked"/>
     </javac>
   </target>
   <target name="compile-examples" depends="compile-main">
-    <javac srcdir="${examples.src}" destdir="${examples.build}" classpathref="examples.path.id" debug="true">
+    <javac srcdir="${examples.src}" destdir="${examples.build}" classpathref="examples.path.id" debug="true" includeantruntime="false">
       <compilerarg value="-Xlint:unchecked"/>
     </javac>
   </target>
