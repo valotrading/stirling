@@ -23,3 +23,11 @@ object SecurityIDSource extends MessageTag[Character](22) {
   val ISIN = Value('4')
   val ExchangeSymbol = Value('8')
 }
+
+object OrderRestrictions extends MessageTag[Character](529) {
+  val Tag = this
+  val ProgramTrade = Value(1)
+  val IndexArbitrage = Value(2)
+  val NonIndexArbitrage = Value(3)
+  val CompetingMarketMaker = Value(4)
+}
