@@ -13,13 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.tags.fix44.burgundy;
+package fixengine.tags.fix50
 
-import fixengine.messages.QtyField;
-import fixengine.messages.Tag;
+import fixengine.messages.QtyTag
 
-public class DisplayLowQty extends Tag<QtyField> {
-    public static final DisplayLowQty TAG = new DisplayLowQty();
 
-    public DisplayLowQty() { super(1085, QtyField.class); }
+object DisplayLowQty extends QtyTag(1085) {
+  val Tag = this
+}
+
+object DisplayHighQty extends QtyTag(1086) {
+  val Tag = this
+}
+
+object DisplayMinIncr extends QtyTag(1087) {
+  val Tag = this
 }

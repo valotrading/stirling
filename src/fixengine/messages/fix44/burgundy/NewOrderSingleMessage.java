@@ -47,13 +47,13 @@ import fixengine.tags.fix43.SecurityIDSource;
 import fixengine.tags.fix44.PegMoveType;
 import fixengine.tags.fix44.PegOffsetType;
 import fixengine.tags.fix44.PegScope;
-import fixengine.tags.fix44.burgundy.DisplayHighQty;
-import fixengine.tags.fix44.burgundy.DisplayLowQty;
 import fixengine.tags.fix44.burgundy.DisplayMethod;
-import fixengine.tags.fix44.burgundy.DisplayMinIncr;
 import fixengine.tags.fix44.burgundy.ExecInst;
 import fixengine.tags.fix44.burgundy.OrderRestrictions;
 import fixengine.tags.fix44.burgundy.PartyRole;
+import fixengine.tags.fix50.DisplayHighQty;
+import fixengine.tags.fix50.DisplayLowQty;
+import fixengine.tags.fix50.DisplayMinIncr;
 
 public class NewOrderSingleMessage extends fixengine.messages.fix44.NewOrderSingleMessage {
     public NewOrderSingleMessage(MessageHeader header) {
@@ -78,9 +78,9 @@ public class NewOrderSingleMessage extends fixengine.messages.fix44.NewOrderSing
         field(TransactTime.TAG);
         field(MinQty.TAG, Required.NO);
         field(DisplayMethod.Tag(), Required.NO);
-        field(DisplayLowQty.TAG, Required.NO);
-        field(DisplayHighQty.TAG, Required.NO);
-        field(DisplayMinIncr.TAG, Required.NO);
+        field(DisplayLowQty.Tag(), Required.NO);
+        field(DisplayHighQty.Tag(), Required.NO);
+        field(DisplayMinIncr.Tag(), Required.NO);
         field(MaxFloor.TAG, Required.NO);
         field(ExpireTime.TAG, new Required() {
             @Override public boolean isRequired() {
