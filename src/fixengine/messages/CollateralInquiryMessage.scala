@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.messages;
+package fixengine.messages
 
-public interface CollateralInquiryMessage extends Message {
-}
+trait CollateralInquiryMessage extends Message
