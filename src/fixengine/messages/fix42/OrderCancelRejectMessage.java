@@ -30,7 +30,7 @@ import fixengine.tags.Text;
 /**
  * @author Pekka Enberg 
  */
-public class OrderCancelRejectMessage extends AbstractMessage {
+public class OrderCancelRejectMessage extends AbstractMessage implements fixengine.messages.OrderCancelRejectMessage {
     public OrderCancelRejectMessage(MessageHeader header) {
         super(header);
 
