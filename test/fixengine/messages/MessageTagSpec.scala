@@ -22,18 +22,18 @@ import java.lang.Integer
 
 class MessageTagSpec extends JUnit4(MessageTagSpec)
 object MessageTagSpec extends Specification {
-  "MessageTag" should {
+  "EnumTag" should {
     "resolve fields" in {
       IntTag.parse(1) must equalTo(IntTag.Foo)
       IntTag.parse(2) must equalTo(IntTag.Bar)
     }
   }
-  "MessageTag" should {
+  "EnumTag" should {
     "throw an exception" in {
       IntTag.parse(0) must throwAn[InvalidValueForTagException]
     }
   }
-  private object IntTag extends MessageTag[Integer](0) {
+  private object IntTag extends EnumTag[Integer](0) {
     val Tag = this
     val Foo = Value(1)
     val Bar = Value(2)

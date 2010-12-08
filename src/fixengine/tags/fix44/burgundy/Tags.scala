@@ -15,10 +15,10 @@
  */
 package fixengine.tags.fix44.burgundy
 
-import fixengine.messages.{MessageTag, Value}
+import fixengine.messages.{EnumTag, Value}
 import java.lang.{Character, Integer}
 
-object ExecInst extends MessageTag[Character](18) {
+object ExecInst extends EnumTag[Character](18) {
   val Tag = this
   val Midpoint = Value('M')
   val MarketPeg = Value('P')
@@ -26,19 +26,19 @@ object ExecInst extends MessageTag[Character](18) {
   val CancelOnSysFail = Value('Q')
 }
 
-object DisplayMethod extends MessageTag[Character](1084) {
+object DisplayMethod extends EnumTag[Character](1084) {
   val Tag = this
   val Random = Value('3')
 }
 
-object OrderRestrictions extends MessageTag[Character](529) {
+object OrderRestrictions extends EnumTag[Character](529) {
   val Tag = this
   val IssuerHolding = Value('B')
   val IssuePriceStabilization = Value('C')
   val ActingAsMarketMaker = Value('5')
 }
 
-object PartyRole extends MessageTag[Integer](452) {
+object PartyRole extends EnumTag[Integer](452) {
   val Tag = this
   val ExecutingFirm = Value(1)
   val ClearingFirm = Value(4)

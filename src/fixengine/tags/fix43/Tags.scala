@@ -15,16 +15,16 @@
  */
 package fixengine.tags.fix43
 
-import fixengine.messages.{MessageTag, Value}
+import fixengine.messages.{EnumTag, Value}
 import java.lang.Character
 
-object SecurityIDSource extends MessageTag[Character](22) {
+object SecurityIDSource extends EnumTag[Character](22) {
   val Tag = this
   val ISIN = Value('4')
   val ExchangeSymbol = Value('8')
 }
 
-object OrderRestrictions extends MessageTag[Character](529) {
+object OrderRestrictions extends EnumTag[Character](529) {
   val Tag = this
   val ProgramTrade = Value(1)
   val IndexArbitrage = Value(2)

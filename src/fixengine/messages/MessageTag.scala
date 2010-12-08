@@ -17,7 +17,7 @@ package fixengine.messages
 
 import java.lang.Character
 
-abstract class MessageTag[T](value: Int) extends Tag[EnumField[Value[T]]](value, classOf[EnumField[Value[T]]]) {
+abstract class EnumTag[T](value: Int) extends Tag[EnumField[Value[T]]](value, classOf[EnumField[Value[T]]]) {
   def parse(v: T) = values.find(_.v == v).getOrElse(throw new InvalidValueForTagException(v.toString))
   private def values: Array[Value[T]] = {
     getClass.getDeclaredFields.filter { field =>

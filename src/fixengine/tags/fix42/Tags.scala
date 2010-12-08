@@ -15,10 +15,10 @@
  */
 package fixengine.tags.fix42
 
-import fixengine.messages.{MessageTag, Value}
+import fixengine.messages.{EnumTag, Value}
 import java.lang.Character
 
-object Side extends MessageTag[Character](54) {
+object Side extends EnumTag[Character](54) {
   val Tag = this
   val Buy = Value('1')
   val Sell = Value('2')
