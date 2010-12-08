@@ -15,8 +15,12 @@
  */
 package fixengine.tags.fix44.mbtrading
 
-import fixengine.messages.IntegerTag
+import fixengine.messages.{IntegerTag, StringTag}
 
 object MBTXAggressive extends IntegerTag(10022) {
+  val Tag = this
+}
+
+object OrderGroupID1 extends StringTag(10055) {
   val Tag = this
 }

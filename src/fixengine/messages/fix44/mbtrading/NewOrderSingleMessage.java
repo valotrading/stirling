@@ -101,6 +101,6 @@ public class NewOrderSingleMessage extends fixengine.messages.fix44.NewOrderSing
         field(TrdRegTimestampType.TAG, Required.NO);
         field(TrdRegTimestampOrigin.TAG, Required.NO);
         field(MBTXAggressive.Tag(), Required.NO);
-        field(OrderGroupID1.TAG, Required.NO);
+        field(OrderGroupID1.Tag(), Required.NO);
     }
 }
