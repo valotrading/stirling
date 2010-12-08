@@ -13,13 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.tags.fix44.mbtrading;
+package fixengine.tags.fix44.mbtrading
 
-import fixengine.messages.IntegerField;
-import fixengine.messages.Tag;
+import fixengine.messages.IntegerTag
 
-public class MBTXAggressive extends Tag<IntegerField> {
-    public static final MBTXAggressive TAG = new MBTXAggressive();
-
-    public MBTXAggressive() { super(10022, IntegerField.class); }
+object MBTXAggressive extends IntegerTag(10022) {
+  val Tag = this
 }
