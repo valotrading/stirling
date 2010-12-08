@@ -75,6 +75,10 @@
     <javac srcdir="${test.src}" destdir="${test.build}" classpathref="test.path.id" debug="true" includeantruntime="false">
       <compilerarg value="-Xlint:unchecked"/>
     </javac>
+    <scalac srcdir="${test.src}" destdir="${test.build}" classpathref="test.path.id" deprecation="true">
+      <include name="**/*.scala"/>
+      <include name="**/*.java"/>
+    </scalac>
   </target>
   <target name="compile-examples" depends="compile-main">
     <javac srcdir="${examples.src}" destdir="${examples.build}" classpathref="examples.path.id" debug="true" includeantruntime="false">
@@ -90,8 +94,8 @@
       <classpath refid="test.path.id"/>
       <batchtest>
         <formatter type="plain" usefile="false"/>
-        <fileset dir="${test.src}">
-          <include name="**/*Spec.java"/>
+        <fileset dir="${test.build}">
+          <include name="**/*Spec.class"/>
         </fileset>
       </batchtest>
     </junit>
