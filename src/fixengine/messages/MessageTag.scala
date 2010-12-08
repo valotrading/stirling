@@ -32,3 +32,5 @@ case class Value[T](val v: T) extends Formattable {
 }
 
 abstract class FloatTag(value: Int) extends Tag[FloatField](value, classOf[FloatField])
+
+abstract class QtyTag(value: Int) extends FloatTag(value)
