@@ -15,8 +15,6 @@
  */
 package fixengine.messages
 
-import java.lang.Character
-
 abstract class EnumTag[T](value: Int) extends Tag[EnumField[Value[T]]](value, classOf[EnumField[Value[T]]]) {
   def parse(v: T) = values.find(_.v == v).getOrElse(throw new InvalidValueForTagException(v.toString))
   private def values: Array[Value[T]] = {
@@ -32,3 +30,5 @@ abstract class EnumTag[T](value: Int) extends Tag[EnumField[Value[T]]](value, cl
 case class Value[T](val v: T) extends Formattable {
   def value = v.toString
 }
+
+abstract class FloatTag(value: Int) extends Tag[FloatField](value, classOf[FloatField])
