@@ -19,10 +19,5 @@ package fixengine.messages;
  * @author Pekka Enberg 
  */
 public interface RequestMessage extends Message {
-    String getOrigClOrdId();
-    String getClOrdId();
-    OrdTypeValue getOrdType();
-    double getOrderQty();
-    String getSymbol();
-    SideValue getSide();
+
 }

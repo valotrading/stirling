@@ -32,30 +32,6 @@ public abstract class AbstractOrderCancelRequestMessage extends AbstractMessage 
         fields();
     }
 
-    @Override public SideValue getSide() {
-        return getEnum(Side.TAG);
-    }
-
-    @Override public String getClOrdId() {
-        return getString(ClOrdID.TAG);
-    }
-
-    @Override public OrdTypeValue getOrdType() {
-        return getEnum(OrdType.TAG);
-    }
-
-    @Override public double getOrderQty() {
-        return getFloat(OrderQty.TAG);
-    }
-
-    @Override public String getOrigClOrdId() {
-        return getString(OrigClOrdID.TAG);
-    }
-
-    @Override public String getSymbol() {
-        return getString(Symbol.TAG);
-    }
-
     @Override public void apply(MessageVisitor visitor) {
         visitor.visit(this);
     }

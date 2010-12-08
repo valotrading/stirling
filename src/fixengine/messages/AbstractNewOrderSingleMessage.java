@@ -32,30 +32,6 @@ public abstract class AbstractNewOrderSingleMessage extends AbstractMessage impl
         visitor.visit(this);
     }
 
-    public String getOrigClOrdId() {
-        return null;
-    }
-
-    @Override public SideValue getSide() {
-        return getEnum(Side.TAG);
-    }
-
-    @Override public OrdTypeValue getOrdType() {
-        return getEnum(OrdType.TAG);
-    }
-
-    @Override public String getClOrdId() {
-        return getString(ClOrdID.TAG);
-    }
-
-    @Override public double getOrderQty() {
-        return getFloat(OrderQty.TAG);
-    }
-
-    @Override public String getSymbol() {
-        return getString(Symbol.TAG);
-    }
-
     protected void fields() {
     }
 }
