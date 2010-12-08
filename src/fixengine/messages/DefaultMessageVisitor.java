@@ -56,6 +56,10 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
+    @Override public void visit(OrderCancelReplaceRequestMessage message) {
+        defaultAction(message);
+    }
+
     @Override public void visit(BusinessMessageRejectMessage message) {
         defaultAction(message);
     }

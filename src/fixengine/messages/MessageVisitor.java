@@ -31,6 +31,7 @@ public interface MessageVisitor {
     void visit(NewOrderSingleMessage message);
     void visit(OrderCancelRequestMessage message);
     void visit(OrderCancelRejectMessage message);
+    void visit(OrderCancelReplaceRequestMessage message);
     void visit(OrderModificationRequestMessage message);
     void visit(BusinessMessageRejectMessage message);
     void visit(RejectMessage message);
