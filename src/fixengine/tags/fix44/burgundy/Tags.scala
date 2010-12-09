@@ -18,19 +18,6 @@ package fixengine.tags.fix44.burgundy
 import fixengine.messages.{EnumTag, Value}
 import java.lang.{Character, Integer}
 
-object ExecInst extends EnumTag[Character](18) {
-  val Tag = this
-  val Midpoint = Value('M')
-  val MarketPeg = Value('P')
-  val PrimaryPeg = Value('R')
-  val CancelOnSysFail = Value('Q')
-}
-
-object DisplayMethod extends EnumTag[Character](1084) {
-  val Tag = this
-  val Random = Value('3')
-}
-
 object OrderRestrictions extends EnumTag[Character](529) {
   val Tag = this
   val IssuerHolding = Value('B')

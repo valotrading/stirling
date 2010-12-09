@@ -47,8 +47,8 @@ import fixengine.tags.fix43.SecurityIDSource
 import fixengine.tags.fix44.PegMoveType
 import fixengine.tags.fix44.PegOffsetType
 import fixengine.tags.fix44.PegScope
-import fixengine.tags.fix44.burgundy.DisplayMethod
-import fixengine.tags.fix44.burgundy.ExecInst
+import fixengine.tags.fix50.DisplayMethod
+import fixengine.tags.fix50.ExecInst
 import fixengine.tags.fix44.burgundy.OrderRestrictions
 import fixengine.tags.fix44.PartyRole
 import fixengine.tags.fix50.DisplayHighQty

@@ -16,7 +16,7 @@
 package fixengine.tags.fix50
 
 import fixengine.messages.{EnumTag, Value, QtyTag}
-import java.lang.String
+import java.lang.{Character, String}
 
 object DisplayLowQty extends QtyTag(1085) {
   val Tag = this
@@ -35,4 +35,17 @@ object MatchType extends EnumTag[String](574) {
   val TwoPartyTradeReport = Value("2")
   val AutoMatch = Value("4")
   val CallAuction = Value("7")
+}
+
+object ExecInst extends EnumTag[Character](18) {
+  val Tag = this
+  val Midpoint = Value('M')
+  val MarketPeg = Value('P')
+  val PrimaryPeg = Value('R')
+  val CancelOnSysFail = Value('Q')
+}
+
+object DisplayMethod extends EnumTag[Character](1084) {
+  val Tag = this
+  val Random = Value('3')
 }

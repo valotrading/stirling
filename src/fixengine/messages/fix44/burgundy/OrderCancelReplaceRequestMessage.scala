@@ -23,8 +23,8 @@ import fixengine.tags.fix43.SecurityIDSource
 import fixengine.tags.fix44.PegMoveType
 import fixengine.tags.fix44.PegOffsetType
 import fixengine.tags.fix44.PegScope
-import fixengine.tags.fix44.burgundy.ExecInst
 import fixengine.tags.fix44.burgundy.OrderRestrictions
+import fixengine.tags.fix50.ExecInst
 import fixengine.tags.{ExpireTime, MaxFloor, MaxShow, MinQty, TransactTime}
 import fixengine.tags.{TimeInForce, Text, SecurityID, Price, OrigClOrdID}
 import fixengine.tags.{OrdType, OrderQty, OrderID, Currency, ClOrdID, Account, Symbol}

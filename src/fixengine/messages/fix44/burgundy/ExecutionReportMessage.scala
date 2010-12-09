@@ -72,11 +72,10 @@ import fixengine.tags.fix44.PegOffsetType
 import fixengine.tags.fix44.PegScope
 import fixengine.tags.fix44.PeggedPrice
 import fixengine.tags.fix44.TotNumReports
-import fixengine.tags.fix44.burgundy.DisplayMethod
 import fixengine.tags.fix44.burgundy.OrderRestrictions
 import fixengine.tags.fix44.PartyRole
 import fixengine.tags.fix44.burgundy.TrdType
-import fixengine.tags.fix50.{MatchType, DisplayLowQty, DisplayHighQty, DisplayMinIncr}
+import fixengine.tags.fix50.{DisplayMethod, MatchType, DisplayLowQty, DisplayHighQty, DisplayMinIncr}
 
 class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRejectMessageTrait {
   field(Account.TAG, Required.NO)
