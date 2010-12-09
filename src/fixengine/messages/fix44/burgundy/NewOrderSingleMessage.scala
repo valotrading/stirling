@@ -79,9 +79,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractNewOrderSingl
   field(DisplayMinIncr.Tag, Required.NO)
   field(MaxFloor.TAG, Required.NO)
   field(ExpireTime.TAG, new Required() {
-    override def isRequired(): Boolean = {
-      return getEnum(TimeInForce.TAG).equals(TimeInForceValue.GOOD_TILL_DATE)
-    }
+    override def isRequired(): Boolean = getEnum(TimeInForce.TAG) == TimeInForceValue.GOOD_TILL_DATE
   })
   field(MaxShow.TAG, Required.NO)
   field(PegOffsetValue.TAG, Required.YES)
@@ -89,14 +87,11 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractNewOrderSingl
   field(PegOffsetType.TAG, Required.NO)
   field(PegScope.TAG, Required.NO)
   group(new RepeatingGroup(NoPartyIDs.TAG) {
-    override def newInstance(): RepeatingGroupInstance = {
+    override def newInstance(): RepeatingGroupInstance =
       new RepeatingGroupInstance(PartyID.TAG) {
-        {
-          field(PartyIDSource.TAG)
-          field(PartyRole.Tag, Required.NO)
-        }
+        field(PartyIDSource.TAG)
+        field(PartyRole.Tag, Required.NO)
       }
-    }
   }, Required.NO)
   field(OrderCapacity.TAG, Required.NO)
   field(OrderRestrictions.Tag, Required.NO)
