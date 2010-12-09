@@ -15,13 +15,17 @@
  */
 package fixengine.tags.fix43
 
-import fixengine.messages.{EnumTag, Value}
 import java.lang.Character
+import fixengine.messages.{StringTag, EnumTag, Value}
 
 object SecurityIDSource extends EnumTag[Character](22) {
   val Tag = this
   val ISIN = Value('4')
   val ExchangeSymbol = Value('8')
+}
+
+object SecondaryExecID extends StringTag(527) {
+  val Tag = this
 }
 
 object OrderRestrictions extends EnumTag[Character](529) {
@@ -30,4 +34,8 @@ object OrderRestrictions extends EnumTag[Character](529) {
   val IndexArbitrage = Value(2)
   val NonIndexArbitrage = Value(3)
   val CompetingMarketMaker = Value(4)
+}
+
+object MassStatusReqID extends StringTag(584) {
+  val Tag = this
 }
