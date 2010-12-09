@@ -48,3 +48,12 @@ object PartyRole extends EnumTag[Integer](452) {
   val ClearingOrganization = Value(21)
   val EnteringTrader = Value(36)
 }
+
+object TrdType extends EnumTag[Integer](828) {
+  val Tag = this
+  val RegularTrade = Value(0)
+  val DerivativeRelatedTransaction = Value(49)
+  val PortfolioTrade = Value(50)
+  val VolumeWeightedAverageTrade = Value(51)
+  val MarketplaceGrantedTrade = Value(52)
+}
