@@ -37,3 +37,4 @@ abstract class IntegerTag(value: Int) extends Tag[IntegerField](value, classOf[I
 abstract class StringTag(value: Int) extends Tag[StringField](value, classOf[StringField])
 
 abstract class QtyTag(value: Int) extends FloatTag(value)
+abstract class PriceTag(value: Int) extends FloatTag(value)
