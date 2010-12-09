@@ -50,7 +50,7 @@ import fixengine.tags.fix44.PegScope
 import fixengine.tags.fix44.burgundy.DisplayMethod
 import fixengine.tags.fix44.burgundy.ExecInst
 import fixengine.tags.fix44.burgundy.OrderRestrictions
-import fixengine.tags.fix44.burgundy.PartyRole
+import fixengine.tags.fix44.PartyRole
 import fixengine.tags.fix50.DisplayHighQty
 import fixengine.tags.fix50.DisplayLowQty
 import fixengine.tags.fix50.DisplayMinIncr

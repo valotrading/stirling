@@ -74,7 +74,7 @@ import fixengine.tags.fix44.PeggedPrice
 import fixengine.tags.fix44.TotNumReports
 import fixengine.tags.fix44.burgundy.DisplayMethod
 import fixengine.tags.fix44.burgundy.OrderRestrictions
-import fixengine.tags.fix44.burgundy.PartyRole
+import fixengine.tags.fix44.PartyRole
 import fixengine.tags.fix44.burgundy.TrdType
 import fixengine.tags.fix50.{MatchType, DisplayLowQty, DisplayHighQty, DisplayMinIncr}
 

@@ -38,17 +38,6 @@ object OrderRestrictions extends EnumTag[Character](529) {
   val ActingAsMarketMaker = Value('5')
 }
 
-object PartyRole extends EnumTag[Integer](452) {
-  val Tag = this
-  val ExecutingFirm = Value(1)
-  val ClearingFirm = Value(4)
-  val EnteringFirm = Value(7)
-  val ContraFirm = Value(17)
-  val ContraClearingFirmOrCcp = Value(18)
-  val ClearingOrganization = Value(21)
-  val EnteringTrader = Value(36)
-}
-
 object TrdType extends EnumTag[Integer](828) {
   val Tag = this
   val RegularTrade = Value(0)

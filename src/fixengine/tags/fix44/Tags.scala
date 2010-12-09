@@ -16,16 +16,20 @@
 package fixengine.tags.fix44
 
 import fixengine.messages.{EnumTag, Value, BooleanTag, IntegerTag, PriceTag}
+import java.lang.Integer
+
+object PartyRole extends EnumTag[Integer](452) {
+  val Tag = this
+  val ExecutingFirm = Value(1)
+  val ClearingFirm = Value(4)
+  val EnteringFirm = Value(7)
+  val ContraFirm = Value(17)
+  val ContraClearingFirmOrCcp = Value(18)
+  val ClearingOrganization = Value(21)
+  val EnteringTrader = Value(36)
+}
 
 object PeggedPrice extends PriceTag(839) {
-  val Tag = this
-}
-
-object TotNumReports extends IntegerTag(911) {
-  val Tag = this
-}
-
-object LastRptRequested extends BooleanTag(912) {
   val Tag = this
 }
 
@@ -34,4 +38,12 @@ object LastLiquidityInd extends EnumTag[Integer](851) {
   val AddedLiquidity = Value(1)
   val RemovedLiquidity = Value(2)
   val LiquidityRoutedOut = Value(3)
+}
+
+object TotNumReports extends IntegerTag(911) {
+  val Tag = this
+}
+
+object LastRptRequested extends BooleanTag(912) {
+  val Tag = this
 }
