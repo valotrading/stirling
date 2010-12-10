@@ -53,7 +53,7 @@ public class NewOrderSingleMessage extends AbstractNewOrderSingleMessage {
         field(SecurityType.TAG, Required.NO);
         field(MaturityMonthYear.TAG, Required.NO);
         field(OrderQty.TAG);
-        field(CustomerOrFirm.TAG, Required.NO);
+        field(CustomerOrFirm.Tag(), Required.NO);
         field(Price.TAG, Required.NO);
         field(TimeInForce.Tag(), Required.NO);
     }

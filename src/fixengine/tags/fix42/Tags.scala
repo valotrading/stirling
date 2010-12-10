@@ -63,6 +63,12 @@ object TimeInForce extends EnumTag[Integer](59) {
   val AtTheClose = Value(7)
 }
 
+object CustomerOrFirm extends EnumTag[Integer](204) {
+  val Tag = this
+  val Customer = Value(0)
+  val Firm = Value(1)
+}
+
 object DiscretionInst extends EnumTag[Integer](388) {
   val Tag = this
   val RelatedToDisplayedPrice = Value(0)
