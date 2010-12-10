@@ -62,3 +62,13 @@ object TimeInForce extends EnumTag[Integer](59) {
   val GoodTillDate = Value(6)
   val AtTheClose = Value(7)
 }
+
+object DiscretionInst extends EnumTag[Integer](388) {
+  val Tag = this
+  val RelatedToDisplayedPrice = Value(0)
+  val RelatedToMarketPrice = Value(1)
+  val RelatedToPrimaryPrice = Value(2)
+  val RelatedToLocalPrimaryPrice = Value(3)
+  val RelatedToMidpoint = Value(4)
+  val RelatedToLastTradePRice = Value(5)
+}
