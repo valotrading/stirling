@@ -60,7 +60,7 @@ class OrderCancelReplaceRequestMessage(header: MessageHeader) extends AbstractMe
   field(PegOffsetValue.TAG, Required.YES)
   field(PegMoveType.Tag, Required.NO)
   field(PegOffsetType.Tag, Required.NO)
-  field(PegScope.TAG, Required.NO)
+  field(PegScope.Tag, Required.NO)
   field(OrderCapacity.TAG, Required.NO)
   field(OrderRestrictions.Tag, Required.NO)
   field(AccountType.TAG, Required.NO)

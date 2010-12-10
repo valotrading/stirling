@@ -122,7 +122,7 @@ class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(head
   field(PegOffsetValue.TAG, Required.YES)
   field(PegMoveType.Tag, Required.NO)
   field(PegOffsetType.Tag, Required.NO)
-  field(PegScope.TAG, Required.NO)
+  field(PegScope.Tag, Required.NO)
   field(ExecRestatementReason.TAG, Required.NO)
   field(SecondaryExecID.Tag, Required.NO)
   field(OrderCapacity.TAG, Required.NO)

@@ -84,7 +84,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractNewOrderSingl
   field(PegOffsetValue.TAG, Required.YES)
   field(PegMoveType.Tag, Required.NO)
   field(PegOffsetType.Tag, Required.NO)
-  field(PegScope.TAG, Required.NO)
+  field(PegScope.Tag, Required.NO)
   group(new RepeatingGroup(NoPartyIDs.TAG) {
     override def newInstance(): RepeatingGroupInstance =
       new RepeatingGroupInstance(PartyID.TAG) {

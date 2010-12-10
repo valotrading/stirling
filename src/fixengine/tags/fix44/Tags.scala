@@ -54,6 +54,14 @@ object PegOffsetType extends EnumTag[Integer](836) {
   val PriceTierLevel = Value(3)
 }
 
+object PegScope extends EnumTag[Integer](840) {
+  val Tag = this
+  val Local = Value(1)
+  val National = Value(2)
+  val Global = Value(3)
+  val NationalExcludingLocal = Value(4)
+}
+
 object TotNumReports extends IntegerTag(911) {
   val Tag = this
 }
