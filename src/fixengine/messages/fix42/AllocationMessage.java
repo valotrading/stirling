@@ -39,7 +39,7 @@ public class AllocationMessage extends AbstractMessage {
         super(header);
 
         field(AllocID.TAG);
-        field(AllocTransType.TAG);
+        field(AllocTransType.Tag());
         field(NoOrders.TAG);          // TODO: repeating group
         field(ClOrdID.TAG);
         field(Side.Tag());

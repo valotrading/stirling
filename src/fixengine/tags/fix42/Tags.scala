@@ -63,6 +63,16 @@ object TimeInForce extends EnumTag[Integer](59) {
   val AtTheClose = Value(7)
 }
 
+object AllocTransType extends EnumTag[Integer](71) {
+  val Tag = this
+  val New = Value(0)
+  val Replace = Value(1)
+  val Cancel = Value(2)
+  val Preliminary = Value(3)                 /* (without MiscFees and NetMoney) */
+  val Calculated = Value(4)                  /* (includes MiscFees and NetMoney) */
+  val CalculatedWithoutPrelminary = Value(5) /* Calculated without Preliminary (sent unsolicited by broker, includes MiscFees and NetMoney) */
+}
+
 object CustomerOrFirm extends EnumTag[Integer](204) {
   val Tag = this
   val Customer = Value(0)
