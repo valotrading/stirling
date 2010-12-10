@@ -47,3 +47,19 @@ object LegPositionEffect extends EnumTag[Character](564) {
 object MassStatusReqID extends StringTag(584) {
   val Tag = this
 }
+
+object LegSide extends EnumTag[Character](624) {
+  val Tag = this
+  val Buy = Value('1')
+  val Sell = Value('2')
+  val BuyMinus = Value('3')
+  val SellPlus = Value('4')
+  val SellShort = Value('5')
+  val SellShortExempt = Value('6')
+  val Undisclosed = Value('7')
+  val Cross = Value('8')
+  val CrossShort = Value('9')
+  val CrossShortExempt = Value('A')
+  val AsDefined = Value('B')
+  val Opposite = Value('C')
+}
