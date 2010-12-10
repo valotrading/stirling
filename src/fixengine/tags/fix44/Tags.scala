@@ -46,6 +46,14 @@ object PegMoveType extends EnumTag[Integer](835) {
   val Fixed = Value(1)
 }
 
+object PegOffsetType extends EnumTag[Integer](836) {
+  val Tag = this
+  val Price = Value(0)
+  val BasisPoints = Value(1)
+  val Ticks = Value(2)
+  val PriceTierLevel = Value(3)
+}
+
 object TotNumReports extends IntegerTag(911) {
   val Tag = this
 }
