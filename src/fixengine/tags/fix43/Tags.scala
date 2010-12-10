@@ -36,6 +36,14 @@ object OrderRestrictions extends EnumTag[Character](529) {
   val CompetingMarketMaker = Value(4)
 }
 
+object LegPositionEffect extends EnumTag[Character](564) {
+  val Tag = this
+  val Close = Value('C')
+  val FIFO = Value('F')
+  val Open = Value('O')
+  val Rolled = Value('R')
+}
+
 object MassStatusReqID extends StringTag(584) {
   val Tag = this
 }
