@@ -17,6 +17,15 @@ package fixengine.tags.fix42
 
 import fixengine.messages.{EnumTag, Value}
 import java.lang.Character
+import java.lang.Integer
+
+object ExecTransType extends EnumTag[Integer](40) {
+  val Tag = this
+  val New = Value(0)
+  val Cancel = Value(1)
+  val Correct = Value(2)
+  val Status = Value(3)
+}
 
 object Side extends EnumTag[Character](54) {
   val Tag = this

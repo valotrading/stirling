@@ -17,7 +17,7 @@ package fixengine.messages.fix42.ubs;
 
 import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
-import fixengine.messages.fix42.ExecTransTypeValue;
+import fixengine.messages.Value;
 import fixengine.tags.AvgPx;
 import fixengine.tags.ClOrdID;
 import fixengine.tags.CumQty;
@@ -49,11 +49,11 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(OrigClOrdID.TAG, Required.NO);
         field(ExecID.TAG);
         field(ExecType.TAG);
-        field(ExecTransType.TAG);
+        field(ExecTransType.Tag());
         field(ExecRefID.TAG, new Required() {
             @Override public boolean isRequired() {
-                ExecTransTypeValue value = getEnum(ExecTransType.TAG);
-                return value.equals(ExecTransTypeValue.CANCEL) || value.equals(ExecTransTypeValue.CORRECT);
+                Value<?> value = getEnum(ExecTransType.Tag());
+                return value.equals(ExecTransType.Cancel()) || value.equals(ExecTransType.Correct());
             }
         });
         field(Symbol.TAG);

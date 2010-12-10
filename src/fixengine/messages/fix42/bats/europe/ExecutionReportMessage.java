@@ -17,6 +17,7 @@ package fixengine.messages.fix42.bats.europe;
 
 import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
+import fixengine.messages.Value;
 
 import fixengine.tags.Account;
 import fixengine.tags.AvgPx;
@@ -61,8 +62,6 @@ import fixengine.tags.fix42.bats.europe.SecurityID;
 import fixengine.tags.fix42.bats.europe.TimeInForce;
 import fixengine.tags.fix42.bats.europe.TradeLiquidityIndicator;
 
-import fixengine.messages.fix42.ExecTransTypeValue;
-
 public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionReportMessage {
     public ExecutionReportMessage(MessageHeader header) {
         super(header);
@@ -77,11 +76,11 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(ExecInst.TAG, Required.NO);
         field(ExecRefID.TAG, new Required() {
             @Override public boolean isRequired() {
-                ExecTransTypeValue value = getEnum(ExecTransType.TAG);
-                return value.equals(ExecTransTypeValue.CANCEL) || value.equals(ExecTransTypeValue.CORRECT);
+                Value<?> value = getEnum(ExecTransType.Tag());
+                return value.equals(ExecTransType.Cancel()) || value.equals(ExecTransType.Correct());
             }
         });
-        field(ExecTransType.TAG);
+        field(ExecTransType.Tag());
         field(IDSource.TAG, Required.NO);
         field(LastPx.TAG);
         field(LastShares.TAG);

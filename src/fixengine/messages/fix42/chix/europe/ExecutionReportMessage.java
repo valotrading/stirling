@@ -67,7 +67,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(Currency.TAG, Required.NO);
         field(ExecID.TAG);
         field(ExecRefID.TAG, Required.NO);
-        field(ExecTransType.TAG);
+        field(ExecTransType.Tag());
         field(IDSource.TAG, Required.NO);
         field(LastCapacity.TAG, Required.NO);
         field(LastPx.TAG);

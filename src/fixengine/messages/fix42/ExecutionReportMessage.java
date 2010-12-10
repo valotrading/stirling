@@ -67,7 +67,7 @@ public class ExecutionReportMessage extends AbstractMessage {
         field(ClOrdID.TAG, Required.NO);
         field(OrigClOrdID.TAG, Required.NO);
         field(ExecID.TAG);
-        field(ExecTransType.TAG);
+        field(ExecTransType.Tag());
         field(ExecType.TAG);
         field(OrdStatus.TAG);
         field(OrdRejReason.TAG, Required.NO);

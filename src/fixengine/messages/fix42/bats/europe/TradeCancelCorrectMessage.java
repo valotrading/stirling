@@ -19,7 +19,7 @@ import fixengine.messages.MessageHeader;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.Required;
 import fixengine.messages.UserDefinedMessage;
-import fixengine.messages.fix42.ExecTransTypeValue;
+import fixengine.messages.Value;
 
 import fixengine.tags.ClOrdID;
 import fixengine.tags.Currency;
@@ -54,11 +54,11 @@ public class TradeCancelCorrectMessage extends UserDefinedMessage {
         field(ExecID.TAG);
         field(ExecRefID.TAG, new Required() {
             @Override public boolean isRequired() {
-                ExecTransTypeValue value = getEnum(ExecTransType.TAG);
-                return value.equals(ExecTransTypeValue.CANCEL) || value.equals(ExecTransTypeValue.CORRECT);
+                Value<?> value = getEnum(ExecTransType.Tag());
+                return value.equals(ExecTransType.Cancel()) || value.equals(ExecTransType.Correct());
             }
         });
-        field(ExecTransType.TAG);
+        field(ExecTransType.Tag());
         field(IDSource.TAG, Required.NO);
         field(LastPx.TAG);
         field(LastShares.TAG);

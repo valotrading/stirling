@@ -63,7 +63,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(ClOrdID.TAG);
         field(ExecID.TAG);
         field(ExecInst.TAG, Required.NO);
-        field(ExecTransType.TAG);
+        field(ExecTransType.Tag());
         field(OrderID.TAG);
         field(OrdStatus.TAG);
         field(OrigClOrdID.TAG, Required.NO);
