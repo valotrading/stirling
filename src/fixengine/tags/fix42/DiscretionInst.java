@@ -18,7 +18,7 @@ package fixengine.tags.fix42;
 import fixengine.messages.EnumField;
 import fixengine.messages.Required;
 import fixengine.messages.Tag;
-import fixengine.messages.TimeInForceValue;
+import fixengine.messages.fix42.DiscretionInstValue;
 
 public class DiscretionInst extends Tag<DiscretionInst.Field> {
     public static final DiscretionInst TAG = new DiscretionInst();
@@ -27,13 +27,13 @@ public class DiscretionInst extends Tag<DiscretionInst.Field> {
         super(388, Field.class);
     }
 
-    public static class Field extends EnumField<TimeInForceValue> {
+    public static class Field extends EnumField<DiscretionInstValue> {
         public Field(Tag<Field> tag) {
             super(tag, Required.YES);
         }
 
         @Override public void parse(String value) {
-            this.value = TimeInForceValue.parse(value.charAt(0));
+            this.value = DiscretionInstValue.parse(value.charAt(0));
         }
     }
 }

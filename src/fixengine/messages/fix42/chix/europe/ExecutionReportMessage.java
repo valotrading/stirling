@@ -45,7 +45,7 @@ import fixengine.tags.SecurityID;
 import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.Text;
-import fixengine.tags.TimeInForce;
+import fixengine.tags.fix42.TimeInForce;
 import fixengine.tags.TradeDate;
 import fixengine.tags.TransactTime;
 
@@ -87,7 +87,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(Side.Tag());
         field(Symbol.TAG);
         field(Text.TAG, Required.NO);
-        field(TimeInForce.TAG, Required.NO);
+        field(TimeInForce.Tag(), Required.NO);
         field(TransactTime.TAG);
         field(TradeDate.TAG, Required.NO);
         field(ClientID.TAG, Required.NO);

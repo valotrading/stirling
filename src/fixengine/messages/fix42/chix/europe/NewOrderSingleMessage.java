@@ -18,14 +18,13 @@ package fixengine.messages.fix42.chix.europe;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.OrdTypeValue;
 import fixengine.messages.Required;
-import fixengine.messages.TimeInForceValue;
 
 import fixengine.tags.Account;
 import fixengine.tags.MaxFloor;
 import fixengine.tags.MinQty;
 import fixengine.tags.Symbol;
 import fixengine.tags.fix42.Side;
-import fixengine.tags.TimeInForce;
+import fixengine.tags.fix42.TimeInForce;
 import fixengine.tags.PegDifference;
 import fixengine.tags.Price;
 import fixengine.tags.OrderCapacity;
@@ -73,13 +72,13 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         });
         field(Side.Tag());
         field(Symbol.TAG);
-        field(TimeInForce.TAG, Required.NO);
+        field(TimeInForce.Tag(), Required.NO);
         field(TransactTime.TAG);
         field(MinQty.TAG, Required.NO);
         field(MaxFloor.TAG, Required.NO);
         field(ExpireTime.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(TimeInForce.TAG).equals(TimeInForceValue.GOOD_TILL_DATE);
+                return getEnum(TimeInForce.Tag()).equals(TimeInForce.GoodTillDate());
             }
         });
         field(SecurityExchange.TAG, new Required() {

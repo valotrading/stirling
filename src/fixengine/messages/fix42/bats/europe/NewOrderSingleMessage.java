@@ -81,12 +81,12 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         });
         field(Side.Tag());
         field(Symbol.TAG, Required.NO);
-        field(TimeInForce.TAG, Required.NO);
+        field(TimeInForce.Tag(), Required.NO);
         field(MinQty.TAG, Required.NO);
         field(MaxFloor.TAG, Required.NO);
         field(ExpireTime.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(TimeInForce.TAG).equals(TimeInForceValue.GOOD_TILL_DATE);
+                return getEnum(TimeInForce.Tag()).equals(TimeInForce.GoodTillDate());
             }
         });
         field(SecurityExchange.TAG, new Required() {

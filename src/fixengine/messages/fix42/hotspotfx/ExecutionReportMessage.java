@@ -46,7 +46,7 @@ import fixengine.tags.SettlCurrAmt;
 import fixengine.tags.SettlCurrency;
 import fixengine.tags.Symbol;
 import fixengine.tags.Text;
-import fixengine.tags.TimeInForce;
+import fixengine.tags.fix42.TimeInForce;
 import fixengine.tags.TradeDate;
 import fixengine.tags.TransactTime;
 import fixengine.tags.fix42.ExecTransType;
@@ -69,7 +69,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(OrigClOrdID.TAG, Required.NO);
         field(OrderQty.TAG, Required.NO);
         field(Price.TAG, Required.NO);
-        field(TimeInForce.TAG, Required.NO);
+        field(TimeInForce.Tag(), Required.NO);
         field(Currency.TAG, Required.NO);
         field(Side.Tag());
         field(Symbol.TAG);

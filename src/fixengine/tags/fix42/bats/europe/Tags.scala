@@ -13,44 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.tags.fix42
+package fixengine.tags.fix42.bats.europe
 
 import fixengine.messages.{EnumTag, Value}
 import java.lang.Character
 import java.lang.Integer
 
-object ExecTransType extends EnumTag[Integer](40) {
-  val Tag = this
-  val New = Value(0)
-  val Cancel = Value(1)
-  val Correct = Value(2)
-  val Status = Value(3)
-}
-
-object Side extends EnumTag[Character](54) {
-  val Tag = this
-  val Buy = Value('1')
-  val Sell = Value('2')
-  val BuyMinus = Value('3')
-  val SellPlus = Value('4')
-  val SellShort = Value('5')
-  val SellShortExempt = Value('6')
-  val Undisclosed = Value('7')
-  val Cross = Value('8')
-  val CrossShort = Value('9')
-  val CrossShortExempt = Value('A')
-  val AsDefined = Value('B')
-  val Opposite = Value('C')
-}
-
 object TimeInForce extends EnumTag[Integer](59) {
   val Tag = this
   val Day = Value(0)
   val GoodTillCancel = Value(1)
-  val AtTheOpening = Value(2)
   val ImmediateOrCancel = Value(3)
-  val FillOrKill = Value(4)
-  val GoodTillCrossing = Value(5)
   val GoodTillDate = Value(6)
-  val AtTheClose = Value(7)
+  val GoodThroughCrossing = Value(8)
 }

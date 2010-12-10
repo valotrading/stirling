@@ -27,9 +27,9 @@ import fixengine.tags.OrderQty
 import fixengine.tags.OrigClOrdID
 import fixengine.tags.Price
 import fixengine.tags.Symbol
-import fixengine.tags.TimeInForce
 import fixengine.tags.TransactTime
 import fixengine.tags.fix42.Side
+import fixengine.tags.fix42.TimeInForce
 import fixengine.tags.fix44.Username
 
 class OrderModificationRequestMessage(header: MessageHeader) extends AbstractMessage(header) with OrderModificationRequestMessageTrait {
@@ -42,7 +42,7 @@ class OrderModificationRequestMessage(header: MessageHeader) extends AbstractMes
   field(Price.TAG)
   field(Side.Tag)
   field(Symbol.TAG)
-  field(TimeInForce.TAG)
+  field(TimeInForce.Tag)
   field(TransactTime.TAG)
   field(Username.TAG)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)

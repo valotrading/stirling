@@ -19,7 +19,6 @@ import fixengine.messages.MessageHeader
 import fixengine.messages.RepeatingGroup
 import fixengine.messages.RepeatingGroupInstance
 import fixengine.messages.Required
-import fixengine.messages.TimeInForceValue
 import fixengine.tags.Account
 import fixengine.tags.ClOrdID
 import fixengine.tags.Currency
@@ -35,25 +34,25 @@ import fixengine.tags.Price
 import fixengine.tags.SecurityID
 import fixengine.tags.Symbol
 import fixengine.tags.Text
-import fixengine.tags.TimeInForce
 import fixengine.tags.TransactTime
 import fixengine.tags.fix42.Side
+import fixengine.tags.fix42.TimeInForce
 import fixengine.tags.fix43.AccountType
 import fixengine.tags.fix43.OrderCapacity
 import fixengine.tags.fix43.PartyID
 import fixengine.tags.fix43.PartyIDSource
 import fixengine.tags.fix43.PegOffsetValue
 import fixengine.tags.fix43.SecurityIDSource
+import fixengine.tags.fix44.PartyRole
 import fixengine.tags.fix44.PegMoveType
 import fixengine.tags.fix44.PegOffsetType
 import fixengine.tags.fix44.PegScope
-import fixengine.tags.fix50.DisplayMethod
-import fixengine.tags.fix50.ExecInst
 import fixengine.tags.fix44.burgundy.OrderRestrictions
-import fixengine.tags.fix44.PartyRole
 import fixengine.tags.fix50.DisplayHighQty
 import fixengine.tags.fix50.DisplayLowQty
+import fixengine.tags.fix50.DisplayMethod
 import fixengine.tags.fix50.DisplayMinIncr
+import fixengine.tags.fix50.ExecInst
 import fixengine.messages.AbstractNewOrderSingleMessage
 
 class NewOrderSingleMessage(header: MessageHeader) extends AbstractNewOrderSingleMessage(header) {
@@ -70,7 +69,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractNewOrderSingl
   field(Price.TAG)
   field(Side.Tag)
   field(Text.TAG, Required.NO)
-  field(TimeInForce.TAG, Required.NO)
+  field(TimeInForce.Tag, Required.NO)
   field(TransactTime.TAG)
   field(MinQty.TAG, Required.NO)
   field(DisplayMethod.Tag, Required.NO)
@@ -79,7 +78,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractNewOrderSingl
   field(DisplayMinIncr.Tag, Required.NO)
   field(MaxFloor.TAG, Required.NO)
   field(ExpireTime.TAG, new Required() {
-    override def isRequired(): Boolean = getEnum(TimeInForce.TAG) == TimeInForceValue.GOOD_TILL_DATE
+    override def isRequired(): Boolean = getEnum(TimeInForce.Tag) == TimeInForce.GoodTillDate
   })
   field(MaxShow.TAG, Required.NO)
   field(PegOffsetValue.TAG, Required.YES)

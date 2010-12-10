@@ -18,7 +18,6 @@ package fixengine.messages.fix44.mbtrading
 import fixengine.messages.AbstractMessage
 import fixengine.messages.MessageHeader
 import fixengine.messages.Required
-import fixengine.messages.TimeInForceValue
 import fixengine.messages.MessageVisitor
 import fixengine.messages.{NewOrderSingleMessage => NewOrderSingleMessageTrait}
 import fixengine.tags.Account
@@ -34,7 +33,6 @@ import fixengine.tags.PegDifference
 import fixengine.tags.SecurityType
 import fixengine.tags.SendingTime
 import fixengine.tags.Symbol
-import fixengine.tags.TimeInForce
 import fixengine.tags.TransactTime
 import fixengine.tags.fix42.ComplianceID
 import fixengine.tags.fix42.DiscretionInst
@@ -46,6 +44,7 @@ import fixengine.tags.fix42.PutOrCall
 import fixengine.tags.fix42.Side
 import fixengine.tags.fix42.StopPx
 import fixengine.tags.fix42.StrikePrice
+import fixengine.tags.fix42.TimeInForce
 import fixengine.tags.fix43.LegPrice
 import fixengine.tags.fix43.OrderRestrictions
 import fixengine.tags.fix43.Price2
@@ -69,7 +68,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(heade
   field(SendingTime.TAG)
   field(Symbol.TAG)
   field(Side.Tag)
-  field(TimeInForce.TAG)
+  field(TimeInForce.Tag)
   field(TransactTime.TAG)
   field(StopPx.TAG, Required.NO)
   field(ExDestination.TAG)
@@ -77,7 +76,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(heade
   field(LocateReqd.TAG, Required.NO)
   field(ExpireTime.TAG, new Required() {
     override def isRequired() = {
-      getEnum(TimeInForce.TAG).equals(TimeInForceValue.GOOD_TILL_DATE)
+      getEnum(TimeInForce.Tag).equals(TimeInForce.GoodTillDate)
     }
   })
   field(SecurityType.TAG, Required.NO)

@@ -29,7 +29,7 @@ import fixengine.tags.PegDifference;
 import fixengine.tags.Price;
 import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
-import fixengine.tags.TimeInForce;
+import fixengine.tags.fix42.TimeInForce;
 import fixengine.tags.TransactTime;
 import fixengine.tags.fix42.chix.europe.ExecInst;
 import fixengine.tags.fix44.TradeLinkID;
@@ -52,7 +52,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(Side.Tag());
         field(Symbol.TAG);
         field(OrdType.TAG);
-        field(TimeInForce.TAG, Required.NO);
+        field(TimeInForce.Tag(), Required.NO);
         field(TransactTime.TAG, Required.NO);
         field(PegDifference.TAG, Required.NO);
         field(TradeLinkID.TAG, Required.NO);

@@ -29,7 +29,7 @@ import fixengine.tags.Price;
 import fixengine.tags.SecurityType;
 import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
-import fixengine.tags.TimeInForce;
+import fixengine.tags.fix42.TimeInForce;
 import fixengine.tags.TransactTime;
 import fixengine.tags.fix42.CustomerOrFirm;
 
@@ -55,6 +55,6 @@ public class NewOrderSingleMessage extends AbstractNewOrderSingleMessage {
         field(OrderQty.TAG);
         field(CustomerOrFirm.TAG, Required.NO);
         field(Price.TAG, Required.NO);
-        field(TimeInForce.TAG, Required.NO);
+        field(TimeInForce.Tag(), Required.NO);
     }
 }

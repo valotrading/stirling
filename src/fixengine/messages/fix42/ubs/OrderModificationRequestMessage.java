@@ -27,7 +27,7 @@ import fixengine.tags.OrigClOrdID;
 import fixengine.tags.Price;
 import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
-import fixengine.tags.TimeInForce;
+import fixengine.tags.fix42.TimeInForce;
 import fixengine.tags.TransactTime;
 
 public class OrderModificationRequestMessage extends fixengine.messages.fix42.OrderModificationRequestMessage {
@@ -49,7 +49,7 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
             }
         });
         field(ExecInst.TAG, Required.NO);
-        field(TimeInForce.TAG, Required.NO);
+        field(TimeInForce.Tag(), Required.NO);
         field(MinQty.TAG, Required.NO);
     }
 }

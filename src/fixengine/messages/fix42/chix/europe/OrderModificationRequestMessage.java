@@ -18,7 +18,6 @@ package fixengine.messages.fix42.chix.europe;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.OrdTypeValue;
 import fixengine.messages.Required;
-import fixengine.messages.TimeInForceValue;
 
 import fixengine.tags.ClOrdID;
 import fixengine.tags.ExpireTime;
@@ -33,7 +32,7 @@ import fixengine.tags.PegDifference;
 import fixengine.tags.Price;
 import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
-import fixengine.tags.TimeInForce;
+import fixengine.tags.fix42.TimeInForce;
 import fixengine.tags.TransactTime;
 
 import fixengine.tags.fix42.chix.europe.ExecInst;
@@ -58,13 +57,13 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
         field(OrderCapacity.TAG, Required.NO);
         field(Side.Tag());
         field(Symbol.TAG, Required.NO);
-        field(TimeInForce.TAG, Required.NO);
+        field(TimeInForce.Tag(), Required.NO);
         field(TransactTime.TAG);
         field(MinQty.TAG, Required.NO);
         field(MaxFloor.TAG, Required.NO);
         field(ExpireTime.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(TimeInForce.TAG).equals(TimeInForceValue.GOOD_TILL_DATE);
+                return getEnum(TimeInForce.Tag()).equals(TimeInForce.GoodTillDate());
             }
         });
         field(PegDifference.TAG, Required.NO);

@@ -43,7 +43,7 @@ import fixengine.tags.Price;
 import fixengine.tags.SecurityType;
 import fixengine.tags.Symbol;
 import fixengine.tags.Text;
-import fixengine.tags.TimeInForce;
+import fixengine.tags.fix42.TimeInForce;
 import fixengine.tags.TransactTime;
 import fixengine.tags.fix42.Side;
 import fixengine.tags.fix42.ExecTransType;
@@ -86,7 +86,7 @@ public class ExecutionReportMessage extends AbstractMessage {
                 return OrdTypeValue.LIMIT.equals(getEnum(OrdType.TAG));
             }
         });
-        field(TimeInForce.TAG, Required.NO);
+        field(TimeInForce.Tag(), Required.NO);
         field(CumQty.TAG);
         field(AvgPx.TAG);
         field(TransactTime.TAG, Required.NO);

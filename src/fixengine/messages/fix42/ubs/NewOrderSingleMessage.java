@@ -27,7 +27,7 @@ import fixengine.tags.OrderQty;
 import fixengine.tags.Price;
 import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
-import fixengine.tags.TimeInForce;
+import fixengine.tags.fix42.TimeInForce;
 import fixengine.tags.TransactTime;
 import fixengine.tags.fix42.ubs.Internalization;
 
@@ -50,7 +50,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
                 return getEnum(OrdType.TAG).equals(OrdTypeValue.LIMIT);
             }
         });
-        field(TimeInForce.TAG, Required.NO);
+        field(TimeInForce.Tag(), Required.NO);
         field(MinQty.TAG, Required.NO);
         field(Internalization.TAG, Required.NO);
     }
