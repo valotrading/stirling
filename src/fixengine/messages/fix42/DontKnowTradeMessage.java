@@ -29,9 +29,9 @@ import fixengine.tags.OrderQty;
 import fixengine.tags.SecurityExchange;
 import fixengine.tags.SecurityID;
 import fixengine.tags.SecurityType;
-import fixengine.tags.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.Text;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.fix42.IDSource;
 
 public class DontKnowTradeMessage extends AbstractMessage {
@@ -68,7 +68,7 @@ public class DontKnowTradeMessage extends AbstractMessage {
         /* SecurityDesc(107) */
         /* EncodedSecurityDescLen(350) */
         /* EncodedSecurityDesc(351) */
-        field(Side.TAG);
+        field(Side.Tag());
         field(OrderQty.TAG, Required.NO);
         /* CashOrderQty(152) */
         field(LastShares.TAG, Required.NO);

@@ -30,7 +30,7 @@ import fixengine.tags.LastShares;
 import fixengine.tags.OrderID;
 import fixengine.tags.OrigTime;
 import fixengine.tags.SecurityExchange;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TransactTime;
 import fixengine.tags.fix42.ClearingAccount;
@@ -66,7 +66,7 @@ public class TradeCancelCorrectMessage extends UserDefinedMessage {
         field(OrigTime.TAG);
         field(SecurityID.TAG, Required.NO);
         field(Symbol.TAG, Required.NO);
-        field(Side.TAG);
+        field(Side.Tag());
         field(TransactTime.TAG);
         field(SecurityExchange.TAG, Required.NO);
         field(ClearingFirm.TAG, Required.NO);

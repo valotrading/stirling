@@ -42,7 +42,7 @@ import fixengine.tags.OrderQty;
 import fixengine.tags.OrigClOrdID;
 import fixengine.tags.Price;
 import fixengine.tags.SecurityID;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.Text;
 import fixengine.tags.TimeInForce;
@@ -84,7 +84,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
                 return hasValue(IDSource.TAG);
             }
         });
-        field(Side.TAG);
+        field(Side.Tag());
         field(Symbol.TAG);
         field(Text.TAG, Required.NO);
         field(TimeInForce.TAG, Required.NO);

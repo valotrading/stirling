@@ -26,7 +26,7 @@ import fixengine.tags.OrderQty;
 import fixengine.tags.OrigClOrdID;
 import fixengine.tags.SecurityExchange;
 import fixengine.tags.Symbol;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 
 import fixengine.tags.fix42.bats.europe.IDSource;
 import fixengine.tags.fix42.bats.europe.SecurityID;
@@ -57,7 +57,7 @@ public class OrderCancelRequestMessage extends fixengine.messages.fix42.OrderCan
                 return hasValue(IDSource.TAG);
             }
         });
-        field(Side.TAG);
+        field(Side.Tag());
         field(Symbol.TAG, Required.NO);
         field(SecurityExchange.TAG, new Required() {
             @Override public boolean isRequired() {

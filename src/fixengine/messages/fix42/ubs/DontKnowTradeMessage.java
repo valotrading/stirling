@@ -23,7 +23,7 @@ import fixengine.tags.LastPx;
 import fixengine.tags.LastShares;
 import fixengine.tags.OrderID;
 import fixengine.tags.OrderQty;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 
 public class DontKnowTradeMessage extends fixengine.messages.fix42.DontKnowTradeMessage {
@@ -36,7 +36,7 @@ public class DontKnowTradeMessage extends fixengine.messages.fix42.DontKnowTrade
         field(ExecID.TAG);
         field(DKReason.TAG);
         field(Symbol.TAG);
-        field(Side.TAG);
+        field(Side.Tag());
         field(OrderQty.TAG, Required.NO);
         field(LastShares.TAG, Required.NO);
         field(LastPx.TAG, Required.NO);

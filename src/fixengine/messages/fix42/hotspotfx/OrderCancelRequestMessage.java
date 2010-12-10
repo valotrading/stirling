@@ -21,7 +21,7 @@ import fixengine.tags.Account;
 import fixengine.tags.ClOrdID;
 import fixengine.tags.Currency;
 import fixengine.tags.OrigClOrdID;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TransactTime;
 
@@ -35,7 +35,7 @@ public class OrderCancelRequestMessage extends fixengine.messages.fix42.OrderCan
         field(ClOrdID.TAG);
         field(OrigClOrdID.TAG);
         field(Symbol.TAG);
-        field(Side.TAG, Required.NO);
+        field(Side.Tag(), Required.NO);
         field(TransactTime.TAG, Required.NO);
         field(Currency.TAG, Required.NO);
     }

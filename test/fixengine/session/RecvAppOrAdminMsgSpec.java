@@ -24,7 +24,6 @@ import fixengine.messages.Field;
 import fixengine.messages.MsgTypeValue;
 import fixengine.messages.OrdStatusValue;
 import fixengine.messages.OrdTypeValue;
-import fixengine.messages.SideValue;
 import fixengine.messages.fix42.ExecTransTypeValue;
 import fixengine.tags.AllocAccount;
 import fixengine.tags.AllocID;
@@ -47,7 +46,7 @@ import fixengine.tags.OrderID;
 import fixengine.tags.OrderQty;
 import fixengine.tags.SendingTime;
 import fixengine.tags.Shares;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TestReqID;
 import fixengine.tags.TradeDate;
@@ -269,7 +268,7 @@ import fixengine.tags.fix42.ExecTransType;
                 .field(AllocTransType.TAG, "0")
                 .field(NoOrders.TAG, "1")
                 .field(ClOrdID.TAG, "12807331319412")
-                .field(Side.TAG, "2")
+                .field(Side.Tag(), "2")
                 .field(Symbol.TAG, "GOOG")
                 .field(Shares.TAG, "1000.00")
                 .field(AvgPx.TAG, "370.00")
@@ -303,7 +302,7 @@ import fixengine.tags.fix42.ExecTransType;
                 .field(AllocTransType.TAG, "0")
                 .field(NoOrders.TAG, "1")
                 .field(ClOrdID.TAG, "12807331319412")
-                .field(Side.TAG, "2")
+                .field(Side.Tag(), "2")
                 .field(Symbol.TAG, "GOOG")
                 .field(Shares.TAG, "1000.00")
                 .field(AvgPx.TAG, "370.00")
@@ -337,7 +336,7 @@ import fixengine.tags.fix42.ExecTransType;
                 .field(AllocTransType.TAG, "0")
                 .field(NoOrders.TAG, "1")
                 .field(ClOrdID.TAG, "12807331319412")
-                .field(Side.TAG, "2")
+                .field(Side.Tag(), "2")
                 .field(Symbol.TAG, "GOOG")
                 .field(Shares.TAG, "1000.00")
                 .field(AvgPx.TAG, "370.00")
@@ -409,7 +408,7 @@ import fixengine.tags.fix42.ExecTransType;
                 .enumeration(ExecType.TAG, ExecTypeValue.NEW)
                 .enumeration(OrdStatus.TAG, OrdStatusValue.NEW)
                 .string(Symbol.TAG, "PALM")
-                .enumeration(Side.TAG, SideValue.BUY)
+                .enumeration(Side.Tag(), Side.Buy())
                 .float0(OrderQty.TAG, 1500.0)
                 .float0(LeavesQty.TAG, 1500.0)
                 .enumeration(OrdType.TAG, OrdTypeValue.LIMIT)

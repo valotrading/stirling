@@ -25,7 +25,7 @@ import fixengine.tags.OrdType;
 import fixengine.tags.OrderQty;
 import fixengine.tags.OrigClOrdID;
 import fixengine.tags.Price;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TimeInForce;
 import fixengine.tags.TransactTime;
@@ -39,7 +39,7 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
         field(ClOrdID.TAG);
         field(OrigClOrdID.TAG);
         field(Symbol.TAG);
-        field(Side.TAG);
+        field(Side.Tag());
         field(TransactTime.TAG);
         field(OrderQty.TAG);
         field(OrdType.TAG);

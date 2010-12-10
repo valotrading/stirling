@@ -29,7 +29,7 @@ import fixengine.tags.OrigClOrdID;
 import fixengine.tags.Price;
 import fixengine.tags.SecurityExchange;
 import fixengine.tags.Symbol;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 
 import fixengine.tags.fix42.bats.europe.CancelOrigOnReject;
 import fixengine.tags.fix42.bats.europe.IDSource;
@@ -67,7 +67,7 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
                 return hasValue(IDSource.TAG);
             }
         });
-        field(Side.TAG);
+        field(Side.Tag());
         field(Symbol.TAG, Required.NO);
         field(SecurityExchange.TAG, new Required() {
             @Override public boolean isRequired() {

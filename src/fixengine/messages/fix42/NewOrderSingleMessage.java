@@ -27,7 +27,7 @@ import fixengine.tags.OrdType;
 import fixengine.tags.OrderQty;
 import fixengine.tags.Price;
 import fixengine.tags.SecurityType;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TimeInForce;
 import fixengine.tags.TransactTime;
@@ -46,7 +46,7 @@ public class NewOrderSingleMessage extends AbstractNewOrderSingleMessage {
         field(Currency.TAG, Required.NO);
         field(HandlInst.TAG);
         field(ExDestination.TAG);
-        field(Side.TAG);
+        field(Side.Tag());
         field(TransactTime.TAG);
         field(OrdType.TAG);
         field(Symbol.TAG);

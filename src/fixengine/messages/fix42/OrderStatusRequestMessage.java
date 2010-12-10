@@ -27,7 +27,7 @@ import fixengine.tags.OrderID;
 import fixengine.tags.SecurityExchange;
 import fixengine.tags.SecurityID;
 import fixengine.tags.SecurityType;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.fix42.ClientID;
 import fixengine.tags.fix42.IDSource;
@@ -69,6 +69,6 @@ public class OrderStatusRequestMessage extends AbstractMessage {
         /* SecurityDesc(107) */
         /* EncodedSecurityDescLen(350) */
         /* EncodedSecurityDesc(351) */
-        field(Side.TAG);
+        field(Side.Tag());
     }
 }

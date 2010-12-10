@@ -41,11 +41,11 @@ import fixengine.tags.OrderQty;
 import fixengine.tags.OrigClOrdID;
 import fixengine.tags.Price;
 import fixengine.tags.SecurityType;
-import fixengine.tags.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.Text;
 import fixengine.tags.TimeInForce;
 import fixengine.tags.TransactTime;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.fix42.ExecTransType;
 
 /**
@@ -75,7 +75,7 @@ public class ExecutionReportMessage extends AbstractMessage {
         field(Symbol.TAG);
         field(SecurityType.TAG, Required.NO);
         field(MaturityMonthYear.TAG, Required.NO);
-        field(Side.TAG);
+        field(Side.Tag());
         field(OrderQty.TAG);
         field(LastShares.TAG, Required.NO);
         field(LastPx.TAG, Required.NO);

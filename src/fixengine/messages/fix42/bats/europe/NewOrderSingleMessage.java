@@ -31,7 +31,7 @@ import fixengine.tags.OrderQty;
 import fixengine.tags.PegDifference;
 import fixengine.tags.Price;
 import fixengine.tags.SecurityExchange;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 
 import fixengine.tags.fix42.ClearingAccount;
@@ -79,7 +79,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
                 return hasValue(IDSource.TAG);
             }
         });
-        field(Side.TAG);
+        field(Side.Tag());
         field(Symbol.TAG, Required.NO);
         field(TimeInForce.TAG, Required.NO);
         field(MinQty.TAG, Required.NO);

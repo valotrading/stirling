@@ -27,10 +27,10 @@ import fixengine.tags.ExecInst
 import fixengine.tags.HandlInst
 import fixengine.tags.OrdType
 import fixengine.tags.OrderQty
-import fixengine.tags.Side
 import fixengine.tags.TimeInForce
 import fixengine.tags.TransactTime
 import fixengine.tags.fix42.ExDestination
+import fixengine.tags.fix42.Side
 import fixengine.tags.fix42.StopPx
 import fixengine.tags.fix43.LegCFICode
 import fixengine.tags.fix43.LegMaturityMonthYear
@@ -57,7 +57,7 @@ class NewOrderMultiLegMessage(header: MessageHeader) extends AbstractMessage(hea
   field(OrderQty.TAG)
   field(OrdType.TAG)
   field(StopPx.TAG, Required.NO)
-  field(Side.TAG)
+  field(Side.Tag)
   field(TimeInForce.TAG)
   field(TransactTime.TAG)
   field(ExDestination.TAG)

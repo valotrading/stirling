@@ -24,7 +24,7 @@ import fixengine.tags.Account;
 import fixengine.tags.MaxFloor;
 import fixengine.tags.MinQty;
 import fixengine.tags.Symbol;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.TimeInForce;
 import fixengine.tags.PegDifference;
 import fixengine.tags.Price;
@@ -71,7 +71,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
                 return hasValue(IDSource.TAG);
             }
         });
-        field(Side.TAG);
+        field(Side.Tag());
         field(Symbol.TAG);
         field(TimeInForce.TAG, Required.NO);
         field(TransactTime.TAG);

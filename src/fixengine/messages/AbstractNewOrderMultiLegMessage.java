@@ -18,7 +18,7 @@ package fixengine.messages;
 import fixengine.tags.ClOrdID;
 import fixengine.tags.OrdType;
 import fixengine.tags.OrderQty;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 
 public abstract class AbstractNewOrderMultiLegMessage extends AbstractMessage implements NewOrderMultiLegMessage {

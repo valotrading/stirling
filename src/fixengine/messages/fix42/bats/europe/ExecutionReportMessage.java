@@ -43,7 +43,7 @@ import fixengine.tags.PegDifference;
 import fixengine.tags.Price;
 import fixengine.tags.SecondaryOrderID;
 import fixengine.tags.SecurityExchange;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.Text;
 import fixengine.tags.TransactTime;
@@ -92,7 +92,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(Price.TAG, Required.NO);
         field(AvgPx.TAG, Required.NO);
         field(SecurityID.TAG, Required.NO);
-        field(Side.TAG);
+        field(Side.Tag());
         field(Symbol.TAG, Required.NO);
         field(Text.TAG, Required.NO);
         field(TimeInForce.TAG, Required.NO);

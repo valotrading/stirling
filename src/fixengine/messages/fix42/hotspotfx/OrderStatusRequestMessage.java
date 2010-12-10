@@ -19,7 +19,7 @@ import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
 import fixengine.tags.Account;
 import fixengine.tags.ClOrdID;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TransactTime;
 
@@ -32,7 +32,7 @@ public class OrderStatusRequestMessage extends fixengine.messages.fix42.OrderSta
         field(Account.TAG, Required.NO);
         field(ClOrdID.TAG);
         field(Symbol.TAG, Required.NO);
-        field(Side.TAG, Required.NO);
+        field(Side.Tag(), Required.NO);
         field(TransactTime.TAG, Required.NO);
     }
 }

@@ -25,7 +25,6 @@ import fixengine.messages.MessageVisitor;
 import fixengine.messages.MsgTypeValue;
 import fixengine.messages.OrdStatusValue;
 import fixengine.messages.OrdTypeValue;
-import fixengine.messages.SideValue;
 import fixengine.messages.fix42.ExecTransTypeValue;
 import fixengine.messages.fix42.ExecutionReportMessage;
 import fixengine.messages.fix42.LogonMessage;
@@ -38,7 +37,7 @@ import fixengine.tags.OrdStatus;
 import fixengine.tags.OrdType;
 import fixengine.tags.OrderID;
 import fixengine.tags.OrderQty;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.fix42.ExecTransType;
 
@@ -60,7 +59,7 @@ import fixengine.tags.fix42.ExecTransType;
                 .enumeration(ExecType.TAG, ExecTypeValue.NEW)
                 .enumeration(OrdStatus.TAG, OrdStatusValue.NEW)
                 .string(Symbol.TAG, "PALM")
-                .enumeration(Side.TAG, SideValue.BUY)
+                .enumeration(Side.Tag(), Side.Buy())
                 .float0(OrderQty.TAG, 1500.0)
                 .float0(LeavesQty.TAG, 1500.0)
                 .enumeration(OrdType.TAG, OrdTypeValue.MARKET)
@@ -76,7 +75,7 @@ import fixengine.tags.fix42.ExecTransType;
                 .enumeration(ExecType.TAG, ExecTypeValue.NEW)
                 .enumeration(OrdStatus.TAG, OrdStatusValue.NEW)
                 .string(Symbol.TAG, "PALM")
-                .enumeration(Side.TAG, SideValue.BUY)
+                .enumeration(Side.Tag(), Side.Buy())
                 .float0(OrderQty.TAG, 1500.0)
                 .float0(LeavesQty.TAG, 1500.0)
                 .enumeration(OrdType.TAG, OrdTypeValue.MARKET)
@@ -110,7 +109,7 @@ import fixengine.tags.fix42.ExecTransType;
                 .enumeration(ExecType.TAG, ExecTypeValue.NEW)
                 .enumeration(OrdStatus.TAG, OrdStatusValue.NEW)
                 .string(Symbol.TAG, "PALM")
-                .enumeration(Side.TAG, SideValue.BUY)
+                .enumeration(Side.Tag(), Side.Buy())
                 .float0(OrderQty.TAG, 1500.0)
                 .float0(LeavesQty.TAG, 1500.0)
                 .enumeration(OrdType.TAG, OrdTypeValue.MARKET)

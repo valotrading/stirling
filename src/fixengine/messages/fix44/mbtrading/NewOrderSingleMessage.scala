@@ -33,7 +33,6 @@ import fixengine.tags.OrderQty
 import fixengine.tags.PegDifference
 import fixengine.tags.SecurityType
 import fixengine.tags.SendingTime
-import fixengine.tags.Side
 import fixengine.tags.Symbol
 import fixengine.tags.TimeInForce
 import fixengine.tags.TransactTime
@@ -44,6 +43,7 @@ import fixengine.tags.fix42.EffectiveTime
 import fixengine.tags.fix42.ExDestination
 import fixengine.tags.fix42.LocateReqd
 import fixengine.tags.fix42.PutOrCall
+import fixengine.tags.fix42.Side
 import fixengine.tags.fix42.StopPx
 import fixengine.tags.fix42.StrikePrice
 import fixengine.tags.fix43.LegPrice
@@ -68,7 +68,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(heade
   field(StopPx.TAG, Required.NO)
   field(SendingTime.TAG)
   field(Symbol.TAG)
-  field(Side.TAG)
+  field(Side.Tag)
   field(TimeInForce.TAG)
   field(TransactTime.TAG)
   field(StopPx.TAG, Required.NO)

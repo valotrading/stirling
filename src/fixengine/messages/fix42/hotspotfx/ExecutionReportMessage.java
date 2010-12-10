@@ -44,13 +44,13 @@ import fixengine.tags.Price;
 import fixengine.tags.SecurityType;
 import fixengine.tags.SettlCurrAmt;
 import fixengine.tags.SettlCurrency;
-import fixengine.tags.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.Text;
 import fixengine.tags.TimeInForce;
 import fixengine.tags.TradeDate;
 import fixengine.tags.TransactTime;
 import fixengine.tags.fix42.ExecTransType;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.fix44.TradeLinkID;
 
 public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionReportMessage {
@@ -71,7 +71,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(Price.TAG, Required.NO);
         field(TimeInForce.TAG, Required.NO);
         field(Currency.TAG, Required.NO);
-        field(Side.TAG);
+        field(Side.Tag());
         field(Symbol.TAG);
         field(ExecBroker.TAG, Required.NO);
         field(LeavesQty.TAG);

@@ -33,7 +33,7 @@ import fixengine.tags.OrdStatus;
 import fixengine.tags.OrderID;
 import fixengine.tags.OrderQty;
 import fixengine.tags.OrigClOrdID;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TransactTime;
 import fixengine.tags.fix42.ExecTransType;
@@ -57,7 +57,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
             }
         });
         field(Symbol.TAG);
-        field(Side.TAG);
+        field(Side.Tag());
         field(OrderQty.TAG);
         field(OrdStatus.TAG);
         field(LastShares.TAG, Required.NO);

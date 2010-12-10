@@ -52,12 +52,12 @@ import fixengine.tags.OrigClOrdID
 import fixengine.tags.Price
 import fixengine.tags.SecondaryOrderID
 import fixengine.tags.SecurityID
-import fixengine.tags.Side
 import fixengine.tags.Symbol
 import fixengine.tags.Text
 import fixengine.tags.TimeInForce
 import fixengine.tags.TradeDate
 import fixengine.tags.TransactTime
+import fixengine.tags.fix42.Side
 import fixengine.tags.fix43.AccountType
 import fixengine.tags.fix43.MassStatusReqID
 import fixengine.tags.fix43.PartyID
@@ -95,7 +95,7 @@ class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(head
   field(OrdType.TAG, Required.NO)
   field(OrigClOrdID.TAG, Required.NO)
   field(Price.TAG, Required.NO)
-  field(Side.TAG, Required.NO)
+  field(Side.Tag, Required.NO)
   field(Symbol.TAG)
   field(SecurityIDSource.Tag, Required.NO)
   field(SecurityID.TAG, Required.NO)

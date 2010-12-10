@@ -26,10 +26,10 @@ import fixengine.tags.OrdType
 import fixengine.tags.OrderQty
 import fixengine.tags.OrigClOrdID
 import fixengine.tags.Price
-import fixengine.tags.Side
 import fixengine.tags.Symbol
 import fixengine.tags.TimeInForce
 import fixengine.tags.TransactTime
+import fixengine.tags.fix42.Side
 import fixengine.tags.fix44.Username
 
 class OrderModificationRequestMessage(header: MessageHeader) extends AbstractMessage(header) with OrderModificationRequestMessageTrait {
@@ -40,7 +40,7 @@ class OrderModificationRequestMessage(header: MessageHeader) extends AbstractMes
   field(OrdType.TAG)
   field(OrigClOrdID.TAG)
   field(Price.TAG)
-  field(Side.TAG)
+  field(Side.Tag)
   field(Symbol.TAG)
   field(TimeInForce.TAG)
   field(TransactTime.TAG)

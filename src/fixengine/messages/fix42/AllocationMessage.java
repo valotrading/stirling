@@ -28,9 +28,9 @@ import fixengine.tags.ClOrdID;
 import fixengine.tags.NoAllocs;
 import fixengine.tags.NoOrders;
 import fixengine.tags.Shares;
-import fixengine.tags.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TradeDate;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.fix42.AllocShares;
 import fixengine.tags.fix42.AllocTransType;
 
@@ -42,7 +42,7 @@ public class AllocationMessage extends AbstractMessage {
         field(AllocTransType.TAG);
         field(NoOrders.TAG);          // TODO: repeating group
         field(ClOrdID.TAG);
-        field(Side.TAG);
+        field(Side.Tag());
         field(Symbol.TAG);
         field(Shares.TAG);
         field(AvgPx.TAG);

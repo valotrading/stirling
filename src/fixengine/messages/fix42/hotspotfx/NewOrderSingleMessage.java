@@ -27,7 +27,7 @@ import fixengine.tags.OrdType;
 import fixengine.tags.OrderQty;
 import fixengine.tags.PegDifference;
 import fixengine.tags.Price;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TimeInForce;
 import fixengine.tags.TransactTime;
@@ -49,7 +49,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(MaxShow.TAG, Required.NO);
         field(MinQty.TAG, Required.NO);
         field(Price.TAG);
-        field(Side.TAG);
+        field(Side.Tag());
         field(Symbol.TAG);
         field(OrdType.TAG);
         field(TimeInForce.TAG, Required.NO);

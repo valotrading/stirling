@@ -25,7 +25,7 @@ import fixengine.tags.OrdType;
 import fixengine.tags.OrderCapacity;
 import fixengine.tags.OrderQty;
 import fixengine.tags.Price;
-import fixengine.tags.Side;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
 import fixengine.tags.TimeInForce;
 import fixengine.tags.TransactTime;
@@ -40,7 +40,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(ClOrdID.TAG);
         field(ExecInst.TAG);
         field(Symbol.TAG);
-        field(Side.TAG);
+        field(Side.Tag());
         field(OrderQty.TAG);
         field(OrdType.TAG);
         field(TransactTime.TAG);

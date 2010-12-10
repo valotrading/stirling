@@ -22,15 +22,15 @@ import fixengine.messages.Required
 import fixengine.messages.{OrderCancelRequestMessage => OrderCancelRequestMessageTrait}
 import fixengine.tags.ClOrdID
 import fixengine.tags.OrigClOrdID
-import fixengine.tags.Side
 import fixengine.tags.Symbol
 import fixengine.tags.TransactTime
+import fixengine.tags.fix42.Side
 import fixengine.tags.fix44.Username
 
 class OrderCancelRequestMessage(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestMessageTrait {
   field(ClOrdID.TAG)
   field(OrigClOrdID.TAG)
-  field(Side.TAG)
+  field(Side.Tag)
   field(Symbol.TAG)
   field(TransactTime.TAG)
   field(Username.TAG)
