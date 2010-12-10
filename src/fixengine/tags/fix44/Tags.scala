@@ -40,6 +40,12 @@ object LastLiquidityInd extends EnumTag[Integer](851) {
   val LiquidityRoutedOut = Value(3)
 }
 
+object PegMoveType extends EnumTag[Integer](835) {
+  val Tag = this
+  val Floating = Value(0)
+  val Fixed = Value(1)
+}
+
 object TotNumReports extends IntegerTag(911) {
   val Tag = this
 }
