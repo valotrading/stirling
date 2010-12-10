@@ -92,7 +92,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractNewOrderSingl
         field(PartyRole.Tag, Required.NO)
       }
   }, Required.NO)
-  field(OrderCapacity.TAG, Required.NO)
+  field(OrderCapacity.Tag, Required.NO)
   field(OrderRestrictions.Tag, Required.NO)
   field(AccountType.TAG, Required.NO)
 }

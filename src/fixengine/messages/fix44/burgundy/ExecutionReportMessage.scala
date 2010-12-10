@@ -44,7 +44,6 @@ import fixengine.tags.NoPartyIDs
 import fixengine.tags.OrdRejReason
 import fixengine.tags.OrdStatus
 import fixengine.tags.OrdType
-import fixengine.tags.OrderCapacity
 import fixengine.tags.OrderID
 import fixengine.tags.OrderQty
 import fixengine.tags.OrigClOrdID
@@ -59,6 +58,7 @@ import fixengine.tags.fix42.Side
 import fixengine.tags.fix42.TimeInForce
 import fixengine.tags.fix43.AccountType
 import fixengine.tags.fix43.MassStatusReqID
+import fixengine.tags.fix43.OrderCapacity
 import fixengine.tags.fix43.PartyID
 import fixengine.tags.fix43.PartyIDSource
 import fixengine.tags.fix43.PegOffsetValue
@@ -125,7 +125,7 @@ class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(head
   field(PegScope.Tag, Required.NO)
   field(ExecRestatementReason.TAG, Required.NO)
   field(SecondaryExecID.Tag, Required.NO)
-  field(OrderCapacity.TAG, Required.NO)
+  field(OrderCapacity.Tag, Required.NO)
   field(OrderRestrictions.Tag, Required.NO)
   field(MatchType.Tag, Required.NO)
   field(AccountType.TAG, Required.NO)

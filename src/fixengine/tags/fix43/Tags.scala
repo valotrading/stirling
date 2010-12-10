@@ -33,6 +33,13 @@ object SecondaryExecID extends StringTag(527) {
   val Tag = this
 }
 
+object OrderCapacity extends EnumTag[Character](528) {
+  val Tag = this
+  val Agency = Value('A')    /* Agency single order */
+  val Principal = Value('P') /* Principal */
+  val Riskless = Value('R')  /* Riskless */
+}
+
 object OrderRestrictions extends EnumTag[Character](529) {
   val Tag = this
   val ProgramTrade = Value(1)
