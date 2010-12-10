@@ -133,7 +133,7 @@ class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(head
   group(new RepeatingGroup(NoPartyIDs.TAG) {
     override def newInstance(): RepeatingGroupInstance =
       new RepeatingGroupInstance(PartyID.TAG) {
-        field(PartyIDSource.TAG)
+        field(PartyIDSource.Tag)
         field(PartyRole.Tag, Required.NO)
       }
   }, Required.NO)

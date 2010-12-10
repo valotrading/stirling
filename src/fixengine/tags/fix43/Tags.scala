@@ -24,6 +24,11 @@ object SecurityIDSource extends EnumTag[Character](22) {
   val ExchangeSymbol = Value('8')
 }
 
+object PartyIDSource extends EnumTag[Character](447) {
+  val Tag = this
+  val Custom = Value('D')
+}
+
 object SecondaryExecID extends StringTag(527) {
   val Tag = this
 }
