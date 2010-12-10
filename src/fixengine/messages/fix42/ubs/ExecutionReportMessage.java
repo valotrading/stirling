@@ -24,7 +24,7 @@ import fixengine.tags.CumQty;
 import fixengine.tags.ExecID;
 import fixengine.tags.ExecRefID;
 import fixengine.tags.ExecType;
-import fixengine.tags.LastCapacity;
+import fixengine.tags.fix42.LastCapacity;
 import fixengine.tags.LastMkt;
 import fixengine.tags.LastPx;
 import fixengine.tags.LastShares;
@@ -63,7 +63,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(LastShares.TAG, Required.NO);
         field(LastPx.TAG, Required.NO);
         field(LastMkt.TAG, Required.NO);
-        field(LastCapacity.TAG, Required.NO);
+        field(LastCapacity.Tag(), Required.NO);
         field(LeavesQty.TAG);
         field(CumQty.TAG);
         field(AvgPx.TAG);

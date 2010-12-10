@@ -19,6 +19,14 @@ import fixengine.messages.{EnumTag, Value}
 import java.lang.Character
 import java.lang.Integer
 
+object LastCapacity extends EnumTag[Integer](29) {
+  val Tag = this
+  val Agent = Value(1)
+  val CrossAsAgent = Value(2)
+  val CrossAsPrincipal = Value(3)
+  val Principal = Value(4)
+}
+
 object ExecTransType extends EnumTag[Integer](40) {
   val Tag = this
   val New = Value(0)
