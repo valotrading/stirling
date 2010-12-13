@@ -52,6 +52,6 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         });
         field(TimeInForce.Tag(), Required.NO);
         field(MinQty.TAG, Required.NO);
-        field(Internalization.TAG, Required.NO);
+        field(Internalization.Tag(), Required.NO);
     }
 }

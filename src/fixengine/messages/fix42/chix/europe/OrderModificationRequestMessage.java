@@ -44,7 +44,7 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
 
     @Override protected void fields() {
         field(ClOrdID.TAG);
-        field(ExecInst.TAG, Required.NO);
+        field(ExecInst.Tag(), Required.NO);
         field(HandlInst.TAG);
         field(OrderQty.TAG);
         field(OrdType.TAG);

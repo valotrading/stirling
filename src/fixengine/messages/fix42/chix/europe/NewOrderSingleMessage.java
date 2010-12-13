@@ -51,12 +51,12 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(ClOrdID.TAG);
         field(Currency.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(IDSource.TAG).equals(IDSourceValue.ISIN);
+                return getEnum(IDSource.Tag()).equals(IDSource.ISIN());
             }
         });
-        field(ExecInst.TAG, Required.NO);
+        field(ExecInst.Tag(), Required.NO);
         field(HandlInst.TAG);
-        field(IDSource.TAG, Required.NO);
+        field(IDSource.Tag(), Required.NO);
         field(OrderQty.TAG);
         field(OrdType.TAG);
         field(Price.TAG, new Required() {
@@ -67,7 +67,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(OrderCapacity.TAG, Required.NO);
         field(SecurityID.TAG, new Required() {
             @Override public boolean isRequired() {
-                return hasValue(IDSource.TAG);
+                return hasValue(IDSource.Tag());
             }
         });
         field(Side.Tag());
@@ -83,7 +83,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         });
         field(SecurityExchange.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(IDSource.TAG).equals(IDSourceValue.ISIN);
+                return getEnum(IDSource.Tag()).equals(IDSource.ISIN());
             }
         });
         field(PegDifference.TAG, Required.NO);

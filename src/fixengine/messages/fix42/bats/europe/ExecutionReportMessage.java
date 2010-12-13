@@ -73,7 +73,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(CumQty.TAG);
         field(Currency.TAG, Required.NO);
         field(ExecID.TAG);
-        field(ExecInst.TAG, Required.NO);
+        field(ExecInst.Tag(), Required.NO);
         field(ExecRefID.TAG, new Required() {
             @Override public boolean isRequired() {
                 Value<?> value = getEnum(ExecTransType.Tag());
@@ -81,7 +81,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
             }
         });
         field(ExecTransType.Tag());
-        field(IDSource.TAG, Required.NO);
+        field(IDSource.Tag(), Required.NO);
         field(LastPx.TAG);
         field(LastShares.TAG);
         field(OrderID.TAG);
@@ -90,7 +90,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(OrigClOrdID.TAG, Required.NO);
         field(Price.TAG, Required.NO);
         field(AvgPx.TAG, Required.NO);
-        field(SecurityID.TAG, Required.NO);
+        field(SecurityID.Tag(), Required.NO);
         field(Side.Tag());
         field(Symbol.TAG, Required.NO);
         field(Text.TAG, Required.NO);
@@ -103,32 +103,32 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
                 return TimeInForce.GoodTillDate().equals(getEnum(TimeInForce.Tag()));
             }
         });
-        field(ExecType.TAG);
+        field(ExecType.Tag());
         field(LeavesQty.TAG);
         field(SecondaryOrderID.TAG, Required.NO);
         field(SecurityExchange.TAG, Required.NO);
         field(ContraBroker.TAG, Required.NO);
         field(ExecRestatementReason.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(ExecType.TAG).equals(ExecTypeValue.RESTATED);
+                return getEnum(ExecType.Tag()).equals(ExecType.Restated());
             }
         });
         field(NoContraBrokers.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(ExecType.TAG).isTrade();
+                return ExecType.isTrade(getEnum(ExecType.Tag()));
             }
         });
         field(ClearingFirm.TAG, Required.NO);
         field(ClearingAccount.TAG, Required.NO);
-        field(CentralCounterparty.TAG, Required.NO);
+        field(CentralCounterparty.Tag(), Required.NO);
         field(MTFAccessFee.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(ExecType.TAG).isTrade();
+                return ExecType.isTrade(getEnum(ExecType.Tag()));
             }
         });
-        field(TradeLiquidityIndicator.TAG, new Required() {
+        field(TradeLiquidityIndicator.Tag(), new Required() {
             @Override public boolean isRequired() {
-                return getEnum(ExecType.TAG).isTrade();
+                return ExecType.isTrade(getEnum(ExecType.Tag()));
             }
         });
         field(MaxRemovePct.TAG, Required.NO);

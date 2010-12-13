@@ -57,11 +57,11 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(ClOrdID.TAG);
         field(Currency.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(IDSource.TAG).equals(IDSourceValue.ISIN);
+                return getEnum(IDSource.Tag()).equals(IDSource.ISIN());
             }
         });
-        field(ExecInst.TAG, Required.NO);
-        field(IDSource.TAG, new Required() {
+        field(ExecInst.Tag(), Required.NO);
+        field(IDSource.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return !hasValue(Symbol.TAG);
             }
@@ -74,9 +74,9 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
             }
         });
         field(OrderCapacity.TAG, Required.NO);
-        field(SecurityID.TAG, new Required() {
+        field(SecurityID.Tag(), new Required() {
             @Override public boolean isRequired() {
-                return hasValue(IDSource.TAG);
+                return hasValue(IDSource.Tag());
             }
         });
         field(Side.Tag());
@@ -91,18 +91,18 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         });
         field(SecurityExchange.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(IDSource.TAG).equals(IDSourceValue.ISIN);
+                return getEnum(IDSource.Tag()).equals(IDSource.ISIN());
             }
         });
         field(PegDifference.TAG, Required.NO);
         field(ClearingFirm.TAG, Required.NO);
         field(ClearingAccount.TAG, Required.NO);
         field(PreventParticipantMatch.TAG, Required.NO);
-        field(RoutingInst.TAG, Required.NO);
-        field(DisplayIndicator.TAG, Required.NO);
+        field(RoutingInst.Tag(), Required.NO);
+        field(DisplayIndicator.Tag(), Required.NO);
         field(MaxRemovePct.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(RoutingInst.TAG).equals(RoutingInstValue.POST_ONLY_AT_LIMIT);
+                return getEnum(RoutingInst.Tag()).equals(RoutingInst.PostOnlyAtLimit());
             }
         });
         field(OrigCompID.TAG, Required.NO);

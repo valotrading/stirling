@@ -40,7 +40,7 @@ public class OrderCancelRejectMessage extends fixengine.messages.fix42.OrderCanc
         field(OrdStatus.TAG);
         field(OrigClOrdID.TAG);
         field(Text.TAG);
-        field(CxlRejReason.TAG);
+        field(CxlRejReason.Tag());
         field(CxlRejResponseTo.TAG);
     }
 }

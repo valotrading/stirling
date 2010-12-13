@@ -41,10 +41,10 @@ public class OrderCancelRequestMessage extends fixengine.messages.fix42.OrderCan
         field(ClOrdID.TAG);
         field(Currency.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(IDSource.TAG).equals(IDSourceValue.ISIN);
+                return getEnum(IDSource.Tag()).equals(IDSource.ISIN());
             }
         });
-        field(IDSource.TAG, new Required() {
+        field(IDSource.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return !hasValue(Symbol.TAG);
             }
@@ -52,16 +52,16 @@ public class OrderCancelRequestMessage extends fixengine.messages.fix42.OrderCan
         field(OrderID.TAG);
         field(OrderQty.TAG);
         field(OrigClOrdID.TAG);
-        field(SecurityID.TAG, new Required() {
+        field(SecurityID.Tag(), new Required() {
             @Override public boolean isRequired() {
-                return hasValue(IDSource.TAG);
+                return hasValue(IDSource.Tag());
             }
         });
         field(Side.Tag());
         field(Symbol.TAG, Required.NO);
         field(SecurityExchange.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(IDSource.TAG).equals(IDSourceValue.ISIN);
+                return getEnum(IDSource.Tag()).equals(IDSource.ISIN());
             }
         });
     }

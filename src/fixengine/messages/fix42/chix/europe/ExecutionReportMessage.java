@@ -68,7 +68,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(ExecID.TAG);
         field(ExecRefID.TAG, Required.NO);
         field(ExecTransType.Tag());
-        field(IDSource.TAG, Required.NO);
+        field(IDSource.Tag(), Required.NO);
         field(LastCapacity.Tag(), Required.NO);
         field(LastPx.TAG);
         field(LastShares.TAG);
@@ -81,7 +81,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(OrderCapacity.TAG, Required.NO);
         field(SecurityID.TAG, new Required() {
             @Override public boolean isRequired() {
-                return hasValue(IDSource.TAG);
+                return hasValue(IDSource.Tag());
             }
         });
         field(Side.Tag());
@@ -97,6 +97,6 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(LeavesQty.TAG);
         field(NoContraBrokers.TAG, Required.NO);
         field(ContraBroker.TAG, Required.NO);
-        field(TradeLiquidityIndicator.TAG, Required.NO);
+        field(TradeLiquidityIndicator.Tag(), Required.NO);
     }
 }

@@ -59,12 +59,12 @@ public class TradeCancelCorrectMessage extends UserDefinedMessage {
             }
         });
         field(ExecTransType.Tag());
-        field(IDSource.TAG, Required.NO);
+        field(IDSource.Tag(), Required.NO);
         field(LastPx.TAG);
         field(LastShares.TAG);
         field(OrderID.TAG);
         field(OrigTime.TAG);
-        field(SecurityID.TAG, Required.NO);
+        field(SecurityID.Tag(), Required.NO);
         field(Symbol.TAG, Required.NO);
         field(Side.Tag());
         field(TransactTime.TAG);
@@ -72,7 +72,7 @@ public class TradeCancelCorrectMessage extends UserDefinedMessage {
         field(ClearingFirm.TAG, Required.NO);
         field(ClearingAccount.TAG, Required.NO);
         field(CorrectedPrice.TAG, Required.NO);
-        field(TradeLiquidityIndicator.TAG, Required.NO);
+        field(TradeLiquidityIndicator.Tag(), Required.NO);
     }
 
     @Override public void apply(MessageVisitor visitor) {
