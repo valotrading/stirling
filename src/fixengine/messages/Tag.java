@@ -40,14 +40,6 @@ public class Tag<T extends Field> {
         return Integer.toString(value).length();
     }
 
-    public int checksum() {
-        int checksum = 0;
-        String s = Integer.toString(value);
-        for (int i = 0; i < s.length(); i++)
-            checksum += s.charAt(i);
-        return checksum;
-    }
-
     public int value() {
         return value;
     }
