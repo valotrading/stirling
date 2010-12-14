@@ -30,6 +30,7 @@ public interface MessageVisitor {
     void visit(NewOrderSingleMessage message);
     void visit(OrderCancelRequestMessage message);
     void visit(OrderMassCancelRequestMessage message);
+    void visit(OrderMassCancelReportMessage message);
     void visit(OrderCancelRejectMessage message);
     void visit(OrderCancelReplaceRequestMessage message);
     void visit(OrderModificationRequestMessage message);
