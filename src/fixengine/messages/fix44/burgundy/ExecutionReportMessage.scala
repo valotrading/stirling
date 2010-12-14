@@ -21,7 +21,7 @@ import fixengine.messages.MessageVisitor
 import fixengine.messages.RepeatingGroup
 import fixengine.messages.RepeatingGroupInstance
 import fixengine.messages.Required
-import fixengine.messages.{OrderCancelRejectMessage => OrderCancelRejectMessageTrait}
+import fixengine.messages.{ExecutionReportMessage => ExecutionReportMessageTrait}
 import fixengine.tags.Account
 import fixengine.tags.AvgPx
 import fixengine.tags.ClOrdID
@@ -76,7 +76,7 @@ import fixengine.tags.fix44.burgundy.OrderRestrictions
 import fixengine.tags.fix44.burgundy.TrdType
 import fixengine.tags.fix50.{DisplayMethod, MatchType, DisplayLowQty, DisplayHighQty, DisplayMinIncr}
 
-class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRejectMessageTrait {
+class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(header) with ExecutionReportMessageTrait {
   field(Account.TAG, Required.NO)
   field(AvgPx.TAG)
   field(ClOrdID.TAG, Required.NO)
