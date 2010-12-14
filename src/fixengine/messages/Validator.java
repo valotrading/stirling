@@ -26,8 +26,8 @@ public interface Validator<T> {
     };
 
     public interface ErrorHandler {
-        void sessionReject(SessionRejectReasonValue reason, String text, ErrorLevel level, boolean terminate);
-        void businessReject(BusinessRejectReasonValue reason, String text, ErrorLevel level);
+        void sessionReject(Value<Integer> reason, String text, ErrorLevel level, boolean terminate);
+        void businessReject(Value<Integer> reason, String text, ErrorLevel level);
         void terminate(String text);
     };
 

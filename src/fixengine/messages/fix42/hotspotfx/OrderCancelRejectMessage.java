@@ -37,8 +37,8 @@ public class OrderCancelRejectMessage extends fixengine.messages.fix42.OrderCanc
         field(OrderID.TAG);
         field(OrigClOrdID.TAG);
         field(Symbol.TAG);
-        field(CxlRejResponseTo.TAG);
-        field(CxlRejReason.TAG, Required.NO);
+        field(CxlRejResponseTo.Tag());
+        field(CxlRejReason.Tag(), Required.NO);
         field(Text.TAG, Required.NO);
     }
 }

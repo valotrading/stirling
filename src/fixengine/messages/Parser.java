@@ -25,7 +25,7 @@ import fixengine.messages.fix42.DefaultMessageFactory;
 public class Parser {
     public interface Callback {
         void message(Message m);
-        void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text);
+        void invalidMessage(int msgSeqNum, Value<Integer> reason, String text);
         void unsupportedMsgType(String msgType, int msgSeqNum);
         void invalidMsgType(String msgType, int msgSeqNum);
     }

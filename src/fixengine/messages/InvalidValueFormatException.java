@@ -15,12 +15,14 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.SessionRejectReason;
+
 /**
  * @author Pekka Enberg
  */
 public class InvalidValueFormatException extends ParseException {
     public InvalidValueFormatException(String message) {
-        super(message, SessionRejectReasonValue.INVALID_VALUE_FORMAT);
+        super(message, SessionRejectReason.InvalidValueFormat());
     }
 
     private static final long serialVersionUID = 1L;

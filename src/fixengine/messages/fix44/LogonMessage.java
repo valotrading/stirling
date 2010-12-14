@@ -30,7 +30,7 @@ public class LogonMessage extends AbstractMessage implements fixengine.messages.
     public LogonMessage(MessageHeader header) {
         super(header);
 
-        field(EncryptMethod.TAG);
+        field(EncryptMethod.Tag());
         field(HeartBtInt.TAG);
         field(ResetSeqNumFlag.TAG, Required.NO);
         field(Username.TAG);

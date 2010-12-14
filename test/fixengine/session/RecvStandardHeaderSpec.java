@@ -21,10 +21,10 @@ import org.joda.time.DateTime;
 import org.junit.runner.RunWith;
 
 import fixengine.messages.DefaultMessageVisitor;
-import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.Message;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.MsgTypeValue;
+import fixengine.messages.Value;
 import fixengine.tags.BeginString;
 import fixengine.tags.BodyLength;
 import fixengine.tags.CheckSum;
@@ -219,7 +219,7 @@ import fixengine.tags.TestReqID;
                         .setBeginString("FIX.4.3")
                         .msgSeqNum(1)
                         .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
-                        .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
+                        .enumeration(EncryptMethod.Tag(), EncryptMethod.None())
                     .build());
             server.expect(MsgTypeValue.LOGOUT);
             checking(expectLogSevere("BeginString is invalid, expecting FIX.4.2 but received FIX.4.3"));
@@ -249,7 +249,7 @@ import fixengine.tags.TestReqID;
                         .msgSeqNum(1)
                         .setSenderCompID("SENDER")
                         .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
-                        .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
+                        .enumeration(EncryptMethod.Tag(), EncryptMethod.None())
                     .build());
             server.expect(MsgTypeValue.REJECT);
             server.expect(MsgTypeValue.LOGOUT);
@@ -273,7 +273,7 @@ import fixengine.tags.TestReqID;
                         .msgSeqNum(1)
                         .setTargetCompID("TARGET")
                         .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
-                        .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
+                        .enumeration(EncryptMethod.Tag(), EncryptMethod.None())
                     .build());
             server.expect(MsgTypeValue.REJECT);
             server.expect(MsgTypeValue.LOGOUT);

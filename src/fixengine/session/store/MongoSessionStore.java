@@ -28,7 +28,7 @@ import fixengine.Config;
 import fixengine.messages.FixMessage;
 import fixengine.messages.Message;
 import fixengine.messages.Parser;
-import fixengine.messages.SessionRejectReasonValue;
+import fixengine.messages.Value;
 import fixengine.session.Sequence;
 import fixengine.session.Session;
 
@@ -115,7 +115,7 @@ public class MongoSessionStore implements SessionStore {
                     messages.add(message);
                 }
 
-                @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
+                @Override public void invalidMessage(int msgSeqNum, Value<Integer> reason, String text) {
                     throw new RuntimeException("Invalid message: " + text);
                 }
 

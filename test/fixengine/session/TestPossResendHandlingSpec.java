@@ -20,11 +20,9 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import org.jmock.Expectations;
 
-import fixengine.messages.ExecTypeValue;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.MsgTypeValue;
-import fixengine.messages.OrdStatusValue;
-import fixengine.messages.OrdTypeValue;
+import fixengine.messages.Value;
 import fixengine.messages.fix42.ExecutionReportMessage;
 import fixengine.messages.fix42.LogonMessage;
 import fixengine.tags.AvgPx;
@@ -55,13 +53,13 @@ import fixengine.tags.fix42.ExecTransType;
                 .string(OrderID.TAG, "1278658351213-17")
                 .string(ExecID.TAG, "1278658351213-18")
                 .enumeration(ExecTransType.Tag(), ExecTransType.New())
-                .enumeration(ExecType.TAG, ExecTypeValue.NEW)
-                .enumeration(OrdStatus.TAG, OrdStatusValue.NEW)
+                .enumeration(ExecType.Tag(), ExecType.New())
+                .enumeration(OrdStatus.Tag(), OrdStatus.New())
                 .string(Symbol.TAG, "PALM")
                 .enumeration(Side.Tag(), Side.Buy())
                 .float0(OrderQty.TAG, 1500.0)
                 .float0(LeavesQty.TAG, 1500.0)
-                .enumeration(OrdType.TAG, OrdTypeValue.MARKET)
+                .enumeration(OrdType.Tag(), OrdType.Market())
                 .float0(CumQty.TAG, .0)
                 .float0(AvgPx.TAG, .0)
                 .build());
@@ -71,13 +69,13 @@ import fixengine.tags.fix42.ExecTransType;
                 .string(OrderID.TAG, "1278658351211-17")
                 .string(ExecID.TAG, "1278658351213-18")
                 .enumeration(ExecTransType.Tag(), ExecTransType.New())
-                .enumeration(ExecType.TAG, ExecTypeValue.NEW)
-                .enumeration(OrdStatus.TAG, OrdStatusValue.NEW)
+                .enumeration(ExecType.Tag(), ExecType.New())
+                .enumeration(OrdStatus.Tag(), OrdStatus.New())
                 .string(Symbol.TAG, "PALM")
                 .enumeration(Side.Tag(), Side.Buy())
                 .float0(OrderQty.TAG, 1500.0)
                 .float0(LeavesQty.TAG, 1500.0)
-                .enumeration(OrdType.TAG, OrdTypeValue.MARKET)
+                .enumeration(OrdType.Tag(), OrdType.Market())
                 .float0(CumQty.TAG, .0)
                 .float0(AvgPx.TAG, .0)
                 .build());
@@ -105,13 +103,13 @@ import fixengine.tags.fix42.ExecTransType;
                 .string(OrderID.TAG, "1278658351213-19")
                 .string(ExecID.TAG, "1278658351213-20")
                 .enumeration(ExecTransType.Tag(), ExecTransType.New())
-                .enumeration(ExecType.TAG, ExecTypeValue.NEW)
-                .enumeration(OrdStatus.TAG, OrdStatusValue.NEW)
+                .enumeration(ExecType.Tag(), ExecType.New())
+                .enumeration(OrdStatus.Tag(), OrdStatus.New())
                 .string(Symbol.TAG, "PALM")
                 .enumeration(Side.Tag(), Side.Buy())
                 .float0(OrderQty.TAG, 1500.0)
                 .float0(LeavesQty.TAG, 1500.0)
-                .enumeration(OrdType.TAG, OrdTypeValue.MARKET)
+                .enumeration(OrdType.Tag(), OrdType.Market())
                 .float0(CumQty.TAG, .0)
                 .float0(AvgPx.TAG, .0)
                 .build());

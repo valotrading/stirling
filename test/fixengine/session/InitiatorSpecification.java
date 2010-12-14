@@ -45,7 +45,6 @@ import fixengine.Version;
 import fixengine.messages.BooleanField;
 import fixengine.messages.DefaultMessageComparator;
 import fixengine.messages.DefaultMessageVisitor;
-import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.EnumField;
 import fixengine.messages.Field;
 import fixengine.messages.FixMessageParser;
@@ -58,9 +57,9 @@ import fixengine.messages.MessageVisitor;
 import fixengine.messages.MsgTypeValue;
 import fixengine.messages.Parser;
 import fixengine.messages.RawMessageBuilder;
-import fixengine.messages.SessionRejectReasonValue;
 import fixengine.messages.StringField;
 import fixengine.messages.Tag;
+import fixengine.messages.Value;
 import fixengine.messages.fix42.DefaultMessageFactory;
 import fixengine.session.store.InMemorySessionStore;
 import fixengine.session.store.MongoSessionStore;
@@ -277,7 +276,7 @@ public class InitiatorSpecification extends Specification<Session> {
             return this;
         }
 
-        <T extends Formattable> MessageBuilder enumeration(Tag<? extends EnumField<T>> tag, T value) {
+        <T> MessageBuilder enumeration(Tag<? extends EnumField<Value<T>>> tag, Value<T> value) {
             message.setEnum(tag, value);
             return this;
         }
@@ -317,7 +316,7 @@ public class InitiatorSpecification extends Specification<Session> {
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
                         .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
-                        .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
+                        .enumeration(EncryptMethod.Tag(), EncryptMethod.None())
                     .build());
         }
 
@@ -383,7 +382,7 @@ public class InitiatorSpecification extends Specification<Session> {
                         @Override public void invalidMsgType(String msgType, int msgSeqNum) {
                         }
 
-                        @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
+                        @Override public void invalidMessage(int msgSeqNum, Value<Integer> reason, String text) {
                         }
                     });
                 }

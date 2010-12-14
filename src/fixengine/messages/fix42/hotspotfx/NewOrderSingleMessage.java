@@ -43,7 +43,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(Account.TAG, Required.NO);
         field(ClOrdID.TAG);
         field(ExecInst.Tag(), Required.NO);
-        field(HandlInst.TAG);
+        field(HandlInst.Tag());
         field(Currency.TAG, Required.NO);
         field(OrderQty.TAG);
         field(MaxShow.TAG, Required.NO);
@@ -51,7 +51,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(Price.TAG);
         field(Side.Tag());
         field(Symbol.TAG);
-        field(OrdType.TAG);
+        field(OrdType.Tag());
         field(TimeInForce.Tag(), Required.NO);
         field(TransactTime.TAG, Required.NO);
         field(PegDifference.TAG, Required.NO);

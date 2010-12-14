@@ -19,8 +19,8 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 
-import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.MsgTypeValue;
+import fixengine.messages.Value;
 import fixengine.tags.EncryptMethod;
 import fixengine.tags.GapFillFlag;
 import fixengine.tags.HeartBtInt;
@@ -46,7 +46,7 @@ import fixengine.tags.NewSeqNo;
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(2)
                         .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
-                        .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
+                        .enumeration(EncryptMethod.Tag(), EncryptMethod.None())
                     .build());
             server.expect(MsgTypeValue.RESEND_REQUEST);
             runInClient(new Runnable() {
@@ -97,7 +97,7 @@ import fixengine.tags.NewSeqNo;
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(2)
                         .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
-                        .enumeration(EncryptMethod.TAG, EncryptMethodValue.NONE)
+                        .enumeration(EncryptMethod.Tag(), EncryptMethod.None())
                     .build());
             server.expect(MsgTypeValue.RESEND_REQUEST);
             server.respond(

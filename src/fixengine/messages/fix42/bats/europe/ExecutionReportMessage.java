@@ -86,7 +86,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(LastShares.TAG);
         field(OrderID.TAG);
         field(OrderQty.TAG);
-        field(OrdStatus.TAG);
+        field(OrdStatus.Tag());
         field(OrigClOrdID.TAG, Required.NO);
         field(Price.TAG, Required.NO);
         field(AvgPx.TAG, Required.NO);
@@ -96,7 +96,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(Text.TAG, Required.NO);
         field(TimeInForce.Tag(), Required.NO);
         field(TransactTime.TAG);
-        field(OrdRejReason.TAG, Required.NO);
+        field(OrdRejReason.Tag(), Required.NO);
         field(MaxFloor.TAG, Required.NO);
         field(ExpireTime.TAG, new Required() {
             @Override public boolean isRequired() {
@@ -108,7 +108,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(SecondaryOrderID.TAG, Required.NO);
         field(SecurityExchange.TAG, Required.NO);
         field(ContraBroker.TAG, Required.NO);
-        field(ExecRestatementReason.TAG, new Required() {
+        field(ExecRestatementReason.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return getEnum(ExecType.Tag()).equals(ExecType.Restated());
             }

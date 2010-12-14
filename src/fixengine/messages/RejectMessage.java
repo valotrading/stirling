@@ -29,7 +29,7 @@ public class RejectMessage extends AbstractMessage {
 
         field(RefSeqNo.TAG);
         field(RefTagId.TAG, Required.NO);
-        field(SessionRejectReason.TAG, Required.NO);
+        field(SessionRejectReason.Tag(), Required.NO);
         field(Text.TAG, Required.NO);
     }
 

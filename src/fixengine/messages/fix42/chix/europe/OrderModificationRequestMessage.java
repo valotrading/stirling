@@ -16,7 +16,6 @@
 package fixengine.messages.fix42.chix.europe;
 
 import fixengine.messages.MessageHeader;
-import fixengine.messages.OrdTypeValue;
 import fixengine.messages.Required;
 
 import fixengine.tags.ClOrdID;
@@ -45,16 +44,16 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
     @Override protected void fields() {
         field(ClOrdID.TAG);
         field(ExecInst.Tag(), Required.NO);
-        field(HandlInst.TAG);
+        field(HandlInst.Tag());
         field(OrderQty.TAG);
-        field(OrdType.TAG);
+        field(OrdType.Tag());
         field(OrigClOrdID.TAG);
         field(Price.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(OrdType.TAG).equals(OrdTypeValue.LIMIT);
+                return getEnum(OrdType.Tag()).equals(OrdType.Limit());
             }
         });
-        field(OrderCapacity.TAG, Required.NO);
+        field(OrderCapacity.Tag(), Required.NO);
         field(Side.Tag());
         field(Symbol.TAG, Required.NO);
         field(TimeInForce.Tag(), Required.NO);

@@ -15,12 +15,14 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.SessionRejectReason;
+
 /**
  * @author Pekka Enberg
  */
 public class OutOfOrderTagException extends ParseException {
     public OutOfOrderTagException(String message) {
-        super(message, SessionRejectReasonValue.OUT_OF_ORDER_TAG);
+        super(message, SessionRejectReason.OutOfOrderTag());
     }
 
     private static final long serialVersionUID = 1L;

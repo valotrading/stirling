@@ -65,7 +65,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(ExecInst.TAG, Required.NO);
         field(ExecTransType.Tag());
         field(OrderID.TAG);
-        field(OrdStatus.TAG);
+        field(OrdStatus.Tag());
         field(OrigClOrdID.TAG, Required.NO);
         field(OrderQty.TAG, Required.NO);
         field(Price.TAG, Required.NO);
@@ -84,7 +84,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(SettlCurrency.TAG, Required.NO);
         field(SecurityType.TAG);
         field(MaxShow.TAG, Required.NO);
-        field(ExecType.TAG);
+        field(ExecType.Tag());
         field(AvgPx.TAG);
         field(LastShares.TAG, Required.NO);
         field(LastPx.TAG, Required.NO);

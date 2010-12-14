@@ -26,7 +26,7 @@ import fixengine.tags.ResetSeqNumFlag
 import fixengine.tags.fix44.Password
 
 class LogonMessage(header: MessageHeader) extends AbstractMessage(header) with LogonMessageTrait {
-  field(EncryptMethod.TAG)
+  field(EncryptMethod.Tag)
   field(HeartBtInt.TAG)
   field(ResetSeqNumFlag.TAG, Required.NO)
   field(Password.TAG)

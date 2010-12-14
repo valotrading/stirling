@@ -29,7 +29,7 @@ public class BusinessMessageRejectMessage extends AbstractMessage {
 
         field(RefSeqNo.TAG, Required.NO);
         field(RefMsgType.TAG);
-        field(BusinessRejectReason.TAG);
+        field(BusinessRejectReason.Tag());
         field(Text.TAG, Required.NO);
     }
 

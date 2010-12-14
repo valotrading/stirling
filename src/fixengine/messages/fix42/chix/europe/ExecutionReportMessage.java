@@ -74,11 +74,11 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(LastShares.TAG);
         field(OrderID.TAG);
         field(OrderQty.TAG);
-        field(OrdStatus.TAG);
-        field(OrdType.TAG, Required.NO);
+        field(OrdStatus.Tag());
+        field(OrdType.Tag(), Required.NO);
         field(OrigClOrdID.TAG, Required.NO);
         field(Price.TAG, Required.NO);
-        field(OrderCapacity.TAG, Required.NO);
+        field(OrderCapacity.Tag(), Required.NO);
         field(SecurityID.TAG, new Required() {
             @Override public boolean isRequired() {
                 return hasValue(IDSource.Tag());
@@ -93,7 +93,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(ClientID.TAG, Required.NO);
         field(MinQty.TAG, Required.NO);
         field(MaxFloor.TAG, Required.NO);
-        field(ExecType.TAG);
+        field(ExecType.Tag());
         field(LeavesQty.TAG);
         field(NoContraBrokers.TAG, Required.NO);
         field(ContraBroker.TAG, Required.NO);

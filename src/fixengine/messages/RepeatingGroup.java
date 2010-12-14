@@ -14,6 +14,8 @@
  * limitations under the License.
  */ package fixengine.messages;
 
+import fixengine.tags.SessionRejectReason;
+
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +54,7 @@ public abstract class RepeatingGroup implements Field {
         }
         if (instances.size() != countField.getValue())
             throw new ParseException(countTag.prettyName() + ": Incorrect NumInGroup count for repeating group. Expected: " + countField.getValue() +
-                ", but was: " + instances.size(), SessionRejectReasonValue.NUM_IN_GROUP_MISMATCH);
+                ", but was: " + instances.size(), SessionRejectReason.NumInGroupMismatch());
     }
 
     @Override public String format() {

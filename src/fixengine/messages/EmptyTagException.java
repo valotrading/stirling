@@ -15,12 +15,14 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.SessionRejectReason;
+
 /**
  * @author Pekka Enberg
  */
 public class EmptyTagException extends ParseException {
     public EmptyTagException(String message) {
-        super(message, SessionRejectReasonValue.EMPTY_TAG);
+        super(message, SessionRejectReason.EmptyTag());
     }
 
     private static final long serialVersionUID = 1L;

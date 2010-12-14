@@ -19,7 +19,7 @@ package fixengine.messages;
  * @author Pekka Enberg 
  */
 public class ParseException extends RuntimeException {
-    private SessionRejectReasonValue reason;
+    private Value<Integer> reason;
 
     protected ParseException() {
     }
@@ -28,7 +28,7 @@ public class ParseException extends RuntimeException {
         this(message, null);
     }
 
-    protected ParseException(String message, SessionRejectReasonValue reason) {
+    protected ParseException(String message, Value<Integer> reason) {
         super(message);
 
         this.reason = reason;
@@ -38,7 +38,7 @@ public class ParseException extends RuntimeException {
         super(cause);
     }
 
-    public SessionRejectReasonValue getReason() {
+    public Value<Integer> getReason() {
         return reason;
     }
 

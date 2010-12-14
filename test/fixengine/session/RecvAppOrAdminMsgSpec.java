@@ -19,11 +19,9 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 
-import fixengine.messages.ExecTypeValue;
 import fixengine.messages.Field;
 import fixengine.messages.MsgTypeValue;
-import fixengine.messages.OrdStatusValue;
-import fixengine.messages.OrdTypeValue;
+import fixengine.messages.Value;
 import fixengine.tags.AllocAccount;
 import fixengine.tags.AllocID;
 import fixengine.tags.AvgPx;
@@ -152,7 +150,7 @@ import fixengine.tags.fix42.ExecTransType;
             server.respond(message("67", "A")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
-                .field(EncryptMethod.TAG, "7")
+                .field(EncryptMethod.Tag(), "7")
                 .field(HeartBtInt.TAG, "30")
                 .field(CheckSum.TAG, "034")
                 .toString());
@@ -404,13 +402,13 @@ import fixengine.tags.fix42.ExecTransType;
                 .string(OrderID.TAG, "1278658351213-17")
                 .string(ExecID.TAG, "1278658351213-18")
                 .enumeration(ExecTransType.Tag(), ExecTransType.New())
-                .enumeration(ExecType.TAG, ExecTypeValue.NEW)
-                .enumeration(OrdStatus.TAG, OrdStatusValue.NEW)
+                .enumeration(ExecType.Tag(), ExecType.New())
+                .enumeration(OrdStatus.Tag(), OrdStatus.New())
                 .string(Symbol.TAG, "PALM")
                 .enumeration(Side.Tag(), Side.Buy())
                 .float0(OrderQty.TAG, 1500.0)
                 .float0(LeavesQty.TAG, 1500.0)
-                .enumeration(OrdType.TAG, OrdTypeValue.LIMIT)
+                .enumeration(OrdType.Tag(), OrdType.Limit())
                 .float0(CumQty.TAG, .0)
                 .float0(AvgPx.TAG, .0)
                 .build());

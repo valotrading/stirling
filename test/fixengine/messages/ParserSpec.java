@@ -15,6 +15,7 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.SessionRejectReason;
 import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
@@ -132,7 +133,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.EMPTY_TAG, "TestReqID(112): Empty tag", msgType);
+            expectInvalidMessage(SessionRejectReason.EmptyTag(), "TestReqID(112): Empty tag", msgType);
         }
     }
 
@@ -154,7 +155,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.EMPTY_TAG, "SenderCompID(49): Empty tag", msgType);
+            expectInvalidMessage(SessionRejectReason.EmptyTag(), "SenderCompID(49): Empty tag", msgType);
         }
     }
 
@@ -171,7 +172,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.INVALID_VALUE_FORMAT, "SendingTime(52): Invalid value format", msgType);
+            expectInvalidMessage(SessionRejectReason.InvalidValueFormat(), "SendingTime(52): Invalid value format", msgType);
         }
     }
 
@@ -189,7 +190,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.INVALID_VALUE, "EncryptMethod(98): Invalid value", msgType);
+            expectInvalidMessage(SessionRejectReason.InvalidValue(), "EncryptMethod(98): Invalid value", msgType);
         }
     }
 
@@ -207,7 +208,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.TAG_MULTIPLE_TIMES, "TestReqID(112): Tag multiple times", msgType);
+            expectInvalidMessage(SessionRejectReason.TagMultipleTimes(), "TestReqID(112): Tag multiple times", msgType);
         }
     }
 
@@ -263,7 +264,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.INVALID_TAG_NUMBER, "Invalid tag number: 9898", msgType);
+            expectInvalidMessage(SessionRejectReason.InvalidTagNumber(), "Invalid tag number: 9898", msgType);
         }
     }
 
@@ -281,7 +282,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.INVALID_TAG, "Tag not defined for this message: 88", msgType);
+            expectInvalidMessage(SessionRejectReason.InvalidTag(), "Tag not defined for this message: 88", msgType);
         }
     }
 
@@ -298,7 +299,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.OUT_OF_ORDER_TAG, "SendingTime(52): Out of order tag", msgType);
+            expectInvalidMessage(SessionRejectReason.OutOfOrderTag(), "SendingTime(52): Out of order tag", msgType);
         }
     }
 
@@ -316,7 +317,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.OUT_OF_ORDER_TAG, "CheckSum(10): Out of order tag", msgType);
+            expectInvalidMessage(SessionRejectReason.OutOfOrderTag(), "CheckSum(10): Out of order tag", msgType);
         }
     }
 
@@ -333,7 +334,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.FIELD_DELIMITER_IN_VALUE, "Non-data value includes field delimiter (SOH character)", msgType);
+            expectInvalidMessage(SessionRejectReason.FieldDelimiterInValue(), "Non-data value includes field delimiter (SOH character)", msgType);
         }
     }
 
@@ -428,7 +429,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.OUT_OF_ORDER_GROUP_FIELD, "AllocShares(80): Repeating group fields out of order", msgType);
+            expectInvalidMessage(SessionRejectReason.OutOfOrderGroupField(), "AllocShares(80): Repeating group fields out of order", msgType);
         }
     }
 
@@ -458,7 +459,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.NUM_IN_GROUP_MISMATCH, "NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 3, but was: 2", msgType);
+            expectInvalidMessage(SessionRejectReason.NumInGroupMismatch(), "NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 3, but was: 2", msgType);
         }
     }
 
@@ -488,7 +489,7 @@ public class ParserSpec extends Specification<String> {
         }
 
         public void parse() {
-            expectInvalidMessage(SessionRejectReasonValue.NUM_IN_GROUP_MISMATCH, "NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 1, but was: 2", msgType);
+            expectInvalidMessage(SessionRejectReason.NumInGroupMismatch(), "NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 1, but was: 2", msgType);
         }
     }
 
@@ -505,7 +506,7 @@ public class ParserSpec extends Specification<String> {
                 .field(TargetCompID, "Target");
     }
 
-    private void expectInvalidMessage(final SessionRejectReasonValue reason, final String text, String msgType) {
+    private void expectInvalidMessage(final Value<Integer> reason, final String text, String msgType) {
         checking(new Expectations() {{
             one(callback).invalidMessage(1, reason, text);
         }});

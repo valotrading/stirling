@@ -16,7 +16,6 @@
 package fixengine.messages.fix42.bats.europe;
 
 import fixengine.messages.MessageHeader;
-import fixengine.messages.OrdTypeValue;
 import fixengine.messages.Required;
 
 import fixengine.tags.Account;
@@ -55,11 +54,11 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
         });
         field(OrderID.TAG);
         field(OrderQty.TAG);
-        field(OrdType.TAG);
+        field(OrdType.Tag());
         field(OrigClOrdID.TAG);
         field(Price.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(OrdType.TAG).equals(OrdTypeValue.LIMIT);
+                return getEnum(OrdType.Tag()).equals(OrdType.Limit());
             }
         });
         field(SecurityID.Tag(), new Required() {

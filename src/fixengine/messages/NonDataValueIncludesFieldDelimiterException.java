@@ -15,12 +15,14 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.SessionRejectReason;
+
 /**
  * @author Pekka Enberg
  */
 public class NonDataValueIncludesFieldDelimiterException extends ParseException {
     public NonDataValueIncludesFieldDelimiterException(String message) {
-        super(message, SessionRejectReasonValue.FIELD_DELIMITER_IN_VALUE);
+        super(message, SessionRejectReason.FieldDelimiterInValue());
     }
 
     private static final long serialVersionUID = 1L;

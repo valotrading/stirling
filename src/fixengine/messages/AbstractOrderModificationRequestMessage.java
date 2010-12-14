@@ -48,14 +48,14 @@ public class AbstractOrderModificationRequestMessage extends AbstractMessage imp
     protected void fields() {
         field(OrigClOrdID.TAG);
         field(ClOrdID.TAG);
-        field(HandlInst.TAG);
+        field(HandlInst.Tag());
         field(Symbol.TAG);
         field(SecurityType.TAG, Required.NO);
         field(MaturityMonthYear.TAG, Required.NO);
         field(Side.Tag());
         field(TransactTime.TAG);
         field(OrderQty.TAG);
-        field(OrdType.TAG);
+        field(OrdType.Tag());
         field(Currency.TAG, Required.NO);
         field(Price.TAG, Required.NO);
     }

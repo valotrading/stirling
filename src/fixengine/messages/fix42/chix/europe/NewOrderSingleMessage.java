@@ -16,7 +16,6 @@
 package fixengine.messages.fix42.chix.europe;
 
 import fixengine.messages.MessageHeader;
-import fixengine.messages.OrdTypeValue;
 import fixengine.messages.Required;
 
 import fixengine.tags.Account;
@@ -55,16 +54,16 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
             }
         });
         field(ExecInst.Tag(), Required.NO);
-        field(HandlInst.TAG);
+        field(HandlInst.Tag());
         field(IDSource.Tag(), Required.NO);
         field(OrderQty.TAG);
-        field(OrdType.TAG);
+        field(OrdType.Tag());
         field(Price.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(OrdType.TAG).equals(OrdTypeValue.LIMIT);
+                return getEnum(OrdType.Tag()).equals(OrdType.Limit());
             }
         });
-        field(OrderCapacity.TAG, Required.NO);
+        field(OrderCapacity.Tag(), Required.NO);
         field(SecurityID.TAG, new Required() {
             @Override public boolean isRequired() {
                 return hasValue(IDSource.Tag());

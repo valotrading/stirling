@@ -18,7 +18,6 @@ package fixengine.messages.fix42;
 import fixengine.messages.AbstractMessage;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MessageVisitor;
-import fixengine.messages.OrdTypeValue;
 import fixengine.messages.Required;
 import fixengine.tags.AvgPx;
 import fixengine.tags.ClOrdID;
@@ -68,10 +67,10 @@ public class ExecutionReportMessage extends AbstractMessage implements fixengine
         field(OrigClOrdID.TAG, Required.NO);
         field(ExecID.TAG);
         field(ExecTransType.Tag());
-        field(ExecType.TAG);
-        field(OrdStatus.TAG);
-        field(OrdRejReason.TAG, Required.NO);
-        field(ExecRestatementReason.TAG, Required.NO);
+        field(ExecType.Tag());
+        field(OrdStatus.Tag());
+        field(OrdRejReason.Tag(), Required.NO);
+        field(ExecRestatementReason.Tag(), Required.NO);
         field(Symbol.TAG);
         field(SecurityType.TAG, Required.NO);
         field(MaturityMonthYear.TAG, Required.NO);
@@ -80,10 +79,10 @@ public class ExecutionReportMessage extends AbstractMessage implements fixengine
         field(LastShares.TAG, Required.NO);
         field(LastPx.TAG, Required.NO);
         field(LeavesQty.TAG);
-        field(OrdType.TAG, Required.NO);
+        field(OrdType.Tag(), Required.NO);
         field(Price.TAG, new Required() {
             @Override public boolean isRequired() {
-                return OrdTypeValue.LIMIT.equals(getEnum(OrdType.TAG));
+                return OrdType.Limit().equals(getEnum(OrdType.Tag()));
             }
         });
         field(TimeInForce.Tag(), Required.NO);

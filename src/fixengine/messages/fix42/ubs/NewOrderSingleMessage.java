@@ -16,7 +16,6 @@
 package fixengine.messages.fix42.ubs;
 
 import fixengine.messages.MessageHeader;
-import fixengine.messages.OrdTypeValue;
 import fixengine.messages.Required;
 import fixengine.tags.ClOrdID;
 import fixengine.tags.ExecInst;
@@ -42,12 +41,12 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(Symbol.TAG);
         field(Side.Tag());
         field(OrderQty.TAG);
-        field(OrdType.TAG);
+        field(OrdType.Tag());
         field(TransactTime.TAG);
-        field(OrderCapacity.TAG);
+        field(OrderCapacity.Tag());
         field(Price.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(OrdType.TAG).equals(OrdTypeValue.LIMIT);
+                return getEnum(OrdType.Tag()).equals(OrdType.Limit());
             }
         });
         field(TimeInForce.Tag(), Required.NO);

@@ -26,6 +26,7 @@ import static fixengine.messages.MsgTypeValue.TEST_REQUEST;
 
 import java.util.logging.Logger;
 
+import fixengine.messages.Value;
 import lang.DefaultTimeSource;
 import lang.TimeSource;
 
@@ -34,9 +35,7 @@ import org.joda.time.DateTime;
 import silvertip.Connection;
 import fixengine.Config;
 import fixengine.messages.BusinessMessageRejectMessage;
-import fixengine.messages.BusinessRejectReasonValue;
 import fixengine.messages.DefaultMessageVisitor;
-import fixengine.messages.EncryptMethodValue;
 import fixengine.messages.FixMessage;
 import fixengine.messages.HeartbeatMessage;
 import fixengine.messages.LogonMessage;
@@ -51,7 +50,6 @@ import fixengine.messages.Parser;
 import fixengine.messages.RejectMessage;
 import fixengine.messages.ResendRequestMessage;
 import fixengine.messages.SequenceResetMessage;
-import fixengine.messages.SessionRejectReasonValue;
 import fixengine.messages.TestRequestMessage;
 import fixengine.messages.Validator.ErrorHandler;
 import fixengine.messages.Validator.ErrorLevel;
@@ -123,7 +121,7 @@ public class Session {
                             processMessage(conn, message, visitor);
                     }
 
-                    @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
+                    @Override public void invalidMessage(int msgSeqNum, Value<Integer> reason, String text) {
                     }
 
                     @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {
@@ -183,7 +181,7 @@ public class Session {
         } else if (message.getNewSeqNo() < message.getMsgSeqNum()) {
             String text = "Value is incorrect (out of range) for this tag, NewSeqNum(36)=" + message.getNewSeqNo();
             getLogger().warning(text);
-            sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE, text);
+            sessionReject(conn, message.getMsgSeqNum(), SessionRejectReason.InvalidValue(), text);
         } else {
             incomingQueue.reset(message.getNewSeqNo());
         }
@@ -205,7 +203,7 @@ public class Session {
                     }
                 }
 
-                @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
+                @Override public void invalidMessage(int msgSeqNum, Value<Integer> reason, String text) {
                     terminateOnMsgSeqNumTooLow(conn, message);
                 }
 
@@ -236,7 +234,7 @@ public class Session {
                         incomingQueue.skip(message.getMsgSeqNum());
                 }
 
-                @Override public void invalidMessage(int msgSeqNum, SessionRejectReasonValue reason, String text) {
+                @Override public void invalidMessage(int msgSeqNum, Value<Integer> reason, String text) {
                     incomingQueue.skip(msgSeqNum);
                     if (authenticated) {
                         getLogger().severe(text);
@@ -250,13 +248,13 @@ public class Session {
                 @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {
                     getLogger().warning("MsgType(35): Unknown message type: " + msgType);
                     incomingQueue.skip(msgSeqNum);
-                    businessReject(conn, msgType, msgSeqNum, BusinessRejectReasonValue.UNKNOWN_MESSAGE_TYPE, "MsgType(35): Unknown message type: " + msgType);
+                    businessReject(conn, msgType, msgSeqNum, BusinessRejectReason.UnknownMessageType(), "MsgType(35): Unknown message type: " + msgType);
                 }
 
                 @Override public void invalidMsgType(String msgType, int msgSeqNum) {
                     getLogger().warning("MsgType(35): Invalid message type: " + msgType);
                     incomingQueue.skip(msgSeqNum);
-                    sessionReject(conn, msgSeqNum, SessionRejectReasonValue.INVALID_MSG_TYPE, "MsgType(35): Invalid message type: " + msgType);
+                    sessionReject(conn, msgSeqNum, SessionRejectReason.InvalidMsgType(), "MsgType(35): Invalid message type: " + msgType);
                 }
             });
         }
@@ -276,14 +274,14 @@ public class Session {
 
     private boolean validate(final Connection conn, final Message message) {
         return MessageValidator.validate(this, message, new ErrorHandler() {
-            @Override public void sessionReject(SessionRejectReasonValue reason, String text, ErrorLevel level, boolean terminate) {
+            @Override public void sessionReject(Value<Integer> reason, String text, ErrorLevel level, boolean terminate) {
                 logError(text, level);
                 Session.this.sessionReject(conn, message, reason, text);
                 if (terminate)
                     Session.this.terminate(conn, text);
             }
 
-            @Override public void businessReject(BusinessRejectReasonValue reason, String text, ErrorLevel level) {
+            @Override public void businessReject(Value<Integer> reason, String text, ErrorLevel level) {
                 logError(text, level);
                 Session.this.businessReject(conn, message.getMsgType(), message.getMsgSeqNum(), reason, text);
             }
@@ -385,30 +383,30 @@ public class Session {
     private void processSeqReset(Connection conn, SequenceResetMessage message) {
         int newSeqNo = message.getInteger(NewSeqNo.TAG);
         if (newSeqNo <= message.getMsgSeqNum()) {
-            sessionReject(conn, message.getMsgSeqNum(), SessionRejectReasonValue.INVALID_VALUE,
+            sessionReject(conn, message.getMsgSeqNum(), SessionRejectReason.InvalidValue(),
                 "Attempt to lower sequence number, invalid value NewSeqNum(36)=" + newSeqNo);
         } else {
             incomingQueue.reset(newSeqNo);
         }
     }
 
-    private void sessionReject(Connection conn, Message message, SessionRejectReasonValue reason, String text) {
+    private void sessionReject(Connection conn, Message message, Value<Integer> reason, String text) {
         sessionReject(conn, message.getMsgSeqNum(), reason, text);
     }
 
-    private void sessionReject(Connection conn, int msgSeqNum, SessionRejectReasonValue reason, String text) {
+    private void sessionReject(Connection conn, int msgSeqNum, Value<Integer> reason, String text) {
         RejectMessage reject = (RejectMessage) messageFactory.create(REJECT);
         reject.setInteger(RefSeqNo.TAG, msgSeqNum);
-        reject.setEnum(SessionRejectReason.TAG, reason);
+        reject.setEnum(SessionRejectReason.Tag(), reason);
         reject.setString(Text.TAG, text);
         send(conn, reject);
     }
 
-    private void businessReject(Connection conn, String msgType, int msgSeqNum, BusinessRejectReasonValue reason, String text) {
+    private void businessReject(Connection conn, String msgType, int msgSeqNum, Value<Integer> reason, String text) {
         BusinessMessageRejectMessage reject = (BusinessMessageRejectMessage) messageFactory.create(BUSINESS_MESSAGE_REJECT);
         reject.setInteger(RefSeqNo.TAG, msgSeqNum);
         reject.setString(RefMsgType.TAG, msgType);
-        reject.setEnum(BusinessRejectReason.TAG, reason);
+        reject.setEnum(BusinessRejectReason.Tag(), reason);
         reject.setString(Text.TAG, text);
         send(conn, reject);
     }
@@ -424,7 +422,7 @@ public class Session {
         authenticated = initiatedLogout = false;
         LogonMessage message = (LogonMessage) messageFactory.create(LOGON);
         message.setInteger(HeartBtInt.TAG, 30);
-        message.setEnum(EncryptMethod.TAG, EncryptMethodValue.NONE);
+        message.setEnum(EncryptMethod.Tag(), EncryptMethod.None());
         sendOutOfQueue(conn, message);
     }
 

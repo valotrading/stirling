@@ -48,7 +48,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(ClOrdID.TAG);
         field(OrigClOrdID.TAG, Required.NO);
         field(ExecID.TAG);
-        field(ExecType.TAG);
+        field(ExecType.Tag());
         field(ExecTransType.Tag());
         field(ExecRefID.TAG, new Required() {
             @Override public boolean isRequired() {
@@ -59,7 +59,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(Symbol.TAG);
         field(Side.Tag());
         field(OrderQty.TAG);
-        field(OrdStatus.TAG);
+        field(OrdStatus.Tag());
         field(LastShares.TAG, Required.NO);
         field(LastPx.TAG, Required.NO);
         field(LastMkt.TAG, Required.NO);

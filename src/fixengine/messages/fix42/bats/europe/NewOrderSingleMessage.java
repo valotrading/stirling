@@ -16,9 +16,7 @@
 package fixengine.messages.fix42.bats.europe;
 
 import fixengine.messages.MessageHeader;
-import fixengine.messages.OrdTypeValue;
 import fixengine.messages.Required;
-
 import fixengine.tags.Account;
 import fixengine.tags.ClOrdID;
 import fixengine.tags.Currency;
@@ -31,11 +29,10 @@ import fixengine.tags.OrderQty;
 import fixengine.tags.PegDifference;
 import fixengine.tags.Price;
 import fixengine.tags.SecurityExchange;
-import fixengine.tags.fix42.Side;
 import fixengine.tags.Symbol;
-
 import fixengine.tags.fix42.ClearingAccount;
 import fixengine.tags.fix42.ClearingFirm;
+import fixengine.tags.fix42.Side;
 import fixengine.tags.fix42.bats.europe.DisplayIndicator;
 import fixengine.tags.fix42.bats.europe.ExecInst;
 import fixengine.tags.fix42.bats.europe.IDSource;
@@ -67,13 +64,13 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
             }
         });
         field(OrderQty.TAG);
-        field(OrdType.TAG);
+        field(OrdType.Tag());
         field(Price.TAG, new Required() {
             @Override public boolean isRequired() {
-                return getEnum(OrdType.TAG).equals(OrdTypeValue.LIMIT);
+                return getEnum(OrdType.Tag()).equals(OrdType.Limit());
             }
         });
-        field(OrderCapacity.TAG, Required.NO);
+        field(OrderCapacity.Tag(), Required.NO);
         field(SecurityID.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return hasValue(IDSource.Tag());

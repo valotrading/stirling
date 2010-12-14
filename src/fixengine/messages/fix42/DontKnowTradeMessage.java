@@ -48,7 +48,7 @@ public class DontKnowTradeMessage extends AbstractMessage {
     protected void fields() {
         field(OrderID.TAG);
         field(ExecID.TAG);
-        field(DKReason.TAG);
+        field(DKReason.Tag());
         field(Symbol.TAG);
         /* SymbolSfx(65) */
         field(SecurityID.TAG, Required.NO);

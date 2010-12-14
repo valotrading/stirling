@@ -164,7 +164,11 @@ public abstract class AbstractField<T> implements Field {
     }
 
     public String prettyName() {
-        return name() + "(" + tag() + ")";
+        return removeTrailingDollar(name()) + "(" + tag() + ")";
+    }
+
+    private static String removeTrailingDollar(String s) {
+        return s.replaceFirst("\\$$","");
     }
 
     @Override public String toString() {

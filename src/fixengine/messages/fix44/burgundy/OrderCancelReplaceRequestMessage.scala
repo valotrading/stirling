@@ -39,7 +39,7 @@ class OrderCancelReplaceRequestMessage(header: MessageHeader) extends AbstractMe
   field(ExecInst.Tag, Required.NO)
   field(OrderID.TAG, Required.NO)
   field(OrderQty.TAG)
-  field(OrdType.TAG)
+  field(OrdType.Tag)
   field(OrigClOrdID.TAG)
   field(Price.TAG)
   field(Side.Tag)

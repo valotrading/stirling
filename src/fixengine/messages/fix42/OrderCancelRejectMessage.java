@@ -45,9 +45,9 @@ public class OrderCancelRejectMessage extends AbstractMessage implements fixengi
         field(OrderID.TAG);
         field(ClOrdID.TAG);
         field(OrigClOrdID.TAG);
-        field(OrdStatus.TAG);
-        field(CxlRejResponseTo.TAG);
-        field(CxlRejReason.TAG, Required.NO);
+        field(OrdStatus.Tag());
+        field(CxlRejResponseTo.Tag());
+        field(CxlRejReason.Tag(), Required.NO);
         field(Text.TAG, Required.NO);
     }
 }

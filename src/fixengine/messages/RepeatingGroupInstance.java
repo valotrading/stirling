@@ -1,5 +1,7 @@
 package fixengine.messages;
 
+import fixengine.tags.SessionRejectReason;
+
 import java.nio.ByteBuffer;
 
 public class RepeatingGroupInstance extends FieldContainer implements Field {
@@ -12,7 +14,7 @@ public class RepeatingGroupInstance extends FieldContainer implements Field {
     @Override public void parse(ByteBuffer b) {
         int tag = Tag.peekTag(b);
         if (tag != delimiter.value())
-            throw new ParseException(lookup(tag).prettyName() + ": Repeating group fields out of order", SessionRejectReasonValue.OUT_OF_ORDER_GROUP_FIELD);
+            throw new ParseException(lookup(tag).prettyName() + ": Repeating group fields out of order", SessionRejectReason.OutOfOrderGroupField());
         super.parse(b);
     }
 

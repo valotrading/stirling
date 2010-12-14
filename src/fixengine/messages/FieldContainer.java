@@ -126,8 +126,8 @@ public class FieldContainer implements Iterable<Field> {
         field.setValue(value);
     }
 
-    @SuppressWarnings("unchecked") public <T extends Formattable> void setEnum(Tag<? extends EnumField<T>> tag, T value) {
-        EnumField<T> field = (EnumField<T>) lookup(tag);
+    @SuppressWarnings("unchecked") public <T> void setEnum(Tag<? extends EnumField<Value<T>>> tag, Value<T> value) {
+        EnumField<Value<T>> field = (EnumField<Value<T>>) lookup(tag);
         field.setValue(value);
     }
 

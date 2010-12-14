@@ -34,7 +34,7 @@ public class DontKnowTradeMessage extends fixengine.messages.fix42.DontKnowTrade
     @Override protected void fields() {
         field(OrderID.TAG);
         field(ExecID.TAG);
-        field(DKReason.TAG);
+        field(DKReason.Tag());
         field(Symbol.TAG);
         field(Side.Tag());
         field(OrderQty.TAG, Required.NO);

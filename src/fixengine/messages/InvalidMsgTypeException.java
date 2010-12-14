@@ -15,12 +15,14 @@
  */
 package fixengine.messages;
 
+import fixengine.tags.SessionRejectReason;
+
 /**
  * @author Pekka Enberg
  */
 public class InvalidMsgTypeException extends ParseException {
     public InvalidMsgTypeException(String message) {
-        super(message, SessionRejectReasonValue.INVALID_MSG_TYPE);
+        super(message, SessionRejectReason.InvalidMsgType());
     }
 
     private static final long serialVersionUID = 1L;
