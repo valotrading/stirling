@@ -119,6 +119,14 @@ object UnsolicitedIndicator extends BooleanTag(325) {
   val Tag = this
 }
 
+object TradeSesReqID extends StringTag(335) {
+  val Tag = this
+}
+
+object TradingSessionID extends StringTag(336) {
+  val Tag = this
+}
+
 object DiscretionInst extends EnumTag[Integer](388) {
   val Tag = this
   val RelatedToDisplayedPrice = Value(0)

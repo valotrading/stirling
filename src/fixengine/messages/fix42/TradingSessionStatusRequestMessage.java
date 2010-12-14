@@ -30,7 +30,7 @@ public class TradingSessionStatusRequestMessage extends AbstractMessage implemen
         super(header);
 
         field(TradSesReqID.TAG);
-        field(TradingSessionID.TAG);
+        field(TradingSessionID.Tag());
         field(TradSesMethod.TAG);
         field(TradSesMode.TAG);
         field(SubscriptionRequestType.Tag());
