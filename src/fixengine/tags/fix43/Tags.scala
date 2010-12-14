@@ -15,8 +15,22 @@
  */
 package fixengine.tags.fix43
 
-import java.lang.{Character, Integer}
-import fixengine.messages.{StringTag, EnumTag, Value}
+import fixengine.messages.{
+  AmtTag,
+  BooleanTag,
+  EnumTag,
+  IntegerTag,
+  LocalMktDateTag,
+  PriceTag,
+  QtyTag,
+  StringTag,
+  Value
+}
+import java.lang.{
+  Character,
+  Integer,
+  String
+}
 
 object SecurityIDSource extends EnumTag[Character](22) {
   val Tag = this
@@ -86,4 +100,8 @@ object LegSide extends EnumTag[Character](624) {
   val CrossShortExempt = Value('A')
   val AsDefined = Value('B')
   val Opposite = Value('C')
+}
+
+object Price2 extends PriceTag(640) {
+  val Tag = this
 }
