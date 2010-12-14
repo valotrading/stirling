@@ -17,7 +17,6 @@ package fixengine.messages;
 
 import fixengine.messages.fix42.AllocationMessage;
 import fixengine.messages.fix42.DontKnowTradeMessage;
-import fixengine.messages.fix42.ExecutionReportMessage;
 import fixengine.messages.fix42.OrderStatusRequestMessage;
 
 /**

@@ -51,7 +51,7 @@ import fixengine.tags.fix42.ExecTransType;
 /**
  * @author Pekka Enberg 
  */
-public class ExecutionReportMessage extends AbstractMessage {
+public class ExecutionReportMessage extends AbstractMessage implements fixengine.messages.ExecutionReportMessage {
     public ExecutionReportMessage(MessageHeader header) {
         super(header);
 
