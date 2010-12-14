@@ -13,39 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.tags.fix44.mbtrading
+package fixengine.messages
 
-import fixengine.messages.{
-  FloatTag,
-  IntegerTag,
-  QtyTag,
-  StringTag
-}
-
-object PosPendBuy extends QtyTag(10000) {
-  val Tag = this
-}
-
-object PosPendSell extends QtyTag(10001) {
-  val Tag = this
-}
-
-object PosBuyPowerUsed extends FloatTag(10003) {
-  val Tag = this
-}
-
-object PosRealizedPNL extends FloatTag(10004) {
-  val Tag = this
-}
-
-object PosEquityUsed extends FloatTag(10015) {
-  val Tag = this
-}
-
-object MBTXAggressive extends IntegerTag(10022) {
-  val Tag = this
-}
-
-object OrderGroupID1 extends StringTag(10055) {
-  val Tag = this
-}
+trait RequestForPositionsMessage extends Message

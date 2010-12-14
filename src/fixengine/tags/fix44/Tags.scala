@@ -15,8 +15,22 @@
  */
 package fixengine.tags.fix44
 
-import fixengine.messages.{EnumTag, Value, BooleanTag, IntegerTag, PriceTag}
-import java.lang.{Character, Integer, String}
+import fixengine.messages.{
+  AmtTag,
+  BooleanTag,
+  EnumTag,
+  IntegerTag,
+  LocalMktDateTag,
+  PriceTag,
+  QtyTag,
+  StringTag,
+  Value
+}
+import java.lang.{
+  Character,
+  Integer,
+  String
+}
 
 object PartyRole extends EnumTag[Integer](452) {
   val Tag = this
@@ -62,6 +76,38 @@ object MassCancelRejectReason extends EnumTag[String](532) {
   val InvalidSecurityType = Value("5")
   val InvalidTrdSession = Value("6")
   val Other = Value("99")
+}
+
+object LongQty extends QtyTag(704) {
+  val Tag = this
+}
+
+object ShortQty extends QtyTag(705) {
+  val Tag = this
+}
+
+object PosReqID extends StringTag(710) {
+  val Tag = this
+}
+
+object ClearingBusinessDate extends LocalMktDateTag(715) {
+  val Tag = this
+}
+
+object PosMaintRptID extends StringTag(721) {
+  val Tag = this
+}
+
+object TotalNumPosReports extends IntegerTag(727) {
+  val Tag = this
+}
+
+object PosReqResult extends IntegerTag(728) {
+  val Tag = this
+}
+
+object SettlPrice extends PriceTag(730) {
+  val Tag = this
 }
 
 object PegMoveType extends EnumTag[Integer](835) {

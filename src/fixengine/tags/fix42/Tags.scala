@@ -15,9 +15,30 @@
  */
 package fixengine.tags.fix42
 
-import fixengine.messages.{EnumTag, Value}
-import java.lang.Character
-import java.lang.Integer
+import fixengine.messages.{
+  AmtTag,
+  BooleanTag,
+  EnumTag,
+  IntegerTag,
+  LocalMktDateTag,
+  PriceTag,
+  QtyTag,
+  StringTag,
+  Value
+}
+import java.lang.{
+  Character,
+  Integer,
+  String
+}
+
+object Account extends StringTag(1) {
+  val Tag = this
+}
+
+object Commission extends AmtTag(12) {
+  val Tag = this
+}
 
 object LastCapacity extends EnumTag[Integer](29) {
   val Tag = this
@@ -51,6 +72,10 @@ object Side extends EnumTag[Character](54) {
   val Opposite = Value('C')
 }
 
+object Symbol extends StringTag(55) {
+  val Tag = this
+}
+
 object TimeInForce extends EnumTag[Integer](59) {
   val Tag = this
   val Day = Value(0)
@@ -73,6 +98,10 @@ object AllocTransType extends EnumTag[Integer](71) {
   val CalculatedWithoutPrelminary = Value(5) /* Calculated without Preliminary (sent unsolicited by broker, includes MiscFees and NetMoney) */
 }
 
+object TradeDate extends LocalMktDateTag(75) {
+  val Tag = this
+}
+
 object CustomerOrFirm extends EnumTag[Integer](204) {
   val Tag = this
   val Customer = Value(0)
@@ -84,6 +113,10 @@ object SubscriptionRequestType extends EnumTag[Character](263) {
   val Snapshot = Value('0')
   val SnapshotUpdate = Value('1')
   val Unsubscribe = Value('2')
+}
+
+object UnsolicitedIndicator extends BooleanTag(325) {
+  val Tag = this
 }
 
 object DiscretionInst extends EnumTag[Integer](388) {
