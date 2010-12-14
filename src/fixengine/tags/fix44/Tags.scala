@@ -64,17 +64,6 @@ object MassCancelRejectReason extends EnumTag[String](532) {
   val Other = Value("99")
 }
 
-object PeggedPrice extends PriceTag(839) {
-  val Tag = this
-}
-
-object LastLiquidityInd extends EnumTag[Integer](851) {
-  val Tag = this
-  val AddedLiquidity = Value(1)
-  val RemovedLiquidity = Value(2)
-  val LiquidityRoutedOut = Value(3)
-}
-
 object PegMoveType extends EnumTag[Integer](835) {
   val Tag = this
   val Floating = Value(0)
@@ -89,12 +78,23 @@ object PegOffsetType extends EnumTag[Integer](836) {
   val PriceTierLevel = Value(3)
 }
 
+object PeggedPrice extends PriceTag(839) {
+  val Tag = this
+}
+
 object PegScope extends EnumTag[Integer](840) {
   val Tag = this
   val Local = Value(1)
   val National = Value(2)
   val Global = Value(3)
   val NationalExcludingLocal = Value(4)
+}
+
+object LastLiquidityInd extends EnumTag[Integer](851) {
+  val Tag = this
+  val AddedLiquidity = Value(1)
+  val RemovedLiquidity = Value(2)
+  val LiquidityRoutedOut = Value(3)
 }
 
 object TotNumReports extends IntegerTag(911) {
