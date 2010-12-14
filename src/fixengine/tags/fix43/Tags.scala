@@ -38,6 +38,17 @@ object SecurityIDSource extends EnumTag[Character](22) {
   val ExchangeSymbol = Value('8')
 }
 
+object TradSesStatus extends EnumTag(340) {
+  val Tag = this
+  val Unknown = Value(0)
+  val Halted = Value(1)
+  val Open = Value(2)
+  val Closed = Value(3)
+  val PreOpen = Value(4)
+  val PreClose = Value(5)
+  val RequestRejected = Value(6)
+}
+
 object PartyIDSource extends EnumTag[Character](447) {
   val Tag = this
   val Custom = Value('D')
@@ -100,6 +111,10 @@ object LegSide extends EnumTag[Character](624) {
   val CrossShortExempt = Value('A')
   val AsDefined = Value('B')
   val Opposite = Value('C')
+}
+
+object TradingSessionSubID extends StringTag(625) {
+  val Tag = this
 }
 
 object Price2 extends PriceTag(640) {

@@ -22,11 +22,19 @@ import fixengine.messages.{
   Required,
   TradingSessionStatusMessage => TradingSessionStatusMessageTrait
 }
+import fixengine.tags.fix42.{
+  TradeSesReqID,
+  TradingSessionID
+}
+import fixengine.tags.fix43.{
+  TradSesStatus,
+  TradingSessionSubID
+}
 
 class TradingSessionStatusMessage(header: MessageHeader) extends AbstractMessage(header) with TradingSessionStatusMessageTrait {
   field(TradeSesReqID.Tag)
   field(TradingSessionID.Tag, Required.NO)
-  field(TradingSessionStatus.Tag, Required.NO)
+  field(TradSesStatus.Tag, Required.NO)
   field(TradingSessionSubID.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

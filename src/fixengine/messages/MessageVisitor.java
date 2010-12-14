@@ -48,4 +48,5 @@ public interface MessageVisitor {
     void visit(TradingSessionStatusRequestMessage message);
     void visit(CollateralInquiryMessage message);
     void visit(RequestForPositionsMessage message);
+    void visit(TradingSessionStatusMessage message);
 }
