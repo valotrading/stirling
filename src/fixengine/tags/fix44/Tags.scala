@@ -16,7 +16,7 @@
 package fixengine.tags.fix44
 
 import fixengine.messages.{EnumTag, Value, BooleanTag, IntegerTag, PriceTag}
-import java.lang.{Integer, Character}
+import java.lang.{Character, Integer, String}
 
 object PartyRole extends EnumTag[Integer](452) {
   val Tag = this
@@ -38,6 +38,30 @@ object MassCancelRequestType extends EnumTag[Character](530) {
   val CxlOrdersSecurityType = Value('5')
   val CxlOrdersTrdSession = Value('6')
   val CxlAllOrders = Value('7')
+}
+
+object MassCancelResponse extends EnumTag[Character](531) {
+  val Tag = this
+  val CxlReqRej = Value('0')
+  val CxlOrdersSecurity = Value('1')
+  val CxlOrdersUnderlyingSecurity = Value('2')
+  val CxlOrdersProduct = Value('3')
+  val CxlOrdersCFICode = Value('4')
+  val CxlOrdersSecurityType = Value('5')
+  val CxlOrdersTrdSession = Value('6')
+  val CxlAllOrders = Value('7')
+}
+
+object MassCancelRejectReason extends EnumTag[String](532) {
+  val Tag = this
+  val MassCxlNotSupported = Value("0")
+  val InvalidSecurity = Value("1")
+  val InvalidUnderlying = Value("2")
+  val InvalidProduct = Value("3")
+  val InvalidCFICode = Value("4")
+  val InvalidSecurityType = Value("5")
+  val InvalidTrdSession = Value("6")
+  val Other = Value("99")
 }
 
 object PeggedPrice extends PriceTag(839) {
