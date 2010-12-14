@@ -15,4 +15,11 @@
  */
 package fixengine.messages
 
+trait RequestForPositionsMessage extends Message
 trait TradingSessionStatusMessage extends Message
+trait NewOrderMultiLegMessage extends RequestMessage
+trait OrderCancelRejectMessage extends Message
+trait OrderCancelReplaceRequestMessage extends Message
+trait OrderMassCancelReportMessage extends Message
+trait OrderMassCancelRequestMessage extends Message
+trait OrderMassStatusRequestMessage extends Message
