@@ -15,7 +15,7 @@
  */
 package fixengine.tags.fix43
 
-import java.lang.Character
+import java.lang.{Character, Integer}
 import fixengine.messages.{StringTag, EnumTag, Value}
 
 object SecurityIDSource extends EnumTag[Character](22) {
@@ -58,6 +58,18 @@ object LegPositionEffect extends EnumTag[Character](564) {
 
 object MassStatusReqID extends StringTag(584) {
   val Tag = this
+}
+
+object MassStatusReqType extends EnumTag[Integer](585) {
+  val Tag = this
+  val StatusSecurity = Value(1)
+  val StatusUnderlyingSecurity = Value(2)
+  val StatusProduct = Value(3)
+  val StatusCFICode = Value(4)
+  val StatusSecurityType = Value(5)
+  val StatusTrdSession = Value(6)
+  val StatusAllOrders = Value(7)
+  val StatusPartyID = Value(8)
 }
 
 object LegSide extends EnumTag[Character](624) {
