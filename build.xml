@@ -26,10 +26,6 @@
     <pathelement location="${main.build}"/>
     <pathelement location="${test.build}"/>
   </path>
-  <!-- Scala for Ant -->
-  <taskdef resource="scala/tools/ant/antlib.xml">
-    <classpath refid="lib.path.id"/>
-  </taskdef>
   <!-- Automatic installation of Ivy -->
   <property name="ivy.install.version" value="2.2.0"/>
   <condition property="ivy.home" value="${env.IVY_HOME}">
@@ -53,10 +49,15 @@
       <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
     </path>
     <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+    <ivy:retrieve/>
+  </target>
+  <target name="init-scala" depends="init-ivy">
+    <taskdef resource="scala/tools/ant/antlib.xml">
+      <classpath refid="lib.path.id"/>
+    </taskdef>
   </target>
   <!-- Bread and butter -->
-  <target name="init" depends="init-ivy">
-    <ivy:retrieve/>
+  <target name="init" depends="init-scala">
     <mkdir dir="${main.build}"/>
     <mkdir dir="${examples.build}"/>
     <mkdir dir="${test.build}"/>
