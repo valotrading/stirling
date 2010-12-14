@@ -27,7 +27,7 @@ import fixengine.tags.fix44.Username
 
 class CollateralInquiryMessage(header: MessageHeader) extends AbstractMessage(header) with CollateralInquiryMessageTrait {
   field(Account.TAG)
-  field(SubscriptionRequestType.TAG)
+  field(SubscriptionRequestType.Tag)
   field(Username.TAG)
   field(Password.TAG)
   field(CollInquiryID.TAG)

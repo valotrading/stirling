@@ -33,7 +33,7 @@ public class TradingSessionStatusRequestMessage extends AbstractMessage implemen
         field(TradingSessionID.TAG);
         field(TradSesMethod.TAG);
         field(TradSesMode.TAG);
-        field(SubscriptionRequestType.TAG);
+        field(SubscriptionRequestType.Tag());
     }
 
     @Override public void apply(MessageVisitor visitor) {

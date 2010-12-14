@@ -79,6 +79,13 @@ object CustomerOrFirm extends EnumTag[Integer](204) {
   val Firm = Value(1)
 }
 
+object SubscriptionRequestType extends EnumTag[Character](263) {
+  val Tag = this
+  val Snapshot = Value('0')
+  val SnapshotUpdate = Value('1')
+  val Unsubscribe = Value('2')
+}
+
 object DiscretionInst extends EnumTag[Integer](388) {
   val Tag = this
   val RelatedToDisplayedPrice = Value(0)
