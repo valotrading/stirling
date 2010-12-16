@@ -19,6 +19,7 @@ import fixengine.messages.{
   AmtTag,
   BooleanTag,
   EnumTag,
+  ExchangeTag,
   IntegerTag,
   LocalMktDateTag,
   PriceTag,
@@ -99,6 +100,10 @@ object AllocTransType extends EnumTag[Integer](71) {
 }
 
 object TradeDate extends LocalMktDateTag(75) {
+  val Tag = this
+}
+
+object ExDestination extends ExchangeTag(100) {
   val Tag = this
 }
 

@@ -31,12 +31,12 @@ case class Value[T](val v: T) extends Formattable {
   def value = v.toString
 }
 
-
 abstract class BooleanTag(value: Int) extends Tag[BooleanField](value, classOf[BooleanField])
 abstract class FloatTag(value: Int) extends Tag[FloatField](value, classOf[FloatField])
 abstract class IntegerTag(value: Int) extends Tag[IntegerField](value, classOf[IntegerField])
 abstract class StringTag(value: Int) extends Tag[StringField](value, classOf[StringField])
 
+abstract class ExchangeTag(value: Int) extends Tag[ExchangeField](value, classOf[ExchangeField])
 abstract class LocalMktDateTag(value: Int) extends Tag[LocalMktDateField](value, classOf[LocalMktDateField])
 abstract class UtcTimestampTag(value: Int) extends Tag[UtcTimestampField](value, classOf[UtcTimestampField])
 

@@ -71,7 +71,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(heade
   field(TimeInForce.Tag)
   field(TransactTime.TAG)
   field(StopPx.TAG, Required.NO)
-  field(ExDestination.TAG)
+  field(ExDestination.Tag)
   field(MaxFloor.Tag, Required.NO)
   field(LocateReqd.Tag, Required.NO)
   field(ExpireTime.TAG, new Required() {
