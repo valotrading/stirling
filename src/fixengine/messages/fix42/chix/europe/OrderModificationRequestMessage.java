@@ -45,10 +45,10 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
         field(ClOrdID.Tag());
         field(ExecInst.Tag(), Required.NO);
         field(HandlInst.Tag());
-        field(OrderQty.TAG);
+        field(OrderQty.Tag());
         field(OrdType.Tag());
         field(OrigClOrdID.Tag());
-        field(Price.TAG, new Required() {
+        field(Price.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return getEnum(OrdType.Tag()).equals(OrdType.Limit());
             }
@@ -58,8 +58,8 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
         field(Symbol.Tag(), Required.NO);
         field(TimeInForce.Tag(), Required.NO);
         field(TransactTime.TAG);
-        field(MinQty.TAG, Required.NO);
-        field(MaxFloor.TAG, Required.NO);
+        field(MinQty.Tag(), Required.NO);
+        field(MaxFloor.Tag(), Required.NO);
         field(ExpireTime.TAG, new Required() {
             @Override public boolean isRequired() {
                 return getEnum(TimeInForce.Tag()).equals(TimeInForce.GoodTillDate());

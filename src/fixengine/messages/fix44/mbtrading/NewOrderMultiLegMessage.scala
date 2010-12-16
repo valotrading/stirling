@@ -54,7 +54,7 @@ class NewOrderMultiLegMessage(header: MessageHeader) extends AbstractMessage(hea
   field(ClOrdID.Tag)
   field(ExecInst.Tag, Required.NO)
   field(HandlInst.Tag)
-  field(OrderQty.TAG)
+  field(OrderQty.Tag)
   field(OrdType.Tag)
   field(StopPx.TAG, Required.NO)
   field(Side.Tag)

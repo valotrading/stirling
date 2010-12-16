@@ -15,11 +15,15 @@
  */
 package fixengine.tags
 
-import fixengine.messages.{EnumTag, StringTag, Value}
+import fixengine.messages.{EnumTag, FloatTag, StringTag, Value}
 import java.lang.{Character, Integer, String}
 
 
 object Account extends StringTag(1) {
+  val Tag = this
+}
+
+object AvgPx extends FloatTag(6) {
   val Tag = this
 }
 
@@ -33,6 +37,10 @@ object CheckSum extends StringTag(10) {
 }
 
 object ClOrdID extends StringTag(11) {
+  val Tag = this
+}
+
+object CumQty extends FloatTag(14) {
   val Tag = this
 }
 
@@ -69,11 +77,23 @@ object LastMkt extends StringTag(30) {
   val Tag = this
 }
 
+object LastPx extends FloatTag(31) {
+  val Tag = this
+}
+
+object LastShares extends FloatTag(32) {
+  val Tag = this
+}
+
 object MsgType extends StringTag(35) {
   val Tag = this
 }
 
 object OrderID extends StringTag(37) {
+  val Tag = this
+}
+
+object OrderQty extends FloatTag(38) {
   val Tag = this
 }
 
@@ -127,6 +147,10 @@ object OrigClOrdID extends StringTag(41) {
   val Tag = this
 }
 
+object Price extends FloatTag(44) {
+  val Tag = this
+}
+
 object OrderCapacity extends EnumTag[Character](47) {
   val Tag = this
   val Agency = Value('A') /* Agency single order */
@@ -146,6 +170,9 @@ object SenderSubID extends StringTag(50) {
   val Tag = this
 }
 
+object Shares extends FloatTag(53) {
+  val Tag = this
+}
 object Symbol extends StringTag(55) {
   val Tag = this
 }
@@ -244,11 +271,23 @@ object OrdRejReason extends EnumTag[Integer](103) {
   val SurveillanceOption = Value(12)
 }
 
+object MinQty extends FloatTag(110) {
+  val Tag = this
+}
+
+object MaxFloor extends FloatTag(111) {
+  val Tag = this
+}
+
 object TestReqID extends StringTag(112) {
   val Tag = this
 }
 
 object OnBehalfOfCompID extends StringTag(115) {
+  val Tag = this
+}
+
+object SettlCurrAmt extends FloatTag(119) {
   val Tag = this
 }
 
@@ -302,7 +341,15 @@ object ExecType extends EnumTag[Character](150) {
   val OrderStatus = Value('I')
 }
 
+object LeavesQty extends FloatTag(151) {
+  val Tag = this
+}
+
 object SecurityType extends StringTag(167) {
+  val Tag = this
+}
+
+object OrderQty2 extends FloatTag(192) {
   val Tag = this
 }
 
@@ -396,6 +443,7 @@ object ExecRestatementReason extends EnumTag[Integer](378) {
   val CancelOnSystemFailure = Value(7)
   val MarketOption = Value(8)
 }
+
 object BusinessRejectReason extends EnumTag[Integer](380) {
   val Tag = this
 

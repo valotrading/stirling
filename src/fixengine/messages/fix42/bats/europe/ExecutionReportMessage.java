@@ -70,7 +70,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
     @Override protected void fields() {
         field(Account.Tag(), Required.NO);
         field(ClOrdID.Tag());
-        field(CumQty.TAG);
+        field(CumQty.Tag());
         field(Currency.Tag(), Required.NO);
         field(ExecID.Tag());
         field(ExecInst.Tag(), Required.NO);
@@ -82,14 +82,14 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         });
         field(ExecTransType.Tag());
         field(IDSource.Tag(), Required.NO);
-        field(LastPx.TAG);
-        field(LastShares.TAG);
+        field(LastPx.Tag());
+        field(LastShares.Tag());
         field(OrderID.Tag());
-        field(OrderQty.TAG);
+        field(OrderQty.Tag());
         field(OrdStatus.Tag());
         field(OrigClOrdID.Tag(), Required.NO);
-        field(Price.TAG, Required.NO);
-        field(AvgPx.TAG, Required.NO);
+        field(Price.Tag(), Required.NO);
+        field(AvgPx.Tag(), Required.NO);
         field(SecurityID.Tag(), Required.NO);
         field(Side.Tag());
         field(Symbol.Tag(), Required.NO);
@@ -97,14 +97,14 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(TimeInForce.Tag(), Required.NO);
         field(TransactTime.TAG);
         field(OrdRejReason.Tag(), Required.NO);
-        field(MaxFloor.TAG, Required.NO);
+        field(MaxFloor.Tag(), Required.NO);
         field(ExpireTime.TAG, new Required() {
             @Override public boolean isRequired() {
                 return TimeInForce.GoodTillDate().equals(getEnum(TimeInForce.Tag()));
             }
         });
         field(ExecType.Tag());
-        field(LeavesQty.TAG);
+        field(LeavesQty.Tag());
         field(SecondaryOrderID.Tag(), Required.NO);
         field(SecurityExchange.Tag(), Required.NO);
         field(ContraBroker.Tag(), Required.NO);
@@ -132,7 +132,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
             }
         });
         field(MaxRemovePct.TAG, Required.NO);
-        field(MinQty.TAG, Required.NO);
+        field(MinQty.Tag(), Required.NO);
         field(PegDifference.TAG, Required.NO);
     }
 }

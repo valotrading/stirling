@@ -45,10 +45,10 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(ExecInst.Tag(), Required.NO);
         field(HandlInst.Tag());
         field(Currency.Tag(), Required.NO);
-        field(OrderQty.TAG);
+        field(OrderQty.Tag());
         field(MaxShow.TAG, Required.NO);
-        field(MinQty.TAG, Required.NO);
-        field(Price.TAG);
+        field(MinQty.Tag(), Required.NO);
+        field(Price.Tag());
         field(Side.Tag());
         field(Symbol.Tag());
         field(OrdType.Tag());

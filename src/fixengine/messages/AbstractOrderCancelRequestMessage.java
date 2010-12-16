@@ -44,6 +44,6 @@ public abstract class AbstractOrderCancelRequestMessage extends AbstractMessage 
         field(MaturityMonthYear.Tag(), Required.NO);
         field(Side.Tag());
         field(TransactTime.TAG);
-        field(OrderQty.TAG);
+        field(OrderQty.Tag());
     }
 }

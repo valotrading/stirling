@@ -63,9 +63,9 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
                 return !hasValue(Symbol.Tag());
             }
         });
-        field(OrderQty.TAG);
+        field(OrderQty.Tag());
         field(OrdType.Tag());
-        field(Price.TAG, new Required() {
+        field(Price.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return getEnum(OrdType.Tag()).equals(OrdType.Limit());
             }
@@ -79,8 +79,8 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(Side.Tag());
         field(Symbol.Tag(), Required.NO);
         field(TimeInForce.Tag(), Required.NO);
-        field(MinQty.TAG, Required.NO);
-        field(MaxFloor.TAG, Required.NO);
+        field(MinQty.Tag(), Required.NO);
+        field(MaxFloor.Tag(), Required.NO);
         field(ExpireTime.TAG, new Required() {
             @Override public boolean isRequired() {
                 return getEnum(TimeInForce.Tag()).equals(TimeInForce.GoodTillDate());

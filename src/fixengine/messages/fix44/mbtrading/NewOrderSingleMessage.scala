@@ -62,7 +62,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(heade
   field(ClOrdID.Tag)
   field(ExecInst.Tag, Required.NO)
   field(HandlInst.Tag)
-  field(OrderQty.TAG)
+  field(OrderQty.Tag)
   field(OrdType.Tag)
   field(StopPx.TAG, Required.NO)
   field(SendingTime.TAG)
@@ -72,7 +72,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(heade
   field(TransactTime.TAG)
   field(StopPx.TAG, Required.NO)
   field(ExDestination.TAG)
-  field(MaxFloor.TAG, Required.NO)
+  field(MaxFloor.Tag, Required.NO)
   field(LocateReqd.TAG, Required.NO)
   field(ExpireTime.TAG, new Required() {
     override def isRequired() = {

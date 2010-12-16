@@ -75,19 +75,19 @@ public class ExecutionReportMessage extends AbstractMessage implements fixengine
         field(SecurityType.Tag(), Required.NO);
         field(MaturityMonthYear.Tag(), Required.NO);
         field(Side.Tag());
-        field(OrderQty.TAG);
-        field(LastShares.TAG, Required.NO);
-        field(LastPx.TAG, Required.NO);
-        field(LeavesQty.TAG);
+        field(OrderQty.Tag());
+        field(LastShares.Tag(), Required.NO);
+        field(LastPx.Tag(), Required.NO);
+        field(LeavesQty.Tag());
         field(OrdType.Tag(), Required.NO);
-        field(Price.TAG, new Required() {
+        field(Price.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return OrdType.Limit().equals(getEnum(OrdType.Tag()));
             }
         });
         field(TimeInForce.Tag(), Required.NO);
-        field(CumQty.TAG);
-        field(AvgPx.TAG);
+        field(CumQty.Tag());
+        field(AvgPx.Tag());
         field(TransactTime.TAG, Required.NO);
         field(Text.Tag(), Required.NO);
         field(ExDestination.Tag(), Required.NO);

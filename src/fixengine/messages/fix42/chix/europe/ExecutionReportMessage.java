@@ -61,23 +61,23 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
 
     @Override protected void fields() {
         field(Account.Tag(), Required.NO);
-        field(AvgPx.TAG);
+        field(AvgPx.Tag());
         field(ClOrdID.Tag(), Required.NO);
-        field(CumQty.TAG);
+        field(CumQty.Tag());
         field(Currency.Tag(), Required.NO);
         field(ExecID.Tag());
         field(ExecRefID.Tag(), Required.NO);
         field(ExecTransType.Tag());
         field(IDSource.Tag(), Required.NO);
         field(LastCapacity.Tag(), Required.NO);
-        field(LastPx.TAG);
-        field(LastShares.TAG);
+        field(LastPx.Tag());
+        field(LastShares.Tag());
         field(OrderID.Tag());
-        field(OrderQty.TAG);
+        field(OrderQty.Tag());
         field(OrdStatus.Tag());
         field(OrdType.Tag(), Required.NO);
         field(OrigClOrdID.Tag(), Required.NO);
-        field(Price.TAG, Required.NO);
+        field(Price.Tag(), Required.NO);
         field(OrderCapacity.Tag(), Required.NO);
         field(SecurityID.Tag(), new Required() {
             @Override public boolean isRequired() {
@@ -91,10 +91,10 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(TransactTime.TAG);
         field(TradeDate.TAG, Required.NO);
         field(ClientID.TAG, Required.NO);
-        field(MinQty.TAG, Required.NO);
-        field(MaxFloor.TAG, Required.NO);
+        field(MinQty.Tag(), Required.NO);
+        field(MaxFloor.Tag(), Required.NO);
         field(ExecType.Tag());
-        field(LeavesQty.TAG);
+        field(LeavesQty.Tag());
         field(NoContraBrokers.TAG, Required.NO);
         field(ContraBroker.Tag(), Required.NO);
         field(TradeLiquidityIndicator.Tag(), Required.NO);

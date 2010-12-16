@@ -31,7 +31,7 @@ public class OrderCancelRequestMessage extends fixengine.messages.fix42.OrderCan
 
     @Override protected void fields() {
         field(ClOrdID.Tag());
-        field(OrderQty.TAG);
+        field(OrderQty.Tag());
         field(OrigClOrdID.Tag());
         field(Side.Tag());
         field(Symbol.Tag());

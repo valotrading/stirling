@@ -40,15 +40,15 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
         field(Symbol.Tag());
         field(Side.Tag());
         field(TransactTime.TAG);
-        field(OrderQty.TAG);
+        field(OrderQty.Tag());
         field(OrdType.Tag());
-        field(Price.TAG, new Required() {
+        field(Price.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return getEnum(OrdType.Tag()).equals(OrdType.Limit());
             }
         });
         field(ExecInst.Tag(), Required.NO);
         field(TimeInForce.Tag(), Required.NO);
-        field(MinQty.TAG, Required.NO);
+        field(MinQty.Tag(), Required.NO);
     }
 }

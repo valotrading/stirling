@@ -50,7 +50,7 @@ public class OrderCancelRequestMessage extends fixengine.messages.fix42.OrderCan
             }
         });
         field(OrderID.Tag());
-        field(OrderQty.TAG);
+        field(OrderQty.Tag());
         field(OrigClOrdID.Tag());
         field(SecurityID.Tag(), new Required() {
             @Override public boolean isRequired() {

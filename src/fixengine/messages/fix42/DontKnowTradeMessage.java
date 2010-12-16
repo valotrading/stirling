@@ -69,10 +69,10 @@ public class DontKnowTradeMessage extends AbstractMessage {
         /* EncodedSecurityDescLen(350) */
         /* EncodedSecurityDesc(351) */
         field(Side.Tag());
-        field(OrderQty.TAG, Required.NO);
+        field(OrderQty.Tag(), Required.NO);
         /* CashOrderQty(152) */
-        field(LastShares.TAG, Required.NO);
-        field(LastPx.TAG, Required.NO);
+        field(LastShares.Tag(), Required.NO);
+        field(LastPx.Tag(), Required.NO);
         field(Text.Tag(), Required.NO);
         /* EncodedTextLen(354) */
         /* EncodedText(355) */

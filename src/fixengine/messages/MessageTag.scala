@@ -31,14 +31,16 @@ case class Value[T](val v: T) extends Formattable {
   def value = v.toString
 }
 
-abstract class LocalMktDateTag(value: Int) extends Tag[LocalMktDateField](value, classOf[LocalMktDateField])
 
 abstract class BooleanTag(value: Int) extends Tag[BooleanField](value, classOf[BooleanField])
 abstract class FloatTag(value: Int) extends Tag[FloatField](value, classOf[FloatField])
 abstract class IntegerTag(value: Int) extends Tag[IntegerField](value, classOf[IntegerField])
 abstract class StringTag(value: Int) extends Tag[StringField](value, classOf[StringField])
 
-abstract class QtyTag(value: Int) extends FloatTag(value)
-abstract class PriceTag(value: Int) extends FloatTag(value)
+abstract class LocalMktDateTag(value: Int) extends Tag[LocalMktDateField](value, classOf[LocalMktDateField])
+abstract class UtcTimestampTag(value: Int) extends Tag[UtcTimestampField](value, classOf[UtcTimestampField])
 
 abstract class AmtTag(value: Int) extends IntegerTag(value)
+abstract class PriceOffsetTag(value: Int) extends FloatTag(value)
+abstract class PriceTag(value: Int) extends FloatTag(value)
+abstract class QtyTag(value: Int) extends FloatTag(value)

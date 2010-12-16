@@ -57,11 +57,11 @@ import fixengine.tags.fix42.ExecTransType;
                 .enumeration(OrdStatus.Tag(), OrdStatus.New())
                 .string(Symbol.Tag(), "PALM")
                 .enumeration(Side.Tag(), Side.Buy())
-                .float0(OrderQty.TAG, 1500.0)
-                .float0(LeavesQty.TAG, 1500.0)
+                .float0(OrderQty.Tag(), 1500.0)
+                .float0(LeavesQty.Tag(), 1500.0)
                 .enumeration(OrdType.Tag(), OrdType.Market())
-                .float0(CumQty.TAG, .0)
-                .float0(AvgPx.TAG, .0)
+                .float0(CumQty.Tag(), .0)
+                .float0(AvgPx.Tag(), .0)
                 .build());
             server.respond(new MessageBuilder(MsgTypeValue.EXECUTION_REPORT)
                 .msgSeqNum(3)
@@ -73,11 +73,11 @@ import fixengine.tags.fix42.ExecTransType;
                 .enumeration(OrdStatus.Tag(), OrdStatus.New())
                 .string(Symbol.Tag(), "PALM")
                 .enumeration(Side.Tag(), Side.Buy())
-                .float0(OrderQty.TAG, 1500.0)
-                .float0(LeavesQty.TAG, 1500.0)
+                .float0(OrderQty.Tag(), 1500.0)
+                .float0(LeavesQty.Tag(), 1500.0)
                 .enumeration(OrdType.Tag(), OrdType.Market())
-                .float0(CumQty.TAG, .0)
-                .float0(AvgPx.TAG, .0)
+                .float0(CumQty.Tag(), .0)
+                .float0(AvgPx.Tag(), .0)
                 .build());
             checking(new Expectations() {{
                 one(visitor).visit(with(any(ExecutionReportMessage.class)));
@@ -107,11 +107,11 @@ import fixengine.tags.fix42.ExecTransType;
                 .enumeration(OrdStatus.Tag(), OrdStatus.New())
                 .string(Symbol.Tag(), "PALM")
                 .enumeration(Side.Tag(), Side.Buy())
-                .float0(OrderQty.TAG, 1500.0)
-                .float0(LeavesQty.TAG, 1500.0)
+                .float0(OrderQty.Tag(), 1500.0)
+                .float0(LeavesQty.Tag(), 1500.0)
                 .enumeration(OrdType.Tag(), OrdType.Market())
-                .float0(CumQty.TAG, .0)
-                .float0(AvgPx.TAG, .0)
+                .float0(CumQty.Tag(), .0)
+                .float0(AvgPx.Tag(), .0)
                 .build());
             checking(new Expectations() {{
                 one(visitor).visit(with(any(LogonMessage.class)));

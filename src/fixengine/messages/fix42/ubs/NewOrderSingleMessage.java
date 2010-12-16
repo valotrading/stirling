@@ -40,17 +40,17 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(ExecInst.Tag());
         field(Symbol.Tag());
         field(Side.Tag());
-        field(OrderQty.TAG);
+        field(OrderQty.Tag());
         field(OrdType.Tag());
         field(TransactTime.TAG);
         field(OrderCapacity.Tag());
-        field(Price.TAG, new Required() {
+        field(Price.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return getEnum(OrdType.Tag()).equals(OrdType.Limit());
             }
         });
         field(TimeInForce.Tag(), Required.NO);
-        field(MinQty.TAG, Required.NO);
+        field(MinQty.Tag(), Required.NO);
         field(Internalization.Tag(), Required.NO);
     }
 }

@@ -29,7 +29,7 @@ import fixengine.messages.{MessageVisitor, AbstractMessage, MessageHeader, Requi
 class OrderCancelRequestMessage(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestMessageTrait {
   field(ClOrdID.Tag)
   field(OrderID.Tag, Required.NO)
-  field(OrderQty.TAG)
+  field(OrderQty.Tag)
   field(OrigClOrdID.Tag)
   field(Side.Tag)
   field(Symbol.Tag)

@@ -37,8 +37,8 @@ public class DontKnowTradeMessage extends fixengine.messages.fix42.DontKnowTrade
         field(DKReason.Tag());
         field(Symbol.Tag());
         field(Side.Tag());
-        field(OrderQty.TAG, Required.NO);
-        field(LastShares.TAG, Required.NO);
-        field(LastPx.TAG, Required.NO);
+        field(OrderQty.Tag(), Required.NO);
+        field(LastShares.Tag(), Required.NO);
+        field(LastPx.Tag(), Required.NO);
     }
 }

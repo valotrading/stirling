@@ -54,9 +54,9 @@ public class AbstractOrderModificationRequestMessage extends AbstractMessage imp
         field(MaturityMonthYear.Tag(), Required.NO);
         field(Side.Tag());
         field(TransactTime.TAG);
-        field(OrderQty.TAG);
+        field(OrderQty.Tag());
         field(OrdType.Tag());
         field(Currency.Tag(), Required.NO);
-        field(Price.TAG, Required.NO);
+        field(Price.Tag(), Required.NO);
     }
 }

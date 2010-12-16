@@ -53,10 +53,10 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
             }
         });
         field(OrderID.Tag());
-        field(OrderQty.TAG);
+        field(OrderQty.Tag());
         field(OrdType.Tag());
         field(OrigClOrdID.Tag());
-        field(Price.TAG, new Required() {
+        field(Price.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return getEnum(OrdType.Tag()).equals(OrdType.Limit());
             }

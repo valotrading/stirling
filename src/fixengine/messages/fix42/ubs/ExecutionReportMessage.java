@@ -58,15 +58,15 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         });
         field(Symbol.Tag());
         field(Side.Tag());
-        field(OrderQty.TAG);
+        field(OrderQty.Tag());
         field(OrdStatus.Tag());
-        field(LastShares.TAG, Required.NO);
-        field(LastPx.TAG, Required.NO);
+        field(LastShares.Tag(), Required.NO);
+        field(LastPx.Tag(), Required.NO);
         field(LastMkt.Tag(), Required.NO);
         field(LastCapacity.Tag(), Required.NO);
-        field(LeavesQty.TAG);
-        field(CumQty.TAG);
-        field(AvgPx.TAG);
+        field(LeavesQty.Tag());
+        field(CumQty.Tag());
+        field(AvgPx.Tag());
         field(TransactTime.TAG);
     }
 }
