@@ -158,19 +158,19 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
     }
 
     public void setPossDupFlag(boolean possDupFlag) {
-        header.setBoolean(PossDupFlag.TAG, possDupFlag);
+        header.setBoolean(PossDupFlag.Tag(), possDupFlag);
     }
 
     public boolean getPossDupFlag() {
-        return header.getBoolean(PossDupFlag.TAG);
+        return header.getBoolean(PossDupFlag.Tag());
     }
 
     public boolean getPossResend() {
-        return header.getBoolean(PossResend.TAG);
+        return header.getBoolean(PossResend.Tag());
     }
 
     @Override public void setPossResend(boolean possResend) {
-        header.setBoolean(PossResend.TAG, possResend);
+        header.setBoolean(PossResend.Tag(), possResend);
     }
 
     public boolean hasValidTargetCompId(Config config) {

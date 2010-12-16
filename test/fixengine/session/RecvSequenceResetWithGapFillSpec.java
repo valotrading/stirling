@@ -33,7 +33,7 @@ import fixengine.tags.NewSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(4)
-                        .bool(GapFillFlag.TAG, true)
+                        .bool(GapFillFlag.Tag(), true)
                         .integer(NewSeqNo.TAG, 3)
                     .build());
             server.expect(MsgTypeValue.RESEND_REQUEST);
@@ -53,7 +53,7 @@ import fixengine.tags.NewSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(2)
-                        .bool(GapFillFlag.TAG, true)
+                        .bool(GapFillFlag.Tag(), true)
                         .integer(NewSeqNo.TAG, 5)
                     .build());
             runInClient(new Runnable() {
@@ -74,7 +74,7 @@ import fixengine.tags.NewSeqNo;
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(1)
                         .setPossDupFlag(true)
-                        .bool(GapFillFlag.TAG, true)
+                        .bool(GapFillFlag.Tag(), true)
                         .integer(NewSeqNo.TAG, 5)
                     .build());
             runInClient(new Runnable() {
@@ -94,7 +94,7 @@ import fixengine.tags.NewSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(1)
-                        .bool(GapFillFlag.TAG, true)
+                        .bool(GapFillFlag.Tag(), true)
                         .integer(NewSeqNo.TAG, 5)
                     .build());
             server.expect(MsgTypeValue.LOGOUT);
@@ -115,7 +115,7 @@ import fixengine.tags.NewSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(2)
-                        .bool(GapFillFlag.TAG, true)
+                        .bool(GapFillFlag.Tag(), true)
                         .integer(NewSeqNo.TAG, 2)
                     .build());
             server.expect(MsgTypeValue.REJECT);
@@ -159,21 +159,21 @@ import fixengine.tags.NewSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(3)
-                        .bool(GapFillFlag.TAG, true)
+                        .bool(GapFillFlag.Tag(), true)
                         .integer(NewSeqNo.TAG, 2)
                     .build());
             server.expect(MsgTypeValue.RESEND_REQUEST);
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(4)
-                        .bool(GapFillFlag.TAG, true)
+                        .bool(GapFillFlag.Tag(), true)
                         .integer(NewSeqNo.TAG, 2)
                     .build());
             server.expect(MsgTypeValue.RESEND_REQUEST);
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(5)
-                        .bool(GapFillFlag.TAG, true)
+                        .bool(GapFillFlag.Tag(), true)
                         .integer(NewSeqNo.TAG, 2)
                     .build());
             server.expect(MsgTypeValue.LOGOUT);
@@ -196,7 +196,7 @@ import fixengine.tags.NewSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(4)
-                        .bool(GapFillFlag.TAG, true)
+                        .bool(GapFillFlag.Tag(), true)
                         .integer(NewSeqNo.TAG, 2)
                     .build());
             server.expect(MsgTypeValue.RESEND_REQUEST);

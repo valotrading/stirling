@@ -156,7 +156,7 @@ public class Session {
     }
 
     private boolean processSequenceReset(Connection conn, SequenceResetMessage message) {
-        if (message.getBoolean(GapFillFlag.TAG)) {
+        if (message.getBoolean(GapFillFlag.Tag())) {
             return processSequenceResetGapFill(conn, message);
         } else {
             return processSequenceResetReset(conn, message);
@@ -448,7 +448,7 @@ public class Session {
         message.setSendingTime(currentTime());
         message.setMsgSeqNum(seq.peek());
         message.setInteger(NewSeqNo.TAG, seq.next());
-        message.setBoolean(GapFillFlag.TAG, false);
+        message.setBoolean(GapFillFlag.Tag(), false);
         conn.send(FixMessage.fromString(message.format()));
         prevTxTime = currentTime();
         setOutgoingSeq(seq);

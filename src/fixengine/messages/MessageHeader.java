@@ -61,12 +61,12 @@ public class MessageHeader extends FieldContainer implements Parseable {
         field(OnBehalfOfCompID.Tag(), Required.NO);
         field(DeliverToCompID.Tag(), Required.NO);
         field(MsgSeqNum.TAG);
-        field(PossDupFlag.TAG, Required.NO);
-        field(PossResend.TAG, Required.NO);
+        field(PossDupFlag.Tag(), Required.NO);
+        field(PossResend.Tag(), Required.NO);
         field(SendingTime.TAG);
         field(OrigSendingTime.TAG, new Required() {
             @Override public boolean isRequired() {
-                return hasValue(PossDupFlag.TAG) && getBoolean(PossDupFlag.TAG);
+                return hasValue(PossDupFlag.Tag()) && getBoolean(PossDupFlag.Tag());
             }
         });
         field(SenderLocationID.Tag(), Required.NO);
@@ -124,7 +124,7 @@ public class MessageHeader extends FieldContainer implements Parseable {
     }
 
     public boolean hasOrigSendTimeAfterSendingTime() {
-        if (!getBoolean(PossDupFlag.TAG) || !hasValue(OrigSendingTime.TAG)) {
+        if (!getBoolean(PossDupFlag.Tag()) || !hasValue(OrigSendingTime.TAG)) {
             return true;
         }
         return !getDateTime(OrigSendingTime.TAG).isAfter(getDateTime(SendingTime.TAG));

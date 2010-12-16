@@ -73,6 +73,6 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
                 return getEnum(IDSource.Tag()).equals(IDSource.ISIN());
             }
         });
-        field(CancelOrigOnReject.TAG, Required.NO);
+        field(CancelOrigOnReject.Tag(), Required.NO);
     }
 }

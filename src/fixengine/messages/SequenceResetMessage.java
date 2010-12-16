@@ -27,7 +27,7 @@ public class SequenceResetMessage extends AbstractMessage {
     public SequenceResetMessage(MessageHeader header) {
         super(header);
         
-        field(GapFillFlag.TAG, Required.NO);
+        field(GapFillFlag.Tag(), Required.NO);
         field(NewSeqNo.TAG);
     }
 

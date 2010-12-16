@@ -28,7 +28,7 @@ import fixengine.tags.fix44.Password
 class LogonMessage(header: MessageHeader) extends AbstractMessage(header) with LogonMessageTrait {
   field(EncryptMethod.Tag)
   field(HeartBtInt.TAG)
-  field(ResetSeqNumFlag.TAG, Required.NO)
+  field(ResetSeqNumFlag.Tag, Required.NO)
   field(Password.TAG)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

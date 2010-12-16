@@ -15,7 +15,7 @@
  */
 package fixengine.tags
 
-import fixengine.messages.{EnumTag, FloatTag, StringTag, Value}
+import fixengine.messages.{BooleanTag, EnumTag, FloatTag, StringTag, Value}
 import java.lang.{Character, Integer, String}
 
 
@@ -147,6 +147,10 @@ object OrigClOrdID extends StringTag(41) {
   val Tag = this
 }
 
+object PossDupFlag extends BooleanTag(43) {
+  val Tag = this
+}
+
 object Price extends FloatTag(44) {
   val Tag = this
 }
@@ -197,6 +201,10 @@ object ExecBroker extends StringTag(76) {
 }
 
 object AllocAccount extends StringTag(79) {
+  val Tag = this
+}
+
+object PossResend extends BooleanTag(97) {
   val Tag = this
 }
 
@@ -296,6 +304,10 @@ object SettlCurrency extends StringTag(120) {
 }
 
 
+object GapFillFlag extends BooleanTag(123) {
+  val Tag = this
+}
+
 object DKReason extends EnumTag[Character](127) {
   val Tag = this
   val UnknownSymbol = Value('A')
@@ -314,6 +326,9 @@ object DeliverToSubID extends StringTag(129) {
   val Tag = this
 }
 
+object ResetSeqNumFlag extends BooleanTag(141) {
+  val Tag = this
+}
 object SenderLocationID extends StringTag(142) {
   val Tag = this
 }

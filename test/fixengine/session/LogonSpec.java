@@ -103,7 +103,7 @@ import fixengine.tags.NewSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(1)
-                        .bool(GapFillFlag.TAG, true)
+                        .bool(GapFillFlag.Tag(), true)
                         .integer(NewSeqNo.TAG, 4)
                     .build());
             runInClient(new Runnable() {

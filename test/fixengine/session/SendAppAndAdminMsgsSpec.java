@@ -39,14 +39,14 @@ import fixengine.tags.NewSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(2)
-                        .bool(GapFillFlag.TAG, true)
+                        .bool(GapFillFlag.Tag(), true)
                         .integer(NewSeqNo.TAG, 2)
                     .build());
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(2)
                         .integer(NewSeqNo.TAG, 2)
-                        .bool(GapFillFlag.TAG, true)
+                        .bool(GapFillFlag.Tag(), true)
                     .build());
             runInClient(new Runnable() {
                 @Override public void run() {
