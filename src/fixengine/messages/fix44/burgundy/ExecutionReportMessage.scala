@@ -101,7 +101,7 @@ class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(head
   field(Text.Tag, Required.NO)
   field(TimeInForce.Tag, Required.NO)
   field(TransactTime.TAG, Required.NO)
-  field(TradeDate.TAG, Required.NO)
+  field(TradeDate.Tag, Required.NO)
   field(OrdRejReason.Tag, Required.NO)
   field(MinQty.Tag, Required.NO)
   field(DisplayMethod.Tag, Required.NO)

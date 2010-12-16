@@ -46,7 +46,7 @@ public class AllocationMessage extends AbstractMessage {
         field(Symbol.Tag());
         field(Shares.Tag());
         field(AvgPx.Tag());
-        field(TradeDate.TAG);
+        field(TradeDate.Tag());
         group(new RepeatingGroup(NoAllocs.Tag()) {
             @Override protected RepeatingGroupInstance newInstance() {
                 return new RepeatingGroupInstance(AllocAccount.Tag()) {

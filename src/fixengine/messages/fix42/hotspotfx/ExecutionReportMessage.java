@@ -78,8 +78,8 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(CumQty.Tag());
         field(MinQty.Tag(), Required.NO);
         field(OrderQty2.Tag(), Required.NO);
-        field(FutSettDate.TAG, Required.NO);
-        field(TradeDate.TAG, Required.NO);
+        field(FutSettDate.Tag(), Required.NO);
+        field(TradeDate.Tag(), Required.NO);
         field(SettlCurrAmt.Tag(), Required.NO);
         field(SettlCurrency.Tag(), Required.NO);
         field(SecurityType.Tag());

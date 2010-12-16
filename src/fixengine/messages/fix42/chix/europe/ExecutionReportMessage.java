@@ -89,7 +89,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(Text.Tag(), Required.NO);
         field(TimeInForce.Tag(), Required.NO);
         field(TransactTime.TAG);
-        field(TradeDate.TAG, Required.NO);
+        field(TradeDate.Tag(), Required.NO);
         field(ClientID.TAG, Required.NO);
         field(MinQty.Tag(), Required.NO);
         field(MaxFloor.Tag(), Required.NO);

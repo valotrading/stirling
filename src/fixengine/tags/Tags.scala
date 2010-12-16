@@ -15,7 +15,7 @@
  */
 package fixengine.tags
 
-import fixengine.messages.{BooleanTag, EnumTag, FloatTag, IntegerTag, StringTag, Value}
+import fixengine.messages.{BooleanTag, EnumTag, FloatTag, IntegerTag, LocalMktDateTag, StringTag, Value}
 import java.lang.{Character, Integer, String}
 
 
@@ -215,6 +215,10 @@ object TargetSubID extends StringTag(57) {
 object Text extends StringTag(58) {
   val Tag = this
 }
+object FutSettDate extends LocalMktDateTag(64) {
+  val Tag = this
+}
+
 object AllocID extends StringTag(70) {
   val Tag = this
 }
@@ -223,6 +227,9 @@ object NoOrders extends IntegerTag(73) {
   val Tag = this
 }
 
+object TradeDate extends LocalMktDateTag(75) {
+  val Tag = this
+}
 object ExecBroker extends StringTag(76) {
   val Tag = this
 }
