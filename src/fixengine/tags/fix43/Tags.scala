@@ -23,6 +23,7 @@ import fixengine.messages.{
   IntegerTag,
   LocalMktDateTag,
   MonthYearTag,
+  NumInGroupTag,
   PriceTag,
   QtyTag,
   StringTag,
@@ -75,6 +76,9 @@ object OrderRestrictions extends EnumTag[Character](529) {
   val CompetingMarketMaker = Value(4)
 }
 
+object NoLegs extends NumInGroupTag(555) {
+  val Tag = this
+}
 object LegPositionEffect extends EnumTag[Character](564) {
   val Tag = this
   val Close = Value('C')
