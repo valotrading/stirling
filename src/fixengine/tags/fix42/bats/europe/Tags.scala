@@ -15,7 +15,7 @@
  */
 package fixengine.tags.fix42.bats.europe
 
-import fixengine.messages.{EnumTag, Value}
+import fixengine.messages.{EnumTag, FloatTag, Value}
 import java.lang.{String, Character, Integer}
 
 object ExecInst extends EnumTag[Character](18) {
@@ -120,6 +120,14 @@ object DisplayIndicator extends EnumTag[Character](9479) {
   val Tag = this
   val DisplayedOrder = Value('X')
   val Invisible = Value('I')
+}
+
+object CorrectedPrice extends FloatTag(9620) {
+  val Tag = this
+}
+
+object MTFAccessFee extends FloatTag(9621) {
+  val Tag = this
 }
 
 object TradeLiquidityIndicator extends EnumTag[String](9730) {

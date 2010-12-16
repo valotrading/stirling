@@ -121,7 +121,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(ClearingFirm.TAG, Required.NO);
         field(ClearingAccount.TAG, Required.NO);
         field(CentralCounterparty.Tag(), Required.NO);
-        field(MTFAccessFee.TAG, new Required() {
+        field(MTFAccessFee.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return ExecType.isTrade(getEnum(ExecType.Tag()));
             }
