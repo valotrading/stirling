@@ -218,7 +218,7 @@ import fixengine.tags.TestReqID;
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .setBeginString("FIX.4.3")
                         .msgSeqNum(1)
-                        .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
+                        .integer(HeartBtInt.Tag(), getHeartbeatIntervalInSeconds())
                         .enumeration(EncryptMethod.Tag(), EncryptMethod.None())
                     .build());
             server.expect(MsgTypeValue.LOGOUT);
@@ -248,7 +248,7 @@ import fixengine.tags.TestReqID;
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
                         .setSenderCompID("SENDER")
-                        .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
+                        .integer(HeartBtInt.Tag(), getHeartbeatIntervalInSeconds())
                         .enumeration(EncryptMethod.Tag(), EncryptMethod.None())
                     .build());
             server.expect(MsgTypeValue.REJECT);
@@ -272,7 +272,7 @@ import fixengine.tags.TestReqID;
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
                         .setTargetCompID("TARGET")
-                        .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
+                        .integer(HeartBtInt.Tag(), getHeartbeatIntervalInSeconds())
                         .enumeration(EncryptMethod.Tag(), EncryptMethod.None())
                     .build());
             server.expect(MsgTypeValue.REJECT);
@@ -296,7 +296,7 @@ import fixengine.tags.TestReqID;
             server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(message("10", "0")
-                    .field(MsgSeqNum.TAG, "2")
+                    .field(MsgSeqNum.Tag(), "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(TestReqID.Tag(), "1")
                     .field(CheckSum.Tag(), "206")
@@ -360,7 +360,7 @@ import fixengine.tags.TestReqID;
             server.respondLogon();
             server.respond(
                     message("56", "ZZ")
-                    .field(MsgSeqNum.TAG, "2")
+                    .field(MsgSeqNum.Tag(), "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.Tag(), "115")
                     .toString());
@@ -384,7 +384,7 @@ import fixengine.tags.TestReqID;
             server.respondLogon();
             server.respond(
                     message("55", "P")
-                    .field(MsgSeqNum.TAG, "2")
+                    .field(MsgSeqNum.Tag(), "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.Tag(), "014")
                     .toString());
@@ -416,9 +416,9 @@ import fixengine.tags.TestReqID;
             server.respond(
                     message()
                     /* BeginString missing */
-                    .field(BodyLength.TAG, "10")
+                    .field(BodyLength.Tag(), "10")
                     .field(MsgType.Tag(), "0")
-                    .field(MsgSeqNum.TAG, "2")
+                    .field(MsgSeqNum.Tag(), "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.Tag(), "165")
                     .toString());
@@ -443,7 +443,7 @@ import fixengine.tags.TestReqID;
                     .field(BeginString.Tag(), "FIX.4.2")
                     /* BodyLength missing */
                     .field(MsgType.Tag(), "0")
-                    .field(MsgSeqNum.TAG, "2")
+                    .field(MsgSeqNum.Tag(), "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.Tag(), "165")
                     .toString());
@@ -466,9 +466,9 @@ import fixengine.tags.TestReqID;
             server.respond(
                     message()
                     .field(BeginString.Tag(), "FIX.4.2")
-                    .field(BodyLength.TAG, "26")
+                    .field(BodyLength.Tag(), "26")
                     /* MsgType missing */
-                    .field(MsgSeqNum.TAG, "2")
+                    .field(MsgSeqNum.Tag(), "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
                     .field(CheckSum.Tag(), "214")
                     .toString());
@@ -487,7 +487,7 @@ import fixengine.tags.TestReqID;
             server.respond(
                     message()
                     .field(BeginString.Tag(), "FIX.4.2")
-                    .field(BodyLength.TAG, "50")
+                    .field(BodyLength.Tag(), "50")
                     .field(MsgType.Tag(), "0")
                     /* MsgSeqNum missing */
                     .field(SenderCompID.Tag(), ACCEPTOR)

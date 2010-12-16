@@ -32,7 +32,7 @@ import fixengine.tags.NewSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(2)
-                        .integer(NewSeqNo.TAG, 5)
+                        .integer(NewSeqNo.Tag(), 5)
                     .build());
             server.respondLogout(5);
             server.expect(MsgTypeValue.LOGOUT);
@@ -52,7 +52,7 @@ import fixengine.tags.NewSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(2)
-                        .integer(NewSeqNo.TAG, 2)
+                        .integer(NewSeqNo.Tag(), 2)
                     .build());
             server.respondLogout(2);
             server.expect(MsgTypeValue.LOGOUT);
@@ -77,7 +77,7 @@ import fixengine.tags.NewSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(3)
-                        .integer(NewSeqNo.TAG, 2)
+                        .integer(NewSeqNo.Tag(), 2)
                     .build());
             server.expect(MsgTypeValue.REJECT);
             checking(expectLogWarning("Value is incorrect (out of range) for this tag, NewSeqNum(36)=2"));

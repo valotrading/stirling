@@ -27,8 +27,8 @@ public class RejectMessage extends AbstractMessage {
     public RejectMessage(MessageHeader header) {
         super(header);
 
-        field(RefSeqNo.TAG);
-        field(RefTagId.TAG, Required.NO);
+        field(RefSeqNo.Tag());
+        field(RefTagId.Tag(), Required.NO);
         field(SessionRejectReason.Tag(), Required.NO);
         field(Text.Tag(), Required.NO);
     }

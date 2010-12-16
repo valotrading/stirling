@@ -126,11 +126,11 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
     }
 
     public void setMsgSeqNum(int msgSeqNum) {
-        header.setInteger(MsgSeqNum.TAG, msgSeqNum);
+        header.setInteger(MsgSeqNum.Tag(), msgSeqNum);
     }
 
     @Override public int getMsgSeqNum() {
-        return header.getInteger(MsgSeqNum.TAG);
+        return header.getInteger(MsgSeqNum.Tag());
     }
 
     public void setSendingTime(DateTime sendingTime) {
@@ -229,7 +229,7 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
         buffer.append(new StringField(MsgType.Tag(), header.getMsgType()));
         buffer.append(header.format());
         buffer.append(super.format());
-        buffer.prefix(new IntegerField(BodyLength.TAG, buffer.length()));
+        buffer.prefix(new IntegerField(BodyLength.Tag(), buffer.length()));
         buffer.prefix(new StringField(BeginString.Tag(), header.getBeginString()));
         buffer.append(new StringField(CheckSum.Tag(), CheckSum.format(buffer.checksum())));
         return buffer.toString();

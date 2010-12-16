@@ -97,7 +97,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(PreventParticipantMatch.TAG, Required.NO);
         field(RoutingInst.Tag(), Required.NO);
         field(DisplayIndicator.Tag(), Required.NO);
-        field(MaxRemovePct.TAG, new Required() {
+        field(MaxRemovePct.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return getEnum(RoutingInst.Tag()).equals(RoutingInst.PostOnlyAtLimit());
             }

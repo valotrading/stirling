@@ -128,9 +128,9 @@ class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(head
   field(OrderCapacity.Tag, Required.NO)
   field(OrderRestrictions.Tag, Required.NO)
   field(MatchType.Tag, Required.NO)
-  field(AccountType.TAG, Required.NO)
+  field(AccountType.Tag, Required.NO)
   field(MassStatusReqID.Tag, Required.NO)
-  group(new RepeatingGroup(NoPartyIDs.TAG) {
+  group(new RepeatingGroup(NoPartyIDs.Tag) {
     override def newInstance(): RepeatingGroupInstance =
       new RepeatingGroupInstance(PartyID.TAG) {
         field(PartyIDSource.Tag)

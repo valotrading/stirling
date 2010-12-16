@@ -52,7 +52,7 @@ public class MessageHeader extends FieldContainer implements Parseable {
 
     public MessageHeader() {
         head.field(BeginString.Tag());
-        head.field(BodyLength.TAG);
+        head.field(BodyLength.Tag());
         head.field(MsgType.Tag());
         field(SenderCompID.Tag());
         field(SenderSubID.Tag(), Required.NO);
@@ -60,7 +60,7 @@ public class MessageHeader extends FieldContainer implements Parseable {
         field(TargetSubID.Tag(), Required.NO);
         field(OnBehalfOfCompID.Tag(), Required.NO);
         field(DeliverToCompID.Tag(), Required.NO);
-        field(MsgSeqNum.TAG);
+        field(MsgSeqNum.Tag());
         field(PossDupFlag.Tag(), Required.NO);
         field(PossResend.Tag(), Required.NO);
         field(SendingTime.TAG);
@@ -74,7 +74,7 @@ public class MessageHeader extends FieldContainer implements Parseable {
 
     @Override public void parse(ByteBuffer b) {
         parseHeadField(b, BeginString.Tag());
-        parseHeadField(b, BodyLength.TAG);
+        parseHeadField(b, BodyLength.Tag());
         trailer(b);
         parseHeadField(b, MsgType.Tag());
         super.parse(b);
@@ -100,7 +100,7 @@ public class MessageHeader extends FieldContainer implements Parseable {
     }
 
     public int getBodyLength() {
-        return head.getInteger(BodyLength.TAG);
+        return head.getInteger(BodyLength.Tag());
     }
 
     public String getMsgType() {

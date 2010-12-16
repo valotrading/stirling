@@ -13,13 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fixengine.tags;
+package fixengine.messages
 
-import fixengine.messages.IntegerField;
-import fixengine.messages.Tag;
+import java.lang.String
 
-public class RefTagId extends Tag<IntegerField> {
-    public static final RefTagId TAG = new RefTagId();
-
-    public RefTagId() { super(371, IntegerField.class); }
+object ClassNameHelper {
+  def removeTrailingDollar(s: String): String = s.replaceFirst("\\$$", "")
 }

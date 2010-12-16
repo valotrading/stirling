@@ -45,7 +45,7 @@ import fixengine.tags.NewSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(2)
-                        .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
+                        .integer(HeartBtInt.Tag(), getHeartbeatIntervalInSeconds())
                         .enumeration(EncryptMethod.Tag(), EncryptMethod.None())
                     .build());
             server.expect(MsgTypeValue.RESEND_REQUEST);
@@ -63,7 +63,7 @@ import fixengine.tags.NewSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
-                        .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
+                        .integer(HeartBtInt.Tag(), getHeartbeatIntervalInSeconds())
                         /* EncryptMethod(98) missing */
                     .build());
             server.expect(MsgTypeValue.LOGOUT);
@@ -96,7 +96,7 @@ import fixengine.tags.NewSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(2)
-                        .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
+                        .integer(HeartBtInt.Tag(), getHeartbeatIntervalInSeconds())
                         .enumeration(EncryptMethod.Tag(), EncryptMethod.None())
                     .build());
             server.expect(MsgTypeValue.RESEND_REQUEST);
@@ -104,7 +104,7 @@ import fixengine.tags.NewSeqNo;
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(1)
                         .bool(GapFillFlag.Tag(), true)
-                        .integer(NewSeqNo.TAG, 4)
+                        .integer(NewSeqNo.Tag(), 4)
                     .build());
             runInClient(new Runnable() {
                 @Override public void run() {

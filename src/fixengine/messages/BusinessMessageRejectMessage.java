@@ -27,7 +27,7 @@ public class BusinessMessageRejectMessage extends AbstractMessage {
     public BusinessMessageRejectMessage(MessageHeader header) {
         super(header);
 
-        field(RefSeqNo.TAG, Required.NO);
+        field(RefSeqNo.Tag(), Required.NO);
         field(RefMsgType.Tag());
         field(BusinessRejectReason.Tag());
         field(Text.Tag(), Required.NO);

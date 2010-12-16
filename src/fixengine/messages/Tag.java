@@ -71,7 +71,7 @@ public class Tag<T extends Field> {
     }
 
     public String prettyName() {
-        return getClass().getSimpleName() + "(" + value + ")";
+        return ClassNameHelper.removeTrailingDollar(getClass().getSimpleName()) + "(" + value + ")";
     }
 
     @Override

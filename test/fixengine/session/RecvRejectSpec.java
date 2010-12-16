@@ -31,7 +31,7 @@ import fixengine.tags.RefSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.REJECT)
                         .msgSeqNum(2)
-                        .integer(RefSeqNo.TAG, 2)
+                        .integer(RefSeqNo.Tag(), 2)
                     .build());
             server.respondLogout(3);
             server.expect(MsgTypeValue.LOGOUT);

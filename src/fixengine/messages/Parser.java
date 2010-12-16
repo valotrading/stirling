@@ -50,20 +50,20 @@ public class Parser {
             msg.setReceiveTime(receiveTime);
             callback.message(msg);
         } catch (InvalidMsgTypeException e) {
-            callback.invalidMsgType(header.getMsgType(), header.getInteger(MsgSeqNum.TAG));
+            callback.invalidMsgType(header.getMsgType(), header.getInteger(MsgSeqNum.Tag()));
         } catch (UnsupportedMsgTypeException e) {
-            callback.unsupportedMsgType(header.getMsgType(), header.getInteger(MsgSeqNum.TAG));
+            callback.unsupportedMsgType(header.getMsgType(), header.getInteger(MsgSeqNum.Tag()));
         } catch (ParseException e) {
-            callback.invalidMessage(header.getInteger(MsgSeqNum.TAG), e.getReason(), e.getMessage());
+            callback.invalidMessage(header.getInteger(MsgSeqNum.Tag()), e.getReason(), e.getMessage());
         }
     }
 
     public static int parseMsgSeqNum(FixMessage message) {
-        String value = parseField(message, MsgSeqNum.TAG);
-        IntegerField field = new IntegerField(MsgSeqNum.TAG);
+        String value = parseField(message, MsgSeqNum.Tag());
+        IntegerField field = new IntegerField(MsgSeqNum.Tag());
         field.parse(value);
         if (!field.isFormatValid())
-            throw new InvalidValueFormatException(MsgSeqNum.TAG.prettyName() + " has invalid value format: " + value);
+            throw new InvalidValueFormatException(MsgSeqNum.Tag().prettyName() + " has invalid value format: " + value);
         return field.intValue();
     }
 

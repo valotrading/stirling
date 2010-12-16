@@ -63,7 +63,7 @@ class NewOrderMultiLegMessage(header: MessageHeader) extends AbstractMessage(hea
   field(ExDestination.Tag)
   field(NoTrdRegTimestamps.TAG, Required.NO)
   field(TrdRegTimestamp.TAG, Required.NO)
-  field(TrdRegTimestampType.TAG, Required.NO)
+  field(TrdRegTimestampType.Tag, Required.NO)
   field(TrdRegTimestampOrigin.TAG, Required.NO)
   group(new RepeatingGroup(NoLegs.TAG) {
     override def newInstance = new RepeatingGroupInstance(LegSymbol.TAG) {

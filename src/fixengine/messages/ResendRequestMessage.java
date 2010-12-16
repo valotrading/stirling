@@ -25,8 +25,8 @@ public class ResendRequestMessage extends AbstractMessage {
     public ResendRequestMessage(MessageHeader header) {
         super(header);
 
-        field(BeginSeqNo.TAG);
-        field(EndSeqNo.TAG);
+        field(BeginSeqNo.Tag());
+        field(EndSeqNo.Tag());
     }
 
     @Override

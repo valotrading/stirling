@@ -63,7 +63,7 @@ class OrderCancelReplaceRequestMessage(header: MessageHeader) extends AbstractMe
   field(PegScope.Tag, Required.NO)
   field(OrderCapacity.Tag, Required.NO)
   field(OrderRestrictions.Tag, Required.NO)
-  field(AccountType.TAG, Required.NO)
+  field(AccountType.Tag, Required.NO)
 
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

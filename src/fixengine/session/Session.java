@@ -319,8 +319,8 @@ public class Session {
                     store.saveIncomingMessage(Session.this, message);
                     if (outgoingQueue.isEmpty()) {
                         incomingQueue.skip(message.getMsgSeqNum());
-                        int beginSeqNo = message.getInteger(BeginSeqNo.TAG);
-                        int endSeqNo = message.getInteger(EndSeqNo.TAG);
+                        int beginSeqNo = message.getInteger(BeginSeqNo.Tag());
+                        int endSeqNo = message.getInteger(EndSeqNo.Tag());
                         for (Message msg : store.load(Session.this, beginSeqNo, endSeqNo))
                             send(conn, msg);
                     } else {
@@ -375,13 +375,13 @@ public class Session {
 
     private void sendResendRequest(Connection conn, int beginSeqNo, int endSeqNo) {
         ResendRequestMessage resendReq = (ResendRequestMessage) messageFactory.create(RESEND_REQUEST);
-        resendReq.setInteger(BeginSeqNo.TAG, beginSeqNo);
-        resendReq.setInteger(EndSeqNo.TAG, endSeqNo);
+        resendReq.setInteger(BeginSeqNo.Tag(), beginSeqNo);
+        resendReq.setInteger(EndSeqNo.Tag(), endSeqNo);
         send(conn, resendReq);
     }
 
     private void processSeqReset(Connection conn, SequenceResetMessage message) {
-        int newSeqNo = message.getInteger(NewSeqNo.TAG);
+        int newSeqNo = message.getInteger(NewSeqNo.Tag());
         if (newSeqNo <= message.getMsgSeqNum()) {
             sessionReject(conn, message.getMsgSeqNum(), SessionRejectReason.InvalidValue(),
                 "Attempt to lower sequence number, invalid value NewSeqNum(36)=" + newSeqNo);
@@ -396,7 +396,7 @@ public class Session {
 
     private void sessionReject(Connection conn, int msgSeqNum, Value<Integer> reason, String text) {
         RejectMessage reject = (RejectMessage) messageFactory.create(REJECT);
-        reject.setInteger(RefSeqNo.TAG, msgSeqNum);
+        reject.setInteger(RefSeqNo.Tag(), msgSeqNum);
         reject.setEnum(SessionRejectReason.Tag(), reason);
         reject.setString(Text.Tag(), text);
         send(conn, reject);
@@ -404,7 +404,7 @@ public class Session {
 
     private void businessReject(Connection conn, String msgType, int msgSeqNum, Value<Integer> reason, String text) {
         BusinessMessageRejectMessage reject = (BusinessMessageRejectMessage) messageFactory.create(BUSINESS_MESSAGE_REJECT);
-        reject.setInteger(RefSeqNo.TAG, msgSeqNum);
+        reject.setInteger(RefSeqNo.Tag(), msgSeqNum);
         reject.setString(RefMsgType.Tag(), msgType);
         reject.setEnum(BusinessRejectReason.Tag(), reason);
         reject.setString(Text.Tag(), text);
@@ -421,7 +421,7 @@ public class Session {
     public void logon(Connection conn) {
         authenticated = initiatedLogout = false;
         LogonMessage message = (LogonMessage) messageFactory.create(LOGON);
-        message.setInteger(HeartBtInt.TAG, 30);
+        message.setInteger(HeartBtInt.Tag(), 30);
         message.setEnum(EncryptMethod.Tag(), EncryptMethod.None());
         sendOutOfQueue(conn, message);
     }
@@ -447,7 +447,7 @@ public class Session {
         message.setHeaderConfig(config);
         message.setSendingTime(currentTime());
         message.setMsgSeqNum(seq.peek());
-        message.setInteger(NewSeqNo.TAG, seq.next());
+        message.setInteger(NewSeqNo.Tag(), seq.next());
         message.setBoolean(GapFillFlag.Tag(), false);
         conn.send(FixMessage.fromString(message.format()));
         prevTxTime = currentTime();

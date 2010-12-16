@@ -113,7 +113,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
                 return getEnum(ExecType.Tag()).equals(ExecType.Restated());
             }
         });
-        field(NoContraBrokers.TAG, new Required() {
+        field(NoContraBrokers.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return ExecType.isTrade(getEnum(ExecType.Tag()));
             }
@@ -131,7 +131,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
                 return ExecType.isTrade(getEnum(ExecType.Tag()));
             }
         });
-        field(MaxRemovePct.TAG, Required.NO);
+        field(MaxRemovePct.Tag(), Required.NO);
         field(MinQty.Tag(), Required.NO);
         field(PegDifference.TAG, Required.NO);
     }

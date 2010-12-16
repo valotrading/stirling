@@ -15,7 +15,7 @@
  */
 package fixengine.tags.fix42.bats.europe
 
-import fixengine.messages.{BooleanTag, EnumTag, FloatTag, Value}
+import fixengine.messages.{BooleanTag, EnumTag, IntegerTag, FloatTag, Value}
 import java.lang.{String, Character, Integer}
 
 object ExecInst extends EnumTag[Character](18) {
@@ -120,6 +120,14 @@ object DisplayIndicator extends EnumTag[Character](9479) {
   val Tag = this
   val DisplayedOrder = Value('X')
   val Invisible = Value('I')
+}
+
+object ModifySequence extends IntegerTag(9617) {
+  val Tag = this
+}
+
+object MaxRemovePct extends IntegerTag(9618) {
+  val Tag = this
 }
 
 object CancelOrigOnReject extends BooleanTag(9619) {

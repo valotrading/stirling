@@ -88,7 +88,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(AvgPx.Tag());
         field(LastShares.Tag(), Required.NO);
         field(LastPx.Tag(), Required.NO);
-        field(NoContraBrokers.TAG, Required.NO);
+        field(NoContraBrokers.Tag(), Required.NO);
         field(ContraBroker.Tag(), Required.NO);
         field(Text.Tag(), Required.NO);
         field(TransactTime.TAG);

@@ -50,8 +50,8 @@ import fixengine.tags.EndSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.RESEND_REQUEST)
                         .msgSeqNum(2)
-                        .integer(BeginSeqNo.TAG, 1)
-                        .integer(EndSeqNo.TAG, 3)
+                        .integer(BeginSeqNo.Tag(), 1)
+                        .integer(EndSeqNo.Tag(), 3)
                     .build());
             server.expect(MsgTypeValue.NEW_ORDER_SINGLE);
             server.expect(MsgTypeValue.NEW_ORDER_SINGLE);

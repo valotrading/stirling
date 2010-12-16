@@ -44,11 +44,11 @@ import fixengine.tags.TargetCompID;
             server.respond(
                     message()
                     .field(BeginString.Tag(), "FIX.4.2")
-                    .field(BodyLength.TAG, "55")
+                    .field(BodyLength.Tag(), "55")
                     .field(MsgType.Tag(), "0")
                     .field(SenderCompID.Tag(), "OPENFIX")
                     .field(TargetCompID.Tag(), "initiator")
-                    .field(MsgSeqNum.TAG, "2")
+                    .field(MsgSeqNum.Tag(), "2")
                     .field(SendingTime.TAG, "20100810-07:25:02")
                     .field(CheckSum.Tag(), "100")
                     .toString());
@@ -85,11 +85,11 @@ import fixengine.tags.TargetCompID;
             server.respond(
                     message()
                     .field(BeginString.Tag(), "FIX.4.2")
-                    .field(BodyLength.TAG, "56")
+                    .field(BodyLength.Tag(), "56")
                     .field(MsgType.Tag(), "0")
                     .field(SenderCompID.Tag(), "acceptor")
                     .field(TargetCompID.Tag(), "initiator")
-                    .field(MsgSeqNum.TAG, "2")
+                    .field(MsgSeqNum.Tag(), "2")
                     .field(SendingTime.TAG, "20100810-07:58:22")
                     .field(CheckSum.Tag(), "48")
                     .toString());
@@ -108,11 +108,11 @@ import fixengine.tags.TargetCompID;
             server.respondLogon();
             String msg = message()
                 .field(BeginString.Tag(), "FIX.4.2")
-                .field(BodyLength.TAG, "55")
+                .field(BodyLength.Tag(), "55")
                 .field(MsgType.Tag(), "0")
                 .field(SenderCompID.Tag(), "OPENFIX")
                 .field(TargetCompID.Tag(), "initiator")
-                .field(MsgSeqNum.TAG, "2")
+                .field(MsgSeqNum.Tag(), "2")
                 .field(SendingTime.TAG, "20100810-07:25:02")
                 .field(CheckSum.Tag(), "239").toString();
             server.respond(msg.substring(0, msg.length() - 1));

@@ -110,6 +110,10 @@ object SettlPrice extends PriceTag(730) {
   val Tag = this
 }
 
+object TrdRegTimestampType extends IntegerTag(770) {
+  val Tag = this
+}
+
 object PegMoveType extends EnumTag[Integer](835) {
   val Tag = this
   val Floating = Value(0)

@@ -40,14 +40,14 @@ public class AllocationMessage extends AbstractMessage {
 
         field(AllocID.Tag());
         field(AllocTransType.Tag());
-        field(NoOrders.TAG);          // TODO: repeating group
+        field(NoOrders.Tag());          // TODO: repeating group
         field(ClOrdID.Tag());
         field(Side.Tag());
         field(Symbol.Tag());
         field(Shares.Tag());
         field(AvgPx.Tag());
         field(TradeDate.TAG);
-        group(new RepeatingGroup(NoAllocs.TAG) {
+        group(new RepeatingGroup(NoAllocs.Tag()) {
             @Override protected RepeatingGroupInstance newInstance() {
                 return new RepeatingGroupInstance(AllocAccount.Tag()) {
                     {

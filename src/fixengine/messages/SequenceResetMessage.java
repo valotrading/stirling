@@ -28,7 +28,7 @@ public class SequenceResetMessage extends AbstractMessage {
         super(header);
         
         field(GapFillFlag.Tag(), Required.NO);
-        field(NewSeqNo.TAG);
+        field(NewSeqNo.Tag());
     }
 
     public void setSendingTime(DateTime sendingTime) {
@@ -38,7 +38,7 @@ public class SequenceResetMessage extends AbstractMessage {
     }
 
     public int getNewSeqNo() {
-        return getInteger(NewSeqNo.TAG);
+        return getInteger(NewSeqNo.Tag());
     }
 
     @Override public void apply(MessageVisitor visitor) {

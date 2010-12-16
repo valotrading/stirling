@@ -95,7 +95,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(MaxFloor.Tag(), Required.NO);
         field(ExecType.Tag());
         field(LeavesQty.Tag());
-        field(NoContraBrokers.TAG, Required.NO);
+        field(NoContraBrokers.Tag(), Required.NO);
         field(ContraBroker.Tag(), Required.NO);
         field(TradeLiquidityIndicator.Tag(), Required.NO);
     }

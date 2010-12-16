@@ -40,12 +40,12 @@ import fixengine.tags.NewSeqNo;
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(2)
                         .bool(GapFillFlag.Tag(), true)
-                        .integer(NewSeqNo.TAG, 2)
+                        .integer(NewSeqNo.Tag(), 2)
                     .build());
             server.respond(
                     new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
                         .msgSeqNum(2)
-                        .integer(NewSeqNo.TAG, 2)
+                        .integer(NewSeqNo.Tag(), 2)
                         .bool(GapFillFlag.Tag(), true)
                     .build());
             runInClient(new Runnable() {

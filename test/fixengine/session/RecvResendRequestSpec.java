@@ -36,8 +36,8 @@ import fixengine.tags.EndSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.RESEND_REQUEST)
                         .msgSeqNum(3)
-                        .integer(BeginSeqNo.TAG, 2)
-                        .integer(EndSeqNo.TAG, 0)
+                        .integer(BeginSeqNo.Tag(), 2)
+                        .integer(EndSeqNo.Tag(), 0)
                     .build());
             server.expect(MsgTypeValue.HEARTBEAT);
             server.expect(MsgTypeValue.HEARTBEAT);
@@ -46,8 +46,8 @@ import fixengine.tags.EndSeqNo;
             server.respond(
                     new MessageBuilder(MsgTypeValue.RESEND_REQUEST)
                         .msgSeqNum(4)
-                        .integer(BeginSeqNo.TAG, 2)
-                        .integer(EndSeqNo.TAG, 2)
+                        .integer(BeginSeqNo.Tag(), 2)
+                        .integer(EndSeqNo.Tag(), 2)
                     .build());
             server.expect(MsgTypeValue.HEARTBEAT);
             runInClient(new Runnable() {

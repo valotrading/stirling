@@ -111,6 +111,10 @@ object LocateReqd extends BooleanTag(114) {
   val Tag = this
 }
 
+object PutOrCall extends IntegerTag(201) {
+  val Tag = this
+}
+
 object CustomerOrFirm extends EnumTag[Integer](204) {
   val Tag = this
   val Customer = Value(0)

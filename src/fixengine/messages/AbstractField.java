@@ -40,9 +40,9 @@ public abstract class AbstractField<T> implements Field {
     
     private String parseFieldName() {
         if (!tag.getClass().equals(Tag.class)) {
-            return tag.getClass().getSimpleName();
+            return ClassNameHelper.removeTrailingDollar(tag.getClass().getSimpleName());
         }
-        String s = getClass().getSimpleName();
+        String s = ClassNameHelper.removeTrailingDollar(getClass().getSimpleName());
         if (s.length() < 5) {
             return s;
         }
@@ -164,11 +164,7 @@ public abstract class AbstractField<T> implements Field {
     }
 
     public String prettyName() {
-        return removeTrailingDollar(name()) + "(" + tag() + ")";
-    }
-
-    private static String removeTrailingDollar(String s) {
-        return s.replaceFirst("\\$$","");
+        return name() + "(" + tag() + ")";
     }
 
     @Override public String toString() {

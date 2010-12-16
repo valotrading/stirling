@@ -82,6 +82,10 @@ object LegPositionEffect extends EnumTag[Character](564) {
   val Rolled = Value('R')
 }
 
+object AccountType extends IntegerTag(581) {
+  val Tag = this
+}
+
 object MassStatusReqID extends StringTag(584) {
   val Tag = this
 }

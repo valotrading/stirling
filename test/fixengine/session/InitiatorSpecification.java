@@ -181,7 +181,7 @@ public class InitiatorSpecification extends Specification<Session> {
     protected RawMessageBuilder message(String bodyLength, String msgType) {
         return message()
                 .field(BeginString.Tag(), "FIX.4.2")
-                .field(BodyLength.TAG, bodyLength)
+                .field(BodyLength.Tag(), bodyLength)
                 .field(MsgType.Tag(), msgType)
                 .field(SenderCompID.Tag(), ACCEPTOR)
                 .field(TargetCompID.Tag(), INITIATOR);
@@ -315,7 +315,7 @@ public class InitiatorSpecification extends Specification<Session> {
             server.respond(
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
-                        .integer(HeartBtInt.TAG, getHeartbeatIntervalInSeconds())
+                        .integer(HeartBtInt.Tag(), getHeartbeatIntervalInSeconds())
                         .enumeration(EncryptMethod.Tag(), EncryptMethod.None())
                     .build());
         }
