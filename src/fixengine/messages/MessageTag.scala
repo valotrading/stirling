@@ -38,6 +38,7 @@ abstract class StringTag(value: Int) extends Tag[StringField](value, classOf[Str
 
 abstract class ExchangeTag(value: Int) extends Tag[ExchangeField](value, classOf[ExchangeField])
 abstract class LocalMktDateTag(value: Int) extends Tag[LocalMktDateField](value, classOf[LocalMktDateField])
+abstract class MonthYearTag(value: Int) extends Tag[MonthYearField](value, classOf[MonthYearField])
 abstract class UtcTimestampTag(value: Int) extends Tag[UtcTimestampField](value, classOf[UtcTimestampField])
 
 abstract class AmtTag(value: Int) extends IntegerTag(value)

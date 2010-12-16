@@ -22,6 +22,7 @@ import fixengine.messages.{
   FloatTag,
   IntegerTag,
   LocalMktDateTag,
+  MonthYearTag,
   PriceTag,
   QtyTag,
   StringTag,
@@ -102,6 +103,9 @@ object MassStatusReqType extends EnumTag[Integer](585) {
   val StatusPartyID = Value(8)
 }
 
+object LegMaturityMonthYear extends MonthYearTag(610) {
+  val Tag = this
+}
 object LegRatioQty extends FloatTag(623) {
   val Tag = this
 }
