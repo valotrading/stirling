@@ -21,6 +21,7 @@ import fixengine.messages.{
   EnumTag,
   IntegerTag,
   LocalMktDateTag,
+  NumInGroupTag,
   PriceTag,
   QtyTag,
   StringTag,
@@ -110,6 +111,9 @@ object SettlPrice extends PriceTag(730) {
   val Tag = this
 }
 
+object NoTrdRegTimestamps extends NumInGroupTag(768) {
+  val Tag = this
+}
 object TrdRegTimestampType extends IntegerTag(770) {
   val Tag = this
 }
