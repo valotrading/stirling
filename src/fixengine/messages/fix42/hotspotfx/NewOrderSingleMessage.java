@@ -40,17 +40,17 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
     }
 
     @Override protected void fields() {
-        field(Account.TAG, Required.NO);
-        field(ClOrdID.TAG);
+        field(Account.Tag(), Required.NO);
+        field(ClOrdID.Tag());
         field(ExecInst.Tag(), Required.NO);
         field(HandlInst.Tag());
-        field(Currency.TAG, Required.NO);
+        field(Currency.Tag(), Required.NO);
         field(OrderQty.TAG);
         field(MaxShow.TAG, Required.NO);
         field(MinQty.TAG, Required.NO);
         field(Price.TAG);
         field(Side.Tag());
-        field(Symbol.TAG);
+        field(Symbol.Tag());
         field(OrdType.Tag());
         field(TimeInForce.Tag(), Required.NO);
         field(TransactTime.TAG, Required.NO);

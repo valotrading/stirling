@@ -43,14 +43,14 @@ import fixengine.tags.TargetCompID;
             server.respondLogon();
             server.respond(
                     message()
-                    .field(BeginString.TAG, "FIX.4.2")
+                    .field(BeginString.Tag(), "FIX.4.2")
                     .field(BodyLength.TAG, "55")
-                    .field(MsgType.TAG, "0")
-                    .field(SenderCompID.TAG, "OPENFIX")
-                    .field(TargetCompID.TAG, "initiator")
+                    .field(MsgType.Tag(), "0")
+                    .field(SenderCompID.Tag(), "OPENFIX")
+                    .field(TargetCompID.Tag(), "initiator")
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100810-07:25:02")
-                    .field(CheckSum.TAG, "100")
+                    .field(CheckSum.Tag(), "100")
                     .toString());
             checking(expectLogWarning("CheckSum(10) mismatch, expected=239, actual=100"));
             runInClient(new Runnable() {
@@ -84,14 +84,14 @@ import fixengine.tags.TargetCompID;
             server.respondLogon();
             server.respond(
                     message()
-                    .field(BeginString.TAG, "FIX.4.2")
+                    .field(BeginString.Tag(), "FIX.4.2")
                     .field(BodyLength.TAG, "56")
-                    .field(MsgType.TAG, "0")
-                    .field(SenderCompID.TAG, "acceptor")
-                    .field(TargetCompID.TAG, "initiator")
+                    .field(MsgType.Tag(), "0")
+                    .field(SenderCompID.Tag(), "acceptor")
+                    .field(TargetCompID.Tag(), "initiator")
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100810-07:58:22")
-                    .field(CheckSum.TAG, "48")
+                    .field(CheckSum.Tag(), "48")
                     .toString());
             checking(expectLogWarning("CheckSum(10) has invalid length: 48"));
             runInClient(new Runnable() {
@@ -107,14 +107,14 @@ import fixengine.tags.TargetCompID;
             server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             String msg = message()
-                .field(BeginString.TAG, "FIX.4.2")
+                .field(BeginString.Tag(), "FIX.4.2")
                 .field(BodyLength.TAG, "55")
-                .field(MsgType.TAG, "0")
-                .field(SenderCompID.TAG, "OPENFIX")
-                .field(TargetCompID.TAG, "initiator")
+                .field(MsgType.Tag(), "0")
+                .field(SenderCompID.Tag(), "OPENFIX")
+                .field(TargetCompID.Tag(), "initiator")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100810-07:25:02")
-                .field(CheckSum.TAG, "239").toString();
+                .field(CheckSum.Tag(), "239").toString();
             server.respond(msg.substring(0, msg.length() - 1));
             /* FIXME: Currently this error condition is never reported to
              * Session. */

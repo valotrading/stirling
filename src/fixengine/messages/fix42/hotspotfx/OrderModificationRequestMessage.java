@@ -36,15 +36,15 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
     }
 
     @Override protected void fields() {
-        field(Account.TAG, Required.NO);
-        field(ClOrdID.TAG);
-        field(OrigClOrdID.TAG);
+        field(Account.Tag(), Required.NO);
+        field(ClOrdID.Tag());
+        field(OrigClOrdID.Tag());
         field(HandlInst.Tag());
         field(OrderQty.TAG);
         field(MaxShow.TAG, Required.NO);
         field(MinQty.TAG, Required.NO);
         field(Price.TAG);
-        field(Symbol.TAG, Required.NO);
+        field(Symbol.Tag(), Required.NO);
         field(OrdType.Tag(), Required.NO);
         field(Side.Tag(), Required.NO);
         field(TransactTime.TAG, Required.NO);

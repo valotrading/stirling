@@ -46,17 +46,17 @@ public class AbstractOrderModificationRequestMessage extends AbstractMessage imp
     }
 
     protected void fields() {
-        field(OrigClOrdID.TAG);
-        field(ClOrdID.TAG);
+        field(OrigClOrdID.Tag());
+        field(ClOrdID.Tag());
         field(HandlInst.Tag());
-        field(Symbol.TAG);
-        field(SecurityType.TAG, Required.NO);
-        field(MaturityMonthYear.TAG, Required.NO);
+        field(Symbol.Tag());
+        field(SecurityType.Tag(), Required.NO);
+        field(MaturityMonthYear.Tag(), Required.NO);
         field(Side.Tag());
         field(TransactTime.TAG);
         field(OrderQty.TAG);
         field(OrdType.Tag());
-        field(Currency.TAG, Required.NO);
+        field(Currency.Tag(), Required.NO);
         field(Price.TAG, Required.NO);
     }
 }

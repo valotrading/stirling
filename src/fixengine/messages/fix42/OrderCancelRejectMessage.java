@@ -42,12 +42,12 @@ public class OrderCancelRejectMessage extends AbstractMessage implements fixengi
     }
 
     protected void fields() {
-        field(OrderID.TAG);
-        field(ClOrdID.TAG);
-        field(OrigClOrdID.TAG);
+        field(OrderID.Tag());
+        field(ClOrdID.Tag());
+        field(OrigClOrdID.Tag());
         field(OrdStatus.Tag());
         field(CxlRejResponseTo.Tag());
         field(CxlRejReason.Tag(), Required.NO);
-        field(Text.TAG, Required.NO);
+        field(Text.Tag(), Required.NO);
     }
 }

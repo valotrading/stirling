@@ -27,9 +27,9 @@ public class OrderCancelRejectMessage extends fixengine.messages.fix42.OrderCanc
     }
 
     @Override public void fields() {
-        field(ClOrdID.TAG);
-        field(OrigClOrdID.TAG);
-        field(OrderID.TAG);
+        field(ClOrdID.Tag());
+        field(OrigClOrdID.Tag());
+        field(OrderID.Tag());
         field(OrdStatus.Tag());
     }
 }

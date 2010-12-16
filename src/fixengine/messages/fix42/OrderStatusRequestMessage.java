@@ -45,24 +45,24 @@ public class OrderStatusRequestMessage extends AbstractMessage {
     }
 
     protected void fields() {
-        field(OrderID.TAG, Required.NO);
-        field(ClOrdID.TAG);
+        field(OrderID.Tag(), Required.NO);
+        field(ClOrdID.Tag());
         field(ClientID.TAG, Required.NO);
-        field(Account.TAG, Required.NO);
-        field(ExecBroker.TAG, Required.NO);
-        field(Symbol.TAG);
+        field(Account.Tag(), Required.NO);
+        field(ExecBroker.Tag(), Required.NO);
+        field(Symbol.Tag());
         /* SymbolSfx(65) */
-        field(SecurityID.TAG, Required.NO);
+        field(SecurityID.Tag(), Required.NO);
         field(IDSource.TAG, Required.NO);
-        field(SecurityType.TAG, Required.NO);
-        field(MaturityMonthYear.TAG, Required.NO);
+        field(SecurityType.Tag(), Required.NO);
+        field(MaturityMonthYear.Tag(), Required.NO);
         /* MaturityDay(205) */
         /* PutOrCall(201) */
         /* StrikePrice(202) */
         /* OptAttribute(206) */
         /* ContractMultiplier(201) */
         /* CouponRate(223) */
-        field(SecurityExchange.TAG, Required.NO);
+        field(SecurityExchange.Tag(), Required.NO);
         /* Issuer(106) */
         /* EncodedIssuerLen(348) */
         /* EncodedIssuer(349) */

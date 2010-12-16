@@ -28,9 +28,9 @@ public class BusinessMessageRejectMessage extends AbstractMessage {
         super(header);
 
         field(RefSeqNo.TAG, Required.NO);
-        field(RefMsgType.TAG);
+        field(RefMsgType.Tag());
         field(BusinessRejectReason.Tag());
-        field(Text.TAG, Required.NO);
+        field(Text.Tag(), Required.NO);
     }
 
     @Override

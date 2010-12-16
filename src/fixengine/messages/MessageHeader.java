@@ -51,15 +51,15 @@ public class MessageHeader extends FieldContainer implements Parseable {
     }
 
     public MessageHeader() {
-        head.field(BeginString.TAG);
+        head.field(BeginString.Tag());
         head.field(BodyLength.TAG);
-        head.field(MsgType.TAG);
-        field(SenderCompID.TAG);
-        field(SenderSubID.TAG, Required.NO);
-        field(TargetCompID.TAG);
-        field(TargetSubID.TAG, Required.NO);
-        field(OnBehalfOfCompID.TAG, Required.NO);
-        field(DeliverToCompID.TAG, Required.NO);
+        head.field(MsgType.Tag());
+        field(SenderCompID.Tag());
+        field(SenderSubID.Tag(), Required.NO);
+        field(TargetCompID.Tag());
+        field(TargetSubID.Tag(), Required.NO);
+        field(OnBehalfOfCompID.Tag(), Required.NO);
+        field(DeliverToCompID.Tag(), Required.NO);
         field(MsgSeqNum.TAG);
         field(PossDupFlag.TAG, Required.NO);
         field(PossResend.TAG, Required.NO);
@@ -69,14 +69,14 @@ public class MessageHeader extends FieldContainer implements Parseable {
                 return hasValue(PossDupFlag.TAG) && getBoolean(PossDupFlag.TAG);
             }
         });
-        field(SenderLocationID.TAG, Required.NO);
+        field(SenderLocationID.Tag(), Required.NO);
     }
 
     @Override public void parse(ByteBuffer b) {
-        parseHeadField(b, BeginString.TAG);
+        parseHeadField(b, BeginString.Tag());
         parseHeadField(b, BodyLength.TAG);
         trailer(b);
-        parseHeadField(b, MsgType.TAG);
+        parseHeadField(b, MsgType.Tag());
         super.parse(b);
     }
 
@@ -92,11 +92,11 @@ public class MessageHeader extends FieldContainer implements Parseable {
     }
 
     public String getBeginString() {
-        return head.getString(BeginString.TAG);
+        return head.getString(BeginString.Tag());
     }
 
     public void setBeginString(String beginString) {
-        head.setString(BeginString.TAG, beginString);
+        head.setString(BeginString.Tag(), beginString);
     }
 
     public int getBodyLength() {
@@ -104,15 +104,15 @@ public class MessageHeader extends FieldContainer implements Parseable {
     }
 
     public String getMsgType() {
-        return head.getString(MsgType.TAG);
+        return head.getString(MsgType.Tag());
     }
 
     public void setMsgType(String msgType) {
-        head.setString(MsgType.TAG, msgType);
+        head.setString(MsgType.Tag(), msgType);
     }
 
     public boolean isPointToPoint() {
-        return !hasValue(OnBehalfOfCompID.TAG) && !hasValue(DeliverToCompID.TAG);
+        return !hasValue(OnBehalfOfCompID.Tag()) && !hasValue(DeliverToCompID.Tag());
     }
 
     public boolean hasAccurateSendingTime(DateTime currentTime) {

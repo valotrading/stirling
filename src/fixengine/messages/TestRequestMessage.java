@@ -24,7 +24,7 @@ public class TestRequestMessage extends AbstractMessage {
     public TestRequestMessage(MessageHeader header) {
         super(header);
 
-        field(TestReqID.TAG);
+        field(TestReqID.Tag());
     }
 
     @Override public void apply(MessageVisitor visitor) {

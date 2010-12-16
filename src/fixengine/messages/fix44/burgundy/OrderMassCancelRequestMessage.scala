@@ -21,12 +21,12 @@ import fixengine.tags.fix43.SecurityIDSource
 import fixengine.tags.fix44.MassCancelRequestType
 
 class OrderMassCancelRequestMessage(header: MessageHeader) extends AbstractMessage(header) with OrderMassCancelRequestMessageTrait {
-  field(ClOrdID.TAG)
-  field(OnBehalfOfCompID.TAG, Required.NO)
+  field(ClOrdID.Tag)
+  field(OnBehalfOfCompID.Tag, Required.NO)
   field(MassCancelRequestType.Tag)
-  field(Symbol.TAG, Required.NO)
+  field(Symbol.Tag, Required.NO)
   field(SecurityIDSource.Tag, Required.NO)
-  field(SecurityID.TAG, Required.NO)
+  field(SecurityID.Tag, Required.NO)
   field(TransactTime.TAG)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

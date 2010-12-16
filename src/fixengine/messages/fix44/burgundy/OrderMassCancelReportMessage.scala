@@ -20,12 +20,12 @@ import fixengine.tags.{Text, OrderID, ClOrdID}
 import fixengine.tags.fix44.{MassCancelRequestType, MassCancelResponse, MassCancelRejectReason}
 
 class OrderMassCancelReportMessage(header: MessageHeader) extends AbstractMessage(header) with OrderMassCancelReportMessageTrait {
-  field(ClOrdID.TAG)
-  field(OrderID.TAG)
+  field(ClOrdID.Tag)
+  field(OrderID.Tag)
   field(MassCancelRequestType.Tag)
   field(MassCancelResponse.Tag)
   field(MassCancelRejectReason.Tag, Required.NO)
-  field(Text.TAG, Required.NO)
+  field(Text.Tag, Required.NO)
 
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

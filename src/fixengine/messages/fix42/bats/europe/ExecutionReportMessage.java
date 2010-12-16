@@ -68,13 +68,13 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
     }
 
     @Override protected void fields() {
-        field(Account.TAG, Required.NO);
-        field(ClOrdID.TAG);
+        field(Account.Tag(), Required.NO);
+        field(ClOrdID.Tag());
         field(CumQty.TAG);
-        field(Currency.TAG, Required.NO);
-        field(ExecID.TAG);
+        field(Currency.Tag(), Required.NO);
+        field(ExecID.Tag());
         field(ExecInst.Tag(), Required.NO);
-        field(ExecRefID.TAG, new Required() {
+        field(ExecRefID.Tag(), new Required() {
             @Override public boolean isRequired() {
                 Value<?> value = getEnum(ExecTransType.Tag());
                 return value.equals(ExecTransType.Cancel()) || value.equals(ExecTransType.Correct());
@@ -84,16 +84,16 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(IDSource.Tag(), Required.NO);
         field(LastPx.TAG);
         field(LastShares.TAG);
-        field(OrderID.TAG);
+        field(OrderID.Tag());
         field(OrderQty.TAG);
         field(OrdStatus.Tag());
-        field(OrigClOrdID.TAG, Required.NO);
+        field(OrigClOrdID.Tag(), Required.NO);
         field(Price.TAG, Required.NO);
         field(AvgPx.TAG, Required.NO);
         field(SecurityID.Tag(), Required.NO);
         field(Side.Tag());
-        field(Symbol.TAG, Required.NO);
-        field(Text.TAG, Required.NO);
+        field(Symbol.Tag(), Required.NO);
+        field(Text.Tag(), Required.NO);
         field(TimeInForce.Tag(), Required.NO);
         field(TransactTime.TAG);
         field(OrdRejReason.Tag(), Required.NO);
@@ -105,9 +105,9 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         });
         field(ExecType.Tag());
         field(LeavesQty.TAG);
-        field(SecondaryOrderID.TAG, Required.NO);
-        field(SecurityExchange.TAG, Required.NO);
-        field(ContraBroker.TAG, Required.NO);
+        field(SecondaryOrderID.Tag(), Required.NO);
+        field(SecurityExchange.Tag(), Required.NO);
+        field(ContraBroker.Tag(), Required.NO);
         field(ExecRestatementReason.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return getEnum(ExecType.Tag()).equals(ExecType.Restated());

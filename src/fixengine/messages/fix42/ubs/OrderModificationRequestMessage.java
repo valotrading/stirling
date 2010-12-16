@@ -35,9 +35,9 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
     }
 
     @Override protected void fields() {
-        field(ClOrdID.TAG);
-        field(OrigClOrdID.TAG);
-        field(Symbol.TAG);
+        field(ClOrdID.Tag());
+        field(OrigClOrdID.Tag());
+        field(Symbol.Tag());
         field(Side.Tag());
         field(TransactTime.TAG);
         field(OrderQty.TAG);
@@ -47,7 +47,7 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
                 return getEnum(OrdType.Tag()).equals(OrdType.Limit());
             }
         });
-        field(ExecInst.TAG, Required.NO);
+        field(ExecInst.Tag(), Required.NO);
         field(TimeInForce.Tag(), Required.NO);
         field(MinQty.TAG, Required.NO);
     }

@@ -42,16 +42,16 @@ public class NewOrderSingleMessage extends AbstractNewOrderSingleMessage {
     }
 
     protected void fields() {
-        field(ClOrdID.TAG);
-        field(Currency.TAG, Required.NO);
+        field(ClOrdID.Tag());
+        field(Currency.Tag(), Required.NO);
         field(HandlInst.Tag());
-        field(ExDestination.TAG);
+        field(ExDestination.Tag());
         field(Side.Tag());
         field(TransactTime.TAG);
         field(OrdType.Tag());
-        field(Symbol.TAG);
-        field(SecurityType.TAG, Required.NO);
-        field(MaturityMonthYear.TAG, Required.NO);
+        field(Symbol.Tag());
+        field(SecurityType.Tag(), Required.NO);
+        field(MaturityMonthYear.Tag(), Required.NO);
         field(OrderQty.TAG);
         field(CustomerOrFirm.Tag(), Required.NO);
         field(Price.TAG, Required.NO);

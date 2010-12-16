@@ -60,33 +60,33 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
     }
 
     @Override protected void fields() {
-        field(Account.TAG, Required.NO);
+        field(Account.Tag(), Required.NO);
         field(AvgPx.TAG);
-        field(ClOrdID.TAG, Required.NO);
+        field(ClOrdID.Tag(), Required.NO);
         field(CumQty.TAG);
-        field(Currency.TAG, Required.NO);
-        field(ExecID.TAG);
-        field(ExecRefID.TAG, Required.NO);
+        field(Currency.Tag(), Required.NO);
+        field(ExecID.Tag());
+        field(ExecRefID.Tag(), Required.NO);
         field(ExecTransType.Tag());
         field(IDSource.Tag(), Required.NO);
         field(LastCapacity.Tag(), Required.NO);
         field(LastPx.TAG);
         field(LastShares.TAG);
-        field(OrderID.TAG);
+        field(OrderID.Tag());
         field(OrderQty.TAG);
         field(OrdStatus.Tag());
         field(OrdType.Tag(), Required.NO);
-        field(OrigClOrdID.TAG, Required.NO);
+        field(OrigClOrdID.Tag(), Required.NO);
         field(Price.TAG, Required.NO);
         field(OrderCapacity.Tag(), Required.NO);
-        field(SecurityID.TAG, new Required() {
+        field(SecurityID.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return hasValue(IDSource.Tag());
             }
         });
         field(Side.Tag());
-        field(Symbol.TAG);
-        field(Text.TAG, Required.NO);
+        field(Symbol.Tag());
+        field(Text.Tag(), Required.NO);
         field(TimeInForce.Tag(), Required.NO);
         field(TransactTime.TAG);
         field(TradeDate.TAG, Required.NO);
@@ -96,7 +96,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(ExecType.Tag());
         field(LeavesQty.TAG);
         field(NoContraBrokers.TAG, Required.NO);
-        field(ContraBroker.TAG, Required.NO);
+        field(ContraBroker.Tag(), Required.NO);
         field(TradeLiquidityIndicator.Tag(), Required.NO);
     }
 }

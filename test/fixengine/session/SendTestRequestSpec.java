@@ -33,7 +33,7 @@ import fixengine.tags.TestReqID;
             server.respond(
                     new MessageBuilder(MsgTypeValue.TEST_REQUEST)
                         .msgSeqNum(2)
-                        .string(TestReqID.TAG, "12345678")
+                        .string(TestReqID.Tag(), "12345678")
                     .build());
             // TODO: Verify that TestReqID of Heartbeat matches
             server.expect(MsgTypeValue.HEARTBEAT);

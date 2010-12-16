@@ -50,9 +50,9 @@ import fixengine.tags.fix44.Username
 import fixengine.messages.{NewOrderMultiLegMessage => NewOrderMultiLegMessageTrait}
 
 class NewOrderMultiLegMessage(header: MessageHeader) extends AbstractMessage(header) with NewOrderMultiLegMessageTrait {
-  field(Account.TAG)
-  field(ClOrdID.TAG)
-  field(ExecInst.TAG, Required.NO)
+  field(Account.Tag)
+  field(ClOrdID.Tag)
+  field(ExecInst.Tag, Required.NO)
   field(HandlInst.Tag)
   field(OrderQty.TAG)
   field(OrdType.Tag)

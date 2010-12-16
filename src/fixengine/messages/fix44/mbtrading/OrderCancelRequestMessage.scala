@@ -28,10 +28,10 @@ import fixengine.tags.fix42.Side
 import fixengine.tags.fix44.Username
 
 class OrderCancelRequestMessage(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestMessageTrait {
-  field(ClOrdID.TAG)
-  field(OrigClOrdID.TAG)
+  field(ClOrdID.Tag)
+  field(OrigClOrdID.Tag)
   field(Side.Tag)
-  field(Symbol.TAG)
+  field(Symbol.Tag)
   field(TransactTime.TAG)
   field(Username.TAG)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)

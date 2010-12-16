@@ -43,7 +43,7 @@ public class MessageBufferSpec extends Specification<MessageBuffer> {
 
     public class BufferThatHasAppendedTag {
         public MessageBuffer create() {
-            buffer.append(new StringField(MsgType.TAG, MsgTypeValue.LOGON));
+            buffer.append(new StringField(MsgType.Tag(), MsgTypeValue.LOGON));
             return buffer;
         }
 
@@ -56,12 +56,12 @@ public class MessageBufferSpec extends Specification<MessageBuffer> {
         }
 
         public void retainsAlreadyAppendedTagsWhenNewTagsAreAppended() {
-            buffer.append(new StringField(TargetCompID.TAG, "IB"));
+            buffer.append(new StringField(TargetCompID.Tag(), "IB"));
             specify(buffer.toString(), must.equal("35=A" + DELIMITER + "56=IB" + DELIMITER));
         }
         
         public void retainsAlreadyAppendedTagsAtTheBackWhenNewTagsArePrefixed() {
-            buffer.prefix(new StringField(TargetCompID.TAG, "IB"));
+            buffer.prefix(new StringField(TargetCompID.Tag(), "IB"));
             specify(buffer.toString(), must.equal("56=IB" + DELIMITER + "35=A" + DELIMITER));
         }
     }

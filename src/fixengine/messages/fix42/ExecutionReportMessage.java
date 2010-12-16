@@ -62,18 +62,18 @@ public class ExecutionReportMessage extends AbstractMessage implements fixengine
     }
 
     protected void fields() {
-        field(OrderID.TAG);
-        field(ClOrdID.TAG, Required.NO);
-        field(OrigClOrdID.TAG, Required.NO);
-        field(ExecID.TAG);
+        field(OrderID.Tag());
+        field(ClOrdID.Tag(), Required.NO);
+        field(OrigClOrdID.Tag(), Required.NO);
+        field(ExecID.Tag());
         field(ExecTransType.Tag());
         field(ExecType.Tag());
         field(OrdStatus.Tag());
         field(OrdRejReason.Tag(), Required.NO);
         field(ExecRestatementReason.Tag(), Required.NO);
-        field(Symbol.TAG);
-        field(SecurityType.TAG, Required.NO);
-        field(MaturityMonthYear.TAG, Required.NO);
+        field(Symbol.Tag());
+        field(SecurityType.Tag(), Required.NO);
+        field(MaturityMonthYear.Tag(), Required.NO);
         field(Side.Tag());
         field(OrderQty.TAG);
         field(LastShares.TAG, Required.NO);
@@ -89,9 +89,9 @@ public class ExecutionReportMessage extends AbstractMessage implements fixengine
         field(CumQty.TAG);
         field(AvgPx.TAG);
         field(TransactTime.TAG, Required.NO);
-        field(Text.TAG, Required.NO);
-        field(ExDestination.TAG, Required.NO);
-        field(LastMkt.TAG, Required.NO);
-        field(Currency.TAG, Required.NO);
+        field(Text.Tag(), Required.NO);
+        field(ExDestination.Tag(), Required.NO);
+        field(LastMkt.Tag(), Required.NO);
+        field(Currency.Tag(), Required.NO);
     }
 }

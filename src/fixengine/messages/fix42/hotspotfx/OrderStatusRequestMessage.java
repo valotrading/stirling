@@ -29,9 +29,9 @@ public class OrderStatusRequestMessage extends fixengine.messages.fix42.OrderSta
     }
 
     @Override protected void fields() {
-        field(Account.TAG, Required.NO);
-        field(ClOrdID.TAG);
-        field(Symbol.TAG, Required.NO);
+        field(Account.Tag(), Required.NO);
+        field(ClOrdID.Tag());
+        field(Symbol.Tag(), Required.NO);
         field(Side.Tag(), Required.NO);
         field(TransactTime.TAG, Required.NO);
     }

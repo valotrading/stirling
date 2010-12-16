@@ -180,11 +180,11 @@ public class InitiatorSpecification extends Specification<Session> {
 
     protected RawMessageBuilder message(String bodyLength, String msgType) {
         return message()
-                .field(BeginString.TAG, "FIX.4.2")
+                .field(BeginString.Tag(), "FIX.4.2")
                 .field(BodyLength.TAG, bodyLength)
-                .field(MsgType.TAG, msgType)
-                .field(SenderCompID.TAG, ACCEPTOR)
-                .field(TargetCompID.TAG, INITIATOR);
+                .field(MsgType.Tag(), msgType)
+                .field(SenderCompID.Tag(), ACCEPTOR)
+                .field(TargetCompID.Tag(), INITIATOR);
     }
 
     protected String formatDateTime(DateTime dateTime) {
@@ -197,8 +197,8 @@ public class InitiatorSpecification extends Specification<Session> {
         public MessageBuilder(String type) {
             MessageHeader header = new MessageHeader(type);
             header.setBeginString(VERSION.value());
-            header.setString(SenderCompID.TAG, ACCEPTOR);
-            header.setString(TargetCompID.TAG, INITIATOR);
+            header.setString(SenderCompID.Tag(), ACCEPTOR);
+            header.setString(TargetCompID.Tag(), INITIATOR);
             header.setDateTime(SendingTime.TAG, new DefaultTimeSource().currentTime());
             if (MsgTypeValue.SEQUENCE_RESET.equals(type)) {
                 header.setDateTime(OrigSendingTime.TAG, header.getDateTime(SendingTime.TAG));

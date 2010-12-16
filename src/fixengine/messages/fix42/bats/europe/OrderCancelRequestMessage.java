@@ -37,29 +37,29 @@ public class OrderCancelRequestMessage extends fixengine.messages.fix42.OrderCan
     }
 
     @Override protected void fields() {
-        field(Account.TAG, Required.NO);
-        field(ClOrdID.TAG);
-        field(Currency.TAG, new Required() {
+        field(Account.Tag(), Required.NO);
+        field(ClOrdID.Tag());
+        field(Currency.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return getEnum(IDSource.Tag()).equals(IDSource.ISIN());
             }
         });
         field(IDSource.Tag(), new Required() {
             @Override public boolean isRequired() {
-                return !hasValue(Symbol.TAG);
+                return !hasValue(Symbol.Tag());
             }
         });
-        field(OrderID.TAG);
+        field(OrderID.Tag());
         field(OrderQty.TAG);
-        field(OrigClOrdID.TAG);
+        field(OrigClOrdID.Tag());
         field(SecurityID.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return hasValue(IDSource.Tag());
             }
         });
         field(Side.Tag());
-        field(Symbol.TAG, Required.NO);
-        field(SecurityExchange.TAG, new Required() {
+        field(Symbol.Tag(), Required.NO);
+        field(SecurityExchange.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return getEnum(IDSource.Tag()).equals(IDSource.ISIN());
             }

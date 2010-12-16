@@ -36,9 +36,9 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
     }
 
     @Override protected void fields() {
-        field(ClOrdID.TAG);
-        field(ExecInst.TAG);
-        field(Symbol.TAG);
+        field(ClOrdID.Tag());
+        field(ExecInst.Tag());
+        field(Symbol.Tag());
         field(Side.Tag());
         field(OrderQty.TAG);
         field(OrdType.Tag());

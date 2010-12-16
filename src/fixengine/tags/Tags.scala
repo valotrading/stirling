@@ -15,137 +15,41 @@
  */
 package fixengine.tags
 
-import fixengine.messages.{EnumTag, Value}
-import java.lang.{Integer, Character}
+import fixengine.messages.{EnumTag, StringTag, Value}
+import java.lang.{Character, Integer, String}
 
 
-object BusinessRejectReason extends EnumTag[Integer](380) {
+object Account extends StringTag(1) {
   val Tag = this
-
-  /** Other.  */
-  val Other = Value(0)
-
-  /** Unknown ID.  */
-  val UnknownId = Value(1)
-
-  /** Unknown Security.  */
-  val UnknownSecurity = Value(2)
-
-  /** Unknown Message Type.  */
-  val UnknownMessageType = Value(3)
-
-  /** Application not available.  */
-  val ApplicationNotAvailable = Value(4)
-
-  /** Conditionally Required Field Missing.  */
-  val ConditionallyRequiredFieldMissing = Value(5)
-
-  /** Not authorized.  */
-  val NotAuthorized = Value(6)
-
-  /** DeliverTo firm not available at this time.  */
-  val DeliverToFirmNotAvailable = Value(7)
 }
 
-object CxlRejReason extends EnumTag[Integer](102) {
+object BeginString extends StringTag(8) {
   val Tag = this
-
-  /** Too late to cancel.  */
-  val TooLateToCancel = Value(0)
-
-  /** Unknown order.  */
-  val UnknownOrder = Value(1)
-
-  /** Broker/Exchange Option.  */
-  val BrokerExchangeOption = Value(2)
-
-  /** Order already in Pending Cancel or Pending Replace status.  */
-  val PendingCancelOrReplace = Value(3)
-
-  /** Unable to process Order Mass Cancel Request.  */
-  val UnableToProcessRequest = Value(4)
-
-  /** OrigOrdModTime did not match last TransactTime of order. */
-  val TimeMismatch = Value(5)
-
-  /** Duplicate ClOrdID received.  */
-  val DuplicateClOrdId = Value(6)
 }
 
-object CxlRejResponseTo extends EnumTag[Character](434) {
+object CheckSum extends StringTag(10) {
   val Tag = this
-  val OrderCancelRequest = Value('1')
-  val OrderModificationRequest = Value('2')
+  def format(checksum: Integer) = String.format("%03d", checksum)
 }
 
-object DKReason extends EnumTag[Character](127) {
+object ClOrdID extends StringTag(11) {
   val Tag = this
-  val UnknownSymbol = Value('A')
-  val WrongSide = Value('B')
-  val QuantityExceedsOrder = Value('C')
-  val NoMatchingOrder = Value('D')
-  val PriceExceedsLimit = Value('E')
-  val Other = Value('Z')
 }
 
-object EncryptMethod extends EnumTag[Integer](98) {
+object Currency extends StringTag(15) {
   val Tag = this
-
-  /** None / other */
-  val None = Value(0)
-
-  /** PKCS (proprietary) */
-  val Pkcs = Value(1)
-
-  /** DES (ECB mode) */
-  val Des = Value(2)
-
-  /** PKCS/DES (proprietary) */
-  val PkcsDes = Value(3)
-
-  /** PGP/DES (defunct) */
-  val PgpDes = Value(4)
-
-  /** PGP/DES-MD5 */
-  val PgpDesMd5 = Value(5)
-
-  /** PEM/DES-MD5 */
-  val PemDesMd5 = Value(6)
 }
 
-object ExecRestatementReason extends EnumTag[Integer](378) {
+object ExecID extends StringTag(17) {
   val Tag = this
-  val GtCorporateAction = Value(0)
-  val GtRenewalRestatement = Value(1) /* (no corporate action) */
-  val VerbalChange = Value(2)
-  val RepricingOfOrder = Value(3)
-  val BrokerOption = Value(4)
-  val PartialDeclineOfOrderQty = Value(5) /* (e.g. exchange-initiated partial cancel) */
-  val CancelOnTradingHalt = Value(6)
-  val CancelOnSystemFailure = Value(7)
-  val MarketOption = Value(8)
 }
-object ExecType extends EnumTag[Character](150) {
+
+object ExecInst extends StringTag(18) {
   val Tag = this
-  val New = Value('0')
-  val PartialFill = Value('1')
-  val Fill = Value('2')
-  val DoneForDay = Value('3')
-  val Canceled = Value('4')
-  val Replace = Value('5')
-  val PendingCancel = Value('6')
-  val Stopped = Value('7')
-  val Rejected = Value('8')
-  val Suspended = Value('9')
-  val PendingNew = Value('A')
-  val Calculated = Value('B')
-  val Expired = Value('C')
-  val Restated = Value('D')
-  val PendingReplace = Value('E')
-  val Trade = Value('F')
-  val TradeCorrect = Value('G')
-  val TradeCancel = Value('H')
-  val OrderStatus = Value('I')
+}
+
+object ExecRefID extends StringTag(19) {
+  val Tag = this
 }
 
 object HandlInst extends EnumTag[Character](21) {
@@ -161,21 +65,16 @@ object HandlInst extends EnumTag[Character](21) {
   val ManualOrder = Value('3')
 }
 
-object OrdRejReason extends EnumTag[Integer](103) {
+object LastMkt extends StringTag(30) {
   val Tag = this
-  val BrokerExchangeOption = Value(0)
-  val UnknownSymbol = Value(1)
-  val ExchangeClosed = Value(2)
-  val OrderExceedsLimit = Value(3)
-  val TooLateToEnter = Value(4)
-  val UnknownOrder = Value(5)
-  val DuplicateOrder = Value(6)
-  val DuplicateOfVerballyCommunicatedOrder = Value(7)
-  val StaleOrder = Value(8)
-  val TradeAlongRequired = Value(9)
-  val InvalidInvestorId = Value(10)
-  val UnsupportedOrderCharacteristic = Value(11)
-  val SurveillanceOption = Value(12)
+}
+
+object MsgType extends StringTag(35) {
+  val Tag = this
+}
+
+object OrderID extends StringTag(37) {
+  val Tag = this
 }
 
 object OrdStatus extends EnumTag[Character](39) {
@@ -224,11 +123,203 @@ object OrdType extends EnumTag[Character](40) {
   val Pegged = Value('P')
 }
 
+object OrigClOrdID extends StringTag(41) {
+  val Tag = this
+}
+
 object OrderCapacity extends EnumTag[Character](47) {
   val Tag = this
   val Agency = Value('A') /* Agency single order */
   val Principal = Value('P') /* Principal */
   val Riskless = Value('R') /* Riskless */
+}
+
+object SecurityID extends StringTag(48) {
+  val Tag = this
+}
+
+object SenderCompID extends StringTag(49) {
+  val Tag = this
+}
+
+object SenderSubID extends StringTag(50) {
+  val Tag = this
+}
+
+object Symbol extends StringTag(55) {
+  val Tag = this
+}
+
+object TargetCompID extends StringTag(56) {
+  val Tag = this
+}
+
+object TargetSubID extends StringTag(57) {
+  val Tag = this
+}
+
+object Text extends StringTag(58) {
+  val Tag = this
+}
+object AllocID extends StringTag(70) {
+  val Tag = this
+}
+
+object ExecBroker extends StringTag(76) {
+  val Tag = this
+}
+
+object AllocAccount extends StringTag(79) {
+  val Tag = this
+}
+
+object EncryptMethod extends EnumTag[Integer](98) {
+  val Tag = this
+
+  /** None / other */
+  val None = Value(0)
+
+  /** PKCS (proprietary) */
+  val Pkcs = Value(1)
+
+  /** DES (ECB mode) */
+  val Des = Value(2)
+
+  /** PKCS/DES (proprietary) */
+  val PkcsDes = Value(3)
+
+  /** PGP/DES (defunct) */
+  val PgpDes = Value(4)
+
+  /** PGP/DES-MD5 */
+  val PgpDesMd5 = Value(5)
+
+  /** PEM/DES-MD5 */
+  val PemDesMd5 = Value(6)
+}
+
+object ExDestination extends StringTag(100) {
+  val Tag = this
+}
+
+object CxlRejReason extends EnumTag[Integer](102) {
+  val Tag = this
+
+  /** Too late to cancel.  */
+  val TooLateToCancel = Value(0)
+
+  /** Unknown order.  */
+  val UnknownOrder = Value(1)
+
+  /** Broker/Exchange Option.  */
+  val BrokerExchangeOption = Value(2)
+
+  /** Order already in Pending Cancel or Pending Replace status.  */
+  val PendingCancelOrReplace = Value(3)
+
+  /** Unable to process Order Mass Cancel Request.  */
+  val UnableToProcessRequest = Value(4)
+
+  /** OrigOrdModTime did not match last TransactTime of order. */
+  val TimeMismatch = Value(5)
+
+  /** Duplicate ClOrdID received.  */
+  val DuplicateClOrdId = Value(6)
+}
+
+object OrdRejReason extends EnumTag[Integer](103) {
+  val Tag = this
+  val BrokerExchangeOption = Value(0)
+  val UnknownSymbol = Value(1)
+  val ExchangeClosed = Value(2)
+  val OrderExceedsLimit = Value(3)
+  val TooLateToEnter = Value(4)
+  val UnknownOrder = Value(5)
+  val DuplicateOrder = Value(6)
+  val DuplicateOfVerballyCommunicatedOrder = Value(7)
+  val StaleOrder = Value(8)
+  val TradeAlongRequired = Value(9)
+  val InvalidInvestorId = Value(10)
+  val UnsupportedOrderCharacteristic = Value(11)
+  val SurveillanceOption = Value(12)
+}
+
+object TestReqID extends StringTag(112) {
+  val Tag = this
+}
+
+object OnBehalfOfCompID extends StringTag(115) {
+  val Tag = this
+}
+
+object SettlCurrency extends StringTag(120) {
+  val Tag = this
+}
+
+
+object DKReason extends EnumTag[Character](127) {
+  val Tag = this
+  val UnknownSymbol = Value('A')
+  val WrongSide = Value('B')
+  val QuantityExceedsOrder = Value('C')
+  val NoMatchingOrder = Value('D')
+  val PriceExceedsLimit = Value('E')
+  val Other = Value('Z')
+}
+
+object DeliverToCompID extends StringTag(128) {
+  val Tag = this
+}
+
+object DeliverToSubID extends StringTag(129) {
+  val Tag = this
+}
+
+object SenderLocationID extends StringTag(142) {
+  val Tag = this
+}
+
+object ExecType extends EnumTag[Character](150) {
+  val Tag = this
+  val New = Value('0')
+  val PartialFill = Value('1')
+  val Fill = Value('2')
+  val DoneForDay = Value('3')
+  val Canceled = Value('4')
+  val Replace = Value('5')
+  val PendingCancel = Value('6')
+  val Stopped = Value('7')
+  val Rejected = Value('8')
+  val Suspended = Value('9')
+  val PendingNew = Value('A')
+  val Calculated = Value('B')
+  val Expired = Value('C')
+  val Restated = Value('D')
+  val PendingReplace = Value('E')
+  val Trade = Value('F')
+  val TradeCorrect = Value('G')
+  val TradeCancel = Value('H')
+  val OrderStatus = Value('I')
+}
+
+object SecurityType extends StringTag(167) {
+  val Tag = this
+}
+
+object SecondaryOrderID extends StringTag(198) {
+  val Tag = this
+}
+
+object MaturityMonthYear extends StringTag(200) {
+  val Tag = this
+}
+
+object SecurityExchange extends StringTag(207) {
+  val Tag = this
+}
+
+object RefMsgType extends StringTag(372) {
+  val Tag = this
 }
 
 object SessionRejectReason extends EnumTag[Integer](373) {
@@ -287,4 +378,54 @@ object SessionRejectReason extends EnumTag[Integer](373) {
 
   /** Non "data" value includes field delimiter (SOH character).  */
   val FieldDelimiterInValue = Value(17)
+}
+
+object ContraBroker extends StringTag(375) {
+  val Tag = this
+}
+
+object ExecRestatementReason extends EnumTag[Integer](378) {
+  val Tag = this
+  val GtCorporateAction = Value(0)
+  val GtRenewalRestatement = Value(1) /* (no corporate action) */
+  val VerbalChange = Value(2)
+  val RepricingOfOrder = Value(3)
+  val BrokerOption = Value(4)
+  val PartialDeclineOfOrderQty = Value(5) /* (e.g. exchange-initiated partial cancel) */
+  val CancelOnTradingHalt = Value(6)
+  val CancelOnSystemFailure = Value(7)
+  val MarketOption = Value(8)
+}
+object BusinessRejectReason extends EnumTag[Integer](380) {
+  val Tag = this
+
+  /** Other.  */
+  val Other = Value(0)
+
+  /** Unknown ID.  */
+  val UnknownId = Value(1)
+
+  /** Unknown Security.  */
+  val UnknownSecurity = Value(2)
+
+  /** Unknown Message Type.  */
+  val UnknownMessageType = Value(3)
+
+  /** Application not available.  */
+  val ApplicationNotAvailable = Value(4)
+
+  /** Conditionally Required Field Missing.  */
+  val ConditionallyRequiredFieldMissing = Value(5)
+
+  /** Not authorized.  */
+  val NotAuthorized = Value(6)
+
+  /** DeliverTo firm not available at this time.  */
+  val DeliverToFirmNotAvailable = Value(7)
+}
+
+object CxlRejResponseTo extends EnumTag[Character](434) {
+  val Tag = this
+  val OrderCancelRequest = Value('1')
+  val OrderModificationRequest = Value('2')
 }

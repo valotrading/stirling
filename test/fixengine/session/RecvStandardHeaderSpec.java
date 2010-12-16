@@ -111,7 +111,7 @@ import fixengine.tags.TestReqID;
             server.respond(
                     new MessageBuilder(MsgTypeValue.TEST_REQUEST)
                         .msgSeqNum(2)
-                        .string(TestReqID.TAG, "12345678")
+                        .string(TestReqID.Tag(), "12345678")
                     .build());
             server.expect(MsgTypeValue.HEARTBEAT);
             checking(expectLogWarning("BeginString(8) is empty"));
@@ -298,8 +298,8 @@ import fixengine.tags.TestReqID;
             server.respond(message("10", "0")
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
-                    .field(TestReqID.TAG, "1")
-                    .field(CheckSum.TAG, "206")
+                    .field(TestReqID.Tag(), "1")
+                    .field(CheckSum.Tag(), "206")
                     .toString());
             checking(expectLogWarning("Expected tag not found: CheckSum(10)"));
             runInClient(new Runnable() {
@@ -362,7 +362,7 @@ import fixengine.tags.TestReqID;
                     message("56", "ZZ")
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
-                    .field(CheckSum.TAG, "115")
+                    .field(CheckSum.Tag(), "115")
                     .toString());
             server.expect(MsgTypeValue.REJECT);
             checking(expectLogWarning("MsgType(35): Invalid message type: ZZ"));
@@ -386,7 +386,7 @@ import fixengine.tags.TestReqID;
                     message("55", "P")
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
-                    .field(CheckSum.TAG, "014")
+                    .field(CheckSum.Tag(), "014")
                     .toString());
             server.expect(MsgTypeValue.BUSINESS_MESSAGE_REJECT);
             checking(expectLogWarning("MsgType(35): Unknown message type: P"));
@@ -417,10 +417,10 @@ import fixengine.tags.TestReqID;
                     message()
                     /* BeginString missing */
                     .field(BodyLength.TAG, "10")
-                    .field(MsgType.TAG, "0")
+                    .field(MsgType.Tag(), "0")
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
-                    .field(CheckSum.TAG, "165")
+                    .field(CheckSum.Tag(), "165")
                     .toString());
             checking(expectLogWarning("Expected tag not found: BeginString(8)"));
             runInClient(new Runnable() {
@@ -440,12 +440,12 @@ import fixengine.tags.TestReqID;
             server.respondLogon();
             server.respond(
                     message()
-                    .field(BeginString.TAG, "FIX.4.2")
+                    .field(BeginString.Tag(), "FIX.4.2")
                     /* BodyLength missing */
-                    .field(MsgType.TAG, "0")
+                    .field(MsgType.Tag(), "0")
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
-                    .field(CheckSum.TAG, "165")
+                    .field(CheckSum.Tag(), "165")
                     .toString());
             checking(expectLogWarning("Expected tag not found: BodyLength(9)"));
             runInClient(new Runnable() {
@@ -465,12 +465,12 @@ import fixengine.tags.TestReqID;
             server.respondLogon();
             server.respond(
                     message()
-                    .field(BeginString.TAG, "FIX.4.2")
+                    .field(BeginString.Tag(), "FIX.4.2")
                     .field(BodyLength.TAG, "26")
                     /* MsgType missing */
                     .field(MsgSeqNum.TAG, "2")
                     .field(SendingTime.TAG, "20100701-12:09:40")
-                    .field(CheckSum.TAG, "214")
+                    .field(CheckSum.Tag(), "214")
                     .toString());
             checking(expectLogWarning("Expected tag not found: MsgType(35)"));
             runInClient(new Runnable() {
@@ -486,14 +486,14 @@ import fixengine.tags.TestReqID;
             server.respondLogon();
             server.respond(
                     message()
-                    .field(BeginString.TAG, "FIX.4.2")
+                    .field(BeginString.Tag(), "FIX.4.2")
                     .field(BodyLength.TAG, "50")
-                    .field(MsgType.TAG, "0")
+                    .field(MsgType.Tag(), "0")
                     /* MsgSeqNum missing */
-                    .field(SenderCompID.TAG, ACCEPTOR)
-                    .field(TargetCompID.TAG, INITIATOR)
+                    .field(SenderCompID.Tag(), ACCEPTOR)
+                    .field(TargetCompID.Tag(), INITIATOR)
                     .field(SendingTime.TAG, "20100701-12:09:40")
-                    .field(CheckSum.TAG, "018")
+                    .field(CheckSum.Tag(), "018")
                     .toString());
             server.expect(MsgTypeValue.LOGOUT);
             checking(expectLogSevere("MsgSeqNum(34) is missing"));

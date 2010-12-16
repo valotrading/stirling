@@ -50,9 +50,9 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
     }
 
     @Override protected void fields() {
-        field(Account.TAG, Required.NO);
-        field(ClOrdID.TAG);
-        field(Currency.TAG, new Required() {
+        field(Account.Tag(), Required.NO);
+        field(ClOrdID.Tag());
+        field(Currency.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return getEnum(IDSource.Tag()).equals(IDSource.ISIN());
             }
@@ -60,7 +60,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(ExecInst.Tag(), Required.NO);
         field(IDSource.Tag(), new Required() {
             @Override public boolean isRequired() {
-                return !hasValue(Symbol.TAG);
+                return !hasValue(Symbol.Tag());
             }
         });
         field(OrderQty.TAG);
@@ -77,7 +77,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
             }
         });
         field(Side.Tag());
-        field(Symbol.TAG, Required.NO);
+        field(Symbol.Tag(), Required.NO);
         field(TimeInForce.Tag(), Required.NO);
         field(MinQty.TAG, Required.NO);
         field(MaxFloor.TAG, Required.NO);
@@ -86,7 +86,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
                 return getEnum(TimeInForce.Tag()).equals(TimeInForce.GoodTillDate());
             }
         });
-        field(SecurityExchange.TAG, new Required() {
+        field(SecurityExchange.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return getEnum(IDSource.Tag()).equals(IDSource.ISIN());
             }

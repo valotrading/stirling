@@ -44,25 +44,25 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
     }
 
     @Override protected void fields() {
-        field(OrderID.TAG);
-        field(ClOrdID.TAG);
-        field(OrigClOrdID.TAG, Required.NO);
-        field(ExecID.TAG);
+        field(OrderID.Tag());
+        field(ClOrdID.Tag());
+        field(OrigClOrdID.Tag(), Required.NO);
+        field(ExecID.Tag());
         field(ExecType.Tag());
         field(ExecTransType.Tag());
-        field(ExecRefID.TAG, new Required() {
+        field(ExecRefID.Tag(), new Required() {
             @Override public boolean isRequired() {
                 Value<?> value = getEnum(ExecTransType.Tag());
                 return value.equals(ExecTransType.Cancel()) || value.equals(ExecTransType.Correct());
             }
         });
-        field(Symbol.TAG);
+        field(Symbol.Tag());
         field(Side.Tag());
         field(OrderQty.TAG);
         field(OrdStatus.Tag());
         field(LastShares.TAG, Required.NO);
         field(LastPx.TAG, Required.NO);
-        field(LastMkt.TAG, Required.NO);
+        field(LastMkt.Tag(), Required.NO);
         field(LastCapacity.Tag(), Required.NO);
         field(LeavesQty.TAG);
         field(CumQty.TAG);

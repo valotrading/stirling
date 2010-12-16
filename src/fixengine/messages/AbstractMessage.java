@@ -94,35 +94,35 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
     }
 
     public void setSenderCompId(String senderCompId) {
-        header.setString(SenderCompID.TAG, senderCompId);
+        header.setString(SenderCompID.Tag(), senderCompId);
     }
 
     public void setSenderSubID(String senderSubID) {
-        header.setString(SenderSubID.TAG, senderSubID);
+        header.setString(SenderSubID.Tag(), senderSubID);
     }
 
     public String getSenderCompId() {
-        return header.getString(SenderCompID.TAG);
+        return header.getString(SenderCompID.Tag());
     }
 
     public void setTargetCompId(String targetCompId) {
-        header.setString(TargetCompID.TAG, targetCompId);
+        header.setString(TargetCompID.Tag(), targetCompId);
     }
 
     public void setTargetSubID(String targetSubID) {
-        header.setString(TargetSubID.TAG, targetSubID);
+        header.setString(TargetSubID.Tag(), targetSubID);
     }
 
     public String getTargetCompId() {
-        return header.getString(TargetCompID.TAG);
+        return header.getString(TargetCompID.Tag());
     }
 
     public void setOnBehalfOfCompId(String onBehalfOfCompId) {
-        header.setString(OnBehalfOfCompID.TAG, onBehalfOfCompId);
+        header.setString(OnBehalfOfCompID.Tag(), onBehalfOfCompId);
     }
 
     public void setDeliverToCompId(String deliverToCompId) {
-        header.setString(DeliverToCompID.TAG, deliverToCompId);
+        header.setString(DeliverToCompID.Tag(), deliverToCompId);
     }
 
     public void setMsgSeqNum(int msgSeqNum) {
@@ -215,7 +215,7 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
         if (b.hasRemaining()) {
             int tag = Tag.parseTag(b);
             Field field = header.lookup(tag);
-            if (CheckSum.TAG.value() == tag) {
+            if (CheckSum.Tag().value() == tag) {
                 throw new OutOfOrderTagException("CheckSum(10): Out of order tag");
             } else if (field != null) {
                 throw new OutOfOrderTagException(field.prettyName() + ": Out of order tag");
@@ -226,12 +226,12 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
 
     public String format() {
         MessageBuffer buffer = new MessageBuffer();
-        buffer.append(new StringField(MsgType.TAG, header.getMsgType()));
+        buffer.append(new StringField(MsgType.Tag(), header.getMsgType()));
         buffer.append(header.format());
         buffer.append(super.format());
         buffer.prefix(new IntegerField(BodyLength.TAG, buffer.length()));
-        buffer.prefix(new StringField(BeginString.TAG, header.getBeginString()));
-        buffer.append(new StringField(CheckSum.TAG, CheckSum.format(buffer.checksum())));
+        buffer.prefix(new StringField(BeginString.Tag(), header.getBeginString()));
+        buffer.append(new StringField(CheckSum.Tag(), CheckSum.format(buffer.checksum())));
         return buffer.toString();
     }
 
@@ -248,8 +248,8 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append(new StringField(BeginString.TAG, header.getBeginString()).toString() + " ");
-        result.append(new StringField(MsgType.TAG, header.getMsgType()).toString() + " ");
+        result.append(new StringField(BeginString.Tag(), header.getBeginString()).toString() + " ");
+        result.append(new StringField(MsgType.Tag(), header.getMsgType()).toString() + " ");
         for (Field field : this) {
             String s = field.toString();
             if (s.isEmpty())

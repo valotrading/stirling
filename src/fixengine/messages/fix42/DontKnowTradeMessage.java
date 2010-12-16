@@ -46,22 +46,22 @@ public class DontKnowTradeMessage extends AbstractMessage {
     }
 
     protected void fields() {
-        field(OrderID.TAG);
-        field(ExecID.TAG);
+        field(OrderID.Tag());
+        field(ExecID.Tag());
         field(DKReason.Tag());
-        field(Symbol.TAG);
+        field(Symbol.Tag());
         /* SymbolSfx(65) */
-        field(SecurityID.TAG, Required.NO);
+        field(SecurityID.Tag(), Required.NO);
         field(IDSource.TAG, Required.NO);
-        field(SecurityType.TAG, Required.NO);
-        field(MaturityMonthYear.TAG, Required.NO);
+        field(SecurityType.Tag(), Required.NO);
+        field(MaturityMonthYear.Tag(), Required.NO);
         /* MaturityDay(205) */
         /* PutOrCall(201) */
         /* StrikePrice(202) */
         /* OptAttribute(206) */
         /* ContractMultiplier(201) */
         /* CouponRate(223) */
-        field(SecurityExchange.TAG, Required.NO);
+        field(SecurityExchange.Tag(), Required.NO);
         /* Issuer(106) */
         /* EncodedIssuerLen(348) */
         /* EncodedIssuer(349) */
@@ -73,7 +73,7 @@ public class DontKnowTradeMessage extends AbstractMessage {
         /* CashOrderQty(152) */
         field(LastShares.TAG, Required.NO);
         field(LastPx.TAG, Required.NO);
-        field(Text.TAG, Required.NO);
+        field(Text.Tag(), Required.NO);
         /* EncodedTextLen(354) */
         /* EncodedText(355) */
     }

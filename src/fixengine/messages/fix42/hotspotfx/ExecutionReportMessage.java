@@ -59,21 +59,21 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
     }
 
     @Override protected void fields() {
-        field(Account.TAG, Required.NO);
-        field(ClOrdID.TAG);
-        field(ExecID.TAG);
-        field(ExecInst.TAG, Required.NO);
+        field(Account.Tag(), Required.NO);
+        field(ClOrdID.Tag());
+        field(ExecID.Tag());
+        field(ExecInst.Tag(), Required.NO);
         field(ExecTransType.Tag());
-        field(OrderID.TAG);
+        field(OrderID.Tag());
         field(OrdStatus.Tag());
-        field(OrigClOrdID.TAG, Required.NO);
+        field(OrigClOrdID.Tag(), Required.NO);
         field(OrderQty.TAG, Required.NO);
         field(Price.TAG, Required.NO);
         field(TimeInForce.Tag(), Required.NO);
-        field(Currency.TAG, Required.NO);
+        field(Currency.Tag(), Required.NO);
         field(Side.Tag());
-        field(Symbol.TAG);
-        field(ExecBroker.TAG, Required.NO);
+        field(Symbol.Tag());
+        field(ExecBroker.Tag(), Required.NO);
         field(LeavesQty.TAG);
         field(CumQty.TAG);
         field(MinQty.TAG, Required.NO);
@@ -81,16 +81,16 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(FutSettDate.TAG, Required.NO);
         field(TradeDate.TAG, Required.NO);
         field(SettlCurrAmt.TAG, Required.NO);
-        field(SettlCurrency.TAG, Required.NO);
-        field(SecurityType.TAG);
+        field(SettlCurrency.Tag(), Required.NO);
+        field(SecurityType.Tag());
         field(MaxShow.TAG, Required.NO);
         field(ExecType.Tag());
         field(AvgPx.TAG);
         field(LastShares.TAG, Required.NO);
         field(LastPx.TAG, Required.NO);
         field(NoContraBrokers.TAG, Required.NO);
-        field(ContraBroker.TAG, Required.NO);
-        field(Text.TAG, Required.NO);
+        field(ContraBroker.Tag(), Required.NO);
+        field(Text.Tag(), Required.NO);
         field(TransactTime.TAG);
         field(ExpireTime.TAG, Required.NO);
         field(TradeLinkID.TAG, Required.NO);

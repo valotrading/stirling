@@ -31,15 +31,15 @@ import fixengine.tags.TransactTime
 import fixengine.messages.{OrderCancelRejectMessage => OrderCancelRejectMessageTrait}
 
 class OrderCancelRejectMessage(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRejectMessageTrait {
-  field(Account.TAG, Required.NO)
-  field(ClOrdID.TAG)
-  field(OrderID.TAG, Required.NO)
+  field(Account.Tag, Required.NO)
+  field(ClOrdID.Tag)
+  field(OrderID.Tag, Required.NO)
   field(OrdStatus.Tag)
-  field(OrigClOrdID.TAG)
+  field(OrigClOrdID.Tag)
   field(TransactTime.TAG, Required.NO)
   field(CxlRejResponseTo.Tag)
   field(CxlRejReason.Tag, Required.NO)
-  field(Text.TAG, Required.NO)
+  field(Text.Tag, Required.NO)
 
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

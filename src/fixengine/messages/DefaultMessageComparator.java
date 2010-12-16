@@ -29,6 +29,6 @@ public class DefaultMessageComparator implements MessageComparator {
     }
 
     private String execID(Message message) {
-        return message.getString(ExecID.TAG);
+        return message.getString(ExecID.Tag());
     }
 }

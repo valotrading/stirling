@@ -37,11 +37,11 @@ public abstract class AbstractOrderCancelRequestMessage extends AbstractMessage 
     }
 
     protected void fields() {
-        field(OrigClOrdID.TAG);
-        field(ClOrdID.TAG);
-        field(Symbol.TAG);
-        field(SecurityType.TAG, Required.NO);
-        field(MaturityMonthYear.TAG, Required.NO);
+        field(OrigClOrdID.Tag());
+        field(ClOrdID.Tag());
+        field(Symbol.Tag());
+        field(SecurityType.Tag(), Required.NO);
+        field(MaturityMonthYear.Tag(), Required.NO);
         field(Side.Tag());
         field(TransactTime.TAG);
         field(OrderQty.TAG);

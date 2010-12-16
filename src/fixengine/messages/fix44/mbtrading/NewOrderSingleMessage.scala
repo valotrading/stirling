@@ -58,15 +58,15 @@ import fixengine.tags.fix44.mbtrading.MBTXAggressive
 import fixengine.tags.fix44.mbtrading.OrderGroupID1
 
 class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(header) with NewOrderSingleMessageTrait {
-  field(Account.TAG)
-  field(ClOrdID.TAG)
-  field(ExecInst.TAG, Required.NO)
+  field(Account.Tag)
+  field(ClOrdID.Tag)
+  field(ExecInst.Tag, Required.NO)
   field(HandlInst.Tag)
   field(OrderQty.TAG)
   field(OrdType.Tag)
   field(StopPx.TAG, Required.NO)
   field(SendingTime.TAG)
-  field(Symbol.TAG)
+  field(Symbol.Tag)
   field(Side.Tag)
   field(TimeInForce.Tag)
   field(TransactTime.TAG)
@@ -79,9 +79,9 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(heade
       getEnum(TimeInForce.Tag).equals(TimeInForce.GoodTillDate)
     }
   })
-  field(SecurityType.TAG, Required.NO)
+  field(SecurityType.Tag, Required.NO)
   field(EffectiveTime.TAG, Required.NO)
-  field(MaturityMonthYear.TAG, Required.NO)
+  field(MaturityMonthYear.Tag, Required.NO)
   field(PutOrCall.TAG, Required.NO)
   field(StrikePrice.TAG, Required.NO)
   field(PegDifference.TAG, Required.NO)

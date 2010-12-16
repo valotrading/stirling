@@ -60,11 +60,11 @@ public abstract class OrderCommand implements Command {
     String orderID = client.findOrderID(origClientOrderID(msg));
     if (orderID == null)
       throw new RuntimeException("cannot find OrderID for OrigClOrdID: " + origClientOrderID(msg));
-    msg.setString(OrderID.TAG, orderID);
+    msg.setString(OrderID.Tag(), orderID);
   }
 
   private String origClientOrderID(Message msg) {
-    return msg.getString(OrigClOrdID.TAG);
+    return msg.getString(OrigClOrdID.Tag());
   }
 
   protected abstract Message newMessage(ConsoleClient client);

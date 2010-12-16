@@ -24,7 +24,7 @@ public class HeartbeatMessage extends AbstractMessage {
     public HeartbeatMessage(MessageHeader header) {
         super(header);
 
-        field(TestReqID.TAG, Required.NO);
+        field(TestReqID.Tag(), Required.NO);
     }
 
     @Override

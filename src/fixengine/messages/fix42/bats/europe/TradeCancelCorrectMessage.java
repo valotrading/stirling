@@ -49,10 +49,10 @@ public class TradeCancelCorrectMessage extends UserDefinedMessage {
     public TradeCancelCorrectMessage(MessageHeader header) {
         super(header);
 
-        field(ClOrdID.TAG);
-        field(Currency.TAG, Required.NO);
-        field(ExecID.TAG);
-        field(ExecRefID.TAG, new Required() {
+        field(ClOrdID.Tag());
+        field(Currency.Tag(), Required.NO);
+        field(ExecID.Tag());
+        field(ExecRefID.Tag(), new Required() {
             @Override public boolean isRequired() {
                 Value<?> value = getEnum(ExecTransType.Tag());
                 return value.equals(ExecTransType.Cancel()) || value.equals(ExecTransType.Correct());
@@ -62,13 +62,13 @@ public class TradeCancelCorrectMessage extends UserDefinedMessage {
         field(IDSource.Tag(), Required.NO);
         field(LastPx.TAG);
         field(LastShares.TAG);
-        field(OrderID.TAG);
+        field(OrderID.Tag());
         field(OrigTime.TAG);
         field(SecurityID.Tag(), Required.NO);
-        field(Symbol.TAG, Required.NO);
+        field(Symbol.Tag(), Required.NO);
         field(Side.Tag());
         field(TransactTime.TAG);
-        field(SecurityExchange.TAG, Required.NO);
+        field(SecurityExchange.Tag(), Required.NO);
         field(ClearingFirm.TAG, Required.NO);
         field(ClearingAccount.TAG, Required.NO);
         field(CorrectedPrice.TAG, Required.NO);

@@ -311,7 +311,7 @@ public class Session {
                     store.saveIncomingMessage(Session.this, message);
                     incomingQueue.skip(message.getMsgSeqNum());
                     HeartbeatMessage heartbeat = (HeartbeatMessage) messageFactory.create(HEARTBEAT);
-                    heartbeat.setString(TestReqID.TAG, message.getString(TestReqID.TAG));
+                    heartbeat.setString(TestReqID.Tag(), message.getString(TestReqID.Tag()));
                     send(conn, heartbeat);
                 }
 
@@ -398,22 +398,22 @@ public class Session {
         RejectMessage reject = (RejectMessage) messageFactory.create(REJECT);
         reject.setInteger(RefSeqNo.TAG, msgSeqNum);
         reject.setEnum(SessionRejectReason.Tag(), reason);
-        reject.setString(Text.TAG, text);
+        reject.setString(Text.Tag(), text);
         send(conn, reject);
     }
 
     private void businessReject(Connection conn, String msgType, int msgSeqNum, Value<Integer> reason, String text) {
         BusinessMessageRejectMessage reject = (BusinessMessageRejectMessage) messageFactory.create(BUSINESS_MESSAGE_REJECT);
         reject.setInteger(RefSeqNo.TAG, msgSeqNum);
-        reject.setString(RefMsgType.TAG, msgType);
+        reject.setString(RefMsgType.Tag(), msgType);
         reject.setEnum(BusinessRejectReason.Tag(), reason);
-        reject.setString(Text.TAG, text);
+        reject.setString(Text.Tag(), text);
         send(conn, reject);
     }
 
     private void terminate(Connection conn, String text) {
         LogoutMessage logout = (LogoutMessage) messageFactory.create(LOGOUT);
-        logout.setString(Text.TAG, text);
+        logout.setString(Text.Tag(), text);
         send(conn, logout);
         conn.close();
     }
@@ -473,7 +473,7 @@ public class Session {
 
     private void testRequest(Connection conn) {
         TestRequestMessage req = (TestRequestMessage) messageFactory.create(TEST_REQUEST);
-        req.setString(TestReqID.TAG, Long.toString(++testReqId));
+        req.setString(TestReqID.Tag(), Long.toString(++testReqId));
         send(conn, req);
     }
 

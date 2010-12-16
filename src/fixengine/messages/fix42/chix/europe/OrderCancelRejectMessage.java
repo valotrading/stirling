@@ -30,11 +30,11 @@ public class OrderCancelRejectMessage extends fixengine.messages.fix42.OrderCanc
     }
 
     @Override public void fields() {
-        field(ClOrdID.TAG);
-        field(OrderID.TAG);
+        field(ClOrdID.Tag());
+        field(OrderID.Tag());
         field(OrdStatus.Tag());
-        field(OrigClOrdID.TAG);
-        field(Text.TAG);
+        field(OrigClOrdID.Tag());
+        field(Text.Tag());
         field(CxlRejReason.Tag());
     }
 }

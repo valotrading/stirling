@@ -62,9 +62,9 @@ import fixengine.tags.fix42.ExecTransType;
             server.respond(message("72", "0")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
-                .field(TestReqID.TAG, "1")
+                .field(TestReqID.Tag(), "1")
                 .field(9898, "value")
-                .field(CheckSum.TAG, "045")
+                .field(CheckSum.Tag(), "045")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
             checking(expectLogSevere("Invalid tag number: 9898"));
@@ -107,8 +107,8 @@ import fixengine.tags.fix42.ExecTransType;
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
                 .field(88, "0")
-                .field(TestReqID.TAG, "1")
-                .field(CheckSum.TAG, "209")
+                .field(TestReqID.Tag(), "1")
+                .field(CheckSum.Tag(), "209")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
             checking(expectLogSevere("Tag not defined for this message: 88"));
@@ -128,7 +128,7 @@ import fixengine.tags.fix42.ExecTransType;
             server.respond(
                     new MessageBuilder(MsgTypeValue.TEST_REQUEST)
                         .msgSeqNum(2)
-                        .string(TestReqID.TAG, "")
+                        .string(TestReqID.Tag(), "")
                     .build());
             server.expect(MsgTypeValue.REJECT);
             checking(expectLogSevere("TestReqID(112): Empty tag"));
@@ -152,7 +152,7 @@ import fixengine.tags.fix42.ExecTransType;
                 .field(SendingTime.TAG, "20100701-12:09:40")
                 .field(EncryptMethod.Tag(), "7")
                 .field(HeartBtInt.TAG, "30")
-                .field(CheckSum.TAG, "034")
+                .field(CheckSum.Tag(), "034")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
             checking(expectLogSevere("EncryptMethod(98): Invalid value"));
@@ -172,8 +172,8 @@ import fixengine.tags.fix42.ExecTransType;
             server.respond(message("56", "0")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "WRONG FORMAT")
-                .field(TestReqID.TAG, "1")
-                .field(CheckSum.TAG, "012")
+                .field(TestReqID.Tag(), "1")
+                .field(CheckSum.Tag(), "012")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
             checking(expectLogSevere("SendingTime(52): Invalid value format"));
@@ -193,9 +193,9 @@ import fixengine.tags.fix42.ExecTransType;
             server.respondLogon();
             server.respond(message("64", "0")
                 .field(MsgSeqNum.TAG, "2")
-                .field(TestReqID.TAG, "1000")
+                .field(TestReqID.Tag(), "1000")
                 .field(SendingTime.TAG, "20100701-12:09:40")
-                .field(CheckSum.TAG, "129")
+                .field(CheckSum.Tag(), "129")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
             checking(expectLogSevere("SendingTime(52): Out of order tag"));
@@ -216,9 +216,9 @@ import fixengine.tags.fix42.ExecTransType;
             server.respond(message("68", "0")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
-                .field(CheckSum.TAG, "207")
-                .field(TestReqID.TAG, "1")
-                .field(CheckSum.TAG, "045")
+                .field(CheckSum.Tag(), "207")
+                .field(TestReqID.Tag(), "1")
+                .field(CheckSum.Tag(), "045")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
             checking(expectLogSevere("CheckSum(10): Out of order tag"));
@@ -239,9 +239,9 @@ import fixengine.tags.fix42.ExecTransType;
             server.respond(message("67", "0")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
-                .field(TestReqID.TAG, "1")
-                .field(TestReqID.TAG, "1")
-                .field(CheckSum.TAG, "247")
+                .field(TestReqID.Tag(), "1")
+                .field(TestReqID.Tag(), "1")
+                .field(CheckSum.Tag(), "247")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
             checking(expectLogSevere("TestReqID(112): Tag multiple times"));
@@ -261,21 +261,21 @@ import fixengine.tags.fix42.ExecTransType;
             server.respond(message("187", "J")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
-                .field(AllocID.TAG, "12807331319411")
+                .field(AllocID.Tag(), "12807331319411")
                 .field(AllocTransType.Tag(), "0")
                 .field(NoOrders.TAG, "1")
-                .field(ClOrdID.TAG, "12807331319412")
+                .field(ClOrdID.Tag(), "12807331319412")
                 .field(Side.Tag(), "2")
-                .field(Symbol.TAG, "GOOG")
+                .field(Symbol.Tag(), "GOOG")
                 .field(Shares.TAG, "1000.00")
                 .field(AvgPx.TAG, "370.00")
                 .field(TradeDate.TAG, "20011004")
                 .field(NoAllocs.TAG, "1")
-                .field(AllocAccount.TAG, "1234")
+                .field(AllocAccount.Tag(), "1234")
                 .field(AllocShares.TAG, "900.00")
-                .field(AllocAccount.TAG, "2345")
+                .field(AllocAccount.Tag(), "2345")
                 .field(AllocShares.TAG, "100.00")
-                .field(CheckSum.TAG, "159")
+                .field(CheckSum.Tag(), "159")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
             checking(expectLogSevere("NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 1, but was: 2"));
@@ -295,21 +295,21 @@ import fixengine.tags.fix42.ExecTransType;
             server.respond(message("187", "J")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
-                .field(AllocID.TAG, "12807331319411")
+                .field(AllocID.Tag(), "12807331319411")
                 .field(AllocTransType.Tag(), "0")
                 .field(NoOrders.TAG, "1")
-                .field(ClOrdID.TAG, "12807331319412")
+                .field(ClOrdID.Tag(), "12807331319412")
                 .field(Side.Tag(), "2")
-                .field(Symbol.TAG, "GOOG")
+                .field(Symbol.Tag(), "GOOG")
                 .field(Shares.TAG, "1000.00")
                 .field(AvgPx.TAG, "370.00")
                 .field(TradeDate.TAG, "20011004")
                 .field(NoAllocs.TAG, "3")
-                .field(AllocAccount.TAG, "1234")
+                .field(AllocAccount.Tag(), "1234")
                 .field(AllocShares.TAG, "900.00")
-                .field(AllocAccount.TAG, "2345")
+                .field(AllocAccount.Tag(), "2345")
                 .field(AllocShares.TAG, "100.00")
-                .field(CheckSum.TAG, "161")
+                .field(CheckSum.Tag(), "161")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
             checking(expectLogSevere("NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 3, but was: 2"));
@@ -329,21 +329,21 @@ import fixengine.tags.fix42.ExecTransType;
             server.respond(message("187", "J")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
-                .field(AllocID.TAG, "12807331319411")
+                .field(AllocID.Tag(), "12807331319411")
                 .field(AllocTransType.Tag(), "0")
                 .field(NoOrders.TAG, "1")
-                .field(ClOrdID.TAG, "12807331319412")
+                .field(ClOrdID.Tag(), "12807331319412")
                 .field(Side.Tag(), "2")
-                .field(Symbol.TAG, "GOOG")
+                .field(Symbol.Tag(), "GOOG")
                 .field(Shares.TAG, "1000.00")
                 .field(AvgPx.TAG, "370.00")
                 .field(TradeDate.TAG, "20011004")
                 .field(NoAllocs.TAG, "2")
                 .field(AllocShares.TAG, "900.00")
-                .field(AllocAccount.TAG, "1234")
+                .field(AllocAccount.Tag(), "1234")
                 .field(AllocShares.TAG, "100.00")
-                .field(AllocAccount.TAG, "2345")
-                .field(CheckSum.TAG, "160")
+                .field(AllocAccount.Tag(), "2345")
+                .field(CheckSum.Tag(), "160")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
             checking(expectLogSevere("AllocShares(80): Repeating group fields out of order"));
@@ -363,8 +363,8 @@ import fixengine.tags.fix42.ExecTransType;
             server.respond(message("65", "0")
                 .field(MsgSeqNum.TAG, "2")
                 .field(SendingTime.TAG, "20100701-12:09:40")
-                .field(TestReqID.TAG, "1" + Field.DELIMITER + "000")
-                .field(CheckSum.TAG, "131")
+                .field(TestReqID.Tag(), "1" + Field.DELIMITER + "000")
+                .field(CheckSum.Tag(), "131")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
             checking(expectLogSevere("Non-data value includes field delimiter (SOH character)"));
@@ -399,12 +399,12 @@ import fixengine.tags.fix42.ExecTransType;
             server.respondLogon();
             server.respond(new MessageBuilder(MsgTypeValue.EXECUTION_REPORT)
                 .msgSeqNum(2)
-                .string(OrderID.TAG, "1278658351213-17")
-                .string(ExecID.TAG, "1278658351213-18")
+                .string(OrderID.Tag(), "1278658351213-17")
+                .string(ExecID.Tag(), "1278658351213-18")
                 .enumeration(ExecTransType.Tag(), ExecTransType.New())
                 .enumeration(ExecType.Tag(), ExecType.New())
                 .enumeration(OrdStatus.Tag(), OrdStatus.New())
-                .string(Symbol.TAG, "PALM")
+                .string(Symbol.Tag(), "PALM")
                 .enumeration(Side.Tag(), Side.Buy())
                 .float0(OrderQty.TAG, 1500.0)
                 .float0(LeavesQty.TAG, 1500.0)

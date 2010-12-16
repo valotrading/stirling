@@ -33,15 +33,15 @@ import fixengine.tags.fix42.TimeInForce
 import fixengine.tags.fix44.Username
 
 class OrderModificationRequestMessage(header: MessageHeader) extends AbstractMessage(header) with OrderModificationRequestMessageTrait {
-  field(Account.TAG)
-  field(ClOrdID.TAG)
+  field(Account.Tag)
+  field(ClOrdID.Tag)
   field(HandlInst.Tag)
   field(OrderQty.TAG)
   field(OrdType.Tag)
-  field(OrigClOrdID.TAG)
+  field(OrigClOrdID.Tag)
   field(Price.TAG)
   field(Side.Tag)
-  field(Symbol.TAG)
+  field(Symbol.Tag)
   field(TimeInForce.Tag)
   field(TransactTime.TAG)
   field(Username.TAG)

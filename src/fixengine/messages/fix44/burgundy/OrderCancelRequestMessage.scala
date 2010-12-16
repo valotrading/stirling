@@ -27,14 +27,14 @@ import fixengine.tags.fix43.SecurityIDSource
 import fixengine.messages.{MessageVisitor, AbstractMessage, MessageHeader, Required, OrderCancelRequestMessage => OrderCancelRequestMessageTrait}
 
 class OrderCancelRequestMessage(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestMessageTrait {
-  field(ClOrdID.TAG)
-  field(OrderID.TAG, Required.NO)
+  field(ClOrdID.Tag)
+  field(OrderID.Tag, Required.NO)
   field(OrderQty.TAG)
-  field(OrigClOrdID.TAG)
+  field(OrigClOrdID.Tag)
   field(Side.Tag)
-  field(Symbol.TAG)
+  field(Symbol.Tag)
   field(SecurityIDSource.Tag, Required.NO)
-  field(SecurityID.TAG, Required.NO)
+  field(SecurityID.Tag, Required.NO)
   field(TransactTime.TAG)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

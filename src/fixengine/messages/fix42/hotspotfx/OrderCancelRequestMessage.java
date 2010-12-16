@@ -31,12 +31,12 @@ public class OrderCancelRequestMessage extends fixengine.messages.fix42.OrderCan
     }
 
     @Override protected void fields() {
-        field(Account.TAG, Required.NO);
-        field(ClOrdID.TAG);
-        field(OrigClOrdID.TAG);
-        field(Symbol.TAG);
+        field(Account.Tag(), Required.NO);
+        field(ClOrdID.Tag());
+        field(OrigClOrdID.Tag());
+        field(Symbol.Tag());
         field(Side.Tag(), Required.NO);
         field(TransactTime.TAG, Required.NO);
-        field(Currency.TAG, Required.NO);
+        field(Currency.Tag(), Required.NO);
     }
 }

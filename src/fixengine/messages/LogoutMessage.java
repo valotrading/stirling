@@ -24,7 +24,7 @@ public class LogoutMessage extends AbstractMessage {
     public LogoutMessage(MessageHeader header) {
         super(header);
 
-        field(Text.TAG, Required.NO);
+        field(Text.Tag(), Required.NO);
     }
 
     @Override public void apply(MessageVisitor visitor) {
