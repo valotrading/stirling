@@ -72,7 +72,7 @@ class NewOrderMultiLegMessage(header: MessageHeader) extends AbstractMessage(hea
       field(LegStrikePrice.TAG)
       field(LegPositionEffect.Tag)
       field(LegSide.Tag)
-      field(LegRatioQty.TAG)
+      field(LegRatioQty.Tag)
       field(LegRefID.TAG)
       field(Username.TAG)
       field(Password.TAG)

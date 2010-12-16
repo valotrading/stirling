@@ -19,6 +19,7 @@ import fixengine.messages.{
   AmtTag,
   BooleanTag,
   EnumTag,
+  FloatTag,
   IntegerTag,
   LocalMktDateTag,
   PriceTag,
@@ -95,6 +96,10 @@ object MassStatusReqType extends EnumTag[Integer](585) {
   val StatusTrdSession = Value(6)
   val StatusAllOrders = Value(7)
   val StatusPartyID = Value(8)
+}
+
+object LegRatioQty extends FloatTag(623) {
+  val Tag = this
 }
 
 object LegSide extends EnumTag[Character](624) {
