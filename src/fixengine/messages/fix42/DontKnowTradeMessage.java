@@ -52,7 +52,7 @@ public class DontKnowTradeMessage extends AbstractMessage {
         field(Symbol.Tag());
         /* SymbolSfx(65) */
         field(SecurityID.Tag(), Required.NO);
-        field(IDSource.TAG, Required.NO);
+        field(IDSource.Tag(), Required.NO);
         field(SecurityType.Tag(), Required.NO);
         field(MaturityMonthYear.Tag(), Required.NO);
         /* MaturityDay(205) */

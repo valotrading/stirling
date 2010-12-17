@@ -47,13 +47,13 @@ public class OrderStatusRequestMessage extends AbstractMessage {
     protected void fields() {
         field(OrderID.Tag(), Required.NO);
         field(ClOrdID.Tag());
-        field(ClientID.TAG, Required.NO);
+        field(ClientID.Tag(), Required.NO);
         field(Account.Tag(), Required.NO);
         field(ExecBroker.Tag(), Required.NO);
         field(Symbol.Tag());
         /* SymbolSfx(65) */
         field(SecurityID.Tag(), Required.NO);
-        field(IDSource.TAG, Required.NO);
+        field(IDSource.Tag(), Required.NO);
         field(SecurityType.Tag(), Required.NO);
         field(MaturityMonthYear.Tag(), Required.NO);
         /* MaturityDay(205) */

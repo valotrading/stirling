@@ -118,8 +118,8 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
                 return ExecType.isTrade(getEnum(ExecType.Tag()));
             }
         });
-        field(ClearingFirm.TAG, Required.NO);
-        field(ClearingAccount.TAG, Required.NO);
+        field(ClearingFirm.Tag(), Required.NO);
+        field(ClearingAccount.Tag(), Required.NO);
         field(CentralCounterparty.Tag(), Required.NO);
         field(MTFAccessFee.Tag(), new Required() {
             @Override public boolean isRequired() {

@@ -69,8 +69,8 @@ public class TradeCancelCorrectMessage extends UserDefinedMessage {
         field(Side.Tag());
         field(TransactTime.TAG);
         field(SecurityExchange.Tag(), Required.NO);
-        field(ClearingFirm.TAG, Required.NO);
-        field(ClearingAccount.TAG, Required.NO);
+        field(ClearingFirm.Tag(), Required.NO);
+        field(ClearingAccount.Tag(), Required.NO);
         field(CorrectedPrice.Tag(), Required.NO);
         field(TradeLiquidityIndicator.Tag(), Required.NO);
     }

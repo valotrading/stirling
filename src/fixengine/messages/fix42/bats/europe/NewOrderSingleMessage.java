@@ -92,8 +92,8 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
             }
         });
         field(PegDifference.Tag(), Required.NO);
-        field(ClearingFirm.TAG, Required.NO);
-        field(ClearingAccount.TAG, Required.NO);
+        field(ClearingFirm.Tag(), Required.NO);
+        field(ClearingAccount.Tag(), Required.NO);
         field(PreventParticipantMatch.TAG, Required.NO);
         field(RoutingInst.Tag(), Required.NO);
         field(DisplayIndicator.Tag(), Required.NO);

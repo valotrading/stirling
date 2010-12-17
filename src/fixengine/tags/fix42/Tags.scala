@@ -42,6 +42,10 @@ object Commission extends AmtTag(12) {
   val Tag = this
 }
 
+object IDSource extends StringTag(22) {
+  val Tag = this
+}
+
 object LastCapacity extends EnumTag[Integer](29) {
   val Tag = this
   val Agent = Value(1)
@@ -116,6 +120,10 @@ object ExDestination extends ExchangeTag(100) {
   val Tag = this
 }
 
+object ClientID extends StringTag(109) {
+  val Tag = this
+}
+
 object LocateReqd extends BooleanTag(114) {
   val Tag = this
 }
@@ -145,11 +153,27 @@ object UnsolicitedIndicator extends BooleanTag(325) {
   val Tag = this
 }
 
+object TradSesReqID extends StringTag(335) {
+  val Tag = this
+}
+
 object TradeSesReqID extends StringTag(335) {
   val Tag = this
 }
 
 object TradingSessionID extends StringTag(336) {
+  val Tag = this
+}
+
+object TradSesMethod extends StringTag(338) {
+  val Tag = this
+}
+
+object TradSesMode extends StringTag(339) {
+  val Tag = this
+}
+
+object ComplianceID extends StringTag(376) {
   val Tag = this
 }
 
@@ -164,5 +188,12 @@ object DiscretionInst extends EnumTag[Integer](388) {
 }
 
 object DiscretionOffset extends PriceOffsetTag(389) {
+  val Tag = this
+}
+object ClearingFirm extends StringTag(439) {
+  val Tag = this
+}
+
+object ClearingAccount extends StringTag(440) {
   val Tag = this
 }
