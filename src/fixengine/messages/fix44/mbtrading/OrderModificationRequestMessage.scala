@@ -44,6 +44,6 @@ class OrderModificationRequestMessage(header: MessageHeader) extends AbstractMes
   field(Symbol.Tag)
   field(TimeInForce.Tag)
   field(TransactTime.TAG)
-  field(Username.TAG)
+  field(Username.Tag)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

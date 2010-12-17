@@ -80,6 +80,14 @@ object MassCancelRejectReason extends EnumTag[String](532) {
   val Other = Value("99")
 }
 
+object Username extends StringTag(553) {
+  val Tag = this
+}
+
+object Password extends StringTag(554) {
+  val Tag = this
+}
+
 object LongQty extends QtyTag(704) {
   val Tag = this
 }
@@ -119,7 +127,15 @@ object TrdRegTimestampType extends IntegerTag(770) {
   val Tag = this
 }
 
+object TrdRegTimestampOrigin extends StringTag(771) {
+  val Tag = this
+}
+
 object NextExpectedMsgSeqNum extends SeqNumTag(789) {
+  val Tag = this
+}
+
+object TradeLinkID extends StringTag(820) {
   val Tag = this
 }
 
@@ -154,6 +170,10 @@ object LastLiquidityInd extends EnumTag[Integer](851) {
   val AddedLiquidity = Value(1)
   val RemovedLiquidity = Value(2)
   val LiquidityRoutedOut = Value(3)
+}
+
+object CollInquiryID extends StringTag(909) {
+  val Tag = this
 }
 
 object TotNumReports extends IntegerTag(911) {

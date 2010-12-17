@@ -33,6 +33,6 @@ class OrderCancelRequestMessage(header: MessageHeader) extends AbstractMessage(h
   field(Side.Tag)
   field(Symbol.Tag)
   field(TransactTime.TAG)
-  field(Username.TAG)
+  field(Username.Tag)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

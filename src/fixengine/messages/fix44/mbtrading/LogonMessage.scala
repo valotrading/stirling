@@ -29,6 +29,6 @@ class LogonMessage(header: MessageHeader) extends AbstractMessage(header) with L
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
   field(ResetSeqNumFlag.Tag, Required.NO)
-  field(Password.TAG)
+  field(Password.Tag)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

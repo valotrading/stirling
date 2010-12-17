@@ -64,7 +64,7 @@ class NewOrderMultiLegMessage(header: MessageHeader) extends AbstractMessage(hea
   field(NoTrdRegTimestamps.Tag, Required.NO)
   field(TrdRegTimestamp.TAG, Required.NO)
   field(TrdRegTimestampType.Tag, Required.NO)
-  field(TrdRegTimestampOrigin.TAG, Required.NO)
+  field(TrdRegTimestampOrigin.Tag, Required.NO)
   group(new RepeatingGroup(NoLegs.Tag) {
     override def newInstance = new RepeatingGroupInstance(LegSymbol.Tag) {
       field(LegCFICode.Tag)
@@ -74,8 +74,8 @@ class NewOrderMultiLegMessage(header: MessageHeader) extends AbstractMessage(hea
       field(LegSide.Tag)
       field(LegRatioQty.Tag)
       field(LegRefID.Tag)
-      field(Username.TAG)
-      field(Password.TAG)
+      field(Username.Tag)
+      field(Password.Tag)
     }
   }, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)

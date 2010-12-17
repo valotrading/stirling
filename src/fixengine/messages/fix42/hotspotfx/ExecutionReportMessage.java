@@ -93,6 +93,6 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(Text.Tag(), Required.NO);
         field(TransactTime.TAG);
         field(ExpireTime.TAG, Required.NO);
-        field(TradeLinkID.TAG, Required.NO);
+        field(TradeLinkID.Tag(), Required.NO);
     }
 }
