@@ -35,7 +35,7 @@ public class LogonMessage extends AbstractMessage implements fixengine.messages.
         field(ResetSeqNumFlag.Tag(), Required.NO);
         field(Username.TAG);
         field(Password.TAG);
-        field(NextExpectedMsgSeqNum.TAG, Required.NO);
+        field(NextExpectedMsgSeqNum.Tag(), Required.NO);
     }
 
     @Override public void apply(MessageVisitor visitor) {

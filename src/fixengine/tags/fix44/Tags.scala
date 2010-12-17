@@ -24,6 +24,7 @@ import fixengine.messages.{
   NumInGroupTag,
   PriceTag,
   QtyTag,
+  SeqNumTag,
   StringTag,
   Value
 }
@@ -115,6 +116,10 @@ object NoTrdRegTimestamps extends NumInGroupTag(768) {
   val Tag = this
 }
 object TrdRegTimestampType extends IntegerTag(770) {
+  val Tag = this
+}
+
+object NextExpectedMsgSeqNum extends SeqNumTag(789) {
   val Tag = this
 }
 

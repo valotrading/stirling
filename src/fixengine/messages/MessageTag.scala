@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package fixengine.messages
+import fixengine.messages.fix43.SeqNumField
 
 abstract class EnumTag[T](value: Int) extends Tag[EnumField[Value[T]]](value, classOf[EnumField[Value[T]]]) {
   def parse(v: T) = values.find(_.v == v).getOrElse(throw new InvalidValueForTagException(v.toString))
@@ -44,5 +45,6 @@ abstract class NumInGroupTag(value: Int) extends Tag[NumInGroupField](value, cla
 abstract class PriceTag(value: Int) extends Tag[PriceField](value, classOf[PriceField])
 abstract class PriceOffsetTag(value: Int) extends Tag[PriceOffsetField](value, classOf[PriceOffsetField])
 abstract class QtyTag(value: Int) extends Tag[QtyField](value, classOf[QtyField])
+abstract class SeqNumTag(value: Int) extends Tag[SeqNumField](value, classOf[SeqNumField])
 
 abstract class AmtTag(value: Int) extends IntegerTag(value)
