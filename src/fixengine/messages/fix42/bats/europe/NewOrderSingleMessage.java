@@ -94,7 +94,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(PegDifference.Tag(), Required.NO);
         field(ClearingFirm.Tag(), Required.NO);
         field(ClearingAccount.Tag(), Required.NO);
-        field(PreventParticipantMatch.TAG, Required.NO);
+        field(PreventParticipantMatch.Tag(), Required.NO);
         field(RoutingInst.Tag(), Required.NO);
         field(DisplayIndicator.Tag(), Required.NO);
         field(MaxRemovePct.Tag(), new Required() {
@@ -102,7 +102,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
                 return getEnum(RoutingInst.Tag()).equals(RoutingInst.PostOnlyAtLimit());
             }
         });
-        field(OrigCompID.TAG, Required.NO);
-        field(OrigSubID.TAG, Required.NO);
+        field(OrigCompID.Tag(), Required.NO);
+        field(OrigSubID.Tag(), Required.NO);
     }
 }

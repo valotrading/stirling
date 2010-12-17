@@ -15,7 +15,7 @@
  */
 package fixengine.tags.fix42.bats.europe
 
-import fixengine.messages.{BooleanTag, EnumTag, IntegerTag, FloatTag, Value}
+import fixengine.messages.{BooleanTag, EnumTag, IntegerTag, FloatTag, StringTag, Value}
 import java.lang.{String, Character, Integer}
 
 object ExecInst extends EnumTag[Character](18) {
@@ -101,6 +101,10 @@ object CentralCounterparty extends EnumTag[String](7772) {
   val XCLR = Value("XCLR") /* SIX x-clear */
 }
 
+object PreventParticipantMatch extends StringTag(7928) {
+  val Tag = this
+}
+
 object RoutingInst extends EnumTag[String](9303) {
   val Tag = this
   val Bats = Value("B")                             /* BATS Only */
@@ -139,6 +143,14 @@ object CorrectedPrice extends FloatTag(9620) {
 }
 
 object MTFAccessFee extends FloatTag(9621) {
+  val Tag = this
+}
+
+object OrigCompID extends StringTag(9688) {
+  val Tag = this
+}
+
+object OrigSubID extends StringTag(9689) {
   val Tag = this
 }
 
