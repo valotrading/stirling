@@ -36,7 +36,7 @@ public class OrderCancelRequestMessage extends fixengine.messages.fix42.OrderCan
         field(OrigClOrdID.Tag());
         field(Symbol.Tag());
         field(Side.Tag(), Required.NO);
-        field(TransactTime.TAG, Required.NO);
+        field(TransactTime.Tag(), Required.NO);
         field(Currency.Tag(), Required.NO);
     }
 }

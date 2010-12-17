@@ -57,10 +57,10 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
         field(Side.Tag());
         field(Symbol.Tag(), Required.NO);
         field(TimeInForce.Tag(), Required.NO);
-        field(TransactTime.TAG);
+        field(TransactTime.Tag());
         field(MinQty.Tag(), Required.NO);
         field(MaxFloor.Tag(), Required.NO);
-        field(ExpireTime.TAG, new Required() {
+        field(ExpireTime.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return getEnum(TimeInForce.Tag()).equals(TimeInForce.GoodTillDate());
             }

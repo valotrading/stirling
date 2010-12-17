@@ -53,7 +53,7 @@ public class AbstractOrderModificationRequestMessage extends AbstractMessage imp
         field(SecurityType.Tag(), Required.NO);
         field(MaturityMonthYear.Tag(), Required.NO);
         field(Side.Tag());
-        field(TransactTime.TAG);
+        field(TransactTime.Tag());
         field(OrderQty.Tag());
         field(OrdType.Tag());
         field(Currency.Tag(), Required.NO);

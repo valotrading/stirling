@@ -53,7 +53,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(Symbol.Tag());
         field(OrdType.Tag());
         field(TimeInForce.Tag(), Required.NO);
-        field(TransactTime.TAG, Required.NO);
+        field(TransactTime.Tag(), Required.NO);
         field(PegDifference.Tag(), Required.NO);
         field(TradeLinkID.Tag(), Required.NO);
     }

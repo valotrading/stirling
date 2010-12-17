@@ -47,6 +47,6 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
         field(Symbol.Tag(), Required.NO);
         field(OrdType.Tag(), Required.NO);
         field(Side.Tag(), Required.NO);
-        field(TransactTime.TAG, Required.NO);
+        field(TransactTime.Tag(), Required.NO);
     }
 }

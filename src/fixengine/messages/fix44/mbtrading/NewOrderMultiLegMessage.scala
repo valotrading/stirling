@@ -59,7 +59,7 @@ class NewOrderMultiLegMessage(header: MessageHeader) extends AbstractMessage(hea
   field(StopPx.Tag, Required.NO)
   field(Side.Tag)
   field(TimeInForce.Tag)
-  field(TransactTime.TAG)
+  field(TransactTime.Tag)
   field(ExDestination.Tag)
   field(NoTrdRegTimestamps.Tag, Required.NO)
   field(TrdRegTimestamp.TAG, Required.NO)

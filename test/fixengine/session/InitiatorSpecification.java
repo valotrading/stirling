@@ -199,9 +199,9 @@ public class InitiatorSpecification extends Specification<Session> {
             header.setBeginString(VERSION.value());
             header.setString(SenderCompID.Tag(), ACCEPTOR);
             header.setString(TargetCompID.Tag(), INITIATOR);
-            header.setDateTime(SendingTime.TAG, new DefaultTimeSource().currentTime());
+            header.setDateTime(SendingTime.Tag(), new DefaultTimeSource().currentTime());
             if (MsgTypeValue.SEQUENCE_RESET.equals(type)) {
-                header.setDateTime(OrigSendingTime.TAG, header.getDateTime(SendingTime.TAG));
+                header.setDateTime(OrigSendingTime.Tag(), header.getDateTime(SendingTime.Tag()));
             }
             this.message = new DefaultMessageFactory().create(type, header);
         }

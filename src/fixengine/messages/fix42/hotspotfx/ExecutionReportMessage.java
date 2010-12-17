@@ -91,8 +91,8 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(NoContraBrokers.Tag(), Required.NO);
         field(ContraBroker.Tag(), Required.NO);
         field(Text.Tag(), Required.NO);
-        field(TransactTime.TAG);
-        field(ExpireTime.TAG, Required.NO);
+        field(TransactTime.Tag());
+        field(ExpireTime.Tag(), Required.NO);
         field(TradeLinkID.Tag(), Required.NO);
     }
 }

@@ -134,7 +134,7 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
     }
 
     public void setSendingTime(DateTime sendingTime) {
-        header.setDateTime(SendingTime.TAG, sendingTime);
+        header.setDateTime(SendingTime.Tag(), sendingTime);
     }
 
     @Override public void setReceiveTime(DateTime receiveTime) {
@@ -142,19 +142,19 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
     }
 
     public DateTime getSendingTime() {
-        return header.getDateTime(SendingTime.TAG);
+        return header.getDateTime(SendingTime.Tag());
     }
 
     public void setOrigSendingTime(DateTime origSendingTime) {
-        header.setDateTime(OrigSendingTime.TAG, origSendingTime);
+        header.setDateTime(OrigSendingTime.Tag(), origSendingTime);
     }
 
     public DateTime getOrigSendingTime() {
-        return header.getDateTime(OrigSendingTime.TAG);
+        return header.getDateTime(OrigSendingTime.Tag());
     }
 
     public boolean hasOrigSendingTime() {
-        return header.hasValue(OrigSendingTime.TAG);
+        return header.hasValue(OrigSendingTime.Tag());
     }
 
     public void setPossDupFlag(boolean possDupFlag) {

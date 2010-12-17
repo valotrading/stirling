@@ -65,16 +65,16 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(heade
   field(OrderQty.Tag)
   field(OrdType.Tag)
   field(StopPx.Tag, Required.NO)
-  field(SendingTime.TAG)
+  field(SendingTime.Tag)
   field(Symbol.Tag)
   field(Side.Tag)
   field(TimeInForce.Tag)
-  field(TransactTime.TAG)
+  field(TransactTime.Tag)
   field(StopPx.Tag, Required.NO)
   field(ExDestination.Tag)
   field(MaxFloor.Tag, Required.NO)
   field(LocateReqd.Tag, Required.NO)
-  field(ExpireTime.TAG, new Required() {
+  field(ExpireTime.Tag, new Required() {
     override def isRequired() = {
       getEnum(TimeInForce.Tag).equals(TimeInForce.GoodTillDate)
     }

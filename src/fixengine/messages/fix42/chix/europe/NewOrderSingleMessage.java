@@ -72,10 +72,10 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(Side.Tag());
         field(Symbol.Tag());
         field(TimeInForce.Tag(), Required.NO);
-        field(TransactTime.TAG);
+        field(TransactTime.Tag());
         field(MinQty.Tag(), Required.NO);
         field(MaxFloor.Tag(), Required.NO);
-        field(ExpireTime.TAG, new Required() {
+        field(ExpireTime.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return getEnum(TimeInForce.Tag()).equals(TimeInForce.GoodTillDate());
             }

@@ -15,7 +15,7 @@
  */
 package fixengine.tags
 
-import fixengine.messages.{BooleanTag, EnumTag, FloatTag, IntegerTag, LocalMktDateTag, PriceOffsetTag, QtyTag, StringTag, Value}
+import fixengine.messages.{BooleanTag, EnumTag, FloatTag, IntegerTag, LocalMktDateTag, PriceOffsetTag, QtyTag, StringTag, UtcTimestampTag, Value}
 import java.lang.{Character, Integer, String}
 
 
@@ -166,6 +166,10 @@ object OrigClOrdID extends StringTag(41) {
   val Tag = this
 }
 
+object OrigTime extends UtcTimestampTag(42) {
+  val Tag = this
+}
+
 object PossDupFlag extends BooleanTag(43) {
   val Tag = this
 }
@@ -197,6 +201,10 @@ object SenderSubID extends StringTag(50) {
   val Tag = this
 }
 
+object SendingTime extends UtcTimestampTag(52) {
+  val Tag = this
+}
+
 object Shares extends FloatTag(53) {
   val Tag = this
 }
@@ -215,6 +223,10 @@ object TargetSubID extends StringTag(57) {
 object Text extends StringTag(58) {
   val Tag = this
 }
+object TransactTime extends UtcTimestampTag(60) {
+  val Tag = this
+}
+
 object FutSettDate extends LocalMktDateTag(64) {
   val Tag = this
 }
@@ -346,7 +358,15 @@ object SettlCurrency extends StringTag(120) {
 }
 
 
+object OrigSendingTime extends UtcTimestampTag(122) {
+  val Tag = this
+}
+
 object GapFillFlag extends BooleanTag(123) {
+  val Tag = this
+}
+
+object ExpireTime extends UtcTimestampTag(126) {
   val Tag = this
 }
 

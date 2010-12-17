@@ -36,7 +36,7 @@ class OrderCancelRejectMessage(header: MessageHeader) extends AbstractMessage(he
   field(OrderID.Tag, Required.NO)
   field(OrdStatus.Tag)
   field(OrigClOrdID.Tag)
-  field(TransactTime.TAG, Required.NO)
+  field(TransactTime.Tag, Required.NO)
   field(CxlRejResponseTo.Tag)
   field(CxlRejReason.Tag, Required.NO)
   field(Text.Tag, Required.NO)

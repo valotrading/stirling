@@ -63,11 +63,11 @@ public class TradeCancelCorrectMessage extends UserDefinedMessage {
         field(LastPx.Tag());
         field(LastShares.Tag());
         field(OrderID.Tag());
-        field(OrigTime.TAG);
+        field(OrigTime.Tag());
         field(SecurityID.Tag(), Required.NO);
         field(Symbol.Tag(), Required.NO);
         field(Side.Tag());
-        field(TransactTime.TAG);
+        field(TransactTime.Tag());
         field(SecurityExchange.Tag(), Required.NO);
         field(ClearingFirm.Tag(), Required.NO);
         field(ClearingAccount.Tag(), Required.NO);

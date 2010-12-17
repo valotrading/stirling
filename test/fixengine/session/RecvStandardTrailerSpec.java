@@ -49,7 +49,7 @@ import fixengine.tags.TargetCompID;
                     .field(SenderCompID.Tag(), "OPENFIX")
                     .field(TargetCompID.Tag(), "initiator")
                     .field(MsgSeqNum.Tag(), "2")
-                    .field(SendingTime.TAG, "20100810-07:25:02")
+                    .field(SendingTime.Tag(), "20100810-07:25:02")
                     .field(CheckSum.Tag(), "100")
                     .toString());
             checking(expectLogWarning("CheckSum(10) mismatch, expected=239, actual=100"));
@@ -90,7 +90,7 @@ import fixengine.tags.TargetCompID;
                     .field(SenderCompID.Tag(), "acceptor")
                     .field(TargetCompID.Tag(), "initiator")
                     .field(MsgSeqNum.Tag(), "2")
-                    .field(SendingTime.TAG, "20100810-07:58:22")
+                    .field(SendingTime.Tag(), "20100810-07:58:22")
                     .field(CheckSum.Tag(), "48")
                     .toString());
             checking(expectLogWarning("CheckSum(10) has invalid length: 48"));
@@ -113,7 +113,7 @@ import fixengine.tags.TargetCompID;
                 .field(SenderCompID.Tag(), "OPENFIX")
                 .field(TargetCompID.Tag(), "initiator")
                 .field(MsgSeqNum.Tag(), "2")
-                .field(SendingTime.TAG, "20100810-07:25:02")
+                .field(SendingTime.Tag(), "20100810-07:25:02")
                 .field(CheckSum.Tag(), "239").toString();
             server.respond(msg.substring(0, msg.length() - 1));
             /* FIXME: Currently this error condition is never reported to

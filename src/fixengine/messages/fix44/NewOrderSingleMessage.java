@@ -44,7 +44,7 @@ public class NewOrderSingleMessage extends AbstractNewOrderSingleMessage {
         field(HandlInst.Tag());
         field(ExDestination.Tag());
         field(Side.Tag());
-        field(TransactTime.TAG);
+        field(TransactTime.Tag());
         field(OrdType.Tag());
         field(Symbol.Tag());
         field(SecurityType.Tag(), Required.NO);

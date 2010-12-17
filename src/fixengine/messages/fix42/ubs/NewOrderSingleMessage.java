@@ -42,7 +42,7 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
         field(Side.Tag());
         field(OrderQty.Tag());
         field(OrdType.Tag());
-        field(TransactTime.TAG);
+        field(TransactTime.Tag());
         field(OrderCapacity.Tag());
         field(Price.Tag(), new Required() {
             @Override public boolean isRequired() {

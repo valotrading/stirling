@@ -67,6 +67,6 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(LeavesQty.Tag());
         field(CumQty.Tag());
         field(AvgPx.Tag());
-        field(TransactTime.TAG);
+        field(TransactTime.Tag());
     }
 }

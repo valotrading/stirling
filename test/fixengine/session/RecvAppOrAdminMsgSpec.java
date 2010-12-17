@@ -61,7 +61,7 @@ import fixengine.tags.fix42.ExecTransType;
             server.respondLogon();
             server.respond(message("72", "0")
                 .field(MsgSeqNum.Tag(), "2")
-                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(SendingTime.Tag(), "20100701-12:09:40")
                 .field(TestReqID.Tag(), "1")
                 .field(9898, "value")
                 .field(CheckSum.Tag(), "045")
@@ -105,7 +105,7 @@ import fixengine.tags.fix42.ExecTransType;
             server.respondLogon();
             server.respond(message("66", "0")
                 .field(MsgSeqNum.Tag(), "2")
-                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(SendingTime.Tag(), "20100701-12:09:40")
                 .field(88, "0")
                 .field(TestReqID.Tag(), "1")
                 .field(CheckSum.Tag(), "209")
@@ -149,7 +149,7 @@ import fixengine.tags.fix42.ExecTransType;
             server.respondLogon();
             server.respond(message("67", "A")
                 .field(MsgSeqNum.Tag(), "2")
-                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(SendingTime.Tag(), "20100701-12:09:40")
                 .field(EncryptMethod.Tag(), "7")
                 .field(HeartBtInt.Tag(), "30")
                 .field(CheckSum.Tag(), "034")
@@ -171,7 +171,7 @@ import fixengine.tags.fix42.ExecTransType;
             server.respondLogon();
             server.respond(message("56", "0")
                 .field(MsgSeqNum.Tag(), "2")
-                .field(SendingTime.TAG, "WRONG FORMAT")
+                .field(SendingTime.Tag(), "WRONG FORMAT")
                 .field(TestReqID.Tag(), "1")
                 .field(CheckSum.Tag(), "012")
                 .toString());
@@ -194,7 +194,7 @@ import fixengine.tags.fix42.ExecTransType;
             server.respond(message("64", "0")
                 .field(MsgSeqNum.Tag(), "2")
                 .field(TestReqID.Tag(), "1000")
-                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(SendingTime.Tag(), "20100701-12:09:40")
                 .field(CheckSum.Tag(), "129")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
@@ -215,7 +215,7 @@ import fixengine.tags.fix42.ExecTransType;
             server.respondLogon();
             server.respond(message("68", "0")
                 .field(MsgSeqNum.Tag(), "2")
-                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(SendingTime.Tag(), "20100701-12:09:40")
                 .field(CheckSum.Tag(), "207")
                 .field(TestReqID.Tag(), "1")
                 .field(CheckSum.Tag(), "045")
@@ -238,7 +238,7 @@ import fixengine.tags.fix42.ExecTransType;
             server.respondLogon();
             server.respond(message("67", "0")
                 .field(MsgSeqNum.Tag(), "2")
-                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(SendingTime.Tag(), "20100701-12:09:40")
                 .field(TestReqID.Tag(), "1")
                 .field(TestReqID.Tag(), "1")
                 .field(CheckSum.Tag(), "247")
@@ -260,7 +260,7 @@ import fixengine.tags.fix42.ExecTransType;
             server.respondLogon();
             server.respond(message("187", "J")
                 .field(MsgSeqNum.Tag(), "2")
-                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(SendingTime.Tag(), "20100701-12:09:40")
                 .field(AllocID.Tag(), "12807331319411")
                 .field(AllocTransType.Tag(), "0")
                 .field(NoOrders.Tag(), "1")
@@ -294,7 +294,7 @@ import fixengine.tags.fix42.ExecTransType;
             server.respondLogon();
             server.respond(message("187", "J")
                 .field(MsgSeqNum.Tag(), "2")
-                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(SendingTime.Tag(), "20100701-12:09:40")
                 .field(AllocID.Tag(), "12807331319411")
                 .field(AllocTransType.Tag(), "0")
                 .field(NoOrders.Tag(), "1")
@@ -328,7 +328,7 @@ import fixengine.tags.fix42.ExecTransType;
             server.respondLogon();
             server.respond(message("187", "J")
                 .field(MsgSeqNum.Tag(), "2")
-                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(SendingTime.Tag(), "20100701-12:09:40")
                 .field(AllocID.Tag(), "12807331319411")
                 .field(AllocTransType.Tag(), "0")
                 .field(NoOrders.Tag(), "1")
@@ -362,7 +362,7 @@ import fixengine.tags.fix42.ExecTransType;
             server.respondLogon();
             server.respond(message("65", "0")
                 .field(MsgSeqNum.Tag(), "2")
-                .field(SendingTime.TAG, "20100701-12:09:40")
+                .field(SendingTime.Tag(), "20100701-12:09:40")
                 .field(TestReqID.Tag(), "1" + Field.DELIMITER + "000")
                 .field(CheckSum.Tag(), "131")
                 .toString());

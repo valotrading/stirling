@@ -70,14 +70,14 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractNewOrderSingl
   field(Side.Tag)
   field(Text.Tag, Required.NO)
   field(TimeInForce.Tag, Required.NO)
-  field(TransactTime.TAG)
+  field(TransactTime.Tag)
   field(MinQty.Tag, Required.NO)
   field(DisplayMethod.Tag, Required.NO)
   field(DisplayLowQty.Tag, Required.NO)
   field(DisplayHighQty.Tag, Required.NO)
   field(DisplayMinIncr.Tag, Required.NO)
   field(MaxFloor.Tag, Required.NO)
-  field(ExpireTime.TAG, new Required() {
+  field(ExpireTime.Tag, new Required() {
     override def isRequired(): Boolean = getEnum(TimeInForce.Tag) == TimeInForce.GoodTillDate
   })
   field(MaxShow.Tag, Required.NO)

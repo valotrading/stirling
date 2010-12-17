@@ -100,7 +100,7 @@ class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(head
   field(SecurityID.Tag, Required.NO)
   field(Text.Tag, Required.NO)
   field(TimeInForce.Tag, Required.NO)
-  field(TransactTime.TAG, Required.NO)
+  field(TransactTime.Tag, Required.NO)
   field(TradeDate.Tag, Required.NO)
   field(OrdRejReason.Tag, Required.NO)
   field(MinQty.Tag, Required.NO)
@@ -112,7 +112,7 @@ class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(head
   field(DisplayHighQty.Tag, requiredWhenDisplayMethodIsRandom)
   field(DisplayMinIncr.Tag, Required.NO)
   field(MaxFloor.Tag, Required.NO)
-  field(ExpireTime.TAG, new Required() {
+  field(ExpireTime.Tag, new Required() {
     override def isRequired(): Boolean = getEnum(TimeInForce.Tag) == TimeInForce.GoodTillDate
   })
   field(ExecType.Tag)

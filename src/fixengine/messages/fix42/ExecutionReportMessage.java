@@ -88,7 +88,7 @@ public class ExecutionReportMessage extends AbstractMessage implements fixengine
         field(TimeInForce.Tag(), Required.NO);
         field(CumQty.Tag());
         field(AvgPx.Tag());
-        field(TransactTime.TAG, Required.NO);
+        field(TransactTime.Tag(), Required.NO);
         field(Text.Tag(), Required.NO);
         field(ExDestination.Tag(), Required.NO);
         field(LastMkt.Tag(), Required.NO);

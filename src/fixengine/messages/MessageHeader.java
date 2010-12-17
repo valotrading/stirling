@@ -63,8 +63,8 @@ public class MessageHeader extends FieldContainer implements Parseable {
         field(MsgSeqNum.Tag());
         field(PossDupFlag.Tag(), Required.NO);
         field(PossResend.Tag(), Required.NO);
-        field(SendingTime.TAG);
-        field(OrigSendingTime.TAG, new Required() {
+        field(SendingTime.Tag());
+        field(OrigSendingTime.Tag(), new Required() {
             @Override public boolean isRequired() {
                 return hasValue(PossDupFlag.Tag()) && getBoolean(PossDupFlag.Tag());
             }
@@ -116,18 +116,18 @@ public class MessageHeader extends FieldContainer implements Parseable {
     }
 
     public boolean hasAccurateSendingTime(DateTime currentTime) {
-        if (!hasValue(SendingTime.TAG)) {
+        if (!hasValue(SendingTime.Tag())) {
             return true;
         }
-        Minutes difference = Minutes.minutesBetween(currentTime, getDateTime(SendingTime.TAG));
+        Minutes difference = Minutes.minutesBetween(currentTime, getDateTime(SendingTime.Tag()));
         return Math.abs(difference.getMinutes()) < MAX_TIME_DIFFERENCE.getMinutes();
     }
 
     public boolean hasOrigSendTimeAfterSendingTime() {
-        if (!getBoolean(PossDupFlag.Tag()) || !hasValue(OrigSendingTime.TAG)) {
+        if (!getBoolean(PossDupFlag.Tag()) || !hasValue(OrigSendingTime.Tag())) {
             return true;
         }
-        return !getDateTime(OrigSendingTime.TAG).isAfter(getDateTime(SendingTime.TAG));
+        return !getDateTime(OrigSendingTime.Tag()).isAfter(getDateTime(SendingTime.Tag()));
     }
 
     public Message newMessage(MessageFactory messageFactory) {
