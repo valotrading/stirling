@@ -64,15 +64,15 @@ import fixengine.messages.fix42.DefaultMessageFactory;
 import fixengine.session.store.InMemorySessionStore;
 import fixengine.session.store.MongoSessionStore;
 import fixengine.session.store.SessionStore;
-import fixengine.tags.BeginString;
-import fixengine.tags.BodyLength;
-import fixengine.tags.EncryptMethod;
-import fixengine.tags.HeartBtInt;
-import fixengine.tags.MsgType;
-import fixengine.tags.OrigSendingTime;
-import fixengine.tags.SenderCompID;
-import fixengine.tags.SendingTime;
-import fixengine.tags.TargetCompID;
+import fixengine.tags.fix42.BeginString;
+import fixengine.tags.fix42.BodyLength;
+import fixengine.tags.fix42.EncryptMethod;
+import fixengine.tags.fix42.HeartBtInt;
+import fixengine.tags.fix42.MsgType;
+import fixengine.tags.fix42.OrigSendingTime;
+import fixengine.tags.fix42.SenderCompID;
+import fixengine.tags.fix42.SendingTime;
+import fixengine.tags.fix42.TargetCompID;
 
 public class InitiatorSpecification extends Specification<Session> {
     private static final String dateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'";
@@ -266,7 +266,7 @@ public class InitiatorSpecification extends Specification<Session> {
             return this;
         }
 
-        public MessageBuilder float0(Tag<FloatField> tag, Double value) {
+        public MessageBuilder float0(Tag<? extends FloatField> tag, Double value) {
             message.setFloat(tag, value);
             return this;
         }

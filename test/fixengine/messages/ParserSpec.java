@@ -15,7 +15,6 @@
  */
 package fixengine.messages;
 
-import fixengine.tags.SessionRejectReason;
 import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
@@ -26,9 +25,9 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 
 import fixengine.messages.FixMessage;
+import fixengine.tags.fix43.SessionRejectReason;
 
-@RunWith(JDaveRunner.class)
-public class ParserSpec extends Specification<String> {
+@RunWith(JDaveRunner.class) public class ParserSpec extends Specification<String> {
     private Parser.Callback callback = mock(Parser.Callback.class);
     private String raw;
 

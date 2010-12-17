@@ -19,21 +19,20 @@ import fixengine.messages.AbstractMessage;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.Required;
-import fixengine.tags.Account;
-import fixengine.tags.ClOrdID;
-import fixengine.tags.ExecBroker;
-import fixengine.tags.MaturityMonthYear;
-import fixengine.tags.OrderID;
-import fixengine.tags.SecurityExchange;
-import fixengine.tags.SecurityID;
-import fixengine.tags.SecurityType;
-import fixengine.tags.fix42.Side;
-import fixengine.tags.Symbol;
+import fixengine.tags.fix42.Account;
+import fixengine.tags.fix42.ClOrdID;
 import fixengine.tags.fix42.ClientID;
+import fixengine.tags.fix42.ExecBroker;
 import fixengine.tags.fix42.IDSource;
+import fixengine.tags.fix42.MaturityMonthYear;
+import fixengine.tags.fix42.OrderID;
+import fixengine.tags.fix42.SecurityExchange;
+import fixengine.tags.fix42.SecurityID;
+import fixengine.tags.fix42.SecurityType;
+import fixengine.tags.fix42.Side;
+import fixengine.tags.fix42.Symbol;
 
 public class OrderStatusRequestMessage extends AbstractMessage {
-
     public OrderStatusRequestMessage(MessageHeader header) {
         super(header);
 

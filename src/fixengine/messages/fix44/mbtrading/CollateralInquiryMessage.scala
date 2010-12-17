@@ -15,15 +15,21 @@
  */
 package fixengine.messages.fix44.mbtrading
 
-import fixengine.messages.AbstractMessage
-import fixengine.messages.MessageHeader
-import fixengine.messages.MessageVisitor
-import fixengine.messages.{CollateralInquiryMessage => CollateralInquiryMessageTrait}
-import fixengine.tags.Account
-import fixengine.tags.fix42.SubscriptionRequestType
-import fixengine.tags.fix44.CollInquiryID
-import fixengine.tags.fix44.Password
-import fixengine.tags.fix44.Username
+import fixengine.messages.{
+  AbstractMessage,
+  CollateralInquiryMessage => CollateralInquiryMessageTrait,
+  MessageHeader,
+  MessageVisitor
+}
+import fixengine.tags.fix42.{
+  Account,
+  SubscriptionRequestType
+}
+import fixengine.tags.fix44.{
+  CollInquiryID,
+  Password,
+  Username
+}
 
 class CollateralInquiryMessage(header: MessageHeader) extends AbstractMessage(header) with CollateralInquiryMessageTrait {
   field(Account.Tag)

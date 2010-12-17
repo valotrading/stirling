@@ -15,10 +15,26 @@
  */
 package fixengine.messages.fix44.burgundy
 
-import fixengine.messages.{MessageVisitor, AbstractMessage, MessageHeader, Required, OrderMassCancelRequestMessage => OrderMassCancelRequestMessageTrait}
-import fixengine.tags.{OnBehalfOfCompID, ClOrdID, SecurityID, Symbol, TransactTime}
-import fixengine.tags.fix43.SecurityIDSource
-import fixengine.tags.fix44.MassCancelRequestType
+import fixengine.messages.{
+  AbstractMessage,
+  MessageHeader,
+  MessageVisitor,
+  OrderMassCancelRequestMessage => OrderMassCancelRequestMessageTrait,
+  Required
+}
+import fixengine.tags.fix42.{
+  ClOrdID,
+  OnBehalfOfCompID,
+  SecurityID,
+  Symbol,
+  TransactTime
+}
+import fixengine.tags.fix43.{
+  SecurityIDSource
+}
+import fixengine.tags.fix44.{
+  MassCancelRequestType
+}
 
 class OrderMassCancelRequestMessage(header: MessageHeader) extends AbstractMessage(header) with OrderMassCancelRequestMessageTrait {
   field(ClOrdID.Tag)

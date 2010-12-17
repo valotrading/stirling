@@ -15,20 +15,24 @@
  */
 package fixengine.messages.fix44.burgundy
 
-import fixengine.messages.AbstractMessage
-import fixengine.messages.MessageHeader
-import fixengine.messages.MessageVisitor
-import fixengine.messages.Required
-import fixengine.tags.Account
-import fixengine.tags.ClOrdID
-import fixengine.tags.CxlRejReason
-import fixengine.tags.CxlRejResponseTo
-import fixengine.tags.OrdStatus
-import fixengine.tags.OrderID
-import fixengine.tags.OrigClOrdID
-import fixengine.tags.Text
-import fixengine.tags.TransactTime
-import fixengine.messages.{OrderCancelRejectMessage => OrderCancelRejectMessageTrait}
+import fixengine.messages.{
+  AbstractMessage,
+  MessageHeader,
+  MessageVisitor,
+  OrderCancelRejectMessage => OrderCancelRejectMessageTrait,
+  Required
+}
+import fixengine.tags.fix42.{
+  Account,
+  ClOrdID,
+  CxlRejReason,
+  CxlRejResponseTo,
+  OrdStatus,
+  OrderID,
+  OrigClOrdID,
+  Text,
+  TransactTime
+}
 
 class OrderCancelRejectMessage(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRejectMessageTrait {
   field(Account.Tag, Required.NO)
@@ -40,6 +44,5 @@ class OrderCancelRejectMessage(header: MessageHeader) extends AbstractMessage(he
   field(CxlRejResponseTo.Tag)
   field(CxlRejReason.Tag, Required.NO)
   field(Text.Tag, Required.NO)
-
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

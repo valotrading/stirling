@@ -20,8 +20,8 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
 import fixengine.messages.MsgTypeValue;
-import fixengine.tags.BeginSeqNo;
-import fixengine.tags.EndSeqNo;
+import fixengine.tags.fix42.BeginSeqNo;
+import fixengine.tags.fix42.EndSeqNo;
 
 @RunWith(JDaveRunner.class) public class RecvResendRequestSpec extends InitiatorSpecification {
     public class InitializedSession {

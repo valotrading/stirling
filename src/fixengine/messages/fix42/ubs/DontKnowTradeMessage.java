@@ -17,14 +17,14 @@ package fixengine.messages.fix42.ubs;
 
 import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
-import fixengine.tags.DKReason;
-import fixengine.tags.ExecID;
-import fixengine.tags.LastPx;
-import fixengine.tags.LastShares;
-import fixengine.tags.OrderID;
-import fixengine.tags.OrderQty;
+import fixengine.tags.fix42.DKReason;
+import fixengine.tags.fix42.ExecID;
+import fixengine.tags.fix42.LastPx;
+import fixengine.tags.fix42.LastShares;
+import fixengine.tags.fix42.OrderID;
+import fixengine.tags.fix42.OrderQty;
 import fixengine.tags.fix42.Side;
-import fixengine.tags.Symbol;
+import fixengine.tags.fix42.Symbol;
 
 public class DontKnowTradeMessage extends fixengine.messages.fix42.DontKnowTradeMessage {
     public DontKnowTradeMessage(MessageHeader header) {

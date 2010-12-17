@@ -47,4 +47,5 @@ abstract class PriceOffsetTag(value: Int) extends Tag[PriceOffsetField](value, c
 abstract class QtyTag(value: Int) extends Tag[QtyField](value, classOf[QtyField])
 abstract class SeqNumTag(value: Int) extends Tag[SeqNumField](value, classOf[SeqNumField])
 
+abstract class CurrencyTag(value: Int) extends StringTag(value)
 abstract class AmtTag(value: Int) extends IntegerTag(value)

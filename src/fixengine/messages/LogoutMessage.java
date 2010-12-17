@@ -15,7 +15,7 @@
  */
 package fixengine.messages;
 
-import fixengine.tags.Text;
+import fixengine.tags.fix42.Text;
 
 /**
  * @author Pekka Enberg 

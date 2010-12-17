@@ -15,20 +15,15 @@
  */
 package fixengine.messages;
 
-import static fixengine.messages.Field.DELIMITER;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
-
 import org.junit.runner.RunWith;
 
-import fixengine.tags.MsgType;
-import fixengine.tags.TargetCompID;
+import fixengine.tags.fix42.MsgType;
+import fixengine.tags.fix42.TargetCompID;
+import static fixengine.messages.Field.DELIMITER;
 
-/**
- * @author Pekka Enberg 
- */
-@RunWith(JDaveRunner.class)
-public class MessageBufferSpec extends Specification<MessageBuffer> {
+@RunWith(JDaveRunner.class) public class MessageBufferSpec extends Specification<MessageBuffer> {
     private final MessageBuffer buffer = new MessageBuffer();
 
     public class EmptyBuffer {

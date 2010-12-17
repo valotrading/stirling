@@ -17,15 +17,13 @@ package fixengine.messages.fix42.bats.europe;
 
 import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
-
-import fixengine.tags.Account;
-import fixengine.tags.ClOrdID;
-import fixengine.tags.CxlRejResponseTo;
-import fixengine.tags.OrdStatus;
-import fixengine.tags.OrderID;
-import fixengine.tags.OrigClOrdID;
-import fixengine.tags.Text;
-
+import fixengine.tags.fix42.Account;
+import fixengine.tags.fix42.ClOrdID;
+import fixengine.tags.fix42.CxlRejResponseTo;
+import fixengine.tags.fix42.OrdStatus;
+import fixengine.tags.fix42.OrderID;
+import fixengine.tags.fix42.OrigClOrdID;
+import fixengine.tags.fix42.Text;
 import fixengine.tags.fix42.bats.europe.CxlRejReason;
 
 public class OrderCancelRejectMessage extends fixengine.messages.fix42.OrderCancelRejectMessage {

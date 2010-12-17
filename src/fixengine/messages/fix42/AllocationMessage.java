@@ -21,18 +21,18 @@ import fixengine.messages.MessageVisitor;
 import fixengine.messages.RepeatingGroup;
 import fixengine.messages.RepeatingGroupInstance;
 import fixengine.messages.Required;
-import fixengine.tags.AllocAccount;
-import fixengine.tags.AllocID;
-import fixengine.tags.AvgPx;
-import fixengine.tags.ClOrdID;
-import fixengine.tags.NoAllocs;
-import fixengine.tags.NoOrders;
-import fixengine.tags.Shares;
-import fixengine.tags.Symbol;
-import fixengine.tags.TradeDate;
-import fixengine.tags.fix42.Side;
+import fixengine.tags.fix42.AllocAccount;
+import fixengine.tags.fix42.AllocID;
 import fixengine.tags.fix42.AllocShares;
 import fixengine.tags.fix42.AllocTransType;
+import fixengine.tags.fix42.AvgPx;
+import fixengine.tags.fix42.ClOrdID;
+import fixengine.tags.fix42.NoAllocs;
+import fixengine.tags.fix42.NoOrders;
+import fixengine.tags.fix42.Shares;
+import fixengine.tags.fix42.Side;
+import fixengine.tags.fix42.Symbol;
+import fixengine.tags.fix42.TradeDate;
 
 public class AllocationMessage extends AbstractMessage {
     protected AllocationMessage(MessageHeader header) {

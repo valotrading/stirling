@@ -17,11 +17,11 @@ package fixengine.messages.fix42.hotspotfx;
 
 import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
-import fixengine.tags.Account;
-import fixengine.tags.ClOrdID;
+import fixengine.tags.fix42.Account;
+import fixengine.tags.fix42.ClOrdID;
 import fixengine.tags.fix42.Side;
-import fixengine.tags.Symbol;
-import fixengine.tags.TransactTime;
+import fixengine.tags.fix42.Symbol;
+import fixengine.tags.fix42.TransactTime;
 
 public class OrderStatusRequestMessage extends fixengine.messages.fix42.OrderStatusRequestMessage {
     public OrderStatusRequestMessage(MessageHeader header) {

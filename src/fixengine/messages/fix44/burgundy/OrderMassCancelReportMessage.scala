@@ -15,9 +15,23 @@
  */
 package fixengine.messages.fix44.burgundy
 
-import fixengine.messages.{MessageVisitor, AbstractMessage, MessageHeader, Required, OrderMassCancelReportMessage => OrderMassCancelReportMessageTrait}
-import fixengine.tags.{Text, OrderID, ClOrdID}
-import fixengine.tags.fix44.{MassCancelRequestType, MassCancelResponse, MassCancelRejectReason}
+import fixengine.messages.{
+  AbstractMessage,
+  MessageHeader,
+  MessageVisitor,
+  OrderMassCancelReportMessage => OrderMassCancelReportMessageTrait,
+  Required
+}
+import fixengine.tags.fix42.{
+  Text,
+  OrderID,
+  ClOrdID
+}
+import fixengine.tags.fix44.{
+  MassCancelRequestType,
+  MassCancelResponse,
+  MassCancelRejectReason
+}
 
 class OrderMassCancelReportMessage(header: MessageHeader) extends AbstractMessage(header) with OrderMassCancelReportMessageTrait {
   field(ClOrdID.Tag)
@@ -26,6 +40,5 @@ class OrderMassCancelReportMessage(header: MessageHeader) extends AbstractMessag
   field(MassCancelResponse.Tag)
   field(MassCancelRejectReason.Tag, Required.NO)
   field(Text.Tag, Required.NO)
-
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

@@ -20,7 +20,7 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
 import fixengine.messages.MsgTypeValue;
-import fixengine.tags.RefSeqNo;
+import fixengine.tags.fix42.RefSeqNo;
 
 @RunWith(JDaveRunner.class) public class RecvRejectSpec extends InitiatorSpecification {
     public class InitializedSession {

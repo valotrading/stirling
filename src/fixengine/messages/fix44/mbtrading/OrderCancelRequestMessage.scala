@@ -15,17 +15,23 @@
  */
 package fixengine.messages.fix44.mbtrading
 
-import fixengine.messages.AbstractMessage
-import fixengine.messages.MessageHeader
-import fixengine.messages.MessageVisitor
-import fixengine.messages.Required
-import fixengine.messages.{OrderCancelRequestMessage => OrderCancelRequestMessageTrait}
-import fixengine.tags.ClOrdID
-import fixengine.tags.OrigClOrdID
-import fixengine.tags.Symbol
-import fixengine.tags.TransactTime
-import fixengine.tags.fix42.Side
-import fixengine.tags.fix44.Username
+import fixengine.messages.{
+  AbstractMessage,
+  MessageHeader,
+  MessageVisitor,
+  OrderCancelRequestMessage => OrderCancelRequestMessageTrait,
+  Required
+}
+import fixengine.tags.fix42.{
+  ClOrdID,
+  OrigClOrdID,
+  Symbol,
+  TransactTime,
+  Side
+}
+import fixengine.tags.fix44.{
+  Username
+}
 
 class OrderCancelRequestMessage(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestMessageTrait {
   field(ClOrdID.Tag)

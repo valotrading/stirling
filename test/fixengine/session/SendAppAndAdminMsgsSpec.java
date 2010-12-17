@@ -20,8 +20,8 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
 import fixengine.messages.MsgTypeValue;
-import fixengine.tags.GapFillFlag;
-import fixengine.tags.NewSeqNo;
+import fixengine.tags.fix42.GapFillFlag;
+import fixengine.tags.fix42.NewSeqNo;
 
 @RunWith(JDaveRunner.class) public class SendAppAndAdminMsgsSpec extends InitiatorSpecification {
     public class InitializedSession {

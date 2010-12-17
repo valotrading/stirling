@@ -18,27 +18,26 @@ package fixengine.messages.fix42.chix.europe;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
 
-import fixengine.tags.Account;
-import fixengine.tags.MaxFloor;
-import fixengine.tags.MinQty;
-import fixengine.tags.Symbol;
-import fixengine.tags.fix42.Side;
-import fixengine.tags.fix42.TimeInForce;
-import fixengine.tags.PegDifference;
-import fixengine.tags.Price;
-import fixengine.tags.OrderCapacity;
-import fixengine.tags.SecurityID;
-import fixengine.tags.SecurityExchange;
-import fixengine.tags.ClOrdID;
-import fixengine.tags.Currency;
-import fixengine.tags.HandlInst;
-import fixengine.tags.OrderQty;
-import fixengine.tags.OrdType;
-import fixengine.tags.ExpireTime;
-import fixengine.tags.TransactTime;
-
+import fixengine.tags.fix42.Account;
+import fixengine.tags.fix42.ClOrdID;
+import fixengine.tags.fix42.Currency;
+import fixengine.tags.fix42.ExpireTime;
+import fixengine.tags.fix42.HandlInst;
+import fixengine.tags.fix42.MaxFloor;
+import fixengine.tags.fix42.MinQty;
+import fixengine.tags.fix42.OrdType;
+import fixengine.tags.fix42.OrderCapacity;
+import fixengine.tags.fix42.OrderQty;
+import fixengine.tags.fix42.PegDifference;
+import fixengine.tags.fix42.Price;
+import fixengine.tags.fix42.SecurityExchange;
+import fixengine.tags.fix42.SecurityID;
+import fixengine.tags.fix42.Symbol;
+import fixengine.tags.fix42.TransactTime;
 import fixengine.tags.fix42.chix.europe.ExecInst;
 import fixengine.tags.fix42.chix.europe.IDSource;
+import fixengine.tags.fix42.Side;
+import fixengine.tags.fix42.TimeInForce;
 
 public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSingleMessage {
     public NewOrderSingleMessage(MessageHeader header) {

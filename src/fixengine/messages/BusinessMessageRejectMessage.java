@@ -15,10 +15,10 @@
  */
 package fixengine.messages;
 
-import fixengine.tags.BusinessRejectReason;
-import fixengine.tags.RefMsgType;
-import fixengine.tags.RefSeqNo;
-import fixengine.tags.Text;
+import fixengine.tags.fix42.BusinessRejectReason;
+import fixengine.tags.fix42.RefMsgType;
+import fixengine.tags.fix42.RefSeqNo;
+import fixengine.tags.fix42.Text;
 
 /**
  * @author Pekka Enberg

@@ -15,39 +15,47 @@
  */
 package fixengine.messages.fix44.mbtrading
 
-import fixengine.messages.AbstractMessage
-import fixengine.messages.MessageHeader
-import fixengine.messages.MessageVisitor
-import fixengine.messages.RepeatingGroup
-import fixengine.messages.RepeatingGroupInstance
-import fixengine.messages.Required
-import fixengine.tags.Account
-import fixengine.tags.ClOrdID
-import fixengine.tags.ExecInst
-import fixengine.tags.HandlInst
-import fixengine.tags.OrdType
-import fixengine.tags.OrderQty
-import fixengine.tags.TransactTime
-import fixengine.tags.fix42.ExDestination
-import fixengine.tags.fix42.Side
-import fixengine.tags.fix42.StopPx
-import fixengine.tags.fix42.TimeInForce
-import fixengine.tags.fix43.LegCFICode
-import fixengine.tags.fix43.LegMaturityMonthYear
-import fixengine.tags.fix43.LegPositionEffect
-import fixengine.tags.fix43.LegRatioQty
-import fixengine.tags.fix43.LegRefID
-import fixengine.tags.fix43.LegSide
-import fixengine.tags.fix43.LegStrikePrice
-import fixengine.tags.fix43.LegSymbol
-import fixengine.tags.fix43.NoLegs
-import fixengine.tags.fix44.NoTrdRegTimestamps
-import fixengine.tags.fix44.Password
-import fixengine.tags.fix44.TrdRegTimestamp
-import fixengine.tags.fix44.TrdRegTimestampOrigin
-import fixengine.tags.fix44.TrdRegTimestampType
-import fixengine.tags.fix44.Username
-import fixengine.messages.{NewOrderMultiLegMessage => NewOrderMultiLegMessageTrait}
+import fixengine.messages.{
+  AbstractMessage,
+  MessageHeader,
+  MessageVisitor,
+  NewOrderMultiLegMessage => NewOrderMultiLegMessageTrait,
+  RepeatingGroup,
+  RepeatingGroupInstance,
+  Required
+}
+import fixengine.tags.fix42.{
+  Account,
+  ClOrdID,
+  ExDestination,
+  ExecInst,
+  HandlInst,
+  OrdType,
+  OrderQty,
+  Side,
+  StopPx,
+  TimeInForce,
+  TransactTime
+}
+import fixengine.tags.fix43.{
+  LegCFICode,
+  LegMaturityMonthYear,
+  LegPositionEffect,
+  LegRatioQty,
+  LegRefID,
+  LegSide,
+  LegStrikePrice,
+  LegSymbol,
+  NoLegs
+}
+import fixengine.tags.fix44.{
+  NoTrdRegTimestamps,
+  Password,
+  TrdRegTimestamp,
+  TrdRegTimestampOrigin,
+  TrdRegTimestampType,
+  Username
+}
 
 class NewOrderMultiLegMessage(header: MessageHeader) extends AbstractMessage(header) with NewOrderMultiLegMessageTrait {
   field(Account.Tag)

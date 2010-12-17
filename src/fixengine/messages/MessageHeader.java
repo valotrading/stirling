@@ -20,21 +20,21 @@ import java.nio.ByteBuffer;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
-import fixengine.tags.BeginString;
-import fixengine.tags.BodyLength;
-import fixengine.tags.DeliverToCompID;
-import fixengine.tags.MsgSeqNum;
-import fixengine.tags.MsgType;
-import fixengine.tags.OnBehalfOfCompID;
-import fixengine.tags.OrigSendingTime;
-import fixengine.tags.PossDupFlag;
-import fixengine.tags.PossResend;
-import fixengine.tags.SenderCompID;
-import fixengine.tags.SenderSubID;
-import fixengine.tags.SendingTime;
-import fixengine.tags.TargetCompID;
-import fixengine.tags.TargetSubID;
-import fixengine.tags.SenderLocationID;
+import fixengine.tags.fix42.BeginString;
+import fixengine.tags.fix42.BodyLength;
+import fixengine.tags.fix42.DeliverToCompID;
+import fixengine.tags.fix42.MsgSeqNum;
+import fixengine.tags.fix42.MsgType;
+import fixengine.tags.fix42.OnBehalfOfCompID;
+import fixengine.tags.fix42.OrigSendingTime;
+import fixengine.tags.fix42.PossDupFlag;
+import fixengine.tags.fix42.PossResend;
+import fixengine.tags.fix42.SenderCompID;
+import fixengine.tags.fix42.SenderSubID;
+import fixengine.tags.fix42.SendingTime;
+import fixengine.tags.fix42.TargetCompID;
+import fixengine.tags.fix42.TargetSubID;
+import fixengine.tags.fix42.SenderLocationID;
 
 /**
  * @author Pekka Enberg 

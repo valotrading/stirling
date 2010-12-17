@@ -23,8 +23,8 @@ import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MsgTypeValue;
 import fixengine.messages.fix42.NewOrderSingleMessage;
-import fixengine.tags.BeginSeqNo;
-import fixengine.tags.EndSeqNo;
+import fixengine.tags.fix42.BeginSeqNo;
+import fixengine.tags.fix42.EndSeqNo;
 
 @RunWith(JDaveRunner.class) public class QueueOutgoingMsgsSpec extends InitiatorSpecification {
     public class InitializedSession {

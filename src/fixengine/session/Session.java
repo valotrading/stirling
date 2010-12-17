@@ -54,18 +54,18 @@ import fixengine.messages.TestRequestMessage;
 import fixengine.messages.Validator.ErrorHandler;
 import fixengine.messages.Validator.ErrorLevel;
 import fixengine.session.store.SessionStore;
-import fixengine.tags.BeginSeqNo;
-import fixengine.tags.BusinessRejectReason;
-import fixengine.tags.EncryptMethod;
-import fixengine.tags.EndSeqNo;
-import fixengine.tags.GapFillFlag;
-import fixengine.tags.HeartBtInt;
-import fixengine.tags.NewSeqNo;
-import fixengine.tags.RefMsgType;
-import fixengine.tags.RefSeqNo;
-import fixengine.tags.SessionRejectReason;
-import fixengine.tags.TestReqID;
-import fixengine.tags.Text;
+import fixengine.tags.fix42.BeginSeqNo;
+import fixengine.tags.fix42.BusinessRejectReason;
+import fixengine.tags.fix42.EncryptMethod;
+import fixengine.tags.fix42.EndSeqNo;
+import fixengine.tags.fix42.GapFillFlag;
+import fixengine.tags.fix42.HeartBtInt;
+import fixengine.tags.fix42.NewSeqNo;
+import fixengine.tags.fix42.RefMsgType;
+import fixengine.tags.fix42.RefSeqNo;
+import fixengine.tags.fix43.SessionRejectReason;
+import fixengine.tags.fix42.TestReqID;
+import fixengine.tags.fix42.Text;
 
 /**
  * @author Karim Osman

@@ -20,7 +20,7 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
 import fixengine.messages.MsgTypeValue;
-import fixengine.tags.TestReqID;
+import fixengine.tags.fix42.TestReqID;
 
 @RunWith(JDaveRunner.class) public class SendTestRequestSpec extends InitiatorSpecification {
     public class InitializedSession {

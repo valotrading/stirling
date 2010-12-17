@@ -15,15 +15,21 @@
  */
 package fixengine.messages.fix44.mbtrading
 
-import fixengine.messages.AbstractMessage
-import fixengine.messages.MessageHeader
-import fixengine.messages.MessageVisitor
-import fixengine.messages.Required
-import fixengine.messages.{LogonMessage => LogonMessageTrait}
-import fixengine.tags.EncryptMethod
-import fixengine.tags.HeartBtInt
-import fixengine.tags.ResetSeqNumFlag
-import fixengine.tags.fix44.Password
+import fixengine.messages.{
+  AbstractMessage,
+  LogonMessage => LogonMessageTrait,
+  MessageHeader,
+  MessageVisitor,
+  Required
+}
+import fixengine.tags.fix42.{
+  EncryptMethod,
+  HeartBtInt,
+  ResetSeqNumFlag
+}
+import fixengine.tags.fix44.{
+  Password
+}
 
 class LogonMessage(header: MessageHeader) extends AbstractMessage(header) with LogonMessageTrait {
   field(EncryptMethod.Tag)

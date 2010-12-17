@@ -15,22 +15,28 @@
  */
 package fixengine.messages.fix44.mbtrading
 
-import fixengine.messages.AbstractMessage
-import fixengine.messages.MessageHeader
-import fixengine.messages.MessageVisitor
-import fixengine.messages.{OrderModificationRequestMessage => OrderModificationRequestMessageTrait}
-import fixengine.tags.Account
-import fixengine.tags.ClOrdID
-import fixengine.tags.HandlInst
-import fixengine.tags.OrdType
-import fixengine.tags.OrderQty
-import fixengine.tags.OrigClOrdID
-import fixengine.tags.Price
-import fixengine.tags.Symbol
-import fixengine.tags.TransactTime
-import fixengine.tags.fix42.Side
-import fixengine.tags.fix42.TimeInForce
-import fixengine.tags.fix44.Username
+import fixengine.messages.{
+  AbstractMessage,
+  MessageHeader,
+  MessageVisitor,
+  OrderModificationRequestMessage => OrderModificationRequestMessageTrait
+}
+import fixengine.tags.fix42.{
+  Account,
+  ClOrdID,
+  HandlInst,
+  OrdType,
+  OrderQty,
+  OrigClOrdID,
+  Price,
+  Side,
+  Symbol,
+  TimeInForce,
+  TransactTime
+}
+import fixengine.tags.fix44.{
+  Username
+}
 
 class OrderModificationRequestMessage(header: MessageHeader) extends AbstractMessage(header) with OrderModificationRequestMessageTrait {
   field(Account.Tag)

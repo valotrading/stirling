@@ -15,22 +15,50 @@
  */
 package fixengine.messages.fix44.burgundy
 
-import fixengine.tags.fix42.Side
-import fixengine.tags.fix42.TimeInForce
-import fixengine.tags.fix43.AccountType
-import fixengine.tags.fix43.OrderCapacity
-import fixengine.tags.fix43.PegOffsetValue
-import fixengine.tags.fix43.SecurityIDSource
-import fixengine.tags.fix44.PegMoveType
-import fixengine.tags.fix44.PegOffsetType
-import fixengine.tags.fix44.PegScope
-import fixengine.tags.fix44.burgundy.OrderRestrictions
-import fixengine.tags.fix50.ExecInst
-import fixengine.tags.{ExpireTime, MaxFloor, MaxShow, MinQty, TransactTime}
-import fixengine.tags.{Text, SecurityID, Price, OrigClOrdID}
-import fixengine.tags.{OrdType, OrderQty, OrderID, Currency, ClOrdID, Account, Symbol}
-import fixengine.messages.{MessageVisitor, AbstractMessage, MessageHeader, Required}
-import fixengine.messages.{OrderCancelReplaceRequestMessage => OrderCancelReplaceRequestMessageTrait}
+import fixengine.messages.{
+  AbstractMessage,
+  MessageHeader,
+  MessageVisitor,
+  OrderCancelReplaceRequestMessage => OrderCancelReplaceRequestMessageTrait,
+  Required
+}
+import fixengine.tags.fix42.{
+  Side,
+  TimeInForce,
+  Account,
+  ClOrdID,
+  Currency,
+  ExpireTime,
+  MaxFloor,
+  MaxShow,
+  MinQty,
+  OrdType,
+  OrderCapacity,
+  OrderID,
+  OrderQty,
+  OrigClOrdID,
+  Price,
+  SecurityID,
+  Symbol,
+  Text,
+  TransactTime
+}
+import fixengine.tags.fix43.{
+  AccountType,
+  PegOffsetValue,
+  SecurityIDSource
+}
+import fixengine.tags.fix44.{
+  PegMoveType,
+  PegOffsetType,
+  PegScope
+}
+import fixengine.tags.fix44.burgundy.{
+  OrderRestrictions
+}
+import fixengine.tags.fix50.{
+  ExecInst
+}
 
 class OrderCancelReplaceRequestMessage(header: MessageHeader) extends AbstractMessage(header) with OrderCancelReplaceRequestMessageTrait {
   field(Account.Tag, Required.NO)
@@ -64,6 +92,5 @@ class OrderCancelReplaceRequestMessage(header: MessageHeader) extends AbstractMe
   field(OrderCapacity.Tag, Required.NO)
   field(OrderRestrictions.Tag, Required.NO)
   field(AccountType.Tag, Required.NO)
-
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

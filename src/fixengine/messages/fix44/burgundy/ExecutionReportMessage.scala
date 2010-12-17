@@ -15,66 +15,82 @@
  */
 package fixengine.messages.fix44.burgundy
 
-import fixengine.messages.AbstractMessage
-import fixengine.messages.MessageHeader
-import fixengine.messages.MessageVisitor
-import fixengine.messages.RepeatingGroup
-import fixengine.messages.RepeatingGroupInstance
-import fixengine.messages.Required
-import fixengine.messages.{ExecutionReportMessage => ExecutionReportMessageTrait}
-import fixengine.tags.Account
-import fixengine.tags.AvgPx
-import fixengine.tags.ClOrdID
-import fixengine.tags.CumQty
-import fixengine.tags.Currency
-import fixengine.tags.ExecID
-import fixengine.tags.ExecInst
-import fixengine.tags.ExecRefID
-import fixengine.tags.ExecRestatementReason
-import fixengine.tags.ExecType
-import fixengine.tags.ExpireTime
-import fixengine.tags.HandlInst
-import fixengine.tags.LastPx
-import fixengine.tags.LastShares
-import fixengine.tags.LeavesQty
-import fixengine.tags.MaxFloor
-import fixengine.tags.MaxShow
-import fixengine.tags.MinQty
-import fixengine.tags.NoPartyIDs
-import fixengine.tags.OrdRejReason
-import fixengine.tags.OrdStatus
-import fixengine.tags.OrdType
-import fixengine.tags.OrderID
-import fixengine.tags.OrderQty
-import fixengine.tags.OrigClOrdID
-import fixengine.tags.Price
-import fixengine.tags.SecondaryOrderID
-import fixengine.tags.SecurityID
-import fixengine.tags.Symbol
-import fixengine.tags.Text
-import fixengine.tags.TradeDate
-import fixengine.tags.TransactTime
-import fixengine.tags.fix42.Side
-import fixengine.tags.fix42.TimeInForce
-import fixengine.tags.fix43.AccountType
-import fixengine.tags.fix43.MassStatusReqID
-import fixengine.tags.fix43.OrderCapacity
-import fixengine.tags.fix43.PartyID
-import fixengine.tags.fix43.PartyIDSource
-import fixengine.tags.fix43.PegOffsetValue
-import fixengine.tags.fix43.SecondaryExecID
-import fixengine.tags.fix43.SecurityIDSource
-import fixengine.tags.fix44.LastLiquidityInd
-import fixengine.tags.fix44.LastRptRequested
-import fixengine.tags.fix44.PartyRole
-import fixengine.tags.fix44.PegMoveType
-import fixengine.tags.fix44.PegOffsetType
-import fixengine.tags.fix44.PegScope
-import fixengine.tags.fix44.PeggedPrice
-import fixengine.tags.fix44.TotNumReports
-import fixengine.tags.fix44.burgundy.OrderRestrictions
-import fixengine.tags.fix44.burgundy.TrdType
-import fixengine.tags.fix50.{DisplayMethod, MatchType, DisplayLowQty, DisplayHighQty, DisplayMinIncr}
+import fixengine.messages.{
+  AbstractMessage,
+  ExecutionReportMessage => ExecutionReportMessageTrait,
+  MessageHeader,
+  MessageVisitor,
+  RepeatingGroup,
+  RepeatingGroupInstance,
+  Required
+}
+import fixengine.tags.fix42.{
+  Account,
+  AvgPx,
+  ClOrdID,
+  CumQty,
+  Currency,
+  ExecID,
+  ExecInst,
+  ExecRefID,
+  ExecType,
+  ExpireTime,
+  HandlInst,
+  LastPx,
+  LastShares,
+  LeavesQty,
+  MaxFloor,
+  MaxShow,
+  MinQty,
+  OrdRejReason,
+  OrdStatus,
+  OrdType,
+  OrderID,
+  OrderQty,
+  OrigClOrdID,
+  Price,
+  SecondaryOrderID,
+  SecurityID,
+  Side,
+  Symbol,
+  Text,
+  TimeInForce,
+  TradeDate,
+  TransactTime
+}
+import fixengine.tags.fix43.{
+  AccountType,
+  ExecRestatementReason,
+  MassStatusReqID,
+  NoPartyIDs,
+  OrderCapacity,
+  PartyID,
+  PartyIDSource,
+  PegOffsetValue,
+  SecondaryExecID,
+  SecurityIDSource
+}
+import fixengine.tags.fix44.{
+  LastLiquidityInd,
+  LastRptRequested,
+  PartyRole,
+  PegMoveType,
+  PegOffsetType,
+  PegScope,
+  PeggedPrice,
+  TotNumReports
+}
+import fixengine.tags.fix44.burgundy.{
+  OrderRestrictions,
+  TrdType
+}
+import fixengine.tags.fix50.{
+  DisplayMethod,
+  MatchType,
+  DisplayLowQty,
+  DisplayHighQty,
+  DisplayMinIncr
+}
 
 class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(header) with ExecutionReportMessageTrait {
   field(Account.Tag, Required.NO)

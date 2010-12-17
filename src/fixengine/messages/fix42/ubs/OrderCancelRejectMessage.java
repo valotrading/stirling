@@ -16,10 +16,10 @@
 package fixengine.messages.fix42.ubs;
 
 import fixengine.messages.MessageHeader;
-import fixengine.tags.ClOrdID;
-import fixengine.tags.OrdStatus;
-import fixengine.tags.OrderID;
-import fixengine.tags.OrigClOrdID;
+import fixengine.tags.fix42.ClOrdID;
+import fixengine.tags.fix42.OrdStatus;
+import fixengine.tags.fix42.OrderID;
+import fixengine.tags.fix42.OrigClOrdID;
 
 public class OrderCancelRejectMessage extends fixengine.messages.fix42.OrderCancelRejectMessage {
     public OrderCancelRejectMessage(MessageHeader header) {

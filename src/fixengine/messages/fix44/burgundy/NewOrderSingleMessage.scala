@@ -15,45 +15,57 @@
  */
 package fixengine.messages.fix44.burgundy
 
-import fixengine.messages.MessageHeader
-import fixengine.messages.RepeatingGroup
-import fixengine.messages.RepeatingGroupInstance
-import fixengine.messages.Required
-import fixengine.tags.Account
-import fixengine.tags.ClOrdID
-import fixengine.tags.Currency
-import fixengine.tags.ExpireTime
-import fixengine.tags.HandlInst
-import fixengine.tags.MaxFloor
-import fixengine.tags.MaxShow
-import fixengine.tags.MinQty
-import fixengine.tags.NoPartyIDs
-import fixengine.tags.OrdType
-import fixengine.tags.OrderQty
-import fixengine.tags.Price
-import fixengine.tags.SecurityID
-import fixengine.tags.Symbol
-import fixengine.tags.Text
-import fixengine.tags.TransactTime
-import fixengine.tags.fix42.Side
-import fixengine.tags.fix42.TimeInForce
-import fixengine.tags.fix43.AccountType
-import fixengine.tags.fix43.OrderCapacity
-import fixengine.tags.fix43.PartyID
-import fixengine.tags.fix43.PartyIDSource
-import fixengine.tags.fix43.PegOffsetValue
-import fixengine.tags.fix43.SecurityIDSource
-import fixengine.tags.fix44.PartyRole
-import fixengine.tags.fix44.PegMoveType
-import fixengine.tags.fix44.PegOffsetType
-import fixengine.tags.fix44.PegScope
-import fixengine.tags.fix44.burgundy.OrderRestrictions
-import fixengine.tags.fix50.DisplayHighQty
-import fixengine.tags.fix50.DisplayLowQty
-import fixengine.tags.fix50.DisplayMethod
-import fixengine.tags.fix50.DisplayMinIncr
-import fixengine.tags.fix50.ExecInst
-import fixengine.messages.AbstractNewOrderSingleMessage
+import fixengine.messages.{
+  AbstractNewOrderSingleMessage,
+  MessageHeader,
+  RepeatingGroup,
+  RepeatingGroupInstance,
+  Required
+}
+import fixengine.tags.fix42.{
+  Account,
+  ClOrdID,
+  Currency,
+  ExpireTime,
+  HandlInst,
+  MaxFloor,
+  MaxShow,
+  MinQty,
+  OrdType,
+  OrderQty,
+  Price,
+  SecurityID,
+  Side,
+  Symbol,
+  Text,
+  TimeInForce,
+  TransactTime
+}
+import fixengine.tags.fix43.{
+  AccountType,
+  NoPartyIDs,
+  OrderCapacity,
+  PartyID,
+  PartyIDSource,
+  PegOffsetValue,
+  SecurityIDSource
+}
+import fixengine.tags.fix44.{
+  PartyRole,
+  PegMoveType,
+  PegOffsetType,
+  PegScope
+}
+import fixengine.tags.fix44.burgundy.{
+  OrderRestrictions
+}
+import fixengine.tags.fix50.{
+  DisplayHighQty,
+  DisplayLowQty,
+  DisplayMethod,
+  DisplayMinIncr,
+  ExecInst
+}
 
 class NewOrderSingleMessage(header: MessageHeader) extends AbstractNewOrderSingleMessage(header) {
   field(Account.Tag, Required.NO)

@@ -111,7 +111,7 @@ public class FieldContainer implements Iterable<Field> {
         field.setValue(value);
     }
 
-    public void setFloat(Tag<FloatField> tag, Double value) {
+    public void setFloat(Tag<? extends FloatField> tag, Double value) {
         FloatField field = (FloatField) lookup(tag);
         field.setValue(value);
     }

@@ -15,7 +15,7 @@
  */
 package fixengine.messages;
 
-import fixengine.tags.SessionRejectReason;
+import fixengine.tags.fix43.SessionRejectReason;
 
 /**
  * @author Pekka Enberg

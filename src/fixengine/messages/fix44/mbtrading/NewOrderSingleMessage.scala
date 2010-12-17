@@ -15,47 +15,57 @@
  */
 package fixengine.messages.fix44.mbtrading
 
-import fixengine.messages.AbstractMessage
-import fixengine.messages.MessageHeader
-import fixengine.messages.Required
-import fixengine.messages.MessageVisitor
-import fixengine.messages.{NewOrderSingleMessage => NewOrderSingleMessageTrait}
-import fixengine.tags.Account
-import fixengine.tags.ClOrdID
-import fixengine.tags.ExecInst
-import fixengine.tags.ExpireTime
-import fixengine.tags.HandlInst
-import fixengine.tags.MaturityMonthYear
-import fixengine.tags.MaxFloor
-import fixengine.tags.OrdType
-import fixengine.tags.OrderQty
-import fixengine.tags.PegDifference
-import fixengine.tags.SecurityType
-import fixengine.tags.SendingTime
-import fixengine.tags.Symbol
-import fixengine.tags.TransactTime
-import fixengine.tags.fix42.ComplianceID
-import fixengine.tags.fix42.DiscretionInst
-import fixengine.tags.fix42.DiscretionOffset
-import fixengine.tags.fix42.EffectiveTime
-import fixengine.tags.fix42.ExDestination
-import fixengine.tags.fix42.LocateReqd
-import fixengine.tags.fix42.PutOrCall
-import fixengine.tags.fix42.Side
-import fixengine.tags.fix42.StopPx
-import fixengine.tags.fix42.StrikePrice
-import fixengine.tags.fix42.TimeInForce
-import fixengine.tags.fix43.LegPrice
-import fixengine.tags.fix43.OrderRestrictions
-import fixengine.tags.fix43.Price2
-import fixengine.tags.fix43.SecondaryClOrdID
-import fixengine.tags.fix44.NoTrdRegTimestamps
-import fixengine.tags.fix44.TrdRegTimestamp
-import fixengine.tags.fix44.TrdRegTimestampOrigin
-import fixengine.tags.fix44.TrdRegTimestampType
-import fixengine.tags.fix44.Username
-import fixengine.tags.fix44.mbtrading.MBTXAggressive
-import fixengine.tags.fix44.mbtrading.OrderGroupID1
+import fixengine.messages.{
+  AbstractMessage,
+  MessageHeader,
+  MessageVisitor,
+  NewOrderSingleMessage => NewOrderSingleMessageTrait,
+  Required
+}
+import fixengine.tags.fix42.{
+  Account,
+  ClOrdID,
+  ComplianceID,
+  DiscretionInst,
+  DiscretionOffset,
+  EffectiveTime,
+  ExDestination,
+  ExecInst,
+  ExpireTime,
+  HandlInst,
+  LocateReqd,
+  MaturityMonthYear,
+  MaxFloor,
+  OrdType,
+  OrderQty,
+  PegDifference,
+  PutOrCall,
+  SecurityType,
+  SendingTime,
+  Side,
+  StopPx,
+  StrikePrice,
+  Symbol,
+  TimeInForce,
+  TransactTime
+}
+import fixengine.tags.fix43.{
+  LegPrice,
+  OrderRestrictions,
+  Price2,
+  SecondaryClOrdID
+}
+import fixengine.tags.fix44.{
+  NoTrdRegTimestamps,
+  TrdRegTimestamp,
+  TrdRegTimestampOrigin,
+  TrdRegTimestampType,
+  Username
+}
+import fixengine.tags.fix44.mbtrading.{
+  MBTXAggressive,
+  OrderGroupID1
+}
 
 class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(header) with NewOrderSingleMessageTrait {
   field(Account.Tag)

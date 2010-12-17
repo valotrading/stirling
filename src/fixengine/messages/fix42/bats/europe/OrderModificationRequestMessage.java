@@ -18,18 +18,17 @@ package fixengine.messages.fix42.bats.europe;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
 
-import fixengine.tags.Account;
-import fixengine.tags.ClOrdID;
-import fixengine.tags.Currency;
-import fixengine.tags.OrdType;
-import fixengine.tags.OrderID;
-import fixengine.tags.OrderQty;
-import fixengine.tags.OrigClOrdID;
-import fixengine.tags.Price;
-import fixengine.tags.SecurityExchange;
-import fixengine.tags.Symbol;
+import fixengine.tags.fix42.Account;
+import fixengine.tags.fix42.ClOrdID;
+import fixengine.tags.fix42.Currency;
+import fixengine.tags.fix42.OrdType;
+import fixengine.tags.fix42.OrderID;
+import fixengine.tags.fix42.OrderQty;
+import fixengine.tags.fix42.OrigClOrdID;
+import fixengine.tags.fix42.Price;
+import fixengine.tags.fix42.SecurityExchange;
 import fixengine.tags.fix42.Side;
-
+import fixengine.tags.fix42.Symbol;
 import fixengine.tags.fix42.bats.europe.CancelOrigOnReject;
 import fixengine.tags.fix42.bats.europe.IDSource;
 import fixengine.tags.fix42.bats.europe.SecurityID;

@@ -17,23 +17,21 @@ package fixengine.messages.fix42.chix.europe;
 
 import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
-
-import fixengine.tags.ClOrdID;
-import fixengine.tags.ExpireTime;
-import fixengine.tags.HandlInst;
-import fixengine.tags.MaxFloor;
-import fixengine.tags.MinQty;
-import fixengine.tags.OrdType;
-import fixengine.tags.OrderCapacity;
-import fixengine.tags.OrderQty;
-import fixengine.tags.OrigClOrdID;
-import fixengine.tags.PegDifference;
-import fixengine.tags.Price;
+import fixengine.tags.fix42.ClOrdID;
+import fixengine.tags.fix42.ExpireTime;
+import fixengine.tags.fix42.HandlInst;
+import fixengine.tags.fix42.MaxFloor;
+import fixengine.tags.fix42.MinQty;
+import fixengine.tags.fix42.OrdType;
+import fixengine.tags.fix42.OrderCapacity;
+import fixengine.tags.fix42.OrderQty;
+import fixengine.tags.fix42.OrigClOrdID;
+import fixengine.tags.fix42.PegDifference;
+import fixengine.tags.fix42.Price;
 import fixengine.tags.fix42.Side;
-import fixengine.tags.Symbol;
+import fixengine.tags.fix42.Symbol;
 import fixengine.tags.fix42.TimeInForce;
-import fixengine.tags.TransactTime;
-
+import fixengine.tags.fix42.TransactTime;
 import fixengine.tags.fix42.chix.europe.ExecInst;
 
 public class OrderModificationRequestMessage extends fixengine.messages.fix42.OrderModificationRequestMessage {

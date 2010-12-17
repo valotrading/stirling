@@ -17,14 +17,14 @@ package fixengine.messages.fix42.hotspotfx;
 
 import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
-import fixengine.tags.Account;
-import fixengine.tags.ClOrdID;
-import fixengine.tags.CxlRejReason;
-import fixengine.tags.CxlRejResponseTo;
-import fixengine.tags.OrderID;
-import fixengine.tags.OrigClOrdID;
-import fixengine.tags.Symbol;
-import fixengine.tags.Text;
+import fixengine.tags.fix42.Account;
+import fixengine.tags.fix42.ClOrdID;
+import fixengine.tags.fix42.CxlRejReason;
+import fixengine.tags.fix42.CxlRejResponseTo;
+import fixengine.tags.fix42.OrderID;
+import fixengine.tags.fix42.OrigClOrdID;
+import fixengine.tags.fix42.Symbol;
+import fixengine.tags.fix42.Text;
 
 public class OrderCancelRejectMessage extends fixengine.messages.fix42.OrderCancelRejectMessage {
     public OrderCancelRejectMessage(MessageHeader header) {

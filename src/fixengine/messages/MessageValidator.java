@@ -20,9 +20,9 @@ import java.util.List;
 
 import fixengine.messages.Validator.ErrorHandler;
 import fixengine.session.Session;
-import fixengine.tags.BusinessRejectReason;
-import fixengine.tags.OrigSendingTime;
-import fixengine.tags.SessionRejectReason;
+import fixengine.tags.fix42.BusinessRejectReason;
+import fixengine.tags.fix42.OrigSendingTime;
+import fixengine.tags.fix43.SessionRejectReason;
 
 public class MessageValidator {
     private static final List<Validator<Message>> validators = new ArrayList<Validator<Message>>() {

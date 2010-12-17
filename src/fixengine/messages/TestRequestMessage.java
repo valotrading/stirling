@@ -15,7 +15,7 @@
  */
 package fixengine.messages;
 
-import fixengine.tags.TestReqID;
+import fixengine.tags.fix42.TestReqID;
 
 /**
  * @author Pekka Enberg 

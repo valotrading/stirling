@@ -15,7 +15,7 @@
  */
 package fixengine.messages;
 
-import fixengine.tags.ExecID;
+import fixengine.tags.fix42.ExecID;
 
 public class DefaultMessageComparator implements MessageComparator {
     @Override public boolean equals(Message m1, Message m2) {

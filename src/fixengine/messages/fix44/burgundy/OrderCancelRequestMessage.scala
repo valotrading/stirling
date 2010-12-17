@@ -15,16 +15,26 @@
  */
 package fixengine.messages.fix44.burgundy
 
-import fixengine.tags.ClOrdID
-import fixengine.tags.OrderID
-import fixengine.tags.OrderQty
-import fixengine.tags.OrigClOrdID
-import fixengine.tags.SecurityID
-import fixengine.tags.Symbol
-import fixengine.tags.TransactTime
-import fixengine.tags.fix42.Side
-import fixengine.tags.fix43.SecurityIDSource
-import fixengine.messages.{MessageVisitor, AbstractMessage, MessageHeader, Required, OrderCancelRequestMessage => OrderCancelRequestMessageTrait}
+import fixengine.messages.{
+  AbstractMessage,
+  MessageHeader,
+  MessageVisitor,
+  OrderCancelRequestMessage => OrderCancelRequestMessageTrait,
+  Required
+}
+import fixengine.tags.fix42.{
+  ClOrdID,
+  OrderID,
+  OrderQty,
+  OrigClOrdID,
+  SecurityID,
+  Side,
+  Symbol,
+  TransactTime
+}
+import fixengine.tags.fix43.{
+  SecurityIDSource
+}
 
 class OrderCancelRequestMessage(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestMessageTrait {
   field(ClOrdID.Tag)

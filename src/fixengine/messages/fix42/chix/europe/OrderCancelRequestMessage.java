@@ -16,13 +16,12 @@
 package fixengine.messages.fix42.chix.europe;
 
 import fixengine.messages.MessageHeader;
-
-import fixengine.tags.ClOrdID;
-import fixengine.tags.OrderQty;
-import fixengine.tags.OrigClOrdID;
+import fixengine.tags.fix42.ClOrdID;
+import fixengine.tags.fix42.OrderQty;
+import fixengine.tags.fix42.OrigClOrdID;
 import fixengine.tags.fix42.Side;
-import fixengine.tags.Symbol;
-import fixengine.tags.TransactTime;
+import fixengine.tags.fix42.Symbol;
+import fixengine.tags.fix42.TransactTime;
 
 public class OrderCancelRequestMessage extends fixengine.messages.fix42.OrderCancelRequestMessage {
     public OrderCancelRequestMessage(MessageHeader header) {

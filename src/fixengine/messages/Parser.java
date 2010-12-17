@@ -18,9 +18,9 @@ package fixengine.messages;
 import org.joda.time.DateTime;
 import java.nio.ByteBuffer;
 
-import fixengine.tags.MsgSeqNum;
 import fixengine.messages.FixMessage;
 import fixengine.messages.fix42.DefaultMessageFactory;
+import fixengine.tags.fix42.MsgSeqNum;
 
 public class Parser {
     public interface Callback {

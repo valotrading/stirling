@@ -24,21 +24,18 @@ import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
-import silvertip.Connection;
-import fixengine.messages.FixMessage;
 import fixengine.examples.console.ConsoleClient;
 import fixengine.messages.DefaultMessageComparator;
 import fixengine.messages.DefaultMessageVisitor;
+import fixengine.messages.FixMessage;
 import fixengine.messages.FixMessageParser;
 import fixengine.messages.MsgTypeValue;
 import fixengine.session.HeartBtIntValue;
 import fixengine.session.Session;
-import fixengine.tags.ClOrdID;
-import fixengine.tags.OrderID;
+import fixengine.tags.fix42.ClOrdID;
+import fixengine.tags.fix42.OrderID;
+import silvertip.Connection;
 
-/**
- * @author Karim Osman
- */
 public class Logon implements Command {
   private static final Logger logger = Logger.getLogger("ConsoleClient");
 

@@ -20,14 +20,14 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
 import fixengine.messages.MsgTypeValue;
-import fixengine.tags.BeginString;
-import fixengine.tags.BodyLength;
-import fixengine.tags.CheckSum;
-import fixengine.tags.MsgSeqNum;
-import fixengine.tags.MsgType;
-import fixengine.tags.SenderCompID;
-import fixengine.tags.SendingTime;
-import fixengine.tags.TargetCompID;
+import fixengine.tags.fix42.BeginString;
+import fixengine.tags.fix42.BodyLength;
+import fixengine.tags.fix42.CheckSum;
+import fixengine.tags.fix42.MsgSeqNum;
+import fixengine.tags.fix42.MsgType;
+import fixengine.tags.fix42.SenderCompID;
+import fixengine.tags.fix42.SendingTime;
+import fixengine.tags.fix42.TargetCompID;
 
 @RunWith(JDaveRunner.class) public class RecvStandardTrailerSpec extends InitiatorSpecification {
     public class InitializedSession {

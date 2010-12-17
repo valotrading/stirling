@@ -17,18 +17,18 @@ package fixengine.messages.fix42.hotspotfx;
 
 import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
-import fixengine.tags.Account;
-import fixengine.tags.ClOrdID;
-import fixengine.tags.HandlInst;
-import fixengine.tags.MaxShow;
-import fixengine.tags.MinQty;
-import fixengine.tags.OrdType;
-import fixengine.tags.OrderQty;
-import fixengine.tags.OrigClOrdID;
-import fixengine.tags.Price;
+import fixengine.tags.fix42.Account;
+import fixengine.tags.fix42.ClOrdID;
+import fixengine.tags.fix42.HandlInst;
+import fixengine.tags.fix42.MaxShow;
+import fixengine.tags.fix42.MinQty;
+import fixengine.tags.fix42.OrdType;
+import fixengine.tags.fix42.OrderQty;
+import fixengine.tags.fix42.OrigClOrdID;
+import fixengine.tags.fix42.Price;
 import fixengine.tags.fix42.Side;
-import fixengine.tags.Symbol;
-import fixengine.tags.TransactTime;
+import fixengine.tags.fix42.Symbol;
+import fixengine.tags.fix42.TransactTime;
 
 public class OrderModificationRequestMessage extends fixengine.messages.fix42.OrderModificationRequestMessage {
     public OrderModificationRequestMessage(MessageHeader header) {

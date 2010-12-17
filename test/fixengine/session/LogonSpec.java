@@ -21,10 +21,10 @@ import org.junit.runner.RunWith;
 
 import fixengine.messages.MsgTypeValue;
 import fixengine.messages.Value;
-import fixengine.tags.EncryptMethod;
-import fixengine.tags.GapFillFlag;
-import fixengine.tags.HeartBtInt;
-import fixengine.tags.NewSeqNo;
+import fixengine.tags.fix42.EncryptMethod;
+import fixengine.tags.fix42.GapFillFlag;
+import fixengine.tags.fix42.HeartBtInt;
+import fixengine.tags.fix42.NewSeqNo;
 
 @RunWith(JDaveRunner.class) public class LogonSpec extends InitiatorSpecification {
     public class InitializedSession {

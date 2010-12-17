@@ -17,8 +17,8 @@ package fixengine.messages;
 
 import org.joda.time.DateTime;
 
-import fixengine.tags.GapFillFlag;
-import fixengine.tags.NewSeqNo;
+import fixengine.tags.fix42.GapFillFlag;
+import fixengine.tags.fix42.NewSeqNo;
 
 /**
  * @author Pekka Enberg 

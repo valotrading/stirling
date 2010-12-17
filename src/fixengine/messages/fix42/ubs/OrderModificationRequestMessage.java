@@ -17,17 +17,17 @@ package fixengine.messages.fix42.ubs;
 
 import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
-import fixengine.tags.ClOrdID;
-import fixengine.tags.ExecInst;
-import fixengine.tags.MinQty;
-import fixengine.tags.OrdType;
-import fixengine.tags.OrderQty;
-import fixengine.tags.OrigClOrdID;
-import fixengine.tags.Price;
+import fixengine.tags.fix42.ClOrdID;
+import fixengine.tags.fix42.ExecInst;
+import fixengine.tags.fix42.MinQty;
+import fixengine.tags.fix42.OrdType;
+import fixengine.tags.fix42.OrderQty;
+import fixengine.tags.fix42.OrigClOrdID;
+import fixengine.tags.fix42.Price;
 import fixengine.tags.fix42.Side;
-import fixengine.tags.Symbol;
+import fixengine.tags.fix42.Symbol;
 import fixengine.tags.fix42.TimeInForce;
-import fixengine.tags.TransactTime;
+import fixengine.tags.fix42.TransactTime;
 
 public class OrderModificationRequestMessage extends fixengine.messages.fix42.OrderModificationRequestMessage {
     public OrderModificationRequestMessage(MessageHeader header) {

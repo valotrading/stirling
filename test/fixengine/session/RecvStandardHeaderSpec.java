@@ -25,17 +25,17 @@ import fixengine.messages.Message;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.MsgTypeValue;
 import fixengine.messages.Value;
-import fixengine.tags.BeginString;
-import fixengine.tags.BodyLength;
-import fixengine.tags.CheckSum;
-import fixengine.tags.EncryptMethod;
-import fixengine.tags.HeartBtInt;
-import fixengine.tags.MsgSeqNum;
-import fixengine.tags.MsgType;
-import fixengine.tags.SenderCompID;
-import fixengine.tags.SendingTime;
-import fixengine.tags.TargetCompID;
-import fixengine.tags.TestReqID;
+import fixengine.tags.fix42.BeginString;
+import fixengine.tags.fix42.BodyLength;
+import fixengine.tags.fix42.CheckSum;
+import fixengine.tags.fix42.EncryptMethod;
+import fixengine.tags.fix42.HeartBtInt;
+import fixengine.tags.fix42.MsgSeqNum;
+import fixengine.tags.fix42.MsgType;
+import fixengine.tags.fix42.SenderCompID;
+import fixengine.tags.fix42.SendingTime;
+import fixengine.tags.fix42.TargetCompID;
+import fixengine.tags.fix42.TestReqID;
 
 @RunWith(JDaveRunner.class) public class RecvStandardHeaderSpec extends InitiatorSpecification {
     public class InitializedSession {

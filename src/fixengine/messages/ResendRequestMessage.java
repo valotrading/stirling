@@ -15,8 +15,8 @@
  */
 package fixengine.messages;
 
-import fixengine.tags.BeginSeqNo;
-import fixengine.tags.EndSeqNo;
+import fixengine.tags.fix42.BeginSeqNo;
+import fixengine.tags.fix42.EndSeqNo;
 
 /**
  * @author Pekka Enberg 

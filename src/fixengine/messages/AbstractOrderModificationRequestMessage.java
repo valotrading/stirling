@@ -15,18 +15,18 @@
  */
 package fixengine.messages;
 
-import fixengine.tags.ClOrdID;
-import fixengine.tags.Currency;
-import fixengine.tags.HandlInst;
-import fixengine.tags.MaturityMonthYear;
-import fixengine.tags.OrdType;
-import fixengine.tags.OrderQty;
-import fixengine.tags.OrigClOrdID;
-import fixengine.tags.Price;
-import fixengine.tags.SecurityType;
+import fixengine.tags.fix42.ClOrdID;
+import fixengine.tags.fix42.Currency;
+import fixengine.tags.fix42.HandlInst;
+import fixengine.tags.fix42.MaturityMonthYear;
+import fixengine.tags.fix42.OrdType;
+import fixengine.tags.fix42.OrderQty;
+import fixengine.tags.fix42.OrigClOrdID;
+import fixengine.tags.fix42.Price;
+import fixengine.tags.fix42.SecurityType;
 import fixengine.tags.fix42.Side;
-import fixengine.tags.Symbol;
-import fixengine.tags.TransactTime;
+import fixengine.tags.fix42.Symbol;
+import fixengine.tags.fix42.TransactTime;
 
 /**
  * This class represents the Order Cancel/Replace Request (a.k.a. Order

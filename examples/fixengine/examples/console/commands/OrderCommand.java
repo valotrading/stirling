@@ -30,8 +30,8 @@ import fixengine.messages.Message;
 import fixengine.messages.MessageFactory;
 import fixengine.messages.StringField;
 import fixengine.messages.Tag;
-import fixengine.tags.OrderID;
-import fixengine.tags.OrigClOrdID;
+import fixengine.tags.fix42.OrderID;
+import fixengine.tags.fix42.OrigClOrdID;
 
 public abstract class OrderCommand implements Command {
   private static final Set<Class<? extends Parser>> parserClasses = new HashSet<Class<? extends Parser>>();

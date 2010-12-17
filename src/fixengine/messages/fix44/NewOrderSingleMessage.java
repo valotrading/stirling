@@ -18,20 +18,20 @@ package fixengine.messages.fix44;
 import fixengine.messages.AbstractNewOrderSingleMessage;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.Required;
-import fixengine.tags.ClOrdID;
-import fixengine.tags.Currency;
-import fixengine.tags.ExDestination;
-import fixengine.tags.HandlInst;
-import fixengine.tags.MaturityMonthYear;
-import fixengine.tags.OrdType;
-import fixengine.tags.OrderQty;
-import fixengine.tags.Price;
-import fixengine.tags.SecurityType;
-import fixengine.tags.fix42.Side;
-import fixengine.tags.Symbol;
-import fixengine.tags.fix42.TimeInForce;
-import fixengine.tags.TransactTime;
+import fixengine.tags.fix42.ClOrdID;
+import fixengine.tags.fix42.Currency;
 import fixengine.tags.fix42.CustomerOrFirm;
+import fixengine.tags.fix42.ExDestination;
+import fixengine.tags.fix42.HandlInst;
+import fixengine.tags.fix42.MaturityMonthYear;
+import fixengine.tags.fix42.OrdType;
+import fixengine.tags.fix42.OrderQty;
+import fixengine.tags.fix42.Price;
+import fixengine.tags.fix42.SecurityType;
+import fixengine.tags.fix42.Side;
+import fixengine.tags.fix42.Symbol;
+import fixengine.tags.fix42.TransactTime;
+import fixengine.tags.fix42.TimeInForce;
 
 public class NewOrderSingleMessage extends AbstractNewOrderSingleMessage {
     public NewOrderSingleMessage(MessageHeader header) {

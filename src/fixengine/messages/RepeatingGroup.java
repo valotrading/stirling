@@ -12,13 +12,14 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ package fixengine.messages;
-
-import fixengine.tags.SessionRejectReason;
+ */
+package fixengine.messages;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+
+import fixengine.tags.fix43.SessionRejectReason;
 
 public abstract class RepeatingGroup implements Field {
     private final List<RepeatingGroupInstance> instances = new ArrayList<RepeatingGroupInstance>();
