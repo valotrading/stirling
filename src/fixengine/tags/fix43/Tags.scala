@@ -25,6 +25,7 @@ import fixengine.messages.{
   MonthYearTag,
   NumInGroupTag,
   PriceTag,
+  PriceOffsetTag,
   QtyTag,
   StringTag,
   Value
@@ -39,6 +40,10 @@ object SecurityIDSource extends EnumTag[Character](22) {
   val Tag = this
   val ISIN = Value('4')
   val ExchangeSymbol = Value('8')
+}
+
+object PegOffsetValue extends PriceOffsetTag(211) {
+  val Tag = this
 }
 
 object TradSesStatus extends EnumTag(340) {

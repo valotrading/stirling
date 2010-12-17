@@ -23,6 +23,7 @@ import fixengine.messages.{
   IntegerTag,
   LocalMktDateTag,
   PriceTag,
+  PriceOffsetTag,
   QtyTag,
   StringTag,
   Value
@@ -156,4 +157,8 @@ object DiscretionInst extends EnumTag[Integer](388) {
   val RelatedToLocalPrimaryPrice = Value(3)
   val RelatedToMidpoint = Value(4)
   val RelatedToLastTradePRice = Value(5)
+}
+
+object DiscretionOffset extends PriceOffsetTag(389) {
+  val Tag = this
 }

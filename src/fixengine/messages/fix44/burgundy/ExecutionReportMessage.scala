@@ -119,7 +119,7 @@ class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(head
   field(LeavesQty.Tag)
   field(SecondaryOrderID.Tag, Required.NO)
   field(MaxShow.TAG, Required.NO)
-  field(PegOffsetValue.TAG, Required.YES)
+  field(PegOffsetValue.Tag, Required.YES)
   field(PegMoveType.Tag, Required.NO)
   field(PegOffsetType.Tag, Required.NO)
   field(PegScope.Tag, Required.NO)

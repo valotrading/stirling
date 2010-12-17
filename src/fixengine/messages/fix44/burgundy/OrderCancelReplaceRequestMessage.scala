@@ -57,7 +57,7 @@ class OrderCancelReplaceRequestMessage(header: MessageHeader) extends AbstractMe
       return getEnum(TimeInForce.Tag).equals(TimeInForce.GoodTillDate)
     }
   })
-  field(PegOffsetValue.TAG, Required.YES)
+  field(PegOffsetValue.Tag, Required.YES)
   field(PegMoveType.Tag, Required.NO)
   field(PegOffsetType.Tag, Required.NO)
   field(PegScope.Tag, Required.NO)
