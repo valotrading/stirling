@@ -133,6 +133,6 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         });
         field(MaxRemovePct.Tag(), Required.NO);
         field(MinQty.Tag(), Required.NO);
-        field(PegDifference.TAG, Required.NO);
+        field(PegDifference.Tag(), Required.NO);
     }
 }

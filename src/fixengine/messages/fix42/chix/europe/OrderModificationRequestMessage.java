@@ -65,6 +65,6 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
                 return getEnum(TimeInForce.Tag()).equals(TimeInForce.GoodTillDate());
             }
         });
-        field(PegDifference.TAG, Required.NO);
+        field(PegDifference.Tag(), Required.NO);
     }
 }

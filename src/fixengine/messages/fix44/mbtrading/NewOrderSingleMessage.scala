@@ -84,7 +84,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(heade
   field(MaturityMonthYear.Tag, Required.NO)
   field(PutOrCall.Tag, Required.NO)
   field(StrikePrice.Tag, Required.NO)
-  field(PegDifference.TAG, Required.NO)
+  field(PegDifference.Tag, Required.NO)
   field(DiscretionInst.Tag, Required.NO)
   field(DiscretionOffset.TAG, Required.NO)
   field(ComplianceID.TAG, Required.NO)

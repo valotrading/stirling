@@ -85,6 +85,6 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
                 return getEnum(IDSource.Tag()).equals(IDSource.ISIN());
             }
         });
-        field(PegDifference.TAG, Required.NO);
+        field(PegDifference.Tag(), Required.NO);
     }
 }
