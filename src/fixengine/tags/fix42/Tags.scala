@@ -26,6 +26,7 @@ import fixengine.messages.{
   PriceOffsetTag,
   QtyTag,
   StringTag,
+  UtcTimestampTag,
   Value
 }
 import java.lang.{
@@ -125,6 +126,10 @@ object ClientID extends StringTag(109) {
 }
 
 object LocateReqd extends BooleanTag(114) {
+  val Tag = this
+}
+
+object EffectiveTime extends UtcTimestampTag(168) {
   val Tag = this
 }
 

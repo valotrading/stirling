@@ -80,7 +80,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(heade
     }
   })
   field(SecurityType.Tag, Required.NO)
-  field(EffectiveTime.TAG, Required.NO)
+  field(EffectiveTime.Tag, Required.NO)
   field(MaturityMonthYear.Tag, Required.NO)
   field(PutOrCall.Tag, Required.NO)
   field(StrikePrice.Tag, Required.NO)
