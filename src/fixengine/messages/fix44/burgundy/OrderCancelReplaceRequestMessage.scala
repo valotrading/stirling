@@ -50,7 +50,7 @@ class OrderCancelReplaceRequestMessage(header: MessageHeader) extends AbstractMe
   field(TimeInForce.Tag, Required.NO)
   field(TransactTime.TAG)
   field(MinQty.Tag, Required.NO)
-  field(MaxShow.TAG, Required.NO)
+  field(MaxShow.Tag, Required.NO)
   field(MaxFloor.Tag, Required.NO)
   field(ExpireTime.TAG, new Required() {
     override def isRequired(): Boolean = {

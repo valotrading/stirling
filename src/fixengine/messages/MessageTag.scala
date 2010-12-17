@@ -43,6 +43,6 @@ abstract class UtcTimestampTag(value: Int) extends Tag[UtcTimestampField](value,
 abstract class NumInGroupTag(value: Int) extends Tag[NumInGroupField](value, classOf[NumInGroupField])
 abstract class PriceTag(value: Int) extends Tag[PriceField](value, classOf[PriceField])
 abstract class PriceOffsetTag(value: Int) extends Tag[PriceOffsetField](value, classOf[PriceOffsetField])
+abstract class QtyTag(value: Int) extends Tag[QtyField](value, classOf[QtyField])
 
 abstract class AmtTag(value: Int) extends IntegerTag(value)
-abstract class QtyTag(value: Int) extends FloatTag(value)

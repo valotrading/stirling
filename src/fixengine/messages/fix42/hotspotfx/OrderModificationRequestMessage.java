@@ -41,7 +41,7 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
         field(OrigClOrdID.Tag());
         field(HandlInst.Tag());
         field(OrderQty.Tag());
-        field(MaxShow.TAG, Required.NO);
+        field(MaxShow.Tag(), Required.NO);
         field(MinQty.Tag(), Required.NO);
         field(Price.Tag());
         field(Symbol.Tag(), Required.NO);

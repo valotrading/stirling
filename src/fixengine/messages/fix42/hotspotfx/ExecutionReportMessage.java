@@ -83,7 +83,7 @@ public class ExecutionReportMessage extends fixengine.messages.fix42.ExecutionRe
         field(SettlCurrAmt.Tag(), Required.NO);
         field(SettlCurrency.Tag(), Required.NO);
         field(SecurityType.Tag());
-        field(MaxShow.TAG, Required.NO);
+        field(MaxShow.Tag(), Required.NO);
         field(ExecType.Tag());
         field(AvgPx.Tag());
         field(LastShares.Tag(), Required.NO);

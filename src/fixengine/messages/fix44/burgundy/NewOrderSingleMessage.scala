@@ -80,7 +80,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractNewOrderSingl
   field(ExpireTime.TAG, new Required() {
     override def isRequired(): Boolean = getEnum(TimeInForce.Tag) == TimeInForce.GoodTillDate
   })
-  field(MaxShow.TAG, Required.NO)
+  field(MaxShow.Tag, Required.NO)
   field(PegOffsetValue.Tag, Required.YES)
   field(PegMoveType.Tag, Required.NO)
   field(PegOffsetType.Tag, Required.NO)

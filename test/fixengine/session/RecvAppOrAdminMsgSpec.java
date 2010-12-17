@@ -272,9 +272,9 @@ import fixengine.tags.fix42.ExecTransType;
                 .field(TradeDate.Tag(), "20011004")
                 .field(NoAllocs.Tag(), "1")
                 .field(AllocAccount.Tag(), "1234")
-                .field(AllocShares.TAG, "900.00")
+                .field(AllocShares.Tag(), "900.00")
                 .field(AllocAccount.Tag(), "2345")
-                .field(AllocShares.TAG, "100.00")
+                .field(AllocShares.Tag(), "100.00")
                 .field(CheckSum.Tag(), "159")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
@@ -306,9 +306,9 @@ import fixengine.tags.fix42.ExecTransType;
                 .field(TradeDate.Tag(), "20011004")
                 .field(NoAllocs.Tag(), "3")
                 .field(AllocAccount.Tag(), "1234")
-                .field(AllocShares.TAG, "900.00")
+                .field(AllocShares.Tag(), "900.00")
                 .field(AllocAccount.Tag(), "2345")
-                .field(AllocShares.TAG, "100.00")
+                .field(AllocShares.Tag(), "100.00")
                 .field(CheckSum.Tag(), "161")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
@@ -339,9 +339,9 @@ import fixengine.tags.fix42.ExecTransType;
                 .field(AvgPx.Tag(), "370.00")
                 .field(TradeDate.Tag(), "20011004")
                 .field(NoAllocs.Tag(), "2")
-                .field(AllocShares.TAG, "900.00")
+                .field(AllocShares.Tag(), "900.00")
                 .field(AllocAccount.Tag(), "1234")
-                .field(AllocShares.TAG, "100.00")
+                .field(AllocShares.Tag(), "100.00")
                 .field(AllocAccount.Tag(), "2345")
                 .field(CheckSum.Tag(), "160")
                 .toString());

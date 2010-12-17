@@ -15,7 +15,7 @@
  */
 package fixengine.tags
 
-import fixengine.messages.{BooleanTag, EnumTag, FloatTag, IntegerTag, LocalMktDateTag, PriceOffsetTag, StringTag, Value}
+import fixengine.messages.{BooleanTag, EnumTag, FloatTag, IntegerTag, LocalMktDateTag, PriceOffsetTag, QtyTag, StringTag, Value}
 import java.lang.{Character, Integer, String}
 
 
@@ -420,6 +420,10 @@ object MaturityMonthYear extends StringTag(200) {
 }
 
 object SecurityExchange extends StringTag(207) {
+  val Tag = this
+}
+
+object MaxShow extends QtyTag(210) {
   val Tag = this
 }
 

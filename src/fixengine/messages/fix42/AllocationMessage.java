@@ -51,7 +51,7 @@ public class AllocationMessage extends AbstractMessage {
             @Override protected RepeatingGroupInstance newInstance() {
                 return new RepeatingGroupInstance(AllocAccount.Tag()) {
                     {
-                        field(AllocShares.TAG);
+                        field(AllocShares.Tag());
                     }
                 };
             }

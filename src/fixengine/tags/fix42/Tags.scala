@@ -104,6 +104,10 @@ object TradeDate extends LocalMktDateTag(75) {
   val Tag = this
 }
 
+object AllocShares extends QtyTag(80) {
+  val Tag = this
+}
+
 object StopPx extends PriceTag(99) {
   val Tag = this
 }
