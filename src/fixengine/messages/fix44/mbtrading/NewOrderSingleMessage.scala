@@ -94,7 +94,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(heade
   field(LegPrice.Tag, Required.NO)
   field(Price2.Tag, Required.NO)
   field(NoTrdRegTimestamps.Tag, Required.NO)
-  field(TrdRegTimestamp.TAG, Required.NO)
+  field(TrdRegTimestamp.Tag, Required.NO)
   field(TrdRegTimestampType.Tag, Required.NO)
   field(TrdRegTimestampOrigin.Tag, Required.NO)
   field(MBTXAggressive.Tag, Required.NO)

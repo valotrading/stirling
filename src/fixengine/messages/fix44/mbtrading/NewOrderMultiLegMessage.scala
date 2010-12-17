@@ -62,7 +62,7 @@ class NewOrderMultiLegMessage(header: MessageHeader) extends AbstractMessage(hea
   field(TransactTime.Tag)
   field(ExDestination.Tag)
   field(NoTrdRegTimestamps.Tag, Required.NO)
-  field(TrdRegTimestamp.TAG, Required.NO)
+  field(TrdRegTimestamp.Tag, Required.NO)
   field(TrdRegTimestampType.Tag, Required.NO)
   field(TrdRegTimestampOrigin.Tag, Required.NO)
   group(new RepeatingGroup(NoLegs.Tag) {

@@ -26,6 +26,7 @@ import fixengine.messages.{
   QtyTag,
   SeqNumTag,
   StringTag,
+  UtcTimestampTag,
   Value
 }
 import java.lang.{
@@ -123,6 +124,10 @@ object SettlPrice extends PriceTag(730) {
 object NoTrdRegTimestamps extends NumInGroupTag(768) {
   val Tag = this
 }
+object TrdRegTimestamp extends UtcTimestampTag(769) {
+  val Tag = this
+}
+
 object TrdRegTimestampType extends IntegerTag(770) {
   val Tag = this
 }
