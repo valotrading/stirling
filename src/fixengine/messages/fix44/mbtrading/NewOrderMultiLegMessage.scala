@@ -69,7 +69,7 @@ class NewOrderMultiLegMessage(header: MessageHeader) extends AbstractMessage(hea
     override def newInstance = new RepeatingGroupInstance(LegSymbol.TAG) {
       field(LegCFICode.TAG)
       field(LegMaturityMonthYear.Tag)
-      field(LegStrikePrice.TAG)
+      field(LegStrikePrice.Tag)
       field(LegPositionEffect.Tag)
       field(LegSide.Tag)
       field(LegRatioQty.Tag)
