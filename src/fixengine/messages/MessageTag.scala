@@ -41,8 +41,8 @@ abstract class LocalMktDateTag(value: Int) extends Tag[LocalMktDateField](value,
 abstract class MonthYearTag(value: Int) extends Tag[MonthYearField](value, classOf[MonthYearField])
 abstract class UtcTimestampTag(value: Int) extends Tag[UtcTimestampField](value, classOf[UtcTimestampField])
 abstract class NumInGroupTag(value: Int) extends Tag[NumInGroupField](value, classOf[NumInGroupField])
+abstract class PriceTag(value: Int) extends Tag[PriceField](value, classOf[PriceField])
 
 abstract class AmtTag(value: Int) extends IntegerTag(value)
 abstract class PriceOffsetTag(value: Int) extends FloatTag(value)
-abstract class PriceTag(value: Int) extends FloatTag(value)
 abstract class QtyTag(value: Int) extends FloatTag(value)
