@@ -88,7 +88,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(heade
   field(DiscretionInst.Tag, Required.NO)
   field(DiscretionOffset.Tag, Required.NO)
   field(ComplianceID.Tag, Required.NO)
-  field(SecondaryClOrdID.TAG, Required.NO)
+  field(SecondaryClOrdID.Tag, Required.NO)
   field(OrderRestrictions.Tag, Required.NO)
   field(Username.TAG)
   field(LegPrice.Tag, Required.NO)

@@ -62,6 +62,14 @@ object PartyIDSource extends EnumTag[Character](447) {
   val Custom = Value('D')
 }
 
+object PartyID extends StringTag(448) {
+  val Tag = this
+}
+
+object SecondaryClOrdID extends StringTag(526) {
+  val Tag = this
+}
+
 object SecondaryExecID extends StringTag(527) {
   val Tag = this
 }
@@ -116,6 +124,14 @@ object MassStatusReqType extends EnumTag[Integer](585) {
   val StatusPartyID = Value(8)
 }
 
+object LegSymbol extends StringTag(600) {
+  val Tag = this
+}
+
+object LegCFICode extends StringTag(608) {
+  val Tag = this
+}
+
 object LegMaturityMonthYear extends MonthYearTag(610) {
   val Tag = this
 }
@@ -148,5 +164,8 @@ object TradingSessionSubID extends StringTag(625) {
 }
 
 object Price2 extends PriceTag(640) {
+  val Tag = this
+}
+object LegRefID extends StringTag(654) {
   val Tag = this
 }
