@@ -103,6 +103,10 @@ object TradeDate extends LocalMktDateTag(75) {
   val Tag = this
 }
 
+object StopPx extends PriceTag(99) {
+  val Tag = this
+}
+
 object ExDestination extends ExchangeTag(100) {
   val Tag = this
 }
@@ -112,6 +116,10 @@ object LocateReqd extends BooleanTag(114) {
 }
 
 object PutOrCall extends IntegerTag(201) {
+  val Tag = this
+}
+
+object StrikePrice extends PriceTag(202) {
   val Tag = this
 }
 
