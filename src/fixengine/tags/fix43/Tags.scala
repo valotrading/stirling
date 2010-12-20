@@ -16,24 +16,19 @@
 package fixengine.tags.fix43
 
 import fixengine.messages.{
-  AmtTag,
-  BooleanTag,
   EnumTag,
   FloatTag,
   IntegerTag,
-  LocalMktDateTag,
   MonthYearTag,
   NumInGroupTag,
   PriceTag,
   PriceOffsetTag,
-  QtyTag,
   StringTag,
   Value
 }
 import java.lang.{
   Character,
-  Integer,
-  String
+  Integer
 }
 
 object SecurityIDSource extends EnumTag[Character](22) {
@@ -272,6 +267,23 @@ object LegPrice extends PriceTag(566) {
   val Tag = this
 }
 
+object TradeRequestID extends StringTag(568) {
+  val Tag = this
+}
+
+object TradeRequestType extends EnumTag[Integer](569) {
+  val Tag = this
+  val AllTrades = Value(0)
+  val MatchedTrades = Value(1)
+  val UnmatchedTrades = Value(2)
+  val UnreportedTrades = Value(3)
+  val AdvisoriesMatch = Value(4)
+}
+
+object NoDates extends IntegerTag(580) {
+  val Tag = this
+}
+
 object AccountType extends IntegerTag(581) {
   val Tag = this
 }
@@ -334,6 +346,7 @@ object TradingSessionSubID extends StringTag(625) {
 object Price2 extends PriceTag(640) {
   val Tag = this
 }
+
 object LegRefID extends StringTag(654) {
   val Tag = this
 }
