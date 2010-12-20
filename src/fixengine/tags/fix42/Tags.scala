@@ -32,8 +32,7 @@ import fixengine.messages.{
 }
 import java.lang.{
   Character,
-  Integer,
-  String
+  Integer
 }
 
 object Account extends StringTag(1) {
