@@ -121,6 +121,26 @@ object SettlPrice extends PriceTag(730) {
   val Tag = this
 }
 
+object TradeRequestResult extends EnumTag[Integer](749) {
+  val Tag = this
+  val Successful = Value(0)
+  val InvalidOrUnknownInstrument = Value(1)
+  val InvalidTypeOfTradeRequested = Value(2)
+  val InvalidParties = Value(3)
+  val InvalidTransportTypeRequested = Value(4)
+  val InvalidDestinationRequested = Value(5)
+  val TradeRequestTypeNotSupported = Value(8)
+  val UnauthorizedForTradeCaptureReportRequest = Value(9)
+  val Other = Value(99)
+}
+
+object TradeRequestStatus extends EnumTag[Integer](750) {
+  val Tag = this
+  val Accepted = Value(0)
+  val Completed = Value(1)
+  val Rejected = Value(2)
+}
+
 object NoTrdRegTimestamps extends NumInGroupTag(768) {
   val Tag = this
 }
