@@ -36,7 +36,6 @@ import java.lang.{
 }
 
 object PartyRole extends EnumTag[Integer](452) {
-  val Tag = this
   val ExecutingFirm = Value(1)
   val ClearingFirm = Value(4)
   val EnteringFirm = Value(7)
@@ -45,9 +44,7 @@ object PartyRole extends EnumTag[Integer](452) {
   val ClearingOrganization = Value(21)
   val EnteringTrader = Value(36)
 }
-
 object MassCancelRequestType extends EnumTag[Character](530) {
-  val Tag = this
   val CxlOrdersSecurity = Value('1')
   val CxlOrdersUnderlyingSecurity = Value('2')
   val CxlOrdersProduct = Value('3')
@@ -56,9 +53,7 @@ object MassCancelRequestType extends EnumTag[Character](530) {
   val CxlOrdersTrdSession = Value('6')
   val CxlAllOrders = Value('7')
 }
-
 object MassCancelResponse extends EnumTag[Character](531) {
-  val Tag = this
   val CxlReqRej = Value('0')
   val CxlOrdersSecurity = Value('1')
   val CxlOrdersUnderlyingSecurity = Value('2')
@@ -68,9 +63,7 @@ object MassCancelResponse extends EnumTag[Character](531) {
   val CxlOrdersTrdSession = Value('6')
   val CxlAllOrders = Value('7')
 }
-
 object MassCancelRejectReason extends EnumTag[String](532) {
-  val Tag = this
   val MassCxlNotSupported = Value("0")
   val InvalidSecurity = Value("1")
   val InvalidUnderlying = Value("2")
@@ -80,49 +73,17 @@ object MassCancelRejectReason extends EnumTag[String](532) {
   val InvalidTrdSession = Value("6")
   val Other = Value("99")
 }
-
-object Username extends StringTag(553) {
-  val Tag = this
-}
-
-object Password extends StringTag(554) {
-  val Tag = this
-}
-
-object LongQty extends QtyTag(704) {
-  val Tag = this
-}
-
-object ShortQty extends QtyTag(705) {
-  val Tag = this
-}
-
-object PosReqID extends StringTag(710) {
-  val Tag = this
-}
-
-object ClearingBusinessDate extends LocalMktDateTag(715) {
-  val Tag = this
-}
-
-object PosMaintRptID extends StringTag(721) {
-  val Tag = this
-}
-
-object TotalNumPosReports extends IntegerTag(727) {
-  val Tag = this
-}
-
-object PosReqResult extends IntegerTag(728) {
-  val Tag = this
-}
-
-object SettlPrice extends PriceTag(730) {
-  val Tag = this
-}
-
+object Username extends StringTag(553)
+object Password extends StringTag(554)
+object LongQty extends QtyTag(704)
+object ShortQty extends QtyTag(705)
+object PosReqID extends StringTag(710)
+object ClearingBusinessDate extends LocalMktDateTag(715)
+object PosMaintRptID extends StringTag(721)
+object TotalNumPosReports extends IntegerTag(727)
+object PosReqResult extends IntegerTag(728)
+object SettlPrice extends PriceTag(730)
 object TradeRequestResult extends EnumTag[Integer](749) {
-  val Tag = this
   val Successful = Value(0)
   val InvalidOrUnknownInstrument = Value(1)
   val InvalidTypeOfTradeRequested = Value(2)
@@ -133,78 +94,39 @@ object TradeRequestResult extends EnumTag[Integer](749) {
   val UnauthorizedForTradeCaptureReportRequest = Value(9)
   val Other = Value(99)
 }
-
 object TradeRequestStatus extends EnumTag[Integer](750) {
-  val Tag = this
   val Accepted = Value(0)
   val Completed = Value(1)
   val Rejected = Value(2)
 }
-
-object NoTrdRegTimestamps extends NumInGroupTag(768) {
-  val Tag = this
-}
-object TrdRegTimestamp extends UtcTimestampTag(769) {
-  val Tag = this
-}
-
-object TrdRegTimestampType extends IntegerTag(770) {
-  val Tag = this
-}
-
-object TrdRegTimestampOrigin extends StringTag(771) {
-  val Tag = this
-}
-
-object NextExpectedMsgSeqNum extends SeqNumTag(789) {
-  val Tag = this
-}
-
-object TradeLinkID extends StringTag(820) {
-  val Tag = this
-}
-
+object NoTrdRegTimestamps extends NumInGroupTag(768)
+object TrdRegTimestamp extends UtcTimestampTag(769)
+object TrdRegTimestampType extends IntegerTag(770)
+object TrdRegTimestampOrigin extends StringTag(771)
+object NextExpectedMsgSeqNum extends SeqNumTag(789)
+object TradeLinkID extends StringTag(820)
 object PegMoveType extends EnumTag[Integer](835) {
-  val Tag = this
   val Floating = Value(0)
   val Fixed = Value(1)
 }
-
 object PegOffsetType extends EnumTag[Integer](836) {
-  val Tag = this
   val Price = Value(0)
   val BasisPoints = Value(1)
   val Ticks = Value(2)
   val PriceTierLevel = Value(3)
 }
-
-object PeggedPrice extends PriceTag(839) {
-  val Tag = this
-}
-
+object PeggedPrice extends PriceTag(839)
 object PegScope extends EnumTag[Integer](840) {
-  val Tag = this
   val Local = Value(1)
   val National = Value(2)
   val Global = Value(3)
   val NationalExcludingLocal = Value(4)
 }
-
 object LastLiquidityInd extends EnumTag[Integer](851) {
-  val Tag = this
   val AddedLiquidity = Value(1)
   val RemovedLiquidity = Value(2)
   val LiquidityRoutedOut = Value(3)
 }
-
-object CollInquiryID extends StringTag(909) {
-  val Tag = this
-}
-
-object TotNumReports extends IntegerTag(911) {
-  val Tag = this
-}
-
-object LastRptRequested extends BooleanTag(912) {
-  val Tag = this
-}
+object CollInquiryID extends StringTag(909)
+object TotNumReports extends IntegerTag(911)
+object LastRptRequested extends BooleanTag(912)

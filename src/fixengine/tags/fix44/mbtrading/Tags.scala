@@ -22,30 +22,16 @@ import fixengine.messages.{
   StringTag
 }
 
-object PosPendBuy extends QtyTag(10000) {
-  val Tag = this
-}
+object PosPendBuy extends QtyTag(10000)
 
-object PosPendSell extends QtyTag(10001) {
-  val Tag = this
-}
+object PosPendSell extends QtyTag(10001)
 
-object PosBuyPowerUsed extends FloatTag(10003) {
-  val Tag = this
-}
+object PosBuyPowerUsed extends FloatTag(10003)
 
-object PosRealizedPNL extends FloatTag(10004) {
-  val Tag = this
-}
+object PosRealizedPNL extends FloatTag(10004)
 
-object PosEquityUsed extends FloatTag(10015) {
-  val Tag = this
-}
+object PosEquityUsed extends FloatTag(10015)
 
-object MBTXAggressive extends IntegerTag(10022) {
-  val Tag = this
-}
+object MBTXAggressive extends IntegerTag(10022)
 
-object OrderGroupID1 extends StringTag(10055) {
-  val Tag = this
-}
+object OrderGroupID1 extends StringTag(10055)

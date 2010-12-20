@@ -15,18 +15,21 @@
  */
 package fixengine.tags.fix44.burgundy
 
-import fixengine.messages.{EnumTag, Value}
-import java.lang.{Character, Integer}
+import fixengine.messages.{
+  EnumTag,
+  Value
+}
+import java.lang.{
+  Character,
+  Integer
+}
 
 object OrderRestrictions extends EnumTag[Character](529) {
-  val Tag = this
   val IssuerHolding = Value('B')
   val IssuePriceStabilization = Value('C')
   val ActingAsMarketMaker = Value('5')
 }
-
 object TrdType extends EnumTag[Integer](828) {
-  val Tag = this
   val RegularTrade = Value(0)
   val DerivativeRelatedTransaction = Value(49)
   val PortfolioTrade = Value(50)
