@@ -50,4 +50,5 @@ public interface MessageVisitor {
     void visit(RequestForPositionsMessage message);
     void visit(TradingSessionStatusMessage message);
     void visit(TradeCaptureReportRequest message);
+    void visit(TradeCaptureReportRequestAck message);
 }
