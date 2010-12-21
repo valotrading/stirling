@@ -24,5 +24,6 @@ trait OrderMassCancelReportMessage extends Message
 trait OrderMassCancelRequestMessage extends Message
 trait OrderMassStatusRequestMessage extends Message
 trait TradeCaptureReport extends Message
+trait TradeCaptureReportAck extends Message
 trait TradeCaptureReportRequest extends Message
 trait TradeCaptureReportRequestAck extends Message

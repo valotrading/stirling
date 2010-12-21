@@ -131,6 +131,10 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
+    @Override public void visit(TradeCaptureReportAck message) {
+        defaultAction(message);
+    }
+
     @Override public void visit(TradeCaptureReportRequest message) {
         defaultAction(message);
     }
