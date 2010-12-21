@@ -15,20 +15,18 @@
  */
 package fixengine.tags.fix44.burgundy
 
-import fixengine.messages.{
-  EnumTag,
-  Value
-}
 import java.lang.{
   Character,
   Integer
 }
+import fixengine.messages.{IntegerTag, EnumTag, Value}
 
 object OrderRestrictions extends EnumTag[Character](529) {
   val IssuerHolding = Value('B')
   val IssuePriceStabilization = Value('C')
   val ActingAsMarketMaker = Value('5')
 }
+
 object TrdType extends EnumTag[Integer](828) {
   val RegularTrade = Value(0)
   val DerivativeRelatedTransaction = Value(49)
@@ -36,3 +34,5 @@ object TrdType extends EnumTag[Integer](828) {
   val VolumeWeightedAverageTrade = Value(51)
   val MarketplaceGrantedTrade = Value(52)
 }
+
+object ValidityPeriod extends IntegerTag(11220)
