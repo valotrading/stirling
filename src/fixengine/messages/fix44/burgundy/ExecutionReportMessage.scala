@@ -92,7 +92,7 @@ import fixengine.tags.fix50.{
   DisplayMinIncr
 }
 
-class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(header) with ExecutionReportMessageTrait {
+class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(header) with ExecutionReportMessageTrait with Groups {
   field(Account.Tag, Required.NO)
   field(AvgPx.Tag)
   field(ClOrdID.Tag, Required.NO)
@@ -146,13 +146,7 @@ class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(head
   field(MatchType.Tag, Required.NO)
   field(AccountType.Tag, Required.NO)
   field(MassStatusReqID.Tag, Required.NO)
-  group(new RepeatingGroup(NoPartyIDs.Tag) {
-    override def newInstance(): RepeatingGroupInstance =
-      new RepeatingGroupInstance(PartyID.Tag) {
-        field(PartyIDSource.Tag)
-        field(PartyRole.Tag, Required.NO)
-      }
-  }, Required.NO)
+  parties(Required.NO)
   field(TrdType.Tag, new Required() {
     override def isRequired(): Boolean = getEnum(MatchType.Tag) == MatchType.TwoPartyTradeReport
   })

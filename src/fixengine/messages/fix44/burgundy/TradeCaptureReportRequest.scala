@@ -1,5 +1,3 @@
-package fixengine.messages.fix44.burgundy
-
 /*
  * Copyright 2010 the original author or authors.
  *
@@ -15,6 +13,7 @@ package fixengine.messages.fix44.burgundy
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package fixengine.messages.fix44.burgundy
 
 import fixengine.messages.{
   AbstractMessage,
@@ -38,26 +37,16 @@ import fixengine.tags.fix42.{
 }
 import fixengine.tags.fix43.{
   NoDates,
-  NoPartyIDs,
-  PartyID,
-  PartyIDSource,
   SecurityIDSource,
   TradeRequestID,
   TradeRequestType
 }
-import fixengine.tags.fix44.PartyRole
 import fixengine.tags.fix44.burgundy.TrdType
 
-class TradeCaptureReportRequest(header: MessageHeader) extends AbstractMessage(header) with TradeCaptureReportRequestTrait {
+class TradeCaptureReportRequest(header: MessageHeader) extends AbstractMessage(header) with TradeCaptureReportRequestTrait with Groups{
   field(TradeRequestID.Tag)
   field(TradeRequestType.Tag)
-  group(new RepeatingGroup(NoPartyIDs.Tag) {
-    override def newInstance(): RepeatingGroupInstance =
-      new RepeatingGroupInstance(PartyID.Tag) {
-        field(PartyIDSource.Tag)
-        field(PartyRole.Tag, Required.NO)
-      }
-  }, Required.NO)
+  parties(Required.NO)
   field(Symbol.Tag, Required.NO)
   field(SecurityIDSource.Tag, Required.NO)
   field(SecurityID.Tag, Required.NO)

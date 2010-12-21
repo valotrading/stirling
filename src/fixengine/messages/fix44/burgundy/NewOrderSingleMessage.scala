@@ -18,8 +18,6 @@ package fixengine.messages.fix44.burgundy
 import fixengine.messages.{
   AbstractNewOrderSingleMessage,
   MessageHeader,
-  RepeatingGroup,
-  RepeatingGroupInstance,
   Required
 }
 import fixengine.tags.fix42.{
@@ -43,22 +41,16 @@ import fixengine.tags.fix42.{
 }
 import fixengine.tags.fix43.{
   AccountType,
-  NoPartyIDs,
   OrderCapacity,
-  PartyID,
-  PartyIDSource,
   PegOffsetValue,
   SecurityIDSource
 }
 import fixengine.tags.fix44.{
-  PartyRole,
   PegMoveType,
   PegOffsetType,
   PegScope
 }
-import fixengine.tags.fix44.burgundy.{
-  OrderRestrictions
-}
+import fixengine.tags.fix44.burgundy.OrderRestrictions
 import fixengine.tags.fix50.{
   DisplayHighQty,
   DisplayLowQty,
@@ -67,7 +59,7 @@ import fixengine.tags.fix50.{
   ExecInst
 }
 
-class NewOrderSingleMessage(header: MessageHeader) extends AbstractNewOrderSingleMessage(header) {
+class NewOrderSingleMessage(header: MessageHeader) extends AbstractNewOrderSingleMessage(header) with Groups {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(Currency.Tag, Required.NO)
@@ -97,13 +89,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractNewOrderSingl
   field(PegMoveType.Tag, Required.NO)
   field(PegOffsetType.Tag, Required.NO)
   field(PegScope.Tag, Required.NO)
-  group(new RepeatingGroup(NoPartyIDs.Tag) {
-    override def newInstance(): RepeatingGroupInstance =
-      new RepeatingGroupInstance(PartyID.Tag) {
-        field(PartyIDSource.Tag)
-        field(PartyRole.Tag, Required.NO)
-      }
-  }, Required.NO)
+  parties(Required.NO)
   field(OrderCapacity.Tag, Required.NO)
   field(OrderRestrictions.Tag, Required.NO)
   field(AccountType.Tag, Required.NO)
