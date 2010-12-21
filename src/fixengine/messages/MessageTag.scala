@@ -37,6 +37,7 @@ case class Value[T](val v: T) extends Formattable {
 }
 
 abstract class BooleanTag(value: Int) extends MessageTag[BooleanField](value, classOf[BooleanField])
+abstract class CharTag(value: Int) extends MessageTag[CharField](value, classOf[CharField])
 abstract class FloatTag(value: Int) extends MessageTag[FloatField](value, classOf[FloatField])
 abstract class IntegerTag(value: Int) extends MessageTag[IntegerField](value, classOf[IntegerField])
 abstract class StringTag(value: Int) extends MessageTag[StringField](value, classOf[StringField])
