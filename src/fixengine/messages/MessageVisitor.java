@@ -53,4 +53,5 @@ public interface MessageVisitor {
     void visit(TradeCaptureReportAck message);
     void visit(TradeCaptureReportRequest message);
     void visit(TradeCaptureReportRequestAck message);
+    void visit(MassQuote message);
 }
