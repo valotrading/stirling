@@ -167,7 +167,15 @@ object TradeRequestType extends EnumTag[Integer](569) {
   val AdvisoriesMatch = Value(4)
 }
 object NoDates extends IntegerTag(580)
-object AccountType extends IntegerTag(581)
+object AccountType extends EnumTag[Integer](581) {
+  val AccountCustomer = Value(1)
+  val AccountNonCustomer = Value(2)
+  val HouseTrader = Value(3)
+  val FloorTrader = Value(4)
+  val AccountNonCustomerCross = Value(6)
+  val HouseTraderCross = Value(7)
+  val JointBOAcct = Value(8)
+}
 object MassStatusReqID extends StringTag(584)
 object MassStatusReqType extends EnumTag[Integer](585) {
   val StatusSecurity = Value(1)
