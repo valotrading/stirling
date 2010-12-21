@@ -16,6 +16,7 @@
 package fixengine.tags.fix43
 
 import fixengine.messages.{
+  BooleanTag,
   EnumTag,
   FloatTag,
   IntegerTag,
@@ -137,6 +138,11 @@ object PartyIDSource extends EnumTag[Character](447) {
 }
 object PartyID extends StringTag(448)
 object NoPartyIDs extends IntegerTag(453)
+object TradeReportTransType extends EnumTag[Character](487) {
+  val Cancel = Value('C')
+  val New = Value('N')
+  val Replace = Value('R')
+}
 object SecondaryClOrdID extends StringTag(526)
 object SecondaryExecID extends StringTag(527)
 object OrderCapacity extends EnumTag[Character](528) {
@@ -150,6 +156,7 @@ object OrderRestrictions extends EnumTag[Character](529) {
   val NonIndexArbitrage = Value(3)
   val CompetingMarketMaker = Value(4)
 }
+object NoSides extends NumInGroupTag(552)
 object NoLegs extends NumInGroupTag(555)
 object LegPositionEffect extends EnumTag[Character](564) {
   val Close = Value('C')
@@ -166,6 +173,8 @@ object TradeRequestType extends EnumTag[Integer](569) {
   val UnreportedTrades = Value(3)
   val AdvisoriesMatch = Value(4)
 }
+object PreviouslyReported extends BooleanTag(570)
+object TradeReportId extends StringTag(571)
 object NoDates extends IntegerTag(580)
 object AccountType extends EnumTag[Integer](581) {
   val AccountCustomer = Value(1)
