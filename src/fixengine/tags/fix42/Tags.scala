@@ -18,8 +18,10 @@ package fixengine.tags.fix42
 import fixengine.messages.{
   AmtTag,
   BooleanTag,
+  CharTag,
   EnumTag,
   ExchangeTag,
+  FloatTag,
   IntegerTag,
   LocalMktDateTag,
   PriceTag,
@@ -215,6 +217,7 @@ object MaxFloor extends QtyTag(111)
 object TestReqID extends StringTag(112)
 object LocateReqd extends BooleanTag(114)
 object OnBehalfOfCompID extends StringTag(115)
+object QuoteID extends CharTag(117)
 object SettlCurrAmt extends AmtTag(119)
 object SettlCurrency extends CurrencyTag(120)
 object OrigSendingTime extends UtcTimestampTag(122)
@@ -230,6 +233,10 @@ object DKReason extends EnumTag[Character](127) {
 }
 object DeliverToCompID extends StringTag(128)
 object DeliverToSubID extends StringTag(129)
+object BidPx extends FloatTag(132)
+object OfferPx extends FloatTag(133)
+object BidSize extends IntegerTag(134)
+object OfferSize extends IntegerTag(135)
 object ResetSeqNumFlag extends BooleanTag(141)
 object SenderLocationID extends StringTag(142)
 object ExecType extends EnumTag[Character](150) {
@@ -269,6 +276,17 @@ object SubscriptionRequestType extends EnumTag[Character](263) {
   val SnapshotUpdate = Value('1')
   val Unsubscribe = Value('2')
 }
+object DefBidSize extends QtyTag(293)
+object NoQuoteEntries extends IntegerTag(295)
+object NoQuoteSets extends IntegerTag(296)
+object QuoteEntryID extends StringTag(299)
+object QuoteResponseLevel extends EnumTag[Integer](301) {
+  val NoAck = Value(0)
+  val AckNeg = Value(1)
+  val AckEach = Value(2)
+}
+object QuoteSetID extends StringTag(302)
+object TotQuoteEntries extends IntegerTag(304)
 object UnsolicitedIndicator extends BooleanTag(325)
 object TradSesReqID extends StringTag(335)
 object TradeSesReqID extends StringTag(335)
