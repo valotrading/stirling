@@ -147,6 +147,10 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
+    @Override public void visit(MassQuoteAcknowledgement message) {
+        defaultAction(message);
+    }
+
     public void defaultAction(Message message) {
     }
 
