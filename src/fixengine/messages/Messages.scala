@@ -29,3 +29,4 @@ trait TradeCaptureReportRequest extends Message
 trait TradeCaptureReportRequestAck extends Message
 trait MassQuote extends Message
 trait MassQuoteAcknowledgement extends Message
+trait SecurityListRequest extends Message
