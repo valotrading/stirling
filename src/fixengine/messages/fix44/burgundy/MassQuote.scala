@@ -61,7 +61,6 @@ class MassQuote(header: MessageHeader) extends AbstractMessage(header) with Mass
             group(new RepeatingGroup(NoQuoteEntries.Tag) {
               override def newInstance(): RepeatingGroupInstance =
                 new RepeatingGroupInstance(QuoteEntryID.Tag) {
-                  field(QuoteEntryID.Tag)
                   field(Symbol.Tag)
                   field(SecurityIDSource.Tag, Required.NO)
                   field(SecurityID.Tag, Required.NO)
