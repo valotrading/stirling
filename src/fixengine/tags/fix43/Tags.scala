@@ -158,6 +158,13 @@ object OrderRestrictions extends EnumTag[Character](529) {
 }
 object NoSides extends NumInGroupTag(552)
 object NoLegs extends NumInGroupTag(555)
+object SecurityListRequestType extends EnumTag[Integer](559) {
+  val Symbol = Value(0)
+  val SecurityTypeCFICode = Value(1)
+  val Product = Value(2)
+  val TradingSessionID = Value(3)
+  val AllSecurities = Value(4)
+}
 object LegPositionEffect extends EnumTag[Character](564) {
   val Close = Value('C')
   val FIFO = Value('F')
