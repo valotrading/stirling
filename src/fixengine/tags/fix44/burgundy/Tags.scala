@@ -19,7 +19,7 @@ import java.lang.{
   Character,
   Integer
 }
-import fixengine.messages.{IntegerTag, EnumTag, Value}
+import fixengine.messages.{BooleanTag, IntegerTag, EnumTag, Value}
 
 object OrderRestrictions extends EnumTag[Character](529) {
   val IssuerHolding = Value('B')
@@ -35,4 +35,5 @@ object TrdType extends EnumTag[Integer](828) {
   val MarketplaceGrantedTrade = Value(52)
 }
 
+object IncludeTickRules extends BooleanTag(10001)
 object ValidityPeriod extends IntegerTag(11220)
