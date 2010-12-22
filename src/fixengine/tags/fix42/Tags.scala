@@ -287,6 +287,7 @@ object QuoteResponseLevel extends EnumTag[Integer](301) {
 }
 object QuoteSetID extends StringTag(302)
 object TotQuoteEntries extends IntegerTag(304)
+object SecurityReqID extends StringTag(320)
 object UnsolicitedIndicator extends BooleanTag(325)
 object TradSesReqID extends StringTag(335)
 object TradeSesReqID extends StringTag(335)
