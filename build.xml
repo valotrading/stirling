@@ -64,28 +64,28 @@
   </target>
   <target name="all" depends="compile-main, compile-test, compile-examples"/>
   <target name="compile-main" depends="init">
-    <scalac srcdir="${main.src}" destdir="${main.build}" classpathref="main.path.id" deprecation="true">
-      <include name="**/*.scala"/>
-      <include name="**/*.java"/>
-    </scalac>
-    <javac srcdir="${main.src}" destdir="${main.build}" classpathref="main.path.id" debug="true" includeantruntime="false">
-      <compilerarg value="-Xlint:unchecked"/>
-    </javac>
+    <scalacjavac srcdir="${main.src}" destdir="${main.build}" classpathref="main.path.id"/>
   </target>
   <target name="compile-test" depends="compile-main">
-    <scalac srcdir="${test.src}" destdir="${test.build}" classpathref="test.path.id" deprecation="true">
-      <include name="**/*.scala"/>
-      <include name="**/*.java"/>
-    </scalac>
-    <javac srcdir="${test.src}" destdir="${test.build}" classpathref="test.path.id" debug="true" includeantruntime="false">
-      <compilerarg value="-Xlint:unchecked"/>
-    </javac>
+    <scalacjavac srcdir="${test.src}" destdir="${test.build}" classpathref="test.path.id"/>
   </target>
   <target name="compile-examples" depends="compile-main">
-    <javac srcdir="${examples.src}" destdir="${examples.build}" classpathref="examples.path.id" debug="true" includeantruntime="false">
-      <compilerarg value="-Xlint:unchecked"/>
-    </javac>
+    <scalacjavac srcdir="${examples.src}" destdir="${examples.build}" classpathref="examples.path.id" />
   </target>
+  <macrodef name="scalacjavac">
+    <attribute name="srcdir"/>
+    <attribute name="destdir"/>
+    <attribute name="classpathref"/>
+    <sequential>
+      <scalac srcdir="@{srcdir}" destdir="@{destdir}" classpathref="@{classpathref}" deprecation="true">
+        <include name="**/*.scala"/>
+        <include name="**/*.java"/>
+      </scalac>
+      <javac srcdir="@{srcdir}" destdir="@{destdir}" classpathref="@{classpathref}" debug="true" includeantruntime="false">
+        <compilerarg value="-Xlint:unchecked"/>
+      </javac>
+    </sequential>
+  </macrodef>
   <target name="dist" depends="compile-main">
     <jar destfile="${library}" basedir="${main.build}"/>
   </target>
