@@ -35,6 +35,48 @@ import java.lang.{
   String
 }
 
+object QuoteAckStatus extends EnumTag[Integer](297) {
+  val Accpt = Value(0)
+  val CxlSym = Value(1)
+  val CxlSecType = Value(2)
+  val CxlUnder = Value(3)
+  val CxlAll = Value(4)
+  val Rej = Value(5)
+  val Removed = Value(6)
+  val Expired = Value(7)
+  val Query = Value(8)
+  val QuoteNotFound = Value(9)
+  val Pending = Value(10)
+  val Pass = Value(11)
+  val LockedMarketWarning = Value(12)
+  val CrossMarketWarning = Value(13)
+  val CanceledDueToLockMarket = Value(14)
+  val CanceledDueToCrossMarket = Value(15)
+}
+object QuoteRejectReason extends EnumTag[Integer](300) {
+  val UnknSym = Value(1)
+  val ExchClsd = Value(2)
+  val OrdExLim = Value(3)
+  val TooLate = Value(4)
+  val UnknOrd = Value(5)
+  val DupOrd = Value(6)
+  val InvSpread = Value(7)
+  val InvPx = Value(8)
+  val NotAuth = Value(9)
+  val Other = Value(99)
+}
+object QuoteEntryRejectReason extends EnumTag[Integer](368) {
+  val UnknwnSym = Value(1)
+  val ExchClsd = Value(2)
+  val OrdExcLim = Value(3)
+  val TooLate = Value(4)
+  val UnknOrd = Value(5)
+  val DupOrd = Value(6)
+  val InvBidAsk = Value(7)
+  val InvPx = Value(8)
+  val NotAuth = Value(9)
+  val Other = Value(99)
+}
 object PartyRole extends EnumTag[Integer](452) {
   val ExecutingFirm = Value(1)
   val ClearingFirm = Value(4)
