@@ -56,4 +56,5 @@ public interface MessageVisitor {
     void visit(MassQuote message);
     void visit(MassQuoteAcknowledgement message);
     void visit(SecurityListRequest message);
+    void visit(NewsMessage message);
 }

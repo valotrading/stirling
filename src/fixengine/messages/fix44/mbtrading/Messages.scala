@@ -16,20 +16,23 @@
 package fixengine.messages.fix44.mbtrading
 
 import fixengine.messages.{
-  AbstractMessage,
   CollateralInquiryMessage => CollateralInquiryTrait,
   LogonMessage => LogonTrait,
-  MessageHeader,
-  MessageVisitor,
   NewOrderMultiLegMessage => NewOrderMultiLegTrait,
   NewOrderSingleMessage => NewOrderSingleTrait,
+  NewsMessage => NewsMessageTrait,
   OrderCancelRequestMessage => OrderCancelRequestTrait,
   OrderModificationRequestMessage => OrderModificationRequestTrait,
+  RequestForPositionsMessage => RequestForPositionsTrait,
+  TradingSessionStatusMessage => TradingSessionStatusTrait
+}
+import fixengine.messages.{
+  AbstractMessage,
+  MessageHeader,
+  MessageVisitor,
   RepeatingGroup,
   RepeatingGroupInstance,
-  RequestForPositionsMessage => RequestForPositionsTrait,
-  Required,
-  TradingSessionStatusMessage => TradingSessionStatusTrait
+  Required
 }
 import fixengine.tags.fix42.{
   Account,
@@ -44,13 +47,16 @@ import fixengine.tags.fix42.{
   ExecInst,
   ExpireTime,
   HandlInst,
+  Headline,
   HeartBtInt,
+  LinesOfText,
   LocateReqd,
   MaturityMonthYear,
   MaxFloor,
   OrdType,
   OrderQty,
   OrigClOrdID,
+  OrigTime,
   PegDifference,
   Price,
   PutOrCall,
@@ -62,12 +68,14 @@ import fixengine.tags.fix42.{
   StrikePrice,
   SubscriptionRequestType,
   Symbol,
+  Text,
   TimeInForce,
   TradeDate,
   TradeSesReqID,
   TradingSessionID,
   TransactTime,
-  UnsolicitedIndicator
+  UnsolicitedIndicator,
+  Urgency
 }
 import fixengine.tags.fix43.{
   LegCFICode,
@@ -262,5 +270,14 @@ class RequestForPositions(header: MessageHeader) extends AbstractMessage(header)
   field(PosBuyPowerUsed.Tag)
   field(PosRealizedPNL.Tag)
   field(PosEquityUsed.Tag)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class NewsMessage(header: MessageHeader) extends AbstractMessage(header) with NewsMessageTrait {
+  field(LinesOfText.Tag)
+  field(OrigTime.Tag)
+  field(Text.Tag)
+  field(Urgency.Tag)
+  field(Headline.Tag)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

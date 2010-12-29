@@ -74,6 +74,7 @@ object LastCapacity extends EnumTag[Integer](29) {
 object LastMkt extends ExchangeTag(30)
 object LastPx extends PriceTag(31)
 object LastShares extends QtyTag(32)
+object LinesOfText extends IntegerTag(33)
 object MsgSeqNum extends IntegerTag(34)
 object MsgType extends StringTag(35)
 object NewSeqNo extends IntegerTag(36)
@@ -165,6 +166,11 @@ object TimeInForce extends EnumTag[Integer](59) {
   val AtTheClose = Value(7)
 }
 object TransactTime extends UtcTimestampTag(60)
+object Urgency extends EnumTag[Character](61) {
+  val Normal = Value(0)
+  val Flash = Value(1)
+  val Background = Value(2)
+}
 object FutSettDate extends LocalMktDateTag(64)
 object AllocID extends StringTag(70)
 object AllocTransType extends EnumTag[Integer](71) {
@@ -239,6 +245,7 @@ object BidSize extends IntegerTag(134)
 object OfferSize extends IntegerTag(135)
 object ResetSeqNumFlag extends BooleanTag(141)
 object SenderLocationID extends StringTag(142)
+object Headline extends StringTag(148)
 object ExecType extends EnumTag[Character](150) {
   val New = Value('0')
   val PartialFill = Value('1')
