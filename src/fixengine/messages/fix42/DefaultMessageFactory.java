@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.apache.commons.lang.CharUtils;
 
-import fixengine.messages.BusinessMessageRejectMessage;
 import fixengine.messages.HeartbeatMessage;
 import fixengine.messages.InvalidMsgTypeException;
 import fixengine.messages.LogoutMessage;
@@ -34,6 +33,7 @@ import fixengine.messages.SequenceResetMessage;
 import fixengine.messages.Tag;
 import fixengine.messages.TestRequestMessage;
 import fixengine.messages.UnsupportedMsgTypeException;
+import fixengine.messages.fix42.BusinessMessageReject;
 
 import java.lang.reflect.Constructor;
 
@@ -48,7 +48,7 @@ public class DefaultMessageFactory implements MessageFactory {
         message(MsgTypeValue.SEQUENCE_RESET, SequenceResetMessage.class);
         message(MsgTypeValue.TEST_REQUEST, TestRequestMessage.class);
         message(MsgTypeValue.REJECT, RejectMessage.class);
-        message(MsgTypeValue.BUSINESS_MESSAGE_REJECT, BusinessMessageRejectMessage.class);
+        message(MsgTypeValue.BUSINESS_MESSAGE_REJECT, BusinessMessageReject.class);
         message(MsgTypeValue.EXECUTION_REPORT, ExecutionReportMessage.class);
         message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelRejectMessage.class);
         message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingleMessage.class);

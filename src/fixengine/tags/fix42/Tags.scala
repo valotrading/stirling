@@ -313,6 +313,7 @@ object RefTagId extends IntegerTag(371)
 object RefMsgType extends StringTag(372)
 object ContraBroker extends StringTag(375)
 object ComplianceID extends StringTag(376)
+object BusinessRejectRefID extends StringTag(379)
 object BusinessRejectReason extends EnumTag[Integer](380) {
   val Other = Value(0)
   val UnknownId = Value(1)

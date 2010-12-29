@@ -18,6 +18,7 @@ package fixengine.messages;
 import fixengine.messages.fix42.AllocationMessage;
 import fixengine.messages.fix42.DontKnowTradeMessage;
 import fixengine.messages.fix42.OrderStatusRequestMessage;
+import fixengine.messages.fix42.BusinessMessageReject;
 
 /**
  * @author Pekka Enberg
@@ -71,7 +72,7 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(BusinessMessageRejectMessage message) {
+    @Override public void visit(BusinessMessageReject message) {
         defaultAction(message);
     }
 

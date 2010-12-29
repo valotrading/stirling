@@ -29,10 +29,10 @@ import fixengine.tags.fix42.{
   Text
 }
 class BusinessMessageReject(header: MessageHeader) extends AbstractMessage(header) {
-  field(RefSeqNo.Tag(), Required.NO);
-  field(RefMsgType.Tag());
-  field(Text.Tag(), Required.NO);
-  field(BusinessRejectReason.Tag());
-  field(BusinessRejectRefID.Tag(), Required.NO);
+  field(RefSeqNo.Tag, Required.NO)
+  field(RefMsgType.Tag)
+  field(Text.Tag, Required.NO)
+  field(BusinessRejectReason.Tag)
+  field(BusinessRejectRefID.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

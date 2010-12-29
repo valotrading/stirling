@@ -18,6 +18,7 @@ package fixengine.messages;
 import fixengine.messages.fix42.AllocationMessage;
 import fixengine.messages.fix42.DontKnowTradeMessage;
 import fixengine.messages.fix42.OrderStatusRequestMessage;
+import fixengine.messages.fix42.BusinessMessageReject;
 
 /**
  * @author Pekka Enberg 
@@ -35,7 +36,7 @@ public interface MessageVisitor {
     void visit(OrderCancelRejectMessage message);
     void visit(OrderCancelReplaceRequestMessage message);
     void visit(OrderModificationRequestMessage message);
-    void visit(BusinessMessageRejectMessage message);
+    void visit(BusinessMessageReject message);
     void visit(RejectMessage message);
     void visit(ResendRequestMessage message);
     void visit(SequenceResetMessage message);

@@ -32,9 +32,7 @@ import lang.TimeSource;
 
 import org.joda.time.DateTime;
 
-import silvertip.Connection;
 import fixengine.Config;
-import fixengine.messages.BusinessMessageRejectMessage;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.FixMessage;
 import fixengine.messages.HeartbeatMessage;
@@ -53,6 +51,7 @@ import fixengine.messages.SequenceResetMessage;
 import fixengine.messages.TestRequestMessage;
 import fixengine.messages.Validator.ErrorHandler;
 import fixengine.messages.Validator.ErrorLevel;
+import fixengine.messages.fix42.BusinessMessageReject;
 import fixengine.session.store.SessionStore;
 import fixengine.tags.fix42.BeginSeqNo;
 import fixengine.tags.fix42.BusinessRejectReason;
@@ -63,9 +62,10 @@ import fixengine.tags.fix42.HeartBtInt;
 import fixengine.tags.fix42.NewSeqNo;
 import fixengine.tags.fix42.RefMsgType;
 import fixengine.tags.fix42.RefSeqNo;
-import fixengine.tags.fix43.SessionRejectReason;
 import fixengine.tags.fix42.TestReqID;
 import fixengine.tags.fix42.Text;
+import fixengine.tags.fix43.SessionRejectReason;
+import silvertip.Connection;
 
 /**
  * @author Karim Osman
@@ -403,7 +403,7 @@ public class Session {
     }
 
     private void businessReject(Connection conn, String msgType, int msgSeqNum, Value<Integer> reason, String text) {
-        BusinessMessageRejectMessage reject = (BusinessMessageRejectMessage) messageFactory.create(BUSINESS_MESSAGE_REJECT);
+        BusinessMessageReject reject = (BusinessMessageReject) messageFactory.create(BUSINESS_MESSAGE_REJECT);
         reject.setInteger(RefSeqNo.Tag(), msgSeqNum);
         reject.setString(RefMsgType.Tag(), msgType);
         reject.setEnum(BusinessRejectReason.Tag(), reason);
