@@ -269,7 +269,10 @@ object EffectiveTime extends UtcTimestampTag(168)
 object OrderQty2 extends QtyTag(192)
 object SecondaryOrderID extends StringTag(198)
 object MaturityMonthYear extends StringTag(200)
-object PutOrCall extends IntegerTag(201)
+object PutOrCall extends EnumTag[Integer](201) {
+  val Put = Value(0)
+  val Call = Value(1)
+}
 object StrikePrice extends PriceTag(202)
 object CustomerOrFirm extends EnumTag[Integer](204) {
   val Customer = Value(0)
