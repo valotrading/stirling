@@ -152,11 +152,15 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
+    @Override public void visit(NewsMessage message) {
+        defaultAction(message);
+    }
+
     @Override public void visit(SecurityListRequest message) {
         defaultAction(message);
     }
 
-    @Override public void visit(NewsMessage message) {
+    @Override public void visit(SecurityList message) {
         defaultAction(message);
     }
 
