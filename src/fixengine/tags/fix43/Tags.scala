@@ -24,6 +24,7 @@ import fixengine.messages.{
   NumInGroupTag,
   PriceTag,
   PriceOffsetTag,
+  QtyTag,
   StringTag,
   Value
 }
@@ -138,6 +139,12 @@ object PartyIDSource extends EnumTag[Character](447) {
 }
 object PartyID extends StringTag(448)
 object NoPartyIDs extends IntegerTag(453)
+object NoSecurityAltID extends NumInGroupTag(454)
+object SecurityAltID extends StringTag(455)
+object SecurityAltIDSource extends StringTag(456)
+object NoUnderlyingSecurityAltID extends NumInGroupTag(457)
+object UnderlyingSecurityAltID extends StringTag(458)
+object UnderlyingSecurityAltIDSource extends StringTag(459)
 object TradeReportTransType extends EnumTag[Character](487) {
   val Cancel = Value('C')
   val New = Value('N')
@@ -165,6 +172,15 @@ object SecurityListRequestType extends EnumTag[Integer](559) {
   val TradingSessionID = Value(3)
   val AllSecurities = Value(4)
 }
+object SecurityRequestResult extends EnumTag[Integer](560) {
+  val ValidReq = Value(0)
+  val InvalidReq = Value(1)
+  val NoInstrumentsFound = Value(2)
+  val NotAuthorized = Value(3)
+  val InstrumentUnavailable = Value(4)
+  val NotSupported = Value(5)
+}
+object RoundLot extends QtyTag(561)
 object LegPositionEffect extends EnumTag[Character](564) {
   val Close = Value('C')
   val FIFO = Value('F')
