@@ -15,9 +15,15 @@
  */
 package fixengine.tags.fix44
 
+import java.lang.{
+  Character,
+  Integer,
+  String
+}
 import fixengine.messages.{
   AmtTag,
   BooleanTag,
+  CurrencyTag,
   EnumTag,
   IntegerTag,
   LocalMktDateTag,
@@ -28,11 +34,6 @@ import fixengine.messages.{
   StringTag,
   UtcTimestampTag,
   Value
-}
-import java.lang.{
-  Character,
-  Integer,
-  String
 }
 
 object QuoteAckStatus extends EnumTag[Integer](297) {
@@ -65,6 +66,7 @@ object QuoteRejectReason extends EnumTag[Integer](300) {
   val NotAuth = Value(9)
   val Other = Value(99)
 }
+object UnderlyingSecurityIDSource extends StringTag(305)
 object QuoteEntryRejectReason extends EnumTag[Integer](368) {
   val UnknwnSym = Value(1)
   val ExchClsd = Value(2)
@@ -120,6 +122,7 @@ object Password extends StringTag(554)
 object LongQty extends QtyTag(704)
 object ShortQty extends QtyTag(705)
 object PosReqID extends StringTag(710)
+object NoUnderlyings extends NumInGroupTag(711)
 object ClearingBusinessDate extends LocalMktDateTag(715)
 object PosMaintRptID extends StringTag(721)
 object TotalNumPosReports extends IntegerTag(727)
@@ -141,6 +144,7 @@ object TradeRequestStatus extends EnumTag[Integer](750) {
   val Completed = Value(1)
   val Rejected = Value(2)
 }
+object SecuritySubType extends StringTag(762)
 object NoTrdRegTimestamps extends NumInGroupTag(768)
 object TrdRegTimestamp extends UtcTimestampTag(769)
 object TrdRegTimestampType extends IntegerTag(770)
@@ -169,6 +173,22 @@ object LastLiquidityInd extends EnumTag[Integer](851) {
   val RemovedLiquidity = Value(2)
   val LiquidityRoutedOut = Value(3)
 }
+object NoEvents extends NumInGroupTag(864)
+object EventType extends EnumTag[Integer](865) {
+  val Put = Value(1)
+  val Call = Value(2)
+  val Tender = Value(3)
+  val SinkingFundCall = Value(4)
+  val Other = Value(99)
+}
+object EventDate extends LocalMktDateTag(866)
+object NoInstrAttrib extends NumInGroupTag(870)
+object InstrAttribValue extends StringTag(872)
+object LastFragment extends EnumTag[Boolean](893) {
+  val NotLastMessage = Value(false)
+  val LastMessage = Value(true)
+}
 object CollInquiryID extends StringTag(909)
 object TotNumReports extends IntegerTag(911)
 object LastRptRequested extends BooleanTag(912)
+object StrikeCurrency extends CurrencyTag(947)
