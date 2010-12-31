@@ -216,6 +216,8 @@ object OrdRejReason extends EnumTag[Integer](103) {
   val DuplicateOfVerballyCommunicatedOrder = Value(7)
   val StaleOrder = Value(8)
 }
+object Issuer extends CharTag(106)
+object SecurityDesc extends CharTag(107)
 object HeartBtInt extends IntegerTag(108)
 object ClientID extends StringTag(109)
 object MinQty extends QtyTag(110)
@@ -245,6 +247,7 @@ object BidSize extends IntegerTag(134)
 object OfferSize extends IntegerTag(135)
 object ResetSeqNumFlag extends BooleanTag(141)
 object SenderLocationID extends StringTag(142)
+object NoRelatedSym extends IntegerTag(146)
 object Headline extends StringTag(148)
 object ExecType extends EnumTag[Character](150) {
   val New = Value('0')
@@ -281,6 +284,7 @@ object CustomerOrFirm extends EnumTag[Integer](204) {
 object SecurityExchange extends ExchangeTag(207)
 object MaxShow extends QtyTag(210)
 object PegDifference extends PriceOffsetTag(211)
+object ContractMultiplier extends FloatTag(231)
 object SubscriptionRequestType extends EnumTag[Character](263) {
   val Snapshot = Value('0')
   val SnapshotUpdate = Value('1')
@@ -297,7 +301,13 @@ object QuoteResponseLevel extends EnumTag[Integer](301) {
 }
 object QuoteSetID extends StringTag(302)
 object TotQuoteEntries extends IntegerTag(304)
+object UnderlyingSecurityDesc extends StringTag(307)
+object UnderlyingSecurityID extends StringTag(309)
+object UnderlyingSecurityType extends StringTag(310)
+object UnderlyingSymbol extends StringTag(311)
+object UnderlyingCurrency extends CurrencyTag(318)
 object SecurityReqID extends StringTag(320)
+object SecurityResponseID extends StringTag(322)
 object UnsolicitedIndicator extends BooleanTag(325)
 object TradSesReqID extends StringTag(335)
 object TradeSesReqID extends StringTag(335)
@@ -335,6 +345,7 @@ object DiscretionInst extends EnumTag[Integer](388) {
   val RelatedToLastTradePRice = Value(5)
 }
 object DiscretionOffset extends PriceOffsetTag(389)
+object TotalNumSecurities extends IntegerTag(393)
 object CxlRejResponseTo extends EnumTag[Character](434) {
   val OrderCancelRequest = Value('1')
   val OrderModificationRequest = Value('2')
