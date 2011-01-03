@@ -32,3 +32,4 @@ trait MassQuoteAcknowledgement extends Message
 trait NewsMessage extends Message
 trait SecurityListRequest extends Message
 trait SecurityList extends Message
+trait BusinessMessageReject extends Message
