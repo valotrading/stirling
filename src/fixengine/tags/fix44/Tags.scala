@@ -36,6 +36,7 @@ import fixengine.messages.{
   Value
 }
 
+object Headline extends StringTag(148)
 object QuoteAckStatus extends EnumTag[Integer](297) {
   val Accpt = Value(0)
   val CxlSym = Value(1)
@@ -192,3 +193,4 @@ object CollInquiryID extends StringTag(909)
 object TotNumReports extends IntegerTag(911)
 object LastRptRequested extends BooleanTag(912)
 object StrikeCurrency extends CurrencyTag(947)
+object NoLinesOfText extends NumInGroupTag(33)
