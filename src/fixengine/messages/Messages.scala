@@ -34,3 +34,4 @@ trait SecurityListRequest extends Message
 trait SecurityList extends Message
 trait BusinessMessageReject extends Message
 trait DontKnowTrade extends Message
+trait News extends Message
