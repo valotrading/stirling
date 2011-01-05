@@ -35,7 +35,6 @@ public interface MessageVisitor {
     void visit(OrderCancelRejectMessage message);
     void visit(OrderCancelReplaceRequestMessage message);
     void visit(OrderModificationRequestMessage message);
-    void visit(fixengine.messages.fix42.BusinessMessageReject message);
     void visit(RejectMessage message);
     void visit(ResendRequestMessage message);
     void visit(SequenceResetMessage message);

@@ -19,6 +19,7 @@ import fixengine.messages.{
   AbstractMessage,
   MessageHeader,
   MessageVisitor,
+  BusinessMessageReject => BusinessMessageRejectTrait,
   Required
 }
 import fixengine.tags.fix42.{
@@ -28,7 +29,7 @@ import fixengine.tags.fix42.{
   RefSeqNo,
   Text
 }
-class BusinessMessageReject(header: MessageHeader) extends AbstractMessage(header) {
+class BusinessMessageReject(header: MessageHeader) extends AbstractMessage(header) with BusinessMessageRejectTrait {
   field(RefSeqNo.Tag, Required.NO)
   field(RefMsgType.Tag)
   field(Text.Tag, Required.NO)

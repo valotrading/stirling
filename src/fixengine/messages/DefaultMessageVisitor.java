@@ -71,10 +71,6 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(fixengine.messages.fix42.BusinessMessageReject message) {
-        defaultAction(message);
-    }
-
     @Override public void visit(RejectMessage message) {
         defaultAction(message);
     }
