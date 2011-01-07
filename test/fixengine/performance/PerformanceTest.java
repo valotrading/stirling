@@ -35,7 +35,7 @@ import fixengine.messages.FixMessageParser;
 import fixengine.session.HeartBtIntValue;
 import fixengine.session.Session;
 import fixengine.session.store.MongoSessionStore;
-import fixengine.session.store.InMemorySessionStore;
+import fixengine.session.store.NonPersistentInMemorySessionStore;
 import fixengine.session.store.SessionStore;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MsgTypeValue;
@@ -65,7 +65,7 @@ public class PerformanceTest implements Runnable {
 
     private static SessionStore getSessionStore(String name) throws Exception {
         if (name.equals("memory"))
-            return new InMemorySessionStore();
+            return new NonPersistentInMemorySessionStore();
         else if (name.equals("mongo"))
             return new MongoSessionStore("localhost", 27017);
         else
