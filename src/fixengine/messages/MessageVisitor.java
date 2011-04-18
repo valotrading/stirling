@@ -63,4 +63,5 @@ public interface MessageVisitor {
     void visit(CollateralReportMessage message);
     void visit(CollateralInquiryAcknowledgmentMessage message);
     void visit(PositionReportMessage message);
+    void visit(RequestForPositionAcknowledgmentMessage message);
 }

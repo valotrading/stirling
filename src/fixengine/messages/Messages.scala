@@ -38,3 +38,4 @@ trait News extends Message
 trait CollateralReportMessage extends Message
 trait CollateralInquiryAcknowledgmentMessage extends Message
 trait PositionReportMessage extends Message
+trait RequestForPositionAcknowledgmentMessage extends Message
