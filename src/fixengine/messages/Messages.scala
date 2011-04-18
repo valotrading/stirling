@@ -37,3 +37,4 @@ trait DontKnowTrade extends Message
 trait News extends Message
 trait CollateralReportMessage extends Message
 trait CollateralInquiryAcknowledgmentMessage extends Message
+trait PositionReportMessage extends Message
