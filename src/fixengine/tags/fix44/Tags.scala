@@ -199,3 +199,10 @@ object MarginExcess extends IntegerTag(899)
 object TotalNetValue extends StringTag(900)
 object CollRptID extends StringTag(908)
 object CollStatus extends IntegerTag(910)
+object CollInquiryStatus extends EnumTag[Integer](945) {
+  val Accepted = 0
+  val AcceptedWithWarnings = 1
+  val Completed = 2
+  val CompletedWithWarnings = 3
+  val Rejected = 4
+}

@@ -63,3 +63,5 @@ object OrderGroupID1 extends StringTag(10055)
 object LiquidityTag extends StringTag(9730)
 
 object MBTInternalOrderId extends StringTag(10017)
+
+object UserQuotePerms extends StringTag(10059)
