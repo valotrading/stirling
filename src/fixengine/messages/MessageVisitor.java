@@ -60,4 +60,5 @@ public interface MessageVisitor {
     void visit(BusinessMessageReject message);
     void visit(DontKnowTrade message);
     void visit(News message);
+    void visit(CollateralReportMessage message);
 }

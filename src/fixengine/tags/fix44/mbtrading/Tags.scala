@@ -18,21 +18,45 @@ package fixengine.tags.fix44.mbtrading
 import fixengine.messages.{
   FloatTag,
   IntegerTag,
+  EnumTag,
   QtyTag,
   StringTag
 }
+import java.lang.Integer
 
 object PosPendBuy extends QtyTag(10000)
 
 object PosPendSell extends QtyTag(10001)
 
+object MorningBuyingPower extends StringTag(10002)
+
 object PosBuyPowerUsed extends FloatTag(10003)
 
 object PosRealizedPNL extends FloatTag(10004)
 
+object MBTAccountType extends EnumTag[Integer](10005) {
+  val Cash = 1
+  val USMArgin = 2
+  val DVP = 6
+}
+
+object OvernightBuyingPower extends StringTag(10006)
+
+object RealizedPnL extends StringTag(10008)
+
+object MorningExcessEquity extends StringTag(10009)
+
+object MorningExcessEquity2 extends StringTag(10010)
+
 object PosEquityUsed extends FloatTag(10015)
 
+object AccountCredit extends StringTag(10018)
+
 object MBTXAggressive extends IntegerTag(10022)
+
+object OvernightExcess extends StringTag(10048)
+
+object BODOOvernightExcessEq extends StringTag(10050)
 
 object OrderGroupID1 extends StringTag(10055)
 
