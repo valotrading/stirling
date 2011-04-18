@@ -241,3 +241,28 @@ object LegSide extends EnumTag[Character](624) {
 object TradingSessionSubID extends StringTag(625)
 object Price2 extends PriceTag(640)
 object LegRefID extends StringTag(654)
+object PositionEffect extends EnumTag[Character](77) {
+  val Open = Value('O')
+  val Close = Value('C')
+  val Rolled = Value('R')
+  val FIFO = Value('F')
+}
+object MultiLegReportingType extends EnumTag[Character](442) {
+  val Single = Value('1')
+  val Individual = Value('2')
+  val Multileg = Value('3')
+}
+object Product extends EnumTag[Int](460) {
+  val Agency = 1
+  val Commodity = 2
+  val Corporate = 3
+  val Currency = 4
+  val Equity = 5
+  val Government = 6
+  val Index = 7
+  val Loan = 8
+  val MoneyMarket = 9
+  val Mortgage = 10
+  val Municipal = 11
+  val Other = 12
+}
