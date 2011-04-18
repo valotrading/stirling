@@ -19,19 +19,19 @@ import java.util.Scanner;
 
 import fixengine.examples.console.ConsoleClient;
 
-import fixengine.messages.fix42.DefaultMessageFactory;
-import fixengine.messages.fix42.bats.europe.MessageFactory;
-
 public class Profile implements Command {
   private static final String DEFAULT_PROFILE = "default";
   private static final String BATS_PROFILE = "bats";
+  private static final String MB_TRADING_PROFILE = "mbtrading";
 
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
     String profile = profile(scanner);
     if (profile.equals(DEFAULT_PROFILE))
-      client.setMessageFactory(new DefaultMessageFactory());
+      client.setMessageFactory(new fixengine.messages.fix42.DefaultMessageFactory());
     else if (profile.equals(BATS_PROFILE))
-      client.setMessageFactory(new MessageFactory());
+      client.setMessageFactory(new fixengine.messages.fix42.bats.europe.MessageFactory());
+    else if (profile.equals(MB_TRADING_PROFILE))
+      client.setMessageFactory(new fixengine.messages.fix44.mbtrading.MessageFactory());
     else
       throw new CommandArgException("unknown profile: " + profile);
   }
