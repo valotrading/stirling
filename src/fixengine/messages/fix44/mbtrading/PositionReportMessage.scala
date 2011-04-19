@@ -25,7 +25,6 @@ import fixengine.messages.{
 import fixengine.tags.fix42.{
   Account,
   Commission,
-  MsgType,
   Side,
   SubscriptionRequestType,
   Symbol,
@@ -54,7 +53,6 @@ import fixengine.tags.fix44.mbtrading.{
 }
 
 class PositionReportMessage(header: MessageHeader) extends AbstractMessage(header) with PositionReportTrait {
-  field(MsgType.Tag)
   field(Account.Tag)
   field(Commission.Tag, Required.NO)
   field(Symbol.Tag, Required.NO)

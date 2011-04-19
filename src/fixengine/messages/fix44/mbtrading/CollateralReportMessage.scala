@@ -23,7 +23,6 @@ import fixengine.messages.{
   Required
 }
 import fixengine.tags.fix42.{
-  MsgType,
   Account,
   Commission,
   Currency
@@ -47,7 +46,6 @@ import fixengine.tags.fix44.mbtrading.{
   RealizedPnL
 }
 class CollateralReportMessage(header: MessageHeader) extends AbstractMessage(header) with CollateralReportMessageTrait {
-  field(MsgType.Tag)
   field(Account.Tag)
   field(Commission.Tag, Required.NO)
   field(Currency.Tag, Required.NO)

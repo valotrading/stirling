@@ -24,7 +24,6 @@ import fixengine.messages.{
 }
 import fixengine.tags.fix42.{
   BusinessRejectRefID,
-  MsgType,
   RefMsgType,
   RefSeqNo,
   Text
@@ -32,7 +31,6 @@ import fixengine.tags.fix42.{
 import fixengine.tags.fix43.BusinessRejectReason
 
 class BusinessMessageReject(header: MessageHeader) extends AbstractMessage(header) with BusinessMessageRejectTrait {
-  field(MsgType.Tag)
   field(RefSeqNo.Tag)
   field(Text.Tag, Required.NO)
   field(RefMsgType.Tag)

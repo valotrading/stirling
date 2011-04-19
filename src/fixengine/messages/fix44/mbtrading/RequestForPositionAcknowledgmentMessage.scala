@@ -24,7 +24,6 @@ import fixengine.messages.{
 }
 import fixengine.tags.fix42.{
   Account,
-  MsgType,
   Text
 }
 import fixengine.tags.fix44.{
@@ -35,7 +34,6 @@ import fixengine.tags.fix44.{
 }
 
 class RequestForPositionAcknowledgmentMessage(header: MessageHeader) extends AbstractMessage(header) with RequestForPositionAcknowledgmentTrait {
-  field(MsgType.Tag)
   field(Account.Tag)
   field(Text.Tag)
   field(PosReqID.Tag)

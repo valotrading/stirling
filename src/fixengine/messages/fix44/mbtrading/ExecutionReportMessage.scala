@@ -25,7 +25,6 @@ import fixengine.tags.fix42.{
   LastShares,
   LeavesQty,
   MaxFloor,
-  MsgType,
   OrdStatus,
   OrdType,
   OrderID,
@@ -60,7 +59,6 @@ import fixengine.tags.fix44.{
   LastRptRequested
 }
 class ExecutionReportMessage(header: MessageHeader) extends AbstractMessage(header) with ExecutionReportMessageTrait {
-  field(MsgType.Tag)
   field(Account.Tag)
   field(AvgPx.Tag)
   field(ClOrdID.Tag)

@@ -22,9 +22,6 @@ import fixengine.messages.{
   MessageVisitor,
   Required
 }
-import fixengine.tags.fix42.{
-  MsgType
-}
 import fixengine.tags.fix44.{
   CollInquiryID,
   CollInquiryStatus,
@@ -33,7 +30,6 @@ import fixengine.tags.fix44.{
 import fixengine.tags.fix44.mbtrading.UserQuotePerms
 
 class CollateralInquiryAcknowledgmentMessage(header: MessageHeader) extends AbstractMessage(header) with CollateralInquiryAcknowledgmentTrait {
-  field(MsgType.Tag)
   field(CollInquiryID.Tag, Required.NO)
   field(TotNumReports.Tag)
   field(CollInquiryStatus.Tag)
