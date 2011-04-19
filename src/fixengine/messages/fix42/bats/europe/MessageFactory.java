@@ -25,6 +25,10 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
         message(MsgTypeValue.TRADE_CANCEL_CORRECT, OrderModificationRequestMessage.class);
     }
 
+    @Override public String getProfile() {
+        return "bats-europe";
+    }
+
     @Override protected String getTagsPackage() {
         return "fixengine.tags.fix42.bats.europe";
     }

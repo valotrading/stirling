@@ -21,8 +21,8 @@ import fixengine.examples.console.ConsoleClient;
 
 public class Profile implements Command {
   private static final String DEFAULT_PROFILE = "default";
-  private static final String BATS_PROFILE = "bats";
-  private static final String MB_TRADING_PROFILE = "mbtrading";
+  private static final String BATS_PROFILE = "bats-europe";
+  private static final String MB_TRADING_PROFILE = "mb-trading";
 
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
     String profile = profile(scanner);

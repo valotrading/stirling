@@ -82,6 +82,10 @@ public class DefaultMessageFactory implements MessageFactory {
         }
     }
 
+    @Override public String getProfile() {
+        return "default";
+    }
+
     @SuppressWarnings("unchecked") private Class<Tag<?>> tagClass(String tagName) {
         try {
             try {

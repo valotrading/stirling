@@ -27,6 +27,10 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
         message(MsgTypeValue.DONT_KNOW_TRADE, DontKnowTradeMessage.class);
     }
 
+    @Override public String getProfile() {
+        return "ubs";
+    }
+
     @Override protected String getTagsPackage() {
         return "fixengine.tags.fix42.ubs";
     }

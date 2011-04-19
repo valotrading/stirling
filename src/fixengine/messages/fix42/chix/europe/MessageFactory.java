@@ -26,6 +26,10 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
         message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequestMessage.class);
     }
 
+    @Override public String getProfile() {
+        return "chi-x";
+    }
+
     @Override protected String getTagsPackage() {
         return "fixengine.tags.fix42.chix.europe";
     }

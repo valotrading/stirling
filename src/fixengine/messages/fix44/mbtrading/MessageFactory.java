@@ -36,6 +36,10 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
         message(REQUEST_FOR_POSITION_ACKNOWLEDGMENT, RequestForPositionAcknowledgmentMessage.class);
     }
 
+    @Override public String getProfile() {
+        return "mb-trading";
+    }
+
     @Override protected String getTagsPackage() {
         return "fixengine.tags.fix44.mbtrading";
     }
