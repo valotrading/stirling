@@ -39,8 +39,4 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
     @Override public String getProfile() {
         return "mb-trading";
     }
-
-    @Override protected String getTagsPackage() {
-        return "fixengine.tags.fix44.mbtrading";
-    }
 }

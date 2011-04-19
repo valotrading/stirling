@@ -103,7 +103,7 @@ public class DefaultMessageFactory implements MessageFactory {
     }
 
     protected String getTagsPackage() {
-      return "fixengine.tags";
+      return getClass().getPackage().getName();
     }
 
     protected String getVersionTagsPackage() {

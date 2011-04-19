@@ -30,8 +30,4 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
     @Override public String getProfile() {
         return "hotspot-fx";
     }
-
-    @Override protected String getTagsPackage() {
-        return "fixengine.tags.fix42.hotspotfx";
-    }
 }
