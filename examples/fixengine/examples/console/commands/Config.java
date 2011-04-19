@@ -27,12 +27,24 @@ public class Config implements Command {
 
   private fixengine.Config config(Scanner scanner) throws CommandArgException {
     fixengine.Config config = new fixengine.Config();
-    config.setVersion(Version.FIX_4_2);
+    config.setVersion(version(scanner));
     config.setSenderCompId(senderCompID(scanner));
     config.setTargetCompId(targetCompID(scanner));
     config.setSenderSubID(senderSubID(scanner));
     config.setTargetSubID(targetSubID(scanner));
     return config;
+  }
+
+  private Version version(Scanner scanner) throws CommandArgException {
+    if (!scanner.hasNext())
+      throw new CommandArgException("version must be specified");
+    String value = scanner.next();
+    for (Version version : Version.values()) {
+      if (version.value().equals(value.toUpperCase())) {
+        return version;
+      }
+    }
+    throw new CommandArgException("unknown version: '%s'".format(value));
   }
 
   private String senderCompID(Scanner scanner) throws CommandArgException {
