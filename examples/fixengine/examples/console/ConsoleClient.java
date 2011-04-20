@@ -161,6 +161,7 @@ public class ConsoleClient {
   private void registerCommands() {
     commands.put("quit", new Quit());
     commands.put("connect", new Connect());
+    commands.put("logon", new Logon());
     commands.put("logout", new Logout());
     commands.put("reset", new Reset());
     commands.put("storeseq", new StoreSequence());

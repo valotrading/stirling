@@ -88,7 +88,6 @@ public class Connect implements Command {
       };
       client.setSession(session);
       client.getEvents().register(conn);
-      session.logon(conn);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
