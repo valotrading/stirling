@@ -15,8 +15,10 @@
  */
 package fixengine.messages.fix44.mbtrading;
 
-import fixengine.messages.MsgTypeValue;
 import static fixengine.messages.fix44.mbtrading.MsgTypeValue.*;
+
+import fixengine.messages.MsgTypeValue;
+import fixengine.messages.fix44.mbtrading.LogonMessage;
 
 public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
     public MessageFactory() {
@@ -26,6 +28,7 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
         message(MsgTypeValue.LOGON, Logon.class);
         message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingle.class);
         message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequest.class);
+        message(MsgTypeValue.LOGON, LogonMessage.class);
         message(NEW_ORDER_MULTILEG, NewOrderMultiLeg.class);
         message(POSITION, RequestForPositions.class);
         message(POSITION, PositionReportMessage.class);
