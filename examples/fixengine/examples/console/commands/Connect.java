@@ -36,7 +36,7 @@ import fixengine.tags.fix42.ClOrdID;
 import fixengine.tags.fix42.OrderID;
 import silvertip.Connection;
 
-public class Logon implements Command {
+public class Connect implements Command {
   private static final Logger logger = Logger.getLogger("ConsoleClient");
 
   static {
