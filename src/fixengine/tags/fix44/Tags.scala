@@ -68,6 +68,7 @@ object QuoteRejectReason extends EnumTag[Integer](300) {
   val Other = Value(99)
 }
 object UnderlyingSecurityIDSource extends StringTag(305)
+object MessageEncoding extends StringTag(347)
 object QuoteEntryRejectReason extends EnumTag[Integer](368) {
   val UnknwnSym = Value(1)
   val ExchClsd = Value(2)
