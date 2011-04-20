@@ -33,7 +33,7 @@ import fixengine.messages.Tag;
 import fixengine.tags.fix42.OrderID;
 import fixengine.tags.fix42.OrigClOrdID;
 
-public abstract class OrderCommand implements Command {
+public abstract class FixMessageCommand implements Command {
   private static final Set<Class<? extends Parser>> parserClasses = new HashSet<Class<? extends Parser>>();
 
   {

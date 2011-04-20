@@ -20,7 +20,7 @@ import fixengine.messages.Message;
 
 import static fixengine.messages.MsgTypeValue.ORDER_MODIFICATION_REQUEST;
 
-public class UpdateOrder extends OrderCommand {
+public class UpdateOrder extends FixMessageCommand {
   @Override protected Message newMessage(ConsoleClient client) {
     return client.getMessageFactory().create(ORDER_MODIFICATION_REQUEST);
   }

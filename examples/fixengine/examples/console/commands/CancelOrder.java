@@ -20,7 +20,7 @@ import fixengine.messages.Message;
 
 import static fixengine.messages.MsgTypeValue.ORDER_CANCEL_REQUEST;
 
-public class CancelOrder extends OrderCommand {
+public class CancelOrder extends FixMessageCommand {
   @Override protected Message newMessage(ConsoleClient client) {
     return client.getMessageFactory().create(ORDER_CANCEL_REQUEST);
   }
