@@ -426,6 +426,11 @@ public class Session {
         sendOutOfQueue(conn, message);
     }
 
+    public void logon(Connection conn, LogonMessage logonMessage) {
+        authenticated = initiatedLogout = false;
+        sendOutOfQueue(conn, logonMessage);
+    }
+
     private void sendOutOfQueue(Connection conn, Message message) {
         message.setHeaderConfig(config);
         message.setMsgSeqNum(outgoingSeq.next());
