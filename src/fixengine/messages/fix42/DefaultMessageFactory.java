@@ -17,6 +17,8 @@ package fixengine.messages.fix42;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 import org.apache.commons.lang.CharUtils;
 
@@ -76,8 +78,9 @@ public class DefaultMessageFactory implements MessageFactory {
 
     @Override public Tag<?> createTag(String tagName) {
         try {
-            return tagClass(tagName).newInstance();
+            return (Tag<?>) tagClass(tagName).getMethod("Tag").invoke(null);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new IllegalArgumentException("Tag not found: " + tagName);
         }
     }
@@ -87,27 +90,17 @@ public class DefaultMessageFactory implements MessageFactory {
     }
 
     @SuppressWarnings("unchecked") private Class<Tag<?>> tagClass(String tagName) {
-        try {
-            try {
-                return (Class<Tag<?>>) Class.forName(getTagsPackage() + "." + tagName);
-            } catch (ClassNotFoundException e1) {
-                try {
-                    return (Class<Tag<?>>) Class.forName(getVersionTagsPackage() + "." + tagName);
-                } catch (ClassNotFoundException e2) {
-                    return (Class<Tag<?>>) Class.forName(getDefaultTagsPackage() + "." + tagName);
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        for (String tagsPackage : getTagsPackages()) {
+          try {
+              return (Class<Tag<?>>) Class.forName(tagsPackage + "." + tagName);
+          } catch (ClassNotFoundException e) {
+          }
         }
+        throw new RuntimeException("Tag not found");
     }
 
     protected String getTagsPackage() {
       return getClass().getPackage().getName();
-    }
-
-    protected String getVersionTagsPackage() {
-      return "fixengine.tags.fix42";
     }
 
     private String getDefaultTagsPackage() {
@@ -116,6 +109,16 @@ public class DefaultMessageFactory implements MessageFactory {
 
     protected void message(String msgType, Class<? extends Message> clazz) {
         messageTypes.put(msgType, clazz);
+    }
+
+    private List<String> getTagsPackages() {
+        List<String> packages = new ArrayList<String>();
+        packages.add(getTagsPackage());
+        packages.add("fixengine.tags.fix42");
+        packages.add("fixengine.tags.fix43");
+        packages.add("fixengine.tags.fix44");
+        packages.add("fixengine.tags");
+        return packages;
     }
 
     private Constructor<? extends Message> constructor(String msgType) throws NoSuchMethodException {
