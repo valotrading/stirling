@@ -24,7 +24,6 @@ import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.Message;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.MsgTypeValue;
-import fixengine.messages.Value;
 import fixengine.tags.fix42.BeginString;
 import fixengine.tags.fix42.BodyLength;
 import fixengine.tags.fix42.CheckSum;

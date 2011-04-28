@@ -22,7 +22,6 @@ import org.jmock.Expectations;
 
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.MsgTypeValue;
-import fixengine.messages.Value;
 import fixengine.messages.fix42.ExecutionReportMessage;
 import fixengine.messages.fix42.LogonMessage;
 import fixengine.tags.fix42.AvgPx;

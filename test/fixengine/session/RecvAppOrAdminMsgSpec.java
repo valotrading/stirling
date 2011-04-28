@@ -21,7 +21,6 @@ import org.junit.runner.RunWith;
 
 import fixengine.messages.Field;
 import fixengine.messages.MsgTypeValue;
-import fixengine.messages.Value;
 import fixengine.tags.fix42.AllocAccount;
 import fixengine.tags.fix42.AllocID;
 import fixengine.tags.fix42.AvgPx;

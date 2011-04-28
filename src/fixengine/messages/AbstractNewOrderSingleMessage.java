@@ -15,12 +15,6 @@
  */
 package fixengine.messages;
 
-import fixengine.tags.fix42.ClOrdID;
-import fixengine.tags.fix42.OrdType;
-import fixengine.tags.fix42.OrderQty;
-import fixengine.tags.fix42.Side;
-import fixengine.tags.fix42.Symbol;
-
 public abstract class AbstractNewOrderSingleMessage extends AbstractMessage implements NewOrderSingleMessage {
     protected AbstractNewOrderSingleMessage(MessageHeader header) {
         super(header);

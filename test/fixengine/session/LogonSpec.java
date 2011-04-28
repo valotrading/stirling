@@ -20,7 +20,6 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
 import fixengine.messages.MsgTypeValue;
-import fixengine.messages.Value;
 import fixengine.tags.fix42.EncryptMethod;
 import fixengine.tags.fix42.GapFillFlag;
 import fixengine.tags.fix42.HeartBtInt;

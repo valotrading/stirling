@@ -17,7 +17,6 @@ package fixengine.messages;
 
 import fixengine.tags.fix42.ClOrdID;
 import fixengine.tags.fix42.MaturityMonthYear;
-import fixengine.tags.fix42.OrdType;
 import fixengine.tags.fix42.OrderQty;
 import fixengine.tags.fix42.OrigClOrdID;
 import fixengine.tags.fix42.SecurityType;

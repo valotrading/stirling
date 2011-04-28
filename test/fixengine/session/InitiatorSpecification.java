@@ -49,7 +49,6 @@ import fixengine.messages.EnumField;
 import fixengine.messages.Field;
 import fixengine.messages.FixMessageParser;
 import fixengine.messages.FloatField;
-import fixengine.messages.Formattable;
 import fixengine.messages.IntegerField;
 import fixengine.messages.Message;
 import fixengine.messages.MessageHeader;

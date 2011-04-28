@@ -17,8 +17,6 @@ package fixengine.examples.console.commands;
 
 import static fixengine.messages.MsgTypeValue.LOGON;
 
-import java.util.Scanner;
-
 import fixengine.examples.console.ConsoleClient;
 import fixengine.messages.LogonMessage;
 import fixengine.messages.Message;
