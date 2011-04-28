@@ -158,9 +158,8 @@ public class Session {
     private boolean processSequenceReset(Connection conn, SequenceResetMessage message) {
         if (message.getBoolean(GapFillFlag.Tag())) {
             return processSequenceResetGapFill(conn, message);
-        } else {
-            return processSequenceResetReset(conn, message);
         }
+        return processSequenceResetReset(conn, message);
     }
 
     private boolean processSequenceResetGapFill(Connection conn, SequenceResetMessage message) {
