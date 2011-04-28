@@ -342,7 +342,7 @@ public class Session {
                     store.saveIncomingMessage(Session.this, message);
                     incomingQueue.skip(message.getMsgSeqNum());
                     if (!initiatedLogout)
-                        send(conn, (LogoutMessage) messageFactory.create(LOGOUT));
+                        send(conn, messageFactory.create(LOGOUT));
                     else
                         waitingForResponseToInitiatedLogout = false;
                     conn.close();
@@ -440,7 +440,7 @@ public class Session {
     }
 
     public void logout(final Connection conn) {
-        send(conn, (LogoutMessage) messageFactory.create(LOGOUT));
+        send(conn, messageFactory.create(LOGOUT));
         initiatedLogout = true;
         logoutInitiatedAt = currentTime();
         waitingForResponseToInitiatedLogout = true;
@@ -472,7 +472,7 @@ public class Session {
     }
 
     public void heartbeat(Connection conn) {
-        send(conn, (HeartbeatMessage) messageFactory.create(HEARTBEAT));
+        send(conn, messageFactory.create(HEARTBEAT));
     }
 
     private void testRequest(Connection conn) {
