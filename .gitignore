@@ -6,4 +6,8 @@
 /build
 /data
 /fixengine.jar
+/out
 /tags
+/*.iml
+/*.ipr
+/*.iws
