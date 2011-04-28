@@ -26,7 +26,7 @@ public abstract class Required {
 
         public boolean isConditional() {
             return false;
-        };
+        }
     };
     public static final Required NO = new Required() {
         @Override public boolean isRequired() {
@@ -35,7 +35,7 @@ public abstract class Required {
 
         public boolean isConditional() {
             return false;
-        };
+        }
     };
 
     public abstract boolean isRequired();

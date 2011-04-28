@@ -23,13 +23,13 @@ import fixengine.session.Session;
 public interface Validator<T> {
     public enum ErrorLevel {
       WARNING, ERROR
-    };
+    }
 
     public interface ErrorHandler {
         void sessionReject(Value<Integer> reason, String text, ErrorLevel level, boolean terminate);
         void businessReject(Value<Integer> reason, String text, ErrorLevel level);
         void terminate(String text);
-    };
+    }
 
     boolean validate(Session session, T obj, ErrorHandler handler);
 }
