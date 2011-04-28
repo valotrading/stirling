@@ -103,10 +103,6 @@ public class DefaultMessageFactory implements MessageFactory {
       return getClass().getPackage().getName();
     }
 
-    private String getDefaultTagsPackage() {
-      return "fixengine.tags";
-    }
-
     protected void message(String msgType, Class<? extends Message> clazz) {
         messageTypes.put(msgType, clazz);
     }
