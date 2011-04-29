@@ -16,6 +16,7 @@
 package fixengine.examples.console;
 
 import java.io.Console;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +44,9 @@ public class ConsoleClient {
   private static final Version VERSION = Version.FIX_4_2;
   private static final String SENDER_COMP_ID = "initiator";
   private static final String TARGET_COMP_ID = "OPENFIX";
+  private static final String SLASH = System.getProperty("file.separator");
+  private static final String FIX_DIRECTORY = System.getProperty("user.home") + SLASH + ".fixengine";
+  private static final String HISTORY_FILE = FIX_DIRECTORY + SLASH + "console_history";
 
   private final Map<String, Command> commands = new HashMap<String, Command>();
   private final Map<String, String> orderIDs = new HashMap<String, String>();
@@ -153,6 +157,8 @@ public class ConsoleClient {
         }
       }
     });
+    initializeFixDirectory();
+    registerHistory(commandLine);
     events = Events.open(100);
     events.register(commandLine);
     events.dispatch();
@@ -172,5 +178,23 @@ public class ConsoleClient {
     commands.put("cancel-order", new CancelOrder());
     commands.put("update-order", new UpdateOrder());
     commands.put("config", new Config());
+  }
+
+  private void initializeFixDirectory() {
+    File dir = new File(FIX_DIRECTORY);
+    if (dir.isDirectory()) {
+        return;
+    }
+    if (!dir.mkdirs()) {
+      System.err.println("Unable to create directory: " + FIX_DIRECTORY);
+    }
+  }
+
+  private void registerHistory(CommandLine commandLine) {
+    try {
+      commandLine.setHistory(new File(HISTORY_FILE));
+    } catch (IOException e) {
+      System.err.println("Unable to load console history");
+    }
   }
 }
