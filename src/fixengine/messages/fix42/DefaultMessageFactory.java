@@ -80,7 +80,6 @@ public class DefaultMessageFactory implements MessageFactory {
         try {
             return (Tag<?>) tagClass(tagName).getMethod("Tag").invoke(null);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new IllegalArgumentException("Tag not found: " + tagName);
         }
     }
