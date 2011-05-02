@@ -101,7 +101,7 @@ public abstract class FixMessageCommand implements Command {
   }
 
   private static abstract class AbstractFieldParser implements Parser {
-    private final MessageFactory messageFactory;
+    protected final MessageFactory messageFactory;
 
     protected AbstractFieldParser(MessageFactory messageFactory) {
       this.messageFactory = messageFactory;
@@ -120,7 +120,7 @@ public abstract class FixMessageCommand implements Command {
     protected abstract Class<? extends Field> getFieldClass();
 
     protected boolean hasTypeArg(String field) {
-      ParameterizedType type = (ParameterizedType) tagClass(field).getGenericSuperclass();
+      ParameterizedType type = (ParameterizedType) tagClass(field).getSuperclass().getGenericSuperclass();
       return type.getActualTypeArguments().length > 0;
     }
 
@@ -129,7 +129,7 @@ public abstract class FixMessageCommand implements Command {
     }
 
     protected Class<?> typeArg(Class<?> clazz) {
-      ParameterizedType type = (ParameterizedType) clazz.getGenericSuperclass();
+      ParameterizedType type = (ParameterizedType) clazz.getSuperclass().getGenericSuperclass();
       return (Class<?>) type.getActualTypeArguments()[0];
     }
 
@@ -156,8 +156,9 @@ public abstract class FixMessageCommand implements Command {
 
     @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
       try {
-        AbstractField<String> f = (AbstractField<String>) msg.lookup(tagClass(field).newInstance());
-        f.setValue(value(field));
+        AbstractField<String> f = (AbstractField<String>) msg.lookup(messageFactory.createTag(tag(field)));
+        if (f != null)
+          f.setValue(value(field));
       } catch (Exception e) {
         throw new RuntimeException(e);
       }
