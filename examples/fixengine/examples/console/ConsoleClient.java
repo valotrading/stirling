@@ -159,6 +159,7 @@ public class ConsoleClient {
     });
     initializeFixDirectory();
     registerHistory(commandLine);
+    commandLine.addCompletor(new CommandCompletor(this, commands));
     events = Events.open(100);
     events.register(commandLine);
     events.dispatch();
