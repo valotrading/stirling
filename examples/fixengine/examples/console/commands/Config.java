@@ -15,6 +15,8 @@
  */
 package fixengine.examples.console.commands;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import fixengine.Version;
@@ -43,6 +45,14 @@ public class Config implements Command {
       }
     }
     throw new CommandArgException("unknown version: '" + value + "'");
+  }
+
+  public String[] getArgumentNames(ConsoleClient client) {
+    List<String> fields = new ArrayList<String>();
+    for (ArgumentNames argument : ArgumentNames.values()) {
+      fields.add(argument.value() + "=");
+    }
+    return fields.toArray(new String[0]);
   }
 
   private enum ArgumentNames {

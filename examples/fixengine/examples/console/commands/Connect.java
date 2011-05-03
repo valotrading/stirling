@@ -112,4 +112,8 @@ public class Connect implements Command {
   private int port(Arguments arguments) throws CommandArgException {
     return arguments.requiredIntValue(ARGUMENT_PORT);
   }
+
+  public String[] getArgumentNames(ConsoleClient client) {
+    return new String[] { ARGUMENT_HOST + "=", ARGUMENT_PORT + "=" };
+  }
 }

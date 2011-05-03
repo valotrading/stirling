@@ -38,4 +38,8 @@ public class Reset implements Command {
     seq.reset(new Arguments(scanner).requiredIntValue(SEQUENCE_ARGUMENT_NAME));
     return seq;
   }
+
+  public String[] getArgumentNames(ConsoleClient client) {
+    return new String[] {SEQUENCE_ARGUMENT_NAME + "="};
+  }
 }

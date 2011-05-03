@@ -26,4 +26,8 @@ public class Logout implements Command {
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
     if (client.getSession() != null) client.getSession().logout(client.getConnection());
   }
+
+  public String[] getArgumentNames(ConsoleClient client) {
+    return new String[0];
+  }
 }

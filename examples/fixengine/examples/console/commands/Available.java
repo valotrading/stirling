@@ -24,4 +24,8 @@ public class Available implements Command {
         if (client.getSession() != null)
             client.getSession().setAvailable(true);
     }
+
+    public String[] getArgumentNames(ConsoleClient client) {
+        return new String[0];
+    }
 }

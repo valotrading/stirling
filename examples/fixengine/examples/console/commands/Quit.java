@@ -26,4 +26,8 @@ public class Quit implements Command {
   public void execute(ConsoleClient client, Scanner scanner) {
     client.quit();
   }
+
+  public String[] getArgumentNames(ConsoleClient client) {
+    return new String[0];
+  }
 }

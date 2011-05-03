@@ -15,6 +15,8 @@
  */
 package fixengine.examples.console.commands;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import fixengine.examples.console.Arguments;
@@ -37,10 +39,17 @@ public class StoreSequence implements Command {
   private Sequence seq(ArgumentNames name, Arguments arguments) throws CommandArgException {
     Sequence sequence = new Sequence();
     String value = arguments.value(name.value());
-    if (value != null) {
+    if (value != null)
       sequence.reset(arguments.requiredIntValue(name.value()));
-    }
     return sequence;
+  }
+
+  public String[] getArgumentNames(ConsoleClient client) {
+    List<String> fields = new ArrayList<String>();
+    for (ArgumentNames argument : ArgumentNames.values()) {
+      fields.add(argument.value() + "=");
+    }
+    return fields.toArray(new String[0]);
   }
 
   private enum ArgumentNames {

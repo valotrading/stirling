@@ -16,7 +16,10 @@
 package fixengine.examples.console.commands;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -41,6 +44,17 @@ public abstract class FixMessageCommand implements Command {
     parserClasses.add(StringFieldParser.class);
     parserClasses.add(FloatFieldParser.class);
     parserClasses.add(EnumFieldParser.class);
+  }
+
+  public String[] getArgumentNames(ConsoleClient client) {
+    List<String> fields = new ArrayList<String>();
+    Iterator<Field> fieldsIterator = newMessage(client).iterator();
+    while (fieldsIterator.hasNext()) {
+      Field field = fieldsIterator.next();
+      String prettyName = field.prettyName();
+      fields.add(prettyName.replaceAll("\\(([0-9]+)\\)", "="));
+    }
+    return fields.toArray(new String[0]);
   }
 
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {

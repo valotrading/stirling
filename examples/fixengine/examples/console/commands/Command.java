@@ -24,4 +24,6 @@ import fixengine.examples.console.ConsoleClient;
  */
 public interface Command {
   void execute(ConsoleClient client, Scanner scanner) throws CommandArgException;
+
+  String[] getArgumentNames(ConsoleClient client);
 }

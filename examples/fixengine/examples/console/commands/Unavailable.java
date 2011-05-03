@@ -24,4 +24,8 @@ public class Unavailable implements Command {
         if (client.getSession() != null)
             client.getSession().setAvailable(false);
     }
+
+    public String[] getArgumentNames(ConsoleClient client) {
+        return new String[0];
+    }
 }

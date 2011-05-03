@@ -15,6 +15,8 @@
  */
 package fixengine.examples.console.commands;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import fixengine.examples.console.Arguments;
@@ -36,5 +38,13 @@ public class Profile implements Command {
       client.setMessageFactory(new fixengine.messages.fix44.mbtrading.MessageFactory());
     else
       throw new CommandArgException("unknown profile: " + profile);
+  }
+
+  @Override public String[] getArgumentNames(ConsoleClient client) {
+    List<String> profiles = new ArrayList<String>();
+    profiles.add(ARGUMENT_NAME + "=" + DEFAULT_PROFILE);
+    profiles.add(ARGUMENT_NAME + "=" + BATS_PROFILE);
+    profiles.add(ARGUMENT_NAME + "=" + MB_TRADING_PROFILE);
+    return profiles.toArray(new String[0]);
   }
 }
