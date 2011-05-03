@@ -242,7 +242,7 @@ class OrderModificationRequest(header: MessageHeader) extends AbstractMessage(he
 }
 
 class TradingSessionStatus(header: MessageHeader) extends AbstractMessage(header) with TradingSessionStatusTrait {
-  field(TradeSesReqID.Tag)
+  field(TradeSesReqID.Tag, Required.NO)
   field(TradingSessionID.Tag, Required.NO)
   field(TradSesStatus.Tag, Required.NO)
   field(TradingSessionSubID.Tag, Required.NO)
