@@ -24,6 +24,7 @@ import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
+import fixengine.examples.console.Arguments;
 import fixengine.examples.console.ConsoleClient;
 import fixengine.messages.DefaultMessageComparator;
 import fixengine.messages.DefaultMessageVisitor;
@@ -38,6 +39,8 @@ import silvertip.Connection;
 
 public class Connect implements Command {
   private static final Logger logger = Logger.getLogger("ConsoleClient");
+  private static final String ARGUMENT_PORT = "Port";
+  private static final String ARGUMENT_HOST = "Host";
 
   static {
     logger.setUseParentHandlers(false);
@@ -49,8 +52,9 @@ public class Connect implements Command {
   }
 
   public void execute(final ConsoleClient client, Scanner scanner) throws CommandArgException {
+    Arguments arguments = new Arguments(scanner);
     try {
-      Connection conn = Connection.connect(new InetSocketAddress(host(scanner), port(scanner)),
+      Connection conn = Connection.connect(new InetSocketAddress(host(arguments), port(arguments)),
           new FixMessageParser(), new Connection.Callback<FixMessage>() {
           @Override public void messages(Connection<FixMessage> conn, Iterator<FixMessage> messages) {
             while (messages.hasNext()) {
@@ -97,23 +101,15 @@ public class Connect implements Command {
     return HeartBtIntValue.seconds(30);
   }
 
-  private InetAddress host(Scanner scanner) throws CommandArgException {
-    if (!scanner.hasNext())
-      throw new CommandArgException("hostname must be specified");
+  private InetAddress host(Arguments arguments) throws CommandArgException {
     try {
-      return InetAddress.getByName(scanner.next());
+      return InetAddress.getByName(arguments.requiredValue(ARGUMENT_HOST));
     } catch (UnknownHostException e) {
       throw new CommandArgException("unknown hostname");
     }
   }
 
-  private int port(Scanner scanner) throws CommandArgException {
-    if (!scanner.hasNext())
-      throw new CommandArgException("port must be specified");
-    try {
-      return Integer.parseInt(scanner.next());
-    } catch (NumberFormatException e) {
-      throw new CommandArgException("invalid port");
-    }
+  private int port(Arguments arguments) throws CommandArgException {
+    return arguments.requiredIntValue(ARGUMENT_PORT);
   }
 }

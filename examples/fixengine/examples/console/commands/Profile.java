@@ -17,15 +17,17 @@ package fixengine.examples.console.commands;
 
 import java.util.Scanner;
 
+import fixengine.examples.console.Arguments;
 import fixengine.examples.console.ConsoleClient;
 
 public class Profile implements Command {
   private static final String DEFAULT_PROFILE = "default";
   private static final String BATS_PROFILE = "bats-europe";
   private static final String MB_TRADING_PROFILE = "mb-trading";
+  private static final String ARGUMENT_NAME = "Name";
 
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
-    String profile = profile(scanner);
+    String profile = new Arguments(scanner).requiredValue(ARGUMENT_NAME);
     if (profile.equals(DEFAULT_PROFILE))
       client.setMessageFactory(new fixengine.messages.fix42.DefaultMessageFactory());
     else if (profile.equals(BATS_PROFILE))
@@ -34,11 +36,5 @@ public class Profile implements Command {
       client.setMessageFactory(new fixengine.messages.fix44.mbtrading.MessageFactory());
     else
       throw new CommandArgException("unknown profile: " + profile);
-  }
-
-  private String profile(Scanner scanner) throws CommandArgException {
-    if (!scanner.hasNext())
-      throw new CommandArgException("profile must be specified");
-    return scanner.next().toLowerCase();
   }
 }

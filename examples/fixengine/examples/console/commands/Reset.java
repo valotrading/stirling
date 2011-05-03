@@ -17,6 +17,7 @@ package fixengine.examples.console.commands;
 
 import java.util.Scanner;
 
+import fixengine.examples.console.Arguments;
 import fixengine.session.Sequence;
 
 import fixengine.examples.console.ConsoleClient;
@@ -25,16 +26,16 @@ import fixengine.examples.console.ConsoleClient;
  * @author Karim Osman
  */
 public class Reset implements Command {
+  private static final String SEQUENCE_ARGUMENT_NAME = "SequenceNumber";
+
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
     if (client.getSession() != null)
       client.getSession().sequenceReset(client.getConnection(), sequence(scanner));
   }
 
   private Sequence sequence(Scanner scanner) throws CommandArgException {
-    if (!scanner.hasNextInt())
-      throw new CommandArgException("sequence number must be specified and it must be an integer");
     Sequence seq = new Sequence();
-    seq.reset(scanner.nextInt());
+    seq.reset(new Arguments(scanner).requiredIntValue(SEQUENCE_ARGUMENT_NAME));
     return seq;
   }
 }

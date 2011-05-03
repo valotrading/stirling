@@ -17,6 +17,7 @@ package fixengine.examples.console.commands;
 
 import java.util.Scanner;
 
+import fixengine.examples.console.Arguments;
 import fixengine.examples.console.ConsoleClient;
 import fixengine.session.Sequence;
 
@@ -25,33 +26,37 @@ import fixengine.session.Sequence;
  */
 public class StoreSequence implements Command {
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
-    client.getSessionStore().resetOutgoingSeq(senderCompId(scanner), targetCompId(scanner),
-        incomingSeq(scanner), outgoingSeq(scanner));
+    Arguments arguments = new Arguments(scanner);
+    String senderCompId = arguments.requiredValue(ArgumentNames.SENDER_COMP_ID.value());
+    String targetCompId = arguments.requiredValue(ArgumentNames.TARGET_COMP_ID.value());
+    Sequence incomingSeq = seq(ArgumentNames.INCOMING_SEQ, arguments);
+    Sequence outgoingSeq = seq(ArgumentNames.OUTGOING_SEQ, arguments);
+    client.getSessionStore().resetOutgoingSeq(senderCompId, targetCompId, incomingSeq, outgoingSeq);
   }
 
-  private String senderCompId(Scanner scanner) throws CommandArgException {
-    if (!scanner.hasNext())
-      throw new CommandArgException("senderCompId must be specified");
-    return scanner.next();
+  private Sequence seq(ArgumentNames name, Arguments arguments) throws CommandArgException {
+    Sequence sequence = new Sequence();
+    String value = arguments.value(name.value());
+    if (value != null) {
+      sequence.reset(arguments.requiredIntValue(name.value()));
+    }
+    return sequence;
   }
 
-  private String targetCompId(Scanner scanner) throws CommandArgException {
-    if (!scanner.hasNext())
-      throw new CommandArgException("targetCompId must be specified");
-    return scanner.next();
-  }
+  private enum ArgumentNames {
+    SENDER_COMP_ID("SenderCompID"),
+    TARGET_COMP_ID("TargetCompId"),
+    INCOMING_SEQ("IncomingSeq"),
+    OUTGOING_SEQ("OutgoingSeq");
 
-  private Sequence incomingSeq(Scanner scanner) throws CommandArgException {
-    Sequence incomingSeq = new Sequence();
-    if (scanner.hasNextInt()) incomingSeq.reset(scanner.nextInt());
-    return incomingSeq;
+    private String value;
 
-  }
+    private ArgumentNames(String value) {
+      this.value = value;
+    }
 
-  private Sequence outgoingSeq(Scanner scanner) throws CommandArgException {
-    Sequence outgoingSeq = new Sequence();
-    if (scanner.hasNextInt()) outgoingSeq.reset(scanner.nextInt());
-    return outgoingSeq;
-
+    public String value() {
+      return value;
+    }
   }
 }

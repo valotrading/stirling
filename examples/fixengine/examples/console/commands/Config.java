@@ -18,27 +18,25 @@ package fixengine.examples.console.commands;
 import java.util.Scanner;
 
 import fixengine.Version;
+import fixengine.examples.console.Arguments;
 import fixengine.examples.console.ConsoleClient;
 
 public class Config implements Command {
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
-    client.setConfig(config(scanner));
+    client.setConfig(config(new Arguments(scanner)));
   }
 
-  private fixengine.Config config(Scanner scanner) throws CommandArgException {
+  private fixengine.Config config(Arguments arguments) throws CommandArgException {
     fixengine.Config config = new fixengine.Config();
-    config.setVersion(version(scanner));
-    config.setSenderCompId(senderCompID(scanner));
-    config.setTargetCompId(targetCompID(scanner));
-    config.setSenderSubID(senderSubID(scanner));
-    config.setTargetSubID(targetSubID(scanner));
+    config.setVersion(version(arguments.requiredValue(ArgumentNames.VERSION.value())));
+    config.setSenderCompId(arguments.requiredValue(ArgumentNames.SENDER_COMP_ID.value()));
+    config.setTargetCompId(arguments.requiredValue(ArgumentNames.TARGET_COMP_ID.value()));
+    config.setSenderSubID(arguments.value(ArgumentNames.SENDER_SUB_ID.value()));
+    config.setTargetSubID(arguments.value(ArgumentNames.TARGET_SUB_ID.value()));
     return config;
   }
 
-  private Version version(Scanner scanner) throws CommandArgException {
-    if (!scanner.hasNext())
-      throw new CommandArgException("version must be specified");
-    String value = scanner.next();
+  private Version version(String value) throws CommandArgException {
     for (Version version : Version.values()) {
       if (version.value().equals(value.toUpperCase())) {
         return version;
@@ -47,27 +45,21 @@ public class Config implements Command {
     throw new CommandArgException("unknown version: '" + value + "'");
   }
 
-  private String senderCompID(Scanner scanner) throws CommandArgException {
-    if (!scanner.hasNext())
-      throw new CommandArgException("senderCompID must be specified");
-    return scanner.next();
-  }
+  private enum ArgumentNames {
+    SENDER_COMP_ID("SenderCompID"),
+    TARGET_COMP_ID("TargetCompId"),
+    SENDER_SUB_ID("SenderSubID"),
+    TARGET_SUB_ID("TargetSubID"),
+    VERSION("Version");
 
-  private String targetCompID(Scanner scanner) throws CommandArgException {
-    if (!scanner.hasNext())
-      throw new CommandArgException("targetCompID must be specified");
-    return scanner.next();
-  }
+    private String value;
 
-  private String senderSubID(Scanner scanner) throws CommandArgException {
-    if (!scanner.hasNext())
-      return null;
-    return scanner.next();
-  }
+    private ArgumentNames(String value) {
+      this.value = value;
+    }
 
-  private String targetSubID(Scanner scanner) throws CommandArgException {
-    if (!scanner.hasNext())
-      return null;
-    return scanner.next();
+    public String value() {
+      return value;
+    }
   }
 }

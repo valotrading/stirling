@@ -25,6 +25,7 @@
     <path refid="lib.path.id"/>
     <pathelement location="${main.build}"/>
     <pathelement location="${test.build}"/>
+    <pathelement location="${examples.build}"/>
   </path>
   <!-- Automatic installation of Ivy -->
   <property name="ivy.install.version" value="2.2.0"/>
@@ -66,7 +67,7 @@
   <target name="compile-main" depends="init">
     <scalacjavac srcdir="${main.src}" destdir="${main.build}" classpathref="main.path.id"/>
   </target>
-  <target name="compile-test" depends="compile-main">
+  <target name="compile-test" depends="compile-main, compile-examples">
     <scalacjavac srcdir="${test.src}" destdir="${test.build}" classpathref="test.path.id"/>
   </target>
   <target name="compile-examples" depends="compile-main">
