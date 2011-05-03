@@ -57,7 +57,7 @@ public class Config implements Command {
 
   private enum ArgumentNames {
     SENDER_COMP_ID("SenderCompID"),
-    TARGET_COMP_ID("TargetCompId"),
+    TARGET_COMP_ID("TargetCompID"),
     SENDER_SUB_ID("SenderSubID"),
     TARGET_SUB_ID("TargetSubID"),
     VERSION("Version");
