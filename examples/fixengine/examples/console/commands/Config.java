@@ -44,7 +44,7 @@ public class Config implements Command {
         return version;
       }
     }
-    throw new CommandArgException("unknown version: '%s'".format(value));
+    throw new CommandArgException("unknown version: '" + value + "'");
   }
 
   private String senderCompID(Scanner scanner) throws CommandArgException {
