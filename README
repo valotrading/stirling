@@ -10,6 +10,21 @@ created automatically by fixengine.
 
   $ $MONGODB_HOME/bin/mongod --dbpath /path/to/my/data/dir
 
+== Compiling
+
+1. Silvertip is required dependency. Checkout and install Silvertip to your
+   local Maven repository from https://github.com/penberg/silvertip/
+
+  $ git clone https://github.com/penberg/silvertip.git
+  $ cd silvertip
+  $ mvn install
+
+2. Compile fixengine with Ant:
+
+  $ git clone https://github.com/penberg/fixengine.git
+  $ cd fixengine
+  $ ant
+
 == FIX Protocol Profiles
 
 In order to support messages of various FIX protocol profiles, fixengine allows
