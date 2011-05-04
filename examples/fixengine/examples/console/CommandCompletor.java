@@ -47,6 +47,7 @@ public class CommandCompletor implements Completor {
   private SimpleCompletor argumentCompletor() {
     return new SimpleCompletor("") {
       @Override
+      @SuppressWarnings("unchecked")
       public int complete(final String buffer, final int cursor, final List candidates) {
         int index = super.complete(buffer, cursor, candidates);
         for (int i = 0; i < candidates.size(); i++) {
