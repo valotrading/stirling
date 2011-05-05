@@ -44,7 +44,7 @@ public class Config implements Command {
         return version;
       }
     }
-    throw new CommandArgException("unknown version: '" + value + "'");
+    throw new CommandArgException(String.format("unknown version: '%s'", value));
   }
 
   public String[] getArgumentNames(ConsoleClient client) {
