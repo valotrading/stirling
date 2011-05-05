@@ -145,7 +145,8 @@ public class ConsoleClient {
       @Override
       public void commandLine(String commandLine) {
         Scanner scanner = new Scanner(commandLine);
-        Command cmd = getCommand(scanner.next().toLowerCase());
+        String commandName = scanner.next().toLowerCase();
+        Command cmd = getCommand(commandName);
         if (cmd == null) {
           error("unknown command");
           printHelp();
@@ -155,6 +156,7 @@ public class ConsoleClient {
             cmd.execute(ConsoleClient.this, scanner);
           } catch (CommandArgException e) {
             error(e.getMessage());
+            printUsage(commandName);
             prompt();
           }
         }
@@ -229,7 +231,7 @@ public class ConsoleClient {
           printUsage(commandName);
         else
           printHelp();
-        console.printf("\n> ");
+        prompt();
       }
 
       @Override
@@ -261,7 +263,7 @@ public class ConsoleClient {
         console.printf(argument + "<value>");
       console.printf(" ");
     }
-    console.printf("\n");
+    console.printf("\n\n");
   }
 
   private boolean argumentHasValue(String argument) {
@@ -283,5 +285,6 @@ public class ConsoleClient {
     for (String commandName : commands.keySet()) {
       printHelp(commandName);
     }
+    console.printf("\n");
   }
 }
