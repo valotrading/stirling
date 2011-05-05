@@ -116,4 +116,8 @@ public class Connect implements Command {
   public String[] getArgumentNames(ConsoleClient client) {
     return new String[] { ARGUMENT_HOST + "=", ARGUMENT_PORT + "=" };
   }
+
+  public String usage() {
+    return ARGUMENT_HOST + "=<host> " + ARGUMENT_PORT + "=<port> : Opens connection which will be used for sending messages.";
+  }
 }

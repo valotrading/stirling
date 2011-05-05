@@ -30,4 +30,8 @@ public class Logout implements Command {
   public String[] getArgumentNames(ConsoleClient client) {
     return new String[0];
   }
+
+  public String usage() {
+    return ": Creates and sends logout message.";
+  }
 }

@@ -55,6 +55,10 @@ public class Config implements Command {
     return fields.toArray(new String[0]);
   }
 
+  public String usage() {
+    return "Version=<version> SenderCompID=<id> TargetCompID=<id> <Argument=value>* : Configures client for sending FIX messages.";
+  }
+
   private enum ArgumentNames {
     SENDER_COMP_ID("SenderCompID"),
     TARGET_COMP_ID("TargetCompID"),

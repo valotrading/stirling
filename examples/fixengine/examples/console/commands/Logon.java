@@ -36,4 +36,8 @@ public class Logon extends FixMessageCommand {
   @Override protected boolean isModifyingOrderMessage() {
     return false;
   }
+
+  @Override public String usage() {
+    return "<Argument=value>* : Creates and sends logon message.";
+  }
 }

@@ -28,4 +28,8 @@ public class UpdateOrder extends FixMessageCommand {
   @Override protected boolean isModifyingOrderMessage() {
     return true;
   }
+
+  @Override public String usage() {
+    return "<Argument=value>* : Creates and sends order modification request message.";
+  }
 }

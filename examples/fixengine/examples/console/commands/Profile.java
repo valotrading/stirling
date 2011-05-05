@@ -47,4 +47,8 @@ public class Profile implements Command {
     profiles.add(ARGUMENT_NAME + "=" + MB_TRADING_PROFILE);
     return profiles.toArray(new String[0]);
   }
+
+  @Override public String usage() {
+    return ARGUMENT_NAME + "=<profile> : Sets profile which will be used for creating and sending messages.";
+  }
 }

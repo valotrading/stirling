@@ -42,4 +42,8 @@ public class Reset implements Command {
   public String[] getArgumentNames(ConsoleClient client) {
     return new String[] {SEQUENCE_ARGUMENT_NAME + "="};
   }
+
+  public String usage() {
+    return SEQUENCE_ARGUMENT_NAME + "=<number> : Sends sequence number reset message.";
+  }
 }

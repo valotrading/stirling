@@ -28,4 +28,8 @@ public class CancelOrder extends FixMessageCommand {
   @Override protected boolean isModifyingOrderMessage() {
     return true;
   }
+
+  @Override public String usage() {
+    return "OrigClOrdID=<id> <Argument=value>* : Creates and sends order cancel request message.";
+  }
 }

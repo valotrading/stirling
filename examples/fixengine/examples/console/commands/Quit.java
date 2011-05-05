@@ -30,4 +30,8 @@ public class Quit implements Command {
   public String[] getArgumentNames(ConsoleClient client) {
     return new String[0];
   }
+
+  @Override public String usage() {
+    return ": Terminates this console-client session.";
+  }
 }

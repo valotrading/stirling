@@ -28,4 +28,8 @@ public class Available implements Command {
     public String[] getArgumentNames(ConsoleClient client) {
         return new String[0];
     }
+
+    @Override public String usage() {
+        return ": Marks client session available.";
+    }
 }

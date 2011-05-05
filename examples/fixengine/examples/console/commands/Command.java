@@ -26,4 +26,6 @@ public interface Command {
   void execute(ConsoleClient client, Scanner scanner) throws CommandArgException;
 
   String[] getArgumentNames(ConsoleClient client);
+
+  String usage();
 }
