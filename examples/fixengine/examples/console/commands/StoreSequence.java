@@ -53,7 +53,7 @@ public class StoreSequence implements Command {
   }
 
   public String usage() {
-    return "SenderCompID=<id> TargetCompID=<id> <Argument=value>* : Resets outgoing sequence number.";
+    return "SenderCompID=<id> TargetCompID=<id> <Argument=value>* : Resets outgoing and outgoing sequence numbers.";
   }
 
   private enum ArgumentNames {
