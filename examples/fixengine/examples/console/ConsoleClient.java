@@ -145,7 +145,7 @@ public class ConsoleClient {
       @Override
       public void commandLine(String commandLine) {
         Scanner scanner = new Scanner(commandLine);
-        Command cmd = commands.get(scanner.next().toLowerCase());
+        Command cmd = getCommand(scanner.next().toLowerCase());
         if (cmd == null) {
           error("unknown command");
         } else {
@@ -163,6 +163,10 @@ public class ConsoleClient {
     events = Events.open(100);
     events.register(commandLine);
     events.dispatch();
+  }
+
+  private Command getCommand(String commandName) {
+    return commands.get(commandName);
   }
 
   private void error(String message) {
@@ -184,6 +188,8 @@ public class ConsoleClient {
     commands.put("cancel-order", new CancelOrder());
     commands.put("update-order", new UpdateOrder());
     commands.put("config", new Config());
+    commands.put("help", helpCommand());
+    commands.put("?", helpCommand());
   }
 
   private void initializeFixDirectory() {
@@ -201,6 +207,74 @@ public class ConsoleClient {
       commandLine.setHistory(new File(HISTORY_FILE));
     } catch (IOException e) {
       System.err.println("Unable to load console history");
+    }
+  }
+
+  private Command helpCommand() {
+    return new Command() {
+      @Override
+      public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
+        String commandName = null;
+        if (scanner.hasNext())
+          commandName = scanner.next();
+        console.printf("\n\n");
+        if (commands.containsKey(commandName))
+          printUsage(commandName);
+        else
+          printHelp();
+        console.printf("\n> ");
+      }
+
+      @Override
+      public String[] getArgumentNames(ConsoleClient client) {
+        return commands.keySet().toArray(new String[0]);
+      }
+
+      @Override
+      public String usage() {
+        return ": Lists all available commands. Use 'help <command>' to display help for a single command.";
+      }
+    };
+  }
+
+  private void printUsage(String commandName) {
+    console.printf("Usage:\n");
+    printHelp(commandName);
+    String[] argumentNames = getCommand(commandName).getArgumentNames(this);
+    if (argumentNames.length > 0)
+      printAllAvailableArguments(commandName, argumentNames);
+  }
+
+  private void printAllAvailableArguments(String commandName, String[] argumentNames) {
+    console.printf("\nAll available arguments for '" + commandName + "': ");
+    for (String argument : argumentNames) {
+      if (argumentHasValue(argument))
+        console.printf(argument);
+      else
+        console.printf(argument + "<value>");
+      console.printf(" ");
+    }
+    console.printf("\n");
+  }
+
+  private boolean argumentHasValue(String argument) {
+    return argument.indexOf("=") != argument.length() - 1;
+  }
+
+  private void printHelp(String commandName) {
+    Command command = getCommand(commandName);
+    StringBuilder builder = new StringBuilder("  ");
+    builder.append(commandName);
+    builder.append(" ");
+    builder.append(command.usage());
+    builder.append("\n");
+    console.printf(builder.toString());
+  }
+
+  private void printHelp() {
+    console.printf("Available commands:\n");
+    for (String commandName : commands.keySet()) {
+      printHelp(commandName);
     }
   }
 }
