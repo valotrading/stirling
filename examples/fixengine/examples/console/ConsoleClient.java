@@ -147,12 +147,12 @@ public class ConsoleClient {
         Scanner scanner = new Scanner(commandLine);
         Command cmd = commands.get(scanner.next().toLowerCase());
         if (cmd == null) {
-          System.out.println("unknown command");
+          error("unknown command");
         } else {
           try {
             cmd.execute(ConsoleClient.this, scanner);
           } catch (CommandArgException e) {
-            console.printf(e.getMessage() + "\n");
+            error(e.getMessage());
           }
         }
       }
@@ -163,6 +163,10 @@ public class ConsoleClient {
     events = Events.open(100);
     events.register(commandLine);
     events.dispatch();
+  }
+
+  private void error(String message) {
+    console.printf("ERROR: " + message + "\n> ");
   }
 
   private void registerCommands() {
