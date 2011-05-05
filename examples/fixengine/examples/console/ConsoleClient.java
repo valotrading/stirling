@@ -148,11 +148,14 @@ public class ConsoleClient {
         Command cmd = getCommand(scanner.next().toLowerCase());
         if (cmd == null) {
           error("unknown command");
+          printHelp();
+          prompt();
         } else {
           try {
             cmd.execute(ConsoleClient.this, scanner);
           } catch (CommandArgException e) {
             error(e.getMessage());
+            prompt();
           }
         }
       }
@@ -170,7 +173,11 @@ public class ConsoleClient {
   }
 
   private void error(String message) {
-    console.printf("ERROR: " + message + "\n> ");
+    console.printf("ERROR: " + message + "\n");
+  }
+
+  private void prompt() {
+    console.printf("> ");
   }
 
   private void registerCommands() {
