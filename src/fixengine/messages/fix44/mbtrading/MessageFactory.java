@@ -30,8 +30,8 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
         message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequest.class);
         message(MsgTypeValue.LOGON, LogonMessage.class);
         message(NEW_ORDER_MULTILEG, NewOrderMultiLeg.class);
-        message(POSITION, RequestForPositions.class);
-        message(POSITION, PositionReportMessage.class);
+        message(REQUEST_FOR_POSITIONS, RequestForPositions.class);
+        message(POSITION_REPORT, PositionReportMessage.class);
         message(TRADING_SESSION_STATUS, TradingSessionStatus.class);
         message(NEWS_MESSAGE, NewsMessage.class);
         message(COLLATERAL_REPORT, CollateralReportMessage.class);
