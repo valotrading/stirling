@@ -1,0 +1,17 @@
+#!/usr/bin/Rscript --quiet
+
+args = commandArgs(trailingOnly = T)
+
+if (length(args) == 0) {
+  stop("Usage: perftest-plot CSV")
+}
+
+stats <- read.table(args[1], sep=",", header=F)
+x <- stats$V1 / 1000000
+
+png(filename="stats.png", width=1024, height=768)
+par(mfrow=c(2,2))
+plot(x, type="l", main="Latency (ms)", xlab="MsgSeqNum", ylab="Latency (ms)")
+hist(x[x < 1], breaks=100, main="0 ms < Latency (ms) < 1 ms", xlab="Latency (ms)")
+hist(x[x > 1 & x < 5], breaks=100, main="1 ms < Latency (ms) < 1 ms", xlab="Latency (ms)")
+hist(x[x > 5], breaks=100, main="Latency (ms) > 5 ms", xlab="Latency (ms)")
