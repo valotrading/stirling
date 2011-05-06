@@ -68,8 +68,7 @@ public class PerformanceTest implements Runnable {
             return new NonPersistentInMemorySessionStore();
         else if (name.equals("mongo"))
             return new MongoSessionStore("localhost", 27017);
-        else
-            return null;
+        return null;
     }
 
     private PerformanceTest(SessionStore sessionStore) {

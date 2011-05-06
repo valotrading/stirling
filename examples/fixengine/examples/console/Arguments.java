@@ -16,7 +16,6 @@
 package fixengine.examples.console;
 
 import fixengine.examples.console.commands.CommandArgException;
-import fixengine.examples.console.commands.Config;
 
 import java.util.HashMap;
 import java.util.Map;
