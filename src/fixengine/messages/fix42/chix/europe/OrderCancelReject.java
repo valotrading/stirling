@@ -15,18 +15,25 @@
  */
 package fixengine.messages.fix42.chix.europe;
 
-import fixengine.messages.MsgTypeValue;
+import fixengine.messages.MessageHeader;
+import fixengine.tags.fix42.ClOrdID;
+import fixengine.tags.fix42.CxlRejReason;
+import fixengine.tags.fix42.OrdStatus;
+import fixengine.tags.fix42.OrderID;
+import fixengine.tags.fix42.OrigClOrdID;
+import fixengine.tags.fix42.Text;
 
-public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
-    public MessageFactory() {
-        message(MsgTypeValue.EXECUTION_REPORT, ExecutionReport.class);
-        message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelReject.class);
-        message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingleMessage.class);
-        message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequestMessage.class);
-        message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequestMessage.class);
+public class OrderCancelReject extends fixengine.messages.fix42.OrderCancelReject {
+    public OrderCancelReject(MessageHeader header) {
+        super(header);
     }
 
-    @Override public String getProfile() {
-        return "chi-x";
+    @Override public void fields() {
+        field(ClOrdID.Tag());
+        field(OrderID.Tag());
+        field(OrdStatus.Tag());
+        field(OrigClOrdID.Tag());
+        field(Text.Tag());
+        field(CxlRejReason.Tag());
     }
 }

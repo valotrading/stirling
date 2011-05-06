@@ -19,12 +19,12 @@ import fixengine.messages.MsgTypeValue;
 
 public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
     public MessageFactory() {
-        message(MsgTypeValue.EXECUTION_REPORT, ExecutionReportMessage.class);
-        message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelRejectMessage.class);
+        message(MsgTypeValue.EXECUTION_REPORT, ExecutionReport.class);
+        message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelReject.class);
         message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingleMessage.class);
         message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequestMessage.class);
         message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequestMessage.class);
-        message(MsgTypeValue.ORDER_STATUS_REQUEST, OrderStatusRequestMessage.class);
+        message(MsgTypeValue.ORDER_STATUS_REQUEST, OrderStatusRequest.class);
     }
 
     @Override public String getProfile() {

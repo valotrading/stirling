@@ -15,19 +15,19 @@
  */
 package fixengine.messages;
 
-import fixengine.messages.fix42.AllocationMessage;
+import fixengine.messages.fix42.Allocation;
 import fixengine.messages.fix42.DontKnowTradeMessage;
-import fixengine.messages.fix42.OrderStatusRequestMessage;
+import fixengine.messages.fix42.OrderStatusRequest;
 
 /**
  * @author Pekka Enberg
  */
 public class DefaultMessageVisitor implements MessageVisitor {
-    @Override public void visit(ExecutionReportMessage message) {
+    @Override public void visit(ExecutionReport message) {
         defaultAction(message);
     }
 
-    @Override public void visit(HeartbeatMessage message) {
+    @Override public void visit(Heartbeat message) {
         defaultAction(message);
     }
 
@@ -35,7 +35,7 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(LogoutMessage message) {
+    @Override public void visit(Logout message) {
         defaultAction(message);
     }
 
@@ -47,19 +47,19 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(OrderMassCancelRequestMessage message) {
+    @Override public void visit(OrderMassCancelRequest message) {
         defaultAction(message);
     }
 
-    @Override public void visit(OrderMassCancelReportMessage message) {
+    @Override public void visit(OrderMassCancelReport message) {
         defaultAction(message);
     }
 
-    @Override public void visit(OrderMassStatusRequestMessage message) {
+    @Override public void visit(OrderMassStatusRequest message) {
         defaultAction(message);
     }
 
-    @Override public void visit(OrderCancelRejectMessage message) {
+    @Override public void visit(OrderCancelReject message) {
         defaultAction(message);
     }
 
@@ -67,27 +67,27 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(OrderCancelReplaceRequestMessage message) {
+    @Override public void visit(OrderCancelReplaceRequest message) {
         defaultAction(message);
     }
 
-    @Override public void visit(RejectMessage message) {
+    @Override public void visit(Reject message) {
         defaultAction(message);
     }
 
-    @Override public void visit(ResendRequestMessage message) {
+    @Override public void visit(ResendRequest message) {
         defaultAction(message);
     }
 
-    @Override public void visit(SequenceResetMessage message) {
+    @Override public void visit(SequenceReset message) {
         defaultAction(message);
     }
 
-    @Override public void visit(TestRequestMessage message) {
+    @Override public void visit(TestRequest message) {
         defaultAction(message);
     }
 
-    @Override public void visit(AllocationMessage message) {
+    @Override public void visit(Allocation message) {
         defaultAction(message);
     }
 
@@ -99,7 +99,7 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(OrderStatusRequestMessage message) {
+    @Override public void visit(OrderStatusRequest message) {
         defaultAction(message);
     }
 
@@ -107,11 +107,11 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(TradingSessionStatusRequestMessage message) {
+    @Override public void visit(TradingSessionStatusRequest message) {
         defaultAction(message);
     }
 
-    @Override public void visit(CollateralInquiryMessage message) {
+    @Override public void visit(CollateralInquiry message) {
         defaultAction(message);
     }
 
@@ -171,19 +171,19 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(CollateralReportMessage message) {
+    @Override public void visit(CollateralReport message) {
         defaultAction(message);
     }
 
-    @Override public void visit(CollateralInquiryAcknowledgmentMessage message) {
+    @Override public void visit(CollateralInquiryAcknowledgment message) {
         defaultAction(message);
     }
 
-    @Override public void visit(PositionReportMessage message) {
+    @Override public void visit(PositionReport message) {
         defaultAction(message);
     }
 
-    @Override public void visit(RequestForPositionAcknowledgmentMessage message) {
+    @Override public void visit(RequestForPositionAcknowledgment message) {
         defaultAction(message);
     }
 

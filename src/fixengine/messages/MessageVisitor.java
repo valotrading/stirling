@@ -15,37 +15,37 @@
  */
 package fixengine.messages;
 
-import fixengine.messages.fix42.AllocationMessage;
+import fixengine.messages.fix42.Allocation;
 import fixengine.messages.fix42.DontKnowTradeMessage;
-import fixengine.messages.fix42.OrderStatusRequestMessage;
+import fixengine.messages.fix42.OrderStatusRequest;
 
 /**
  * @author Pekka Enberg
  */
 public interface MessageVisitor {
-    void visit(ExecutionReportMessage message);
-    void visit(HeartbeatMessage message);
+    void visit(ExecutionReport message);
+    void visit(Heartbeat message);
     void visit(LogonMessage message);
-    void visit(LogoutMessage message);
+    void visit(Logout message);
     void visit(NewOrderSingleMessage message);
     void visit(OrderCancelRequestMessage message);
-    void visit(OrderMassCancelRequestMessage message);
-    void visit(OrderMassCancelReportMessage message);
-    void visit(OrderMassStatusRequestMessage message);
-    void visit(OrderCancelRejectMessage message);
-    void visit(OrderCancelReplaceRequestMessage message);
+    void visit(OrderMassCancelRequest message);
+    void visit(OrderMassCancelReport message);
+    void visit(OrderMassStatusRequest message);
+    void visit(OrderCancelReject message);
+    void visit(OrderCancelReplaceRequest message);
     void visit(OrderModificationRequestMessage message);
-    void visit(RejectMessage message);
-    void visit(ResendRequestMessage message);
-    void visit(SequenceResetMessage message);
-    void visit(TestRequestMessage message);
-    void visit(AllocationMessage message);
+    void visit(Reject message);
+    void visit(ResendRequest message);
+    void visit(SequenceReset message);
+    void visit(TestRequest message);
+    void visit(Allocation message);
     void visit(DontKnowTradeMessage message);
     void visit(UserDefinedMessage message);
-    void visit(OrderStatusRequestMessage message);
+    void visit(OrderStatusRequest message);
     void visit(NewOrderMultiLegMessage message);
-    void visit(TradingSessionStatusRequestMessage message);
-    void visit(CollateralInquiryMessage message);
+    void visit(TradingSessionStatusRequest message);
+    void visit(CollateralInquiry message);
     void visit(RequestForPositionsMessage message);
     void visit(TradingSessionStatusMessage message);
     void visit(TradeCaptureReport message);
@@ -60,8 +60,8 @@ public interface MessageVisitor {
     void visit(BusinessMessageReject message);
     void visit(DontKnowTrade message);
     void visit(News message);
-    void visit(CollateralReportMessage message);
-    void visit(CollateralInquiryAcknowledgmentMessage message);
-    void visit(PositionReportMessage message);
-    void visit(RequestForPositionAcknowledgmentMessage message);
+    void visit(CollateralReport message);
+    void visit(CollateralInquiryAcknowledgment message);
+    void visit(PositionReport message);
+    void visit(RequestForPositionAcknowledgment message);
 }

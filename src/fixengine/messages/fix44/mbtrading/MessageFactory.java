@@ -18,11 +18,10 @@ package fixengine.messages.fix44.mbtrading;
 import static fixengine.messages.fix44.mbtrading.MsgTypeValue.*;
 
 import fixengine.messages.MsgTypeValue;
-import fixengine.messages.fix44.mbtrading.LogonMessage;
 
 public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
     public MessageFactory() {
-        message(MsgTypeValue.EXECUTION_REPORT, ExecutionReportMessage.class);
+        message(MsgTypeValue.EXECUTION_REPORT, ExecutionReport.class);
         message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequest.class);
         message(MsgTypeValue.BUSINESS_MESSAGE_REJECT, BusinessMessageReject.class);
         message(MsgTypeValue.LOGON, Logon.class);
@@ -31,12 +30,12 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
         message(MsgTypeValue.LOGON, LogonMessage.class);
         message(NEW_ORDER_MULTILEG, NewOrderMultiLeg.class);
         message(REQUEST_FOR_POSITIONS, RequestForPositions.class);
-        message(POSITION_REPORT, PositionReportMessage.class);
+        message(POSITION_REPORT, PositionReport.class);
         message(TRADING_SESSION_STATUS, TradingSessionStatus.class);
         message(NEWS_MESSAGE, NewsMessage.class);
-        message(COLLATERAL_REPORT, CollateralReportMessage.class);
-        message(COLLATERAL_INQUIRY_ACKNOWLEDGMENT, CollateralInquiryAcknowledgmentMessage.class);
-        message(REQUEST_FOR_POSITION_ACKNOWLEDGMENT, RequestForPositionAcknowledgmentMessage.class);
+        message(COLLATERAL_REPORT, CollateralReport.class);
+        message(COLLATERAL_INQUIRY_ACKNOWLEDGMENT, CollateralInquiryAcknowledgment.class);
+        message(REQUEST_FOR_POSITION_ACKNOWLEDGMENT, RequestForPositionAcknowledgment.class);
     }
 
     @Override public String getProfile() {

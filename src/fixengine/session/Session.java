@@ -35,9 +35,9 @@ import org.joda.time.DateTime;
 import fixengine.Config;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.FixMessage;
-import fixengine.messages.HeartbeatMessage;
+import fixengine.messages.Heartbeat;
 import fixengine.messages.LogonMessage;
-import fixengine.messages.LogoutMessage;
+import fixengine.messages.Logout;
 import fixengine.messages.Message;
 import fixengine.messages.MessageComparator;
 import fixengine.messages.MessageFactory;
@@ -45,10 +45,10 @@ import fixengine.messages.MessageValidator;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.ParseException;
 import fixengine.messages.Parser;
-import fixengine.messages.RejectMessage;
-import fixengine.messages.ResendRequestMessage;
-import fixengine.messages.SequenceResetMessage;
-import fixengine.messages.TestRequestMessage;
+import fixengine.messages.Reject;
+import fixengine.messages.ResendRequest;
+import fixengine.messages.SequenceReset;
+import fixengine.messages.TestRequest;
 import fixengine.messages.Validator.ErrorHandler;
 import fixengine.messages.Validator.ErrorLevel;
 import fixengine.messages.fix42.BusinessMessageReject;
@@ -117,7 +117,7 @@ public class Session {
             if (message.getMsgType().equals(SEQUENCE_RESET)) {
                 Parser.parse(messageFactory, message, new Parser.Callback() {
                     @Override public void message(Message sequenceReset) {
-                        if (!processSequenceReset(conn, (SequenceResetMessage) sequenceReset))
+                        if (!processSequenceReset(conn, (SequenceReset) sequenceReset))
                             processMessage(conn, message, visitor);
                     }
 
@@ -155,14 +155,14 @@ public class Session {
         }
     }
 
-    private boolean processSequenceReset(Connection conn, SequenceResetMessage message) {
+    private boolean processSequenceReset(Connection conn, SequenceReset message) {
         if (message.getBoolean(GapFillFlag.Tag())) {
             return processSequenceResetGapFill(conn, message);
         }
         return processSequenceResetReset(conn, message);
     }
 
-    private boolean processSequenceResetGapFill(Connection conn, SequenceResetMessage message) {
+    private boolean processSequenceResetGapFill(Connection conn, SequenceReset message) {
         if (message.getMsgSeqNum() < incomingQueue.nextSeqNum()) {
             if (!message.getPossDupFlag()) {
                 String text = "MsgSeqNum too low, expecting " + incomingQueue.nextSeqNum() + " but received " + message.getMsgSeqNum();
@@ -174,7 +174,7 @@ public class Session {
         return false;
     }
 
-    private boolean processSequenceResetReset(Connection conn, SequenceResetMessage message) {
+    private boolean processSequenceResetReset(Connection conn, SequenceReset message) {
         if (message.getNewSeqNo() == message.getMsgSeqNum()) {
             getLogger().warning("NewSeqNo(36)=" + message.getNewSeqNo() + " is equal to expected MsgSeqNum(34)=" + message.getMsgSeqNum());
         } else if (message.getNewSeqNo() < message.getMsgSeqNum()) {
@@ -306,15 +306,15 @@ public class Session {
     private void process(final Connection conn, Message message, final MessageVisitor visitor) {
         if (authenticated) {
             message.apply(new DefaultMessageVisitor() {
-                @Override public void visit(TestRequestMessage message) {
+                @Override public void visit(TestRequest message) {
                     store.saveIncomingMessage(Session.this, message);
                     incomingQueue.skip(message.getMsgSeqNum());
-                    HeartbeatMessage heartbeat = (HeartbeatMessage) messageFactory.create(HEARTBEAT);
+                    Heartbeat heartbeat = (Heartbeat) messageFactory.create(HEARTBEAT);
                     heartbeat.setString(TestReqID.Tag(), message.getString(TestReqID.Tag()));
                     send(conn, heartbeat);
                 }
 
-                @Override public void visit(ResendRequestMessage message) {
+                @Override public void visit(ResendRequest message) {
                     store.saveIncomingMessage(Session.this, message);
                     if (outgoingQueue.isEmpty()) {
                         incomingQueue.skip(message.getMsgSeqNum());
@@ -333,12 +333,12 @@ public class Session {
                     }
                 }
 
-                @Override public void visit(SequenceResetMessage message) {
+                @Override public void visit(SequenceReset message) {
                     store.saveIncomingMessage(Session.this, message);
                     processSeqReset(conn, message);
                 }
 
-                @Override public void visit(LogoutMessage message) {
+                @Override public void visit(Logout message) {
                     store.saveIncomingMessage(Session.this, message);
                     incomingQueue.skip(message.getMsgSeqNum());
                     if (!initiatedLogout)
@@ -373,13 +373,13 @@ public class Session {
     }
 
     private void sendResendRequest(Connection conn, int beginSeqNo, int endSeqNo) {
-        ResendRequestMessage resendReq = (ResendRequestMessage) messageFactory.create(RESEND_REQUEST);
+        ResendRequest resendReq = (ResendRequest) messageFactory.create(RESEND_REQUEST);
         resendReq.setInteger(BeginSeqNo.Tag(), beginSeqNo);
         resendReq.setInteger(EndSeqNo.Tag(), endSeqNo);
         send(conn, resendReq);
     }
 
-    private void processSeqReset(Connection conn, SequenceResetMessage message) {
+    private void processSeqReset(Connection conn, SequenceReset message) {
         int newSeqNo = message.getInteger(NewSeqNo.Tag());
         if (newSeqNo <= message.getMsgSeqNum()) {
             sessionReject(conn, message.getMsgSeqNum(), SessionRejectReason.InvalidValue(),
@@ -394,7 +394,7 @@ public class Session {
     }
 
     private void sessionReject(Connection conn, int msgSeqNum, Value<Integer> reason, String text) {
-        RejectMessage reject = (RejectMessage) messageFactory.create(REJECT);
+        Reject reject = (Reject) messageFactory.create(REJECT);
         reject.setInteger(RefSeqNo.Tag(), msgSeqNum);
         reject.setEnum(SessionRejectReason.Tag(), reason);
         reject.setString(Text.Tag(), text);
@@ -411,7 +411,7 @@ public class Session {
     }
 
     private void terminate(Connection conn, String text) {
-        LogoutMessage logout = (LogoutMessage) messageFactory.create(LOGOUT);
+        Logout logout = (Logout) messageFactory.create(LOGOUT);
         logout.setString(Text.Tag(), text);
         send(conn, logout);
         conn.close();
@@ -447,7 +447,7 @@ public class Session {
     }
 
     public void sequenceReset(Connection conn, Sequence seq) {
-        SequenceResetMessage message = (SequenceResetMessage) messageFactory.create(SEQUENCE_RESET);
+        SequenceReset message = (SequenceReset) messageFactory.create(SEQUENCE_RESET);
         message.setHeaderConfig(config);
         message.setSendingTime(currentTime());
         message.setMsgSeqNum(seq.peek());
@@ -476,7 +476,7 @@ public class Session {
     }
 
     private void testRequest(Connection conn) {
-        TestRequestMessage req = (TestRequestMessage) messageFactory.create(TEST_REQUEST);
+        TestRequest req = (TestRequest) messageFactory.create(TEST_REQUEST);
         req.setString(TestReqID.Tag(), Long.toString(++testReqId));
         send(conn, req);
     }

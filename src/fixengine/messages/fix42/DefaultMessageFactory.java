@@ -22,18 +22,18 @@ import java.util.ArrayList;
 
 import org.apache.commons.lang.CharUtils;
 
-import fixengine.messages.HeartbeatMessage;
+import fixengine.messages.Heartbeat;
 import fixengine.messages.InvalidMsgTypeException;
-import fixengine.messages.LogoutMessage;
+import fixengine.messages.Logout;
 import fixengine.messages.Message;
 import fixengine.messages.MessageFactory;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MsgTypeValue;
-import fixengine.messages.RejectMessage;
-import fixengine.messages.ResendRequestMessage;
-import fixengine.messages.SequenceResetMessage;
+import fixengine.messages.Reject;
+import fixengine.messages.ResendRequest;
+import fixengine.messages.SequenceReset;
 import fixengine.messages.Tag;
-import fixengine.messages.TestRequestMessage;
+import fixengine.messages.TestRequest;
 import fixengine.messages.UnsupportedMsgTypeException;
 import fixengine.messages.fix42.BusinessMessageReject;
 
@@ -44,20 +44,20 @@ public class DefaultMessageFactory implements MessageFactory {
 
     public DefaultMessageFactory() {
         message(MsgTypeValue.LOGON, LogonMessage.class);
-        message(MsgTypeValue.LOGOUT, LogoutMessage.class);
-        message(MsgTypeValue.HEARTBEAT, HeartbeatMessage.class);
-        message(MsgTypeValue.RESEND_REQUEST, ResendRequestMessage.class);
-        message(MsgTypeValue.SEQUENCE_RESET, SequenceResetMessage.class);
-        message(MsgTypeValue.TEST_REQUEST, TestRequestMessage.class);
-        message(MsgTypeValue.REJECT, RejectMessage.class);
+        message(MsgTypeValue.LOGOUT, Logout.class);
+        message(MsgTypeValue.HEARTBEAT, Heartbeat.class);
+        message(MsgTypeValue.RESEND_REQUEST, ResendRequest.class);
+        message(MsgTypeValue.SEQUENCE_RESET, SequenceReset.class);
+        message(MsgTypeValue.TEST_REQUEST, TestRequest.class);
+        message(MsgTypeValue.REJECT, Reject.class);
         message(MsgTypeValue.BUSINESS_MESSAGE_REJECT, BusinessMessageReject.class);
-        message(MsgTypeValue.EXECUTION_REPORT, ExecutionReportMessage.class);
-        message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelRejectMessage.class);
+        message(MsgTypeValue.EXECUTION_REPORT, ExecutionReport.class);
+        message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelReject.class);
         message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingleMessage.class);
         message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequestMessage.class);
         message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequestMessage.class);
-        message(MsgTypeValue.ORDER_STATUS_REQUEST, OrderStatusRequestMessage.class);
-        message(MsgTypeValue.ALLOCATION_INSTRUCTION, AllocationMessage.class);
+        message(MsgTypeValue.ORDER_STATUS_REQUEST, OrderStatusRequest.class);
+        message(MsgTypeValue.ALLOCATION_INSTRUCTION, Allocation.class);
     }
 
     @Override public Message create(String msgType) {
