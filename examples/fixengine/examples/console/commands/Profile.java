@@ -26,6 +26,7 @@ public class Profile implements Command {
   private static final String DEFAULT_PROFILE = "default";
   private static final String BATS_PROFILE = "bats-europe";
   private static final String MB_TRADING_PROFILE = "mb-trading";
+  private static final String BURGUNDY_PROFILE = "burgundy";
   private static final String ARGUMENT_NAME = "Name";
 
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
@@ -36,6 +37,8 @@ public class Profile implements Command {
       client.setMessageFactory(new fixengine.messages.fix42.bats.europe.MessageFactory());
     else if (profile.equals(MB_TRADING_PROFILE))
       client.setMessageFactory(new fixengine.messages.fix44.mbtrading.MessageFactory());
+    else if (profile.equals(BURGUNDY_PROFILE))
+      client.setMessageFactory(new fixengine.messages.fix44.burgundy.MessageFactory());
     else
       throw new CommandArgException("unknown profile: " + profile);
   }
@@ -45,6 +48,7 @@ public class Profile implements Command {
     profiles.add(ARGUMENT_NAME + "=" + DEFAULT_PROFILE);
     profiles.add(ARGUMENT_NAME + "=" + BATS_PROFILE);
     profiles.add(ARGUMENT_NAME + "=" + MB_TRADING_PROFILE);
+    profiles.add(ARGUMENT_NAME + "=" + BURGUNDY_PROFILE);
     return profiles.toArray(new String[0]);
   }
 
