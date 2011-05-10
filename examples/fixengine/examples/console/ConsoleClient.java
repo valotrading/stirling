@@ -15,12 +15,16 @@
  */
 package fixengine.examples.console;
 
+import java.io.BufferedReader;
 import java.io.Console;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 import fixengine.session.Session;
 import fixengine.session.store.MongoSessionStore;
@@ -75,7 +79,31 @@ public class ConsoleClient {
     } else {
       MongoSessionStore sessionStore = new MongoSessionStore("localhost", 27017);
       console.printf("FIX console started. Use \"help\" for a list of available commands. Also, tab completion is available.\n");
-      new ConsoleClient(console, sessionStore).run();
+      new ConsoleClient(console, sessionStore).run(getInitialCommandLines(args));
+    }
+  }
+
+  private static List<String> getInitialCommandLines(String[] args) throws IOException {
+    if (args.length > 0)
+      return readInitialCommandLines(args[0]);
+    return new ArrayList<String>();
+  }
+
+  private static List<String> readInitialCommandLines(String filename) throws IOException {
+    BufferedReader reader = null;
+    String line = null;
+    try {
+      reader = new BufferedReader(new FileReader(filename));
+      List<String> commandLines = new ArrayList<String>();
+      while ((line = reader.readLine()) != null) {
+        if (line.startsWith("#"))
+          continue;
+        commandLines.add(line);
+      }
+      return commandLines;
+    } finally {
+      if (reader != null)
+        reader.close();
     }
   }
 
@@ -141,7 +169,20 @@ public class ConsoleClient {
     events.stop();
   }
 
-  public void run() throws IOException {
+  public void run(List<String> initialCommandLines) throws IOException {
+    events = Events.open(100);
+    for (String commandLine : initialCommandLines) {
+      Scanner scanner = new Scanner(commandLine);
+      String commandName = scanner.next().toLowerCase();
+      Command cmd = getCommand(commandName);
+      if (cmd == null)
+        continue;
+      try {
+        cmd.execute(ConsoleClient.this, scanner);
+      } catch (CommandArgException e) {
+        error(e.getMessage());
+      }
+    }
     final CommandLine commandLine = CommandLine.open(new CommandLine.Callback() {
       @Override
       public void commandLine(String commandLine) {
@@ -166,7 +207,6 @@ public class ConsoleClient {
     initializeFixDirectory();
     registerHistory(commandLine);
     commandLine.addCompletor(new CommandCompletor(this, commands));
-    events = Events.open(100);
     events.register(commandLine);
     events.dispatch();
   }
