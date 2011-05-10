@@ -74,7 +74,7 @@ public class ConsoleClient {
       System.err.println("no console");
     } else {
       MongoSessionStore sessionStore = new MongoSessionStore("localhost", 27017);
-      console.printf("FIX console started. Use \"help\" for a list of available commands.\n");
+      console.printf("FIX console started. Use \"help\" for a list of available commands. Also, tab completion is available.\n");
       new ConsoleClient(console, sessionStore).run();
     }
   }
