@@ -27,7 +27,7 @@ import fixengine.tags.fix42.ExecBroker;
 import fixengine.tags.fix42.ExecID;
 import fixengine.tags.fix42.ExecInst;
 import fixengine.tags.fix42.ExecTransType;
-import fixengine.tags.fix42.ExecType;
+import fixengine.tags.fix44.ExecType;
 import fixengine.tags.fix42.ExpireTime;
 import fixengine.tags.fix42.FutSettDate;
 import fixengine.tags.fix42.LastPx;

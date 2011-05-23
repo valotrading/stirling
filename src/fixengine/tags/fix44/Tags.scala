@@ -37,6 +37,25 @@ import fixengine.messages.{
 }
 
 object Headline extends StringTag(148)
+object ExecType extends EnumTag[Character](150) {
+  val New = Value('0')
+  val DoneForDay = Value('3')
+  val Canceled = Value('4')
+  val Replace = Value('5')
+  val PendingCancel = Value('6')
+  val Stopped = Value('7')
+  val Rejected = Value('8')
+  val Suspended = Value('9')
+  val PendingNew = Value('A')
+  val Calculated = Value('B')
+  val Expired = Value('C')
+  val Restated = Value('D')
+  val PendingReplace = Value('E')
+  val Trade = Value('F')
+  val TradeCorrect = Value('G')
+  val TradeCancel = Value('H')
+  val OrderStatus = Value('I')
+}
 object QuoteAckStatus extends EnumTag[Integer](297) {
   val Accpt = Value(0)
   val CxlSym = Value(1)
