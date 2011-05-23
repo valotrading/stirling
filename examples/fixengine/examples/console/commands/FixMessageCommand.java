@@ -193,7 +193,7 @@ public abstract class FixMessageCommand implements Command {
 
     @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
       try {
-        AbstractField<Double> f = (AbstractField<Double>) msg.lookup(tagClass(field).newInstance());
+        AbstractField<Double> f = (AbstractField<Double>) msg.lookup(messageFactory.createTag(tag(field)));
         f.setValue(Double.valueOf(value(field)));
       } catch (Exception e) {
         throw new RuntimeException(e);
@@ -212,7 +212,7 @@ public abstract class FixMessageCommand implements Command {
 
     @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
       try {
-        AbstractField<Integer> f = (AbstractField<Integer>) msg.lookup(tagClass(field).newInstance());
+        AbstractField<Integer> f = (AbstractField<Integer>) msg.lookup(messageFactory.createTag(tag(field)));
         f.setValue(Integer.valueOf(value(field)));
       } catch (Exception e) {
         throw new RuntimeException(e);
