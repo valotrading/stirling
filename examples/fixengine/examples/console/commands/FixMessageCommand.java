@@ -30,6 +30,7 @@ import fixengine.messages.AbstractField;
 import fixengine.messages.EnumField;
 import fixengine.messages.Field;
 import fixengine.messages.FloatField;
+import fixengine.messages.PriceField;
 import fixengine.messages.QtyField;
 import fixengine.messages.IntegerField;
 import fixengine.messages.Value;
@@ -48,6 +49,7 @@ public abstract class FixMessageCommand implements Command {
     parserClasses.add(StringFieldParser.class);
     parserClasses.add(FloatFieldParser.class);
     parserClasses.add(QtyFieldParser.class);
+    parserClasses.add(PriceFieldParser.class);
     parserClasses.add(EnumFieldParser.class);
   }
 
@@ -214,6 +216,16 @@ public abstract class FixMessageCommand implements Command {
 
     @Override protected Class<? extends Field> getFieldClass() {
       return QtyField.class;
+    }
+  }
+
+  private static class PriceFieldParser extends FloatFieldParser {
+    public PriceFieldParser(MessageFactory messageFactory) {
+      super(messageFactory);
+    }
+
+    @Override protected Class<? extends Field> getFieldClass() {
+      return PriceField.class;
     }
   }
 
