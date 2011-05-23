@@ -69,4 +69,4 @@ abstract class QtyTag(value: Int) extends MessageTag[QtyField](value, classOf[Qt
 abstract class SeqNumTag(value: Int) extends MessageTag[SeqNumField](value, classOf[SeqNumField])
 
 abstract class CurrencyTag(value: Int) extends StringTag(value)
-abstract class AmtTag(value: Int) extends IntegerTag(value)
+abstract class AmtTag(value: Int) extends FloatTag(value)
