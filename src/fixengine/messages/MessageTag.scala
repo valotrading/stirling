@@ -21,12 +21,28 @@ abstract class MessageTag[T <: Field](value: Int, clazz: Class[T]) extends Tag[T
 }
 
 abstract class EnumTag[T](value: Int) extends MessageTag[EnumField[Value[T]]](value, classOf[EnumField[Value[T]]]) {
-  def parse(v: T) = values.find(_.v == v).getOrElse(throw new InvalidValueForTagException(v.toString))
+  def parse(v: String) = values.find { value =>
+    value.v.toString.equals(v)
+  }.getOrElse {
+    throw new InvalidValueForTagException(v)
+  }
+  def valueOf(name: String) = namesAndValues.find { case (n, v) =>
+    n.equals(name)
+  }.getOrElse {
+    throw new Exception("No such enum field with name: " + name)
+  }._2
   private def values: Array[Value[T]] = {
     getClass.getDeclaredFields.filter { field =>
       classOf[Value[T]].equals(field.getType)
     }.map{ field =>
       method(field).invoke(this).asInstanceOf[Value[T]]
+    }
+  }
+  private def namesAndValues: Array[(String, Value[T])] = {
+    getClass.getDeclaredFields.filter { field =>
+      classOf[Value[T]].equals(field.getType)
+    }.map{ field =>
+      (field.getName, method(field).invoke(this).asInstanceOf[Value[T]])
     }
   }
   private def method(field: java.lang.reflect.Field) = getClass.getDeclaredMethod(field.getName)
