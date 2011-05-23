@@ -16,6 +16,7 @@
 package fixengine.examples.console.commands;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -24,11 +25,13 @@ import java.util.Scanner;
 import java.util.Set;
 
 import fixengine.examples.console.ConsoleClient;
+import fixengine.messages.EnumTag;
 import fixengine.messages.AbstractField;
 import fixengine.messages.EnumField;
 import fixengine.messages.Field;
 import fixengine.messages.FloatField;
 import fixengine.messages.IntegerField;
+import fixengine.messages.Value;
 import fixengine.messages.Message;
 import fixengine.messages.MessageFactory;
 import fixengine.messages.StringField;
@@ -138,13 +141,13 @@ public abstract class FixMessageCommand implements Command {
       return type.getActualTypeArguments().length > 0;
     }
 
-    protected Class<?> typeArg(String field) {
+    protected Type typeArg(String field) {
       return typeArg(tagClass(field));
     }
 
-    protected Class<?> typeArg(Class<?> clazz) {
+    protected Type typeArg(Class<?> clazz) {
       ParameterizedType type = (ParameterizedType) clazz.getSuperclass().getGenericSuperclass();
-      return (Class<?>) type.getActualTypeArguments()[0];
+      return type.getActualTypeArguments()[0];
     }
 
     protected String tag(String field) {
@@ -227,15 +230,18 @@ public abstract class FixMessageCommand implements Command {
     }
 
     @Override public boolean matches(String field) {
-      if (hasTypeArg(field))
-        return typeArg(field).getSuperclass().equals(EnumField.class);
+      if (hasTypeArg(field) && typeArg(field) instanceof ParameterizedType) {
+        ParameterizedType type = (ParameterizedType) typeArg(field);
+        return type.getRawType().equals(getFieldClass());
+      }
       return false;
     }
 
     @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
       try {
-        AbstractField<Enum> f = (AbstractField<Enum>) msg.lookup(tagClass(field).newInstance());
-        f.setValue(Enum.valueOf(enumType(field), value(field)));
+        EnumTag<?> tag = (EnumTag<?>) messageFactory.createTag(tag(field));
+        AbstractField<Value<?>> f = (AbstractField<Value<?>>) msg.lookup(tag);
+        f.setValue(tag.valueOf(value(field)));
       } catch (Exception e) {
         throw new RuntimeException(e);
       }
@@ -243,10 +249,6 @@ public abstract class FixMessageCommand implements Command {
 
     @Override protected Class<? extends Field> getFieldClass() {
       return EnumField.class;
-    }
-
-    @SuppressWarnings("unchecked") private Class<? extends Enum> enumType(String field) {
-      return (Class<? extends Enum>) typeArg(typeArg(field));
     }
   }
 }
