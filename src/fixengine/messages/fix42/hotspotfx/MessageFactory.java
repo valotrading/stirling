@@ -16,6 +16,7 @@
 package fixengine.messages.fix42.hotspotfx;
 
 import fixengine.messages.MsgTypeValue;
+import fixengine.messages.fix42.hotspotfx.NewOrderSingleMessage;
 
 public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
     public MessageFactory() {
@@ -25,6 +26,7 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
         message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequestMessage.class);
         message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequestMessage.class);
         message(MsgTypeValue.ORDER_STATUS_REQUEST, OrderStatusRequest.class);
+        message(MsgTypeValue.LOGON, Logon.class);
     }
 
     @Override public String getProfile() {
