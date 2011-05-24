@@ -23,6 +23,8 @@ import fixengine.tags.fix42.{
   Account,
   AvgPx,
   ClOrdID,
+  CxlRejReason,
+  CxlRejResponseTo,
   ContraBroker,
   CumQty,
   Currency,
@@ -140,4 +142,15 @@ class ExecutionReport(header: MessageHeader) extends fixengine.messages.fix42.Ex
   field(TransactTime.Tag)
   field(ExpireTime.Tag, Required.NO)
   field(TradeLinkID.Tag, Required.NO)
+}
+
+class OrderCancelReject(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelReject(header) {
+  field(Account.Tag, Required.NO)
+  field(ClOrdID.Tag)
+  field(OrderID.Tag)
+  field(OrigClOrdID.Tag)
+  field(Symbol.Tag)
+  field(CxlRejResponseTo.Tag)
+  field(CxlRejReason.Tag, Required.NO)
+  field(Text.Tag, Required.NO)
 }
