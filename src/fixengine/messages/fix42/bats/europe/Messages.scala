@@ -58,6 +58,7 @@ import fixengine.tags.fix42.{
   TransactTime
 }
 import fixengine.tags.fix42.bats.europe.{
+  CancelOrigOnReject,
   CentralCounterparty,
   CorrectedPrice,
   CxlRejReason,
@@ -239,4 +240,31 @@ class TradeCancelCorrect(header: MessageHeader) extends UserDefinedMessage(heade
   field(TradeLiquidityIndicator.Tag, Required.NO)
 
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class OrderModificationRequestMessage(header: MessageHeader) extends fixengine.messages.fix42.OrderModificationRequestMessage(header) {
+  field(Account.Tag, Required.NO)
+  field(ClOrdID.Tag)
+  field(Currency.Tag, new Required {
+    override def isRequired: Boolean = getEnum(IDSource.Tag).equals(IDSource.ISIN)
+  })
+  field(IDSource.Tag, new Required {
+    override def isRequired: Boolean = !hasValue(Symbol.Tag)
+  })
+  field(OrderID.Tag)
+  field(OrderQty.Tag)
+  field(OrdType.Tag)
+  field(OrigClOrdID.Tag)
+  field(Price.Tag, new Required {
+    override def isRequired: Boolean = getEnum(OrdType.Tag).equals(OrdType.Limit)
+  })
+  field(SecurityID.Tag, new Required {
+    override def isRequired: Boolean = hasValue(IDSource.Tag)
+  })
+  field(Side.Tag)
+  field(Symbol.Tag, Required.NO)
+  field(SecurityExchange.Tag, new Required {
+    override def isRequired: Boolean = getEnum(IDSource.Tag).equals(IDSource.ISIN)
+  })
+  field(CancelOrigOnReject.Tag, Required.NO)
 }
