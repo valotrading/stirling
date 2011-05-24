@@ -101,3 +101,10 @@ class NewOrderSingleMessage(header: MessageHeader) extends fixengine.messages.fi
   field(MinQty.Tag, Required.NO)
   field(Internalization.Tag, Required.NO)
 }
+
+class OrderCancelReject(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelReject(header) {
+  field(ClOrdID.Tag)
+  field(OrigClOrdID.Tag)
+  field(OrderID.Tag)
+  field(OrdStatus.Tag)
+}
