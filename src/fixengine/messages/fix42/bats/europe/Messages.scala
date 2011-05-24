@@ -16,7 +16,9 @@
 package fixengine.messages.fix42.bats.europe
 
 import fixengine.messages.MessageHeader
+import fixengine.messages.MessageVisitor
 import fixengine.messages.Required
+import fixengine.messages.UserDefinedMessage;
 import fixengine.messages.Value;
 import fixengine.tags.fix42.{
   Account,
@@ -45,6 +47,7 @@ import fixengine.tags.fix42.{
   OrderID,
   OrderQty,
   OrigClOrdID,
+  OrigTime,
   PegDifference,
   Price,
   SecondaryOrderID,
@@ -56,6 +59,7 @@ import fixengine.tags.fix42.{
 }
 import fixengine.tags.fix42.bats.europe.{
   CentralCounterparty,
+  CorrectedPrice,
   CxlRejReason,
   DisplayIndicator,
   ExecInst,
@@ -206,4 +210,33 @@ class OrderCancelRequestMessage(header: MessageHeader) extends fixengine.message
   field(SecurityExchange.Tag, new Required {
     override def isRequired: Boolean = getEnum(IDSource.Tag).equals(IDSource.ISIN)
   })
+}
+
+class TradeCancelCorrect(header: MessageHeader) extends UserDefinedMessage(header) {
+  field(ClOrdID.Tag)
+  field(Currency.Tag, Required.NO)
+  field(ExecID.Tag)
+  field(ExecRefID.Tag, new Required {
+    override def isRequired: Boolean = {
+      val value = getEnum(ExecTransType.Tag)
+      value.equals(ExecTransType.Cancel) || value.equals(ExecTransType.Correct)
+    }
+  })
+  field(ExecTransType.Tag)
+  field(IDSource.Tag, Required.NO)
+  field(LastPx.Tag)
+  field(LastShares.Tag)
+  field(OrderID.Tag)
+  field(OrigTime.Tag)
+  field(SecurityID.Tag, Required.NO)
+  field(Symbol.Tag, Required.NO)
+  field(Side.Tag)
+  field(TransactTime.Tag)
+  field(SecurityExchange.Tag, Required.NO)
+  field(ClearingFirm.Tag, Required.NO)
+  field(ClearingAccount.Tag, Required.NO)
+  field(CorrectedPrice.Tag, Required.NO)
+  field(TradeLiquidityIndicator.Tag, Required.NO)
+
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
