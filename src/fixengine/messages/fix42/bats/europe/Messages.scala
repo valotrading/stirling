@@ -17,16 +17,54 @@ package fixengine.messages.fix42.bats.europe
 
 import fixengine.messages.MessageHeader
 import fixengine.messages.Required
+import fixengine.messages.Value;
 import fixengine.tags.fix42.{
   Account,
+  AvgPx,
   ClOrdID,
+  ClearingAccount,
+  ClearingFirm,
+  ContraBroker,
+  CumQty,
+  Currency,
   CxlRejResponseTo,
+  ExecID,
+  ExecRefID,
+  ExecTransType,
+  ExpireTime,
+  LastPx,
+  LastShares,
+  LeavesQty,
+  MaxFloor,
+  MinQty,
+  NoContraBrokers,
+  OrdRejReason,
   OrdStatus,
   OrderID,
+  OrderQty,
   OrigClOrdID,
-  Text
+  PegDifference,
+  Price,
+  SecondaryOrderID,
+  SecurityExchange,
+  Side,
+  Symbol,
+  Text,
+  TransactTime
 }
-import fixengine.tags.fix42.bats.europe.CxlRejReason
+import fixengine.tags.fix42.bats.europe.{
+  CentralCounterparty,
+  CxlRejReason,
+  ExecInst,
+  ExecType,
+  IDSource,
+  MTFAccessFee,
+  MaxRemovePct,
+  SecurityID,
+  TimeInForce,
+  TradeLiquidityIndicator
+}
+import fixengine.tags.fix43.ExecRestatementReason
 
 class OrderCancelReject(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelReject(header) {
   field(Account.Tag, Required.NO)
@@ -37,4 +75,63 @@ class OrderCancelReject(header: MessageHeader) extends fixengine.messages.fix42.
   field(Text.Tag)
   field(CxlRejReason.Tag)
   field(CxlRejResponseTo.Tag)
+}
+
+class ExecutionReport(header: MessageHeader) extends fixengine.messages.fix42.ExecutionReport(header) {
+  field(Account.Tag, Required.NO)
+  field(ClOrdID.Tag)
+  field(CumQty.Tag)
+  field(Currency.Tag, Required.NO)
+  field(ExecID.Tag)
+  field(ExecInst.Tag, Required.NO)
+  field(ExecRefID.Tag, new Required {
+    override def isRequired: Boolean = {
+      val value = getEnum(ExecTransType.Tag)
+      value.equals(ExecTransType.Cancel) || value.equals(ExecTransType.Correct)
+    }
+  })
+  field(ExecTransType.Tag)
+  field(IDSource.Tag, Required.NO)
+  field(LastPx.Tag)
+  field(LastShares.Tag)
+  field(OrderID.Tag)
+  field(OrderQty.Tag)
+  field(OrdStatus.Tag)
+  field(OrigClOrdID.Tag, Required.NO)
+  field(Price.Tag, Required.NO)
+  field(AvgPx.Tag, Required.NO)
+  field(SecurityID.Tag, Required.NO)
+  field(Side.Tag)
+  field(Symbol.Tag, Required.NO)
+  field(Text.Tag, Required.NO)
+  field(TimeInForce.Tag, Required.NO)
+  field(TransactTime.Tag)
+  field(OrdRejReason.Tag, Required.NO)
+  field(MaxFloor.Tag, Required.NO)
+  field(ExpireTime.Tag, new Required {
+    override def isRequired: Boolean = TimeInForce.GoodTillDate.equals(getEnum(TimeInForce.Tag))
+  });
+  field(ExecType.Tag)
+  field(LeavesQty.Tag)
+  field(SecondaryOrderID.Tag, Required.NO)
+  field(SecurityExchange.Tag, Required.NO)
+  field(ContraBroker.Tag, Required.NO)
+  field(ExecRestatementReason.Tag, new Required {
+    override def isRequired: Boolean = getEnum(ExecType.Tag).equals(ExecType.Restated)
+  })
+  field(NoContraBrokers.Tag, new Required {
+    override def isRequired: Boolean = ExecType.isTrade(getEnum(ExecType.Tag))
+  })
+  field(ClearingFirm.Tag, Required.NO)
+  field(ClearingAccount.Tag, Required.NO)
+  field(CentralCounterparty.Tag, Required.NO)
+  field(MTFAccessFee.Tag, new Required {
+    override def isRequired: Boolean = ExecType.isTrade(getEnum(ExecType.Tag))
+  })
+  field(TradeLiquidityIndicator.Tag, new Required {
+    override def isRequired: Boolean = ExecType.isTrade(getEnum(ExecType.Tag))
+  })
+  field(MaxRemovePct.Tag, Required.NO)
+  field(MinQty.Tag, Required.NO)
+  field(PegDifference.Tag, Required.NO)
 }
