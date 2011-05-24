@@ -185,3 +185,25 @@ class NewOrderSingleMessage(header: MessageHeader) extends fixengine.messages.fi
   field(OrigCompID.Tag, Required.NO)
   field(OrigSubID.Tag, Required.NO)
 }
+
+class OrderCancelRequestMessage(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelRequestMessage(header) {
+  field(Account.Tag, Required.NO)
+  field(ClOrdID.Tag)
+  field(Currency.Tag, new Required {
+    override def isRequired: Boolean = getEnum(IDSource.Tag).equals(IDSource.ISIN)
+  })
+  field(IDSource.Tag, new Required {
+    override def isRequired: Boolean = !hasValue(Symbol.Tag)
+  })
+  field(OrderID.Tag)
+  field(OrderQty.Tag)
+  field(OrigClOrdID.Tag)
+  field(SecurityID.Tag, new Required {
+    override def isRequired: Boolean = hasValue(IDSource.Tag)
+  })
+  field(Side.Tag)
+  field(Symbol.Tag, Required.NO)
+  field(SecurityExchange.Tag, new Required {
+    override def isRequired: Boolean = getEnum(IDSource.Tag).equals(IDSource.ISIN)
+  })
+}
