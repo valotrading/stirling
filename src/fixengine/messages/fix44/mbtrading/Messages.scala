@@ -98,6 +98,7 @@ import fixengine.tags.fix44.{
   ClearingBusinessDate,
   CollInquiryID,
   LongQty,
+  MessageEncoding,
   NoTrdRegTimestamps,
   Password,
   PosMaintRptID,
@@ -279,5 +280,14 @@ class NewsMessage(header: MessageHeader) extends AbstractMessage(header) with Ne
   field(Text.Tag)
   field(Urgency.Tag)
   field(Headline.Tag)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class LogonMessage(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.LogonMessage {
+  field(EncryptMethod.Tag)
+  field(HeartBtInt.Tag)
+  field(ResetSeqNumFlag.Tag, Required.NO)
+  field(MessageEncoding.Tag, Required.NO)
+  field(Password.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
