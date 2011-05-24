@@ -67,3 +67,18 @@ class OrderCancelRequestMessage(header: MessageHeader) extends fixengine.message
   field(TransactTime.Tag, Required.NO)
   field(Currency.Tag, Required.NO)
 }
+
+class OrderModificationRequestMessage(header: MessageHeader) extends fixengine.messages.fix42.OrderModificationRequestMessage(header) {
+  field(Account.Tag, Required.NO)
+  field(ClOrdID.Tag)
+  field(OrigClOrdID.Tag)
+  field(HandlInst.Tag)
+  field(OrderQty.Tag)
+  field(MaxShow.Tag, Required.NO)
+  field(MinQty.Tag, Required.NO)
+  field(Price.Tag)
+  field(Symbol.Tag, Required.NO)
+  field(OrdType.Tag, Required.NO)
+  field(Side.Tag, Required.NO)
+  field(TransactTime.Tag, Required.NO)
+}
