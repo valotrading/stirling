@@ -116,3 +116,19 @@ class OrderCancelRequestMessage(header: MessageHeader) extends fixengine.message
   field(Side.Tag)
   field(TransactTime.Tag)
 }
+
+class OrderModificationRequestMessage(header: MessageHeader) extends fixengine.messages.fix42.OrderModificationRequestMessage(header) {
+  field(ClOrdID.Tag)
+  field(OrigClOrdID.Tag)
+  field(Symbol.Tag)
+  field(Side.Tag)
+  field(TransactTime.Tag)
+  field(OrderQty.Tag)
+  field(OrdType.Tag)
+  field(Price.Tag, new Required {
+    override def isRequired: Boolean =  getEnum(OrdType.Tag).equals(OrdType.Limit)
+  })
+  field(ExecInst.Tag, Required.NO)
+  field(TimeInForce.Tag, Required.NO)
+  field(MinQty.Tag, Required.NO)
+}
