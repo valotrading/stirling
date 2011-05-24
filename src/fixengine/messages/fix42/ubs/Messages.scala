@@ -108,3 +108,11 @@ class OrderCancelReject(header: MessageHeader) extends fixengine.messages.fix42.
   field(OrderID.Tag)
   field(OrdStatus.Tag)
 }
+
+class OrderCancelRequestMessage(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelRequestMessage(header) {
+  field(ClOrdID.Tag)
+  field(OrigClOrdID.Tag)
+  field(Symbol.Tag)
+  field(Side.Tag)
+  field(TransactTime.Tag)
+}
