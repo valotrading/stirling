@@ -40,6 +40,8 @@ import fixengine.tags.fix42.{
   NoContraBrokers,
   OrdRejReason,
   OrdStatus,
+  OrdType,
+  OrderCapacity,
   OrderID,
   OrderQty,
   OrigClOrdID,
@@ -55,11 +57,16 @@ import fixengine.tags.fix42.{
 import fixengine.tags.fix42.bats.europe.{
   CentralCounterparty,
   CxlRejReason,
+  DisplayIndicator,
   ExecInst,
   ExecType,
   IDSource,
   MTFAccessFee,
   MaxRemovePct,
+  OrigCompID,
+  OrigSubID,
+  PreventParticipantMatch,
+  RoutingInst,
   SecurityID,
   TimeInForce,
   TradeLiquidityIndicator
@@ -134,4 +141,47 @@ class ExecutionReport(header: MessageHeader) extends fixengine.messages.fix42.Ex
   field(MaxRemovePct.Tag, Required.NO)
   field(MinQty.Tag, Required.NO)
   field(PegDifference.Tag, Required.NO)
+}
+
+class NewOrderSingleMessage(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingleMessage(header) {
+  field(Account.Tag, Required.NO)
+  field(ClOrdID.Tag)
+  field(Currency.Tag, new Required {
+    override def isRequired: Boolean = getEnum(IDSource.Tag).equals(IDSource.ISIN)
+  })
+  field(ExecInst.Tag, Required.NO)
+  field(IDSource.Tag, new Required {
+    override def isRequired: Boolean = !hasValue(Symbol.Tag)
+  })
+  field(OrderQty.Tag)
+  field(OrdType.Tag)
+  field(Price.Tag, new Required {
+    override def isRequired: Boolean = getEnum(OrdType.Tag).equals(OrdType.Limit)
+  })
+  field(OrderCapacity.Tag, Required.NO)
+  field(SecurityID.Tag, new Required {
+    override def isRequired: Boolean = hasValue(IDSource.Tag)
+  })
+  field(Side.Tag)
+  field(Symbol.Tag, Required.NO)
+  field(TimeInForce.Tag, Required.NO)
+  field(MinQty.Tag, Required.NO)
+  field(MaxFloor.Tag, Required.NO)
+  field(ExpireTime.Tag, new Required {
+    override def isRequired: Boolean = getEnum(TimeInForce.Tag).equals(TimeInForce.GoodTillDate)
+  })
+  field(SecurityExchange.Tag, new Required() {
+    override def isRequired: Boolean = getEnum(IDSource.Tag).equals(IDSource.ISIN)
+  })
+  field(PegDifference.Tag, Required.NO)
+  field(ClearingFirm.Tag, Required.NO)
+  field(ClearingAccount.Tag, Required.NO)
+  field(PreventParticipantMatch.Tag, Required.NO)
+  field(RoutingInst.Tag, Required.NO)
+  field(DisplayIndicator.Tag, Required.NO)
+  field(MaxRemovePct.Tag, new Required {
+    override def isRequired: Boolean = getEnum(RoutingInst.Tag).equals(RoutingInst.PostOnlyAtLimit)
+  })
+  field(OrigCompID.Tag, Required.NO)
+  field(OrigSubID.Tag, Required.NO)
 }
