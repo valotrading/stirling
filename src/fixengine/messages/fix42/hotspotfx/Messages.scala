@@ -61,7 +61,7 @@ import fixengine.tags.fix42.{
 }
 import fixengine.tags.fix44.{TradeLinkID, ExecType}
 
-class NewOrderSingleMessage(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingleMessage(header) {
+class NewOrderSingle(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingleMessage(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(ExecInst.Tag, Required.NO)
@@ -80,7 +80,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends fixengine.messages.fi
   field(TradeLinkID.Tag, Required.NO)
 }
 
-class OrderCancelRequestMessage(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelRequestMessage(header) {
+class OrderCancelRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelRequestMessage(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(OrigClOrdID.Tag)
@@ -90,7 +90,7 @@ class OrderCancelRequestMessage(header: MessageHeader) extends fixengine.message
   field(Currency.Tag, Required.NO)
 }
 
-class OrderModificationRequestMessage(header: MessageHeader) extends fixengine.messages.fix42.OrderModificationRequestMessage(header) {
+class OrderModificationRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderModificationRequestMessage(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(OrigClOrdID.Tag)

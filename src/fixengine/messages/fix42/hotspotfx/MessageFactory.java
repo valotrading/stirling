@@ -16,15 +16,14 @@
 package fixengine.messages.fix42.hotspotfx;
 
 import fixengine.messages.MsgTypeValue;
-import fixengine.messages.fix42.hotspotfx.NewOrderSingleMessage;
 
 public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
     public MessageFactory() {
         message(MsgTypeValue.EXECUTION_REPORT, ExecutionReport.class);
         message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelReject.class);
-        message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingleMessage.class);
-        message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequestMessage.class);
-        message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequestMessage.class);
+        message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingle.class);
+        message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequest.class);
+        message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequest.class);
         message(MsgTypeValue.ORDER_STATUS_REQUEST, OrderStatusRequest.class);
         message(MsgTypeValue.LOGON, Logon.class);
     }
