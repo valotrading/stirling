@@ -23,6 +23,7 @@ import fixengine.tags.fix42.{
   CumQty,
   DKReason,
   ExecID,
+  ExecInst,
   ExecRefID,
   ExecTransType,
   ExecType,
@@ -31,14 +32,20 @@ import fixengine.tags.fix42.{
   LastPx,
   LastShares,
   LeavesQty,
+  MinQty,
   OrdStatus,
+  OrdType,
+  OrderCapacity,
   OrderID,
   OrderQty,
   OrigClOrdID,
+  Price,
   Side,
   Symbol,
+  TimeInForce,
   TransactTime
 }
+import fixengine.tags.fix42.ubs.Internalization;
 
 class DontKnowTradeMessage(header: MessageHeader) extends fixengine.messages.fix42.DontKnowTradeMessage(header) {
   field(OrderID.Tag)
@@ -76,4 +83,21 @@ class ExecutionReport(header: MessageHeader) extends fixengine.messages.fix42.Ex
   field(CumQty.Tag)
   field(AvgPx.Tag)
   field(TransactTime.Tag)
+}
+
+class NewOrderSingleMessage(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingleMessage(header) {
+  field(ClOrdID.Tag)
+  field(ExecInst.Tag)
+  field(Symbol.Tag)
+  field(Side.Tag)
+  field(OrderQty.Tag)
+  field(OrdType.Tag)
+  field(TransactTime.Tag)
+  field(OrderCapacity.Tag)
+  field(Price.Tag, new Required {
+    override def isRequired: Boolean = getEnum(OrdType.Tag).equals(OrdType.Limit)
+  })
+  field(TimeInForce.Tag, Required.NO)
+  field(MinQty.Tag, Required.NO)
+  field(Internalization.Tag, Required.NO)
 }
