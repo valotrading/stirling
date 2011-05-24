@@ -154,3 +154,11 @@ class OrderCancelReject(header: MessageHeader) extends fixengine.messages.fix42.
   field(CxlRejReason.Tag, Required.NO)
   field(Text.Tag, Required.NO)
 }
+
+class OrderStatusRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderStatusRequest(header) {
+  field(Account.Tag, Required.NO)
+  field(ClOrdID.Tag)
+  field(Symbol.Tag, Required.NO)
+  field(Side.Tag, Required.NO)
+  field(TransactTime.Tag, Required.NO)
+}
