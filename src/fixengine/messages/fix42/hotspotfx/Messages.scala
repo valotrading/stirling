@@ -32,7 +32,6 @@ import fixengine.tags.fix42.{
   ExecID,
   ExecInst,
   ExecTransType,
-  ExecType,
   ExpireTime,
   FutSettDate,
   HandlInst,
@@ -60,7 +59,7 @@ import fixengine.tags.fix42.{
   TradeDate,
   TransactTime
 }
-import fixengine.tags.fix44.TradeLinkID
+import fixengine.tags.fix44.{TradeLinkID, ExecType}
 
 class NewOrderSingleMessage(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingleMessage(header) {
   field(Account.Tag, Required.NO)
