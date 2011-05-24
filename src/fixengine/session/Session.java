@@ -71,9 +71,10 @@ import silvertip.Connection;
  * @author Karim Osman
  */
 public class Session {
+    public static final int MAX_CONSECUTIVE_RESEND_REQUESTS = 10;
+
     private static final long DEFAULT_LOGOUT_RESPONSE_TIMEOUT_MSEC = 10000;
     private static final Logger LOG = Logger.getLogger("Session");
-    private static final int MAX_CONSECUTIVE_RESEND_REQUESTS = 2;
 
     protected MessageQueue<FixMessage> incomingQueue = new MessageQueue<FixMessage>();
     protected MessageQueue<Message> outgoingQueue = new MessageQueue<Message>();

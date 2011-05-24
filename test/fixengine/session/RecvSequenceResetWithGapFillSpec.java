@@ -130,20 +130,14 @@ import fixengine.tags.fix42.NewSeqNo;
         public void detectPossibleInfiniteResendLoopWithMessagesOtherThanSequenceReset() throws Exception {
             server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
-            server.respond(
-                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
-                        .msgSeqNum(3)
-                    .build());
-            server.expect(MsgTypeValue.RESEND_REQUEST);
-            server.respond(
-                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
-                        .msgSeqNum(4)
-                    .build());
-            server.expect(MsgTypeValue.RESEND_REQUEST);
-            server.respond(
-                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
-                        .msgSeqNum(5)
-                    .build());
+            for (int numOfMsgsSent = 0; numOfMsgsSent <= Session.MAX_CONSECUTIVE_RESEND_REQUESTS; numOfMsgsSent++) {
+              server.respond(
+                      new MessageBuilder(MsgTypeValue.HEARTBEAT)
+                          .msgSeqNum(numOfMsgsSent + 3)
+                      .build());
+              if (numOfMsgsSent < Session.MAX_CONSECUTIVE_RESEND_REQUESTS)
+                server.expect(MsgTypeValue.RESEND_REQUEST);
+            }
             server.expect(MsgTypeValue.LOGOUT);
             runInClient(new Runnable() {
                 @Override public void run() {
@@ -156,26 +150,16 @@ import fixengine.tags.fix42.NewSeqNo;
         public void detectPossibleInfiniteResendLoopWithSequenceReset() throws Exception {
             server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
-            server.respond(
-                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
-                        .msgSeqNum(3)
-                        .bool(GapFillFlag.Tag(), true)
-                        .integer(NewSeqNo.Tag(), 2)
-                    .build());
-            server.expect(MsgTypeValue.RESEND_REQUEST);
-            server.respond(
-                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
-                        .msgSeqNum(4)
-                        .bool(GapFillFlag.Tag(), true)
-                        .integer(NewSeqNo.Tag(), 2)
-                    .build());
-            server.expect(MsgTypeValue.RESEND_REQUEST);
-            server.respond(
-                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
-                        .msgSeqNum(5)
-                        .bool(GapFillFlag.Tag(), true)
-                        .integer(NewSeqNo.Tag(), 2)
-                    .build());
+            for (int numOfMsgsSent = 0; numOfMsgsSent <= Session.MAX_CONSECUTIVE_RESEND_REQUESTS; numOfMsgsSent++) {
+              server.respond(
+                      new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
+                          .msgSeqNum(numOfMsgsSent + 3)
+                          .bool(GapFillFlag.Tag(), true)
+                          .integer(NewSeqNo.Tag(), 2)
+                      .build());
+              if (numOfMsgsSent < Session.MAX_CONSECUTIVE_RESEND_REQUESTS)
+                server.expect(MsgTypeValue.RESEND_REQUEST);
+            }
             server.expect(MsgTypeValue.LOGOUT);
             runInClient(new Runnable() {
                 @Override public void run() {
@@ -188,22 +172,22 @@ import fixengine.tags.fix42.NewSeqNo;
         public void detectPossibleInfiniteResendLoop() throws Exception {
             server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
-            server.respond(
-                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
-                        .msgSeqNum(3)
-                    .build());
-            server.expect(MsgTypeValue.RESEND_REQUEST);
-            server.respond(
-                    new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
-                        .msgSeqNum(4)
-                        .bool(GapFillFlag.Tag(), true)
-                        .integer(NewSeqNo.Tag(), 2)
-                    .build());
-            server.expect(MsgTypeValue.RESEND_REQUEST);
-            server.respond(
-                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
-                        .msgSeqNum(5)
-                    .build());
+            for (int numOfMsgsSent = 0; numOfMsgsSent <= Session.MAX_CONSECUTIVE_RESEND_REQUESTS; numOfMsgsSent++) {
+              server.respond(
+                      new MessageBuilder(MsgTypeValue.HEARTBEAT)
+                          .msgSeqNum(numOfMsgsSent + 3)
+                      .build());
+              server.expect(MsgTypeValue.RESEND_REQUEST);
+              numOfMsgsSent++;
+              server.respond(
+                      new MessageBuilder(MsgTypeValue.SEQUENCE_RESET)
+                          .msgSeqNum(numOfMsgsSent + 4)
+                          .bool(GapFillFlag.Tag(), true)
+                          .integer(NewSeqNo.Tag(), 2)
+                      .build());
+              if (numOfMsgsSent + 1 < Session.MAX_CONSECUTIVE_RESEND_REQUESTS)
+                server.expect(MsgTypeValue.RESEND_REQUEST);
+            }
             server.expect(MsgTypeValue.LOGOUT);
             runInClient(new Runnable() {
                 @Override public void run() {
