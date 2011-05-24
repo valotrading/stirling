@@ -29,6 +29,7 @@ import fixengine.tags.fix42.{
   MinQty,
   OrdType,
   OrderQty,
+  OrigClOrdID,
   PegDifference,
   Price,
   Side,
@@ -55,4 +56,14 @@ class NewOrderSingleMessage(header: MessageHeader) extends fixengine.messages.fi
   field(TransactTime.Tag, Required.NO)
   field(PegDifference.Tag, Required.NO)
   field(TradeLinkID.Tag, Required.NO)
+}
+
+class OrderCancelRequestMessage(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelRequestMessage(header) {
+  field(Account.Tag, Required.NO)
+  field(ClOrdID.Tag)
+  field(OrigClOrdID.Tag)
+  field(Symbol.Tag)
+  field(Side.Tag, Required.NO)
+  field(TransactTime.Tag, Required.NO)
+  field(Currency.Tag, Required.NO)
 }
