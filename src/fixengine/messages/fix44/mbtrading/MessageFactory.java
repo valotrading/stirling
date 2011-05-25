@@ -24,15 +24,14 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
         message(MsgTypeValue.EXECUTION_REPORT, ExecutionReport.class);
         message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequest.class);
         message(MsgTypeValue.BUSINESS_MESSAGE_REJECT, BusinessMessageReject.class);
-        message(MsgTypeValue.LOGON, Logon.class);
         message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingle.class);
         message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequest.class);
-        message(MsgTypeValue.LOGON, LogonMessage.class);
+        message(MsgTypeValue.LOGON, Logon.class);
         message(NEW_ORDER_MULTILEG, NewOrderMultiLeg.class);
         message(REQUEST_FOR_POSITIONS, RequestForPositions.class);
         message(POSITION_REPORT, PositionReport.class);
         message(TRADING_SESSION_STATUS, TradingSessionStatus.class);
-        message(NEWS_MESSAGE, NewsMessage.class);
+        message(NEWS_MESSAGE, News.class);
         message(COLLATERAL_REPORT, CollateralReport.class);
         message(COLLATERAL_INQUIRY_ACKNOWLEDGMENT, CollateralInquiryAcknowledgment.class);
         message(REQUEST_FOR_POSITION_ACKNOWLEDGMENT, RequestForPositionAcknowledgment.class);

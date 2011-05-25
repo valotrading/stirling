@@ -131,14 +131,6 @@ class CollateralInquiry(header: MessageHeader) extends AbstractMessage(header) w
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class Logon(header: MessageHeader) extends AbstractMessage(header) with LogonTrait {
-  field(EncryptMethod.Tag)
-  field(HeartBtInt.Tag)
-  field(ResetSeqNumFlag.Tag, Required.NO)
-  field(Password.Tag)
-  override def apply(visitor: MessageVisitor) = visitor.visit(this)
-}
-
 class NewOrderMultiLeg(header: MessageHeader) extends AbstractMessage(header) with NewOrderMultiLegTrait {
   field(Account.Tag)
   field(ClOrdID.Tag)
@@ -274,7 +266,7 @@ class RequestForPositions(header: MessageHeader) extends AbstractMessage(header)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class NewsMessage(header: MessageHeader) extends AbstractMessage(header) with NewsMessageTrait {
+class News(header: MessageHeader) extends AbstractMessage(header) with NewsMessageTrait {
   field(LinesOfText.Tag)
   field(OrigTime.Tag)
   field(Text.Tag)
@@ -283,7 +275,7 @@ class NewsMessage(header: MessageHeader) extends AbstractMessage(header) with Ne
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class LogonMessage(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.LogonMessage {
+class Logon(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.LogonMessage {
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
   field(ResetSeqNumFlag.Tag, Required.NO)
