@@ -19,10 +19,10 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
     public MessageFactory() {
         message(MsgTypeValue.EXECUTION_REPORT, ExecutionReport.class);
         message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelReject.class);
-        message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingleMessage.class);
-        message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequestMessage.class);
-        message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequestMessage.class);
-        message(MsgTypeValue.TRADE_CANCEL_CORRECT, OrderModificationRequestMessage.class);
+        message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingle.class);
+        message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequest.class);
+        message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequest.class);
+        message(MsgTypeValue.TRADE_CANCEL_CORRECT, OrderModificationRequest.class);
     }
 
     @Override public String getProfile() {

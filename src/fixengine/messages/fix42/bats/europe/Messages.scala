@@ -148,7 +148,7 @@ class ExecutionReport(header: MessageHeader) extends fixengine.messages.fix42.Ex
   field(PegDifference.Tag, Required.NO)
 }
 
-class NewOrderSingleMessage(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingleMessage(header) {
+class NewOrderSingle(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingleMessage(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(Currency.Tag, new Required {
@@ -191,7 +191,7 @@ class NewOrderSingleMessage(header: MessageHeader) extends fixengine.messages.fi
   field(OrigSubID.Tag, Required.NO)
 }
 
-class OrderCancelRequestMessage(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelRequestMessage(header) {
+class OrderCancelRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelRequestMessage(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(Currency.Tag, new Required {
@@ -242,7 +242,7 @@ class TradeCancelCorrect(header: MessageHeader) extends UserDefinedMessage(heade
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderModificationRequestMessage(header: MessageHeader) extends fixengine.messages.fix42.OrderModificationRequestMessage(header) {
+class OrderModificationRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderModificationRequestMessage(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(Currency.Tag, new Required {
