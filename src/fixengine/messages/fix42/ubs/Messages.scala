@@ -47,7 +47,7 @@ import fixengine.tags.fix42.{
 }
 import fixengine.tags.fix42.ubs.Internalization;
 
-class DontKnowTradeMessage(header: MessageHeader) extends fixengine.messages.fix42.DontKnowTradeMessage(header) {
+class DontKnowTrade(header: MessageHeader) extends fixengine.messages.fix42.DontKnowTradeMessage(header) {
   field(OrderID.Tag)
   field(ExecID.Tag)
   field(DKReason.Tag)
@@ -85,7 +85,7 @@ class ExecutionReport(header: MessageHeader) extends fixengine.messages.fix42.Ex
   field(TransactTime.Tag)
 }
 
-class NewOrderSingleMessage(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingleMessage(header) {
+class NewOrderSingle(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingleMessage(header) {
   field(ClOrdID.Tag)
   field(ExecInst.Tag)
   field(Symbol.Tag)
@@ -109,7 +109,7 @@ class OrderCancelReject(header: MessageHeader) extends fixengine.messages.fix42.
   field(OrdStatus.Tag)
 }
 
-class OrderCancelRequestMessage(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelRequestMessage(header) {
+class OrderCancelRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelRequestMessage(header) {
   field(ClOrdID.Tag)
   field(OrigClOrdID.Tag)
   field(Symbol.Tag)
@@ -117,7 +117,7 @@ class OrderCancelRequestMessage(header: MessageHeader) extends fixengine.message
   field(TransactTime.Tag)
 }
 
-class OrderModificationRequestMessage(header: MessageHeader) extends fixengine.messages.fix42.OrderModificationRequestMessage(header) {
+class OrderModificationRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderModificationRequestMessage(header) {
   field(ClOrdID.Tag)
   field(OrigClOrdID.Tag)
   field(Symbol.Tag)
