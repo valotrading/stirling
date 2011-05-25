@@ -26,11 +26,11 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
     message(MsgTypeValue.EXECUTION_REPORT, ExecutionReport.class);
     message(MASS_QUOTE, MassQuote.class);
     message(MASS_QUOTE_ACKNOWLEDGEMENT, MassQuoteAcknowledgement.class);
-    message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingleMessage.class);
+    message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingle.class);
     message(NEWS, News.class);
     message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelReject.class);
     message(ORDER_CANCEL_REPLACE_REQUEST, OrderCancelReplaceRequest.class);
-    message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequestMessage.class);
+    message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequest.class);
     message(ORDER_MASS_CANCEL_REPORT, OrderMassCancelReport.class);
     message(ORDER_MASS_CANCEL_REQUEST, OrderMassCancelRequest.class);
     message(ORDER_MASS_STATUS_REQUEST, OrderMassStatusRequest.class);

@@ -59,7 +59,7 @@ import fixengine.tags.fix50.{
   ExecInst
 }
 
-class NewOrderSingleMessage(header: MessageHeader) extends AbstractNewOrderSingleMessage(header) with Groups {
+class NewOrderSingle(header: MessageHeader) extends AbstractNewOrderSingleMessage(header) with Groups {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(Currency.Tag, Required.NO)
