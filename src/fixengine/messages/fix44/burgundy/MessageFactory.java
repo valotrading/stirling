@@ -15,22 +15,23 @@
  */
 package fixengine.messages.fix44.burgundy;
 
+import fixengine.messages.fix42.OrderCancelRequestMessage;
+import fixengine.messages.fix44.NewOrderSingleMessage;
+import static fixengine.messages.MsgTypeValue.*;
 import static fixengine.messages.fix44.burgundy.MsgTypeValue.*;
-
-import fixengine.messages.MsgTypeValue;
 
 public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   public MessageFactory() {
-    message(MsgTypeValue.BUSINESS_MESSAGE_REJECT, BusinessMessageReject.class);
-    message(MsgTypeValue.DONT_KNOW_TRADE, DontKnowTrade.class);
-    message(MsgTypeValue.EXECUTION_REPORT, ExecutionReport.class);
+    message(BUSINESS_MESSAGE_REJECT, BusinessMessageReject.class);
+    message(DONT_KNOW_TRADE, DontKnowTrade.class);
+    message(EXECUTION_REPORT, ExecutionReport.class);
     message(MASS_QUOTE, MassQuote.class);
     message(MASS_QUOTE_ACKNOWLEDGEMENT, MassQuoteAcknowledgement.class);
-    message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingle.class);
+    message(NEW_ORDER_SINGLE, NewOrderSingleMessage.class);
     message(NEWS, News.class);
-    message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelReject.class);
+    message(ORDER_CANCEL_REJECT, OrderCancelReject.class);
     message(ORDER_CANCEL_REPLACE_REQUEST, OrderCancelReplaceRequest.class);
-    message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequest.class);
+    message(ORDER_CANCEL_REQUEST, OrderCancelRequestMessage.class);
     message(ORDER_MASS_CANCEL_REPORT, OrderMassCancelReport.class);
     message(ORDER_MASS_CANCEL_REQUEST, OrderMassCancelRequest.class);
     message(ORDER_MASS_STATUS_REQUEST, OrderMassStatusRequest.class);

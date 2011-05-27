@@ -16,17 +16,16 @@
 package fixengine.messages.fix44.mbtrading;
 
 import static fixengine.messages.fix44.mbtrading.MsgTypeValue.*;
-
-import fixengine.messages.MsgTypeValue;
+import static fixengine.messages.MsgTypeValue.*;
 
 public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
     public MessageFactory() {
-        message(MsgTypeValue.EXECUTION_REPORT, ExecutionReport.class);
-        message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequest.class);
-        message(MsgTypeValue.BUSINESS_MESSAGE_REJECT, BusinessMessageReject.class);
-        message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingle.class);
-        message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequest.class);
-        message(MsgTypeValue.LOGON, Logon.class);
+        message(EXECUTION_REPORT, ExecutionReport.class);
+        message(ORDER_CANCEL_REQUEST, OrderCancelRequest.class);
+        message(BUSINESS_MESSAGE_REJECT, BusinessMessageReject.class);
+        message(NEW_ORDER_SINGLE, NewOrderSingle.class);
+        message(ORDER_MODIFICATION_REQUEST, OrderModificationRequest.class);
+        message(LOGON, Logon.class);
         message(NEW_ORDER_MULTILEG, NewOrderMultiLeg.class);
         message(REQUEST_FOR_POSITIONS, RequestForPositions.class);
         message(POSITION_REPORT, PositionReport.class);

@@ -15,17 +15,17 @@
  */
 package fixengine.messages.fix42.hotspotfx;
 
-import fixengine.messages.MsgTypeValue;
+import static fixengine.messages.MsgTypeValue.*;
 
 public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
     public MessageFactory() {
-        message(MsgTypeValue.EXECUTION_REPORT, ExecutionReport.class);
-        message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelReject.class);
-        message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingle.class);
-        message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequest.class);
-        message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequest.class);
-        message(MsgTypeValue.ORDER_STATUS_REQUEST, OrderStatusRequest.class);
-        message(MsgTypeValue.LOGON, Logon.class);
+        message(EXECUTION_REPORT, ExecutionReport.class);
+        message(ORDER_CANCEL_REJECT, OrderCancelReject.class);
+        message(NEW_ORDER_SINGLE, NewOrderSingle.class);
+        message(ORDER_CANCEL_REQUEST, OrderCancelRequest.class);
+        message(ORDER_MODIFICATION_REQUEST, OrderModificationRequest.class);
+        message(ORDER_STATUS_REQUEST, OrderStatusRequest.class);
+        message(LOGON, Logon.class);
     }
 
     @Override public String getProfile() {

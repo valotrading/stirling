@@ -15,16 +15,20 @@
  */
 package fixengine.messages.fix42.ubs;
 
-import fixengine.messages.MsgTypeValue;
+import fixengine.messages.fix42.DontKnowTradeMessage;
+import fixengine.messages.fix42.NewOrderSingleMessage;
+import fixengine.messages.fix42.OrderCancelRequestMessage;
+import fixengine.messages.fix42.OrderModificationRequestMessage;
+import static fixengine.messages.MsgTypeValue.*;
 
 public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
     public MessageFactory() {
-        message(MsgTypeValue.EXECUTION_REPORT, ExecutionReport.class);
-        message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelReject.class);
-        message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingle.class);
-        message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequest.class);
-        message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequest.class);
-        message(MsgTypeValue.DONT_KNOW_TRADE, DontKnowTrade.class);
+        message(EXECUTION_REPORT, ExecutionReport.class);
+        message(ORDER_CANCEL_REJECT, OrderCancelReject.class);
+        message(NEW_ORDER_SINGLE, NewOrderSingleMessage.class);
+        message(ORDER_CANCEL_REQUEST, OrderCancelRequestMessage.class);
+        message(ORDER_MODIFICATION_REQUEST, OrderModificationRequestMessage.class);
+        message(DONT_KNOW_TRADE, DontKnowTradeMessage.class);
     }
 
     @Override public String getProfile() {
