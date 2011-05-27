@@ -23,17 +23,75 @@ import fixengine.messages.{
   Required
 }
 import fixengine.tags.fix42.{
-  BusinessRejectRefID,
+  AvgPx,
   BusinessRejectReason,
+  BusinessRejectRefID,
+  ClOrdID,
+  CumQty,
+  Currency,
+  ExDestination,
+  ExecID,
+  ExecTransType,
+  ExecType,
+  LastMkt,
+  LastPx,
+  LastShares,
+  LeavesQty,
+  MaturityMonthYear,
+  OrdRejReason,
+  OrdStatus,
+  OrdType,
+  OrderID,
+  OrderQty,
+  OrigClOrdID,
+  Price,
   RefMsgType,
   RefSeqNo,
-  Text
+  SecurityType,
+  Side,
+  Symbol,
+  Text,
+  TimeInForce,
+  TransactTime
 }
+
 class BusinessMessageReject(header: MessageHeader) extends AbstractMessage(header) with BusinessMessageRejectTrait {
   field(RefSeqNo.Tag, Required.NO)
   field(RefMsgType.Tag)
   field(Text.Tag, Required.NO)
   field(BusinessRejectReason.Tag)
   field(BusinessRejectRefID.Tag, Required.NO)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.ExecutionReport {
+  field(OrderID.Tag)
+  field(ClOrdID.Tag, Required.NO)
+  field(OrigClOrdID.Tag, Required.NO)
+  field(ExecID.Tag)
+  field(ExecTransType.Tag)
+  field(ExecType.Tag)
+  field(OrdStatus.Tag)
+  field(OrdRejReason.Tag, Required.NO)
+  field(Symbol.Tag)
+  field(SecurityType.Tag, Required.NO)
+  field(MaturityMonthYear.Tag, Required.NO)
+  field(Side.Tag)
+  field(OrderQty.Tag)
+  field(LastShares.Tag, Required.NO)
+  field(LastPx.Tag, Required.NO)
+  field(LeavesQty.Tag)
+  field(OrdType.Tag, Required.NO)
+  field(Price.Tag, new Required {
+    override def isRequired = OrdType.Limit.equals(getEnum(OrdType.Tag))
+  })
+  field(TimeInForce.Tag, Required.NO)
+  field(CumQty.Tag)
+  field(AvgPx.Tag)
+  field(TransactTime.Tag, Required.NO)
+  field(Text.Tag, Required.NO)
+  field(ExDestination.Tag, Required.NO)
+  field(LastMkt.Tag, Required.NO)
+  field(Currency.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

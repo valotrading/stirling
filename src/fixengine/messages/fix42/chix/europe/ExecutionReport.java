@@ -16,6 +16,7 @@
 package fixengine.messages.fix42.chix.europe;
 
 import fixengine.messages.MessageHeader;
+import fixengine.messages.MessageVisitor;
 import fixengine.messages.Required;
 
 import fixengine.tags.fix42.Account;
@@ -53,12 +54,10 @@ import fixengine.tags.fix42.chix.europe.TradeLiquidityIndicator;
 import fixengine.tags.fix42.LastCapacity;
 import fixengine.tags.fix42.Side;
 
-public class ExecutionReport extends fixengine.messages.fix42.ExecutionReport {
+public class ExecutionReport extends fixengine.messages.AbstractMessage implements fixengine.messages.ExecutionReport {
     public ExecutionReport(MessageHeader header) {
         super(header);
-    }
 
-    @Override protected void fields() {
         field(Account.Tag(), Required.NO);
         field(AvgPx.Tag());
         field(ClOrdID.Tag(), Required.NO);
@@ -97,5 +96,9 @@ public class ExecutionReport extends fixengine.messages.fix42.ExecutionReport {
         field(NoContraBrokers.Tag(), Required.NO);
         field(ContraBroker.Tag(), Required.NO);
         field(TradeLiquidityIndicator.Tag(), Required.NO);
+    }
+
+    @Override public void apply(MessageVisitor visitor) {
+        visitor.visit(this);
     }
 }
