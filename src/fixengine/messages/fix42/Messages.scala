@@ -29,10 +29,12 @@ import fixengine.tags.fix42.{
   ClOrdID,
   CumQty,
   Currency,
+  EncryptMethod,
   ExDestination,
   ExecID,
   ExecTransType,
   ExecType,
+  HeartBtInt,
   LastMkt,
   LastPx,
   LastShares,
@@ -47,6 +49,7 @@ import fixengine.tags.fix42.{
   Price,
   RefMsgType,
   RefSeqNo,
+  ResetSeqNumFlag,
   SecurityType,
   Side,
   Symbol,
@@ -93,5 +96,12 @@ class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) wit
   field(ExDestination.Tag, Required.NO)
   field(LastMkt.Tag, Required.NO)
   field(Currency.Tag, Required.NO)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class LogonMessage(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.LogonMessage {
+  field(EncryptMethod.Tag)
+  field(HeartBtInt.Tag)
+  field(ResetSeqNumFlag.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
