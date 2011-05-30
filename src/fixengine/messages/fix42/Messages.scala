@@ -29,12 +29,14 @@ import fixengine.tags.fix42.{
   ClOrdID,
   CumQty,
   Currency,
+  DKReason,
   EncryptMethod,
   ExDestination,
   ExecID,
   ExecTransType,
   ExecType,
   HeartBtInt,
+  IDSource,
   LastMkt,
   LastPx,
   LastShares,
@@ -50,6 +52,8 @@ import fixengine.tags.fix42.{
   RefMsgType,
   RefSeqNo,
   ResetSeqNumFlag,
+  SecurityExchange,
+  SecurityID,
   SecurityType,
   Side,
   Symbol,
@@ -103,5 +107,39 @@ class LogonMessage(header: MessageHeader) extends AbstractMessage(header) with f
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
   field(ResetSeqNumFlag.Tag, Required.NO)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class DontKnowTradeMessage(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.DontKnowTrade {
+  field(OrderID.Tag)
+  field(ExecID.Tag)
+  field(DKReason.Tag)
+  field(Symbol.Tag)
+  /* SymbolSfx(65) */
+  field(SecurityID.Tag, Required.NO)
+  field(IDSource.Tag, Required.NO)
+  field(SecurityType.Tag, Required.NO)
+  field(MaturityMonthYear.Tag, Required.NO)
+  /* MaturityDay(205) */
+  /* PutOrCall(201) */
+  /* StrikePrice(202) */
+  /* OptAttribute(206) */
+  /* ContractMultiplier(201) */
+  /* CouponRate(223) */
+  field(SecurityExchange.Tag, Required.NO)
+  /* Issuer(106) */
+  /* EncodedIssuerLen(348) */
+  /* EncodedIssuer(349) */
+  /* SecurityDesc(107) */
+  /* EncodedSecurityDescLen(350) */
+  /* EncodedSecurityDesc(351) */
+  field(Side.Tag)
+  field(OrderQty.Tag, Required.NO)
+  /* CashOrderQty(152) */
+  field(LastShares.Tag, Required.NO)
+  field(LastPx.Tag, Required.NO)
+  field(Text.Tag, Required.NO)
+  /* EncodedTextLen(354) */
+  /* EncodedText(355) */
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
