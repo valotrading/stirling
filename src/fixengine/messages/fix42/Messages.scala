@@ -36,6 +36,8 @@ import fixengine.tags.fix42.{
   CumQty,
   Currency,
   CustomerOrFirm,
+  CxlRejReason,
+  CxlRejResponseTo,
   DKReason,
   EncryptMethod,
   ExDestination,
@@ -191,5 +193,16 @@ class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(heade
   field(CustomerOrFirm.Tag, Required.NO)
   field(Price.Tag, Required.NO)
   field(TimeInForce.Tag, Required.NO)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class OrderCancelReject(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.OrderCancelReject {
+  field(OrderID.Tag)
+  field(ClOrdID.Tag)
+  field(OrigClOrdID.Tag)
+  field(OrdStatus.Tag)
+  field(CxlRejResponseTo.Tag)
+  field(CxlRejReason.Tag, Required.NO)
+  field(Text.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
