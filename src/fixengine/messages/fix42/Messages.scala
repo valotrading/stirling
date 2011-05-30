@@ -17,12 +17,18 @@ package fixengine.messages.fix42;
 
 import fixengine.messages.{
   AbstractMessage,
+  BusinessMessageReject => BusinessMessageRejectTrait,
   MessageHeader,
   MessageVisitor,
-  BusinessMessageReject => BusinessMessageRejectTrait,
+  RepeatingGroup,
+  RepeatingGroupInstance,
   Required
 }
 import fixengine.tags.fix42.{
+  AllocAccount,
+  AllocID,
+  AllocShares,
+  AllocTransType,
   AvgPx,
   BusinessRejectReason,
   BusinessRejectRefID,
@@ -42,6 +48,8 @@ import fixengine.tags.fix42.{
   LastShares,
   LeavesQty,
   MaturityMonthYear,
+  NoAllocs,
+  NoOrders,
   OrdRejReason,
   OrdStatus,
   OrdType,
@@ -55,10 +63,12 @@ import fixengine.tags.fix42.{
   SecurityExchange,
   SecurityID,
   SecurityType,
+  Shares,
   Side,
   Symbol,
   Text,
   TimeInForce,
+  TradeDate,
   TransactTime
 }
 
@@ -141,5 +151,25 @@ class DontKnowTradeMessage(header: MessageHeader) extends AbstractMessage(header
   field(Text.Tag, Required.NO)
   /* EncodedTextLen(354) */
   /* EncodedText(355) */
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class Allocation(header: MessageHeader) extends AbstractMessage(header) {
+  field(AllocID.Tag)
+  field(AllocTransType.Tag)
+  field(NoOrders.Tag);
+  field(ClOrdID.Tag)
+  field(Side.Tag)
+  field(Symbol.Tag)
+  field(Shares.Tag)
+  field(AvgPx.Tag)
+  field(TradeDate.Tag)
+  group(new RepeatingGroup(NoAllocs.Tag) {
+    override def newInstance:RepeatingGroupInstance = {
+      return new RepeatingGroupInstance(AllocAccount.Tag) {
+        field(AllocShares.Tag)
+      }
+    }
+  }, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
