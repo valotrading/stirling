@@ -72,10 +72,15 @@ import fixengine.tags.fix42.{
   SecurityType,
   Shares,
   Side,
+  SubscriptionRequestType,
   Symbol,
   Text,
   TimeInForce,
+  TradSesMethod,
+  TradSesMode,
+  TradSesReqID,
   TradeDate,
+  TradingSessionID,
   TransactTime
 }
 
@@ -264,5 +269,14 @@ class OrderStatusRequest(header: MessageHeader) extends AbstractMessage(header) 
   /* EncodedSecurityDescLen(350) */
   /* EncodedSecurityDesc(351) */
   field(Side.Tag)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class TradingSessionStatusRequest(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.TradingSessionStatusRequest {
+  field(TradSesReqID.Tag)
+  field(TradingSessionID.Tag)
+  field(TradSesMethod.Tag)
+  field(TradSesMode.Tag)
+  field(SubscriptionRequestType.Tag)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
