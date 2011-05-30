@@ -35,12 +35,14 @@ import fixengine.tags.fix42.{
   ClOrdID,
   CumQty,
   Currency,
+  CustomerOrFirm,
   DKReason,
   EncryptMethod,
   ExDestination,
   ExecID,
   ExecTransType,
   ExecType,
+  HandlInst,
   HeartBtInt,
   IDSource,
   LastMkt,
@@ -171,5 +173,23 @@ class Allocation(header: MessageHeader) extends AbstractMessage(header) {
       }
     }
   }, Required.NO)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.NewOrderSingleMessage {
+  field(ClOrdID.Tag)
+  field(Currency.Tag, Required.NO)
+  field(HandlInst.Tag)
+  field(ExDestination.Tag)
+  field(Side.Tag)
+  field(TransactTime.Tag)
+  field(OrdType.Tag)
+  field(Symbol.Tag)
+  field(SecurityType.Tag, Required.NO)
+  field(MaturityMonthYear.Tag, Required.NO)
+  field(OrderQty.Tag)
+  field(CustomerOrFirm.Tag, Required.NO)
+  field(Price.Tag, Required.NO)
+  field(TimeInForce.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

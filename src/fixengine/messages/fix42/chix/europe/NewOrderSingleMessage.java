@@ -16,7 +16,9 @@
 package fixengine.messages.fix42.chix.europe;
 
 import fixengine.messages.MessageHeader;
+import fixengine.messages.MessageVisitor;
 import fixengine.messages.Required;
+import fixengine.messages.AbstractMessage;
 
 import fixengine.tags.fix42.Account;
 import fixengine.tags.fix42.ClOrdID;
@@ -39,12 +41,10 @@ import fixengine.tags.fix42.chix.europe.IDSource;
 import fixengine.tags.fix42.Side;
 import fixengine.tags.fix42.TimeInForce;
 
-public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSingleMessage {
+public class NewOrderSingleMessage extends AbstractMessage implements fixengine.messages.NewOrderSingleMessage {
     public NewOrderSingleMessage(MessageHeader header) {
         super(header);
-    }
 
-    @Override protected void fields() {
         field(Account.Tag(), Required.NO);
         field(ClOrdID.Tag());
         field(Currency.Tag(), new Required() {
@@ -85,5 +85,9 @@ public class NewOrderSingleMessage extends fixengine.messages.fix42.NewOrderSing
             }
         });
         field(PegDifference.Tag(), Required.NO);
+    }
+
+    @Override public void apply(MessageVisitor visitor) {
+        visitor.visit(this);
     }
 }
