@@ -206,3 +206,15 @@ class OrderCancelReject(header: MessageHeader) extends AbstractMessage(header) w
   field(Text.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
+
+class OrderCancelRequestMessage(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.OrderCancelRequestMessage {
+  field(OrigClOrdID.Tag)
+  field(ClOrdID.Tag)
+  field(Symbol.Tag)
+  field(SecurityType.Tag, Required.NO)
+  field(MaturityMonthYear.Tag, Required.NO)
+  field(Side.Tag)
+  field(TransactTime.Tag)
+  field(OrderQty.Tag)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}

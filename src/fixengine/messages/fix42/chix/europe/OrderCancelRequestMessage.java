@@ -16,6 +16,10 @@
 package fixengine.messages.fix42.chix.europe;
 
 import fixengine.messages.MessageHeader;
+import fixengine.messages.MessageVisitor;
+import fixengine.messages.Required;
+import fixengine.messages.AbstractMessage;
+
 import fixengine.tags.fix42.ClOrdID;
 import fixengine.tags.fix42.OrderQty;
 import fixengine.tags.fix42.OrigClOrdID;
@@ -23,17 +27,19 @@ import fixengine.tags.fix42.Side;
 import fixengine.tags.fix42.Symbol;
 import fixengine.tags.fix42.TransactTime;
 
-public class OrderCancelRequestMessage extends fixengine.messages.fix42.OrderCancelRequestMessage {
+public class OrderCancelRequestMessage extends AbstractMessage implements fixengine.messages.OrderCancelRequestMessage {
     public OrderCancelRequestMessage(MessageHeader header) {
         super(header);
-    }
 
-    @Override protected void fields() {
         field(ClOrdID.Tag());
         field(OrderQty.Tag());
         field(OrigClOrdID.Tag());
         field(Side.Tag());
         field(Symbol.Tag());
         field(TransactTime.Tag());
+    }
+
+    @Override public void apply(MessageVisitor visitor) {
+        visitor.visit(this);
     }
 }
