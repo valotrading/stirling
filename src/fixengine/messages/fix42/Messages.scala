@@ -25,6 +25,7 @@ import fixengine.messages.{
   Required
 }
 import fixengine.tags.fix42.{
+  Account,
   AllocAccount,
   AllocID,
   AllocShares,
@@ -33,6 +34,7 @@ import fixengine.tags.fix42.{
   BusinessRejectReason,
   BusinessRejectRefID,
   ClOrdID,
+  ClientID,
   CumQty,
   Currency,
   CustomerOrFirm,
@@ -41,6 +43,7 @@ import fixengine.tags.fix42.{
   DKReason,
   EncryptMethod,
   ExDestination,
+  ExecBroker,
   ExecID,
   ExecTransType,
   ExecType,
@@ -232,5 +235,34 @@ class OrderModificationRequestMessage(header: MessageHeader) extends AbstractMes
   field(OrdType.Tag)
   field(Currency.Tag, Required.NO)
   field(Price.Tag, Required.NO)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class OrderStatusRequest(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.OrderStatusRequest {
+  field(OrderID.Tag, Required.NO)
+  field(ClOrdID.Tag)
+  field(ClientID.Tag, Required.NO)
+  field(Account.Tag, Required.NO)
+  field(ExecBroker.Tag, Required.NO)
+  field(Symbol.Tag)
+  /* SymbolSfx(65) */
+  field(SecurityID.Tag, Required.NO)
+  field(IDSource.Tag, Required.NO)
+  field(SecurityType.Tag, Required.NO)
+  field(MaturityMonthYear.Tag, Required.NO)
+  /* MaturityDay(205) */
+  /* PutOrCall(201) */
+  /* StrikePrice(202) */
+  /* OptAttribute(206) */
+  /* ContractMultiplier(201) */
+  /* CouponRate(223) */
+  field(SecurityExchange.Tag, Required.NO)
+  /* Issuer(106) */
+  /* EncodedIssuerLen(348) */
+  /* EncodedIssuer(349) */
+  /* SecurityDesc(107) */
+  /* EncodedSecurityDescLen(350) */
+  /* EncodedSecurityDesc(351) */
+  field(Side.Tag)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

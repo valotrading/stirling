@@ -39,3 +39,4 @@ trait CollateralReport extends Message
 trait CollateralInquiryAcknowledgment extends Message
 trait PositionReport extends Message
 trait RequestForPositionAcknowledgment extends Message
+trait OrderStatusRequest extends Message
