@@ -16,7 +16,10 @@
 package fixengine.messages.fix42.chix.europe;
 
 import fixengine.messages.MessageHeader;
+import fixengine.messages.MessageVisitor;
 import fixengine.messages.Required;
+import fixengine.messages.AbstractMessage;
+
 import fixengine.tags.fix42.ClOrdID;
 import fixengine.tags.fix42.ExpireTime;
 import fixengine.tags.fix42.HandlInst;
@@ -37,9 +40,7 @@ import fixengine.tags.fix42.chix.europe.ExecInst;
 public class OrderModificationRequestMessage extends fixengine.messages.fix42.OrderModificationRequestMessage {
     public OrderModificationRequestMessage(MessageHeader header) {
         super(header);
-    }
 
-    @Override protected void fields() {
         field(ClOrdID.Tag());
         field(ExecInst.Tag(), Required.NO);
         field(HandlInst.Tag());
@@ -64,5 +65,9 @@ public class OrderModificationRequestMessage extends fixengine.messages.fix42.Or
             }
         });
         field(PegDifference.Tag(), Required.NO);
+    }
+
+    @Override public void apply(MessageVisitor visitor) {
+        visitor.visit(this);
     }
 }
