@@ -24,7 +24,7 @@ import fixengine.messages.{
   OrderCancelRequest => OrderCancelRequestTrait,
   OrderModificationRequest => OrderModificationRequestTrait,
   RequestForPositions => RequestForPositionsTrait,
-  TradingSessionStatusMessage => TradingSessionStatusTrait
+  TradingSessionStatus => TradingSessionStatusTrait
 }
 import fixengine.messages.{
   AbstractMessage,

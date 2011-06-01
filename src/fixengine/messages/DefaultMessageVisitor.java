@@ -119,7 +119,7 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(TradingSessionStatusMessage message) {
+    @Override public void visit(TradingSessionStatus message) {
         defaultAction(message);
     }
 
