@@ -61,7 +61,7 @@ import fixengine.tags.fix42.{
 }
 import fixengine.tags.fix44.{TradeLinkID, ExecType}
 
-class NewOrderSingle(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingleMessage(header) {
+class NewOrderSingle(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingle(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(ExecInst.Tag, Required.NO)

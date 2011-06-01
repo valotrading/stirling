@@ -85,7 +85,7 @@ class ExecutionReport(header: MessageHeader) extends fixengine.messages.fix42.Ex
   field(TransactTime.Tag)
 }
 
-class NewOrderSingle(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingleMessage(header) {
+class NewOrderSingle(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingle(header) {
   field(ClOrdID.Tag)
   field(ExecInst.Tag)
   field(Symbol.Tag)

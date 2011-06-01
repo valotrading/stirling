@@ -22,7 +22,7 @@ import org.junit.runner.RunWith;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MsgTypeValue;
-import fixengine.messages.fix42.NewOrderSingleMessage;
+import fixengine.messages.fix42.NewOrderSingle;
 import fixengine.tags.fix42.BeginSeqNo;
 import fixengine.tags.fix42.EndSeqNo;
 
@@ -36,7 +36,7 @@ import fixengine.tags.fix42.EndSeqNo;
                 }
             });
             MessageHeader header = new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE);
-            NewOrderSingleMessage message = new NewOrderSingleMessage(header);
+            NewOrderSingle message = new NewOrderSingle(header);
             specify(session.getOutgoingMsgQueue().isEmpty(), true);
             session.send(connection, message);
             specify(session.getOutgoingMsgQueue().isEmpty(), false);
@@ -70,8 +70,8 @@ import fixengine.tags.fix42.EndSeqNo;
                 }, new DefaultMessageVisitor(), false, 1000);
         }
 
-        private NewOrderSingleMessage message(int msgSeqNum) {
-            NewOrderSingleMessage message = new NewOrderSingleMessage(new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE));
+        private NewOrderSingle message(int msgSeqNum) {
+            NewOrderSingle message = new NewOrderSingle(new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE));
             message.setMsgSeqNum(msgSeqNum);
             return message;
         }

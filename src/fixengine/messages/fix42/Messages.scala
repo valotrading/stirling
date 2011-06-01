@@ -186,7 +186,7 @@ class Allocation(header: MessageHeader) extends AbstractMessage(header) {
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class NewOrderSingleMessage(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.NewOrderSingle {
+class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.NewOrderSingle {
   field(ClOrdID.Tag)
   field(Currency.Tag, Required.NO)
   field(HandlInst.Tag)

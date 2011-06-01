@@ -148,7 +148,7 @@ class ExecutionReport(header: MessageHeader) extends fixengine.messages.fix42.Ex
   field(PegDifference.Tag, Required.NO)
 }
 
-class NewOrderSingle(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingleMessage(header) {
+class NewOrderSingle(header: MessageHeader) extends fixengine.messages.fix42.NewOrderSingle(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(Currency.Tag, new Required {

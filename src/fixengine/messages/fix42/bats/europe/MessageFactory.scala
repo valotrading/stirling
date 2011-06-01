@@ -16,7 +16,6 @@
 package fixengine.messages.fix42.bats.europe
 
 import fixengine.messages.MsgTypeValue._
-import fixengine.messages.fix42.NewOrderSingleMessage
 import fixengine.messages.fix42.OrderCancelRequestMessage
 import fixengine.messages.fix42.OrderModificationRequestMessage
 import fixengine.messages.fix42.bats.europe.MsgTypeValue._
@@ -24,7 +23,7 @@ import fixengine.messages.fix42.bats.europe.MsgTypeValue._
 class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(EXECUTION_REPORT, classOf[ExecutionReport])
   message(ORDER_CANCEL_REJECT, classOf[OrderCancelReject])
-  message(NEW_ORDER_SINGLE, classOf[NewOrderSingleMessage])
+  message(NEW_ORDER_SINGLE, classOf[NewOrderSingle])
   message(ORDER_CANCEL_REQUEST, classOf[OrderCancelRequestMessage])
   message(ORDER_MODIFICATION_REQUEST, classOf[OrderModificationRequestMessage])
   message(TRADE_CANCEL_CORRECT, classOf[OrderModificationRequestMessage])

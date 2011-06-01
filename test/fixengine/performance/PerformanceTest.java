@@ -40,7 +40,7 @@ import fixengine.session.store.SessionStore;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MsgTypeValue;
 import fixengine.messages.fix42.DefaultMessageFactory;
-import fixengine.messages.fix42.NewOrderSingleMessage;
+import fixengine.messages.fix42.NewOrderSingle;
 
 public class PerformanceTest implements Runnable {
     private static final Random generator = new Random();
@@ -216,7 +216,7 @@ public class PerformanceTest implements Runnable {
                         while (txCount < NUM_MESSAGES) {
                             tx[txCount++] = System.nanoTime();
                             MessageHeader header = new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE);
-                            NewOrderSingleMessage message = new NewOrderSingleMessage(header);
+                            NewOrderSingle message = new NewOrderSingle(header);
                             session.send(conn, message);
                         }
                     }
