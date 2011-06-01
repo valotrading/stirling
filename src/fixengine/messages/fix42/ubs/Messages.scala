@@ -117,7 +117,7 @@ class OrderCancelRequest(header: MessageHeader) extends fixengine.messages.fix42
   field(TransactTime.Tag)
 }
 
-class OrderModificationRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderModificationRequestMessage(header) {
+class OrderModificationRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderModificationRequest(header) {
   field(ClOrdID.Tag)
   field(OrigClOrdID.Tag)
   field(Symbol.Tag)

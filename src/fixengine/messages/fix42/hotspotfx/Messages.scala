@@ -90,7 +90,7 @@ class OrderCancelRequest(header: MessageHeader) extends fixengine.messages.fix42
   field(Currency.Tag, Required.NO)
 }
 
-class OrderModificationRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderModificationRequestMessage(header) {
+class OrderModificationRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderModificationRequest(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(OrigClOrdID.Tag)

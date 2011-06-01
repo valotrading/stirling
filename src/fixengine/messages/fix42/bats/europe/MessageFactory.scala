@@ -16,7 +16,6 @@
 package fixengine.messages.fix42.bats.europe
 
 import fixengine.messages.MsgTypeValue._
-import fixengine.messages.fix42.OrderModificationRequestMessage
 import fixengine.messages.fix42.bats.europe.MsgTypeValue._
 
 class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
@@ -24,8 +23,8 @@ class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(ORDER_CANCEL_REJECT, classOf[OrderCancelReject])
   message(NEW_ORDER_SINGLE, classOf[NewOrderSingle])
   message(ORDER_CANCEL_REQUEST, classOf[OrderCancelRequest])
-  message(ORDER_MODIFICATION_REQUEST, classOf[OrderModificationRequestMessage])
-  message(TRADE_CANCEL_CORRECT, classOf[OrderModificationRequestMessage])
+  message(ORDER_MODIFICATION_REQUEST, classOf[OrderModificationRequest])
+  message(TRADE_CANCEL_CORRECT, classOf[OrderModificationRequest])
   override def getProfile = "bats-europe"
   override def isValid(msgType: String) = {
     if (msgType.length == 3 && msgType.equals(TRADE_CANCEL_CORRECT))

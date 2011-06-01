@@ -37,7 +37,7 @@ import fixengine.tags.fix42.TimeInForce;
 import fixengine.tags.fix42.TransactTime;
 import fixengine.tags.fix42.chix.europe.ExecInst;
 
-public class OrderModificationRequestMessage extends fixengine.messages.fix42.OrderModificationRequestMessage {
+public class OrderModificationRequestMessage extends fixengine.messages.fix42.OrderModificationRequest {
     public OrderModificationRequestMessage(MessageHeader header) {
         super(header);
 
