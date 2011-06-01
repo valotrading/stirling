@@ -15,8 +15,6 @@
  */
 package fixengine.messages;
 
-import fixengine.messages.fix42.Allocation;
-import fixengine.messages.fix42.OrderStatusRequest;
 
 /**
  * @author Pekka Enberg

@@ -166,7 +166,7 @@ class DontKnowTrade(header: MessageHeader) extends AbstractMessage(header) with 
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class Allocation(header: MessageHeader) extends AbstractMessage(header) {
+class Allocation(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.Allocation {
   field(AllocID.Tag)
   field(AllocTransType.Tag)
   field(NoOrders.Tag);
