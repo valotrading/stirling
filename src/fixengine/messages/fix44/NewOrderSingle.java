@@ -33,8 +33,8 @@ import fixengine.tags.fix42.Symbol;
 import fixengine.tags.fix42.TransactTime;
 import fixengine.tags.fix42.TimeInForce;
 
-public class NewOrderSingleMessage extends AbstractNewOrderSingleMessage {
-    public NewOrderSingleMessage(MessageHeader header) {
+public class NewOrderSingle extends AbstractNewOrderSingleMessage {
+    public NewOrderSingle(MessageHeader header) {
         super(header);
     }
 

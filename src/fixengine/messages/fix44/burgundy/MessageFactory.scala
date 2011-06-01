@@ -17,7 +17,6 @@ package fixengine.messages.fix44.burgundy
 
 import fixengine.messages.MsgTypeValue._
 import fixengine.messages.fix42.OrderCancelRequestMessage
-import fixengine.messages.fix44.NewOrderSingleMessage
 import fixengine.messages.fix44.burgundy.MsgTypeValue._
 
 class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
@@ -26,7 +25,7 @@ class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(EXECUTION_REPORT, classOf[ExecutionReport])
   message(MASS_QUOTE, classOf[MassQuote])
   message(MASS_QUOTE_ACKNOWLEDGEMENT, classOf[MassQuoteAcknowledgement])
-  message(NEW_ORDER_SINGLE, classOf[NewOrderSingleMessage])
+  message(NEW_ORDER_SINGLE, classOf[NewOrderSingle])
   message(NEWS, classOf[News])
   message(ORDER_CANCEL_REJECT, classOf[OrderCancelReject])
   message(ORDER_CANCEL_REPLACE_REQUEST, classOf[OrderCancelReplaceRequest])
