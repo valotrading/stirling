@@ -43,7 +43,7 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(OrderCancelRequestMessage message) {
+    @Override public void visit(OrderCancelRequest message) {
         defaultAction(message);
     }
 

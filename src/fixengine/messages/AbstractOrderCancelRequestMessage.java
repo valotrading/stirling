@@ -24,7 +24,7 @@ import fixengine.tags.fix42.Side;
 import fixengine.tags.fix42.Symbol;
 import fixengine.tags.fix42.TransactTime;
 
-public abstract class AbstractOrderCancelRequestMessage extends AbstractMessage implements fixengine.messages.OrderCancelRequestMessage {
+public abstract class AbstractOrderCancelRequestMessage extends AbstractMessage implements fixengine.messages.OrderCancelRequest {
     public AbstractOrderCancelRequestMessage(MessageHeader header) {
         super(header);
 

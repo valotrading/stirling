@@ -19,7 +19,7 @@ import fixengine.messages.{
   AbstractMessage,
   MessageHeader,
   MessageVisitor,
-  OrderCancelRequestMessage => OrderCancelRequestMessageTrait,
+  OrderCancelRequest => OrderCancelRequestTrait,
   Required
 }
 import fixengine.tags.fix42.{
@@ -36,7 +36,7 @@ import fixengine.tags.fix43.{
   SecurityIDSource
 }
 
-class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestMessageTrait {
+class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestTrait {
   field(ClOrdID.Tag)
   field(OrderID.Tag, Required.NO)
   field(OrderQty.Tag)
