@@ -80,7 +80,7 @@ class NewOrderSingle(header: MessageHeader) extends fixengine.messages.fix42.New
   field(TradeLinkID.Tag, Required.NO)
 }
 
-class OrderCancelRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelRequestMessage(header) {
+class OrderCancelRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelRequest(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(OrigClOrdID.Tag)

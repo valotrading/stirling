@@ -191,7 +191,7 @@ class NewOrderSingle(header: MessageHeader) extends fixengine.messages.fix42.New
   field(OrigSubID.Tag, Required.NO)
 }
 
-class OrderCancelRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelRequestMessage(header) {
+class OrderCancelRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelRequest(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(Currency.Tag, new Required {
