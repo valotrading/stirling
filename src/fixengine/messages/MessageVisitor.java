@@ -46,7 +46,7 @@ public interface MessageVisitor {
     void visit(NewOrderMultiLeg message);
     void visit(TradingSessionStatusRequest message);
     void visit(CollateralInquiry message);
-    void visit(RequestForPositionsMessage message);
+    void visit(RequestForPositions message);
     void visit(TradingSessionStatusMessage message);
     void visit(TradeCaptureReport message);
     void visit(TradeCaptureReportAck message);

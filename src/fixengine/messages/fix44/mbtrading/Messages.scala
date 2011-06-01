@@ -23,7 +23,7 @@ import fixengine.messages.{
   NewsMessage => NewsMessageTrait,
   OrderCancelRequest => OrderCancelRequestTrait,
   OrderModificationRequest => OrderModificationRequestTrait,
-  RequestForPositionsMessage => RequestForPositionsTrait,
+  RequestForPositions => RequestForPositionsTrait,
   TradingSessionStatusMessage => TradingSessionStatusTrait
 }
 import fixengine.messages.{

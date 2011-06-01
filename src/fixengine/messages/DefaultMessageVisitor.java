@@ -115,7 +115,7 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(RequestForPositionsMessage message) {
+    @Override public void visit(RequestForPositions message) {
         defaultAction(message);
     }
 
