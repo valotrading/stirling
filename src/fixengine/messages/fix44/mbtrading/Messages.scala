@@ -18,7 +18,7 @@ package fixengine.messages.fix44.mbtrading
 import fixengine.messages.{
   CollateralInquiry => CollateralInquiryTrait,
   LogonMessage => LogonTrait,
-  NewOrderMultiLegMessage => NewOrderMultiLegTrait,
+  NewOrderMultiLeg => NewOrderMultiLegTrait,
   NewOrderSingle => NewOrderSingleTrait,
   NewsMessage => NewsMessageTrait,
   OrderCancelRequest => OrderCancelRequestTrait,

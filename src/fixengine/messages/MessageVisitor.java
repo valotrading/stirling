@@ -43,7 +43,7 @@ public interface MessageVisitor {
     void visit(DontKnowTradeMessage message);
     void visit(UserDefinedMessage message);
     void visit(OrderStatusRequest message);
-    void visit(NewOrderMultiLegMessage message);
+    void visit(NewOrderMultiLeg message);
     void visit(TradingSessionStatusRequest message);
     void visit(CollateralInquiry message);
     void visit(RequestForPositionsMessage message);

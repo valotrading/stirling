@@ -103,7 +103,7 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(NewOrderMultiLegMessage message) {
+    @Override public void visit(NewOrderMultiLeg message) {
         defaultAction(message);
     }
 
