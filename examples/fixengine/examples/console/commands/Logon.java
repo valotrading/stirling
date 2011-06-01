@@ -18,7 +18,6 @@ package fixengine.examples.console.commands;
 import static fixengine.messages.MsgTypeValue.LOGON;
 
 import fixengine.examples.console.ConsoleClient;
-import fixengine.messages.LogonMessage;
 import fixengine.messages.Message;
 import fixengine.messages.MessageFactory;
 import fixengine.tags.fix42.EncryptMethod;
@@ -27,7 +26,7 @@ import fixengine.tags.fix42.HeartBtInt;
 public class Logon extends FixMessageCommand {
   @Override protected Message newMessage(ConsoleClient client) {
     MessageFactory messageFactory = client.getMessageFactory();
-    LogonMessage message = (LogonMessage) messageFactory.create(LOGON);
+    fixengine.messages.Logon message = (fixengine.messages.Logon) messageFactory.create(LOGON);
     message.setInteger(HeartBtInt.Tag(), 30);
     message.setEnum(EncryptMethod.Tag(), EncryptMethod.None());
     return message;

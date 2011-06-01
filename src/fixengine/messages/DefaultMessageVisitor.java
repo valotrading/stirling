@@ -30,7 +30,7 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(LogonMessage message) {
+    @Override public void visit(Logon message) {
         defaultAction(message);
     }
 

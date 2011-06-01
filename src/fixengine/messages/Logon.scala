@@ -15,4 +15,4 @@
  */
 package fixengine.messages
 
-trait LogonMessage extends Message
+trait Logon extends Message

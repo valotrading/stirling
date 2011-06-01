@@ -17,7 +17,7 @@ package fixengine.messages.fix44.mbtrading
 
 import fixengine.messages.{
   CollateralInquiry => CollateralInquiryTrait,
-  LogonMessage => LogonTrait,
+  Logon => LogonTrait,
   NewOrderMultiLeg => NewOrderMultiLegTrait,
   NewOrderSingle => NewOrderSingleTrait,
   NewsMessage => NewsMessageTrait,
@@ -275,7 +275,7 @@ class News(header: MessageHeader) extends AbstractMessage(header) with NewsMessa
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class Logon(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.LogonMessage {
+class Logon(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.Logon {
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
   field(ResetSeqNumFlag.Tag, Required.NO)

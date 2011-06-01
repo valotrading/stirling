@@ -25,7 +25,7 @@ import fixengine.tags.fix42.ResetSeqNumFlag
 import fixengine.tags.fix44.Password
 import fixengine.tags.fix44.Username
 
-class Logon(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.LogonMessage {
+class Logon(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.Logon {
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
   field(ResetSeqNumFlag.Tag, Required.NO)

@@ -26,7 +26,7 @@ import fixengine.tags.fix44.NextExpectedMsgSeqNum;
 import fixengine.tags.fix44.Password;
 import fixengine.tags.fix44.Username;
 
-public class Logon extends AbstractMessage implements fixengine.messages.LogonMessage {
+public class Logon extends AbstractMessage implements fixengine.messages.Logon {
     public Logon(MessageHeader header) {
         super(header);
 

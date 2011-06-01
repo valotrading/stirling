@@ -36,7 +36,7 @@ import fixengine.Config;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.FixMessage;
 import fixengine.messages.Heartbeat;
-import fixengine.messages.LogonMessage;
+import fixengine.messages.Logon;
 import fixengine.messages.Logout;
 import fixengine.messages.Message;
 import fixengine.messages.MessageComparator;
@@ -360,7 +360,7 @@ public class Session {
             });
         } else {
             message.apply(new DefaultMessageVisitor() {
-                @Override public void visit(LogonMessage message) {
+                @Override public void visit(Logon message) {
                     authenticated = true;
                     message.apply(visitor);
                 }
@@ -420,13 +420,13 @@ public class Session {
 
     public void logon(Connection conn) {
         authenticated = initiatedLogout = false;
-        LogonMessage message = (LogonMessage) messageFactory.create(LOGON);
+        Logon message = (Logon) messageFactory.create(LOGON);
         message.setInteger(HeartBtInt.Tag(), 30);
         message.setEnum(EncryptMethod.Tag(), EncryptMethod.None());
         sendOutOfQueue(conn, message);
     }
 
-    public void logon(Connection conn, LogonMessage logonMessage) {
+    public void logon(Connection conn, Logon logonMessage) {
         authenticated = initiatedLogout = false;
         sendOutOfQueue(conn, logonMessage);
     }

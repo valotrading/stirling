@@ -24,7 +24,7 @@ import fixengine.messages.fix42.OrderStatusRequest;
 public interface MessageVisitor {
     void visit(ExecutionReport message);
     void visit(Heartbeat message);
-    void visit(LogonMessage message);
+    void visit(Logon message);
     void visit(Logout message);
     void visit(NewOrderSingle message);
     void visit(OrderCancelRequest message);
