@@ -23,7 +23,7 @@ import org.jmock.Expectations;
 import fixengine.messages.MessageVisitor;
 import fixengine.messages.MsgTypeValue;
 import fixengine.messages.fix42.ExecutionReport;
-import fixengine.messages.fix42.LogonMessage;
+import fixengine.messages.fix42.Logon;
 import fixengine.tags.fix42.AvgPx;
 import fixengine.tags.fix42.CumQty;
 import fixengine.tags.fix42.ExecID;
@@ -80,7 +80,7 @@ import fixengine.tags.fix42.Symbol;
                 .build());
             checking(new Expectations() {{
                 one(visitor).visit(with(any(ExecutionReport.class)));
-                one(visitor).visit(with(any(LogonMessage.class)));
+                one(visitor).visit(with(any(Logon.class)));
             }});
             runInClient(new Runnable() {
                 @Override public void run() {
@@ -113,7 +113,7 @@ import fixengine.tags.fix42.Symbol;
                 .float0(AvgPx.Tag(), .0)
                 .build());
             checking(new Expectations() {{
-                one(visitor).visit(with(any(LogonMessage.class)));
+                one(visitor).visit(with(any(Logon.class)));
                 one(visitor).visit(with(any(ExecutionReport.class)));
             }});
             runInClient(new Runnable() {

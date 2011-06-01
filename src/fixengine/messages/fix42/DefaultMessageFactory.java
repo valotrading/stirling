@@ -43,7 +43,7 @@ public class DefaultMessageFactory implements MessageFactory {
     private Map<String, Class<? extends Message>> messageTypes = new HashMap<String, Class<? extends Message>>();
 
     public DefaultMessageFactory() {
-        message(MsgTypeValue.LOGON, LogonMessage.class);
+        message(MsgTypeValue.LOGON, Logon.class);
         message(MsgTypeValue.LOGOUT, Logout.class);
         message(MsgTypeValue.HEARTBEAT, Heartbeat.class);
         message(MsgTypeValue.RESEND_REQUEST, ResendRequest.class);

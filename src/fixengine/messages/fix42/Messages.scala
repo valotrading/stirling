@@ -125,7 +125,7 @@ class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) wit
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class LogonMessage(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.LogonMessage {
+class Logon(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.LogonMessage {
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
   field(ResetSeqNumFlag.Tag, Required.NO)
