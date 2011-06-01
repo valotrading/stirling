@@ -34,7 +34,7 @@ import fixengine.tags.fix42.TransactTime;
  *
  * @author Pekka Enberg
  */
-public class AbstractOrderModificationRequestMessage extends AbstractMessage implements OrderModificationRequestMessage {
+public class AbstractOrderModificationRequestMessage extends AbstractMessage implements OrderModificationRequest {
     public AbstractOrderModificationRequestMessage(MessageHeader header) {
         super(header);
 

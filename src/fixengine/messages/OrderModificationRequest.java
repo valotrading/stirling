@@ -15,5 +15,5 @@
  */
 package fixengine.messages;
 
-public interface OrderModificationRequestMessage extends Message {
+public interface OrderModificationRequest extends Message {
 }

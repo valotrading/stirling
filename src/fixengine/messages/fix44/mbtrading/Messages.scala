@@ -22,7 +22,7 @@ import fixengine.messages.{
   NewOrderSingle => NewOrderSingleTrait,
   NewsMessage => NewsMessageTrait,
   OrderCancelRequest => OrderCancelRequestTrait,
-  OrderModificationRequestMessage => OrderModificationRequestTrait,
+  OrderModificationRequest => OrderModificationRequestTrait,
   RequestForPositionsMessage => RequestForPositionsTrait,
   TradingSessionStatusMessage => TradingSessionStatusTrait
 }
