@@ -16,7 +16,6 @@
 package fixengine.messages;
 
 import fixengine.messages.fix42.Allocation;
-import fixengine.messages.fix42.DontKnowTradeMessage;
 import fixengine.messages.fix42.OrderStatusRequest;
 
 /**
@@ -88,10 +87,6 @@ public class DefaultMessageVisitor implements MessageVisitor {
     }
 
     @Override public void visit(Allocation message) {
-        defaultAction(message);
-    }
-
-    @Override public void visit(DontKnowTradeMessage message) {
         defaultAction(message);
     }
 

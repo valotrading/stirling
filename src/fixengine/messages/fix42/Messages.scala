@@ -132,7 +132,7 @@ class Logon(header: MessageHeader) extends AbstractMessage(header) with fixengin
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class DontKnowTradeMessage(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.DontKnowTrade {
+class DontKnowTrade(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.DontKnowTrade {
   field(OrderID.Tag)
   field(ExecID.Tag)
   field(DKReason.Tag)

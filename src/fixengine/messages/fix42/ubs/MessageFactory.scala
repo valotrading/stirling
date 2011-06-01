@@ -16,7 +16,6 @@
 package fixengine.messages.fix42.ubs
 
 import fixengine.messages.MsgTypeValue._
-import fixengine.messages.fix42.DontKnowTradeMessage
 import fixengine.messages.fix42.NewOrderSingleMessage
 import fixengine.messages.fix42.OrderCancelRequestMessage
 import fixengine.messages.fix42.OrderModificationRequestMessage
@@ -27,6 +26,6 @@ class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(NEW_ORDER_SINGLE, classOf[NewOrderSingleMessage])
   message(ORDER_CANCEL_REQUEST, classOf[OrderCancelRequestMessage])
   message(ORDER_MODIFICATION_REQUEST, classOf[OrderModificationRequestMessage])
-  message(DONT_KNOW_TRADE, classOf[DontKnowTradeMessage])
+  message(DONT_KNOW_TRADE, classOf[DontKnowTrade])
   override def getProfile = "ubs"
 }

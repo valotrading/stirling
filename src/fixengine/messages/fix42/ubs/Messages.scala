@@ -47,7 +47,7 @@ import fixengine.tags.fix42.{
 }
 import fixengine.tags.fix42.ubs.Internalization;
 
-class DontKnowTrade(header: MessageHeader) extends fixengine.messages.fix42.DontKnowTradeMessage(header) {
+class DontKnowTrade(header: MessageHeader) extends fixengine.messages.fix42.DontKnowTrade(header) {
   field(OrderID.Tag)
   field(ExecID.Tag)
   field(DKReason.Tag)

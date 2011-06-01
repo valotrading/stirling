@@ -16,7 +16,6 @@
 package fixengine.messages;
 
 import fixengine.messages.fix42.Allocation;
-import fixengine.messages.fix42.DontKnowTradeMessage;
 import fixengine.messages.fix42.OrderStatusRequest;
 
 /**
@@ -40,7 +39,6 @@ public interface MessageVisitor {
     void visit(SequenceReset message);
     void visit(TestRequest message);
     void visit(Allocation message);
-    void visit(DontKnowTradeMessage message);
     void visit(UserDefinedMessage message);
     void visit(OrderStatusRequest message);
     void visit(NewOrderMultiLeg message);
