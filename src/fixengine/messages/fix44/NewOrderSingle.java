@@ -15,8 +15,9 @@
  */
 package fixengine.messages.fix44;
 
-import fixengine.messages.AbstractNewOrderSingleMessage;
+import fixengine.messages.AbstractMessage;
 import fixengine.messages.MessageHeader;
+import fixengine.messages.MessageVisitor;
 import fixengine.messages.Required;
 import fixengine.tags.fix42.ClOrdID;
 import fixengine.tags.fix42.Currency;
@@ -33,12 +34,9 @@ import fixengine.tags.fix42.Symbol;
 import fixengine.tags.fix42.TransactTime;
 import fixengine.tags.fix42.TimeInForce;
 
-public class NewOrderSingle extends AbstractNewOrderSingleMessage {
+public class NewOrderSingle extends AbstractMessage implements fixengine.messages.NewOrderSingle {
     public NewOrderSingle(MessageHeader header) {
         super(header);
-    }
-
-    @Override protected void fields() {
         field(ClOrdID.Tag());
         field(Currency.Tag(), Required.NO);
         field(HandlInst.Tag());
@@ -53,5 +51,9 @@ public class NewOrderSingle extends AbstractNewOrderSingleMessage {
         field(CustomerOrFirm.Tag(), Required.NO);
         field(Price.Tag(), Required.NO);
         field(TimeInForce.Tag(), Required.NO);
+    }
+
+    @Override public void apply(MessageVisitor visitor) {
+        visitor.visit(this);
     }
 }

@@ -16,8 +16,9 @@
 package fixengine.messages.fix44.burgundy
 
 import fixengine.messages.{
-  AbstractNewOrderSingleMessage,
+  AbstractMessage,
   MessageHeader,
+  MessageVisitor,
   Required
 }
 import fixengine.tags.fix42.{
@@ -59,7 +60,7 @@ import fixengine.tags.fix50.{
   ExecInst
 }
 
-class NewOrderSingle(header: MessageHeader) extends AbstractNewOrderSingleMessage(header) with Groups {
+class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with Groups with fixengine.messages.NewOrderSingle {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(Currency.Tag, Required.NO)
@@ -93,4 +94,5 @@ class NewOrderSingle(header: MessageHeader) extends AbstractNewOrderSingleMessag
   field(OrderCapacity.Tag, Required.NO)
   field(OrderRestrictions.Tag, Required.NO)
   field(AccountType.Tag, Required.NO)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
