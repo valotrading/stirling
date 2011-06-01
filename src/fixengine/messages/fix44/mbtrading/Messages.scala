@@ -19,7 +19,7 @@ import fixengine.messages.{
   CollateralInquiry => CollateralInquiryTrait,
   LogonMessage => LogonTrait,
   NewOrderMultiLegMessage => NewOrderMultiLegTrait,
-  NewOrderSingleMessage => NewOrderSingleTrait,
+  NewOrderSingle => NewOrderSingleTrait,
   NewsMessage => NewsMessageTrait,
   OrderCancelRequestMessage => OrderCancelRequestTrait,
   OrderModificationRequestMessage => OrderModificationRequestTrait,

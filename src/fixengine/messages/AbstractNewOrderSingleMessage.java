@@ -15,7 +15,7 @@
  */
 package fixengine.messages;
 
-public abstract class AbstractNewOrderSingleMessage extends AbstractMessage implements NewOrderSingleMessage {
+public abstract class AbstractNewOrderSingleMessage extends AbstractMessage implements NewOrderSingle {
     protected AbstractNewOrderSingleMessage(MessageHeader header) {
         super(header);
 

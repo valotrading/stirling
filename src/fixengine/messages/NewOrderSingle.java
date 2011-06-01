@@ -15,6 +15,6 @@
  */
 package fixengine.messages;
 
-public interface NewOrderSingleMessage extends RequestMessage {
+public interface NewOrderSingle extends RequestMessage {
 
 }

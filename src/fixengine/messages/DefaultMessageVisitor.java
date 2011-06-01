@@ -39,7 +39,7 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(NewOrderSingleMessage message) {
+    @Override public void visit(NewOrderSingle message) {
         defaultAction(message);
     }
 
