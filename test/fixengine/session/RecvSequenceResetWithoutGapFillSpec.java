@@ -79,7 +79,7 @@ import fixengine.tags.fix42.NewSeqNo;
                         .integer(NewSeqNo.Tag(), 2)
                     .build());
             server.expect(MsgTypeValue.REJECT);
-            checking(expectLogWarning("Value is incorrect (out of range) for this tag, NewSeqNum(36)=2"));
+            checking(expectLogWarning("Value is incorrect (out of range) for this tag, NewSeqNo(36)=2"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

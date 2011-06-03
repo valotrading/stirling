@@ -179,7 +179,7 @@ public class Session {
         if (message.getNewSeqNo() == message.getMsgSeqNum()) {
             getLogger().warning("NewSeqNo(36)=" + message.getNewSeqNo() + " is equal to expected MsgSeqNum(34)=" + message.getMsgSeqNum());
         } else if (message.getNewSeqNo() < message.getMsgSeqNum()) {
-            String text = "Value is incorrect (out of range) for this tag, NewSeqNum(36)=" + message.getNewSeqNo();
+            String text = "Value is incorrect (out of range) for this tag, NewSeqNo(36)=" + message.getNewSeqNo();
             getLogger().warning(text);
             sessionReject(conn, message.getMsgSeqNum(), SessionRejectReason.InvalidValue(), text);
         } else {
@@ -384,7 +384,7 @@ public class Session {
         int newSeqNo = message.getInteger(NewSeqNo.Tag());
         if (newSeqNo <= message.getMsgSeqNum()) {
             sessionReject(conn, message.getMsgSeqNum(), SessionRejectReason.InvalidValue(),
-                "Attempt to lower sequence number, invalid value NewSeqNum(36)=" + newSeqNo);
+                "Attempt to lower sequence number, invalid value NewSeqNo(36)=" + newSeqNo);
         } else {
             incomingQueue.reset(newSeqNo);
         }
