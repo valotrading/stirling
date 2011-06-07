@@ -27,6 +27,9 @@ public interface Message extends Parseable, Iterable<Field>, SequencedMessage<Me
     String format();
     Field lookup(Tag<?> tag);
     String getString(Tag<StringField> tag);
+    Integer getInteger(Tag<IntegerField> tag);
+    Double getFloat(Tag<FloatField> tag);
+    boolean getBoolean(Tag<BooleanField> tag);
     void setString(Tag<StringField> tag, String value);
     void setInteger(Tag<IntegerField> tag, Integer value);
     void setFloat(Tag<? extends FloatField> tag, Double value);
