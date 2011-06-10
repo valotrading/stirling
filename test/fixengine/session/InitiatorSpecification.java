@@ -64,9 +64,11 @@ import fixengine.messages.fix42.DefaultMessageFactory;
 import fixengine.session.store.InMemorySessionStore;
 import fixengine.session.store.MongoSessionStore;
 import fixengine.session.store.SessionStore;
+import fixengine.tags.fix42.BeginSeqNo;
 import fixengine.tags.fix42.BeginString;
 import fixengine.tags.fix42.BodyLength;
 import fixengine.tags.fix42.EncryptMethod;
+import fixengine.tags.fix42.EndSeqNo;
 import fixengine.tags.fix42.HeartBtInt;
 import fixengine.tags.fix42.MsgType;
 import fixengine.tags.fix42.OrigSendingTime;
@@ -324,6 +326,15 @@ public class InitiatorSpecification extends Specification<Session> {
             server.respond(
                     new MessageBuilder(MsgTypeValue.LOGOUT)
                         .msgSeqNum(msgSeqNum)
+                    .build());
+        }
+
+        public void respondResendRequest(int msgSeqNum, int beginSeqNo, int endSeqNo) {
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.RESEND_REQUEST)
+                        .msgSeqNum(msgSeqNum)
+                        .integer(BeginSeqNo.Tag(), beginSeqNo)
+                        .integer(EndSeqNo.Tag(), endSeqNo)
                     .build());
         }
 
