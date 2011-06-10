@@ -101,7 +101,8 @@ public class ConsoleClient {
       reader = new BufferedReader(new FileReader(filename));
       List<String> commandLines = new ArrayList<String>();
       while ((line = reader.readLine()) != null) {
-        if (line.startsWith("#"))
+        line = line.trim();
+        if (line.startsWith("#") || line.isEmpty())
           continue;
         commandLines.add(line);
       }
