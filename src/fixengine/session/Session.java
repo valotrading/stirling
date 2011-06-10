@@ -423,21 +423,14 @@ public class Session {
         Logon message = (Logon) messageFactory.create(LOGON);
         message.setInteger(HeartBtInt.Tag(), 30);
         message.setEnum(EncryptMethod.Tag(), EncryptMethod.None());
-        sendOutOfQueue(conn, message);
+        message.setMsgSeqNum(outgoingSeq.next());
+        send(conn, message, false, true);
     }
 
     public void logon(Connection conn, Logon logonMessage) {
         authenticated = initiatedLogout = false;
-        sendOutOfQueue(conn, logonMessage);
-    }
-
-    private void sendOutOfQueue(Connection conn, Message message) {
-        message.setHeaderConfig(config);
-        message.setMsgSeqNum(outgoingSeq.next());
-        message.setSendingTime(currentTime());
-        conn.send(FixMessage.fromString(message.format()));
-        prevTxTime = currentTime();
-        store.saveOutgoingMessage(this, message);
+        logonMessage.setMsgSeqNum(outgoingSeq.next());
+        send(conn, logonMessage, false, true);
     }
 
     public void logout(final Connection conn) {
@@ -483,18 +476,30 @@ public class Session {
     }
 
     public void send(Connection conn, Message message) {
+        send(conn, message, true, true);
+    }
+
+    public void send(Connection conn, Message message, boolean queue, boolean save) {
         message.setHeaderConfig(config);
-        message.setMsgSeqNum(outgoingSeq.next());
-        outgoingQueue.enqueue(message);
-        if (conn != null && !conn.isClosed()) {
-            while (!outgoingQueue.isEmpty()) {
-                Message msg = outgoingQueue.dequeue();
-                msg.setSendingTime(currentTime());
-                conn.send(FixMessage.fromString(msg.format()));
-                prevTxTime = currentTime();
+        if (!queue) {
+            message.setSendingTime(currentTime());
+            conn.send(FixMessage.fromString(message.format()));
+            prevTxTime = currentTime();
+        } else {
+            message.setMsgSeqNum(outgoingSeq.next());
+            outgoingQueue.enqueue(message);
+            if (conn != null && !conn.isClosed()) {
+                while (!outgoingQueue.isEmpty()) {
+                    Message msg = outgoingQueue.dequeue();
+                    msg.setSendingTime(currentTime());
+                    conn.send(FixMessage.fromString(msg.format()));
+                    prevTxTime = currentTime();
+                }
             }
         }
-        store.saveOutgoingMessage(this, message);
+        if (save) {
+            store.saveOutgoingMessage(this, message);
+        }
     }
 
     public void processInitiatedLogout(Connection conn) {
