@@ -33,4 +33,9 @@ public class ResendRequest extends AbstractMessage {
     public void apply(MessageVisitor visitor) {
         visitor.visit(this);
     }
+
+    @Override
+    public boolean isAdminMessage() {
+        return true;
+    }
 }

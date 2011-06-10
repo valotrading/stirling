@@ -31,4 +31,9 @@ public class Heartbeat extends AbstractMessage {
     public void apply(MessageVisitor visitor) {
         visitor.visit(this);
     }
+
+    @Override
+    public boolean isAdminMessage() {
+        return true;
+    }
 }

@@ -15,4 +15,6 @@
  */
 package fixengine.messages
 
-trait Logon extends Message
+trait Logon extends Message {
+    override def isAdminMessage = true
+}

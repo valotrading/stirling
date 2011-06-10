@@ -25,6 +25,7 @@ import fixengine.Config;
 public interface Message extends Parseable, Iterable<Field>, SequencedMessage<Message>  {
     void apply(MessageVisitor visitor);
     String format();
+    boolean isAdminMessage();
     Field lookup(Tag<?> tag);
     String getString(Tag<StringField> tag);
     Integer getInteger(Tag<IntegerField> tag);

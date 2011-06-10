@@ -69,6 +69,10 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
 
     public abstract void apply(MessageVisitor visitor);
 
+    public boolean isAdminMessage() {
+        return false;
+    }
+
     public void setHeaderConfig(Config config) {
         setBeginString(config.getVersion().value());
 
