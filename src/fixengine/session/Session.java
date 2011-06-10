@@ -304,6 +304,15 @@ public class Session {
         });
     }
 
+    private void sendGapFill(final Connection conn, int beginSeqNo, int endSeqNo) {
+        SequenceReset gapFillMsg = (SequenceReset) messageFactory.create(SEQUENCE_RESET);
+        gapFillMsg.setBoolean(GapFillFlag.Tag(), true);
+        gapFillMsg.setPossDupFlag(true);
+        gapFillMsg.setMsgSeqNum(beginSeqNo);
+        gapFillMsg.setInteger(NewSeqNo.Tag(), endSeqNo);
+        send(conn, gapFillMsg, false, false);
+    }
+
     private void process(final Connection conn, Message message, final MessageVisitor visitor) {
         if (authenticated) {
             message.apply(new DefaultMessageVisitor() {
