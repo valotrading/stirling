@@ -24,10 +24,13 @@ import static fixengine.messages.MsgTypeValue.RESEND_REQUEST;
 import static fixengine.messages.MsgTypeValue.SEQUENCE_RESET;
 import static fixengine.messages.MsgTypeValue.TEST_REQUEST;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import fixengine.messages.Value;
 import lang.DefaultTimeSource;
+import lang.Predicate;
 import lang.TimeSource;
 
 import org.joda.time.DateTime;
@@ -313,6 +316,31 @@ public class Session {
         send(conn, gapFillMsg, false, false);
     }
 
+    private void resendRange(final Connection conn, int beginSeqNo, int endSeqNo) {
+        if (endSeqNo == 0) {
+            endSeqNo = outgoingSeq.peek() - 1;
+        }
+        List<Message> toSend = new ArrayList<Message>();
+        for (Message msg : store.load(Session.this, beginSeqNo, endSeqNo)) {
+            if (!msg.isAdminMessage() || msg.getMsgType().equals(REJECT)) {
+                toSend.add(msg);
+            }
+        }
+        int nextSeqNo = beginSeqNo;
+        for (Message msg : toSend) {
+            int msgSeqNum = msg.getMsgSeqNum();
+            if (msgSeqNum > nextSeqNo) {
+                sendGapFill(conn, nextSeqNo, msgSeqNum);
+            }
+            msg.setPossDupFlag(true);
+            send(conn, msg, false, false);
+            nextSeqNo = msgSeqNum + 1;
+        }
+        if (nextSeqNo <= endSeqNo) {
+            sendGapFill(conn, nextSeqNo, endSeqNo + 1);
+        }
+    }
+
     private void process(final Connection conn, Message message, final MessageVisitor visitor) {
         if (authenticated) {
             message.apply(new DefaultMessageVisitor() {
@@ -330,15 +358,12 @@ public class Session {
                         incomingQueue.skip(message.getMsgSeqNum());
                         int beginSeqNo = message.getInteger(BeginSeqNo.Tag());
                         int endSeqNo = message.getInteger(EndSeqNo.Tag());
-                        for (Message msg : store.load(Session.this, beginSeqNo, endSeqNo))
-                            send(conn, msg);
+                        resendRange(conn, beginSeqNo, endSeqNo);
                     } else {
                         while (!outgoingQueue.isEmpty()) {
                             Message msg = outgoingQueue.dequeue();
                             msg.setPossDupFlag(true);
-                            msg.setSendingTime(currentTime());
-                            conn.send(FixMessage.fromString(msg.format()));
-                            prevTxTime = currentTime();
+                            send(conn, msg, false, false);
                         }
                     }
                 }
