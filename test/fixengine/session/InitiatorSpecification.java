@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 
 import jdave.Specification;
 import lang.DefaultTimeSource;
+import lang.Predicate;
 
 import org.jmock.Expectations;
 import org.jmock.internal.ExpectationBuilder;
@@ -362,6 +363,14 @@ public class InitiatorSpecification extends Specification<Session> {
         }
 
         public void expect(final String type) {
+            expect(type, new Predicate<Message>() {
+                @Override public boolean apply(Message msg) {
+                    return msg.getMsgType().equals(type);
+                }
+            });
+        }
+
+        public void expect(final String type, final Predicate<Message> validator) {
             this.commands.add(new Runnable() {
                 @Override public void run() {
                     StringBuilder raw = parse();
@@ -369,7 +378,7 @@ public class InitiatorSpecification extends Specification<Session> {
                         return;
                     Parser.parse(new fixengine.messages.FixMessage(raw.toString().getBytes(), type), new Parser.Callback() {
                         @Override public void message(Message m) {
-                            if (m.getMsgType().equals(type))
+                            if (validator.apply(m))
                                 successCount++;
                             else
                                 failureCount++;
