@@ -64,17 +64,25 @@ public class MongoSessionStore implements SessionStore {
         }
     }
 
-    @Override public List<Message> load(Session session, int beginSeqNo, int endSeqNo) {
-        List<Message> messages = new ArrayList<Message>();
-        for (Message message : load(session, outgoingMessages())) {
+    @Override public List<Message> getOutgoingMessages(Session session, int beginSeqNo, int endSeqNo) {
+        return getRange(load(session, outgoingMessages()), beginSeqNo, endSeqNo);
+    }
+
+    @Override public List<Message> getIncomingMessages(Session session, int beginSeqNo, int endSeqNo) {
+        return getRange(load(session, incomingMessages()), beginSeqNo, endSeqNo);
+    }
+
+    private static List<Message> getRange(List<Message> messages, int beginSeqNo, int endSeqNo) {
+        List<Message> range = new ArrayList<Message>();
+        for (Message message : messages) {
             int msgSeqNum = message.getMsgSeqNum();
             if (msgSeqNum < beginSeqNo)
                 continue;
             if (endSeqNo > 0 && msgSeqNum > endSeqNo)
                 continue;
-            messages.add(message);
+            range.add(message);
         }
-        return messages;
+        return range;
     }
 
     public void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq) {

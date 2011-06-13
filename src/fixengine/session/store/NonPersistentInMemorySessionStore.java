@@ -26,7 +26,11 @@ public class NonPersistentInMemorySessionStore implements SessionStore {
     @Override public void load(Session session) {
     }
 
-    @Override public List<Message> load(Session session, int beginSeqNo, int endSeqNo) {
+    @Override public List<Message> getOutgoingMessages(Session session, int beginSeqNo, int endSeqNo) {
+        return new ArrayList<Message>();
+    }
+
+    @Override public List<Message> getIncomingMessages(Session session, int beginSeqNo, int endSeqNo) {
         return new ArrayList<Message>();
     }
 

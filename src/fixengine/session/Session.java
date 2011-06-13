@@ -319,7 +319,7 @@ public class Session {
             endSeqNo = outgoingSeq.peek() - 1;
         }
         int nextSeqNo = beginSeqNo;
-        for (Message msg : store.load(this, beginSeqNo, endSeqNo)) {
+        for (Message msg : store.getOutgoingMessages(this, beginSeqNo, endSeqNo)) {
             if (msg.isAdminMessage() && !msg.getMsgType().equals(REJECT)) {
                 continue;
             }

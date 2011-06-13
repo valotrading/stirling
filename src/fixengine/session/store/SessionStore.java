@@ -29,7 +29,8 @@ public interface SessionStore {
     void saveOutgoingMessage(Session session, Message message);
     void saveIncomingMessage(Session session, Message message);
     void load(Session session);
-    List<Message> load(Session session, int beginSeqNo, int endSeqNo);
+    List<Message> getOutgoingMessages(Session session, int beginSeqNo, int endSeqNo);
+    List<Message> getIncomingMessages(Session session, int beginSeqNo, int endSeqNo);
     void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq);
     void clear(String senderCompId, String targetCompId);
     boolean isDuplicate(Session session, Message message);

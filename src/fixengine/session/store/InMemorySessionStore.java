@@ -32,16 +32,24 @@ public class InMemorySessionStore implements SessionStore {
     @Override public void load(Session session) {
     }
 
-    @Override public List<Message> load(Session session, int beginSeqNo, int endSeqNo) {
-        final List<Message> messages = new ArrayList<Message>();
-        for (Message message : outgoingMessages) {
+    @Override public List<Message> getOutgoingMessages(Session session, int beginSeqNo, int endSeqNo) {
+        return getRange(session, outgoingMessages, beginSeqNo, endSeqNo);
+    }
+
+    @Override public List<Message> getIncomingMessages(Session session, int beginSeqNo, int endSeqNo) {
+        return getRange(session, incomingMessages, beginSeqNo, endSeqNo);
+    }
+
+    private static List<Message> getRange(Session session, List<Message> messages, int beginSeqNo, int endSeqNo) {
+        final List<Message> range = new ArrayList<Message>();
+        for (Message message : messages) {
             if (message.getMsgSeqNum() < beginSeqNo)
                 continue;
             if (endSeqNo > 0 && message.getMsgSeqNum() > endSeqNo)
                 continue;
             Parser.parse(session.getMessageFactory(), FixMessage.fromString(message.format(), message.getMsgType()), new Parser.Callback() {
                 @Override public void message(Message message) {
-                    messages.add(message);
+                    range.add(message);
                 }
 
                 @Override public void invalidMessage(int msgSeqNum, Value<Integer> reason, String text) {
@@ -57,7 +65,7 @@ public class InMemorySessionStore implements SessionStore {
                 }
             });
         }
-        return messages;
+        return range;
     }
 
     @Override public void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq) {
