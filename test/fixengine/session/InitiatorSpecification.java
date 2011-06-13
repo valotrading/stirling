@@ -314,7 +314,7 @@ public class InitiatorSpecification extends Specification<Session> {
         }
 
         public void respondLogon() {
-            server.respond(
+            respond(
                     new MessageBuilder(MsgTypeValue.LOGON)
                         .msgSeqNum(1)
                         .integer(HeartBtInt.Tag(), getHeartbeatIntervalInSeconds())
@@ -323,14 +323,14 @@ public class InitiatorSpecification extends Specification<Session> {
         }
 
         public void respondLogout(int msgSeqNum) {
-            server.respond(
+            respond(
                     new MessageBuilder(MsgTypeValue.LOGOUT)
                         .msgSeqNum(msgSeqNum)
                     .build());
         }
 
         public void respondResendRequest(int msgSeqNum, int beginSeqNo, int endSeqNo) {
-            server.respond(
+            respond(
                     new MessageBuilder(MsgTypeValue.RESEND_REQUEST)
                         .msgSeqNum(msgSeqNum)
                         .integer(BeginSeqNo.Tag(), beginSeqNo)
