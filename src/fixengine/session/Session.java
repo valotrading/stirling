@@ -471,15 +471,11 @@ public class Session {
 
     public void sequenceReset(Connection conn, Sequence seq) {
         SequenceReset message = (SequenceReset) messageFactory.create(SEQUENCE_RESET);
-        message.setHeaderConfig(config);
-        message.setSendingTime(currentTime());
         message.setMsgSeqNum(seq.peek());
         message.setInteger(NewSeqNo.Tag(), seq.next());
         message.setBoolean(GapFillFlag.Tag(), false);
-        conn.send(FixMessage.fromString(message.format()));
-        prevTxTime = currentTime();
+        send(conn, message, false, true);
         setOutgoingSeq(seq);
-        store.saveOutgoingMessage(this, message);
     }
 
     public void keepAlive(Connection conn) {
