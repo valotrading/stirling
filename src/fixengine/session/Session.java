@@ -24,8 +24,6 @@ import static fixengine.messages.MsgTypeValue.RESEND_REQUEST;
 import static fixengine.messages.MsgTypeValue.SEQUENCE_RESET;
 import static fixengine.messages.MsgTypeValue.TEST_REQUEST;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import fixengine.messages.Value;
@@ -320,14 +318,11 @@ public class Session {
         if (endSeqNo == 0) {
             endSeqNo = outgoingSeq.peek() - 1;
         }
-        List<Message> toSend = new ArrayList<Message>();
-        for (Message msg : store.load(Session.this, beginSeqNo, endSeqNo)) {
-            if (!msg.isAdminMessage() || msg.getMsgType().equals(REJECT)) {
-                toSend.add(msg);
-            }
-        }
         int nextSeqNo = beginSeqNo;
-        for (Message msg : toSend) {
+        for (Message msg : store.load(this, beginSeqNo, endSeqNo)) {
+            if (msg.isAdminMessage() && !msg.getMsgType().equals(REJECT)) {
+                continue;
+            }
             int msgSeqNum = msg.getMsgSeqNum();
             if (msgSeqNum > nextSeqNo) {
                 sendGapFill(conn, nextSeqNo, msgSeqNum);
