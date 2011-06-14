@@ -509,7 +509,7 @@ public class InitiatorSpecification extends Specification<Session> {
         });
     }
 
-    private SessionStore getSessionStore() throws Exception {
+    private SessionStore newSessionStore() throws Exception {
         String value = System.getProperty("fixengine.session.store");
         if ("mongo".equals(value)) {
             SessionStore store = new MongoSessionStore("localhost", 27017);
@@ -522,7 +522,7 @@ public class InitiatorSpecification extends Specification<Session> {
     protected class TestSession extends Session {
         protected TestSession() throws Exception {
             super(HeartBtIntValue.milliseconds(getHearbeatIntervalInMillis()), InitiatorSpecification.this.config,
-                getSessionStore(), new DefaultMessageFactory(), new DefaultMessageComparator());
+                newSessionStore(), new DefaultMessageFactory(), new DefaultMessageComparator());
         }
 
         protected MessageQueue<Message> getOutgoingMsgQueue() {
