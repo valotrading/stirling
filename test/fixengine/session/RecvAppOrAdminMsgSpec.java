@@ -15,11 +15,12 @@
  */
 package fixengine.session;
 
+import java.util.List;
 import jdave.junit4.JDaveRunner;
-
 import org.junit.runner.RunWith;
 
 import fixengine.messages.Field;
+import fixengine.messages.Message;
 import fixengine.messages.MsgTypeValue;
 import fixengine.tags.fix42.AllocAccount;
 import fixengine.tags.fix42.AllocID;
@@ -426,6 +427,27 @@ import fixengine.tags.fix42.ExecTransType;
          * different values. */
         private void cleartextAndEncryptedSectionDiffer() throws Exception {
             // TODO: Currently, FIX engine does not support encrypted sections.
+        }
+
+        public void persistAdminMessages() throws Exception {
+            server.expect(MsgTypeValue.LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
+                        .msgSeqNum(2)
+                    .build(), getHearbeatIntervalInMillis() / 2);
+            server.respondLogout(3);
+            server.expect(MsgTypeValue.LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            List<Message> messages = session.getStore().getIncomingMessages(session, 1, 0);
+            specify(messages.size(), 3);
+            specify(messages.get(0).getMsgType(), must.equal(MsgTypeValue.LOGON));
+            specify(messages.get(1).getMsgType(), must.equal(MsgTypeValue.HEARTBEAT));
+            specify(messages.get(2).getMsgType(), must.equal(MsgTypeValue.LOGOUT));
         }
     }
 }

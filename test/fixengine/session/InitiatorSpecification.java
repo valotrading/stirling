@@ -529,6 +529,10 @@ public class InitiatorSpecification extends Specification<Session> {
             return outgoingQueue;
         }
 
+        protected SessionStore getStore() {
+            return store;
+        }
+
         @Override protected long getLogoutResponseTimeoutMsec() {
             return LOGOUT_RESPONSE_TIMEOUT_MSEC;
         }

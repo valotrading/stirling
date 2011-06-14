@@ -391,6 +391,7 @@ public class Session {
             message.apply(new DefaultMessageVisitor() {
                 @Override public void visit(Logon message) {
                     authenticated = true;
+                    store.saveIncomingMessage(Session.this, message);
                     message.apply(visitor);
                 }
 
