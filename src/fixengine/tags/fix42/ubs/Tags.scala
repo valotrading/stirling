@@ -17,10 +17,10 @@ package fixengine.tags.fix42.ubs
 
 import fixengine.messages.{
   EnumTag,
-  Value
+  CharValue
 }
 import java.lang.Character
 
 object Internalization extends EnumTag[Character](9004) {
-  val DoNotExecuteAgainstOwnOrders = Value('4')
+  val DoNotExecuteAgainstOwnOrders = CharValue('4')
 }

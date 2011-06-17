@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 package fixengine.messages
+
 import fixengine.messages.fix43.SeqNumField
+import java.lang.{Integer, Character}
 
 abstract class MessageTag[T <: Field](value: Int, clazz: Class[T]) extends Tag[T](value, clazz) {
   val Tag = this
@@ -33,14 +35,14 @@ abstract class EnumTag[T](value: Int) extends MessageTag[EnumField[Value[T]]](va
   }._2
   private def values: Array[Value[T]] = {
     getClass.getDeclaredFields.filter { field =>
-      classOf[Value[T]].equals(field.getType)
+      classOf[Value[T]].isAssignableFrom(field.getType)
     }.map{ field =>
       method(field).invoke(this).asInstanceOf[Value[T]]
     }
   }
   private def namesAndValues: Array[(String, Value[T])] = {
     getClass.getDeclaredFields.filter { field =>
-      classOf[Value[T]].equals(field.getType)
+      classOf[Value[T]].isAssignableFrom(field.getType)
     }.map{ field =>
       (field.getName, method(field).invoke(this).asInstanceOf[Value[T]])
     }
@@ -48,9 +50,14 @@ abstract class EnumTag[T](value: Int) extends MessageTag[EnumField[Value[T]]](va
   private def method(field: java.lang.reflect.Field) = getClass.getDeclaredMethod(field.getName)
 }
 
-case class Value[T](val v: T) extends Formattable {
+abstract class Value[T](val v: T) extends Formattable {
   def value = v.toString
 }
+
+case class CharValue(char: Character) extends Value[Character](char)
+case class IntegerValue(int: Integer) extends Value[Integer](int)
+case class StringValue(str: String) extends Value[String](str)
+case class BooleanValue(bool: Boolean) extends Value[Boolean](bool)
 
 abstract class BooleanTag(value: Int) extends MessageTag[BooleanField](value, classOf[BooleanField])
 abstract class CharTag(value: Int) extends MessageTag[CharField](value, classOf[CharField])

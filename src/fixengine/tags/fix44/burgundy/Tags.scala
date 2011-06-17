@@ -22,63 +22,65 @@ import java.lang.{
 }
 import fixengine.messages.{
   BooleanTag,
+  CharValue,
   EnumTag,
   IntegerTag,
+  IntegerValue,
   NumInGroupTag,
   PriceTag,
   StringTag,
-  Value
+  StringValue
 }
 
 object SettlType extends EnumTag[Integer](63) {
-  val Cash = Value(1)
-  val T2 = Value(3)
-  val T3 = Value(4)
-  val T4 = Value(5)
-  val T5 = Value(8)
-  val T1 = Value(9)
+  val Cash = IntegerValue(1)
+  val T2 = IntegerValue(3)
+  val T3 = IntegerValue(4)
+  val T4 = IntegerValue(5)
+  val T5 = IntegerValue(8)
+  val T1 = IntegerValue(9)
 }
 object SecurityType extends EnumTag[String](167) {
-  val CommonStock = Value("CS")
-  val MutualFunds = Value("MF")
-  val Warrant = Value("WAR")
-  val StructuredNotes = Value("STRUCT")
-  val SubscriptionOption = Value("SOP")
-  val Right = Value("RG")
-  val Certificate = Value("CT")
+  val CommonStock = StringValue("CS")
+  val MutualFunds = StringValue("MF")
+  val Warrant = StringValue("WAR")
+  val StructuredNotes = StringValue("STRUCT")
+  val SubscriptionOption = StringValue("SOP")
+  val Right = StringValue("RG")
+  val Certificate = StringValue("CT")
 }
 object OrderRestrictions extends EnumTag[Character](529) {
-  val IssuerHolding = Value('B')
-  val IssuePriceStabilization = Value('C')
-  val ActingAsMarketMaker = Value('5')
+  val IssuerHolding = CharValue('B')
+  val IssuePriceStabilization = CharValue('C')
+  val ActingAsMarketMaker = CharValue('5')
 }
 object TrdType extends EnumTag[Integer](828) {
-  val RegularTrade = Value(0)
-  val DerivativeRelatedTransaction = Value(49)
-  val PortfolioTrade = Value(50)
-  val VolumeWeightedAverageTrade = Value(51)
-  val MarketplaceGrantedTrade = Value(52)
+  val RegularTrade = IntegerValue(0)
+  val DerivativeRelatedTransaction = IntegerValue(49)
+  val PortfolioTrade = IntegerValue(50)
+  val VolumeWeightedAverageTrade = IntegerValue(51)
+  val MarketplaceGrantedTrade = IntegerValue(52)
 }
 object InstrAttribType extends EnumTag[Integer](871) {
-  val PriceDimension = Value(101)
-  val VolumeDimension = Value(102)
-  val PrimaryMarket = Value(103)
-  val CcpProduct = Value(104)
-  val PostTradePublicTransparent = Value(105)
-  val SecurityShortName= Value(106)
-  val InstrumentCurrency= Value(308)
-  val NoOfInstrumentsOutstanding = Value(201)
-  val KnockOutBarrierHigh = Value(202)
-  val KnockOutBarrierLow = Value(203)
-  val ExerciseToDate = Value(307)
-  val BarrierHigh = Value(309)
-  val BarrierLow = Value(310)
-  val LoanAmount = Value(301)
-  val NominalValue = Value(302)
-  val IssuePrice = Value(303)
-  val DerivativeIssuer= Value(304)
-  val LoanNumber = Value(305)
-  val LeadingManager = Value(306)
+  val PriceDimension = IntegerValue(101)
+  val VolumeDimension = IntegerValue(102)
+  val PrimaryMarket = IntegerValue(103)
+  val CcpProduct = IntegerValue(104)
+  val PostTradePublicTransparent = IntegerValue(105)
+  val SecurityShortName= IntegerValue(106)
+  val InstrumentCurrency= IntegerValue(308)
+  val NoOfInstrumentsOutstanding = IntegerValue(201)
+  val KnockOutBarrierHigh = IntegerValue(202)
+  val KnockOutBarrierLow = IntegerValue(203)
+  val ExerciseToDate = IntegerValue(307)
+  val BarrierHigh = IntegerValue(309)
+  val BarrierLow = IntegerValue(310)
+  val LoanAmount = IntegerValue(301)
+  val NominalValue = IntegerValue(302)
+  val IssuePrice = IntegerValue(303)
+  val DerivativeIssuer= IntegerValue(304)
+  val LoanNumber = IntegerValue(305)
+  val LeadingManager = IntegerValue(306)
 }
 object TradeSeqNo extends IntegerTag(7554)
 object TradeSeqNoSeries extends IntegerTag(7555)

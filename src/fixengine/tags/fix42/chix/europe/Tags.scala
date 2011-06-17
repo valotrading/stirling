@@ -16,8 +16,9 @@
 package fixengine.tags.fix42.chix.europe
 
 import fixengine.messages.{
+  CharValue,
   EnumTag,
-  Value
+  StringValue
 }
 import java.lang.{
   String,
@@ -25,17 +26,17 @@ import java.lang.{
 }
 
 object ExecInst extends EnumTag[Character](18) {
-  val MarketPeg = Value('P')
-  val PrimaryPeg = Value('R')
-  val Midpoint = Value('M')
+  val MarketPeg = CharValue('P')
+  val PrimaryPeg = CharValue('R')
+  val Midpoint = CharValue('M')
 }
 object IDSource extends EnumTag[Character](22) {
-  val ISIN = Value('4')
-  val RIC = Value('5')
+  val ISIN = CharValue('4')
+  val RIC = CharValue('5')
 }
 object TradeLiquidityIndicator extends EnumTag[String](9730) {
-  val AddedLiquidity = Value("A")           /* Order added liquidity */
-  val RemovedLiquidity = Value("R")         /* Order removed liquidity */
-  val AddedLiquidityToDark = Value("D")     /* Dark trade */
-  val RemovedLiquidityFromDark = Value("X") /* Onward routed trade */
+  val AddedLiquidity = StringValue("A")           /* Order added liquidity */
+  val RemovedLiquidity = StringValue("R")         /* Order removed liquidity */
+  val AddedLiquidityToDark = StringValue("D")     /* Dark trade */
+  val RemovedLiquidityFromDark = StringValue("X") /* Onward routed trade */
 }

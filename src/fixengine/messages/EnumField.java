@@ -46,7 +46,7 @@ public class EnumField<T extends Formattable> extends AbstractField<T> {
     @Override public void parse(String value) {
         if (tag() instanceof EnumTag) {
             for (Field field : tagClass().getDeclaredFields()) {
-                if (!field.getType().equals(Value.class))
+                if (!Value.class.isAssignableFrom(field.getType()))
                     continue;
                 T candidate = enumValue(field);
                 if (candidate.value().toString().equals(value)) {

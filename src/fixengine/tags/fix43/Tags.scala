@@ -17,16 +17,18 @@ package fixengine.tags.fix43
 
 import fixengine.messages.{
   BooleanTag,
+  CharValue,
   EnumTag,
   FloatTag,
   IntegerTag,
+  IntegerValue,
   MonthYearTag,
   NumInGroupTag,
-  PriceTag,
   PriceOffsetTag,
+  PriceTag,
   QtyTag,
   StringTag,
-  Value
+  StringValue
 }
 import java.lang.{
   Character,
@@ -34,108 +36,107 @@ import java.lang.{
 }
 
 object SecurityIDSource extends EnumTag[Character](22) {
-  val ISIN = Value('4')
-  val ExchangeSymbol = Value('8')
+  val ISIN = CharValue('4')
+  val ExchangeSymbol = CharValue('8')
 }
 object CxlRejReason extends EnumTag[Integer](102) {
-  val TooLateToCancel = Value(0)
-  val UnknownOrder = Value(1)
-  val BrokerExchangeOption = Value(2)
-  val PendingCancelOrReplace = Value(3)
-  val UnableToProcessRequest = Value(4)
-  val TimeMismatch = Value(5)
-  val DuplicateClOrdId = Value(6)
+  val TooLateToCancel = IntegerValue(0)
+  val UnknownOrder = IntegerValue(1)
+  val BrokerExchangeOption = IntegerValue(2)
+  val PendingCancelOrReplace = IntegerValue(3)
+  val UnableToProcessRequest = IntegerValue(4)
+  val TimeMismatch = IntegerValue(5)
+  val DuplicateClOrdId = IntegerValue(6)
 }
 object OrdRejReason extends EnumTag[Integer](103) {
-  val BrokerExchangeOption = Value(0)
-  val UnknownSymbol = Value(1)
-  val ExchangeClosed = Value(2)
-  val OrderExceedsLimit = Value(3)
-  val TooLateToEnter = Value(4)
-  val UnknownOrder = Value(5)
-  val DuplicateOrder = Value(6)
-  val DuplicateOfVerballyCommunicatedOrder = Value(7)
-  val StaleOrder = Value(8)
-  val TradeAlongRequired = Value(9)
-  val InvalidInvestorId = Value(10)
-  val UnsupportedOrderCharacteristic = Value(11)
-  val SurveillanceOption = Value(12)
+  val BrokerExchangeOption = IntegerValue(0)
+  val UnknownSymbol = IntegerValue(1)
+  val ExchangeClosed = IntegerValue(2)
+  val OrderExceedsLimit = IntegerValue(3)
+  val TooLateToEnter = IntegerValue(4)
+  val UnknownOrder = IntegerValue(5)
+  val DuplicateOrder = IntegerValue(6)
+  val DuplicateOfVerballyCommunicatedOrder = IntegerValue(7)
+  val StaleOrder = IntegerValue(8)
+  val TradeAlongRequired = IntegerValue(9)
+  val InvalidInvestorId = IntegerValue(10)
+  val UnsupportedOrderCharacteristic = IntegerValue(11)
+  val SurveillanceOption = IntegerValue(12)
 }
 object ExecType extends EnumTag[Character](150) {
-  val New = Value('0')
-  val PartialFill = Value('1')
-  val Fill = Value('2')
-  val DoneForDay = Value('3')
-  val Canceled = Value('4')
-  val Replace = Value('5')
-  val PendingCancel = Value('6')
-  val Stopped = Value('7')
-  val Rejected = Value('8')
-  val Suspended = Value('9')
-  val PendingNew = Value('A')
-  val Calculated = Value('B')
-  val Expired = Value('C')
-  val Restated = Value('D')
-  val PendingReplace = Value('E')
-  val Trade = Value('F')
-  val TradeCorrect = Value('G')
-  val TradeCancel = Value('H')
-  val OrderStatus = Value('I')
+  val New = CharValue('0')
+  val PartialFill = CharValue('1')
+  val Fill = CharValue('2')
+  val DoneForDay = CharValue('3')
+  val Canceled = CharValue('4')
+  val Replace = CharValue('5')
+  val PendingCancel = CharValue('6')
+  val Stopped = CharValue('7')
+  val Rejected = CharValue('8')
+  val Suspended = CharValue('9')
+  val PendingNew = CharValue('A')
+  val Calculated = CharValue('B')
+  val Expired = CharValue('C')
+  val Restated = CharValue('D')
+  val PendingReplace = CharValue('E')
+  val Trade = CharValue('F')
+  val TradeCorrect = CharValue('G')
+  val TradeCancel = CharValue('H')
+  val OrderStatus = CharValue('I')
 }
 object PegOffsetValue extends PriceOffsetTag(211)
 object TradSesStatus extends EnumTag(340) {
-  val Unknown = Value(0)
-  val Halted = Value(1)
-  val Open = Value(2)
-  val Closed = Value(3)
-  val PreOpen = Value(4)
-  val PreClose = Value(5)
-  val RequestRejected = Value(6)
+  val Unknown = IntegerValue(0)
+  val Halted = IntegerValue(1)
+  val Open = IntegerValue(2)
+  val Closed = IntegerValue(3)
+  val PreOpen = IntegerValue(4)
+  val PreClose = IntegerValue(5)
+  val RequestRejected = IntegerValue(6)
 }
-
 object SessionRejectReason extends EnumTag[Integer](373) {
-  val InvalidTagNumber = Value(0)
-  val TagMissing = Value(1)
-  val InvalidTag = Value(2)
-  val UndefinedTag = Value(3)
-  val EmptyTag = Value(4)
-  val InvalidValue = Value(5)
-  val InvalidValueFormat = Value(6)
-  val DecryptionProblem = Value(7)
-  val SignatureProblem = Value(8)
-  val CompIdProblem = Value(9)
-  val SendingTimeAccuracyProblem = Value(10)
-  val InvalidMsgType = Value(11)
-  val XmlValidationError = Value(12)
-  val TagMultipleTimes = Value(13)
-  val OutOfOrderTag = Value(14)
-  val OutOfOrderGroupField = Value(15)
-  val NumInGroupMismatch = Value(16)
-  val FieldDelimiterInValue = Value(17)
+  val InvalidTagNumber = IntegerValue(0)
+  val TagMissing = IntegerValue(1)
+  val InvalidTag = IntegerValue(2)
+  val UndefinedTag = IntegerValue(3)
+  val EmptyTag = IntegerValue(4)
+  val InvalidValue = IntegerValue(5)
+  val InvalidValueFormat = IntegerValue(6)
+  val DecryptionProblem = IntegerValue(7)
+  val SignatureProblem = IntegerValue(8)
+  val CompIdProblem = IntegerValue(9)
+  val SendingTimeAccuracyProblem = IntegerValue(10)
+  val InvalidMsgType = IntegerValue(11)
+  val XmlValidationError = IntegerValue(12)
+  val TagMultipleTimes = IntegerValue(13)
+  val OutOfOrderTag = IntegerValue(14)
+  val OutOfOrderGroupField = IntegerValue(15)
+  val NumInGroupMismatch = IntegerValue(16)
+  val FieldDelimiterInValue = IntegerValue(17)
 }
 object ExecRestatementReason extends EnumTag[Integer](378) {
-  val GtCorporateAction = Value(0)
-  val GtRenewalRestatement = Value(1) /* (no corporate action) */
-  val VerbalChange = Value(2)
-  val RepricingOfOrder = Value(3)
-  val BrokerOption = Value(4)
-  val PartialDeclineOfOrderQty = Value(5) /* (e.g. exchange-initiated partial cancel) */
-  val CancelOnTradingHalt = Value(6)
-  val CancelOnSystemFailure = Value(7)
-  val MarketOption = Value(8)
+  val GtCorporateAction = IntegerValue(0)
+  val GtRenewalRestatement = IntegerValue(1) /* (no corporate action) */
+  val VerbalChange = IntegerValue(2)
+  val RepricingOfOrder = IntegerValue(3)
+  val BrokerOption = IntegerValue(4)
+  val PartialDeclineOfOrderQty = IntegerValue(5) /* (e.g. exchange-initiated partial cancel) */
+  val CancelOnTradingHalt = IntegerValue(6)
+  val CancelOnSystemFailure = IntegerValue(7)
+  val MarketOption = IntegerValue(8)
 }
 object BusinessRejectReason extends EnumTag[Integer](380) {
-  val Other = Value(0)
-  val UnknownId = Value(1)
-  val UnknownSecurity = Value(2)
-  val UnknownMessageType = Value(3)
-  val ApplicationNotAvailable = Value(4)
-  val ConditionallyRequiredFieldMissing = Value(5)
-  val NotAuthorized = Value(6)
-  val DeliverToFirmNotAvailable = Value(7)
+  val Other = IntegerValue(0)
+  val UnknownId = IntegerValue(1)
+  val UnknownSecurity = IntegerValue(2)
+  val UnknownMessageType = IntegerValue(3)
+  val ApplicationNotAvailable = IntegerValue(4)
+  val ConditionallyRequiredFieldMissing = IntegerValue(5)
+  val NotAuthorized = IntegerValue(6)
+  val DeliverToFirmNotAvailable = IntegerValue(7)
 }
 object PartyIDSource extends EnumTag[Character](447) {
-  val Custom = Value('D')
+  val Custom = CharValue('D')
 }
 object PartyID extends StringTag(448)
 object NoPartyIDs extends IntegerTag(453)
@@ -146,78 +147,78 @@ object NoUnderlyingSecurityAltID extends NumInGroupTag(457)
 object UnderlyingSecurityAltID extends StringTag(458)
 object UnderlyingSecurityAltIDSource extends StringTag(459)
 object TradeReportTransType extends EnumTag[Character](487) {
-  val Cancel = Value('C')
-  val New = Value('N')
-  val Replace = Value('R')
+  val Cancel = IntegerValue('C')
+  val New = IntegerValue('N')
+  val Replace = IntegerValue('R')
 }
 object SecondaryClOrdID extends StringTag(526)
 object SecondaryExecID extends StringTag(527)
 object OrderCapacity extends EnumTag[Character](528) {
-  val Agency = Value('A')
-  val Principal = Value('P')
-  val Riskless = Value('R')
+  val Agency = IntegerValue('A')
+  val Principal = IntegerValue('P')
+  val Riskless = IntegerValue('R')
 }
 object OrderRestrictions extends EnumTag[Character](529) {
-  val ProgramTrade = Value(1)
-  val IndexArbitrage = Value(2)
-  val NonIndexArbitrage = Value(3)
-  val CompetingMarketMaker = Value(4)
+  val ProgramTrade = IntegerValue(1)
+  val IndexArbitrage = IntegerValue(2)
+  val NonIndexArbitrage = IntegerValue(3)
+  val CompetingMarketMaker = IntegerValue(4)
 }
 object NoSides extends NumInGroupTag(552)
 object NoLegs extends NumInGroupTag(555)
 object SecurityListRequestType extends EnumTag[Integer](559) {
-  val Symbol = Value(0)
-  val SecurityTypeCFICode = Value(1)
-  val Product = Value(2)
-  val TradingSessionID = Value(3)
-  val AllSecurities = Value(4)
+  val Symbol = IntegerValue(0)
+  val SecurityTypeCFICode = IntegerValue(1)
+  val Product = IntegerValue(2)
+  val TradingSessionID = IntegerValue(3)
+  val AllSecurities = IntegerValue(4)
 }
 object SecurityRequestResult extends EnumTag[Integer](560) {
-  val ValidReq = Value(0)
-  val InvalidReq = Value(1)
-  val NoInstrumentsFound = Value(2)
-  val NotAuthorized = Value(3)
-  val InstrumentUnavailable = Value(4)
-  val NotSupported = Value(5)
+  val ValidReq = IntegerValue(0)
+  val InvalidReq = IntegerValue(1)
+  val NoInstrumentsFound = IntegerValue(2)
+  val NotAuthorized = IntegerValue(3)
+  val InstrumentUnavailable = IntegerValue(4)
+  val NotSupported = IntegerValue(5)
 }
 object RoundLot extends QtyTag(561)
 object LegPositionEffect extends EnumTag[Character](564) {
-  val Close = Value('C')
-  val FIFO = Value('F')
-  val Open = Value('O')
-  val Rolled = Value('R')
+  val Close = CharValue('C')
+  val FIFO = CharValue('F')
+  val Open = CharValue('O')
+  val Rolled = CharValue('R')
 }
 object LegPrice extends PriceTag(566)
 object TradeRequestID extends StringTag(568)
 object TradeRequestType extends EnumTag[Integer](569) {
-  val AllTrades = Value(0)
-  val MatchedTrades = Value(1)
-  val UnmatchedTrades = Value(2)
-  val UnreportedTrades = Value(3)
-  val AdvisoriesMatch = Value(4)
+  val AllTrades = IntegerValue(0)
+  val MatchedTrades = IntegerValue(1)
+  val UnmatchedTrades = IntegerValue(2)
+  val UnreportedTrades = IntegerValue(3)
+  val AdvisoriesMatch = IntegerValue(4)
 }
 object PreviouslyReported extends BooleanTag(570)
 object TradeReportId extends StringTag(571)
 object NoDates extends IntegerTag(580)
 object AccountType extends EnumTag[Integer](581) {
-  val AccountCustomer = Value(1)
-  val AccountNonCustomer = Value(2)
-  val HouseTrader = Value(3)
-  val FloorTrader = Value(4)
-  val AccountNonCustomerCross = Value(6)
-  val HouseTraderCross = Value(7)
-  val JointBOAcct = Value(8)
+  val AccountCustomer = IntegerValue(1)
+  val AccountNonCustomer = IntegerValue(2)
+  val HouseTrader = IntegerValue(3)
+  val FloorTrader = IntegerValue(4)
+  val AccountNonCustomerCross = IntegerValue(6)
+  val HouseTraderCross = IntegerValue(7)
+  val JointBOAcct = IntegerValue(8)
 }
 object MassStatusReqID extends StringTag(584)
 object MassStatusReqType extends EnumTag[Integer](585) {
-  val StatusSecurity = Value(1)
-  val StatusUnderlyingSecurity = Value(2)
-  val StatusProduct = Value(3)
-  val StatusCFICode = Value(4)
-  val StatusSecurityType = Value(5)
-  val StatusTrdSession = Value(6)
-  val StatusAllOrders = Value(7)
-  val StatusPartyID = Value(8)
+  val StatusSecurity = IntegerValue(1)
+  val StatusUnderlyingSecurity = IntegerValue(2)
+  val StatusProduct = IntegerValue(3)
+  val StatusCFICode = IntegerValue(4)
+  val StatusSecurityType = IntegerValue(5)
+  val StatusTrdSession = IntegerValue(6)
+  val StatusAllOrders = IntegerValue(7)
+  val StatusPartyID = IntegerValue(8)
 }
 object LegSymbol extends StringTag(600)
 object LegCFICode extends StringTag(608)
@@ -225,44 +226,44 @@ object LegMaturityMonthYear extends MonthYearTag(610)
 object LegStrikePrice extends PriceTag(612)
 object LegRatioQty extends FloatTag(623)
 object LegSide extends EnumTag[Character](624) {
-  val Buy = Value('1')
-  val Sell = Value('2')
-  val BuyMinus = Value('3')
-  val SellPlus = Value('4')
-  val SellShort = Value('5')
-  val SellShortExempt = Value('6')
-  val Undisclosed = Value('7')
-  val Cross = Value('8')
-  val CrossShort = Value('9')
-  val CrossShortExempt = Value('A')
-  val AsDefined = Value('B')
-  val Opposite = Value('C')
+  val Buy = CharValue('1')
+  val Sell = CharValue('2')
+  val BuyMinus = CharValue('3')
+  val SellPlus = CharValue('4')
+  val SellShort = CharValue('5')
+  val SellShortExempt = CharValue('6')
+  val Undisclosed = CharValue('7')
+  val Cross = CharValue('8')
+  val CrossShort = CharValue('9')
+  val CrossShortExempt = CharValue('A')
+  val AsDefined = CharValue('B')
+  val Opposite = CharValue('C')
 }
 object TradingSessionSubID extends StringTag(625)
 object Price2 extends PriceTag(640)
 object LegRefID extends StringTag(654)
 object PositionEffect extends EnumTag[Character](77) {
-  val Open = Value('O')
-  val Close = Value('C')
-  val Rolled = Value('R')
-  val FIFO = Value('F')
+  val Open = CharValue('O')
+  val Close = CharValue('C')
+  val Rolled = CharValue('R')
+  val FIFO = CharValue('F')
 }
 object MultiLegReportingType extends EnumTag[Character](442) {
-  val Single = Value('1')
-  val Individual = Value('2')
-  val Multileg = Value('3')
+  val Single = CharValue('1')
+  val Individual = CharValue('2')
+  val Multileg = CharValue('3')
 }
 object Product extends EnumTag[Int](460) {
-  val Agency = 1
-  val Commodity = 2
-  val Corporate = 3
-  val Currency = 4
-  val Equity = 5
-  val Government = 6
-  val Index = 7
-  val Loan = 8
-  val MoneyMarket = 9
-  val Mortgage = 10
-  val Municipal = 11
-  val Other = 12
+  val Agency = IntegerValue(1)
+  val Commodity = IntegerValue(2)
+  val Corporate = IntegerValue(3)
+  val Currency = IntegerValue(4)
+  val Equity = IntegerValue(5)
+  val Government = IntegerValue(6)
+  val Index = IntegerValue(7)
+  val Loan = IntegerValue(8)
+  val MoneyMarket = IntegerValue(9)
+  val Mortgage = IntegerValue(10)
+  val Municipal = IntegerValue(11)
+  val Other = IntegerValue(12)
 }

@@ -36,7 +36,7 @@ object MessageTagSpec extends Specification {
     }
   }
   private object IntTag extends EnumTag[Integer](0) {
-    val Foo = Value(1)
-    val Bar = Value(2)
+    val Foo = IntegerValue(1)
+    val Bar = IntegerValue(2)
   }
 }

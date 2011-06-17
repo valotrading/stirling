@@ -19,7 +19,8 @@ import fixengine.messages.{
   ExchangeTag,
   StringTag,
   EnumTag,
-  Value
+  CharValue,
+  IntegerValue
 }
 import java.lang.{
   Character,
@@ -27,13 +28,13 @@ import java.lang.{
 }
 
 object SettlMethod extends EnumTag[Character](1193) {
-  val Cash = Value('C')
-  val Physical = Value('P')
+  val Cash = CharValue('C')
+  val Physical = CharValue('P')
 }
 object ExerciseStyle extends EnumTag[Integer](1194) {
-  val European = Value(0)
-  val American = Value(1)
-  val Bermuda = Value(2)
+  val European = IntegerValue(0)
+  val American = IntegerValue(1)
+  val Bermuda = IntegerValue(2)
 }
 object MarketSegmentID extends StringTag(1300)
 object MarketID extends ExchangeTag(1301)
