@@ -37,8 +37,8 @@ import fixengine.tags.fix42.TimeInForce;
 import fixengine.tags.fix42.TransactTime;
 import fixengine.tags.fix42.chix.europe.ExecInst;
 
-public class OrderModificationRequestMessage extends fixengine.messages.fix42.OrderModificationRequest {
-    public OrderModificationRequestMessage(MessageHeader header) {
+public class OrderModificationRequest extends fixengine.messages.fix42.OrderModificationRequest {
+    public OrderModificationRequest(MessageHeader header) {
         super(header);
 
         field(ClOrdID.Tag());

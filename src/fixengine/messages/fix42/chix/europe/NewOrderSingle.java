@@ -41,8 +41,8 @@ import fixengine.tags.fix42.chix.europe.IDSource;
 import fixengine.tags.fix42.Side;
 import fixengine.tags.fix42.TimeInForce;
 
-public class NewOrderSingleMessage extends AbstractMessage implements fixengine.messages.NewOrderSingle {
-    public NewOrderSingleMessage(MessageHeader header) {
+public class NewOrderSingle extends AbstractMessage implements fixengine.messages.NewOrderSingle {
+    public NewOrderSingle(MessageHeader header) {
         super(header);
 
         field(Account.Tag(), Required.NO);
