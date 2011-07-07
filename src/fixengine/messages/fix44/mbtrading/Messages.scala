@@ -22,7 +22,7 @@ import fixengine.messages.{
   NewOrderSingle => NewOrderSingleTrait,
   NewsMessage => NewsMessageTrait,
   OrderCancelRequest => OrderCancelRequestTrait,
-  OrderModificationRequest => OrderModificationRequestTrait,
+  OrderCancelReplaceRequest => OrderCancelReplaceRequestTrait,
   RequestForPositions => RequestForPositionsTrait,
   TradingSessionStatus => TradingSessionStatusTrait
 }
@@ -218,7 +218,7 @@ class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) 
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderModificationRequest(header: MessageHeader) extends AbstractMessage(header) with OrderModificationRequestTrait {
+class OrderCancelReplaceRequest(header: MessageHeader) extends AbstractMessage(header) with OrderCancelReplaceRequestTrait {
   field(Account.Tag)
   field(ClOrdID.Tag)
   field(HandlInst.Tag)

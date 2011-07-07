@@ -242,7 +242,7 @@ class TradeCancelCorrect(header: MessageHeader) extends UserDefinedMessage(heade
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderModificationRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderModificationRequest(header) {
+class OrderCancelReplaceRequest(header: MessageHeader) extends fixengine.messages.fix42.OrderCancelReplaceRequest(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(Currency.Tag, new Required {

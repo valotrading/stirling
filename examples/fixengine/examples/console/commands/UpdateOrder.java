@@ -18,11 +18,11 @@ package fixengine.examples.console.commands;
 import fixengine.examples.console.ConsoleClient;
 import fixengine.messages.Message;
 
-import static fixengine.messages.MsgTypeValue.ORDER_MODIFICATION_REQUEST;
+import static fixengine.messages.MsgTypeValue.ORDER_CANCEL_REPLACE_REQUEST;
 
 public class UpdateOrder extends FixMessageCommand {
   @Override protected Message newMessage(ConsoleClient client) {
-    return client.getMessageFactory().create(ORDER_MODIFICATION_REQUEST);
+    return client.getMessageFactory().create(ORDER_CANCEL_REPLACE_REQUEST);
   }
 
   @Override protected boolean isModifyingOrderMessage() {

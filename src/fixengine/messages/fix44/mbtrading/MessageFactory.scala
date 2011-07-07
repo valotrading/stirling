@@ -23,7 +23,7 @@ class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(ORDER_CANCEL_REQUEST, classOf[OrderCancelRequest])
   message(BUSINESS_MESSAGE_REJECT, classOf[BusinessMessageReject])
   message(NEW_ORDER_SINGLE, classOf[NewOrderSingle])
-  message(ORDER_MODIFICATION_REQUEST, classOf[OrderModificationRequest])
+  message(ORDER_CANCEL_REPLACE_REQUEST, classOf[OrderCancelReplaceRequest])
   message(LOGON, classOf[Logon])
   message(NEW_ORDER_MULTILEG, classOf[NewOrderMultiLeg])
   message(REQUEST_FOR_POSITIONS, classOf[RequestForPositions])

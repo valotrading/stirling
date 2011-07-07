@@ -23,7 +23,6 @@ public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFacto
         message(ORDER_CANCEL_REJECT, OrderCancelReject.class);
         message(NEW_ORDER_SINGLE, NewOrderSingle.class);
         message(ORDER_CANCEL_REQUEST, OrderCancelRequest.class);
-        message(ORDER_MODIFICATION_REQUEST, OrderModificationRequest.class);
     }
 
     @Override public String getProfile() {

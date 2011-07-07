@@ -349,7 +349,7 @@ object DiscretionOffset extends PriceOffsetTag(389)
 object TotalNumSecurities extends IntegerTag(393)
 object CxlRejResponseTo extends EnumTag[Character](434) {
   val OrderCancelRequest = CharValue('1')
-  val OrderModificationRequest = CharValue('2')
+  val OrderCancelReplaceRequest = CharValue('2')
 }
 object ClearingFirm extends StringTag(439)
 object ClearingAccount extends StringTag(440)

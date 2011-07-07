@@ -227,7 +227,7 @@ class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) 
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderModificationRequest(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.OrderModificationRequest {
+class OrderCancelReplaceRequest(header: MessageHeader) extends AbstractMessage(header) with fixengine.messages.OrderCancelReplaceRequest {
   field(OrigClOrdID.Tag)
   field(ClOrdID.Tag)
   field(HandlInst.Tag)

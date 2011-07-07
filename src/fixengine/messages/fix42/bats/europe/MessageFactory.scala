@@ -23,7 +23,7 @@ class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(ORDER_CANCEL_REJECT, classOf[OrderCancelReject])
   message(NEW_ORDER_SINGLE, classOf[NewOrderSingle])
   message(ORDER_CANCEL_REQUEST, classOf[OrderCancelRequest])
-  message(ORDER_MODIFICATION_REQUEST, classOf[OrderModificationRequest])
+  message(ORDER_CANCEL_REPLACE_REQUEST, classOf[OrderCancelReplaceRequest])
   message(TRADE_CANCEL_CORRECT, classOf[TradeCancelCorrect])
   override def getProfile = "bats-europe"
   override def isValid(msgType: String) = {

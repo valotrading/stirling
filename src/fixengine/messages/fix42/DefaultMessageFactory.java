@@ -55,7 +55,6 @@ public class DefaultMessageFactory implements MessageFactory {
         message(MsgTypeValue.ORDER_CANCEL_REJECT, OrderCancelReject.class);
         message(MsgTypeValue.NEW_ORDER_SINGLE, NewOrderSingle.class);
         message(MsgTypeValue.ORDER_CANCEL_REQUEST, OrderCancelRequest.class);
-        message(MsgTypeValue.ORDER_MODIFICATION_REQUEST, OrderModificationRequest.class);
         message(MsgTypeValue.ORDER_STATUS_REQUEST, OrderStatusRequest.class);
         message(MsgTypeValue.ALLOCATION_INSTRUCTION, Allocation.class);
     }

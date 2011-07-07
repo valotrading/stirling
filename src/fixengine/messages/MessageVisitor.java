@@ -31,7 +31,6 @@ public interface MessageVisitor {
     void visit(OrderMassStatusRequest message);
     void visit(OrderCancelReject message);
     void visit(OrderCancelReplaceRequest message);
-    void visit(OrderModificationRequest message);
     void visit(Reject message);
     void visit(ResendRequest message);
     void visit(SequenceReset message);

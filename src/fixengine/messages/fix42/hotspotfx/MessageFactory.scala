@@ -22,7 +22,7 @@ class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(ORDER_CANCEL_REJECT, classOf[OrderCancelReject])
   message(NEW_ORDER_SINGLE, classOf[NewOrderSingle])
   message(ORDER_CANCEL_REQUEST, classOf[OrderCancelRequest])
-  message(ORDER_MODIFICATION_REQUEST, classOf[OrderModificationRequest])
+  message(ORDER_CANCEL_REPLACE_REQUEST, classOf[OrderCancelReplaceRequest])
   message(ORDER_STATUS_REQUEST, classOf[OrderStatusRequest])
   message(LOGON, classOf[Logon])
   override def getProfile = "hotspot-fx"
