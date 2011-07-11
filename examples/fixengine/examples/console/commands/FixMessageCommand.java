@@ -25,19 +25,20 @@ import java.util.Scanner;
 import java.util.Set;
 
 import fixengine.examples.console.ConsoleClient;
-import fixengine.messages.EnumTag;
 import fixengine.messages.AbstractField;
+import fixengine.messages.BooleanField;
 import fixengine.messages.EnumField;
+import fixengine.messages.EnumTag;
 import fixengine.messages.Field;
 import fixengine.messages.FloatField;
-import fixengine.messages.PriceField;
-import fixengine.messages.QtyField;
 import fixengine.messages.IntegerField;
-import fixengine.messages.Value;
 import fixengine.messages.Message;
 import fixengine.messages.MessageFactory;
+import fixengine.messages.PriceField;
+import fixengine.messages.QtyField;
 import fixengine.messages.StringField;
 import fixengine.messages.Tag;
+import fixengine.messages.Value;
 import fixengine.tags.fix42.OrderID;
 import fixengine.tags.fix42.OrigClOrdID;
 
@@ -51,6 +52,7 @@ public abstract class FixMessageCommand implements Command {
     parserClasses.add(QtyFieldParser.class);
     parserClasses.add(PriceFieldParser.class);
     parserClasses.add(EnumFieldParser.class);
+    parserClasses.add(BooleanFieldParser.class);
   }
 
   public String[] getArgumentNames(ConsoleClient client) {
@@ -273,6 +275,26 @@ public abstract class FixMessageCommand implements Command {
 
     @Override protected Class<? extends Field> getFieldClass() {
       return EnumField.class;
+    }
+  }
+
+  private static class BooleanFieldParser extends AbstractFieldParser {
+    public BooleanFieldParser(MessageFactory messageFactory) {
+      super(messageFactory);
+    }
+
+    @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
+      try {
+        AbstractField<Boolean> f = (AbstractField<Boolean>) msg.lookup(messageFactory.createTag(tag(field)));
+        if (f != null)
+          f.setValue(Boolean.valueOf(value(field)));
+      } catch (Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    @Override protected Class<? extends Field> getFieldClass() {
+      return BooleanField.class;
     }
   }
 }
