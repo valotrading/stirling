@@ -221,6 +221,20 @@ object MassStatusReqType extends EnumTag[Integer](585) {
   val StatusPartyID = IntegerValue(8)
 }
 object LegSymbol extends StringTag(600)
+object LegProduct extends EnumTag[Int](607) {
+  val Agency = IntegerValue(1)
+  val Commodity = IntegerValue(2)
+  val Corporate = IntegerValue(3)
+  val Currency = IntegerValue(4)
+  val Equity = IntegerValue(5)
+  val Government = IntegerValue(6)
+  val Index = IntegerValue(7)
+  val Loan = IntegerValue(8)
+  val MoneyMarket = IntegerValue(9)
+  val Mortgage = IntegerValue(10)
+  val Municipal = IntegerValue(11)
+  val Other = IntegerValue(12)
+}
 object LegCFICode extends StringTag(608)
 object LegMaturityMonthYear extends MonthYearTag(610)
 object LegStrikePrice extends PriceTag(612)
