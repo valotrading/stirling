@@ -173,6 +173,7 @@ class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with
   field(StopPx.Tag, Required.NO)
   field(SendingTime.Tag)
   field(Symbol.Tag)
+  field(Price.Tag, Required.NO)
   field(Side.Tag)
   field(TimeInForce.Tag)
   field(TransactTime.Tag)
