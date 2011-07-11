@@ -27,6 +27,7 @@ import fixengine.tags.fix42.DeliverToSubID;
 import fixengine.tags.fix42.MsgSeqNum;
 import fixengine.tags.fix42.MsgType;
 import fixengine.tags.fix42.OnBehalfOfCompID;
+import fixengine.tags.fix42.OnBehalfOfSubID;
 import fixengine.tags.fix42.OrigSendingTime;
 import fixengine.tags.fix42.PossDupFlag;
 import fixengine.tags.fix42.PossResend;
@@ -60,6 +61,7 @@ public class MessageHeader extends FieldContainer implements Parseable {
         field(TargetCompID.Tag());
         field(TargetSubID.Tag(), Required.NO);
         field(OnBehalfOfCompID.Tag(), Required.NO);
+        field(OnBehalfOfSubID.Tag(), Required.NO);
         field(DeliverToCompID.Tag(), Required.NO);
         field(DeliverToSubID.Tag(), Required.NO);
         field(MsgSeqNum.Tag());
