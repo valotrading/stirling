@@ -210,6 +210,7 @@ class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with
 }
 
 class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestTrait {
+  field(Account.Tag)
   field(ClOrdID.Tag)
   field(OrigClOrdID.Tag)
   field(Side.Tag)
