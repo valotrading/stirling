@@ -23,6 +23,7 @@ import org.joda.time.Minutes;
 import fixengine.tags.fix42.BeginString;
 import fixengine.tags.fix42.BodyLength;
 import fixengine.tags.fix42.DeliverToCompID;
+import fixengine.tags.fix42.DeliverToSubID;
 import fixengine.tags.fix42.MsgSeqNum;
 import fixengine.tags.fix42.MsgType;
 import fixengine.tags.fix42.OnBehalfOfCompID;
@@ -60,6 +61,7 @@ public class MessageHeader extends FieldContainer implements Parseable {
         field(TargetSubID.Tag(), Required.NO);
         field(OnBehalfOfCompID.Tag(), Required.NO);
         field(DeliverToCompID.Tag(), Required.NO);
+        field(DeliverToSubID.Tag(), Required.NO);
         field(MsgSeqNum.Tag());
         field(PossDupFlag.Tag(), Required.NO);
         field(PossResend.Tag(), Required.NO);
