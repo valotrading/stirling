@@ -26,6 +26,7 @@ import java.util.Set;
 
 import fixengine.examples.console.ConsoleClient;
 import fixengine.messages.AbstractField;
+import fixengine.messages.ExchangeField;
 import fixengine.messages.BooleanField;
 import fixengine.messages.EnumField;
 import fixengine.messages.EnumTag;
@@ -48,6 +49,7 @@ public abstract class FixMessageCommand implements Command {
   {
     parserClasses.add(IntegerFieldParser.class);
     parserClasses.add(StringFieldParser.class);
+    parserClasses.add(ExchangeFieldParser.class);
     parserClasses.add(FloatFieldParser.class);
     parserClasses.add(QtyFieldParser.class);
     parserClasses.add(PriceFieldParser.class);
@@ -189,6 +191,16 @@ public abstract class FixMessageCommand implements Command {
 
     @Override protected Class<? extends Field> getFieldClass() {
       return StringField.class;
+    }
+  }
+
+  private static class ExchangeFieldParser extends StringFieldParser {
+    public ExchangeFieldParser(MessageFactory messageFactory) {
+      super(messageFactory);
+    }
+
+    @Override protected Class<? extends Field> getFieldClass() {
+      return ExchangeField.class;
     }
   }
 
