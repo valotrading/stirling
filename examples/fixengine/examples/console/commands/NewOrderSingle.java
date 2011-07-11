@@ -17,16 +17,12 @@ package fixengine.examples.console.commands;
 
 import fixengine.examples.console.ConsoleClient;
 import fixengine.messages.Message;
-import fixengine.messages.UtcTimestampField;
-import fixengine.tags.fix42.TransactTime;
 
 import static fixengine.messages.MsgTypeValue.NEW_ORDER_SINGLE;
 
 public class NewOrderSingle extends FixMessageCommand {
   @Override protected Message newMessage(ConsoleClient client) {
-    Message message = client.getMessageFactory().create(NEW_ORDER_SINGLE);
-    setTransactTime(client, message);
-    return message;
+    return client.getMessageFactory().create(NEW_ORDER_SINGLE);
   }
 
   @Override protected boolean isModifyingOrderMessage() {
@@ -35,11 +31,5 @@ public class NewOrderSingle extends FixMessageCommand {
 
   @Override public String usage() {
     return "<Argument=value>* : Creates and sends new single order message.";
-  }
-
-  private void setTransactTime(ConsoleClient client, Message message) {
-    UtcTimestampField field = (UtcTimestampField) message.lookup(TransactTime.Tag());
-    if (field != null)
-      field.setValue(client.getSession().currentTime());
   }
 }

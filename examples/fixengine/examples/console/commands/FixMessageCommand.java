@@ -33,6 +33,7 @@ import fixengine.messages.EnumTag;
 import fixengine.messages.Field;
 import fixengine.messages.FloatField;
 import fixengine.messages.IntegerField;
+import fixengine.messages.UtcTimestampField;
 import fixengine.messages.Message;
 import fixengine.messages.MessageFactory;
 import fixengine.messages.PriceField;
@@ -42,6 +43,7 @@ import fixengine.messages.Tag;
 import fixengine.messages.Value;
 import fixengine.tags.fix42.OrderID;
 import fixengine.tags.fix42.OrigClOrdID;
+import fixengine.tags.fix42.TransactTime;
 
 public abstract class FixMessageCommand implements Command {
   private static final Set<Class<? extends Parser>> parserClasses = new HashSet<Class<? extends Parser>>();
@@ -71,6 +73,8 @@ public abstract class FixMessageCommand implements Command {
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
     try {
       Message message = newMessage(client);
+      if (isTransactTimeDefined(message))
+        setTransactTime(message, client);
       setFields(message, scanner, client.getMessageFactory());
       if (client.getSession() != null)
         client.getSession().send(client.getConnection(), message);
@@ -79,6 +83,15 @@ public abstract class FixMessageCommand implements Command {
     } catch (Exception e) {
       throw new CommandArgException("failed to set field: " + e.getMessage());
     }
+  }
+
+  private boolean isTransactTimeDefined(Message message) {
+    return message.lookup(TransactTime.Tag()) != null;
+  }
+
+  private void setTransactTime(Message message, ConsoleClient client) {
+    UtcTimestampField field = (UtcTimestampField) message.lookup(TransactTime.Tag());
+    field.setValue(client.getSession().currentTime());
   }
 
   private void setMessageOrderID(Message msg, ConsoleClient client) {
