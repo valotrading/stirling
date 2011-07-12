@@ -22,6 +22,7 @@ import fixengine.messages.{
   NewOrderSingle => NewOrderSingleTrait,
   NewsMessage => NewsMessageTrait,
   OrderCancelRequest => OrderCancelRequestTrait,
+  BusinessMessageReject => BusinessMessageRejectTrait,
   OrderCancelReplaceRequest => OrderCancelReplaceRequestTrait,
   RequestForPositions => RequestForPositionsTrait,
   TradingSessionStatus => TradingSessionStatusTrait
@@ -36,6 +37,7 @@ import fixengine.messages.{
 }
 import fixengine.tags.fix42.{
   Account,
+  BusinessRejectRefID,
   ClOrdID,
   Commission,
   ComplianceID,
@@ -60,6 +62,8 @@ import fixengine.tags.fix42.{
   PegDifference,
   Price,
   PutOrCall,
+  RefMsgType,
+  RefSeqNo,
   ResetSeqNumFlag,
   SecurityType,
   SendingTime,
@@ -78,6 +82,7 @@ import fixengine.tags.fix42.{
   Urgency
 }
 import fixengine.tags.fix43.{
+  BusinessRejectReason,
   LegCFICode,
   LegMaturityMonthYear,
   LegPositionEffect,
@@ -283,5 +288,15 @@ class Logon(header: MessageHeader) extends AbstractMessage(header) with fixengin
   field(ResetSeqNumFlag.Tag, Required.NO)
   field(MessageEncoding.Tag, Required.NO)
   field(Password.Tag, Required.NO)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class BusinessMessageReject(header: MessageHeader) extends AbstractMessage(header) with BusinessMessageRejectTrait {
+  field(RefSeqNo.Tag)
+  field(Text.Tag, Required.NO)
+  field(RefMsgType.Tag)
+  field(BusinessRejectRefID.Tag, Required.NO)
+  field(BusinessRejectReason.Tag)
+
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
