@@ -73,7 +73,7 @@ public abstract class FixMessageCommand implements Command {
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
     try {
       Message message = newMessage(client);
-      if (isTransactTimeDefined(message))
+      if (message.isDefined(TransactTime.Tag()))
         setTransactTime(message, client);
       setFields(message, scanner, client.getMessageFactory());
       if (isModifyingOrderMessage() && message.isDefined(OrderID.Tag()))
@@ -83,10 +83,6 @@ public abstract class FixMessageCommand implements Command {
     } catch (Exception e) {
       throw new CommandArgException("failed to set field: " + e.getMessage());
     }
-  }
-
-  private boolean isTransactTimeDefined(Message message) {
-    return message.lookup(TransactTime.Tag()) != null;
   }
 
   private void setTransactTime(Message message, ConsoleClient client) {
