@@ -37,4 +37,5 @@ class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(REQUEST_FOR_POSITION_ACKNOWLEDGMENT, classOf[RequestForPositionAcknowledgment])
   override def getProfile = "mb-trading"
   override def isValid(msgType: String) = isSupported(msgType)
+  override def getTagsPackage = "fixengine.tags.fix44.mbtrading"
 }
