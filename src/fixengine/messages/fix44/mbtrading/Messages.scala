@@ -440,7 +440,7 @@ class CollateralInquiryAcknowledgment(header: MessageHeader) extends AbstractMes
 
 class RequestForPositionAcknowledgment(header: MessageHeader) extends AbstractMessage(header) with RequestForPositionAcknowledgmentTrait {
   field(Account.Tag)
-  field(Text.Tag)
+  field(Text.Tag, Required.NO)
   field(PosReqID.Tag)
   field(PosMaintRptID.Tag)
   field(TotalNumPosReports.Tag)
