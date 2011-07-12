@@ -76,10 +76,10 @@ public abstract class FixMessageCommand implements Command {
       if (isTransactTimeDefined(message))
         setTransactTime(message, client);
       setFields(message, scanner, client.getMessageFactory());
+      if (isModifyingOrderMessage() && message.isDefined(OrderID.Tag()))
+        setMessageOrderID(message, client);
       if (client.getSession() != null)
         client.getSession().send(client.getConnection(), message);
-      if (isModifyingOrderMessage())
-        setMessageOrderID(message, client);
     } catch (Exception e) {
       throw new CommandArgException("failed to set field: " + e.getMessage());
     }
