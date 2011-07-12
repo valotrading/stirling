@@ -162,8 +162,9 @@ import fixengine.tags.fix44.mbtrading.{
   MBTInternalOrderId,
   MBTXAggressive,
   MorningBuyingPower,
+  OvernightBuyingPower,
+  MorningAccountValue,
   MorningExcessEquity,
-  MorningExcessEquity2,
   OrderGroupID1,
   OvernightExcess,
   PosBuyPowerUsed,
@@ -171,8 +172,12 @@ import fixengine.tags.fix44.mbtrading.{
   PosPendBuy,
   PosPendSell,
   PosRealizedPNL,
+  UserSessionID,
+  FLID,
+  MorningExcessEquity2,
   RealizedPnL,
-  UserQuotePerms
+  UserQuotePerms,
+  UnknownMBTradingTag1
 }
 
 class CollateralInquiry(header: MessageHeader) extends AbstractMessage(header) with CollateralInquiryTrait {
@@ -423,12 +428,17 @@ class CollateralReport(header: MessageHeader) extends AbstractMessage(header) wi
   field(CollStatus.Tag)
   field(MorningBuyingPower.Tag)
   field(MBTAccountType.Tag)
+  field(OvernightBuyingPower.Tag, Required.NO)
   field(RealizedPnL.Tag, Required.NO)
+  field(MorningAccountValue.Tag, Required.NO)
   field(MorningExcessEquity.Tag, Required.NO)
-  field(MorningExcessEquity2.Tag, Required.NO)
   field(AccountCredit.Tag, Required.NO)
+  field(MorningExcessEquity2.Tag, Required.NO)
+  field(FLID.Tag, Required.NO)
+  field(UserSessionID.Tag, Required.NO)
   field(OvernightExcess.Tag, Required.NO)
   field(BODOOvernightExcessEq.Tag, Required.NO)
+  field(UnknownMBTradingTag1.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
