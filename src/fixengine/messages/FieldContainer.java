@@ -37,6 +37,10 @@ public class FieldContainer implements Iterable<Field> {
         return fields.get(tag);
     }
 
+    public boolean isDefined(Tag<?> tag) {
+        return lookup(tag) != null;
+    }
+
     public void parse(ByteBuffer b) {
         while (b.hasRemaining()) {
             b.mark();

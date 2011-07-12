@@ -27,6 +27,7 @@ public interface Message extends Parseable, Iterable<Field>, SequencedMessage<Me
     String format();
     boolean isAdminMessage();
     Field lookup(Tag<?> tag);
+    boolean isDefined(Tag<?> tag);
     String getString(Tag<StringField> tag);
     Integer getInteger(Tag<IntegerField> tag);
     Double getFloat(Tag<FloatField> tag);
