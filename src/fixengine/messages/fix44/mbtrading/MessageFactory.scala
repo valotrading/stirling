@@ -32,6 +32,7 @@ class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(TRADING_SESSION_STATUS, classOf[TradingSessionStatus])
   message(NEWS_MESSAGE, classOf[News])
   message(COLLATERAL_REPORT, classOf[CollateralReport])
+  message(COLLATERAL_INQUIRY, classOf[CollateralInquiry])
   message(COLLATERAL_INQUIRY_ACKNOWLEDGMENT, classOf[CollateralInquiryAcknowledgment])
   message(REQUEST_FOR_POSITION_ACKNOWLEDGMENT, classOf[RequestForPositionAcknowledgment])
   override def getProfile = "mb-trading"
