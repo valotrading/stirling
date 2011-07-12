@@ -25,6 +25,10 @@ import fixengine.messages.{
 }
 import java.lang.Integer
 
+object PosReqType extends EnumTag[Integer](724) {
+  val PositionsCurrent = IntegerValue(0)
+  val PositionsBOD = IntegerValue(9)
+}
 object PosPendBuy extends QtyTag(10000)
 object PosPendSell extends QtyTag(10001)
 object MorningBuyingPower extends StringTag(10002)

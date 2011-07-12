@@ -157,27 +157,28 @@ import fixengine.tags.fix44.{
 import fixengine.tags.fix44.mbtrading.{
   AccountCredit,
   BODOOvernightExcessEq,
+  FLID,
   LiquidityTag,
   MBTAccountType,
   MBTInternalOrderId,
   MBTXAggressive,
-  MorningBuyingPower,
-  OvernightBuyingPower,
   MorningAccountValue,
+  MorningBuyingPower,
   MorningExcessEquity,
+  MorningExcessEquity2,
   OrderGroupID1,
+  OvernightBuyingPower,
   OvernightExcess,
   PosBuyPowerUsed,
   PosEquityUsed,
   PosPendBuy,
   PosPendSell,
   PosRealizedPNL,
-  UserSessionID,
-  FLID,
-  MorningExcessEquity2,
+  PosReqType,
   RealizedPnL,
+  UnknownMBTradingTag1,
   UserQuotePerms,
-  UnknownMBTradingTag1
+  UserSessionID
 }
 
 class CollateralInquiry(header: MessageHeader) extends AbstractMessage(header) with CollateralInquiryTrait {
@@ -366,26 +367,13 @@ class TradingSessionStatus(header: MessageHeader) extends AbstractMessage(header
 }
 
 class RequestForPositions(header: MessageHeader) extends AbstractMessage(header) with RequestForPositionsTrait {
-  field(Account.Tag)
-  field(Commission.Tag)
-  field(Side.Tag)
-  field(Symbol.Tag)
-  field(TradeDate.Tag)
-  field(SubscriptionRequestType.Tag)
-  field(UnsolicitedIndicator.Tag)
-  field(Price2.Tag)
-  field(LongQty.Tag)
-  field(ShortQty.Tag)
+  field(Account.Tag, Required.NO)
+  field(SubscriptionRequestType.Tag, Required.NO)
+  field(MessageEncoding.Tag, Required.NO)
+  field(Username.Tag, Required.NO)
+  field(Password.Tag, Required.NO)
   field(PosReqID.Tag)
-  field(ClearingBusinessDate.Tag)
-  field(PosMaintRptID.Tag)
-  field(TotalNumPosReports.Tag)
-  field(SettlPrice.Tag)
-  field(PosPendBuy.Tag)
-  field(PosPendSell.Tag)
-  field(PosBuyPowerUsed.Tag)
-  field(PosRealizedPNL.Tag)
-  field(PosEquityUsed.Tag)
+  field(PosReqType.Tag)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
