@@ -21,6 +21,7 @@ import fixengine.messages.MsgTypeValue._
 class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(EXECUTION_REPORT, classOf[ExecutionReport])
   message(ORDER_CANCEL_REQUEST, classOf[OrderCancelRequest])
+  message(ORDER_CANCEL_REJECT, classOf[OrderCancelReject])
   message(BUSINESS_MESSAGE_REJECT, classOf[BusinessMessageReject])
   message(NEW_ORDER_SINGLE, classOf[NewOrderSingle])
   message(ORDER_CANCEL_REPLACE_REQUEST, classOf[OrderCancelReplaceRequest])

@@ -26,6 +26,7 @@ import fixengine.messages.{
   NewOrderSingle => NewOrderSingleTrait,
   NewsMessage => NewsMessageTrait,
   OrderCancelReplaceRequest => OrderCancelReplaceRequestTrait,
+  OrderCancelReject => OrderCancelRejectTrait,
   OrderCancelRequest => OrderCancelRequestTrait,
   PositionReport => PositionReportTrait,
   RequestForPositionAcknowledgment => RequestForPositionAcknowledgmentTrait,
@@ -50,6 +51,8 @@ import fixengine.tags.fix42.{
   ComplianceID,
   CumQty,
   Currency,
+  CxlRejReason,
+  CxlRejResponseTo,
   DiscretionInst,
   DiscretionOffset,
   EffectiveTime,
@@ -89,6 +92,7 @@ import fixengine.tags.fix42.{
   StrikePrice,
   SubscriptionRequestType,
   Symbol,
+  SymbolSfx,
   Text,
   TimeInForce,
   TradeDate,
@@ -466,5 +470,18 @@ class PositionReport(header: MessageHeader) extends AbstractMessage(header) with
   field(PosBuyPowerUsed.Tag, Required.NO)
   field(PosRealizedPNL.Tag, Required.NO)
   field(PosEquityUsed.Tag, Required.NO)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class OrderCancelReject(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRejectTrait {
+  field(Account.Tag, Required.NO)
+  field(ClOrdID.Tag)
+  field(OrderID.Tag)
+  field(OrdStatus.Tag)
+  field(OrigClOrdID.Tag)
+  field(Text.Tag)
+  field(SymbolSfx.Tag)
+  field(CxlRejReason.Tag)
+  field(CxlRejResponseTo.Tag)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
