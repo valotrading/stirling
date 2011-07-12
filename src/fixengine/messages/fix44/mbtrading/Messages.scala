@@ -177,6 +177,7 @@ import fixengine.tags.fix44.mbtrading.{
   PosReqType,
   RealizedPnL,
   UnknownMBTradingTag1,
+  BasisClosedPnL,
   UserQuotePerms,
   UserSessionID
 }
@@ -471,6 +472,7 @@ class PositionReport(header: MessageHeader) extends AbstractMessage(header) with
   field(PosBuyPowerUsed.Tag, Required.NO)
   field(PosRealizedPNL.Tag, Required.NO)
   field(PosEquityUsed.Tag, Required.NO)
+  field(BasisClosedPnL.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
