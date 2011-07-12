@@ -36,4 +36,5 @@ class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(COLLATERAL_INQUIRY_ACKNOWLEDGMENT, classOf[CollateralInquiryAcknowledgment])
   message(REQUEST_FOR_POSITION_ACKNOWLEDGMENT, classOf[RequestForPositionAcknowledgment])
   override def getProfile = "mb-trading"
+  override def isValid(msgType: String) = isSupported(msgType)
 }

@@ -132,6 +132,10 @@ public class DefaultMessageFactory implements MessageFactory {
         return false;
     }
 
+    protected boolean isSupported(String msgType) {
+        return messageTypes.containsKey(msgType);
+    }
+
     private boolean isValidSingle(String msgType) {
         char first = msgType.charAt(0);
         return CharUtils.isAsciiAlphanumeric(first);
