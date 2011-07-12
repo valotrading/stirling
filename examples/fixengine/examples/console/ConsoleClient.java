@@ -243,6 +243,7 @@ public class ConsoleClient {
     commands.put("new-order-single", new NewOrderSingle());
     commands.put("cancel-order", new CancelOrder());
     commands.put("update-order", new UpdateOrder());
+    commands.put("collateral-inquiry", new CollateralInquiry());
     commands.put("config", new Config());
     commands.put("help", helpCommand());
     commands.put("?", helpCommand());
