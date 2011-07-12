@@ -39,6 +39,16 @@ import fixengine.messages.{
   UtcTimestampTag
 }
 
+object CxlRejReason extends EnumTag[Integer](102) {
+  val TooLate = IntegerValue(0)
+  val Unknown = IntegerValue(1)
+  val BrokerOpt = IntegerValue(2)
+  val AlreadyPendingCxl = IntegerValue(3)
+  val UnableToProcess = IntegerValue(4)
+  val OrigOrdModTimeMismatch = IntegerValue(5)
+  val DupClOrdID = IntegerValue(6)
+  val Other = IntegerValue(99)
+}
 object Headline extends StringTag(148)
 object ExecType extends EnumTag[Character](150) {
   val New = CharValue('0')
