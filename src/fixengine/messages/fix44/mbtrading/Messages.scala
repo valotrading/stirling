@@ -18,6 +18,8 @@ package fixengine.messages.fix44.mbtrading
 import fixengine.messages.{
   BusinessMessageReject => BusinessMessageRejectTrait,
   CollateralInquiry => CollateralInquiryTrait,
+  CollateralInquiryAcknowledgment => CollateralInquiryAcknowledgmentTrait,
+  CollateralReport => CollateralReportMessageTrait,
   ExecutionReport => ExecutionReportTrait,
   Logon => LogonTrait,
   NewOrderMultiLeg => NewOrderMultiLegTrait,
@@ -25,6 +27,8 @@ import fixengine.messages.{
   NewsMessage => NewsMessageTrait,
   OrderCancelReplaceRequest => OrderCancelReplaceRequestTrait,
   OrderCancelRequest => OrderCancelRequestTrait,
+  PositionReport => PositionReportTrait,
+  RequestForPositionAcknowledgment => RequestForPositionAcknowledgmentTrait,
   RequestForPositions => RequestForPositionsTrait,
   TradingSessionStatus => TradingSessionStatusTrait
 }
@@ -45,6 +49,7 @@ import fixengine.tags.fix42.{
   Commission,
   ComplianceID,
   CumQty,
+  Currency,
   DiscretionInst,
   DiscretionOffset,
   EffectiveTime,
@@ -120,9 +125,14 @@ import fixengine.tags.fix43.{
 import fixengine.tags.fix44.{
   ClearingBusinessDate,
   CollInquiryID,
+  CollInquiryStatus,
+  CollRptID,
+  CollStatus,
   ExecType,
   LastRptRequested,
   LongQty,
+  MarginExcess,
+  MarginRatio,
   MessageEncoding,
   NoTrdRegTimestamps,
   Password,
@@ -131,6 +141,8 @@ import fixengine.tags.fix44.{
   PosReqResult,
   SettlPrice,
   ShortQty,
+  TotNumReports,
+  TotalNetValue,
   TotalNumPosReports,
   TrdRegTimestamp,
   TrdRegTimestampOrigin,
@@ -138,15 +150,24 @@ import fixengine.tags.fix44.{
   Username
 }
 import fixengine.tags.fix44.mbtrading.{
+  AccountCredit,
+  BODOOvernightExcessEq,
   LiquidityTag,
+  MBTAccountType,
   MBTInternalOrderId,
   MBTXAggressive,
+  MorningBuyingPower,
+  MorningExcessEquity,
+  MorningExcessEquity2,
   OrderGroupID1,
+  OvernightExcess,
   PosBuyPowerUsed,
   PosEquityUsed,
   PosPendBuy,
   PosPendSell,
-  PosRealizedPNL
+  PosRealizedPNL,
+  RealizedPnL,
+  UserQuotePerms
 }
 
 class CollateralInquiry(header: MessageHeader) extends AbstractMessage(header) with CollateralInquiryTrait {
@@ -380,5 +401,70 @@ class BusinessMessageReject(header: MessageHeader) extends AbstractMessage(heade
   field(RefMsgType.Tag)
   field(BusinessRejectRefID.Tag, Required.NO)
   field(BusinessRejectReason.Tag)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class CollateralReport(header: MessageHeader) extends AbstractMessage(header) with CollateralReportMessageTrait {
+  field(Account.Tag)
+  field(Commission.Tag, Required.NO)
+  field(Currency.Tag, Required.NO)
+  field(MarginRatio.Tag, Required.NO)
+  field(MarginExcess.Tag)
+  field(TotalNetValue.Tag)
+  field(CollRptID.Tag)
+  field(CollInquiryID.Tag, Required.NO)
+  field(CollStatus.Tag)
+  field(MorningBuyingPower.Tag)
+  field(MBTAccountType.Tag)
+  field(RealizedPnL.Tag, Required.NO)
+  field(MorningExcessEquity.Tag, Required.NO)
+  field(MorningExcessEquity2.Tag, Required.NO)
+  field(AccountCredit.Tag, Required.NO)
+  field(OvernightExcess.Tag, Required.NO)
+  field(BODOOvernightExcessEq.Tag, Required.NO)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class CollateralInquiryAcknowledgment(header: MessageHeader) extends AbstractMessage(header) with CollateralInquiryAcknowledgmentTrait {
+  field(CollInquiryID.Tag, Required.NO)
+  field(TotNumReports.Tag)
+  field(CollInquiryStatus.Tag)
+  field(UserQuotePerms.Tag, Required.NO)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class RequestForPositionAcknowledgment(header: MessageHeader) extends AbstractMessage(header) with RequestForPositionAcknowledgmentTrait {
+  field(Account.Tag)
+  field(Text.Tag)
+  field(PosReqID.Tag)
+  field(PosMaintRptID.Tag)
+  field(TotalNumPosReports.Tag)
+  field(PosReqResult.Tag)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class PositionReport(header: MessageHeader) extends AbstractMessage(header) with PositionReportTrait {
+  field(Account.Tag)
+  field(Commission.Tag, Required.NO)
+  field(Symbol.Tag, Required.NO)
+  field(Side.Tag, Required.NO)
+  field(TradeDate.Tag, Required.NO)
+  field(SubscriptionRequestType.Tag, Required.NO)
+  field(UnsolicitedIndicator.Tag, Required.NO)
+  field(Price2.Tag, Required.NO)
+  field(LongQty.Tag, Required.NO)
+  field(ShortQty.Tag, Required.NO)
+  field(PosMaintRptID.Tag)
+  field(PosReqID.Tag, Required.NO)
+  field(ClearingBusinessDate.Tag)
+  field(PosMaintRptID.Tag)
+  field(TotalNumPosReports.Tag, Required.NO)
+  field(PosReqResult.Tag)
+  field(SettlPrice.Tag)
+  field(PosPendBuy.Tag, Required.NO)
+  field(PosPendSell.Tag, Required.NO)
+  field(PosBuyPowerUsed.Tag, Required.NO)
+  field(PosRealizedPNL.Tag, Required.NO)
+  field(PosEquityUsed.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
