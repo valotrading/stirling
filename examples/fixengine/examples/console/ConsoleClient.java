@@ -244,6 +244,7 @@ public class ConsoleClient {
     commands.put("cancel-order", new CancelOrder());
     commands.put("update-order", new UpdateOrder());
     commands.put("collateral-inquiry", new CollateralInquiry());
+    commands.put("request-for-positions", new RequestForPositions());
     commands.put("config", new Config());
     commands.put("help", helpCommand());
     commands.put("?", helpCommand());

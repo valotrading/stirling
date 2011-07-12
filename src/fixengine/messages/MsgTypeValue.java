@@ -35,5 +35,6 @@ public class MsgTypeValue {
     public static final String BUSINESS_MESSAGE_REJECT = "j";
     public static final String ALLOCATION_INSTRUCTION = "J";
     public static final String DONT_KNOW_TRADE = "Q";
+    public static final String REQUEST_FOR_POSITIONS = "AN";
     public static final String COLLATERAL_INQUIRY = "BB";
 }

@@ -21,7 +21,6 @@ package fixengine.messages.fix44.mbtrading;
 public class MsgTypeValue {
     public static final String NEW_ORDER_MULTILEG = "AB";
     public static final String POSITION_REPORT = "AP";
-    public static final String REQUEST_FOR_POSITIONS = "AN";
     public static final String TRADING_SESSION_STATUS = "h";
     public static final String NEWS_MESSAGE = "B";
     public static final String COLLATERAL_REPORT = "BA";
