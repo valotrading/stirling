@@ -16,14 +16,15 @@
 package fixengine.messages.fix44.mbtrading
 
 import fixengine.messages.{
+  BusinessMessageReject => BusinessMessageRejectTrait,
   CollateralInquiry => CollateralInquiryTrait,
+  ExecutionReport => ExecutionReportTrait,
   Logon => LogonTrait,
   NewOrderMultiLeg => NewOrderMultiLegTrait,
   NewOrderSingle => NewOrderSingleTrait,
   NewsMessage => NewsMessageTrait,
-  OrderCancelRequest => OrderCancelRequestTrait,
-  BusinessMessageReject => BusinessMessageRejectTrait,
   OrderCancelReplaceRequest => OrderCancelReplaceRequestTrait,
+  OrderCancelRequest => OrderCancelRequestTrait,
   RequestForPositions => RequestForPositionsTrait,
   TradingSessionStatus => TradingSessionStatusTrait
 }
@@ -37,25 +38,35 @@ import fixengine.messages.{
 }
 import fixengine.tags.fix42.{
   Account,
+  AvgPx,
   BusinessRejectRefID,
   ClOrdID,
+  ClientID,
   Commission,
   ComplianceID,
+  CumQty,
   DiscretionInst,
   DiscretionOffset,
   EffectiveTime,
   EncryptMethod,
   ExDestination,
+  ExecID,
   ExecInst,
   ExpireTime,
   HandlInst,
   Headline,
   HeartBtInt,
+  LastPx,
+  LastShares,
+  LeavesQty,
   LinesOfText,
   LocateReqd,
   MaturityMonthYear,
   MaxFloor,
+  OrdRejReason,
+  OrdStatus,
   OrdType,
+  OrderID,
   OrderQty,
   OrigClOrdID,
   OrigTime,
@@ -65,6 +76,7 @@ import fixengine.tags.fix42.{
   RefMsgType,
   RefSeqNo,
   ResetSeqNumFlag,
+  SecondaryOrderID,
   SecurityType,
   SendingTime,
   Side,
@@ -78,6 +90,7 @@ import fixengine.tags.fix42.{
   TradeSesReqID,
   TradingSessionID,
   TransactTime,
+  UnderlyingSymbol,
   UnsolicitedIndicator,
   Urgency
 }
@@ -87,14 +100,19 @@ import fixengine.tags.fix43.{
   LegMaturityMonthYear,
   LegPositionEffect,
   LegPrice,
+  LegProduct,
   LegRatioQty,
   LegRefID,
   LegSide,
   LegStrikePrice,
   LegSymbol,
+  MassStatusReqID,
+  MultiLegReportingType,
   NoLegs,
   OrderRestrictions,
+  PositionEffect,
   Price2,
+  Product,
   SecondaryClOrdID,
   TradSesStatus,
   TradingSessionSubID
@@ -102,6 +120,8 @@ import fixengine.tags.fix43.{
 import fixengine.tags.fix44.{
   ClearingBusinessDate,
   CollInquiryID,
+  ExecType,
+  LastRptRequested,
   LongQty,
   MessageEncoding,
   NoTrdRegTimestamps,
@@ -118,6 +138,8 @@ import fixengine.tags.fix44.{
   Username
 }
 import fixengine.tags.fix44.mbtrading.{
+  LiquidityTag,
+  MBTInternalOrderId,
   MBTXAggressive,
   OrderGroupID1,
   PosBuyPowerUsed,
@@ -241,6 +263,67 @@ class OrderCancelReplaceRequest(header: MessageHeader) extends AbstractMessage(h
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
+class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) with ExecutionReportTrait {
+  field(Account.Tag)
+  field(AvgPx.Tag)
+  field(ClOrdID.Tag)
+  field(Commission.Tag, Required.NO)
+  field(CumQty.Tag)
+  field(ExecID.Tag)
+  field(ExecInst.Tag, Required.NO)
+  field(LastPx.Tag, Required.NO)
+  field(LastShares.Tag, Required.NO)
+  field(OrderID.Tag)
+  field(OrderQty.Tag, Required.NO)
+  field(OrdStatus.Tag)
+  field(OrdType.Tag, Required.NO)
+  field(OrigClOrdID.Tag, Required.NO)
+  field(Price.Tag, Required.NO)
+  field(Side.Tag)
+  field(Symbol.Tag)
+  field(Text.Tag, Required.NO)
+  field(TimeInForce.Tag, Required.NO)
+  field(TransactTime.Tag, Required.NO)
+  field(PositionEffect.Tag, Required.NO)
+  field(StopPx.Tag, Required.NO)
+  field(ExDestination.Tag, Required.NO)
+  field(OrdRejReason.Tag, Required.NO)
+  field(ClientID.Tag)
+  field(MaxFloor.Tag, Required.NO)
+  field(ExpireTime.Tag, Required.NO)
+  field(ExecType.Tag)
+  field(LeavesQty.Tag)
+  field(SecurityType.Tag, Required.NO)
+  field(EffectiveTime.Tag, Required.NO)
+  field(SecondaryOrderID.Tag, Required.NO)
+  field(UnderlyingSymbol.Tag, Required.NO)
+  field(ComplianceID.Tag, Required.NO)
+  field(DiscretionInst.Tag, Required.NO)
+  field(DiscretionOffset.Tag, Required.NO)
+  field(MultiLegReportingType.Tag, Required.NO)
+  field(Product.Tag, Required.NO)
+  field(OrderRestrictions.Tag, Required.NO)
+  field(MassStatusReqID.Tag, Required.NO)
+  group(new RepeatingGroup(NoLegs.Tag) {
+    override def newInstance:RepeatingGroupInstance = {
+      return new RepeatingGroupInstance(LegPrice.Tag) {
+        field(LegSymbol.Tag, Required.NO)
+        field(LegProduct.Tag, Required.NO)
+        field(LegStrikePrice.Tag, Required.NO)
+        field(LegRatioQty.Tag, Required.NO)
+        field(LegSide.Tag, Required.NO)
+        field(LegRefID.Tag, Required.NO)
+      }
+    }
+  }, Required.NO)
+  field(LastRptRequested.Tag, Required.NO)
+  field(LiquidityTag.Tag, Required.NO)
+  field(PosRealizedPNL.Tag, Required.NO)
+  field(OrderGroupID1.Tag, Required.NO)
+  field(Price2.Tag, Required.NO)
+  field(MBTInternalOrderId.Tag, Required.NO)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
 class TradingSessionStatus(header: MessageHeader) extends AbstractMessage(header) with TradingSessionStatusTrait {
   field(TradeSesReqID.Tag, Required.NO)
   field(TradingSessionID.Tag, Required.NO)
@@ -297,6 +380,5 @@ class BusinessMessageReject(header: MessageHeader) extends AbstractMessage(heade
   field(RefMsgType.Tag)
   field(BusinessRejectRefID.Tag, Required.NO)
   field(BusinessRejectReason.Tag)
-
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
