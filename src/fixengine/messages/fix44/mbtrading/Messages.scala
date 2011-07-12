@@ -86,6 +86,7 @@ import fixengine.tags.fix42.{
   ResetSeqNumFlag,
   SecondaryOrderID,
   SecurityType,
+  SenderLocationID,
   SendingTime,
   Side,
   StopPx,
@@ -176,7 +177,9 @@ import fixengine.tags.fix44.mbtrading.{
 
 class CollateralInquiry(header: MessageHeader) extends AbstractMessage(header) with CollateralInquiryTrait {
   field(Account.Tag)
+  field(SenderLocationID.Tag)
   field(SubscriptionRequestType.Tag)
+  field(MessageEncoding.Tag)
   field(Username.Tag)
   field(Password.Tag)
   field(CollInquiryID.Tag)
