@@ -173,6 +173,7 @@ object Urgency extends EnumTag[Character](61) {
   val Background = IntegerValue(2)
 }
 object FutSettDate extends LocalMktDateTag(64)
+object SymbolSfx extends StringTag(65)
 object AllocID extends StringTag(70)
 object AllocTransType extends EnumTag[Integer](71) {
   val New = IntegerValue(0)
