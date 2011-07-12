@@ -155,8 +155,10 @@ import fixengine.tags.fix44.{
   Username
 }
 import fixengine.tags.fix44.mbtrading.{
+  AccountBasedPerms,
   AccountCredit,
   BODOOvernightExcessEq,
+  BasisClosedPnL,
   FLID,
   LiquidityTag,
   MBTAccountType,
@@ -176,8 +178,6 @@ import fixengine.tags.fix44.mbtrading.{
   PosRealizedPNL,
   PosReqType,
   RealizedPnL,
-  UnknownMBTradingTag1,
-  BasisClosedPnL,
   UserQuotePerms,
   UserSessionID
 }
@@ -427,7 +427,7 @@ class CollateralReport(header: MessageHeader) extends AbstractMessage(header) wi
   field(UserSessionID.Tag, Required.NO)
   field(OvernightExcess.Tag, Required.NO)
   field(BODOOvernightExcessEq.Tag, Required.NO)
-  field(UnknownMBTradingTag1.Tag, Required.NO)
+  field(AccountBasedPerms.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
