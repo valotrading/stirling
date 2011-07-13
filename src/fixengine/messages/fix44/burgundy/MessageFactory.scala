@@ -15,8 +15,7 @@
  */
 package fixengine.messages.fix44.burgundy
 
-import fixengine.messages.fix42.MsgTypeValue._
-import fixengine.messages.fix44.burgundy.MsgTypeValue._
+import fixengine.messages.fix44.MsgTypeValue._
 
 class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(BUSINESS_MESSAGE_REJECT, classOf[BusinessMessageReject])

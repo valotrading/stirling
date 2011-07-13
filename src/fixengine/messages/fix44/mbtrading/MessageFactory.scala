@@ -15,8 +15,7 @@
  */
 package fixengine.messages.fix44.mbtrading
 
-import fixengine.messages.fix44.mbtrading.MsgTypeValue._
-import fixengine.messages.fix42.MsgTypeValue._
+import fixengine.messages.fix44.MsgTypeValue._
 
 class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(EXECUTION_REPORT, classOf[ExecutionReport])
@@ -30,11 +29,11 @@ class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(REQUEST_FOR_POSITIONS, classOf[RequestForPositions])
   message(POSITION_REPORT, classOf[PositionReport])
   message(TRADING_SESSION_STATUS, classOf[TradingSessionStatus])
-  message(NEWS_MESSAGE, classOf[News])
+  message(NEWS, classOf[News])
   message(COLLATERAL_REPORT, classOf[CollateralReport])
   message(COLLATERAL_INQUIRY, classOf[CollateralInquiry])
-  message(COLLATERAL_INQUIRY_ACKNOWLEDGMENT, classOf[CollateralInquiryAcknowledgment])
-  message(REQUEST_FOR_POSITION_ACKNOWLEDGMENT, classOf[RequestForPositionAcknowledgment])
+  message(COLLATERAL_INQUIRY_ACK, classOf[CollateralInquiryAcknowledgment])
+  message(REQUEST_FOR_POSITIONS_ACK, classOf[RequestForPositionAcknowledgment])
   override def getProfile = "mb-trading"
   override def isValid(msgType: String) = isSupported(msgType)
   override def getTagsPackage = "fixengine.tags.fix44.mbtrading"

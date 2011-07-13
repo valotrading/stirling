@@ -15,7 +15,7 @@
  */
 package fixengine.examples.console.commands;
 
-import static fixengine.messages.fix42.MsgTypeValue.REQUEST_FOR_POSITIONS;
+import static fixengine.messages.fix44.MsgTypeValue.REQUEST_FOR_POSITIONS;
 
 import fixengine.examples.console.ConsoleClient;
 import fixengine.messages.Message;

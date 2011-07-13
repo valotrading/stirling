@@ -61,6 +61,4 @@ public class MsgTypeValue {
     public static final String BID_REQUEST = "k";
     public static final String BID_RESPONSE = "l";
     public static final String LIST_STRIKE_PRICE = "m";
-    public static final String REQUEST_FOR_POSITIONS = "AN";
-    public static final String COLLATERAL_INQUIRY = "BB";
 }
