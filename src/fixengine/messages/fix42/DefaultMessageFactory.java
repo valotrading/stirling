@@ -28,7 +28,6 @@ import fixengine.messages.Logout;
 import fixengine.messages.Message;
 import fixengine.messages.MessageFactory;
 import fixengine.messages.MessageHeader;
-import fixengine.messages.MsgTypeValue;
 import fixengine.messages.Reject;
 import fixengine.messages.ResendRequest;
 import fixengine.messages.SequenceReset;
@@ -36,6 +35,7 @@ import fixengine.messages.Tag;
 import fixengine.messages.TestRequest;
 import fixengine.messages.UnsupportedMsgTypeException;
 import fixengine.messages.fix42.BusinessMessageReject;
+import fixengine.messages.fix42.MsgTypeValue;
 
 import java.lang.reflect.Constructor;
 

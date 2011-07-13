@@ -16,7 +16,7 @@
 package fixengine.messages.fix44.mbtrading
 
 import fixengine.messages.fix44.mbtrading.MsgTypeValue._
-import fixengine.messages.MsgTypeValue._
+import fixengine.messages.fix42.MsgTypeValue._
 
 class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(EXECUTION_REPORT, classOf[ExecutionReport])

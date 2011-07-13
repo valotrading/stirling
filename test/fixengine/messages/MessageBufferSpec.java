@@ -19,6 +19,7 @@ import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
+import fixengine.messages.fix42.MsgTypeValue;
 import fixengine.tags.fix42.MsgType;
 import fixengine.tags.fix42.TargetCompID;
 import static fixengine.messages.Field.DELIMITER;

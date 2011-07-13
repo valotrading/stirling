@@ -38,7 +38,7 @@ import fixengine.session.store.MongoSessionStore;
 import fixengine.session.store.NonPersistentInMemorySessionStore;
 import fixengine.session.store.SessionStore;
 import fixengine.messages.MessageHeader;
-import fixengine.messages.MsgTypeValue;
+import fixengine.messages.fix42.MsgTypeValue;
 import fixengine.messages.fix42.DefaultMessageFactory;
 import fixengine.messages.fix42.NewOrderSingle;
 

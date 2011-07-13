@@ -15,7 +15,7 @@
  */
 package fixengine.messages.fix42.ubs
 
-import fixengine.messages.MsgTypeValue._
+import fixengine.messages.fix42.MsgTypeValue._
 
 class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
   message(EXECUTION_REPORT, classOf[ExecutionReport])

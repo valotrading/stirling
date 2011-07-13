@@ -15,7 +15,7 @@
  */
 package fixengine.messages.fix42.chix.europe;
 
-import static fixengine.messages.MsgTypeValue.*;
+import static fixengine.messages.fix42.MsgTypeValue.*;
 
 public class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {
     public MessageFactory() {

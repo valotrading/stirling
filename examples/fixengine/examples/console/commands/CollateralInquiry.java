@@ -15,7 +15,7 @@
  */
 package fixengine.examples.console.commands;
 
-import static fixengine.messages.MsgTypeValue.COLLATERAL_INQUIRY;
+import static fixengine.messages.fix42.MsgTypeValue.COLLATERAL_INQUIRY;
 
 import fixengine.examples.console.ConsoleClient;
 import fixengine.messages.Message;

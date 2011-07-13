@@ -19,7 +19,7 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 
-import fixengine.messages.MsgTypeValue;
+import fixengine.messages.fix42.MsgTypeValue;
 import fixengine.tags.fix42.GapFillFlag;
 import fixengine.tags.fix42.NewSeqNo;
 

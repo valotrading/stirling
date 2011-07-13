@@ -21,7 +21,7 @@ import org.junit.runner.RunWith;
 
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.MessageHeader;
-import fixengine.messages.MsgTypeValue;
+import fixengine.messages.fix42.MsgTypeValue;
 import fixengine.messages.fix42.NewOrderSingle;
 import fixengine.tags.fix42.BeginSeqNo;
 import fixengine.tags.fix42.EndSeqNo;

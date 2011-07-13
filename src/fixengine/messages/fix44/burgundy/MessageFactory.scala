@@ -15,7 +15,7 @@
  */
 package fixengine.messages.fix44.burgundy
 
-import fixengine.messages.MsgTypeValue._
+import fixengine.messages.fix42.MsgTypeValue._
 import fixengine.messages.fix44.burgundy.MsgTypeValue._
 
 class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {

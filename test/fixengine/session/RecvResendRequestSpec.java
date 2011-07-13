@@ -23,7 +23,7 @@ import lang.Predicate;
 
 import fixengine.messages.Field;
 import fixengine.messages.Message;
-import fixengine.messages.MsgTypeValue;
+import fixengine.messages.fix42.MsgTypeValue;
 import fixengine.messages.Reject;
 import fixengine.messages.Required;
 import fixengine.messages.SequenceReset;

@@ -21,7 +21,7 @@ import org.junit.runner.RunWith;
 import org.jmock.Expectations;
 
 import fixengine.messages.MessageVisitor;
-import fixengine.messages.MsgTypeValue;
+import fixengine.messages.fix42.MsgTypeValue;
 import fixengine.messages.fix42.ExecutionReport;
 import fixengine.messages.fix42.Logon;
 import fixengine.tags.fix42.AvgPx;

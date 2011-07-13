@@ -15,14 +15,14 @@
  */
 package fixengine.session;
 
-import static fixengine.messages.MsgTypeValue.BUSINESS_MESSAGE_REJECT;
-import static fixengine.messages.MsgTypeValue.HEARTBEAT;
-import static fixengine.messages.MsgTypeValue.LOGON;
-import static fixengine.messages.MsgTypeValue.LOGOUT;
-import static fixengine.messages.MsgTypeValue.REJECT;
-import static fixengine.messages.MsgTypeValue.RESEND_REQUEST;
-import static fixengine.messages.MsgTypeValue.SEQUENCE_RESET;
-import static fixengine.messages.MsgTypeValue.TEST_REQUEST;
+import static fixengine.messages.fix42.MsgTypeValue.BUSINESS_MESSAGE_REJECT;
+import static fixengine.messages.fix42.MsgTypeValue.HEARTBEAT;
+import static fixengine.messages.fix42.MsgTypeValue.LOGON;
+import static fixengine.messages.fix42.MsgTypeValue.LOGOUT;
+import static fixengine.messages.fix42.MsgTypeValue.REJECT;
+import static fixengine.messages.fix42.MsgTypeValue.RESEND_REQUEST;
+import static fixengine.messages.fix42.MsgTypeValue.SEQUENCE_RESET;
+import static fixengine.messages.fix42.MsgTypeValue.TEST_REQUEST;
 
 import java.util.logging.Logger;
 

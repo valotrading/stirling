@@ -15,7 +15,7 @@
  */
 package fixengine.messages.fix42.bats.europe
 
-import fixengine.messages.MsgTypeValue._
+import fixengine.messages.fix42.MsgTypeValue._
 import fixengine.messages.fix42.bats.europe.MsgTypeValue._
 
 class MessageFactory extends fixengine.messages.fix42.DefaultMessageFactory {

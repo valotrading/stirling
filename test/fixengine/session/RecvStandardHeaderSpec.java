@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.Message;
 import fixengine.messages.MessageVisitor;
-import fixengine.messages.MsgTypeValue;
+import fixengine.messages.fix42.MsgTypeValue;
 import fixengine.tags.fix42.BeginString;
 import fixengine.tags.fix42.BodyLength;
 import fixengine.tags.fix42.CheckSum;

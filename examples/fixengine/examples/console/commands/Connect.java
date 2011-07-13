@@ -30,7 +30,7 @@ import fixengine.messages.DefaultMessageComparator;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.FixMessage;
 import fixengine.messages.FixMessageParser;
-import fixengine.messages.MsgTypeValue;
+import fixengine.messages.fix42.MsgTypeValue;
 import fixengine.session.HeartBtIntValue;
 import fixengine.session.Session;
 import fixengine.tags.fix42.ClOrdID;

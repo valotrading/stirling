@@ -16,10 +16,8 @@
 package fixengine.session;
 
 import jdave.junit4.JDaveRunner;
-
 import org.junit.runner.RunWith;
-
-import fixengine.messages.MsgTypeValue;
+import fixengine.messages.fix42.MsgTypeValue;
 
 @RunWith(JDaveRunner.class) public class InitiateLogoutProcessSpec extends InitiatorSpecification {
     public class InitializedSession {

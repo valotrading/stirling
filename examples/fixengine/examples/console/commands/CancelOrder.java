@@ -18,7 +18,7 @@ package fixengine.examples.console.commands;
 import fixengine.examples.console.ConsoleClient;
 import fixengine.messages.Message;
 
-import static fixengine.messages.MsgTypeValue.ORDER_CANCEL_REQUEST;
+import static fixengine.messages.fix42.MsgTypeValue.ORDER_CANCEL_REQUEST;
 
 public class CancelOrder extends FixMessageCommand {
   @Override protected Message newMessage(ConsoleClient client) {

@@ -15,6 +15,6 @@
  */
 package fixengine.messages.fix42.bats.europe;
 
-public class MsgTypeValue extends fixengine.messages.MsgTypeValue {
+public class MsgTypeValue extends fixengine.messages.fix42.MsgTypeValue {
     public static final String TRADE_CANCEL_CORRECT = "UCC";
 }

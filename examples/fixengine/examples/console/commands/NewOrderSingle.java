@@ -18,7 +18,7 @@ package fixengine.examples.console.commands;
 import fixengine.examples.console.ConsoleClient;
 import fixengine.messages.Message;
 
-import static fixengine.messages.MsgTypeValue.NEW_ORDER_SINGLE;
+import static fixengine.messages.fix42.MsgTypeValue.NEW_ORDER_SINGLE;
 
 public class NewOrderSingle extends FixMessageCommand {
   @Override protected Message newMessage(ConsoleClient client) {

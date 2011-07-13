@@ -15,6 +15,7 @@
  */
 package fixengine.messages;
 
+import fixengine.messages.fix42.MsgTypeValue;
 import fixengine.tags.fix42.ExecID;
 
 public class DefaultMessageComparator implements MessageComparator {

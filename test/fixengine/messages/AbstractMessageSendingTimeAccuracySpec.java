@@ -21,6 +21,8 @@ import jdave.junit4.JDaveRunner;
 import org.joda.time.DateTime;
 import org.junit.runner.RunWith;
 
+import fixengine.messages.fix42.MsgTypeValue;
+
 /**
  * @author Pekka Enberg 
  */

@@ -15,7 +15,7 @@
  */
 package fixengine.examples.console.commands;
 
-import static fixengine.messages.MsgTypeValue.LOGON;
+import static fixengine.messages.fix42.MsgTypeValue.LOGON;
 
 import fixengine.examples.console.ConsoleClient;
 import fixengine.messages.Message;

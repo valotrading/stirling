@@ -54,7 +54,7 @@ import fixengine.messages.IntegerField;
 import fixengine.messages.Message;
 import fixengine.messages.MessageHeader;
 import fixengine.messages.MessageVisitor;
-import fixengine.messages.MsgTypeValue;
+import fixengine.messages.fix42.MsgTypeValue;
 import fixengine.messages.Parser;
 import fixengine.messages.RawMessageBuilder;
 import fixengine.messages.StringField;

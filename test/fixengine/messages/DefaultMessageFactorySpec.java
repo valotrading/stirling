@@ -22,6 +22,7 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
 import fixengine.messages.fix42.DefaultMessageFactory;
+import fixengine.messages.fix42.MsgTypeValue;
 
 /**
  * @author Pekka Enberg

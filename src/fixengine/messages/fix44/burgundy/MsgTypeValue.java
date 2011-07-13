@@ -19,9 +19,7 @@ package fixengine.messages.fix44.burgundy;
  * @author Kare Nuorteva
  */
 public class MsgTypeValue {
-  public static final String MASS_QUOTE = "i";
   public static final String MASS_QUOTE_ACKNOWLEDGEMENT = "b";
-  public static final String NEWS = "B";
   public static final String ORDER_MASS_CANCEL_REPORT = "r";
   public static final String ORDER_MASS_CANCEL_REQUEST = "q";
   public static final String ORDER_MASS_STATUS_REQUEST = "AF";
