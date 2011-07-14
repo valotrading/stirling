@@ -98,7 +98,7 @@ public class DefaultMessageFactory implements MessageFactory {
     }
 
     protected String getTagsPackage() {
-      return getClass().getPackage().getName();
+      return getClass().getPackage().getName().replaceAll("^fixengine.messages", "fixengine.tags");
     }
 
     protected void message(String msgType, Class<? extends Message> clazz) {
