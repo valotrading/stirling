@@ -140,17 +140,17 @@ public class FieldContainer implements Iterable<Field> {
         return field.getValue();
     }
 
-    public Integer getInteger(Tag<IntegerField> tag) {
+    public Integer getInteger(Tag<? extends IntegerField> tag) {
         IntegerField field = (IntegerField) lookup(tag);
         return field.getValue();
     }
 
-    public Double getFloat(Tag<FloatField> tag) {
+    public Double getFloat(Tag<? extends FloatField> tag) {
         FloatField field = (FloatField) lookup(tag);
         return field.getValue();
     }
 
-    public boolean getBoolean(Tag<BooleanField> tag) {
+    public boolean getBoolean(Tag<? extends BooleanField> tag) {
         BooleanField field = (BooleanField) lookup(tag);
         Boolean result = field.getValue();
         if (result == null)
@@ -158,7 +158,7 @@ public class FieldContainer implements Iterable<Field> {
         return result;
     }
 
-    public DateTime getDateTime(Tag<UtcTimestampField> tag) {
+    public DateTime getDateTime(Tag<? extends UtcTimestampField> tag) {
         UtcTimestampField field = (UtcTimestampField) lookup(tag);
         return field.getValue();
     }
