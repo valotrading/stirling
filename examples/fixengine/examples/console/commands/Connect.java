@@ -16,6 +16,7 @@
 package fixengine.examples.console.commands;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -92,6 +93,8 @@ public class Connect implements Command {
       };
       client.setSession(session);
       client.getEvents().register(conn);
+    } catch (ConnectException e) {
+      client.error("Unable to connect: " + e.getMessage());
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

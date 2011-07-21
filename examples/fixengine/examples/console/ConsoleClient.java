@@ -221,7 +221,7 @@ public class ConsoleClient {
     return commands.get(commandName);
   }
 
-  private void error(String message) {
+  public void error(String message) {
     console.printf("ERROR: " + message + "\n");
   }
 
