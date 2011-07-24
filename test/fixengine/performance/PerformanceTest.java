@@ -29,6 +29,7 @@ import silvertip.Server;
 import silvertip.Server.ConnectionFactory;
 import fixengine.Config;
 import fixengine.Version;
+import fixengine.messages.Message;
 import fixengine.messages.DefaultMessageVisitor;
 import fixengine.messages.DefaultMessageComparator;
 import fixengine.messages.FixMessageParser;
@@ -133,6 +134,7 @@ public class PerformanceTest implements Runnable {
             try {
                 final Events events = Events.open(30000);
                 Server server = Server.accept(port, new ConnectionFactory() {
+                    boolean firstMessage = true;
                     @Override public Connection newConnection(SocketChannel channel) {
                         try {
                             channel.socket().setTcpNoDelay(true);
@@ -143,6 +145,10 @@ public class PerformanceTest implements Runnable {
                             @Override public void messages(Connection<FixMessage> conn, Iterator<FixMessage> messages) {
                                 while (messages.hasNext()) {
                                     messages.next();
+                                    if (firstMessage) {
+                                        firstMessage = false;
+                                        continue;
+                                    }
                                     rx[count++] = System.nanoTime();
                                     if (count == NUM_MESSAGES) {
                                         conn.close();
@@ -211,7 +217,6 @@ public class PerformanceTest implements Runnable {
                 Thread worker = new Thread(new Runnable() {
                     @Override public void run() {
                         int txCount = 0;
-                        tx[txCount++] = System.nanoTime();
                         session.logon(conn);
                         while (txCount < NUM_MESSAGES) {
                             tx[txCount++] = System.nanoTime();
