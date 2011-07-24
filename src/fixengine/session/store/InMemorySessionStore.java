@@ -15,7 +15,7 @@
  */
 package fixengine.session.store;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import fixengine.messages.FixMessage;
@@ -26,8 +26,8 @@ import fixengine.session.Sequence;
 import fixengine.session.Session;
 
 public class InMemorySessionStore implements SessionStore {
-    private List<Message> outgoingMessages = new ArrayList<Message>();
-    private List<Message> incomingMessages = new ArrayList<Message>();
+    private List<Message> outgoingMessages = new LinkedList<Message>();
+    private List<Message> incomingMessages = new LinkedList<Message>();
 
     @Override public void load(Session session) {
     }
@@ -41,7 +41,7 @@ public class InMemorySessionStore implements SessionStore {
     }
 
     private static List<Message> getRange(Session session, List<Message> messages, int beginSeqNo, int endSeqNo) {
-        final List<Message> range = new ArrayList<Message>();
+        final List<Message> range = new LinkedList<Message>();
         for (Message message : messages) {
             if (message.getMsgSeqNum() < beginSeqNo)
                 continue;
