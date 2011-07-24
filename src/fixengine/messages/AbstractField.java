@@ -26,7 +26,7 @@ public abstract class AbstractField<T> implements Field {
     protected boolean validFormat = true;
     private boolean validValue = true;
     private Required required;
-    private final String name;
+    private String name;
     private boolean defined;
     private final Tag<?> tag;
     protected T value;
@@ -35,18 +35,6 @@ public abstract class AbstractField<T> implements Field {
         this.required = required;
         this.value = value;
         this.tag = tag;
-        this.name = parseFieldName();
-    }
-    
-    private String parseFieldName() {
-        if (!tag.getClass().equals(Tag.class)) {
-            return ClassNameHelper.removeTrailingDollar(tag.getClass().getSimpleName());
-        }
-        String s = ClassNameHelper.removeTrailingDollar(getClass().getSimpleName());
-        if (s.length() < 5) {
-            return s;
-        }
-        return s.substring(0, s.length() - 5);
     }
 
     @Override public Required isRequired() {
@@ -63,10 +51,6 @@ public abstract class AbstractField<T> implements Field {
 
     public T getValue() {
         return value;
-    }
-
-    public String name() {
-        return name;
     }
 
     public Tag<?> tag() {
@@ -165,6 +149,24 @@ public abstract class AbstractField<T> implements Field {
 
     public String prettyName() {
         return name() + "(" + tag() + ")";
+    }
+
+    private String name() {
+        if (name == null) {
+          name = parseFieldName();
+        }
+        return name;
+    }
+
+    private String parseFieldName() {
+        if (!tag.getClass().equals(Tag.class)) {
+            return ClassNameHelper.removeTrailingDollar(tag.getClass().getSimpleName());
+        }
+        String s = ClassNameHelper.removeTrailingDollar(getClass().getSimpleName());
+        if (s.length() < 5) {
+            return s;
+        }
+        return s.substring(0, s.length() - 5);
     }
 
     @Override public String toString() {
