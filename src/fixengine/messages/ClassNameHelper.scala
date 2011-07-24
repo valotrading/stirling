@@ -18,5 +18,9 @@ package fixengine.messages
 import java.lang.String
 
 object ClassNameHelper {
-  def removeTrailingDollar(s: String): String = s.replaceFirst("\\$$", "")
+  def removeTrailingDollar(s: String): String = if (s.endsWith("$")) {
+    s.substring(0, s.length - 1)
+  } else {
+    s
+  }
 }
