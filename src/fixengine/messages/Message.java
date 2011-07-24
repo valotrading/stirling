@@ -32,6 +32,7 @@ public interface Message extends Parseable, Iterable<Field>, SequencedMessage<Me
     Integer getInteger(Tag<? extends IntegerField> tag);
     Double getFloat(Tag<? extends FloatField> tag);
     boolean getBoolean(Tag<? extends BooleanField> tag);
+    <T extends Formattable> T getEnum(Tag<? extends EnumField<T>> tag);
     void setString(Tag<StringField> tag, String value);
     void setInteger(Tag<IntegerField> tag, Integer value);
     void setFloat(Tag<? extends FloatField> tag, Double value);
