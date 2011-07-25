@@ -23,7 +23,7 @@ import lang.Objects;
 /**
  * @author Pekka Enberg 
  */
-public class Tag<T extends Field> {
+public abstract class Tag<T extends Field> {
     private Class<T> type;
     private int value;
 
