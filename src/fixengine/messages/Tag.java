@@ -44,11 +44,7 @@ public abstract class Tag<T extends Field> {
         return value;
     }
 
-    public T newField(Required required) {
-        T field = Classes.newInstance(type, Tag.class, this);
-        field.setRequired(required);
-        return field;
-    }
+    public abstract T newField(Required required);
 
     public static int peekTag(ByteBuffer b) {
         b.mark();
