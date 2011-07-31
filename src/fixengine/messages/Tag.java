@@ -17,7 +17,6 @@ package fixengine.messages;
 
 import java.nio.ByteBuffer;
 
-import lang.Classes;
 import lang.Objects;
 
 /**
