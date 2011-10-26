@@ -1,6 +1,0 @@
-<ivy-module version="2.0">
-  <info organisation="fast" module="fast"/>
-  <dependencies>
-    <dependency org="org.jdave" name="jdave-junit4" rev="1.1"/>
-  </dependencies>
-</ivy-module>
