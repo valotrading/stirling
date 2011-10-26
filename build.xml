@@ -25,8 +25,6 @@
   <property name="main.build" location="${build}/main"/>
   <property name="test.src" location="test"/>
   <property name="test.build" location="${build}/test"/>
-  <property name="examples.src" location="examples"/>
-  <property name="examples.build" location="${build}/examples"/>
   <property name="library" value="${basedir}/xtch.jar"/>
   <path id="lib.path.id">
     <fileset dir="${lib.dir}"/>
@@ -35,11 +33,6 @@
     <path refid="lib.path.id"/>
     <pathelement location="${main.build}"/>
     <pathelement location="${test.build}"/>
-  </path>
-  <path id="examples.path.id">
-    <fileset dir="${lib.dir}"/>
-    <pathelement location="${main.build}"/>
-    <pathelement location="${examples.build}"/>
   </path>
   <presetdef name="build.javac">
     <javac debug="true" includeantruntime="false">
@@ -50,17 +43,13 @@
     <ivy:retrieve/>
     <mkdir dir="${main.build}"/>
     <mkdir dir="${test.build}"/>
-    <mkdir dir="${examples.build}"/>
   </target>
-  <target name="all" depends="compile-main, compile-test, compile-examples"/>
+  <target name="all" depends="compile-main, compile-test"/>
   <target name="compile-main" depends="init">
     <build.javac srcdir="${main.src}" destdir="${main.build}" classpathref="lib.path.id"/>
   </target>
   <target name="compile-test" depends="compile-main">
     <build.javac srcdir="${test.src}" destdir="${test.build}" classpathref="test.path.id"/>
-  </target>
-  <target name="compile-examples" depends="compile-main">
-    <build.javac srcdir="${examples.src}" destdir="${examples.build}" classpathref="examples.path.id"/> 
   </target>
   <target name="dist" depends="compile-main">
     <jar destfile="${library}" basedir="${main.build}"/>
