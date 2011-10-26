@@ -21,9 +21,9 @@
   <!-- Bread and butter -->
   <property name="lib.dir" value="lib"/>
   <property name="build" location="build"/>
-  <property name="main.src" location="src"/>
+  <property name="main.src" location="src/main/java"/>
   <property name="main.build" location="${build}/main"/>
-  <property name="test.src" location="test"/>
+  <property name="test.src" location="src/test/java"/>
   <property name="test.build" location="${build}/test"/>
   <property name="library" value="${basedir}/xtch.jar"/>
   <path id="lib.path.id">
