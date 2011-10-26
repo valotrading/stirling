@@ -8,6 +8,9 @@ javacOptions += "-Xlint:unchecked"
 
 resolvers += "laughingpanda" at "http://www.laughingpanda.org/maven2/"
 
-libraryDependencies += "org.jdave" % "jdave-junit4" % "1.3" % "test"
+libraryDependencies ++= Seq(
+  "org.jdave" % "jdave-junit4" % "1.3" % "test",
+  "org.scalatest" %% "scalatest" % "1.6.1" % "test"
+)
 
 testFrameworks += new TestFramework("org.jdave.sbt.JDaveFramework")
