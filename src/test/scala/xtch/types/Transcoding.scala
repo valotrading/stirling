@@ -32,4 +32,13 @@ trait Transcoding {
   def encodeAndDecode(value: AnyRef) = {
     decode(ByteBuffer.wrap(encode(value)))
   }
+  implicit def intListToIntListOps(value: List[Int]) = {
+    new IntListOps(value)
+  }
+}
+
+class IntListOps(val value: List[Int]) {
+  def toByteArray = {
+    Array[Byte](value.map(_.asInstanceOf[Byte]): _*)
+  }
 }
