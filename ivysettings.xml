@@ -7,7 +7,6 @@
     <chain name="main">
       <ibiblio name="public" m2compatible="true"/>
       <ibiblio name="laughingpanda" root="http://www.laughingpanda.org/maven2/" m2compatible="true"/>
-      <ibiblio name="typesafe-releases" root="http://repo.typesafe.com/typesafe/releases/" m2compatible="true"/>
       <filesystem name="local-maven-2" m2compatible="true" local="true">
         <ivy pattern="${local-maven2-pattern}"/>
         <artifact pattern="${local-maven2-pattern}"/>

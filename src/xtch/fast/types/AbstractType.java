@@ -18,8 +18,6 @@ package xtch.fast.types;
 import java.nio.ByteBuffer;
 import xtch.types.Type;
 
-import silvertip.PartialMessageException;
-
 public abstract class AbstractType<T> implements Type<T> {
   protected static final byte ALL_BUT_STOP_BIT_MASK = (byte) 0x7F;
   protected static final byte STOP_BIT_MASK = (byte) 0x80;
