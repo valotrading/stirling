@@ -18,21 +18,24 @@ package xtch.turquoise.types;
 import java.nio.ByteBuffer;
 import xtch.types.AbstractType;
 
-public class Price extends AbstractType<Double> {
+public class Price extends AbstractType<Long> {
   public static final Price TYPE = new Price();
 
-  private static final long FRAC_TO_INT_FACTOR = 100000000L;
+  public static final long FACTOR = 100000000L;
 
-  @Override public void encode(ByteBuffer buffer, Double value, int length) {
-    long integer = value.longValue();
+  @Override public void encode(ByteBuffer buffer, Long value, int length) {
+    long integer = value / FACTOR;
     write32bitsAsLittleEndian(buffer, integer);
 
-    long fractional = (long) ((double) (value - integer) * FRAC_TO_INT_FACTOR);
+    long fractional = value % FACTOR;
     write32bitsAsLittleEndian(buffer, fractional);
   }
 
-  @Override public Double decode(ByteBuffer buffer, int length) {
-    return read32bitsAsLittleEndian(buffer) + (double) read32bitsAsLittleEndian(buffer) / (double) FRAC_TO_INT_FACTOR;
+  @Override public Long decode(ByteBuffer buffer, int length) {
+    long integer = read32bitsAsLittleEndian(buffer);
+    long fractional = read32bitsAsLittleEndian(buffer);
+
+    return integer * FACTOR + fractional;
   }
 
 }
