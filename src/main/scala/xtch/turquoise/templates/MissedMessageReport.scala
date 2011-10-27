@@ -13,20 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.turquoise.templates;
+package xtch.turquoise.templates
 
-import xtch.turquoise.Fields;
-import xtch.turquoise.MessageType;
+import xtch.turquoise.Fields
+import xtch.turquoise.MessageType
 
-/** 
+/**
  * Template for MissedMessageReport message as specified in section 7.3.7 of [2].
  */
-public class MissedMessageReport extends AbstractTemplate {
-  public static final MissedMessageReport TEMPLATE = new MissedMessageReport();
-
-  private MissedMessageReport() {
-    super(MessageType.MISSED_MESSAGE_REPORT);
-    add(MessageHeader.TEMPLATE);
-    add(Fields.RESPONSE_TYPE);
-  }
+object MissedMessageReport extends AbstractTemplate(MessageType.MISSED_MESSAGE_REPORT) {
+  add(MessageHeader.TEMPLATE);
+  add(Fields.RESPONSE_TYPE);
 }
