@@ -13,25 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.turquoise.templates;
+package xtch.turquoise.templates
 
-import java.nio.ByteBuffer;
+import xtch.turquoise.Fields
+import xtch.turquoise.MessageType
 
-import xtch.turquoise.Fields;
-import xtch.turquoise.MessageType;
-
-/** 
+/**
  * Template for Reject message as specified in section 7.3.8 of [2].
  */
-public class Reject extends AbstractTemplate {
-  public static final Reject TEMPLATE = new Reject();
-
-  private Reject() {
-    super(MessageType.REJECT);
-    add(MessageHeader.TEMPLATE);
-    add(Fields.REJECT_CODE);
-    add(Fields.REJECT_REASON);
-    add(Fields.REJECTED_MESSAGE_TYPE);
-    add(Fields.CLIENT_ORDER_ID);
-  }
+object Reject extends AbstractTemplate(MessageType.REJECT) {
+  add(MessageHeader.TEMPLATE);
+  add(Fields.REJECT_CODE);
+  add(Fields.REJECT_REASON);
+  add(Fields.REJECTED_MESSAGE_TYPE);
+  add(Fields.CLIENT_ORDER_ID);
 }
