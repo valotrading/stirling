@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.elements;
+package xtch.elements
 
-import java.nio.ByteBuffer;
+import java.nio.ByteBuffer
 
-/** 
+/**
  * An element in a message, which can be of another type than a field, for
- * example, in the case of FAST messages, Template Identifier or Presence Map. 
+ * example, in the case of FAST messages, Template Identifier or Presence Map.
  */
-public interface Elem<T> {
-  void encode(ByteBuffer buffer, Object value);
-
-  T decode(ByteBuffer buffer);
+trait Elem[T] {
+  def decode(buffer: ByteBuffer): T
+  def encode(buffer: ByteBuffer, value: AnyRef)
 }
