@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.fast.types;
-  
-public interface Decoder<T> {
-  void process(byte b);
+package xtch.fast.types
 
-  T getResult();
+trait Decoder[T] {
+  def process(byte: Byte)
+  def result: T
 }
-
