@@ -13,20 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.turquoise.templates;
+package xtch.turquoise.templates
 
-import xtch.turquoise.Fields;
-import xtch.turquoise.MessageType;
+import xtch.turquoise.Fields
+import xtch.turquoise.MessageType
 
-/** 
+/**
  * Template for Logout message as specified in section 7.3.3 of [2].
  */
-public class Logout extends AbstractTemplate {
-  public static final Logout TEMPLATE = new Logout();
-
-  private Logout() {
-    super(MessageType.LOGOUT);
-    add(MessageHeader.TEMPLATE);
-    add(Fields.LOGOUT_REASON);
-  }
+object Logout extends AbstractTemplate(MessageType.LOGOUT) {
+  add(MessageHeader.TEMPLATE);
+  add(Fields.LOGOUT_REASON);
 }
