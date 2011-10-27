@@ -13,27 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.turquoise.templates;
+package xtch.turquoise.templates
 
-import xtch.turquoise.Fields;
-import xtch.turquoise.MessageType;
+import xtch.turquoise.Fields
+import xtch.turquoise.MessageType
 
-/** 
+/**
  * Template for Order Mass Cancel Request message as specified in section 7.4.4
  * of [2].
  */
-public class OrderMassCancelRequest extends AbstractTemplate {
-  public static final OrderMassCancelRequest TEMPLATE = new OrderMassCancelRequest();
-
-  private OrderMassCancelRequest() {
-    super(MessageType.LOGOUT);
-    add(MessageHeader.TEMPLATE);
-    add(Fields.CLIENT_ORDER_ID);
-    add(Fields.MASS_CANCEL_TYPE);
-    add(Fields.COMMON_SYMBOL);
-    add(Fields.SEGMENT);
-    add(Fields.RESERVED_FIELD_1);
-    add(Fields.TARGET_BOOK);
-    add(Fields.RESERVED_FIELD_2);
-  }
+object OrderMassCancelRequest extends AbstractTemplate(MessageType.ORDER_MASS_CANCEL_REQUEST) {
+  add(MessageHeader.TEMPLATE);
+  add(Fields.CLIENT_ORDER_ID);
+  add(Fields.MASS_CANCEL_TYPE);
+  add(Fields.COMMON_SYMBOL);
+  add(Fields.SEGMENT);
+  add(Fields.RESERVED_FIELD_1);
+  add(Fields.TARGET_BOOK);
+  add(Fields.RESERVED_FIELD_2);
 }
