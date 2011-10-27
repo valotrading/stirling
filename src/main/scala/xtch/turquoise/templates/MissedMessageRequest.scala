@@ -13,23 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.turquoise.templates;
+package xtch.turquoise.templates
 
-import java.nio.ByteBuffer;
+import xtch.turquoise.Fields
+import xtch.turquoise.MessageType
 
-import xtch.turquoise.Fields;
-import xtch.turquoise.MessageType;
-
-/** 
+/**
  * Template for MissedMessageRequest message as specified in section 7.3.5 of [2].
  */
-public class MissedMessageRequest extends AbstractTemplate {
-  public static final MissedMessageRequest TEMPLATE = new MissedMessageRequest();
-
-  private MissedMessageRequest() {
-    super(MessageType.MISSED_MESSAGE_REQUEST);
-    add(MessageHeader.TEMPLATE);
-    add(Fields.APP_ID);
-    add(Fields.LAST_MSG_SEQ_NUM);
-  }
+object MissedMessageRequest extends AbstractTemplate(MessageType.MISSED_MESSAGE_REQUEST) {
+  add(MessageHeader.TEMPLATE);
+  add(Fields.APP_ID);
+  add(Fields.LAST_MSG_SEQ_NUM);
 }
