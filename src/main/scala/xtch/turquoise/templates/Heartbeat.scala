@@ -13,18 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.turquoise.templates;
+package xtch.turquoise.templates
 
-import xtch.turquoise.Fields;
-import xtch.turquoise.MessageType;
+import xtch.turquoise.MessageType
 
-/** 
+/**
  * Template for Heartbeat message as specified in section 7.3.4 of [2].
  */
-public class Heartbeat extends AbstractTemplate {
-  public static final Heartbeat TEMPLATE = new Heartbeat();
-
-  private Heartbeat() {
-    super(MessageType.HEARTBEAT);
-  }
-}
+object Heartbeat extends AbstractTemplate(MessageType.HEARTBEAT)
