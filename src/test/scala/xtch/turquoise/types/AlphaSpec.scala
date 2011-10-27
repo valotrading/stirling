@@ -13,28 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.turquoise.types;
+package xtch.turquoise.types
 
-import java.nio.ByteBuffer;
+import java.nio.ByteBuffer
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
+import xtch.types.Transcoding
 
-import jdave.Specification;
-import jdave.junit4.JDaveRunner;
-import org.junit.runner.RunWith;
-
-import xtch.types.AbstractTypeSpec;
-
-@RunWith(JDaveRunner.class) public class AlphaSpec extends AbstractTypeSpec<Alpha> {
-  public class Initialized {
-    public void encodeAndDecode() {
-      assertEncodeAndDecode('+');
+class AlphaSpec extends WordSpec with MustMatchers with AlphaTranscoding {
+  "Alpha" must {
+    "transcode successfully" in {
+      val value = '+'
+      encodeAndDecode(value: java.lang.Character) must equal(value)
     }
   }
+}
 
-  @Override protected void encode(ByteBuffer buffer, Object value) {
-    Alpha.TYPE.encode(buffer, (Character) value, 1);
+trait AlphaTranscoding extends Transcoding {
+  def decode(buffer: ByteBuffer) = {
+    Alpha.TYPE.decode(buffer, 1)
   }
-
-  @Override protected Character decode(ByteBuffer buffer) {
-    return Alpha.TYPE.decode(buffer, 1);
+  def encode(buffer: ByteBuffer, value: AnyRef) {
+    Alpha.TYPE.encode(buffer, value.asInstanceOf[Char], 1);
   }
 }

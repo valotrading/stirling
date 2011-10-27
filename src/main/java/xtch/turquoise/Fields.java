@@ -54,12 +54,12 @@ public class Fields {
   public static final Field<Integer> SIDE = new SignedInt8Field("Side");
   public static final Field<Integer> ORDER_QTY = new SignedInt32Field("OrderQty");
   public static final Field<Integer> DISPLAY_QTY = new SignedInt32Field("DisplayQty");
-  public static final Field<Double> LIMIT_PRICE = new PriceField("LimitPrice");
+  public static final Field<Long> LIMIT_PRICE = new PriceField("LimitPrice");
   public static final Field<Integer> CAPACITY = new SignedInt8Field("Capacity");
   public static final Field<Integer> AUTO_CANCEL = new SignedInt8Field("AutoCancel");
   public static final Field<Integer> ORDER_SUB_TYPE = new SignedInt8Field("OrderSubType");
   public static final Field<Integer> RESERVED_FIELD_1 = new SignedInt8Field("ReservedField1");
-  public static final Field<Double> RESERVED_FIELD_2 = new PriceField("ReservedField2");
+  public static final Field<Long> RESERVED_FIELD_2 = new PriceField("ReservedField2");
   public static final Field<Integer> TARGET_BOOK = new SignedInt8Field("TargetBook");
   public static final Field<Integer> EXEC_INSTRUCTION = new SignedInt8Field("ExecInstruction");
   public static final Field<Integer> MIN_QTY = new SignedInt32Field("MinQty");
@@ -74,7 +74,7 @@ public class Fields {
   public static final Field<String> EXECUTION_REPORT_REF_ID = new StringField("ExecutionReportRefID", 12);
   public static final Field<Integer> ORDER_STATUS = new SignedInt8Field("OrderStatus");
   public static final Field<Integer> ORDER_REJECT_CODE = new SignedInt32Field("OrderRejectCode");
-  public static final Field<Double> EXECUTED_PRICE = new PriceField("ExecutedPrice");
+  public static final Field<Long> EXECUTED_PRICE = new PriceField("ExecutedPrice");
   public static final Field<Integer> EXECUTED_QTY = new SignedInt32Field("ExecutedQty");
   public static final Field<Integer> LEAVES_QTY = new SignedInt32Field("LeavesQty");
   public static final Field<BigInteger> SECONDARY_ORDER_ID = new UnsignedInt64Field("SecondaryOrderID");
@@ -87,7 +87,7 @@ public class Fields {
   public static final Field<Integer> MASS_CANCEL_RESPONSE = new SignedInt8Field("MassCancelResponse");
   public static final Field<Integer> MASS_CANCEL_REJECT_REASON = new SignedInt32Field("MassCancelRejectReason");
 
-  private static class PriceField extends Field<Double> {
+  private static class PriceField extends Field<Long> {
     protected PriceField(String name) {
       super(name, Price.TYPE, 8);
     }
