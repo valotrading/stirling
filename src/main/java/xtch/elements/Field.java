@@ -22,12 +22,10 @@ import xtch.types.Type;
 
 public class Field<T> extends AbstractElem<T> implements Comparable<Field<?>> {
   private final String name;
-  private int length = Integer.MAX_VALUE;
 
   protected Field(String name, Type<T> type, int length) {
     super(type, length);
     this.name = name;
-    this.length = length;
   }
 
   protected Field(String name, Type<T> type) {
