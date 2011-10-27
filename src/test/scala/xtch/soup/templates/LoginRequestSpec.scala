@@ -49,7 +49,7 @@ trait LoginRequestFixtures {
   def session = "7"
   def sequenceNumber = "1"
   def message = {
-    val message = new SoupTCP2Message(LoginRequest.TEMPLATE)
+    val message = new SoupTCP2Message(LoginRequest)
     message.set(Elements.USERNAME, username)
     message.set(Elements.PASSWORD, password)
     message.set(Elements.SESSION, session)
