@@ -13,22 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.turquoise.templates;
+package xtch.turquoise.templates
 
-import java.nio.ByteBuffer;
+import xtch.turquoise.Fields
+import xtch.turquoise.MessageType
 
-import xtch.turquoise.Fields;
-import xtch.turquoise.MessageType;
-
-/** 
+/**
  * Template for MissedMessageRequestAck message as specified in section 7.3.6 of [2].
  */
-public class MissedMessageRequestAck extends AbstractTemplate {
-  public static final MissedMessageRequestAck TEMPLATE = new MissedMessageRequestAck();
-
-  private MissedMessageRequestAck() {
-    super(MessageType.MISSED_MESSAGE_REQUEST_ACK);
-    add(MessageHeader.TEMPLATE);
-    add(Fields.RESPONSE_TYPE);
-  }
+object MissedMessageRequestAck extends AbstractTemplate(MessageType.MISSED_MESSAGE_REQUEST_ACK) {
+  add(MessageHeader.TEMPLATE);
+  add(Fields.RESPONSE_TYPE);
 }
