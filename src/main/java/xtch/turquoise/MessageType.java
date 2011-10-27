@@ -45,6 +45,11 @@ public class MessageType {
   public static final String ORDER_CANCEL_REJECT ="9";
   public static final String ORDER_MASS_CANCEL_REPORT = "r";
 
+  /**
+   * Other server-initiated message types as specified in section 7.1.3.1 of [2].
+   */
+  public static final String BUSINESS_MESSAGE_REJECT = "j";
+
   private MessageType() {
   }
 }

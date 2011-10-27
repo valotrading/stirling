@@ -13,27 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.turquoise.templates;
+package xtch.turquoise.templates
 
-import java.nio.ByteBuffer;
+import xtch.turquoise.Fields
+import xtch.turquoise.MessageType
 
-import xtch.turquoise.Fields;
-import xtch.turquoise.MessageType;
-
-/** 
+/**
  * Template for Business Reject message as specified in section 7.5.1 of [2].
  */
-public class BusinessReject extends AbstractTemplate {
-  public static final BusinessReject TEMPLATE = new BusinessReject();
-
-  private BusinessReject() {
-    super(MessageType.REJECT);
-    add(MessageHeader.TEMPLATE);
-    add(Fields.APP_ID);
-    add(Fields.SEQUENCE_NO);
-    add(Fields.CLIENT_ORDER_ID);
-    add(Fields.ORDER_ID);
-    add(Fields.TRANSACT_TIME);
-    add(Fields.RESERVED_FIELD_1);
-  }
+object BusinessReject extends AbstractTemplate(MessageType.BUSINESS_MESSAGE_REJECT) {
+  add(MessageHeader.TEMPLATE);
+  add(Fields.APP_ID);
+  add(Fields.SEQUENCE_NO);
+  add(Fields.CLIENT_ORDER_ID);
+  add(Fields.ORDER_ID);
+  add(Fields.TRANSACT_TIME);
+  add(Fields.RESERVED_FIELD_1);
 }
