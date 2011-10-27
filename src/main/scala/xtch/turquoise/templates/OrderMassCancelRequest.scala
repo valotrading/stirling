@@ -22,7 +22,7 @@ import xtch.turquoise.MessageType
  * Template for Order Mass Cancel Request message as specified in section 7.4.4
  * of [2].
  */
-object OrderMassCancelRequest extends AbstractTemplate(MessageType.ORDER_MASS_CANCEL_REQUEST) {
+object OrderMassCancelRequest extends AbstractTemplate(MessageType.OrderMassCancelRequest) {
   add(MessageHeader.TEMPLATE);
   add(Fields.CLIENT_ORDER_ID);
   add(Fields.MASS_CANCEL_TYPE);

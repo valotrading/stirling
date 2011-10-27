@@ -21,7 +21,7 @@ import xtch.turquoise.MessageType
 /**
  * Template for OrderMassCancelReport message as specified in section 7.4.7 of [2].
  */
-object OrderMassCancelReport extends AbstractTemplate(MessageType.ORDER_MASS_CANCEL_REPORT) {
+object OrderMassCancelReport extends AbstractTemplate(MessageType.OrderMassCancelReport) {
   add(MessageHeader.TEMPLATE);
   add(Fields.APP_ID);
   add(Fields.SEQUENCE_NO);

@@ -21,7 +21,7 @@ import xtch.turquoise.MessageType
 /**
  * Template for Business Reject message as specified in section 7.5.1 of [2].
  */
-object BusinessReject extends AbstractTemplate(MessageType.BUSINESS_MESSAGE_REJECT) {
+object BusinessReject extends AbstractTemplate(MessageType.BusinessMessageReject) {
   add(MessageHeader.TEMPLATE);
   add(Fields.APP_ID);
   add(Fields.SEQUENCE_NO);

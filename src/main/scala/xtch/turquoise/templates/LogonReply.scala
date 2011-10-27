@@ -21,7 +21,7 @@ import xtch.turquoise.MessageType
 /**
  * Template for LogonReply message as specified in section 7.3.2 of [2].
  */
-object LogonReply extends AbstractTemplate(MessageType.LOGON_REPLY) {
+object LogonReply extends AbstractTemplate(MessageType.LogonReply) {
   add(MessageHeader.TEMPLATE);
   add(Fields.REJECT_CODE);
   add(Fields.PASSWORD_EXPIRY_DAY_COUNT);

@@ -22,7 +22,7 @@ import xtch.turquoise.MessageType
  * Template for Execution Report message as specified in section 7.4.5 of
  * [2].
  */
-object ExecutionReport extends AbstractTemplate(MessageType.EXECUTION_REPORT) {
+object ExecutionReport extends AbstractTemplate(MessageType.ExecutionReport) {
   add(MessageHeader.TEMPLATE);
   add(Fields.APP_ID);
   add(Fields.SEQUENCE_NO);

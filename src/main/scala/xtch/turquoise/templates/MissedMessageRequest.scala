@@ -21,7 +21,7 @@ import xtch.turquoise.MessageType
 /**
  * Template for MissedMessageRequest message as specified in section 7.3.5 of [2].
  */
-object MissedMessageRequest extends AbstractTemplate(MessageType.MISSED_MESSAGE_REQUEST) {
+object MissedMessageRequest extends AbstractTemplate(MessageType.MissedMessageRequest) {
   add(MessageHeader.TEMPLATE);
   add(Fields.APP_ID);
   add(Fields.LAST_MSG_SEQ_NUM);

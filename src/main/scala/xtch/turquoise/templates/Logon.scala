@@ -21,7 +21,7 @@ import xtch.turquoise.MessageType
 /**
  * Template for Logon message as specified in section 7.3.1 of [2].
  */
-object Logon extends AbstractTemplate(MessageType.LOGON) {
+object Logon extends AbstractTemplate(MessageType.Logon) {
   add(MessageHeader.TEMPLATE);
   add(Fields.COMP_ID);
   add(Fields.PASSWORD);

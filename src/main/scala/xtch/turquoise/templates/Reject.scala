@@ -21,7 +21,7 @@ import xtch.turquoise.MessageType
 /**
  * Template for Reject message as specified in section 7.3.8 of [2].
  */
-object Reject extends AbstractTemplate(MessageType.REJECT) {
+object Reject extends AbstractTemplate(MessageType.Reject) {
   add(MessageHeader.TEMPLATE);
   add(Fields.REJECT_CODE);
   add(Fields.REJECT_REASON);

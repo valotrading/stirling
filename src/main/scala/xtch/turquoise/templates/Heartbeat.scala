@@ -20,4 +20,4 @@ import xtch.turquoise.MessageType
 /**
  * Template for Heartbeat message as specified in section 7.3.4 of [2].
  */
-object Heartbeat extends AbstractTemplate(MessageType.HEARTBEAT)
+object Heartbeat extends AbstractTemplate(MessageType.Heartbeat)

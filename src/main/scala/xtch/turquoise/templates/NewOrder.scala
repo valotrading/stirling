@@ -21,7 +21,7 @@ import xtch.turquoise.MessageType
 /**
  * Template for NewOrder message as specified in section 7.4.1 of [2].
  */
-object NewOrder extends AbstractTemplate(MessageType.NEW_ORDER) {
+object NewOrder extends AbstractTemplate(MessageType.NewOrder) {
   add(MessageHeader.TEMPLATE);
   add(Fields.CLIENT_ORDER_ID);
   add(Fields.TRADER_ID);

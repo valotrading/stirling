@@ -21,7 +21,7 @@ import xtch.turquoise.MessageType
 /**
  * Template for MissedMessageReport message as specified in section 7.3.7 of [2].
  */
-object MissedMessageReport extends AbstractTemplate(MessageType.MISSED_MESSAGE_REPORT) {
+object MissedMessageReport extends AbstractTemplate(MessageType.MissedMessageReport) {
   add(MessageHeader.TEMPLATE);
   add(Fields.RESPONSE_TYPE);
 }

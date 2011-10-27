@@ -21,7 +21,7 @@ import xtch.turquoise.MessageType
 /**
  * Template for MissedMessageRequestAck message as specified in section 7.3.6 of [2].
  */
-object MissedMessageRequestAck extends AbstractTemplate(MessageType.MISSED_MESSAGE_REQUEST_ACK) {
+object MissedMessageRequestAck extends AbstractTemplate(MessageType.MissedMessageRequestAck) {
   add(MessageHeader.TEMPLATE);
   add(Fields.RESPONSE_TYPE);
 }

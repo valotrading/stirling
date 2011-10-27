@@ -22,7 +22,7 @@ import xtch.turquoise.MessageType
  * Template for Order Cancel Reject message as specified in section 7.4.6 of
  * [2].
  */
-object OrderCancelReject extends AbstractTemplate(MessageType.ORDER_CANCEL_REJECT) {
+object OrderCancelReject extends AbstractTemplate(MessageType.OrderCancelReject) {
   add(MessageHeader.TEMPLATE);
   add(Fields.APP_ID);
   add(Fields.SEQUENCE_NO);

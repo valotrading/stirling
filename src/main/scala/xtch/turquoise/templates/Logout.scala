@@ -21,7 +21,7 @@ import xtch.turquoise.MessageType
 /**
  * Template for Logout message as specified in section 7.3.3 of [2].
  */
-object Logout extends AbstractTemplate(MessageType.LOGOUT) {
+object Logout extends AbstractTemplate(MessageType.Logout) {
   add(MessageHeader.TEMPLATE);
   add(Fields.LOGOUT_REASON);
 }
