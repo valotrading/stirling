@@ -13,26 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.turquoise.templates;
+package xtch.turquoise.templates
 
-import xtch.turquoise.Fields;
-import xtch.turquoise.MessageType;
+import xtch.turquoise.Fields
+import xtch.turquoise.MessageType
 
-/** 
+/**
  * Template for Order Cancel Request message as specified in section 7.4.3 of
  * [2].
  */
-public class OrderCancelRequest extends AbstractTemplate {
-  public static final OrderCancelRequest TEMPLATE = new OrderCancelRequest();
-
-  private OrderCancelRequest() {
-    super(MessageType.LOGOUT);
-    add(MessageHeader.TEMPLATE);
-    add(Fields.CLIENT_ORDER_ID);
-    add(Fields.ORIGINAL_CLIENT_ORDER_ID);
-    add(Fields.ORDER_ID);
-    add(Fields.SIDE);
-    add(Fields.TARGET_BOOK);
-    add(Fields.RESERVED_FIELD_1);
-  }
+object OrderCancelRequest extends AbstractTemplate(MessageType.ORDER_CANCEL_REQUEST) {
+  add(MessageHeader.TEMPLATE);
+  add(Fields.CLIENT_ORDER_ID);
+  add(Fields.ORIGINAL_CLIENT_ORDER_ID);
+  add(Fields.ORDER_ID);
+  add(Fields.SIDE);
+  add(Fields.TARGET_BOOK);
+  add(Fields.RESERVED_FIELD_1);
 }
