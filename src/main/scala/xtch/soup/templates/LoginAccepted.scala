@@ -22,7 +22,7 @@ import xtch.soup.PacketType
  * Template for Login Accepted message as specified in Soup TCP 2.0, section
  * 2.2.1.
  */
-object LoginAccepted extends AbstractTemplate(PacketType.LOGIN_ACCEPTED) {
+object LoginAccepted extends AbstractTemplate(PacketType.LoginAccepted) {
   add(Elements.SESSION)
   add(Elements.SEQUENCE_NUMBER)
 }

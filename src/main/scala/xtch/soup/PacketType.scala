@@ -13,20 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.soup;
+package xtch.soup
 
-public class PacketType {
-  public static final PacketType ELEM = new PacketType();
-
-  public static final String SEQUENCE_DATA = "S";
-  public static final String SERVER_HEARTBEAT = "H";
-  public static final String DEBUG = "+";
-  public static final String LOGIN_ACCEPTED = "A";
-  public static final String LOGIN_REJECTED = "J";
-  public static final String LOGIN_REQUEST = "L";
-  public static final String END_OF_SESSION = "Z";
-  public static final String LOGOUT_REQUEST = "O";
-
-  private PacketType() {
-  }
+object PacketType {
+  val SequenceData = "S"
+  val ServerHeartbeat = "H"
+  val Debug = "+"
+  val LoginAccepted = "A"
+  val LoginRejected = "J"
+  val LoginRequest = "L"
+  val EndOfSession = "Z"
+  val LogoutRequest = "O"
 }

@@ -22,7 +22,7 @@ import xtch.soup.PacketType
  * Template for Login Request message as specified in Soup TCP 2.0, section
  * 2.3.1.
  */
-object LoginRequest extends AbstractTemplate(PacketType.LOGIN_REQUEST) {
+object LoginRequest extends AbstractTemplate(PacketType.LoginRequest) {
   add(Elements.USERNAME)
   add(Elements.PASSWORD)
   add(Elements.SESSION)
