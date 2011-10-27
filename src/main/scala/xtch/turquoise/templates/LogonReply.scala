@@ -13,21 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.turquoise.templates;
+package xtch.turquoise.templates
 
-import xtch.turquoise.Fields;
-import xtch.turquoise.MessageType;
+import xtch.turquoise.Fields
+import xtch.turquoise.MessageType
 
-/** 
+/**
  * Template for LogonReply message as specified in section 7.3.2 of [2].
  */
-public class LogonReply extends AbstractTemplate {
-  public static final LogonReply TEMPLATE = new LogonReply();
-
-  private LogonReply() {
-    super(MessageType.LOGON_REPLY);
-    add(MessageHeader.TEMPLATE);
-    add(Fields.REJECT_CODE);
-    add(Fields.PASSWORD_EXPIRY_DAY_COUNT);
-  }
+object LogonReply extends AbstractTemplate(MessageType.LOGON_REPLY) {
+  add(MessageHeader.TEMPLATE);
+  add(Fields.REJECT_CODE);
+  add(Fields.PASSWORD_EXPIRY_DAY_COUNT);
 }
