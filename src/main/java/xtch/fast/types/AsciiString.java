@@ -39,7 +39,7 @@ public class AsciiString extends AbstractType<String> {
     return new Decoder<String>() {
       StringBuffer output = new StringBuffer();
 
-      @Override public String getResult() {
+      @Override public String result() {
         return output.toString();
       }
 

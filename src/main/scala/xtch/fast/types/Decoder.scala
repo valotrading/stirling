@@ -13,23 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.soup.templates;
+package xtch.fast.types
 
-import xtch.soup.Elements;
-import xtch.soup.PacketType;
-
-/** 
- * Template for Login Request message as specified in Soup TCP 2.0, section
- * 2.3.1. 
- */
-public class LoginRequest extends AbstractTemplate {
-  public static final LoginRequest TEMPLATE = new LoginRequest();
-
-  private LoginRequest() {
-    super(PacketType.LOGIN_REQUEST);
-    add(Elements.USERNAME);
-    add(Elements.PASSWORD);
-    add(Elements.SESSION);
-    add(Elements.SEQUENCE_NUMBER);
-  }
+trait Decoder[T] {
+  def process(byte: Byte)
+  def result: T
 }

@@ -44,7 +44,7 @@ public class UnsignedInt32 extends AbstractType<Long> {
     return new Decoder<Long>() {
       long value = 0;
 
-      @Override public Long getResult() {
+      @Override public Long result() {
         return value;
       }
 

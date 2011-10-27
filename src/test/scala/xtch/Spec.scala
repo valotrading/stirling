@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.fast.types;
-  
-public interface Decoder<T> {
-  void process(byte b);
+package xtch
 
-  T getResult();
-}
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
 
+abstract class Spec extends WordSpec with MustMatchers

@@ -13,30 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.elements;
+package xtch.soup.templates
 
-import java.nio.ByteBuffer;
-import java.util.Arrays;
+import xtch.soup.Elements
+import xtch.soup.PacketType
 
-import xtch.types.Type;
-
-public class Field<T> extends AbstractElem<T> implements Comparable<Field<?>> {
-  private final String name;
-
-  protected Field(String name, Type<T> type, int length) {
-    super(type, length);
-    this.name = name;
-  }
-
-  protected Field(String name, Type<T> type) {
-    this(name, type, Integer.MAX_VALUE);
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  @Override public int compareTo(Field<?> field) {
-    return getName().compareTo(field.getName());
-  }
+/**
+ * Template for Login Accepted message as specified in Soup TCP 2.0, section
+ * 2.2.1.
+ */
+object LoginAccepted extends AbstractTemplate(PacketType.LoginAccepted) {
+  add(Elements.SESSION)
+  add(Elements.SEQUENCE_NUMBER)
 }

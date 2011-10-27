@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.types;
+package xtch.types
 
-import java.nio.ByteBuffer;
+import java.nio.ByteBuffer
 
-public interface Type<T> {
-  void encode(ByteBuffer buffer, T value, int length);
-
-  T decode(ByteBuffer buffer, int length);
+trait Type[T] {
+  def decode(buffer: ByteBuffer, length: Int): T
+  def encode(buffer: ByteBuffer, value: T, length: Int)
 }

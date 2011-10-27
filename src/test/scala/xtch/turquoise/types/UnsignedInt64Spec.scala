@@ -17,11 +17,10 @@ package xtch.turquoise.types
 
 import java.math.BigInteger
 import java.nio.ByteBuffer
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
+import xtch.Spec
 import xtch.types.Transcoding
 
-class UnsignedInt64Spec extends WordSpec with MustMatchers with UnsignedInt64Transcoding {
+class UnsignedInt64Spec extends Spec with UnsignedInt64Transcoding {
   "UnsignedInt64" must {
     "encode correctly" in {
       val expected = List(0xfe, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff).toByteArray

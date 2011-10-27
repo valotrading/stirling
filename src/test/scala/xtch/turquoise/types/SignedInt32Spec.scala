@@ -16,11 +16,10 @@
 package xtch.turquoise.types
 
 import java.nio.ByteBuffer
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
+import xtch.Spec
 import xtch.types.Transcoding
 
-class SignedInt32Spec extends WordSpec with MustMatchers with SignedInt32Transcoding {
+class SignedInt32Spec extends Spec with SignedInt32Transcoding {
   "SignedInt32" must {
     "encode correctly" in {
       encode(-2147483647: java.lang.Integer) must equal(List(0x01, 0x00, 0x00, 0x80).toByteArray)

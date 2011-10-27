@@ -16,13 +16,12 @@
 package xtch.soup.templates
 
 import java.nio.ByteBuffer
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
+import xtch.Spec
 import xtch.messages.Message
 import xtch.soup.Elements
 import xtch.soup.messages.SoupTCP2Message
 
-class LoginRequestSpec extends WordSpec with MustMatchers with LoginRequestFixtures with LoginRequestEncoding {
+class LoginRequestSpec extends Spec with LoginRequestFixtures with LoginRequestEncoding {
   "LoginRequest" when {
     "transcoding" must {
       val buffer = encode(message)
@@ -49,7 +48,7 @@ trait LoginRequestFixtures {
   def session = "7"
   def sequenceNumber = "1"
   def message = {
-    val message = new SoupTCP2Message(LoginRequest.TEMPLATE)
+    val message = new SoupTCP2Message(LoginRequest)
     message.set(Elements.USERNAME, username)
     message.set(Elements.PASSWORD, password)
     message.set(Elements.SESSION, session)

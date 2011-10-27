@@ -16,11 +16,10 @@
 package xtch.turquoise.types
 
 import java.nio.ByteBuffer
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
+import xtch.Spec
 import xtch.types.Transcoding
 
-class PriceSpec extends WordSpec with MustMatchers with PriceTranscoding {
+class PriceSpec extends Spec with PriceTranscoding {
   "Price" must {
     "encode correctly" in {
       val value = -1200012345678L

@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.elements;
+package xtch.soup
 
-import java.nio.ByteBuffer;
-
-/** 
- * An element in a message, which can be of another type than a field, for
- * example, in the case of FAST messages, Template Identifier or Presence Map. 
- */
-public interface Elem<T> {
-  void encode(ByteBuffer buffer, Object value);
-
-  T decode(ByteBuffer buffer);
+object PacketType {
+  val SequenceData = "S"
+  val ServerHeartbeat = "H"
+  val Debug = "+"
+  val LoginAccepted = "A"
+  val LoginRejected = "J"
+  val LoginRequest = "L"
+  val EndOfSession = "Z"
+  val LogoutRequest = "O"
 }

@@ -16,11 +16,10 @@
 package xtch.turquoise.types
 
 import java.nio.ByteBuffer
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
+import xtch.Spec
 import xtch.types.Transcoding
 
-class AlphaSpec extends WordSpec with MustMatchers with AlphaTranscoding {
+class AlphaSpec extends Spec with AlphaTranscoding {
   "Alpha" must {
     "transcode successfully" in {
       val value = '+'

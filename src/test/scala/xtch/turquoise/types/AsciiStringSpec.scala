@@ -16,11 +16,10 @@
 package xtch.turquoise.types
 
 import java.nio.ByteBuffer
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
+import xtch.Spec
 import xtch.types.Transcoding
 
-class AsciiStringSpec extends WordSpec with MustMatchers with AsciiStringTranscoding {
+class AsciiStringSpec extends Spec with AsciiStringTranscoding {
   "AsciiString" must {
     "encode value of maximum length correctly" in {
       encode("0123456789") must equal(List(48, 49, 50, 51, 52, 53, 54, 55, 56, 57).toByteArray)

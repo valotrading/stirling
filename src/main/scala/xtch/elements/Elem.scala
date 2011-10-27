@@ -13,20 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.soup;
+package xtch.elements
 
-public class PacketType {
-  public static final PacketType ELEM = new PacketType();
+import java.nio.ByteBuffer
 
-  public static final String SEQUENCE_DATA = "S";
-  public static final String SERVER_HEARTBEAT = "H";
-  public static final String DEBUG = "+";
-  public static final String LOGIN_ACCEPTED = "A";
-  public static final String LOGIN_REJECTED = "J";
-  public static final String LOGIN_REQUEST = "L";
-  public static final String END_OF_SESSION = "Z";
-  public static final String LOGOUT_REQUEST = "O";
-
-  private PacketType() {
-  }
+/**
+ * An element in a message, which can be of another type than a field, for
+ * example, in the case of FAST messages, Template Identifier or Presence Map.
+ */
+trait Elem[T] {
+  def decode(buffer: ByteBuffer): T
+  def encode(buffer: ByteBuffer, value: AnyRef)
 }

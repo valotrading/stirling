@@ -16,11 +16,10 @@
 package xtch.fast.types
 
 import java.nio.ByteBuffer
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
+import xtch.Spec
 import xtch.types.Transcoding
 
-class AsciiStringSpec extends WordSpec with MustMatchers with AsciiStringTranscoding {
+class AsciiStringSpec extends Spec with AsciiStringTranscoding {
   "AsciiString" must {
     "transcode successfully" in {
       val value = "Hello"

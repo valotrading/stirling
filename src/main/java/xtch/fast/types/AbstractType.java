@@ -29,7 +29,7 @@ public abstract class AbstractType<T> implements Type<T> {
       byte b = buffer.get();
       decoder.process(decodeByte(b));
       if (hasStopBit(b) || buffer.position() - startPosition == length)
-        return decoder.getResult();
+        return decoder.result();
     }
     throw new RuntimeException("partial message");
   }
