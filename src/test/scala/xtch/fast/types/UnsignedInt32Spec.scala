@@ -16,11 +16,10 @@
 package xtch.fast.types
 
 import java.nio.ByteBuffer
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
+import xtch.Spec
 import xtch.types.Transcoding
 
-class UnsignedInt32Spec extends WordSpec with MustMatchers with UnsignedInt32Transcoding {
+class UnsignedInt32Spec extends Spec with UnsignedInt32Transcoding {
   "UnsignedInt32" must {
     "encode correctly" in {
       encode(22714L: java.lang.Long) must equal(List(0x01, 0x31, 0xba).toByteArray)

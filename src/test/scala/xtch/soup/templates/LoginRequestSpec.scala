@@ -16,13 +16,12 @@
 package xtch.soup.templates
 
 import java.nio.ByteBuffer
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
+import xtch.Spec
 import xtch.messages.Message
 import xtch.soup.Elements
 import xtch.soup.messages.SoupTCP2Message
 
-class LoginRequestSpec extends WordSpec with MustMatchers with LoginRequestFixtures with LoginRequestEncoding {
+class LoginRequestSpec extends Spec with LoginRequestFixtures with LoginRequestEncoding {
   "LoginRequest" when {
     "transcoding" must {
       val buffer = encode(message)

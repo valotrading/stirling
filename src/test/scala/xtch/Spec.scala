@@ -13,26 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.turquoise.types
+package xtch
 
-import java.nio.ByteBuffer
-import xtch.Spec
-import xtch.types.Transcoding
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
 
-class AlphaSpec extends Spec with AlphaTranscoding {
-  "Alpha" must {
-    "transcode successfully" in {
-      val value = '+'
-      encodeAndDecode(value: java.lang.Character) must equal(value)
-    }
-  }
-}
-
-trait AlphaTranscoding extends Transcoding {
-  def decode(buffer: ByteBuffer) = {
-    Alpha.TYPE.decode(buffer, 1)
-  }
-  def encode(buffer: ByteBuffer, value: AnyRef) {
-    Alpha.TYPE.encode(buffer, value.asInstanceOf[Char], 1);
-  }
-}
+abstract class Spec extends WordSpec with MustMatchers
