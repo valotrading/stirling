@@ -13,9 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch
+package xtch.itch.types
 
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
+import java.nio.ByteBuffer
 
-abstract class Spec extends WordSpec with MustMatchers with ByteHandling
+trait Type[T] {
+  def decode(buffer: ByteBuffer): T
+  def decode(bytes: List[Byte]): T = {
+    val buffer = ByteBuffer.allocate(length)
+    buffer.put(Array[Byte](bytes: _*))
+    buffer.flip
+    decode(buffer)
+  }
+  def encode(buffer: ByteBuffer, value: T)
+  def encode(value: T): List[Byte] = {
+    val buffer = ByteBuffer.allocate(length)
+    encode(buffer, value)
+    buffer.flip
+    val bytes = new Array[Byte](length)
+    buffer.get(bytes)
+    List(bytes: _*)
+  }
+  def length: Int
+}

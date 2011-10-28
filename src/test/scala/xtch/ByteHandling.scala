@@ -15,7 +15,28 @@
  */
 package xtch
 
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
+import java.nio.charset.Charset._
 
-abstract class Spec extends WordSpec with MustMatchers with ByteHandling
+trait ByteHandling {
+  implicit def intListToIntListOps(value: List[Int]) = new IntListOps(value)
+  implicit def stringToStringOps(value: String) = new StringOps(value)
+  val charset = forName("US-ASCII")
+}
+
+class IntListOps(val value: List[Int]) {
+  def toByteArray = {
+    Array[Byte](toBytes: _*)
+  }
+  def toBytes = {
+    value.map(_.asInstanceOf[Byte])
+  }
+}
+
+class StringOps(val value: String) {
+  def toByteArray = {
+    value.getBytes
+  }
+  def toBytes = {
+    List(toByteArray: _*)
+  }
+}

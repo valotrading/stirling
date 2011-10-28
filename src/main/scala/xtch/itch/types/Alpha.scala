@@ -13,23 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.types
+package xtch.itch.types
 
 import java.nio.ByteBuffer
+import java.nio.charset.Charset._
 
-trait Transcoding {
-  val BufferSize = 1024
-  def decode(buffer: ByteBuffer): AnyRef
-  def encode(buffer: ByteBuffer, value: AnyRef)
-  def encode(value: AnyRef): Array[Byte] = {
-    val buffer = ByteBuffer.allocate(BufferSize)
-    encode(buffer, value)
-    buffer.flip
-    val bytes = new Array[Byte](buffer.limit)
-    buffer.get(bytes, 0, bytes.length)
-    bytes
+object Alpha {
+  def apply(length: Int) = new Alpha(length)
+}
+
+class Alpha(val length: Int) extends Type[String] {
+  def decode(buffer: ByteBuffer) = {
+    val bytes = new Array[Byte](length)
+    buffer.get(bytes)
+    new String(bytes, charset).trim
   }
-  def encodeAndDecode(value: AnyRef) = {
-    decode(ByteBuffer.wrap(encode(value)))
+  def encode(buffer: ByteBuffer, value: String) {
+    if (value.length > length)
+      throw new IllegalArgumentException("Value length = %d, maximum length = %d"
+        .format(value.length, length))
+    val bytes = value.padTo(length, ' ').getBytes(charset)
+    buffer.put(bytes)
   }
+  val charset = forName("US-ASCII")
 }
