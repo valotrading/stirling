@@ -16,14 +16,19 @@
 package xtch.itch.types
 
 import java.nio.ByteBuffer
+import java.nio.charset.Charset._
 
-object Alpha {
-  def apply(length: Int) = new Alpha(length)
-}
-
-class Alpha(val length: Int) extends AbstractType[String] {
-  def decode(buffer: ByteBuffer) = read(buffer)
-  def encode(buffer: ByteBuffer, value: String) {
-    write(buffer, value.padTo(length, ' '))
+trait AbstractType[T] extends Type[T] {
+  protected def read(buffer: ByteBuffer) = {
+    val bytes = new Array[Byte](length)
+    buffer.get(bytes)
+    new String(bytes, charset).trim
   }
+  protected def write(buffer: ByteBuffer, value: String) {
+    if (value.length != length)
+      throw new IllegalArgumentException("Value length = %d, type length = %d"
+        .format(value.length, length))
+    buffer.put(value.getBytes(charset))
+  }
+  val charset = forName("US-ASCII")
 }

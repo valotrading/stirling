@@ -17,13 +17,19 @@ package xtch.itch.types
 
 import java.nio.ByteBuffer
 
-object Alpha {
-  def apply(length: Int) = new Alpha(length)
+object Numeric {
+  def apply(length: Int) = new Numeric(length)
 }
 
-class Alpha(val length: Int) extends AbstractType[String] {
-  def decode(buffer: ByteBuffer) = read(buffer)
+class Numeric(val length: Int) extends AbstractType[Long] {
+  def decode(buffer: ByteBuffer) = {
+    read(buffer).toLong
+  }
+  def encode(buffer: ByteBuffer, value: Long) {
+    encode(buffer, value.toString)
+  }
   def encode(buffer: ByteBuffer, value: String) {
-    write(buffer, value.padTo(length, ' '))
+    val pad = " " * (length - value.length)
+    write(buffer, pad ++ value)
   }
 }
