@@ -13,9 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch
+package xtch.itch.types
 
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
+import java.nio.ByteBuffer
 
-abstract class Spec extends WordSpec with MustMatchers with ByteHandling
+object Alpha {
+  def apply(length: Int) = new Alpha(length)
+}
+
+class Alpha(val length: Int) extends AbstractType[String] {
+  def decode(buffer: ByteBuffer) = read(buffer)
+  def encode(buffer: ByteBuffer, value: String) {
+    write(buffer, value.padTo(length, ' '))
+  }
+}

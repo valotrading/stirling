@@ -13,9 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch
+package xtch.soup.templates
 
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
+import xtch.soup.Elements
+import xtch.soup.PacketType
 
-abstract class Spec extends WordSpec with MustMatchers with ByteHandling
+/**
+ * Template for Login Accepted message as specified in Soup TCP 2.0, section
+ * 2.2.1.
+ */
+object LoginAccepted extends AbstractTemplate(PacketType.LoginAccepted) {
+  add(Elements.SESSION)
+  add(Elements.SEQUENCE_NUMBER)
+}
+
+/**
+ * Template for Login Request message as specified in Soup TCP 2.0, section
+ * 2.3.1.
+ */
+object LoginRequest extends AbstractTemplate(PacketType.LoginRequest) {
+  add(Elements.USERNAME)
+  add(Elements.PASSWORD)
+  add(Elements.SESSION)
+  add(Elements.SEQUENCE_NUMBER)
+}

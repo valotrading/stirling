@@ -13,16 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.soup.templates
+package xtch
 
-import xtch.soup.Elements
-import xtch.soup.PacketType
+import java.nio.charset.Charset._
 
-/**
- * Template for Login Accepted message as specified in Soup TCP 2.0, section
- * 2.2.1.
- */
-object LoginAccepted extends AbstractTemplate(PacketType.LoginAccepted) {
-  add(Elements.SESSION)
-  add(Elements.SEQUENCE_NUMBER)
+trait ByteHandling {
+  implicit def intListToIntListOps(value: List[Int]) = new IntListOps(value)
+  implicit def stringToStringOps(value: String) = new StringOps(value)
+  val charset = forName("US-ASCII")
+}
+
+class IntListOps(val value: List[Int]) {
+  def toByteArray = {
+    Array[Byte](toBytes: _*)
+  }
+  def toBytes = {
+    value.map(_.asInstanceOf[Byte])
+  }
+}
+
+class StringOps(val value: String) {
+  def toByteArray = {
+    value.getBytes
+  }
+  def toBytes = {
+    List(toByteArray: _*)
+  }
 }

@@ -13,18 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.soup.templates
+package xtch.itch.types
 
-import xtch.soup.Elements
-import xtch.soup.PacketType
+import java.nio.ByteBuffer
 
-/**
- * Template for Login Request message as specified in Soup TCP 2.0, section
- * 2.3.1.
- */
-object LoginRequest extends AbstractTemplate(PacketType.LoginRequest) {
-  add(Elements.USERNAME)
-  add(Elements.PASSWORD)
-  add(Elements.SESSION)
-  add(Elements.SEQUENCE_NUMBER)
+object Numeric {
+  def apply(length: Int) = new Numeric(length)
+}
+
+class Numeric(val length: Int) extends AbstractType[Long] {
+  def decode(buffer: ByteBuffer) = {
+    read(buffer).toLong
+  }
+  def encode(buffer: ByteBuffer, value: Long) {
+    encode(buffer, value.toString)
+  }
+  def encode(buffer: ByteBuffer, value: String) {
+    val pad = " " * (length - value.length)
+    write(buffer, pad ++ value)
+  }
 }
