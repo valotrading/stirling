@@ -18,7 +18,7 @@ package xtch.itch.types
 import java.nio.ByteBuffer
 import java.nio.charset.Charset._
 
-trait AbstractType[T] extends Type[T] {
+trait AbstractDataType[T] extends DataType[T] {
   protected def read(buffer: ByteBuffer) = {
     val bytes = new Array[Byte](length)
     buffer.get(bytes)

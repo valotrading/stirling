@@ -21,7 +21,7 @@ object Numeric {
   def apply(length: Int) = new Numeric(length)
 }
 
-class Numeric(val length: Int) extends AbstractType[Long] {
+class Numeric(val length: Int) extends AbstractDataType[Long] {
   def decode(buffer: ByteBuffer) = {
     read(buffer).toLong
   }

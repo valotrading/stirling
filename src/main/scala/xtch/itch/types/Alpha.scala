@@ -21,7 +21,7 @@ object Alpha {
   def apply(length: Int) = new Alpha(length)
 }
 
-class Alpha(val length: Int) extends AbstractType[String] {
+class Alpha(val length: Int) extends AbstractDataType[String] {
   def decode(buffer: ByteBuffer) = read(buffer)
   def encode(buffer: ByteBuffer, value: String) {
     write(buffer, value.padTo(length, ' '))

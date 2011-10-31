@@ -17,7 +17,7 @@ package xtch.itch.types
 
 import java.nio.ByteBuffer
 
-trait Type[T] {
+trait DataType[T] {
   def decode(buffer: ByteBuffer): T
   def decode(bytes: List[Byte]): T = {
     val buffer = ByteBuffer.allocate(length)
