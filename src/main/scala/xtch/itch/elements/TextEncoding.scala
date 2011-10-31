@@ -13,21 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.types
+package xtch.itch.elements
 
-import java.nio.ByteBuffer
-import xtch.itch.elements.ASCII
+import java.nio.charset.Charset
 
-trait AbstractDataType[T] extends DataType[T] with ASCII {
-  protected def read(buffer: ByteBuffer) = {
-    val bytes = new Array[Byte](length)
-    buffer.get(bytes)
-    new String(bytes, charset).trim
-  }
-  protected def write(buffer: ByteBuffer, value: String) {
-    if (value.length != length)
-      throw new IllegalArgumentException("Value length = %d, type length = %d"
-        .format(value.length, length))
-    buffer.put(value.getBytes(charset))
-  }
+trait TextEncoding {
+  def charset: Charset
+}
+
+trait ASCII extends TextEncoding {
+  val charset = Charset.forName("US-ASCII")
 }
