@@ -17,11 +17,7 @@ package xtch.itch.types
 
 import java.nio.ByteBuffer
 
-object Alpha {
-  def apply(length: Int) = new Alpha(length)
-}
-
-class Alpha(val length: Int) extends AbstractDataType[String] {
+case class Alpha(val length: Int) extends AbstractDataType[String] {
   def decode(buffer: ByteBuffer) = read(buffer)
   def encode(buffer: ByteBuffer, value: String) {
     write(buffer, value.padTo(length, ' '))
