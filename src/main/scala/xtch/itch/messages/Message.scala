@@ -13,15 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch
+package xtch.itch.messages
 
-import xtch.{Spec => BaseSpec}
-import xtch.itch.messages.{FieldContainer, Message, MessageOps}
-import xtch.itch.types.{DataType, DataTypeOps}
+import java.nio.charset.Charset
+import java.nio.ByteBuffer
+import xtch.itch.templates.MessageTemplate
 
-abstract class Spec extends BaseSpec with Helpers
-
-trait Helpers {
-  implicit def dataTypeToDataTypeOps[T](value: DataType[T]) = new DataTypeOps(value)
-  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
+trait Message extends FieldContainer {
+  def encode(buffer: ByteBuffer) {
+    buffer.put(messageType)
+  }
+  def length = messageType.length + template.length
+  def template: MessageTemplate[_]
+  def messageType = template.messageType.getBytes(charset)
+  def charset: Charset
 }

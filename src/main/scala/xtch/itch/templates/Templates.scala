@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch
+package xtch.itch.templates
 
-import xtch.{Spec => BaseSpec}
-import xtch.itch.messages.{FieldContainer, Message, MessageOps}
-import xtch.itch.types.{DataType, DataTypeOps}
+import xtch.itch.elements.Fields
+import xtch.itch.messages.MessageType
 
-abstract class Spec extends BaseSpec with Helpers
-
-trait Helpers {
-  implicit def dataTypeToDataTypeOps[T](value: DataType[T]) = new DataTypeOps(value)
-  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
+object Templates {
+  /**
+   * Template for Seconds message as specified in section 4.1.1 of [3].
+   */
+  val Seconds = new AbstractTemplate {
+    val messageType = MessageType.Seconds
+    val fields = Fields.Second :: Nil
+  }
 }

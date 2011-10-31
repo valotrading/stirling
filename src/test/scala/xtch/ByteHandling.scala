@@ -15,6 +15,8 @@
  */
 package xtch
 
+import java.nio.ByteBuffer
+
 trait ByteHandling {
   implicit def intListToIntListOps(value: List[Int]) = new IntListOps(value)
   implicit def stringToStringOps(value: String) = new StringOps(value)
@@ -32,6 +34,9 @@ class IntListOps(val value: List[Int]) {
 class StringOps(val value: String) {
   def toByteArray = {
     value.getBytes
+  }
+  def toByteBuffer = {
+    ByteBuffer.wrap(toByteArray)
   }
   def toBytes = {
     List(toByteArray: _*)

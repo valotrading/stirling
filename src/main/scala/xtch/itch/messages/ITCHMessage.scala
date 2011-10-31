@@ -13,15 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch
+package xtch.itch.messages
 
-import xtch.{Spec => BaseSpec}
-import xtch.itch.messages.{FieldContainer, Message, MessageOps}
-import xtch.itch.types.{DataType, DataTypeOps}
+import java.nio.ByteBuffer
+import xtch.itch.elements.ASCII
+import xtch.itch.templates.AbstractTemplate
 
-abstract class Spec extends BaseSpec with Helpers
+object ITCHMessage extends ASCII {
+  val terminator = "\r\n".getBytes(charset)
+}
 
-trait Helpers {
-  implicit def dataTypeToDataTypeOps[T](value: DataType[T]) = new DataTypeOps(value)
-  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
+case class ITCHMessage(template: AbstractTemplate) extends Message with ASCII {
+  import ITCHMessage._
+  override def encode(buffer: ByteBuffer) {
+    super.encode(buffer)
+    template.encode(buffer, this)
+    buffer.put(terminator)
+  }
+  override def length = super.length + terminator.length
 }

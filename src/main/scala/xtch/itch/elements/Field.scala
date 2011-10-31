@@ -13,15 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch
+package xtch.itch.elements
 
-import xtch.{Spec => BaseSpec}
-import xtch.itch.messages.{FieldContainer, Message, MessageOps}
-import xtch.itch.types.{DataType, DataTypeOps}
+import java.nio.ByteBuffer
+import xtch.itch.types.DataType
 
-abstract class Spec extends BaseSpec with Helpers
-
-trait Helpers {
-  implicit def dataTypeToDataTypeOps[T](value: DataType[T]) = new DataTypeOps(value)
-  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
-}
+case class Field[T](name: String, dataType: DataType[T]) extends AbstractElem[T]

@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch
+package xtch.itch.messages
 
-import xtch.{Spec => BaseSpec}
-import xtch.itch.messages.{FieldContainer, Message, MessageOps}
-import xtch.itch.types.{DataType, DataTypeOps}
+import java.nio.ByteBuffer
 
-abstract class Spec extends BaseSpec with Helpers
-
-trait Helpers {
-  implicit def dataTypeToDataTypeOps[T](value: DataType[T]) = new DataTypeOps(value)
-  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
+class MessageOps(val message: Message) {
+  def encodeBytes: List[Byte] = {
+    val buffer = ByteBuffer.allocate(message.length)
+    message.encode(buffer)
+    buffer.flip
+    val bytes = new Array[Byte](message.length)
+    buffer.get(bytes)
+    List(bytes: _*)
+  }
 }
