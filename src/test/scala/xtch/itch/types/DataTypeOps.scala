@@ -13,27 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch
+package xtch.itch.types
 
-trait ByteHandling {
-  implicit def intListToIntListOps(value: List[Int]) = new IntListOps(value)
-  implicit def stringToStringOps(value: String) = new StringOps(value)
-}
+import java.nio.ByteBuffer
 
-class IntListOps(val value: List[Int]) {
-  def toByteArray = {
-    Array[Byte](toBytes: _*)
+class DataTypeOps[T](val dataType: DataType[T]) {
+  def decodeBytes(bytes: List[Byte]): T = {
+    val buffer = ByteBuffer.allocate(dataType.length)
+    buffer.put(Array[Byte](bytes: _*))
+    buffer.flip
+    dataType.decode(buffer)
   }
-  def toBytes = {
-    value.map(_.asInstanceOf[Byte])
-  }
-}
-
-class StringOps(val value: String) {
-  def toByteArray = {
-    value.getBytes
-  }
-  def toBytes = {
-    List(toByteArray: _*)
+  def encodeBytes(value: T): List[Byte] = {
+    val buffer = ByteBuffer.allocate(dataType.length)
+    dataType.encode(buffer, value)
+    buffer.flip
+    val bytes = new Array[Byte](dataType.length)
+    buffer.get(bytes)
+    List(bytes: _*)
   }
 }

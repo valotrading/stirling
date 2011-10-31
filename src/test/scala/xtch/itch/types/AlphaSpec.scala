@@ -16,28 +16,28 @@
 package xtch.itch.types
 
 import java.nio.ByteBuffer
-import xtch.Spec
+import xtch.itch.Spec
 
 class AlphaSpec extends Spec {
   "Alpha" when {
     val alpha = Alpha(5)
     "encoding" must {
       "produce correct output" in {
-        alpha.encode("hello") must equal(List(0x68, 0x65, 0x6c, 0x6c, 0x6f).toBytes)
+        alpha.encodeBytes("hello") must equal(List(0x68, 0x65, 0x6c, 0x6c, 0x6f).toBytes)
       }
       "pad shorter input to type length" in {
-        alpha.encode("foo") must equal("foo  ".toBytes)
+        alpha.encodeBytes("foo") must equal("foo  ".toBytes)
       }
       "throw an exception on too long input" in {
         intercept[IllegalArgumentException] {
-          alpha.encode("excess")
+          alpha.encodeBytes("excess")
         }
       }
     }
     "transcoding" must {
       "produce correct result" in {
         val value = "foo"
-        alpha.decode(alpha.encode(value)) must equal(value)
+        alpha.decodeBytes(alpha.encodeBytes(value)) must equal(value)
       }
     }
   }

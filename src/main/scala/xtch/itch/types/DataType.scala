@@ -19,20 +19,6 @@ import java.nio.ByteBuffer
 
 trait DataType[T] {
   def decode(buffer: ByteBuffer): T
-  def decode(bytes: List[Byte]): T = {
-    val buffer = ByteBuffer.allocate(length)
-    buffer.put(Array[Byte](bytes: _*))
-    buffer.flip
-    decode(buffer)
-  }
   def encode(buffer: ByteBuffer, value: T)
-  def encode(value: T): List[Byte] = {
-    val buffer = ByteBuffer.allocate(length)
-    encode(buffer, value)
-    buffer.flip
-    val bytes = new Array[Byte](length)
-    buffer.get(bytes)
-    List(bytes: _*)
-  }
   def length: Int
 }

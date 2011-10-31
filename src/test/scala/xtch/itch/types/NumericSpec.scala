@@ -16,29 +16,29 @@
 package xtch.itch.types
 
 import java.nio.ByteBuffer
-import xtch.Spec
+import xtch.itch.Spec
 
 class NumericSpec extends Spec {
   "Numeric" when {
     "encoding" must {
       val numeric = Numeric(3)
       "produce correct output" in {
-        numeric.encode(303) must equal(List(0x33, 0x30, 0x33).toBytes)
+        numeric.encodeBytes(303L) must equal(List(0x33, 0x30, 0x33).toBytes)
       }
       "pad shorter input to type length" in {
-        numeric.encode(20) must equal(" 20".toBytes)
+        numeric.encodeBytes(20L) must equal(" 20".toBytes)
       }
       "throw an exception on too large input" in {
         intercept[IllegalArgumentException] {
-          numeric.encode(1000)
+          numeric.encodeBytes(1000L)
         }
       }
     }
     "transcoding" must {
       val numeric = Numeric(8)
       "produce correct result" in {
-        val value = 31137
-        numeric.decode(numeric.encode(value)) must equal(value)
+        val value = 31137L
+        numeric.decodeBytes(numeric.encodeBytes(value)) must equal(value)
       }
     }
   }

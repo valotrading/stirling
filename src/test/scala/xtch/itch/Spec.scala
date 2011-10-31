@@ -13,27 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch
+package xtch.itch
 
-trait ByteHandling {
-  implicit def intListToIntListOps(value: List[Int]) = new IntListOps(value)
-  implicit def stringToStringOps(value: String) = new StringOps(value)
-}
+import xtch.{Spec => BaseSpec}
+import xtch.itch.types.{DataType, DataTypeOps}
 
-class IntListOps(val value: List[Int]) {
-  def toByteArray = {
-    Array[Byte](toBytes: _*)
-  }
-  def toBytes = {
-    value.map(_.asInstanceOf[Byte])
-  }
-}
+abstract class Spec extends BaseSpec with Helpers
 
-class StringOps(val value: String) {
-  def toByteArray = {
-    value.getBytes
-  }
-  def toBytes = {
-    List(toByteArray: _*)
-  }
+trait Helpers {
+  implicit def dataTypeToDataTypeOps[T](value: DataType[T]) = new DataTypeOps(value)
 }
