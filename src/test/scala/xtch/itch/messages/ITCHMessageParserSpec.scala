@@ -25,12 +25,6 @@ import xtch.itch.templates.Templates
 class ITCHMessageParserSpec extends Spec {
   "ITCHMessageParser" when {
     "parsing" must {
-      "parse a Seconds message" in {
-        parse(Encoded.seconds.toByteBuffer) must equal(Decoded.seconds)
-      }
-      "parse a Milliseconds message" in {
-        parse(Encoded.milliseconds.toByteBuffer) must equal(Decoded.milliseconds)
-      }
       "throw an exception on an unknown message type" in {
         intercept[GarbledMessageException] {
           parse("S".toByteBuffer)
@@ -38,22 +32,4 @@ class ITCHMessageParserSpec extends Spec {
       }
     }
   }
-}
-
-object Decoded {
-  def milliseconds = {
-    val message = new ITCHMessage(Templates.Milliseconds)
-    message.set(Fields.Millisecond, 12L)
-    message
-  }
-  def seconds = {
-    val message = new ITCHMessage(Templates.Seconds)
-    message.set(Fields.Second, 12345L)
-    message
-  }
-}
-
-object Encoded {
-  def milliseconds = "M 12\r\n"
-  def seconds = "T12345\r\n"
 }

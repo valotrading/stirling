@@ -18,13 +18,18 @@ package xtch.itch.templates
 import java.nio.ByteBuffer
 import xtch.itch.Spec
 import xtch.itch.elements.Fields
-import xtch.itch.messages.ITCHMessage
+import xtch.itch.messages.{ITCHMessage, ITCHMessageParser}
 
 abstract class TemplateSpec extends Spec with TemplateFixtures {
   "Template" when {
     "encoding" must {
       "produce correct output" in {
         message.encodeBytes must equal(encoded.toBytes)
+      }
+    }
+    "transcoding" must {
+      "produce correct result" in {
+        ITCHMessageParser.parse(message.encodeBytes.toByteBuffer) must equal(message)
       }
     }
   }
