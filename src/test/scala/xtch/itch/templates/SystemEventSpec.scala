@@ -13,12 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.elements
+package xtch.itch.templates
 
-import xtch.itch.types.{Alpha, Numeric}
+import xtch.itch.elements.Fields
+import xtch.itch.messages.ITCHMessage
 
-object Fields {
-  val EventCode = Field("EventCode", Alpha(1))
-  val Millisecond = Field("Millisecond", Numeric(3))
-  val Second = Field("Second", Numeric(5))
+class SystemEventSpec extends TemplateSpec with SystemEventFixtures
+
+trait SystemEventFixtures {
+  def encoded = "SO\r\n"
+  def message = {
+    val message = ITCHMessage(Templates.SystemEvent)
+    message.set(Fields.EventCode, eventCode)
+    message
+  }
+  def eventCode = "O"
 }

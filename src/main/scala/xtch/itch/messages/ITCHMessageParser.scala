@@ -21,6 +21,7 @@ import xtch.itch.templates.Templates
 
 object ITCHMessageParser extends MessageParser[ITCHMessage] {
   val templates = Map(
+    MessageType.SystemEvent -> Templates.SystemEvent,
     MessageType.Milliseconds -> Templates.Milliseconds,
     MessageType.Seconds -> Templates.Seconds
   )

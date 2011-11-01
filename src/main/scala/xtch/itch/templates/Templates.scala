@@ -34,4 +34,12 @@ object Templates {
     val messageType = MessageType.Milliseconds
     val fields = Fields.Millisecond :: Nil
   }
+
+  /**
+   * Template for System Event message as specified in section 4.2.1 of [3].
+   */
+  val SystemEvent = new AbstractTemplate {
+    val messageType = MessageType.SystemEvent
+    val fields = Fields.EventCode :: Nil
+  }
 }
