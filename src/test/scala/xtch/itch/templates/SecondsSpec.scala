@@ -15,20 +15,10 @@
  */
 package xtch.itch.templates
 
-import java.nio.ByteBuffer
-import xtch.itch.Spec
 import xtch.itch.elements.Fields
 import xtch.itch.messages.ITCHMessage
 
-class SecondsSpec extends Spec with SecondsFixtures {
-  "Seconds" when {
-    "encoding" must {
-      "produce correct output" in {
-        message.encodeBytes must equal(encoded.toBytes)
-      }
-    }
-  }
-}
+class SecondsSpec extends TemplateSpec with SecondsFixtures
 
 trait SecondsFixtures {
   def encoded = "T12345\r\n"

@@ -15,17 +15,22 @@
  */
 package xtch.itch.templates
 
+import java.nio.ByteBuffer
+import xtch.itch.Spec
 import xtch.itch.elements.Fields
 import xtch.itch.messages.ITCHMessage
 
-class MillisecondsSpec extends TemplateSpec with MillisecondsFixtures
-
-trait MillisecondsFixtures {
-  def encoded = "M 12\r\n"
-  def message = {
-    val message = ITCHMessage(Templates.Milliseconds)
-    message.set(Fields.Millisecond, millisecond)
-    message
+abstract class TemplateSpec extends Spec with TemplateFixtures {
+  "Template" when {
+    "encoding" must {
+      "produce correct output" in {
+        message.encodeBytes must equal(encoded.toBytes)
+      }
+    }
   }
-  def millisecond = 12L
+}
+
+trait TemplateFixtures {
+  def encoded: String
+  def message: ITCHMessage
 }
