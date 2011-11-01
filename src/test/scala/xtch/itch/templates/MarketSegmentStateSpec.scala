@@ -13,13 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.elements
+package xtch.itch.templates
 
-import xtch.itch.types.{Alpha, Numeric}
+import xtch.itch.elements.Fields
+import xtch.itch.messages.ITCHMessage
 
-object Fields {
-  val EventCode = Field("EventCode", Alpha(1))
-  val MarketSegmentID = Field("MarketSegmentID", Numeric(3))
-  val Millisecond = Field("Millisecond", Numeric(3))
-  val Second = Field("Second", Numeric(5))
+class MarketSegmentStateSpec extends TemplateSpec with MarketSegmentStateFixtures
+
+trait MarketSegmentStateFixtures {
+  def encoded = "O123C\r\n"
+  def eventCode = "C"
+  def marketSegmentId = 123L
+  def message = {
+    val message = ITCHMessage(Templates.MarketSegmentState)
+    message.set(Fields.MarketSegmentID, marketSegmentId)
+    message.set(Fields.EventCode, eventCode)
+    message
+  }
 }

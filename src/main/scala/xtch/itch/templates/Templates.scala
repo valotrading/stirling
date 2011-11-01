@@ -42,4 +42,12 @@ object Templates {
     val messageType = MessageType.SystemEvent
     val fields = Fields.EventCode :: Nil
   }
+
+  /**
+   * Template for Market Segment State message as specified in section 4.2.2 of [3].
+   */
+  val MarketSegmentState = new AbstractTemplate {
+    val messageType = MessageType.MarketSegmentEvent
+    val fields = Fields.MarketSegmentID :: Fields.EventCode :: Nil
+  }
 }

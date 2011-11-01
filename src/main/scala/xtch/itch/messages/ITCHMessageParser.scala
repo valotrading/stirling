@@ -21,9 +21,10 @@ import xtch.itch.templates.Templates
 
 object ITCHMessageParser extends MessageParser[ITCHMessage] {
   val templates = Map(
-    MessageType.SystemEvent -> Templates.SystemEvent,
+    MessageType.MarketSegmentEvent -> Templates.MarketSegmentState,
     MessageType.Milliseconds -> Templates.Milliseconds,
-    MessageType.Seconds -> Templates.Seconds
+    MessageType.Seconds -> Templates.Seconds,
+    MessageType.SystemEvent -> Templates.SystemEvent
   )
   def decode(buffer: ByteBuffer) = {
     try {
