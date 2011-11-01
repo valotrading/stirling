@@ -13,11 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.elements
+package xtch.itch.templates
 
-import xtch.itch.types.Numeric
+import java.nio.ByteBuffer
+import xtch.itch.Spec
+import xtch.itch.elements.Fields
+import xtch.itch.messages.ITCHMessage
 
-object Fields {
-  val Millisecond = Field("Millisecond", Numeric(3))
-  val Second = Field("Second", Numeric(5))
+class MillisecondsSpec extends Spec with MillisecondsFixtures {
+  "Milliseconds" when {
+    "encoding" must {
+      "produce correct output" in {
+        message.encodeBytes must equal(encoded.toBytes)
+      }
+    }
+  }
+}
+
+trait MillisecondsFixtures {
+  def encoded = "M 12\r\n"
+  def message = {
+    val message = ITCHMessage(Templates.Milliseconds)
+    message.set(Fields.Millisecond, millisecond)
+    message
+  }
+  def millisecond = 12L
 }

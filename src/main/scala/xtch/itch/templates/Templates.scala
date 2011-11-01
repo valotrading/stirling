@@ -26,4 +26,12 @@ object Templates {
     val messageType = MessageType.Seconds
     val fields = Fields.Second :: Nil
   }
+
+  /**
+   * Template for Milliseconds message as specified in section 4.1.2 of [3].
+   */
+  val Milliseconds = new AbstractTemplate {
+    val messageType = MessageType.Milliseconds
+    val fields = Fields.Millisecond :: Nil
+  }
 }

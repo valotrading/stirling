@@ -20,7 +20,10 @@ import silvertip.{GarbledMessageException, MessageParser, PartialMessageExceptio
 import xtch.itch.templates.Templates
 
 object ITCHMessageParser extends MessageParser[ITCHMessage] {
-  val templates = Map(MessageType.Seconds -> Templates.Seconds)
+  val templates = Map(
+    MessageType.Milliseconds -> Templates.Milliseconds,
+    MessageType.Seconds -> Templates.Seconds
+  )
   def decode(buffer: ByteBuffer) = {
     try {
       val messageType = decodeMessageType(buffer)
