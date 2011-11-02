@@ -19,6 +19,7 @@ import scala.collection.mutable.Map
 import xtch.itch.elements.Field
 
 trait FieldContainer {
+  def apply[T](field: Field[T]) = values(field).asInstanceOf[T]
   def fields = values.keySet
   def get[T](field: Field[T]) = values.get(field) match {
     case Some(value) => Some(value.asInstanceOf[T])
