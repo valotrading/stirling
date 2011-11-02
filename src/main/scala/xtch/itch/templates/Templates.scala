@@ -129,4 +129,13 @@ object Templates {
       Fields.OrderBook :: Fields.MatchNumber :: Fields.TradePrice :: Fields.Buyer ::
       Fields.Seller :: Nil
   }
+
+  /**
+   * Template for Cross Trade message as specified in section 4.6.2 of [3].
+   */
+  val CrossTrade = new AbstractTemplate {
+    val messageType = MessageType.CrossTrade
+    val fields = Fields.Quantity :: Fields.OrderBook :: Fields.CrossPrice :: Fields.MatchNumber ::
+      Fields.CrossType :: Fields.NumberOfTrades :: Nil
+  }
 }
