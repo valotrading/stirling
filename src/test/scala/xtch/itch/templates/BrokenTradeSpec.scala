@@ -13,20 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.messages
+package xtch.itch.templates
 
-import silvertip.GarbledMessageException
-import xtch.itch.Spec
+import xtch.itch.elements.Fields
+import xtch.itch.messages.ITCHMessage
 
-class ITCHMessageParserSpec extends Spec {
-  "ITCHMessageParser" when {
-    val parser = ITCHMessageParser
-    "parsing" must {
-      "throw an exception on an unknown message type" in {
-        intercept[GarbledMessageException] {
-          parser.parse("?".toByteBuffer)
-        }
-      }
-    }
+class BrokenTradeSpec extends TemplateSpec with BrokenTradeFixtures
+
+trait BrokenTradeFixtures {
+  def encoded = "B123456789\r\n"
+  def matchNumber = 123456789L
+  def message = {
+    val message = ITCHMessage(Templates.BrokenTrade)
+    message.set(Fields.MatchNumber, matchNumber)
+    message
   }
 }

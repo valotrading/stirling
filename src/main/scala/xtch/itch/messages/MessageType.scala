@@ -52,7 +52,7 @@ object MessageType {
    * Trade messages as specified in section 4.6 of [3].
    */
   val Trade = "P"
-  val TradeCross = "Q"
+  val CrossTrade = "Q"
 
   /**
    * Broken Trade/Order Execution message as specified in 4.7 of [3].

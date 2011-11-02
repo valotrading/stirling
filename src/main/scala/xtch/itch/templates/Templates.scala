@@ -85,4 +85,75 @@ object Templates {
     val messageType = MessageType.AddOrderMPID
     val fields = AddOrder.fields :+ Fields.Attribution
   }
+
+  /**
+   * Template for Order Executed message as specified in section 4.5.1 of [3].
+   */
+  val OrderExecuted = new AbstractTemplate {
+    val messageType = MessageType.OrderExecuted
+    val fields = Fields.OrderReferenceNumber :: Fields.ExecutedQuantity :: Fields.MatchNumber ::
+      Fields.Owner :: Fields.Counterparty :: Nil
+  }
+
+  /**
+   * Template for Order Executed with Price message as specified in section 4.5.2 of [3].
+   */
+  val OrderExecutedWithPrice = new AbstractTemplate {
+    val messageType = MessageType.OrderExecutedWithPrice
+    val fields = Fields.OrderReferenceNumber :: Fields.ExecutedQuantity :: Fields.MatchNumber ::
+      Fields.Printable :: Fields.TradePrice :: Fields.Owner :: Fields.Counterparty :: Nil
+  }
+
+  /**
+   * Template for Order Cancel message as specified in section 4.5.3 of [3].
+   */
+  val OrderCancel = new AbstractTemplate {
+    val messageType = MessageType.OrderCancel
+    val fields = Fields.OrderReferenceNumber :: Fields.CanceledQuantity :: Nil
+  }
+
+  /**
+   * Template for Order Delete message as specified in section 4.5.4 of [3].
+   */
+  val OrderDelete = new AbstractTemplate {
+    val messageType = MessageType.OrderDelete
+    val fields = Fields.OrderReferenceNumber :: Nil
+  }
+
+  /**
+   * Template for Trade message as specified in section 4.6.1 of [3].
+   */
+  val Trade = new AbstractTemplate {
+    val messageType = MessageType.Trade
+    val fields = Fields.OrderReferenceNumber :: Fields.TradeType :: Fields.Quantity ::
+      Fields.OrderBook :: Fields.MatchNumber :: Fields.TradePrice :: Fields.Buyer ::
+      Fields.Seller :: Nil
+  }
+
+  /**
+   * Template for Cross Trade message as specified in section 4.6.2 of [3].
+   */
+  val CrossTrade = new AbstractTemplate {
+    val messageType = MessageType.CrossTrade
+    val fields = Fields.Quantity :: Fields.OrderBook :: Fields.CrossPrice :: Fields.MatchNumber ::
+      Fields.CrossType :: Fields.NumberOfTrades :: Nil
+  }
+
+  /**
+   * Template for Broken Trade message as specified in section 4.7 of [3].
+   */
+  val BrokenTrade = new AbstractTemplate {
+    val messageType = MessageType.BrokenTrade
+    val fields = Fields.MatchNumber :: Nil
+  }
+
+  /**
+   * Template for Net Order Imbalance Indicator message as specified in section 4.8 of [3].
+   */
+  val NOII = new AbstractTemplate {
+    val messageType = MessageType.NOII
+    val fields = Fields.PairedQuantity :: Fields.ImbalanceQuantity :: Fields.ImbalanceDirection ::
+      Fields.OrderBook :: Fields.EquilibriumPrice :: Fields.CrossType :: Fields.BestBidPrice ::
+      Fields.BestBidQuantity :: Fields.BestAskPrice :: Fields.BestAskQuantity :: Nil
+  }
 }

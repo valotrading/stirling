@@ -23,12 +23,20 @@ object ITCHMessageParser extends MessageParser[ITCHMessage] {
   val templates = Map(
     MessageType.AddOrder -> Templates.AddOrder,
     MessageType.AddOrderMPID -> Templates.AddOrderMPID,
+    MessageType.BrokenTrade -> Templates.BrokenTrade,
+    MessageType.CrossTrade -> Templates.CrossTrade,
     MessageType.MarketSegmentEvent -> Templates.MarketSegmentState,
     MessageType.Milliseconds -> Templates.Milliseconds,
+    MessageType.NOII -> Templates.NOII,
     MessageType.OrderBookDirectory -> Templates.OrderBookDirectory,
+    MessageType.OrderCancel -> Templates.OrderCancel,
+    MessageType.OrderDelete -> Templates.OrderDelete,
+    MessageType.OrderExecuted -> Templates.OrderExecuted,
+    MessageType.OrderExecutedWithPrice -> Templates.OrderExecutedWithPrice,
     MessageType.Seconds -> Templates.Seconds,
     MessageType.StockTradingAction -> Templates.OrderBookTradingAction,
-    MessageType.SystemEvent -> Templates.SystemEvent
+    MessageType.SystemEvent -> Templates.SystemEvent,
+    MessageType.Trade -> Templates.Trade
   )
   def decode(buffer: ByteBuffer) = {
     try {
