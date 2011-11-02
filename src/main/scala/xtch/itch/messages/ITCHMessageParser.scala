@@ -27,6 +27,7 @@ object ITCHMessageParser extends MessageParser[ITCHMessage] {
     MessageType.CrossTrade -> Templates.CrossTrade,
     MessageType.MarketSegmentEvent -> Templates.MarketSegmentState,
     MessageType.Milliseconds -> Templates.Milliseconds,
+    MessageType.NOII -> Templates.NOII,
     MessageType.OrderBookDirectory -> Templates.OrderBookDirectory,
     MessageType.OrderCancel -> Templates.OrderCancel,
     MessageType.OrderDelete -> Templates.OrderDelete,

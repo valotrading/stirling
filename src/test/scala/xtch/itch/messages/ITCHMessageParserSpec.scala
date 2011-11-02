@@ -24,7 +24,7 @@ class ITCHMessageParserSpec extends Spec {
     "parsing" must {
       "throw an exception on an unknown message type" in {
         intercept[GarbledMessageException] {
-          parser.parse("I".toByteBuffer)
+          parser.parse("?".toByteBuffer)
         }
       }
     }

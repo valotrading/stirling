@@ -146,4 +146,14 @@ object Templates {
     val messageType = MessageType.BrokenTrade
     val fields = Fields.MatchNumber :: Nil
   }
+
+  /**
+   * Template for Net Order Imbalance Indicator message as specified in section 4.8 of [3].
+   */
+  val NOII = new AbstractTemplate {
+    val messageType = MessageType.NOII
+    val fields = Fields.PairedQuantity :: Fields.ImbalanceQuantity :: Fields.ImbalanceDirection ::
+      Fields.OrderBook :: Fields.EquilibriumPrice :: Fields.CrossType :: Fields.BestBidPrice ::
+      Fields.BestBidQuantity :: Fields.BestAskPrice :: Fields.BestAskQuantity :: Nil
+  }
 }
