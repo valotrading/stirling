@@ -32,7 +32,7 @@ object MessageType {
    * Stock related messages as specified in section 4.3 of [3].
    */
   val OrderBookDirectory = "R"
-  val OrderBookTradingAction = "H"
+  val StockTradingAction = "H"
 
   /**
    * Add order messages as specified in section 4.4 of [3].

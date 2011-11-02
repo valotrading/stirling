@@ -25,6 +25,7 @@ object ITCHMessageParser extends MessageParser[ITCHMessage] {
     MessageType.Milliseconds -> Templates.Milliseconds,
     MessageType.OrderBookDirectory -> Templates.OrderBookDirectory,
     MessageType.Seconds -> Templates.Seconds,
+    MessageType.StockTradingAction -> Templates.OrderBookTradingAction,
     MessageType.SystemEvent -> Templates.SystemEvent
   )
   def decode(buffer: ByteBuffer) = {

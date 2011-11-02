@@ -60,4 +60,12 @@ object Templates {
       Fields.TradingCurrency :: Fields.MIC :: Fields.MarketSegmentID :: Fields.NoteCodes ::
       Fields.RoundLotSize :: Nil
   }
+
+  /**
+   * Template for Order Book Trading Action message as specified in section 4.3.2 of [3].
+   */
+  val OrderBookTradingAction = new AbstractTemplate {
+    val messageType = MessageType.StockTradingAction
+    val fields = Fields.OrderBook :: Fields.TradingState :: Fields.Reserved :: Fields.Reason :: Nil
+  }
 }
