@@ -94,4 +94,13 @@ object Templates {
     val fields = Fields.OrderReferenceNumber :: Fields.ExecutedQuantity :: Fields.MatchNumber ::
       Fields.Owner :: Fields.Counterparty :: Nil
   }
+
+  /**
+   * Template for Order Executed with Price message as specified in section 4.5.2 of [3].
+   */
+  val OrderExecutedWithPrice = new AbstractTemplate {
+    val messageType = MessageType.OrderExecutedWithPrice
+    val fields = Fields.OrderReferenceNumber :: Fields.ExecutedQuantity :: Fields.MatchNumber ::
+      Fields.Printable :: Fields.TradePrice :: Fields.Owner :: Fields.Counterparty :: Nil
+  }
 }
