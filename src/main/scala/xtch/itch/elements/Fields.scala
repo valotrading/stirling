@@ -19,7 +19,15 @@ import xtch.itch.types.{Alpha, Numeric}
 
 object Fields {
   val EventCode = Field("EventCode", Alpha(1))
+  val FinancialProduct = Field("FinancialProduct", Numeric(3))
+  val ISIN = Field("ISIN", Alpha(12))
+  val MIC = Field("MIC", Alpha(4))
   val MarketSegmentID = Field("MarketSegmentID", Numeric(3))
   val Millisecond = Field("Millisecond", Numeric(3))
+  val NoteCodes = Field("NoteCodes", Numeric(8))
+  val OrderBook = Field("OrderBook", Numeric(6))
+  val RoundLotSize = Field("RoundLotSize", Numeric(9))
   val Second = Field("Second", Numeric(5))
+  val Symbol = Field("Symbol", Alpha(16))
+  val TradingCurrency = Field("TradingCurrency", Alpha(3))
 }

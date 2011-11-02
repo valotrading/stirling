@@ -50,4 +50,14 @@ object Templates {
     val messageType = MessageType.MarketSegmentEvent
     val fields = Fields.MarketSegmentID :: Fields.EventCode :: Nil
   }
+
+  /**
+   * Template for Order Book Directory message as specified in section 4.3.1 of [3].
+   */
+  val OrderBookDirectory = new AbstractTemplate {
+    val messageType = MessageType.OrderBookDirectory
+    val fields = Fields.OrderBook :: Fields.Symbol :: Fields.ISIN :: Fields.FinancialProduct ::
+      Fields.TradingCurrency :: Fields.MIC :: Fields.MarketSegmentID :: Fields.NoteCodes ::
+      Fields.RoundLotSize :: Nil
+  }
 }
