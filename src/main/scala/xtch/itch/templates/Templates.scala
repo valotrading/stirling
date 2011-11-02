@@ -68,4 +68,13 @@ object Templates {
     val messageType = MessageType.StockTradingAction
     val fields = Fields.OrderBook :: Fields.TradingState :: Fields.Reserved :: Fields.Reason :: Nil
   }
+
+  /**
+   * Template for Add Order message as specified in section 4.4.1 of [3].
+   */
+  val AddOrder = new AbstractTemplate {
+    val messageType = MessageType.AddOrder
+    val fields = Fields.OrderReferenceNumber :: Fields.BuyOrSellIndicator :: Fields.Quantity ::
+      Fields.OrderBook :: Fields.Price :: Nil
+  }
 }
