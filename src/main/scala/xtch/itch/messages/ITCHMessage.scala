@@ -17,13 +17,13 @@ package xtch.itch.messages
 
 import java.nio.ByteBuffer
 import xtch.itch.elements.ASCII
-import xtch.itch.templates.AbstractTemplate
+import xtch.itch.templates.ITCHTemplate
 
 object ITCHMessage extends ASCII {
   val terminator = "\r\n".getBytes(charset)
 }
 
-case class ITCHMessage(template: AbstractTemplate) extends Message with ASCII {
+case class ITCHMessage(template: ITCHTemplate) extends Message with ASCII {
   import ITCHMessage._
   override def encode(buffer: ByteBuffer) {
     super.encode(buffer)

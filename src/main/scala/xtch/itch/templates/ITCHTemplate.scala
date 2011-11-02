@@ -18,7 +18,7 @@ package xtch.itch.templates
 import java.nio.ByteBuffer
 import xtch.itch.messages.ITCHMessage
 
-abstract class AbstractTemplate extends MessageTemplate[ITCHMessage] {
+abstract class ITCHTemplate extends MessageTemplate[ITCHMessage] {
   override def encode(buffer: ByteBuffer, container: ITCHMessage) = {
     super.encode(buffer, container)
   }
