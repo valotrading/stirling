@@ -13,13 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.types
+package xtch.itch
 
-import java.nio.ByteBuffer
+import xtch.{Spec => BaseSpec}
+import xtch.itch.messages.{FieldContainer, Message, MessageOps}
+import xtch.itch.types.{DataType, DataTypeOps}
 
-case class Alpha(val length: Int) extends AbstractDataType[String] {
-  def decode(buffer: ByteBuffer) = read(buffer)
-  def encode(buffer: ByteBuffer, value: String) {
-    write(buffer, value.padTo(length, ' '))
-  }
+abstract class Spec extends BaseSpec with Helpers
+
+trait Helpers {
+  implicit def dataTypeToDataTypeOps[T](value: DataType[T]) = new DataTypeOps(value)
+  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
 }

@@ -13,13 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.types
+package xtch.itch.templates
 
-import java.nio.ByteBuffer
+import xtch.itch.elements.Fields
+import xtch.itch.messages.ITCHMessage
 
-case class Alpha(val length: Int) extends AbstractDataType[String] {
-  def decode(buffer: ByteBuffer) = read(buffer)
-  def encode(buffer: ByteBuffer, value: String) {
-    write(buffer, value.padTo(length, ' '))
+class MarketSegmentStateSpec extends TemplateSpec with MarketSegmentStateFixtures
+
+trait MarketSegmentStateFixtures {
+  def encoded = "O123C\r\n"
+  def eventCode = "C"
+  def marketSegmentId = 123L
+  def message = {
+    val message = ITCHMessage(Templates.MarketSegmentState)
+    message.set(Fields.MarketSegmentID, marketSegmentId)
+    message.set(Fields.EventCode, eventCode)
+    message
   }
 }

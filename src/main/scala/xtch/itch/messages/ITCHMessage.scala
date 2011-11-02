@@ -13,13 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.types
+package xtch.itch.messages
 
 import java.nio.ByteBuffer
+import xtch.itch.elements.ASCII
+import xtch.itch.templates.AbstractTemplate
 
-case class Alpha(val length: Int) extends AbstractDataType[String] {
-  def decode(buffer: ByteBuffer) = read(buffer)
-  def encode(buffer: ByteBuffer, value: String) {
-    write(buffer, value.padTo(length, ' '))
+object ITCHMessage extends ASCII {
+  val terminator = "\r\n".getBytes(charset)
+}
+
+case class ITCHMessage(template: AbstractTemplate) extends Message with ASCII {
+  import ITCHMessage._
+  override def encode(buffer: ByteBuffer) {
+    super.encode(buffer)
+    template.encode(buffer, this)
+    buffer.put(terminator)
   }
+  override def length = super.length + terminator.length
 }

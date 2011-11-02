@@ -13,31 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.types
+package xtch.itch.messages
 
 import java.nio.ByteBuffer
+import silvertip.GarbledMessageException
 import xtch.itch.Spec
+import xtch.itch.elements.Fields
+import xtch.itch.messages.ITCHMessageParser._
+import xtch.itch.templates.Templates
 
-class AlphaSpec extends Spec {
-  "Alpha" when {
-    val alpha = Alpha(5)
-    "encoding" must {
-      "produce correct output" in {
-        alpha.encodeBytes("hello") must equal(List(0x68, 0x65, 0x6c, 0x6c, 0x6f).toBytes)
-      }
-      "pad shorter input to type length" in {
-        alpha.encodeBytes("foo") must equal("foo  ".toBytes)
-      }
-      "throw an exception on too long input" in {
-        intercept[IllegalArgumentException] {
-          alpha.encodeBytes("excess")
+class ITCHMessageParserSpec extends Spec {
+  "ITCHMessageParser" when {
+    "parsing" must {
+      "throw an exception on an unknown message type" in {
+        intercept[GarbledMessageException] {
+          parse("E".toByteBuffer)
         }
-      }
-    }
-    "transcoding" must {
-      "produce correct result" in {
-        val value = "foo"
-        alpha.decodeBytes(alpha.encodeBytes(value)) must equal(value)
       }
     }
   }

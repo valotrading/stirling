@@ -13,13 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.types
+package xtch.itch.messages
 
 import java.nio.ByteBuffer
 
-case class Alpha(val length: Int) extends AbstractDataType[String] {
-  def decode(buffer: ByteBuffer) = read(buffer)
-  def encode(buffer: ByteBuffer, value: String) {
-    write(buffer, value.padTo(length, ' '))
+class MessageOps(val message: Message) {
+  def encodeBytes: List[Byte] = {
+    val buffer = ByteBuffer.allocate(message.length)
+    message.encode(buffer)
+    buffer.flip
+    val bytes = new Array[Byte](message.length)
+    buffer.get(bytes)
+    List(bytes: _*)
   }
 }

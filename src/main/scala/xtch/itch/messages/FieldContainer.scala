@@ -13,13 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.types
+package xtch.itch.messages
 
-import java.nio.ByteBuffer
+import scala.collection.mutable.Map
+import xtch.itch.elements.Field
 
-case class Alpha(val length: Int) extends AbstractDataType[String] {
-  def decode(buffer: ByteBuffer) = read(buffer)
-  def encode(buffer: ByteBuffer, value: String) {
-    write(buffer, value.padTo(length, ' '))
+trait FieldContainer {
+  def fields = values.keySet
+  def get[T](field: Field[T]) = values.get(field) match {
+    case Some(value) => Some(value.asInstanceOf[T])
+    case None => None
   }
+  def set(field: Field[_], value: Any) {
+    values += (field -> value)
+  }
+  private val values = Map[Field[_], Any]()
 }

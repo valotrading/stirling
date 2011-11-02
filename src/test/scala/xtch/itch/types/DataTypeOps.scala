@@ -17,9 +17,19 @@ package xtch.itch.types
 
 import java.nio.ByteBuffer
 
-case class Alpha(val length: Int) extends AbstractDataType[String] {
-  def decode(buffer: ByteBuffer) = read(buffer)
-  def encode(buffer: ByteBuffer, value: String) {
-    write(buffer, value.padTo(length, ' '))
+class DataTypeOps[T](val dataType: DataType[T]) {
+  def decodeBytes(bytes: List[Byte]): T = {
+    val buffer = ByteBuffer.allocate(dataType.length)
+    buffer.put(Array[Byte](bytes: _*))
+    buffer.flip
+    dataType.decode(buffer)
+  }
+  def encodeBytes(value: T): List[Byte] = {
+    val buffer = ByteBuffer.allocate(dataType.length)
+    dataType.encode(buffer, value)
+    buffer.flip
+    val bytes = new Array[Byte](dataType.length)
+    buffer.get(bytes)
+    List(bytes: _*)
   }
 }

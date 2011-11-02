@@ -13,13 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.types
+package xtch.itch.templates
 
-import java.nio.ByteBuffer
+import xtch.itch.elements.Fields
+import xtch.itch.messages.ITCHMessage
 
-case class Alpha(val length: Int) extends AbstractDataType[String] {
-  def decode(buffer: ByteBuffer) = read(buffer)
-  def encode(buffer: ByteBuffer, value: String) {
-    write(buffer, value.padTo(length, ' '))
+class MillisecondsSpec extends TemplateSpec with MillisecondsFixtures
+
+trait MillisecondsFixtures {
+  def encoded = "M 12\r\n"
+  def message = {
+    val message = ITCHMessage(Templates.Milliseconds)
+    message.set(Fields.Millisecond, millisecond)
+    message
   }
+  def millisecond = 12L
 }

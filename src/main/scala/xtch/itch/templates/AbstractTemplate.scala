@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.types
+package xtch.itch.templates
 
 import java.nio.ByteBuffer
+import xtch.itch.messages.ITCHMessage
 
-case class Alpha(val length: Int) extends AbstractDataType[String] {
-  def decode(buffer: ByteBuffer) = read(buffer)
-  def encode(buffer: ByteBuffer, value: String) {
-    write(buffer, value.padTo(length, ' '))
+abstract class AbstractTemplate extends MessageTemplate[ITCHMessage] {
+  override def encode(buffer: ByteBuffer, container: ITCHMessage) = {
+    super.encode(buffer, container)
   }
+  def newFieldContainer = ITCHMessage(this)
 }

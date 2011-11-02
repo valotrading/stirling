@@ -13,13 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.types
+package xtch.itch.elements
 
 import java.nio.ByteBuffer
+import xtch.itch.types.DataType
 
-case class Alpha(val length: Int) extends AbstractDataType[String] {
-  def decode(buffer: ByteBuffer) = read(buffer)
-  def encode(buffer: ByteBuffer, value: String) {
-    write(buffer, value.padTo(length, ' '))
+trait AbstractElem[T] extends Elem[T] {
+  def dataType: DataType[T]
+  def decode(buffer: ByteBuffer) = {
+    dataType.decode(buffer)
   }
+  def encode(buffer: ByteBuffer, value: AnyRef) {
+    value match {
+      case value: T => dataType.encode(buffer, value)
+      case _ => throw new IllegalArgumentException()
+    }
+  }
+  def length = dataType.length
 }

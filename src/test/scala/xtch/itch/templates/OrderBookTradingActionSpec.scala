@@ -13,13 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.types
+package xtch.itch.templates
 
-import java.nio.ByteBuffer
+import xtch.itch.elements.Fields
+import xtch.itch.messages.ITCHMessage
 
-case class Alpha(val length: Int) extends AbstractDataType[String] {
-  def decode(buffer: ByteBuffer) = read(buffer)
-  def encode(buffer: ByteBuffer, value: String) {
-    write(buffer, value.padTo(length, ' '))
+class OrderBookTradingActionSpec extends TemplateSpec with OrderBookTradingActionFixtures
+
+trait OrderBookTradingActionFixtures {
+  def encoded = "H123456T     \r\n"
+  def message = {
+    val message = ITCHMessage(Templates.OrderBookTradingAction)
+    message.set(Fields.OrderBook, orderBook)
+    message.set(Fields.TradingState, tradingState)
+    message.set(Fields.Reserved, " ")
+    message.set(Fields.Reason, reason)
+    message
   }
+  def orderBook = 123456L
+  def reason = " "
+  def tradingState = "T"
 }

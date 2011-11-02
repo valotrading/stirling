@@ -15,12 +15,18 @@
  */
 package xtch
 
-import java.nio.charset.Charset._
+import java.nio.ByteBuffer
 
 trait ByteHandling {
+  implicit def byteSeqToByteSeqOps(value: Seq[Byte]) = new ByteSeqOps(value)
   implicit def intListToIntListOps(value: List[Int]) = new IntListOps(value)
   implicit def stringToStringOps(value: String) = new StringOps(value)
-  val charset = forName("US-ASCII")
+}
+
+class ByteSeqOps(val value: Seq[Byte]) {
+  def toByteBuffer = {
+    ByteBuffer.wrap(value.toArray)
+  }
 }
 
 class IntListOps(val value: List[Int]) {
@@ -36,6 +42,7 @@ class StringOps(val value: String) {
   def toByteArray = {
     value.getBytes
   }
+  def toByteBuffer = new ByteSeqOps(toByteArray).toByteBuffer
   def toBytes = {
     List(toByteArray: _*)
   }

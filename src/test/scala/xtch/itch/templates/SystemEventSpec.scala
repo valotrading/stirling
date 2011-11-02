@@ -13,13 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.types
+package xtch.itch.templates
 
-import java.nio.ByteBuffer
+import xtch.itch.elements.Fields
+import xtch.itch.messages.ITCHMessage
 
-case class Alpha(val length: Int) extends AbstractDataType[String] {
-  def decode(buffer: ByteBuffer) = read(buffer)
-  def encode(buffer: ByteBuffer, value: String) {
-    write(buffer, value.padTo(length, ' '))
+class SystemEventSpec extends TemplateSpec with SystemEventFixtures
+
+trait SystemEventFixtures {
+  def encoded = "SO\r\n"
+  def message = {
+    val message = ITCHMessage(Templates.SystemEvent)
+    message.set(Fields.EventCode, eventCode)
+    message
   }
+  def eventCode = "O"
 }
