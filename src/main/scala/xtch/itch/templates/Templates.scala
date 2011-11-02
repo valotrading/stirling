@@ -85,4 +85,13 @@ object Templates {
     val messageType = MessageType.AddOrderMPID
     val fields = AddOrder.fields :+ Fields.Attribution
   }
+
+  /**
+   * Template for Order Executed message as specified in section 4.5.1 of [3].
+   */
+  val OrderExecuted = new AbstractTemplate {
+    val messageType = MessageType.OrderExecuted
+    val fields = Fields.OrderReferenceNumber :: Fields.ExecutedQuantity :: Fields.MatchNumber ::
+      Fields.Owner :: Fields.Counterparty :: Nil
+  }
 }
