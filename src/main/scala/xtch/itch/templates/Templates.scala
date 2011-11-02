@@ -119,4 +119,14 @@ object Templates {
     val messageType = MessageType.OrderDelete
     val fields = Fields.OrderReferenceNumber :: Nil
   }
+
+  /**
+   * Template for Trade message as specified in section 4.6.1 of [3].
+   */
+  val Trade = new AbstractTemplate {
+    val messageType = MessageType.Trade
+    val fields = Fields.OrderReferenceNumber :: Fields.TradeType :: Fields.Quantity ::
+      Fields.OrderBook :: Fields.MatchNumber :: Fields.TradePrice :: Fields.Buyer ::
+      Fields.Seller :: Nil
+  }
 }

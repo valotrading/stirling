@@ -20,6 +20,7 @@ import xtch.itch.types.{Alpha, Numeric}
 object Fields {
   val Attribution = Field("Attribution", Alpha(4))
   val BuyOrSellIndicator = Field("BuyOrSellIndicator", Alpha(1))
+  val Buyer = Field("Buyer", Alpha(4))
   val CanceledQuantity = Field("CanceledQuantity", Numeric(9))
   val Counterparty = Field("Counterparty", Alpha(4))
   val EventCode = Field("EventCode", Alpha(1))
@@ -41,8 +42,10 @@ object Fields {
   val Reserved = Field("Reserved", Alpha(1))
   val RoundLotSize = Field("RoundLotSize", Numeric(9))
   val Second = Field("Second", Numeric(5))
+  val Seller = Field("Seller", Alpha(4))
   val Symbol = Field("Symbol", Alpha(16))
   val TradePrice = Field("TradePrice", Numeric(10))
+  val TradeType = Field("TradeType", Alpha(1))
   val TradingCurrency = Field("TradingCurrency", Alpha(3))
   val TradingState = Field("TradingState", Alpha(1))
 }
