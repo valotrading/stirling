@@ -22,6 +22,7 @@ import xtch.itch.templates.Templates
 object ITCHMessageParser extends MessageParser[ITCHMessage] {
   val templates = Map(
     MessageType.AddOrder -> Templates.AddOrder,
+    MessageType.AddOrderMPID -> Templates.AddOrderMPID,
     MessageType.MarketSegmentEvent -> Templates.MarketSegmentState,
     MessageType.Milliseconds -> Templates.Milliseconds,
     MessageType.OrderBookDirectory -> Templates.OrderBookDirectory,

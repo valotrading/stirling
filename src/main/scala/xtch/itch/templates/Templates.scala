@@ -77,4 +77,12 @@ object Templates {
     val fields = Fields.OrderReferenceNumber :: Fields.BuyOrSellIndicator :: Fields.Quantity ::
       Fields.OrderBook :: Fields.Price :: Nil
   }
+
+  /**
+   * Template for Add Order message as specified in section 4.4.2 of [3].
+   */
+  val AddOrderMPID = new AbstractTemplate {
+    val messageType = MessageType.AddOrderMPID
+    val fields = AddOrder.fields :+ Fields.Attribution
+  }
 }

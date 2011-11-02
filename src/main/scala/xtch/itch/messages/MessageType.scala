@@ -38,7 +38,7 @@ object MessageType {
    * Add order messages as specified in section 4.4 of [3].
    */
   val AddOrder = "A"
-  val AddOrderMpid = "F"
+  val AddOrderMPID = "F"
 
   /**
    * Modify order messages as specified in section 4.5 of [3].

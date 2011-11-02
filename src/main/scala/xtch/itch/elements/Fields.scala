@@ -18,6 +18,7 @@ package xtch.itch.elements
 import xtch.itch.types.{Alpha, Numeric}
 
 object Fields {
+  val Attribution = Field("Attribution", Alpha(4))
   val BuyOrSellIndicator = Field("BuyOrSellIndicator", Alpha(1))
   val EventCode = Field("EventCode", Alpha(1))
   val FinancialProduct = Field("FinancialProduct", Numeric(3))
