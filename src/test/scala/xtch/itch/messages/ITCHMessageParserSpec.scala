@@ -15,19 +15,16 @@
  */
 package xtch.itch.messages
 
-import java.nio.ByteBuffer
 import silvertip.GarbledMessageException
 import xtch.itch.Spec
-import xtch.itch.elements.Fields
-import xtch.itch.messages.ITCHMessageParser._
-import xtch.itch.templates.Templates
 
 class ITCHMessageParserSpec extends Spec {
   "ITCHMessageParser" when {
+    val parser = ITCHMessageParser
     "parsing" must {
       "throw an exception on an unknown message type" in {
         intercept[GarbledMessageException] {
-          parse("Q".toByteBuffer)
+          parser.parse("Q".toByteBuffer)
         }
       }
     }
