@@ -23,6 +23,7 @@ object ITCHMessageParser extends MessageParser[ITCHMessage] {
   val templates = Map(
     MessageType.AddOrder -> Templates.AddOrder,
     MessageType.AddOrderMPID -> Templates.AddOrderMPID,
+    MessageType.BrokenTrade -> Templates.BrokenTrade,
     MessageType.CrossTrade -> Templates.CrossTrade,
     MessageType.MarketSegmentEvent -> Templates.MarketSegmentState,
     MessageType.Milliseconds -> Templates.Milliseconds,

@@ -138,4 +138,12 @@ object Templates {
     val fields = Fields.Quantity :: Fields.OrderBook :: Fields.CrossPrice :: Fields.MatchNumber ::
       Fields.CrossType :: Fields.NumberOfTrades :: Nil
   }
+
+  /**
+   * Template for Broken Trade message as specified in section 4.7 of [3].
+   */
+  val BrokenTrade = new AbstractTemplate {
+    val messageType = MessageType.BrokenTrade
+    val fields = Fields.MatchNumber :: Nil
+  }
 }
