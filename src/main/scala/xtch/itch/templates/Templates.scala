@@ -111,4 +111,12 @@ object Templates {
     val messageType = MessageType.OrderCancel
     val fields = Fields.OrderReferenceNumber :: Fields.CanceledQuantity :: Nil
   }
+
+  /**
+   * Template for Order Delete message as specified in section 4.5.4 of [3].
+   */
+  val OrderDelete = new AbstractTemplate {
+    val messageType = MessageType.OrderDelete
+    val fields = Fields.OrderReferenceNumber :: Nil
+  }
 }

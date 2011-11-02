@@ -27,6 +27,7 @@ object ITCHMessageParser extends MessageParser[ITCHMessage] {
     MessageType.Milliseconds -> Templates.Milliseconds,
     MessageType.OrderBookDirectory -> Templates.OrderBookDirectory,
     MessageType.OrderCancel -> Templates.OrderCancel,
+    MessageType.OrderDelete -> Templates.OrderDelete,
     MessageType.OrderExecuted -> Templates.OrderExecuted,
     MessageType.OrderExecutedWithPrice -> Templates.OrderExecutedWithPrice,
     MessageType.Seconds -> Templates.Seconds,

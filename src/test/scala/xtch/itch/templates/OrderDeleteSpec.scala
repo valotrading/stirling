@@ -13,23 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xtch.itch.messages
+package xtch.itch.templates
 
-import java.nio.ByteBuffer
-import silvertip.GarbledMessageException
-import xtch.itch.Spec
 import xtch.itch.elements.Fields
-import xtch.itch.messages.ITCHMessageParser._
-import xtch.itch.templates.Templates
+import xtch.itch.messages.ITCHMessage
 
-class ITCHMessageParserSpec extends Spec {
-  "ITCHMessageParser" when {
-    "parsing" must {
-      "throw an exception on an unknown message type" in {
-        intercept[GarbledMessageException] {
-          parse("P".toByteBuffer)
-        }
-      }
-    }
+class OrderDeleteSpec extends TemplateSpec with OrderDeleteFixtures
+
+trait OrderDeleteFixtures {
+  def encoded = "D    65535\r\n"
+  def message = {
+    val message = ITCHMessage(Templates.OrderDelete)
+    message.set(Fields.OrderReferenceNumber, orderReferenceNumber)
+    message
   }
+  def orderReferenceNumber = 65535L
 }
