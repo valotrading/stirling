@@ -103,4 +103,12 @@ object Templates {
     val fields = Fields.OrderReferenceNumber :: Fields.ExecutedQuantity :: Fields.MatchNumber ::
       Fields.Printable :: Fields.TradePrice :: Fields.Owner :: Fields.Counterparty :: Nil
   }
+
+  /**
+   * Template for Order Cancel message as specified in section 4.5.3 of [3].
+   */
+  val OrderCancel = new AbstractTemplate {
+    val messageType = MessageType.OrderCancel
+    val fields = Fields.OrderReferenceNumber :: Fields.CanceledQuantity :: Nil
+  }
 }
