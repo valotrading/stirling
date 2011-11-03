@@ -16,6 +16,7 @@
 package xtch.itch.messages
 
 import java.nio.{BufferUnderflowException, ByteBuffer}
+import scala.annotation.tailrec
 import silvertip.{GarbledMessageException, MessageParser, PartialMessageException}
 import xtch.itch.templates.Templates
 
@@ -53,11 +54,22 @@ object ITCHMessageParser extends MessageParser[ITCHMessage] {
       case _: BufferUnderflowException => throw new PartialMessageException
     }
   }
-  def decodeMessageType(buffer: ByteBuffer) = buffer.get.toChar.toString
+  @tailrec def decodeMessageType(buffer: ByteBuffer): String = {
+    val messageType = buffer.get.toChar
+    if (messageType != ITCHMessage.terminator.head)
+      messageType.toString
+    else {
+      decodeTerminator(buffer, ITCHMessage.terminator.tail)
+      decodeMessageType(buffer)
+    }
+  }
   def decodeTerminator(buffer: ByteBuffer) {
-    val terminator: Seq[Byte] = new Array[Byte](ITCHMessage.terminator.length)
-    buffer.get(terminator.toArray)
-    if (terminator != Seq(ITCHMessage.terminator: _*))
+    decodeTerminator(buffer, ITCHMessage.terminator)
+  }
+  def decodeTerminator(buffer: ByteBuffer, terminator: Seq[Byte]) {
+    val bytes: Seq[Byte] = new Array[Byte](terminator.length)
+    buffer.get(bytes.toArray)
+    if (bytes != terminator)
       throw new GarbledMessageException("Expected terminator")
   }
   def parse(buffer: ByteBuffer) = decode(buffer)

@@ -18,6 +18,7 @@ package xtch
 import java.nio.ByteBuffer
 
 trait ByteHandling {
+  implicit def byteArrayToByteSeqOps(value: Array[Byte]) = new ByteSeqOps(value)
   implicit def byteSeqToByteSeqOps(value: Seq[Byte]) = new ByteSeqOps(value)
   implicit def intListToIntListOps(value: List[Int]) = new IntListOps(value)
   implicit def stringToStringOps(value: String) = new StringOps(value)

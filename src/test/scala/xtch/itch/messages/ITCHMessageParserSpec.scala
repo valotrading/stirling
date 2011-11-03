@@ -15,13 +15,18 @@
  */
 package xtch.itch.messages
 
-import silvertip.GarbledMessageException
+import silvertip.{GarbledMessageException, PartialMessageException}
 import xtch.itch.Spec
 
 class ITCHMessageParserSpec extends Spec {
   "ITCHMessageParser" when {
     val parser = ITCHMessageParser
     "parsing" must {
+      "silently ignore superfluous terminators" in {
+        intercept[PartialMessageException] {
+          parser.parse(ITCHMessage.terminator.toByteBuffer)
+        }
+      }
       "throw an exception on an unknown message type" in {
         intercept[GarbledMessageException] {
           parser.parse("?".toByteBuffer)
