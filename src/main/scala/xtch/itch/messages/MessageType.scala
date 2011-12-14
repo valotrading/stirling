@@ -17,31 +17,31 @@ package xtch.itch.messages
 
 object MessageType {
   /**
-   * Time messages as specified in section 4.1 of [3].
+   * Time messages as specified in section 4.1 of [1].
    */
   val Seconds = "T"
   val Milliseconds = "M"
 
   /**
-   * Event and state change messages as specified in section 4.2 of [3].
+   * Event and state change messages as specified in section 4.2 of [1].
    */
   val SystemEvent = "S"
   val MarketSegmentEvent = "O"
 
   /**
-   * Stock related messages as specified in section 4.3 of [3].
+   * Stock related messages as specified in section 4.3 of [1].
    */
   val OrderBookDirectory = "R"
   val StockTradingAction = "H"
 
   /**
-   * Add order messages as specified in section 4.4 of [3].
+   * Add order messages as specified in section 4.4 of [1].
    */
   val AddOrder = "A"
   val AddOrderMPID = "F"
 
   /**
-   * Modify order messages as specified in section 4.5 of [3].
+   * Modify order messages as specified in section 4.5 of [1].
    */
   val OrderExecuted = "E"
   val OrderExecutedWithPrice = "C"
@@ -49,18 +49,18 @@ object MessageType {
   val OrderDelete = "D"
 
   /**
-   * Trade messages as specified in section 4.6 of [3].
+   * Trade messages as specified in section 4.6 of [1].
    */
   val Trade = "P"
   val CrossTrade = "Q"
 
   /**
-   * Broken Trade/Order Execution message as specified in 4.7 of [3].
+   * Broken Trade/Order Execution message as specified in 4.7 of [1].
    */
   val BrokenTrade = "B"
 
   /**
-   * Net Order Imbalance Indicator as specified in 4.8 of [3].
+   * Net Order Imbalance Indicator as specified in 4.8 of [1].
    */
   val NOII = "I"
 }
