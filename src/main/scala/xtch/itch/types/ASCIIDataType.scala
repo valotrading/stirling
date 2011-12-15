@@ -18,7 +18,7 @@ package xtch.itch.types
 import java.nio.ByteBuffer
 import xtch.itch.elements.ASCII
 
-trait AbstractDataType[T] extends DataType[T] with ASCII {
+trait ASCIIDataType[T] extends DataType[T] with ASCII {
   protected def read(buffer: ByteBuffer) = {
     val bytes = new Array[Byte](length)
     buffer.get(bytes)
