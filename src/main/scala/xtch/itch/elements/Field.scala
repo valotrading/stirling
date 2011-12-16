@@ -16,14 +16,14 @@
 package xtch.itch.elements
 
 import java.nio.ByteBuffer
-import xtch.itch.types.DataType
+import xtch.itch.types.FieldType
 
-case class Field[T](name: String, dataType: DataType[T]) {
+case class Field[T](name: String, fieldType: FieldType[T]) {
   def decode(buffer: ByteBuffer) = {
-    dataType.decode(buffer)
+    fieldType.decode(buffer)
   }
   def encode(buffer: ByteBuffer, value: AnyRef) {
-    dataType.encode(buffer, value.asInstanceOf[T])
+    fieldType.encode(buffer, value.asInstanceOf[T])
   }
-  def length = dataType.length
+  def length = fieldType.length
 }

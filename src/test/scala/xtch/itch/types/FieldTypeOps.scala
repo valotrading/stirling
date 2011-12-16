@@ -17,8 +17,19 @@ package xtch.itch.types
 
 import java.nio.ByteBuffer
 
-trait DataType[T] {
-  def decode(buffer: ByteBuffer): T
-  def encode(buffer: ByteBuffer, value: T)
-  def length: Int
+class FieldTypeOps[T](val fieldType: FieldType[T]) {
+  def decodeBytes(bytes: List[Byte]): T = {
+    val buffer = ByteBuffer.allocate(fieldType.length)
+    buffer.put(Array[Byte](bytes: _*))
+    buffer.flip
+    fieldType.decode(buffer)
+  }
+  def encodeBytes(value: T): List[Byte] = {
+    val buffer = ByteBuffer.allocate(fieldType.length)
+    fieldType.encode(buffer, value)
+    buffer.flip
+    val bytes = new Array[Byte](fieldType.length)
+    buffer.get(bytes)
+    List(bytes: _*)
+  }
 }

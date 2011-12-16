@@ -16,18 +16,9 @@
 package xtch.itch.types
 
 import java.nio.ByteBuffer
-import xtch.itch.elements.ASCII
 
-trait ASCIIDataType[T] extends DataType[T] with ASCII {
-  protected def read(buffer: ByteBuffer) = {
-    val bytes = new Array[Byte](length)
-    buffer.get(bytes)
-    new String(bytes, charset).trim
-  }
-  protected def write(buffer: ByteBuffer, value: String) {
-    if (value.length != length)
-      throw new IllegalArgumentException("Value length = %d, type length = %d"
-        .format(value.length, length))
-    buffer.put(value.getBytes(charset))
-  }
+trait FieldType[T] {
+  def decode(buffer: ByteBuffer): T
+  def encode(buffer: ByteBuffer, value: T)
+  def length: Int
 }

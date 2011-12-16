@@ -16,20 +16,18 @@
 package xtch.itch.types
 
 import java.nio.ByteBuffer
+import xtch.itch.elements.ASCII
 
-class DataTypeOps[T](val dataType: DataType[T]) {
-  def decodeBytes(bytes: List[Byte]): T = {
-    val buffer = ByteBuffer.allocate(dataType.length)
-    buffer.put(Array[Byte](bytes: _*))
-    buffer.flip
-    dataType.decode(buffer)
-  }
-  def encodeBytes(value: T): List[Byte] = {
-    val buffer = ByteBuffer.allocate(dataType.length)
-    dataType.encode(buffer, value)
-    buffer.flip
-    val bytes = new Array[Byte](dataType.length)
+trait ASCIIFieldType[T] extends FieldType[T] with ASCII {
+  protected def read(buffer: ByteBuffer) = {
+    val bytes = new Array[Byte](length)
     buffer.get(bytes)
-    List(bytes: _*)
+    new String(bytes, charset).trim
+  }
+  protected def write(buffer: ByteBuffer, value: String) {
+    if (value.length != length)
+      throw new IllegalArgumentException("Value length = %d, type length = %d"
+        .format(value.length, length))
+    buffer.put(value.getBytes(charset))
   }
 }

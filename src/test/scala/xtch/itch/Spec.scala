@@ -17,11 +17,11 @@ package xtch.itch
 
 import xtch.{Spec => BaseSpec}
 import xtch.itch.messages.{FieldContainer, Message, MessageOps}
-import xtch.itch.types.{DataType, DataTypeOps}
+import xtch.itch.types.{FieldType, FieldTypeOps}
 
 abstract class Spec extends BaseSpec with Helpers
 
 trait Helpers {
-  implicit def dataTypeToDataTypeOps[T](value: DataType[T]) = new DataTypeOps(value)
+  implicit def fieldTypeToFieldTypeOps[T](value: FieldType[T]) = new FieldTypeOps(value)
   implicit def messageToMessageOps(value: Message) = new MessageOps(value)
 }

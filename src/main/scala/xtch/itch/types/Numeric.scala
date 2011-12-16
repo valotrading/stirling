@@ -17,7 +17,7 @@ package xtch.itch.types
 
 import java.nio.ByteBuffer
 
-case class Numeric(val length: Int) extends ASCIIDataType[Long] {
+case class Numeric(val length: Int) extends ASCIIFieldType[Long] {
   def decode(buffer: ByteBuffer) = {
     read(buffer).toLong
   }
