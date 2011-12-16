@@ -18,4 +18,12 @@ package xtch.itch.elements
 import java.nio.ByteBuffer
 import xtch.itch.types.DataType
 
-case class Field[T](name: String, dataType: DataType[T]) extends AbstractElem[T]
+case class Field[T](name: String, dataType: DataType[T]) {
+  def decode(buffer: ByteBuffer) = {
+    dataType.decode(buffer)
+  }
+  def encode(buffer: ByteBuffer, value: AnyRef) {
+    dataType.encode(buffer, value.asInstanceOf[T])
+  }
+  def length = dataType.length
+}
