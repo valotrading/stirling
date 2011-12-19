@@ -19,11 +19,11 @@ created automatically by fixengine.
   $ cd silvertip
   $ mvn install
 
-2. Compile fixengine with Ant:
+2. Compile fixengine with SBT:
 
   $ git clone https://github.com/penberg/fixengine.git
   $ cd fixengine
-  $ ant
+  $ sbt compile
 
 == FIX Protocol Profiles
 

@@ -1,5 +1,0 @@
-#!/bin/sh
-
-JARS=$(find lib -name \*.jar | tr "\n" ":")
-
-java -cp build/main:build/examples:$JARS fixengine.examples.console.ConsoleClient $@

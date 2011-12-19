@@ -1,13 +1,11 @@
 package fixengine.messages.fix44.burgundy
 
-import fixengine.messages.{FieldContainer, Required, RepeatingGroup, RepeatingGroupInstance}
+import fixengine.messages.{Required, RepeatingGroup, RepeatingGroupInstance}
 
-trait Groups extends FieldContainer {
+trait Groups {
   def parties() {
     parties(Required.YES)
   }
-
-
   def parties(req: Required) {
     import fixengine.tags.fix44.PartyRole
     import fixengine.tags.fix43.{PartyIDSource, PartyID, NoPartyIDs}
@@ -19,4 +17,5 @@ trait Groups extends FieldContainer {
         }
     }, req)
   }
+  protected def group(group: RepeatingGroup, required: Required): Unit
 }
