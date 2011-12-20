@@ -46,7 +46,7 @@ public class Connect implements Command {
   static {
     logger.setUseParentHandlers(false);
     try {
-      logger.addHandler(new FileHandler("fixengine.log"));
+      logger.addHandler(new FileHandler("stirling.log"));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

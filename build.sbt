@@ -27,7 +27,7 @@ testFrameworks += new TestFramework("org.jdave.sbt.JDaveFramework")
 
 seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)
 
-artifactPath in com.github.retronym.SbtOneJar.oneJar := new File("fixengine.jar")
+artifactPath in com.github.retronym.SbtOneJar.oneJar := new File("stirling.jar")
 
 mainClass in com.github.retronym.SbtOneJar.oneJar := Some("stirling.fix.examples.console.ConsoleClient")
 
