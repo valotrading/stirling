@@ -13,20 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.messages;
+package stirling.fix.messages
 
-import stirling.fix.tags.fix42.Side;
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
+import stirling.fix.tags.fix42.Side
 
-import jdave.Specification;
-import jdave.junit4.JDaveRunner;
-import org.junit.runner.RunWith;
-
-@RunWith(JDaveRunner.class) public class EnumFieldSpec extends Specification<EnumField> {
-    public class Initialized {
-        @SuppressWarnings("unchecked") public void parse() {
-            EnumField field = new EnumField(Side.Tag());
-            field.parse("1");
-            specify(field.getValue(), must.equal(Side.Buy()));
-        }
+class EnumFieldSpec extends WordSpec with MustMatchers {
+  "EnumField" should {
+    val field = new EnumField(Side.Tag)
+    "parse an enumeration value" in {
+      field.parse("1")
+      field.getValue() must equal(Side.Buy)
     }
+  }
 }
