@@ -1,35 +1,38 @@
-== Setting up MongoDB
+Setting up MongoDB
+==================
 
-In order to use fixengine, you must install MongoDB. MongoDB automatically
-creates a database called 'fixengine', while the collection 'sessions' is
-created automatically by fixengine.
+In order to use `fixengine`, you must install MongoDB. MongoDB automatically
+creates a database called `fixengine`, while the collection `sessions` is
+created automatically by `fixengine`.
 
 1. Download MongoDB version 1.4.3 or greater from MongoDB's site.
 
 2. Extract the downloaded binary distribution and launch MongoDB by running:
 
-  $ $MONGODB_HOME/bin/mongod --dbpath /path/to/my/data/dir
+        $ $MONGODB_HOME/bin/mongod --dbpath /path/to/my/data/dir
 
-== Compiling
+Compiling
+=========
 
 1. Silvertip is required dependency. Checkout and install Silvertip to your
-   local Maven repository from https://github.com/penberg/silvertip/
+   local Maven repository from `https://github.com/penberg/silvertip/`
 
-  $ git clone https://github.com/penberg/silvertip.git
-  $ cd silvertip
-  $ mvn install
+        $ git clone https://github.com/penberg/silvertip.git
+        $ cd silvertip
+        $ mvn install
 
-2. Compile fixengine with SBT:
+2. Compile `fixengine` with SBT:
 
-  $ git clone https://github.com/penberg/fixengine.git
-  $ cd fixengine
-  $ sbt compile
+        $ git clone https://github.com/penberg/fixengine.git
+        $ cd fixengine
+        $ sbt compile
 
-== FIX Protocol Profiles
+FIX Protocol Profiles
+=====================
 
-In order to support messages of various FIX protocol profiles, fixengine allows
-definition of message classes that are profile specific. In most cases, a
-profile specific FIX message comprises of fields, which can be categorized by
+In order to support messages of various FIX protocol profiles, `fixengine`
+allows definition of message classes that are profile specific. In most cases,
+a profile specific FIX message comprises of fields, which can be categorized by
 their value as follows: (a) the values of a field is fully specified by the
 standard, (b) the values of a field is a subset of the standard, or (c) the
 values of a field is not defined in the standard and may assign another meaning
@@ -37,18 +40,19 @@ for a value that is specified in the standard.
 
 If the field is defined as it is defined in the standard, then the standard
 field type is used. The fields following the standard are placed under the
-fixengine.tags package.
+`fixengine.tags` package.
 
 A profile specific enumeration is introduced when the standard defines a string
 field and the profile specifies an enumeration of possible values. A profile
 specific enumeration is also introduced when the profile uses non-standard
 values in the enumeration. However, if the profile uses a subset of an
-enumeration, fixengine uses the standard field type.
+enumeration, `fixengine` uses the standard field type.
 
 In cases where a field is a combination of multiple characters, a field is
 based on the string field type and the validation of such fields is left for
 the user.
 
-== References
+References
+==========
 
 1. http://www.mongodb.org
