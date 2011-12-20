@@ -20,8 +20,6 @@ libraryDependencies ++= Seq(
   "org.jmock" % "jmock" % "2.5.1",
   "org.mongodb" % "mongo-java-driver" % "1.4",
   "org.scalatest" %% "scalatest" % "1.6.1" % "test",
-  "org.scala-tools.testing" %% "specs" % "1.6.9" % "test",
-  "org.scala-tools.testing" %% "scalacheck" % "1.9" % "test",
   "silvertip" % "silvertip" % "0.2.1"
 )
 

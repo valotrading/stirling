@@ -15,24 +15,24 @@
  */
 package fixengine.messages
 
-import org.specs.Specification
-import org.specs.runner.JUnit4
-
 import java.lang.Integer
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
 
-class MessageTagSpec extends JUnit4(MessageTagSpec)
-object MessageTagSpec extends Specification {
+class MessageTagSpec extends WordSpec with MustMatchers {
   "EnumTag" should {
     "resolve fields" in {
-      IntTag.parse("1") must equalTo(IntTag.Foo)
-      IntTag.valueOf("Foo") must equalTo(IntTag.Foo)
-      IntTag.parse("2") must equalTo(IntTag.Bar)
-      IntTag.valueOf("Bar") must equalTo(IntTag.Bar)
+      IntTag.parse("1") must equal(IntTag.Foo)
+      IntTag.valueOf("Foo") must equal(IntTag.Foo)
+      IntTag.parse("2") must equal(IntTag.Bar)
+      IntTag.valueOf("Bar") must equal(IntTag.Bar)
     }
   }
   "EnumTag" should {
     "throw an exception" in {
-      IntTag.parse("0") must throwAn[InvalidValueForTagException]
+      intercept [InvalidValueForTagException] {
+        IntTag.parse("0")
+      }
     }
   }
   private object IntTag extends EnumTag[Integer](0) {
