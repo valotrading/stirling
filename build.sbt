@@ -20,8 +20,6 @@ libraryDependencies ++= Seq(
   "org.jmock" % "jmock" % "2.5.1",
   "org.mongodb" % "mongo-java-driver" % "1.4",
   "org.scalatest" %% "scalatest" % "1.6.1" % "test",
-  "org.scala-tools.testing" %% "specs" % "1.6.9" % "test",
-  "org.scala-tools.testing" %% "scalacheck" % "1.9" % "test",
   "silvertip" % "silvertip" % "0.2.1"
 )
 
@@ -29,16 +27,16 @@ testFrameworks += new TestFramework("org.jdave.sbt.JDaveFramework")
 
 seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)
 
-artifactPath in com.github.retronym.SbtOneJar.oneJar := new File("fixengine.jar")
+artifactPath in com.github.retronym.SbtOneJar.oneJar := new File("stirling.jar")
 
-mainClass in com.github.retronym.SbtOneJar.oneJar := Some("fixengine.examples.console.ConsoleClient")
+mainClass in com.github.retronym.SbtOneJar.oneJar := Some("stirling.fix.examples.console.ConsoleClient")
 
 TaskKey[File]("make-perftest") <<= (baseDirectory, fullClasspath in Runtime) map { (base, classpath) =>
   val template = """|#!/bin/sh
     |JARS="%s"
     |OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseG1GC"
     |java $OPTS -classpath "$JARS" %s $@""".stripMargin
-  val mainClassName = "fixengine.performance.PerformanceTest"
+  val mainClassName = "stirling.fix.performance.PerformanceTest"
   val classpathList = classpath.files.absString
   val outputFile = base / "scripts/perftest"
   IO.write(outputFile, template.format(classpathList, mainClassName))

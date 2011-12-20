@@ -6,8 +6,8 @@ target/
 /bin
 /build
 /data
-/fixengine.jar
-/fixengine.log
+/stirling.jar
+/stirling.log
 /out
 /tags
 /*.iml
