@@ -29,14 +29,14 @@ seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)
 
 artifactPath in com.github.retronym.SbtOneJar.oneJar := new File("fixengine.jar")
 
-mainClass in com.github.retronym.SbtOneJar.oneJar := Some("fixengine.examples.console.ConsoleClient")
+mainClass in com.github.retronym.SbtOneJar.oneJar := Some("stirling.fix.examples.console.ConsoleClient")
 
 TaskKey[File]("make-perftest") <<= (baseDirectory, fullClasspath in Runtime) map { (base, classpath) =>
   val template = """|#!/bin/sh
     |JARS="%s"
     |OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseG1GC"
     |java $OPTS -classpath "$JARS" %s $@""".stripMargin
-  val mainClassName = "fixengine.performance.PerformanceTest"
+  val mainClassName = "stirling.fix.performance.PerformanceTest"
   val classpathList = classpath.files.absString
   val outputFile = base / "scripts/perftest"
   IO.write(outputFile, template.format(classpathList, mainClassName))
