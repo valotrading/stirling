@@ -98,7 +98,7 @@ public class DefaultMessageFactory implements MessageFactory {
     }
 
     protected String getTagsPackage() {
-      return getClass().getPackage().getName().replaceAll("^fixengine.messages", "fixengine.tags");
+      return getClass().getPackage().getName().replaceAll("^stirling.fix.messages", "stirling.fix.tags");
     }
 
     protected void message(String msgType, Class<? extends Message> clazz) {
@@ -108,10 +108,10 @@ public class DefaultMessageFactory implements MessageFactory {
     private List<String> getTagsPackages() {
         List<String> packages = new ArrayList<String>();
         packages.add(getTagsPackage());
-        packages.add("fixengine.tags.fix42");
-        packages.add("fixengine.tags.fix43");
-        packages.add("fixengine.tags.fix44");
-        packages.add("fixengine.tags");
+        packages.add("stirling.fix.tags.fix42");
+        packages.add("stirling.fix.tags.fix43");
+        packages.add("stirling.fix.tags.fix44");
+        packages.add("stirling.fix.tags");
         return packages;
     }
 
