@@ -1,6 +1,6 @@
-organization := "fixengine"
+organization := "stirling"
 
-name := "fixengine"
+name := "stirling"
 
 version := "0.0.1-SNAPSHOT"
 
