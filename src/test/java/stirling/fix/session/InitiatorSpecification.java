@@ -25,7 +25,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Logger;
 
@@ -85,10 +84,8 @@ public class InitiatorSpecification extends Specification<Session> {
     protected static final String INITIATOR = "initiator";
     protected static final String ACCEPTOR = "OPENFIX";
 
-    private static final Random generator = new Random();
-
     protected static final long HEARTBEAT_INTERVAL_MSEC = 1000;
-    protected final SimpleAcceptor server = new SimpleAcceptor(1024 + generator.nextInt(1024));
+    protected final SimpleAcceptor server = new SimpleAcceptor();
     protected Connection connection;
     protected TestSession session;
     private final Logger logger = mock(Logger.class);
@@ -299,10 +296,9 @@ public class InitiatorSpecification extends Specification<Session> {
         private Socket clientSocket;
         private int successCount;
         private int failureCount;
-        private final int port;
+        private int port;
 
-        private SimpleAcceptor(int port) {
-            this.port = port;
+        private SimpleAcceptor() {
         }
 
         public int getPort() {
@@ -479,7 +475,9 @@ public class InitiatorSpecification extends Specification<Session> {
 
         private ServerSocket newSocket() throws IOException {
             try {
-                return new ServerSocket(port);
+                ServerSocket socket = new ServerSocket(0);
+                port = socket.getLocalPort();
+                return socket;
             } finally {
                 serverStarted.countDown();
             }
