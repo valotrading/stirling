@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.1
+#!/usr/bin/env python3
 import httplib2
 import sys
 from optparse import OptionParser
