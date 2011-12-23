@@ -56,10 +56,10 @@ object ITCHFileParser extends MessageParser[ITCHMessage] with ASCII {
       case _: BufferUnderflowException => throw new PartialMessageException
     }
   }
-  @tailrec def decodeMessageType(buffer: ByteBuffer): String = {
+  @tailrec def decodeMessageType(buffer: ByteBuffer): Char = {
     val messageType = buffer.get.toChar
     if (messageType != terminator.head)
-      messageType.toString
+      messageType
     else {
       decodeTerminator(buffer, terminator.tail)
       decodeMessageType(buffer)

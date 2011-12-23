@@ -23,8 +23,8 @@ trait Message extends FieldContainer {
   def encode(buffer: ByteBuffer) {
     buffer.put(messageType)
   }
-  def length = messageType.length + template.length
+  def length = 1 + template.length
   def template: MessageTemplate[_]
-  def messageType = template.messageType.getBytes(charset)
+  def messageType = template.messageType.toByte
   def charset: Charset
 }

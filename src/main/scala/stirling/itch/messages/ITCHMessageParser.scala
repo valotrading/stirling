@@ -49,6 +49,6 @@ object ITCHMessageParser extends MessageParser[ITCHMessage] {
       case _: BufferUnderflowException => throw new PartialMessageException
     }
   }
-  def decodeMessageType(buffer: ByteBuffer): String = buffer.get.toChar.toString
+  def decodeMessageType(buffer: ByteBuffer) = buffer.get.toChar
   def parse(buffer: ByteBuffer) = decode(buffer)
 }

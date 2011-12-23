@@ -19,5 +19,5 @@ import java.nio.ByteBuffer
 import stirling.itch.messages.Message
 
 abstract class MessageTemplate[T <: Message] extends Template[T] {
-  def messageType: String
+  def messageType: Char
 }
