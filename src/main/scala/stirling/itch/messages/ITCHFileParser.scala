@@ -15,64 +15,24 @@
  */
 package stirling.itch.messages
 
-import java.nio.{BufferUnderflowException, ByteBuffer}
+import java.nio.ByteBuffer
 import scala.annotation.tailrec
-import silvertip.{GarbledMessageException, MessageParser, PartialMessageException}
-import stirling.itch.elements.ASCII
-import stirling.itch.templates.Templates
+import silvertip.GarbledMessageException
 
-object ITCHFileParser extends MessageParser[ITCHMessage] with ASCII {
-  val terminator = "\r\n".getBytes(charset)
-  val templates = Map(
-    MessageType.AddOrder -> Templates.AddOrder,
-    MessageType.AddOrderMPID -> Templates.AddOrderMPID,
-    MessageType.BrokenTrade -> Templates.BrokenTrade,
-    MessageType.CrossTrade -> Templates.CrossTrade,
-    MessageType.MarketSegmentEvent -> Templates.MarketSegmentState,
-    MessageType.Milliseconds -> Templates.Milliseconds,
-    MessageType.NOII -> Templates.NOII,
-    MessageType.OrderBookDirectory -> Templates.OrderBookDirectory,
-    MessageType.OrderCancel -> Templates.OrderCancel,
-    MessageType.OrderDelete -> Templates.OrderDelete,
-    MessageType.OrderExecuted -> Templates.OrderExecuted,
-    MessageType.OrderExecutedWithPrice -> Templates.OrderExecutedWithPrice,
-    MessageType.Seconds -> Templates.Seconds,
-    MessageType.StockTradingAction -> Templates.OrderBookTradingAction,
-    MessageType.SystemEvent -> Templates.SystemEvent,
-    MessageType.Trade -> Templates.Trade
-  )
-  def decode(buffer: ByteBuffer) = {
-    try {
-      val messageType = decodeMessageType(buffer)
-      templates.get(messageType) match {
-        case Some(template) => {
-          val message = template.decode(buffer)
-          decodeTerminator(buffer)
-          message
-        }
-        case None => throw new GarbledMessageException("Unknown message type %s".format(messageType))
+object ITCHFileParser extends ITCHMessageParser {
+  override protected def decode(buffer: ByteBuffer) = {
+    @tailrec def skipCrlf: ITCHMessage = {
+      val messageTypeOrCr = decodeMessageType(buffer)
+      if (messageTypeOrCr != cr)
+        decodeMessage(buffer, messageTypeOrCr)
+      else {
+        if (buffer.get != lf)
+          throw new GarbledMessageException("Expected LF")
+        skipCrlf
       }
-    } catch {
-      case _: BufferUnderflowException => throw new PartialMessageException
     }
+    skipCrlf
   }
-  @tailrec def decodeMessageType(buffer: ByteBuffer): Char = {
-    val messageType = buffer.get.toChar
-    if (messageType != terminator.head)
-      messageType
-    else {
-      decodeTerminator(buffer, terminator.tail)
-      decodeMessageType(buffer)
-    }
-  }
-  def decodeTerminator(buffer: ByteBuffer) {
-    decodeTerminator(buffer, terminator)
-  }
-  def decodeTerminator(buffer: ByteBuffer, terminator: Seq[Byte]) {
-    val bytes: Seq[Byte] = new Array[Byte](terminator.length)
-    buffer.get(bytes.toArray)
-    if (bytes != terminator)
-      throw new GarbledMessageException("Expected terminator")
-  }
-  def parse(buffer: ByteBuffer) = decode(buffer)
+  private val cr = '\r'
+  private val lf = '\n'.toByte
 }
