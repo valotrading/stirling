@@ -13,24 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.messages;
+package stirling.fix.messages
 
-public class RawMessageBuilder {
-    StringBuilder s = new StringBuilder();
-
-    public RawMessageBuilder field(Tag<?> tag, String value) {
-        return field(tag.value(), value);
-    }
-
-    public RawMessageBuilder field(int tag, String value) {
-        s.append(tag);
-        s.append('=');
-        s.append(value);
-        s.append(Field.DELIMITER);
-        return this;
-    }
-
-    @Override public String toString() {
-        return s.toString();
-    }
+class RawMessageBuilder {
+  def field(tag: Tag[_], value: String): RawMessageBuilder = {
+    field(tag.value, value)
+  }
+  def field(tag: Int, value: String): RawMessageBuilder = {
+    s.append(tag)
+    s.append('=')
+    s.append(value)
+    s.append(Field.DELIMITER)
+    this
+  }
+  override def toString = s.toString
+  private val s = new StringBuilder
 }
