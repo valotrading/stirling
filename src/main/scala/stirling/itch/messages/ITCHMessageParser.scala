@@ -20,7 +20,24 @@ import silvertip.{GarbledMessageException, MessageParser, PartialMessageExceptio
 import stirling.itch.templates.Templates
 
 object ITCHMessageParser extends MessageParser[ITCHMessage] {
-  val templates = Map(
+  def parse(buffer: ByteBuffer) = {
+    try {
+      decode(buffer)
+    } catch {
+      case _: BufferUnderflowException => throw new PartialMessageException
+    }
+  }
+  protected def decode(buffer: ByteBuffer) = {
+    decodeMessage(buffer, decodeMessageType(buffer))
+  }
+  protected def decodeMessageType(buffer: ByteBuffer) = buffer.get.toChar
+  protected def decodeMessage(buffer: ByteBuffer, messageType: Char) = {
+    templates.get(messageType) match {
+      case Some(template) => template.decode(buffer)
+      case None => throw new GarbledMessageException("Unknown message type %s".format(messageType))
+    }
+  }
+  private val templates = Map(
     MessageType.AddOrder -> Templates.AddOrder,
     MessageType.AddOrderMPID -> Templates.AddOrderMPID,
     MessageType.BrokenTrade -> Templates.BrokenTrade,
@@ -38,17 +55,4 @@ object ITCHMessageParser extends MessageParser[ITCHMessage] {
     MessageType.SystemEvent -> Templates.SystemEvent,
     MessageType.Trade -> Templates.Trade
   )
-  def decode(buffer: ByteBuffer) = {
-    try {
-      val messageType = decodeMessageType(buffer)
-      templates.get(messageType) match {
-        case Some(template) => template.decode(buffer)
-        case None => throw new GarbledMessageException("Unknown message type %s".format(messageType))
-      }
-    } catch {
-      case _: BufferUnderflowException => throw new PartialMessageException
-    }
-  }
-  def decodeMessageType(buffer: ByteBuffer) = buffer.get.toChar
-  def parse(buffer: ByteBuffer) = decode(buffer)
 }
