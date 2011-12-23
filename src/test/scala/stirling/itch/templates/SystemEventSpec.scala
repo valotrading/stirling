@@ -21,7 +21,7 @@ import stirling.itch.messages.ITCHMessage
 class SystemEventSpec extends TemplateSpec with SystemEventFixtures
 
 trait SystemEventFixtures {
-  def encoded = "SO\r\n"
+  def encoded = "SO"
   def message = {
     val message = ITCHMessage(Templates.SystemEvent)
     message.set(Fields.EventCode, eventCode)

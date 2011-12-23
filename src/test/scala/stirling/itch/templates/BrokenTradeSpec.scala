@@ -21,7 +21,7 @@ import stirling.itch.messages.ITCHMessage
 class BrokenTradeSpec extends TemplateSpec with BrokenTradeFixtures
 
 trait BrokenTradeFixtures {
-  def encoded = "B123456789\r\n"
+  def encoded = "B123456789"
   def matchNumber = 123456789L
   def message = {
     val message = ITCHMessage(Templates.BrokenTrade)

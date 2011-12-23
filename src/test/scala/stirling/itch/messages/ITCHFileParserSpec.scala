@@ -24,7 +24,7 @@ class ITCHFileParserSpec extends Spec {
     "parsing" must {
       "silently ignore superfluous terminators" in {
         intercept[PartialMessageException] {
-          parser.parse(ITCHMessage.terminator.toByteBuffer)
+          parser.parse(ITCHFileParser.terminator.toByteBuffer)
         }
       }
       "throw an exception on an unknown message type" in {

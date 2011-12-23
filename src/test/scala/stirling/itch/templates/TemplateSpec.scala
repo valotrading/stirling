@@ -29,7 +29,7 @@ abstract class TemplateSpec extends Spec with TemplateFixtures {
     }
     "transcoding" must {
       "produce correct result" in {
-        ITCHFileParser.parse(message.encodeBytes.toByteBuffer) must equal(message)
+        ITCHFileParser.parse((message.encodeBytes ++ "\r\n".toBytes).toByteBuffer) must equal(message)
       }
     }
   }

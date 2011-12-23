@@ -21,7 +21,7 @@ import stirling.itch.messages.ITCHMessage
 class MarketSegmentStateSpec extends TemplateSpec with MarketSegmentStateFixtures
 
 trait MarketSegmentStateFixtures {
-  def encoded = "O123C\r\n"
+  def encoded = "O123C"
   def eventCode = "C"
   def marketSegmentId = 123L
   def message = {

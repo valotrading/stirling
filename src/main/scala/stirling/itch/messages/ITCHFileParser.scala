@@ -18,9 +18,11 @@ package stirling.itch.messages
 import java.nio.{BufferUnderflowException, ByteBuffer}
 import scala.annotation.tailrec
 import silvertip.{GarbledMessageException, MessageParser, PartialMessageException}
+import stirling.itch.elements.ASCII
 import stirling.itch.templates.Templates
 
-object ITCHFileParser extends MessageParser[ITCHMessage] {
+object ITCHFileParser extends MessageParser[ITCHMessage] with ASCII {
+  val terminator = "\r\n".getBytes(charset)
   val templates = Map(
     MessageType.AddOrder -> Templates.AddOrder,
     MessageType.AddOrderMPID -> Templates.AddOrderMPID,
@@ -56,15 +58,15 @@ object ITCHFileParser extends MessageParser[ITCHMessage] {
   }
   @tailrec def decodeMessageType(buffer: ByteBuffer): String = {
     val messageType = buffer.get.toChar
-    if (messageType != ITCHMessage.terminator.head)
+    if (messageType != terminator.head)
       messageType.toString
     else {
-      decodeTerminator(buffer, ITCHMessage.terminator.tail)
+      decodeTerminator(buffer, terminator.tail)
       decodeMessageType(buffer)
     }
   }
   def decodeTerminator(buffer: ByteBuffer) {
-    decodeTerminator(buffer, ITCHMessage.terminator)
+    decodeTerminator(buffer, terminator)
   }
   def decodeTerminator(buffer: ByteBuffer, terminator: Seq[Byte]) {
     val bytes: Seq[Byte] = new Array[Byte](terminator.length)
