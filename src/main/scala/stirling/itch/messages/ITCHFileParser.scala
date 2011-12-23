@@ -20,7 +20,7 @@ import scala.annotation.tailrec
 import silvertip.{GarbledMessageException, MessageParser, PartialMessageException}
 import stirling.itch.templates.Templates
 
-object ITCHMessageParser extends MessageParser[ITCHMessage] {
+object ITCHFileParser extends MessageParser[ITCHMessage] {
   val templates = Map(
     MessageType.AddOrder -> Templates.AddOrder,
     MessageType.AddOrderMPID -> Templates.AddOrderMPID,

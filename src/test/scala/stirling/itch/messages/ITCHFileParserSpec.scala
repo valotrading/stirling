@@ -18,9 +18,9 @@ package stirling.itch.messages
 import silvertip.{GarbledMessageException, PartialMessageException}
 import stirling.itch.Spec
 
-class ITCHMessageParserSpec extends Spec {
-  "ITCHMessageParser" when {
-    val parser = ITCHMessageParser
+class ITCHFileParserSpec extends Spec {
+  "ITCHFileParser" when {
+    val parser = ITCHFileParser
     "parsing" must {
       "silently ignore superfluous terminators" in {
         intercept[PartialMessageException] {

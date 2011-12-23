@@ -18,7 +18,7 @@ package stirling.itch.templates
 import java.nio.ByteBuffer
 import stirling.itch.Spec
 import stirling.itch.elements.Fields
-import stirling.itch.messages.{ITCHMessage, ITCHMessageParser}
+import stirling.itch.messages.{ITCHFileParser, ITCHMessage}
 
 abstract class TemplateSpec extends Spec with TemplateFixtures {
   "Template" when {
@@ -29,7 +29,7 @@ abstract class TemplateSpec extends Spec with TemplateFixtures {
     }
     "transcoding" must {
       "produce correct result" in {
-        ITCHMessageParser.parse(message.encodeBytes.toByteBuffer) must equal(message)
+        ITCHFileParser.parse(message.encodeBytes.toByteBuffer) must equal(message)
       }
     }
   }
