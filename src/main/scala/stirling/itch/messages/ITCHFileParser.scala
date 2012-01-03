@@ -15,16 +15,24 @@
  */
 package stirling.itch.messages
 
-import java.nio.charset.Charset
 import java.nio.ByteBuffer
-import stirling.itch.templates.MessageTemplate
+import scala.annotation.tailrec
+import silvertip.GarbledMessageException
 
-trait Message extends FieldContainer {
-  def encode(buffer: ByteBuffer) {
-    buffer.put(messageType)
+object ITCHFileParser extends ITCHMessageParser {
+  override protected def decode(buffer: ByteBuffer) = {
+    @tailrec def skipCrlf: ITCHMessage = {
+      val messageTypeOrCr = decodeMessageType(buffer)
+      if (messageTypeOrCr != cr)
+        decodeMessage(buffer, messageTypeOrCr)
+      else {
+        if (buffer.get != lf)
+          throw new GarbledMessageException("Expected LF")
+        skipCrlf
+      }
+    }
+    skipCrlf
   }
-  def length = 1 + template.length
-  def template: MessageTemplate[_]
-  def messageType = template.messageType.toByte
-  def charset: Charset
+  private val cr = '\r'
+  private val lf = '\n'.toByte
 }

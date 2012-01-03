@@ -21,7 +21,7 @@ import stirling.itch.messages.ITCHMessage
 class OrderBookTradingActionSpec extends TemplateSpec with OrderBookTradingActionFixtures
 
 trait OrderBookTradingActionFixtures {
-  def encoded = "H123456T     \r\n"
+  def encoded = "H123456T     "
   def message = {
     val message = ITCHMessage(Templates.OrderBookTradingAction)
     message.set(Fields.OrderBook, orderBook)

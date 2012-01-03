@@ -23,7 +23,7 @@ class CrossTradeSpec extends TemplateSpec with CrossTradeFixtures
 trait CrossTradeFixtures {
   def crossPrice = 1000000000L
   def crossType = "O"
-  def encoded = "Q     4500   8081000000000123456789O    875000\r\n"
+  def encoded = "Q     4500   8081000000000123456789O    875000"
   def matchNumber = 123456789L
   def message = {
     val message = ITCHMessage(Templates.CrossTrade)

@@ -17,21 +17,29 @@ package stirling.itch.messages
 
 import silvertip.{GarbledMessageException, PartialMessageException}
 import stirling.itch.Spec
+import stirling.itch.templates.{MillisecondsFixtures, SecondsFixtures}
 
-class ITCHMessageParserSpec extends Spec {
-  "ITCHMessageParser" when {
-    val parser = ITCHMessageParser
-    "parsing" must {
-      "silently ignore superfluous terminators" in {
-        intercept[PartialMessageException] {
-          parser.parse(ITCHMessage.terminator.toByteBuffer)
-        }
-      }
-      "throw an exception on an unknown message type" in {
-        intercept[GarbledMessageException] {
-          parser.parse("?".toByteBuffer)
-        }
+class ITCHFileParserSpec extends Spec with ITCHFileParserFixtures {
+  "ITCHFileParser" must {
+    val buffer = (crlf + crlf + Milliseconds.encoded + crlf + Seconds.encoded +
+      crlf + crlf).toByteBuffer
+    "ignore CRLFs before messages" in {
+      ITCHFileParser.parse(buffer) must equal(Milliseconds.message)
+    }
+    "ignore CRLFs between messages" in {
+      ITCHFileParser.parse(buffer) must equal(Seconds.message)
+    }
+    "ignore CRLFs after messages" in {
+      intercept[PartialMessageException] {
+        ITCHFileParser.parse(buffer)
       }
     }
   }
 }
+
+trait ITCHFileParserFixtures {
+  def crlf = "\r\n"
+}
+
+object Milliseconds extends MillisecondsFixtures
+object Seconds extends SecondsFixtures

@@ -21,7 +21,7 @@ import stirling.itch.messages.ITCHMessage
 class OrderDeleteSpec extends TemplateSpec with OrderDeleteFixtures
 
 trait OrderDeleteFixtures {
-  def encoded = "D    65535\r\n"
+  def encoded = "D    65535"
   def message = {
     val message = ITCHMessage(Templates.OrderDelete)
     message.set(Fields.OrderReferenceNumber, orderReferenceNumber)

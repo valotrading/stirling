@@ -21,7 +21,7 @@ import stirling.itch.messages.ITCHMessage
 class MillisecondsSpec extends TemplateSpec with MillisecondsFixtures
 
 trait MillisecondsFixtures {
-  def encoded = "M 12\r\n"
+  def encoded = "M 12"
   def message = {
     val message = ITCHMessage(Templates.Milliseconds)
     message.set(Fields.Millisecond, millisecond)

@@ -16,12 +16,30 @@
 package stirling.itch.messages
 
 import java.nio.{BufferUnderflowException, ByteBuffer}
-import scala.annotation.tailrec
 import silvertip.{GarbledMessageException, MessageParser, PartialMessageException}
 import stirling.itch.templates.Templates
 
-object ITCHMessageParser extends MessageParser[ITCHMessage] {
-  val templates = Map(
+object ITCHMessageParser extends ITCHMessageParser
+
+trait ITCHMessageParser extends MessageParser[ITCHMessage] {
+  def parse(buffer: ByteBuffer) = {
+    try {
+      decode(buffer)
+    } catch {
+      case _: BufferUnderflowException => throw new PartialMessageException
+    }
+  }
+  protected def decode(buffer: ByteBuffer) = {
+    decodeMessage(buffer, decodeMessageType(buffer))
+  }
+  protected def decodeMessageType(buffer: ByteBuffer) = buffer.get.toChar
+  protected def decodeMessage(buffer: ByteBuffer, messageType: Char) = {
+    templates.get(messageType) match {
+      case Some(template) => template.decode(buffer)
+      case None => throw new GarbledMessageException("Unknown message type %s".format(messageType))
+    }
+  }
+  private val templates = Map(
     MessageType.AddOrder -> Templates.AddOrder,
     MessageType.AddOrderMPID -> Templates.AddOrderMPID,
     MessageType.BrokenTrade -> Templates.BrokenTrade,
@@ -39,38 +57,4 @@ object ITCHMessageParser extends MessageParser[ITCHMessage] {
     MessageType.SystemEvent -> Templates.SystemEvent,
     MessageType.Trade -> Templates.Trade
   )
-  def decode(buffer: ByteBuffer) = {
-    try {
-      val messageType = decodeMessageType(buffer)
-      templates.get(messageType) match {
-        case Some(template) => {
-          val message = template.decode(buffer)
-          decodeTerminator(buffer)
-          message
-        }
-        case None => throw new GarbledMessageException("Unknown message type %s".format(messageType))
-      }
-    } catch {
-      case _: BufferUnderflowException => throw new PartialMessageException
-    }
-  }
-  @tailrec def decodeMessageType(buffer: ByteBuffer): String = {
-    val messageType = buffer.get.toChar
-    if (messageType != ITCHMessage.terminator.head)
-      messageType.toString
-    else {
-      decodeTerminator(buffer, ITCHMessage.terminator.tail)
-      decodeMessageType(buffer)
-    }
-  }
-  def decodeTerminator(buffer: ByteBuffer) {
-    decodeTerminator(buffer, ITCHMessage.terminator)
-  }
-  def decodeTerminator(buffer: ByteBuffer, terminator: Seq[Byte]) {
-    val bytes: Seq[Byte] = new Array[Byte](terminator.length)
-    buffer.get(bytes.toArray)
-    if (bytes != terminator)
-      throw new GarbledMessageException("Expected terminator")
-  }
-  def parse(buffer: ByteBuffer) = decode(buffer)
 }

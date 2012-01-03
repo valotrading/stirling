@@ -19,16 +19,9 @@ import java.nio.ByteBuffer
 import stirling.itch.elements.ASCII
 import stirling.itch.templates.ITCHTemplate
 
-object ITCHMessage extends ASCII {
-  val terminator = "\r\n".getBytes(charset)
-}
-
 case class ITCHMessage(template: ITCHTemplate) extends Message with ASCII {
-  import ITCHMessage._
   override def encode(buffer: ByteBuffer) {
     super.encode(buffer)
     template.encode(buffer, this)
-    buffer.put(terminator)
   }
-  override def length = super.length + terminator.length
 }

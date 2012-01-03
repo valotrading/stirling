@@ -22,7 +22,7 @@ class TradeSpec extends TemplateSpec with TradeFixtures
 
 trait TradeFixtures {
   def buyer = "RR"
-  def encoded = "P    65535B     4500   8081234567891000000000RR  ACME\r\n"
+  def encoded = "P    65535B     4500   8081234567891000000000RR  ACME"
   def matchNumber = 123456789L
   def message = {
     val message = ITCHMessage(Templates.Trade)

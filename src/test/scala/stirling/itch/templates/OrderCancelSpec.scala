@@ -22,7 +22,7 @@ class OrderCancelSpec extends TemplateSpec with OrderCancelFixtures
 
 trait OrderCancelFixtures {
   def canceledQuantity = 4500L
-  def encoded = "X    65535     4500\r\n"
+  def encoded = "X    65535     4500"
   def message = {
     val message = ITCHMessage(Templates.OrderCancel)
     message.set(Fields.OrderReferenceNumber, orderReferenceNumber)

@@ -22,7 +22,7 @@ class OrderExecutedWithPriceSpec extends TemplateSpec with OrderExecutedWithPric
 
 trait OrderExecutedWithPriceFixtures {
   def counterparty = "RR"
-  def encoded = "C    65535     4500123456789Y1000000000ACMERR  \r\n"
+  def encoded = "C    65535     4500123456789Y1000000000ACMERR  "
   def executedQuantity = 4500L
   def matchNumber = 123456789L
   def message = {

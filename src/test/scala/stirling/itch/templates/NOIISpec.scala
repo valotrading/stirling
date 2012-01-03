@@ -26,7 +26,7 @@ trait NOIIFixtures {
   def bestBidPrice = 16L
   def bestBidQuantity = 2300L
   def crossType = "C"
-  def encoded = "I     4500999999999S   808         0C        16     2300        15      100\r\n"
+  def encoded = "I     4500999999999S   808         0C        16     2300        15      100"
   def equilibriumPrice = 0L
   def imbalanceDirection = "S"
   def imbalanceQuantity = 999999999L

@@ -22,7 +22,7 @@ class AddOrderSpec extends TemplateSpec with AddOrderFixtures
 
 trait AddOrderFixtures {
   def buyOrSellIndicator = "S"
-  def encoded = "A    65535S     4500   8081000000000\r\n"
+  def encoded = "A    65535S     4500   8081000000000"
   def message = {
     val message = ITCHMessage(Templates.AddOrder)
     message.set(Fields.OrderReferenceNumber, orderReferenceNumber)
