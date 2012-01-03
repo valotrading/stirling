@@ -22,7 +22,7 @@ class AddOrderMPIDSpec extends TemplateSpec with AddOrderMPIDFixtures
 
 trait AddOrderMPIDFixtures extends AddOrderFixtures {
   def attribution = "_MMO"
-  override def encoded = "F    65535S     4500   8081000000000_MMO\r\n"
+  override def encoded = "F    65535S     4500   8081000000000_MMO"
   override def message = {
     val message = ITCHMessage(Templates.AddOrderMPID)
     message.set(Fields.OrderReferenceNumber, orderReferenceNumber)

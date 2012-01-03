@@ -22,7 +22,7 @@ class OrderExecutedSpec extends TemplateSpec with OrderExecutedFixtures
 
 trait OrderExecutedFixtures {
   def counterparty = "RR"
-  def encoded = "E    65535     4500123456789ACMERR  \r\n"
+  def encoded = "E    65535     4500123456789ACMERR  "
   def executedQuantity = 4500L
   def matchNumber = 123456789L
   def message = {

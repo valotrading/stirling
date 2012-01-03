@@ -21,7 +21,7 @@ import stirling.itch.messages.ITCHMessage
 class SecondsSpec extends TemplateSpec with SecondsFixtures
 
 trait SecondsFixtures {
-  def encoded = "T12345\r\n"
+  def encoded = "T12345"
   def message = {
     val message = ITCHMessage(Templates.Seconds)
     message.set(Fields.Second, second)

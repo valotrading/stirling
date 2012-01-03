@@ -19,48 +19,48 @@ object MessageType {
   /**
    * Time messages as specified in section 4.1 of [1].
    */
-  val Seconds = "T"
-  val Milliseconds = "M"
+  val Seconds = 'T'
+  val Milliseconds = 'M'
 
   /**
    * Event and state change messages as specified in section 4.2 of [1].
    */
-  val SystemEvent = "S"
-  val MarketSegmentEvent = "O"
+  val SystemEvent = 'S'
+  val MarketSegmentEvent = 'O'
 
   /**
    * Stock related messages as specified in section 4.3 of [1].
    */
-  val OrderBookDirectory = "R"
-  val StockTradingAction = "H"
+  val OrderBookDirectory = 'R'
+  val StockTradingAction = 'H'
 
   /**
    * Add order messages as specified in section 4.4 of [1].
    */
-  val AddOrder = "A"
-  val AddOrderMPID = "F"
+  val AddOrder = 'A'
+  val AddOrderMPID = 'F'
 
   /**
    * Modify order messages as specified in section 4.5 of [1].
    */
-  val OrderExecuted = "E"
-  val OrderExecutedWithPrice = "C"
-  val OrderCancel = "X"
-  val OrderDelete = "D"
+  val OrderExecuted = 'E'
+  val OrderExecutedWithPrice = 'C'
+  val OrderCancel = 'X'
+  val OrderDelete = 'D'
 
   /**
    * Trade messages as specified in section 4.6 of [1].
    */
-  val Trade = "P"
-  val CrossTrade = "Q"
+  val Trade = 'P'
+  val CrossTrade = 'Q'
 
   /**
    * Broken Trade/Order Execution message as specified in 4.7 of [1].
    */
-  val BrokenTrade = "B"
+  val BrokenTrade = 'B'
 
   /**
    * Net Order Imbalance Indicator as specified in 4.8 of [1].
    */
-  val NOII = "I"
+  val NOII = 'I'
 }

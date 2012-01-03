@@ -21,7 +21,7 @@ import stirling.itch.messages.ITCHMessage
 class OrderBookDirectorySpec extends TemplateSpec with OrderBookDirectoryFixtures
 
 trait OrderBookDirectoryFixtures {
-  def encoded = "R727000Acme Corp       US0000000000  1USDNYSE 10       0100000000\r\n"
+  def encoded = "R727000Acme Corp       US0000000000  1USDNYSE 10       0100000000"
   def financialProduct = 1L
   def isin = "US0000000000"
   def marketSegmentId = 10L
