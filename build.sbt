@@ -2,7 +2,7 @@ organization := "stirling"
 
 name := "stirling"
 
-version := "0.0.1-SNAPSHOT"
+version := "0.0.2-SNAPSHOT"
 
 scalaVersion := "2.9.1"
 
@@ -43,3 +43,7 @@ TaskKey[File]("make-perftest") <<= (baseDirectory, fullClasspath in Runtime) map
   outputFile.setExecutable(true)
   outputFile
 }
+
+publishTo := Some(Resolver.file("GitHub Pages", file("../stirling-gh-pages/maven/")))
+
+publishArtifact in (Compile, packageDoc) := false
