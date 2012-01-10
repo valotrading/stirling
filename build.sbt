@@ -16,8 +16,8 @@ libraryDependencies ++= Seq(
   "jline" % "jline" % "0.9.94",
   "joda-time" % "joda-time" % "1.5.2",
   "log4j" % "log4j" % "1.2.16",
-  "org.jdave" % "jdave-junit4" % "1.1",
-  "org.jmock" % "jmock" % "2.5.1",
+  "org.jdave" % "jdave-junit4" % "1.1" % "test",
+  "org.jmock" % "jmock" % "2.5.1" % "test",
   "org.mongodb" % "mongo-java-driver" % "1.4",
   "org.scalatest" %% "scalatest" % "1.6.1" % "test",
   "silvertip" % "silvertip" % "0.2.1"
