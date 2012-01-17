@@ -18,6 +18,7 @@ libraryDependencies ++= Seq(
   "log4j" % "log4j" % "1.2.16",
   "org.jdave" % "jdave-junit4" % "1.1" % "test",
   "org.jmock" % "jmock" % "2.5.1" % "test",
+  "org.mockito" % "mockito-core" % "1.9.0" % "test",
   "org.mongodb" % "mongo-java-driver" % "1.4",
   "org.scalatest" %% "scalatest" % "1.6.1" % "test",
   "silvertip" % "silvertip" % "0.2.1"
