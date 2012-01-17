@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2008 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.messages;
+package stirling.fix.messages
 
-public class RawMessageBuilder {
-    StringBuilder s = new StringBuilder();
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
+import stirling.fix.tags.fix42.Side
 
-    public RawMessageBuilder field(Tag<?> tag, String value) {
-        return field(tag.value(), value);
+class EnumFieldSpec extends WordSpec with MustMatchers {
+  "EnumField" should {
+    val field = new EnumField(Side.Tag)
+    "parse an enumeration value" in {
+      field.parse("1")
+      field.getValue() must equal(Side.Buy)
     }
-
-    public RawMessageBuilder field(int tag, String value) {
-        s.append(tag);
-        s.append('=');
-        s.append(value);
-        s.append(Field.DELIMITER);
-        return this;
-    }
-
-    @Override public String toString() {
-        return s.toString();
-    }
+  }
 }
