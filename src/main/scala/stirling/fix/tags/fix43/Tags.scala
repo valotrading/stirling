@@ -85,7 +85,7 @@ object ExecType extends EnumTag[Character](150) {
   val OrderStatus = CharValue('I')
 }
 object PegOffsetValue extends PriceOffsetTag(211)
-object TradSesStatus extends EnumTag(340) {
+object TradSesStatus extends EnumTag[Integer](340) {
   val Unknown = IntegerValue(0)
   val Halted = IntegerValue(1)
   val Open = IntegerValue(2)
