@@ -105,12 +105,12 @@ public class FieldContainer implements Iterable<Field> {
         return field.hasValue();
     }
 
-    public void setString(Tag<StringField> tag, String value) {
+    public void setString(Tag<? extends StringField> tag, String value) {
         StringField field = (StringField) lookup(tag);
         field.setValue(value);
     }
 
-    public void setInteger(Tag<IntegerField> tag, Integer value) {
+    public void setInteger(Tag<? extends IntegerField> tag, Integer value) {
         IntegerField field = (IntegerField) lookup(tag);
         field.setValue(value);
     }
@@ -120,12 +120,12 @@ public class FieldContainer implements Iterable<Field> {
         field.setValue(value);
     }
 
-    public void setBoolean(Tag<BooleanField> tag, Boolean value) {
+    public void setBoolean(Tag<? extends BooleanField> tag, Boolean value) {
         BooleanField field = (BooleanField) lookup(tag);
         field.setValue(value);
     }
 
-    public void setDateTime(Tag<UtcTimestampField> tag, DateTime value) {
+    public void setDateTime(Tag<? extends UtcTimestampField> tag, DateTime value) {
         UtcTimestampField field = (UtcTimestampField) lookup(tag);
         field.setValue(value);
     }
@@ -135,7 +135,7 @@ public class FieldContainer implements Iterable<Field> {
         field.setValue(value);
     }
 
-    public String getString(Tag<StringField> tag) {
+    public String getString(Tag<? extends StringField> tag) {
         StringField field = (StringField) lookup(tag);
         return field.getValue();
     }
