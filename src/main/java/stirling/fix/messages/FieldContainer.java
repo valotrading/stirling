@@ -125,7 +125,7 @@ public class FieldContainer implements Iterable<Field> {
         field.setValue(value);
     }
 
-    public void setDateTime(Tag<UtcTimestampField> tag, DateTime value) {
+    public void setDateTime(Tag<? extends UtcTimestampField> tag, DateTime value) {
         UtcTimestampField field = (UtcTimestampField) lookup(tag);
         field.setValue(value);
     }
