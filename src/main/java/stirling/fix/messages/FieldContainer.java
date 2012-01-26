@@ -105,7 +105,7 @@ public class FieldContainer implements Iterable<Field> {
         return field.hasValue();
     }
 
-    public void setString(Tag<StringField> tag, String value) {
+    public void setString(Tag<? extends StringField> tag, String value) {
         StringField field = (StringField) lookup(tag);
         field.setValue(value);
     }
@@ -135,7 +135,7 @@ public class FieldContainer implements Iterable<Field> {
         field.setValue(value);
     }
 
-    public String getString(Tag<StringField> tag) {
+    public String getString(Tag<? extends StringField> tag) {
         StringField field = (StringField) lookup(tag);
         return field.getValue();
     }
