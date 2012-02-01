@@ -16,10 +16,9 @@
 package stirling.itch.messages
 
 import java.nio.ByteBuffer
-import stirling.itch.elements.ASCII
 import stirling.itch.templates.ITCHTemplate
 
-case class ITCHMessage(template: ITCHTemplate) extends Message with ASCII {
+case class ITCHMessage(template: ITCHTemplate) extends Message {
   override def encode(buffer: ByteBuffer) {
     super.encode(buffer)
     template.encode(buffer, this)
