@@ -15,7 +15,6 @@
  */
 package stirling.itch.messages
 
-import java.nio.charset.Charset
 import java.nio.ByteBuffer
 import stirling.itch.templates.MessageTemplate
 
@@ -26,5 +25,4 @@ trait Message extends FieldContainer {
   def length = 1 + template.length
   def template: MessageTemplate[_]
   def messageType = template.messageType.toByte
-  def charset: Charset
 }
