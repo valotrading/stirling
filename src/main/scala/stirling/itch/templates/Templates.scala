@@ -15,7 +15,7 @@
  */
 package stirling.itch.templates
 
-import stirling.itch.elements.Fields
+import stirling.itch.fields.Fields
 import stirling.itch.messages.MessageType
 
 object Templates {

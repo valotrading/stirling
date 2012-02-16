@@ -16,7 +16,7 @@
 package stirling.itch.messages
 
 import scala.collection.mutable.Map
-import stirling.itch.elements.Field
+import stirling.itch.fields.Field
 
 trait FieldContainer {
   def apply[T](field: Field[T]) = values(field).asInstanceOf[T]

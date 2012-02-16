@@ -15,7 +15,7 @@
  */
 package stirling.itch.templates
 
-import stirling.itch.elements.Fields
+import stirling.itch.fields.Fields
 import stirling.itch.messages.ITCHMessage
 
 class MarketSegmentStateSpec extends TemplateSpec with MarketSegmentStateFixtures
