@@ -15,7 +15,7 @@
  */
 package stirling.itch
 
-import stirling.itch.messages.{FieldContainer, Message, MessageOps}
+import stirling.itch.messages.{Message, MessageOps}
 import stirling.itch.types.{FieldType, FieldTypeOps}
 
 abstract class Spec extends BaseSpec with Helpers

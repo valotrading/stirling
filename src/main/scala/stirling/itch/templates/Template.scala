@@ -16,8 +16,7 @@
 package stirling.itch.templates
 
 import java.nio.ByteBuffer
-import stirling.itch.fields.Field
-import stirling.itch.messages.FieldContainer
+import stirling.itch.fields.{Field, FieldContainer}
 
 abstract class Template[T <: FieldContainer] {
   def decode(buffer: ByteBuffer): T = {

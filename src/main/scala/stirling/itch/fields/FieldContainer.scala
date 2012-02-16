@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.messages
+package stirling.itch.fields
 
 import scala.collection.mutable.Map
-import stirling.itch.fields.Field
 
 trait FieldContainer {
   def apply[T](field: Field[T]) = values(field).asInstanceOf[T]

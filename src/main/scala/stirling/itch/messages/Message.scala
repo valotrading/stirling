@@ -16,6 +16,7 @@
 package stirling.itch.messages
 
 import java.nio.ByteBuffer
+import stirling.itch.fields.FieldContainer
 import stirling.itch.templates.MessageTemplate
 
 trait Message extends FieldContainer {
