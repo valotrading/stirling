@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.templates
+package stirling.itch.templates.itch186
 
 import stirling.itch.fields.itch186.Fields
 import stirling.itch.messages.itch186.ITCHMessage
 
-class MillisecondsSpec extends TemplateSpec with MillisecondsFixtures
+class SecondsSpec extends TemplateSpec with SecondsFixtures
 
-trait MillisecondsFixtures {
-  def encoded = "M 12"
+trait SecondsFixtures {
+  def encoded = "T12345"
   def message = {
-    val message = ITCHMessage(Templates.Milliseconds)
-    message.set(Fields.Millisecond, millisecond)
+    val message = ITCHMessage(Templates.Seconds)
+    message.set(Fields.Second, second)
     message
   }
-  def millisecond = 12L
+  def second = 12345L
 }

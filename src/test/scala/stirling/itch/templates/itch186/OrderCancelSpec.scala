@@ -13,21 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.templates
+package stirling.itch.templates.itch186
 
 import stirling.itch.fields.itch186.Fields
 import stirling.itch.messages.itch186.ITCHMessage
 
-class MarketSegmentStateSpec extends TemplateSpec with MarketSegmentStateFixtures
+class OrderCancelSpec extends TemplateSpec with OrderCancelFixtures
 
-trait MarketSegmentStateFixtures {
-  def encoded = "O123C"
-  def eventCode = "C"
-  def marketSegmentId = 123L
+trait OrderCancelFixtures {
+  def canceledQuantity = 4500L
+  def encoded = "X    65535     4500"
   def message = {
-    val message = ITCHMessage(Templates.MarketSegmentState)
-    message.set(Fields.MarketSegmentID, marketSegmentId)
-    message.set(Fields.EventCode, eventCode)
+    val message = ITCHMessage(Templates.OrderCancel)
+    message.set(Fields.OrderReferenceNumber, orderReferenceNumber)
+    message.set(Fields.CanceledQuantity, canceledQuantity)
     message
   }
+  def orderReferenceNumber = 65535L
 }

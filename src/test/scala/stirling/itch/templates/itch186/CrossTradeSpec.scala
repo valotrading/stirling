@@ -13,19 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.templates
+package stirling.itch.templates.itch186
 
 import stirling.itch.fields.itch186.Fields
 import stirling.itch.messages.itch186.ITCHMessage
 
-class BrokenTradeSpec extends TemplateSpec with BrokenTradeFixtures
+class CrossTradeSpec extends TemplateSpec with CrossTradeFixtures
 
-trait BrokenTradeFixtures {
-  def encoded = "B123456789"
+trait CrossTradeFixtures {
+  def crossPrice = 1000000000L
+  def crossType = "O"
+  def encoded = "Q     4500   8081000000000123456789O    875000"
   def matchNumber = 123456789L
   def message = {
-    val message = ITCHMessage(Templates.BrokenTrade)
+    val message = ITCHMessage(Templates.CrossTrade)
+    message.set(Fields.Quantity, quantity)
+    message.set(Fields.OrderBook, orderBook)
+    message.set(Fields.CrossPrice, crossPrice)
     message.set(Fields.MatchNumber, matchNumber)
+    message.set(Fields.CrossType, crossType)
+    message.set(Fields.NumberOfTrades, numberOfTrades)
     message
   }
+  def numberOfTrades = 875000L
+  def orderBook = 808L
+  def quantity = 4500L
 }

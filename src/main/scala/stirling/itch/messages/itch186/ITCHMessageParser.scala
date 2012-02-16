@@ -17,7 +17,7 @@ package stirling.itch.messages.itch186
 
 import java.nio.{BufferUnderflowException, ByteBuffer}
 import silvertip.{GarbledMessageException, MessageParser, PartialMessageException}
-import stirling.itch.templates.Templates
+import stirling.itch.templates.itch186.Templates
 
 object ITCHMessageParser extends ITCHMessageParser
 

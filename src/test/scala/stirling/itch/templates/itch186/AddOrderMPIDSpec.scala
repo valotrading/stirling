@@ -13,27 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.templates
+package stirling.itch.templates.itch186
 
 import stirling.itch.fields.itch186.Fields
 import stirling.itch.messages.itch186.ITCHMessage
 
-class AddOrderSpec extends TemplateSpec with AddOrderFixtures
+class AddOrderMPIDSpec extends TemplateSpec with AddOrderMPIDFixtures
 
-trait AddOrderFixtures {
-  def buyOrSellIndicator = "S"
-  def encoded = "A    65535S     4500   8081000000000"
-  def message = {
-    val message = ITCHMessage(Templates.AddOrder)
+trait AddOrderMPIDFixtures extends AddOrderFixtures {
+  def attribution = "_MMO"
+  override def encoded = "F    65535S     4500   8081000000000_MMO"
+  override def message = {
+    val message = ITCHMessage(Templates.AddOrderMPID)
     message.set(Fields.OrderReferenceNumber, orderReferenceNumber)
     message.set(Fields.BuyOrSellIndicator, buyOrSellIndicator)
     message.set(Fields.Quantity, quantity)
     message.set(Fields.OrderBook, orderBook)
     message.set(Fields.Price, price)
+    message.set(Fields.Attribution, attribution)
     message
   }
-  def orderBook = 808L
-  def orderReferenceNumber = 65535L
-  def price = 1000000000L
-  def quantity = 4500L
 }

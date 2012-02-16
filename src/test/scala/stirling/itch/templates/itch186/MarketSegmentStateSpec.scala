@@ -13,28 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.templates
+package stirling.itch.templates.itch186
 
-import java.nio.ByteBuffer
-import stirling.itch.Spec
-import stirling.itch.messages.itch186.{ITCHMessage, ITCHMessageParser}
+import stirling.itch.fields.itch186.Fields
+import stirling.itch.messages.itch186.ITCHMessage
 
-abstract class TemplateSpec extends Spec with TemplateFixtures {
-  "Template" when {
-    "encoding" must {
-      "produce correct output" in {
-        message.encodeBytes must equal(encoded.toBytes)
-      }
-    }
-    "transcoding" must {
-      "produce correct result" in {
-        ITCHMessageParser.parse((message.encodeBytes).toByteBuffer) must equal(message)
-      }
-    }
+class MarketSegmentStateSpec extends TemplateSpec with MarketSegmentStateFixtures
+
+trait MarketSegmentStateFixtures {
+  def encoded = "O123C"
+  def eventCode = "C"
+  def marketSegmentId = 123L
+  def message = {
+    val message = ITCHMessage(Templates.MarketSegmentState)
+    message.set(Fields.MarketSegmentID, marketSegmentId)
+    message.set(Fields.EventCode, eventCode)
+    message
   }
-}
-
-trait TemplateFixtures {
-  def encoded: String
-  def message: ITCHMessage
 }

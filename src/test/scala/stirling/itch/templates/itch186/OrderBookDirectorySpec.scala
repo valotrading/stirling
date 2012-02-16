@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.templates
+package stirling.itch.templates.itch186
 
 import stirling.itch.fields.itch186.Fields
 import stirling.itch.messages.itch186.ITCHMessage

@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.templates
+package stirling.itch.templates.itch186
 
 import stirling.itch.fields.itch186.Fields
 import stirling.itch.messages.itch186.ITCHMessage
 
-class SecondsSpec extends TemplateSpec with SecondsFixtures
+class SystemEventSpec extends TemplateSpec with SystemEventFixtures
 
-trait SecondsFixtures {
-  def encoded = "T12345"
+trait SystemEventFixtures {
+  def encoded = "SO"
   def message = {
-    val message = ITCHMessage(Templates.Seconds)
-    message.set(Fields.Second, second)
+    val message = ITCHMessage(Templates.SystemEvent)
+    message.set(Fields.EventCode, eventCode)
     message
   }
-  def second = 12345L
+  def eventCode = "O"
 }

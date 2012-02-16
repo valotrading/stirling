@@ -13,27 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.templates
+package stirling.itch.templates.itch186
 
 import stirling.itch.fields.itch186.Fields
 import stirling.itch.messages.itch186.ITCHMessage
 
-class OrderExecutedSpec extends TemplateSpec with OrderExecutedFixtures
+class BrokenTradeSpec extends TemplateSpec with BrokenTradeFixtures
 
-trait OrderExecutedFixtures {
-  def counterparty = "RR"
-  def encoded = "E    65535     4500123456789ACMERR  "
-  def executedQuantity = 4500L
+trait BrokenTradeFixtures {
+  def encoded = "B123456789"
   def matchNumber = 123456789L
   def message = {
-    val message = ITCHMessage(Templates.OrderExecuted)
-    message.set(Fields.OrderReferenceNumber, orderReferenceNumber)
-    message.set(Fields.ExecutedQuantity, executedQuantity)
+    val message = ITCHMessage(Templates.BrokenTrade)
     message.set(Fields.MatchNumber, matchNumber)
-    message.set(Fields.Owner, owner)
-    message.set(Fields.Counterparty, counterparty)
     message
   }
-  def orderReferenceNumber = 65535L
-  def owner = "ACME"
 }

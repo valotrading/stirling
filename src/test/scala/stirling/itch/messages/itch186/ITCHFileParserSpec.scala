@@ -17,7 +17,7 @@ package stirling.itch.messages.itch186
 
 import silvertip.{GarbledMessageException, PartialMessageException}
 import stirling.itch.Spec
-import stirling.itch.templates.{MillisecondsFixtures, SecondsFixtures}
+import stirling.itch.templates.itch186.{MillisecondsFixtures, SecondsFixtures}
 
 class ITCHFileParserSpec extends Spec with ITCHFileParserFixtures {
   "ITCHFileParser" must {

@@ -13,19 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.templates
+package stirling.itch.templates.itch186
 
 import stirling.itch.fields.itch186.Fields
 import stirling.itch.messages.itch186.ITCHMessage
 
-class SystemEventSpec extends TemplateSpec with SystemEventFixtures
+class OrderBookTradingActionSpec extends TemplateSpec with OrderBookTradingActionFixtures
 
-trait SystemEventFixtures {
-  def encoded = "SO"
+trait OrderBookTradingActionFixtures {
+  def encoded = "H123456T     "
   def message = {
-    val message = ITCHMessage(Templates.SystemEvent)
-    message.set(Fields.EventCode, eventCode)
+    val message = ITCHMessage(Templates.OrderBookTradingAction)
+    message.set(Fields.OrderBook, orderBook)
+    message.set(Fields.TradingState, tradingState)
+    message.set(Fields.Reserved, " ")
+    message.set(Fields.Reason, reason)
     message
   }
-  def eventCode = "O"
+  def orderBook = 123456L
+  def reason = " "
+  def tradingState = "T"
 }
