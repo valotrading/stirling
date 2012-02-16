@@ -19,17 +19,17 @@ import java.io.{File, FileOutputStream, FileWriter, PrintWriter}
 import java.util.zip.{ZipEntry, ZipOutputStream}
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.itch.messages.itch186.MessageType.{Milliseconds, Seconds}
+import stirling.itch.messages.itch186.{Seconds, Milliseconds, MessageType}
 
 abstract class SourceSpec extends WordSpec with MustMatchers with SourceFixtures {
   "Source" when {
     "reading a message stream" should {
       val source = newSource(stream)
       "yield a Seconds message" in {
-        source.next.messageType must equal(Seconds.toByte)
+        source.next.messageType must equal(MessageType.Seconds.toByte)
       }
       "yield a Milliseconds message" in {
-        source.next.messageType must equal(Milliseconds.toByte)
+        source.next.messageType must equal(MessageType.Milliseconds.toByte)
       }
       "not yield more messages" in {
         source.hasNext must equal(false)

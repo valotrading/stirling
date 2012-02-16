@@ -16,12 +16,12 @@
 package stirling.itch.messages.itch186
 
 import java.nio.{BufferUnderflowException, ByteBuffer}
-import silvertip.{GarbledMessageException, MessageParser, PartialMessageException}
+import silvertip.{GarbledMessageException, MessageParser => SilvertipMessageParser, PartialMessageException}
 import stirling.itch.templates.itch186.Templates
 
-object ITCHMessageParser extends ITCHMessageParser
+object MessageParser extends MessageParser
 
-trait ITCHMessageParser extends MessageParser[ITCHMessage] {
+trait MessageParser extends SilvertipMessageParser[Message] {
   def parse(buffer: ByteBuffer) = {
     try {
       decode(buffer)

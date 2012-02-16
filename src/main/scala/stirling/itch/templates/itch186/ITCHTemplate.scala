@@ -16,12 +16,12 @@
 package stirling.itch.templates.itch186
 
 import java.nio.ByteBuffer
-import stirling.itch.messages.itch186.ITCHMessage
+import stirling.itch.messages.itch186.Message
 import stirling.itch.templates.MessageTemplate
 
-abstract class ITCHTemplate extends MessageTemplate[ITCHMessage] {
-  override def encode(buffer: ByteBuffer, container: ITCHMessage) = {
+abstract class ITCHTemplate extends MessageTemplate[Message] {
+  override def encode(buffer: ByteBuffer, container: Message) = {
     super.encode(buffer, container)
   }
-  def newFieldContainer = ITCHMessage(this)
+  def newFieldContainer = Message(this)
 }

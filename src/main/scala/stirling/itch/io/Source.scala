@@ -21,8 +21,7 @@ import java.nio.channels.{Channels, ReadableByteChannel}
 import java.util.zip.ZipFile
 import scala.collection.JavaConversions._
 import silvertip.PartialMessageException
-import stirling.itch.messages.Message
-import stirling.itch.messages.itch186.ITCHFileParser
+import stirling.itch.messages.itch186.{FileParser, Message}
 
 trait Source extends Iterator[Message] with Closeable
 
@@ -59,7 +58,7 @@ object Source {
     private def read(): Option[Message] = {
       try {
         buffer.mark()
-        Some(ITCHFileParser.parse(buffer))
+        Some(FileParser.parse(buffer))
       } catch {
         case _: PartialMessageException =>
           buffer.reset()
