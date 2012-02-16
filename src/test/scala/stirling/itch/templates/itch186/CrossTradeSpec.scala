@@ -15,24 +15,21 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class CrossTradeSpec extends TemplateSpec with CrossTradeFixtures
 
-trait CrossTradeFixtures {
+trait CrossTradeFixtures extends TemplateFixtures {
   def crossPrice = 1000000000L
   def crossType = "O"
   def encoded = "Q     4500   8081000000000123456789O    875000"
   def matchNumber = 123456789L
   def message = {
-    val message = ITCHMessage(Templates.CrossTrade)
-    message.set(Fields.Quantity, quantity)
-    message.set(Fields.OrderBook, orderBook)
-    message.set(Fields.CrossPrice, crossPrice)
-    message.set(Fields.MatchNumber, matchNumber)
-    message.set(Fields.CrossType, crossType)
-    message.set(Fields.NumberOfTrades, numberOfTrades)
+    val message = newMessage(Templates.CrossTrade)
+    message.set(fields.Quantity, quantity)
+    message.set(fields.OrderBook, orderBook)
+    message.set(fields.CrossPrice, crossPrice)
+    message.set(fields.MatchNumber, matchNumber)
+    message.set(fields.CrossType, crossType)
+    message.set(fields.NumberOfTrades, numberOfTrades)
     message
   }
   def numberOfTrades = 875000L

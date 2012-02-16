@@ -17,6 +17,7 @@ package stirling.itch.templates.itch186
 
 import java.nio.ByteBuffer
 import stirling.itch.Spec
+import stirling.itch.fields.itch186.Fields
 import stirling.itch.messages.itch186.{ITCHMessage, ITCHMessageParser}
 
 abstract class TemplateSpec extends Spec with TemplateFixtures {
@@ -36,5 +37,7 @@ abstract class TemplateSpec extends Spec with TemplateFixtures {
 
 trait TemplateFixtures {
   def encoded: String
+  def fields = Fields
   def message: ITCHMessage
+  def newMessage(template: ITCHTemplate) = new ITCHMessage(template)
 }

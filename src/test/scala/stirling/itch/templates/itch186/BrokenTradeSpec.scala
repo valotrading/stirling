@@ -15,17 +15,14 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class BrokenTradeSpec extends TemplateSpec with BrokenTradeFixtures
 
-trait BrokenTradeFixtures {
+trait BrokenTradeFixtures extends TemplateFixtures {
   def encoded = "B123456789"
   def matchNumber = 123456789L
   def message = {
-    val message = ITCHMessage(Templates.BrokenTrade)
-    message.set(Fields.MatchNumber, matchNumber)
+    val message = newMessage(Templates.BrokenTrade)
+    message.set(fields.MatchNumber, matchNumber)
     message
   }
 }

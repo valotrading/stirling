@@ -15,16 +15,13 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class SecondsSpec extends TemplateSpec with SecondsFixtures
 
-trait SecondsFixtures {
+trait SecondsFixtures extends TemplateFixtures {
   def encoded = "T12345"
   def message = {
-    val message = ITCHMessage(Templates.Seconds)
-    message.set(Fields.Second, second)
+    val message = newMessage(Templates.Seconds)
+    message.set(fields.Second, second)
     message
   }
   def second = 12345L

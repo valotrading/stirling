@@ -15,21 +15,18 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class AddOrderSpec extends TemplateSpec with AddOrderFixtures
 
-trait AddOrderFixtures {
+trait AddOrderFixtures extends TemplateFixtures {
   def buyOrSellIndicator = "S"
   def encoded = "A    65535S     4500   8081000000000"
   def message = {
-    val message = ITCHMessage(Templates.AddOrder)
-    message.set(Fields.OrderReferenceNumber, orderReferenceNumber)
-    message.set(Fields.BuyOrSellIndicator, buyOrSellIndicator)
-    message.set(Fields.Quantity, quantity)
-    message.set(Fields.OrderBook, orderBook)
-    message.set(Fields.Price, price)
+    val message = newMessage(Templates.AddOrder)
+    message.set(fields.OrderReferenceNumber, orderReferenceNumber)
+    message.set(fields.BuyOrSellIndicator, buyOrSellIndicator)
+    message.set(fields.Quantity, quantity)
+    message.set(fields.OrderBook, orderBook)
+    message.set(fields.Price, price)
     message
   }
   def orderBook = 808L

@@ -15,12 +15,9 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class NOIISpec extends TemplateSpec with NOIIFixtures
 
-trait NOIIFixtures {
+trait NOIIFixtures extends TemplateFixtures {
   def bestAskPrice = 15L
   def bestAskQuantity = 100L
   def bestBidPrice = 16L
@@ -32,17 +29,17 @@ trait NOIIFixtures {
   def imbalanceQuantity = 999999999L
   def matchNumber = 123456789L
   def message = {
-    val message = ITCHMessage(Templates.NOII)
-    message.set(Fields.PairedQuantity, pairedQuantity)
-    message.set(Fields.ImbalanceQuantity, imbalanceQuantity)
-    message.set(Fields.ImbalanceDirection, imbalanceDirection)
-    message.set(Fields.OrderBook, orderBook)
-    message.set(Fields.EquilibriumPrice, equilibriumPrice)
-    message.set(Fields.CrossType, crossType)
-    message.set(Fields.BestBidPrice, bestBidPrice)
-    message.set(Fields.BestBidQuantity, bestBidQuantity)
-    message.set(Fields.BestAskPrice, bestAskPrice)
-    message.set(Fields.BestAskQuantity, bestAskQuantity)
+    val message = newMessage(Templates.NOII)
+    message.set(fields.PairedQuantity, pairedQuantity)
+    message.set(fields.ImbalanceQuantity, imbalanceQuantity)
+    message.set(fields.ImbalanceDirection, imbalanceDirection)
+    message.set(fields.OrderBook, orderBook)
+    message.set(fields.EquilibriumPrice, equilibriumPrice)
+    message.set(fields.CrossType, crossType)
+    message.set(fields.BestBidPrice, bestBidPrice)
+    message.set(fields.BestBidQuantity, bestBidQuantity)
+    message.set(fields.BestAskPrice, bestAskPrice)
+    message.set(fields.BestAskQuantity, bestAskQuantity)
     message
   }
   def numberOfTrades = 875000L

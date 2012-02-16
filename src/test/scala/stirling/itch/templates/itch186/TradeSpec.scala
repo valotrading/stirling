@@ -15,25 +15,22 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class TradeSpec extends TemplateSpec with TradeFixtures
 
-trait TradeFixtures {
+trait TradeFixtures extends TemplateFixtures {
   def buyer = "RR"
   def encoded = "P    65535B     4500   8081234567891000000000RR  ACME"
   def matchNumber = 123456789L
   def message = {
-    val message = ITCHMessage(Templates.Trade)
-    message.set(Fields.OrderReferenceNumber, orderReferenceNumber)
-    message.set(Fields.TradeType, tradeType)
-    message.set(Fields.Quantity, quantity)
-    message.set(Fields.OrderBook, orderBook)
-    message.set(Fields.MatchNumber, matchNumber)
-    message.set(Fields.TradePrice, tradePrice)
-    message.set(Fields.Buyer, buyer)
-    message.set(Fields.Seller, seller)
+    val message = newMessage(Templates.Trade)
+    message.set(fields.OrderReferenceNumber, orderReferenceNumber)
+    message.set(fields.TradeType, tradeType)
+    message.set(fields.Quantity, quantity)
+    message.set(fields.OrderBook, orderBook)
+    message.set(fields.MatchNumber, matchNumber)
+    message.set(fields.TradePrice, tradePrice)
+    message.set(fields.Buyer, buyer)
+    message.set(fields.Seller, seller)
     message
   }
   def orderBook = 808L

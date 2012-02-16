@@ -15,19 +15,16 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class OrderBookTradingActionSpec extends TemplateSpec with OrderBookTradingActionFixtures
 
-trait OrderBookTradingActionFixtures {
+trait OrderBookTradingActionFixtures extends TemplateFixtures {
   def encoded = "H123456T     "
   def message = {
-    val message = ITCHMessage(Templates.OrderBookTradingAction)
-    message.set(Fields.OrderBook, orderBook)
-    message.set(Fields.TradingState, tradingState)
-    message.set(Fields.Reserved, " ")
-    message.set(Fields.Reason, reason)
+    val message = newMessage(Templates.OrderBookTradingAction)
+    message.set(fields.OrderBook, orderBook)
+    message.set(fields.TradingState, tradingState)
+    message.set(fields.Reserved, " ")
+    message.set(fields.Reason, reason)
     message
   }
   def orderBook = 123456L

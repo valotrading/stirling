@@ -15,23 +15,20 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class OrderExecutedSpec extends TemplateSpec with OrderExecutedFixtures
 
-trait OrderExecutedFixtures {
+trait OrderExecutedFixtures extends TemplateFixtures {
   def counterparty = "RR"
   def encoded = "E    65535     4500123456789ACMERR  "
   def executedQuantity = 4500L
   def matchNumber = 123456789L
   def message = {
-    val message = ITCHMessage(Templates.OrderExecuted)
-    message.set(Fields.OrderReferenceNumber, orderReferenceNumber)
-    message.set(Fields.ExecutedQuantity, executedQuantity)
-    message.set(Fields.MatchNumber, matchNumber)
-    message.set(Fields.Owner, owner)
-    message.set(Fields.Counterparty, counterparty)
+    val message = newMessage(Templates.OrderExecuted)
+    message.set(fields.OrderReferenceNumber, orderReferenceNumber)
+    message.set(fields.ExecutedQuantity, executedQuantity)
+    message.set(fields.MatchNumber, matchNumber)
+    message.set(fields.Owner, owner)
+    message.set(fields.Counterparty, counterparty)
     message
   }
   def orderReferenceNumber = 65535L

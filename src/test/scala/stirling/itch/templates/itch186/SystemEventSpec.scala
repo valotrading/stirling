@@ -15,16 +15,13 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class SystemEventSpec extends TemplateSpec with SystemEventFixtures
 
-trait SystemEventFixtures {
+trait SystemEventFixtures extends TemplateFixtures {
   def encoded = "SO"
   def message = {
-    val message = ITCHMessage(Templates.SystemEvent)
-    message.set(Fields.EventCode, eventCode)
+    val message = newMessage(Templates.SystemEvent)
+    message.set(fields.EventCode, eventCode)
     message
   }
   def eventCode = "O"

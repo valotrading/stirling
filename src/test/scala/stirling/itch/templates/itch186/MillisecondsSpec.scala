@@ -15,16 +15,13 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class MillisecondsSpec extends TemplateSpec with MillisecondsFixtures
 
-trait MillisecondsFixtures {
+trait MillisecondsFixtures extends TemplateFixtures {
   def encoded = "M 12"
   def message = {
-    val message = ITCHMessage(Templates.Milliseconds)
-    message.set(Fields.Millisecond, millisecond)
+    val message = newMessage(Templates.Milliseconds)
+    message.set(fields.Millisecond, millisecond)
     message
   }
   def millisecond = 12L

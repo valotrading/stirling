@@ -15,22 +15,19 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class AddOrderMPIDSpec extends TemplateSpec with AddOrderMPIDFixtures
 
 trait AddOrderMPIDFixtures extends AddOrderFixtures {
   def attribution = "_MMO"
   override def encoded = "F    65535S     4500   8081000000000_MMO"
   override def message = {
-    val message = ITCHMessage(Templates.AddOrderMPID)
-    message.set(Fields.OrderReferenceNumber, orderReferenceNumber)
-    message.set(Fields.BuyOrSellIndicator, buyOrSellIndicator)
-    message.set(Fields.Quantity, quantity)
-    message.set(Fields.OrderBook, orderBook)
-    message.set(Fields.Price, price)
-    message.set(Fields.Attribution, attribution)
+    val message = newMessage(Templates.AddOrderMPID)
+    message.set(fields.OrderReferenceNumber, orderReferenceNumber)
+    message.set(fields.BuyOrSellIndicator, buyOrSellIndicator)
+    message.set(fields.Quantity, quantity)
+    message.set(fields.OrderBook, orderBook)
+    message.set(fields.Price, price)
+    message.set(fields.Attribution, attribution)
     message
   }
 }

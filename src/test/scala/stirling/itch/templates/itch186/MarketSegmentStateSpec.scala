@@ -15,19 +15,16 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class MarketSegmentStateSpec extends TemplateSpec with MarketSegmentStateFixtures
 
-trait MarketSegmentStateFixtures {
+trait MarketSegmentStateFixtures extends TemplateFixtures {
   def encoded = "O123C"
   def eventCode = "C"
   def marketSegmentId = 123L
   def message = {
-    val message = ITCHMessage(Templates.MarketSegmentState)
-    message.set(Fields.MarketSegmentID, marketSegmentId)
-    message.set(Fields.EventCode, eventCode)
+    val message = newMessage(Templates.MarketSegmentState)
+    message.set(fields.MarketSegmentID, marketSegmentId)
+    message.set(fields.EventCode, eventCode)
     message
   }
 }

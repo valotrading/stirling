@@ -15,27 +15,24 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class OrderBookDirectorySpec extends TemplateSpec with OrderBookDirectoryFixtures
 
-trait OrderBookDirectoryFixtures {
+trait OrderBookDirectoryFixtures extends TemplateFixtures {
   def encoded = "R727000Acme Corp       US0000000000  1USDNYSE 10       0100000000"
   def financialProduct = 1L
   def isin = "US0000000000"
   def marketSegmentId = 10L
   def message = {
-    val message = ITCHMessage(Templates.OrderBookDirectory)
-    message.set(Fields.OrderBook, orderBook)
-    message.set(Fields.Symbol, symbol)
-    message.set(Fields.ISIN, isin)
-    message.set(Fields.FinancialProduct, financialProduct)
-    message.set(Fields.TradingCurrency, tradingCurrency)
-    message.set(Fields.MIC, mic)
-    message.set(Fields.MarketSegmentID, marketSegmentId)
-    message.set(Fields.NoteCodes, noteCodes)
-    message.set(Fields.RoundLotSize, roundLotSize)
+    val message = newMessage(Templates.OrderBookDirectory)
+    message.set(fields.OrderBook, orderBook)
+    message.set(fields.Symbol, symbol)
+    message.set(fields.ISIN, isin)
+    message.set(fields.FinancialProduct, financialProduct)
+    message.set(fields.TradingCurrency, tradingCurrency)
+    message.set(fields.MIC, mic)
+    message.set(fields.MarketSegmentID, marketSegmentId)
+    message.set(fields.NoteCodes, noteCodes)
+    message.set(fields.RoundLotSize, roundLotSize)
     message
   }
   def mic = "NYSE"

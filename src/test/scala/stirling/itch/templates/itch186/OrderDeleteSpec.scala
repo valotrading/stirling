@@ -15,16 +15,13 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class OrderDeleteSpec extends TemplateSpec with OrderDeleteFixtures
 
-trait OrderDeleteFixtures {
+trait OrderDeleteFixtures extends TemplateFixtures {
   def encoded = "D    65535"
   def message = {
-    val message = ITCHMessage(Templates.OrderDelete)
-    message.set(Fields.OrderReferenceNumber, orderReferenceNumber)
+    val message = newMessage(Templates.OrderDelete)
+    message.set(fields.OrderReferenceNumber, orderReferenceNumber)
     message
   }
   def orderReferenceNumber = 65535L

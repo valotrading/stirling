@@ -15,18 +15,15 @@
  */
 package stirling.itch.templates.itch186
 
-import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.itch186.ITCHMessage
-
 class OrderCancelSpec extends TemplateSpec with OrderCancelFixtures
 
-trait OrderCancelFixtures {
+trait OrderCancelFixtures extends TemplateFixtures {
   def canceledQuantity = 4500L
   def encoded = "X    65535     4500"
   def message = {
-    val message = ITCHMessage(Templates.OrderCancel)
-    message.set(Fields.OrderReferenceNumber, orderReferenceNumber)
-    message.set(Fields.CanceledQuantity, canceledQuantity)
+    val message = newMessage(Templates.OrderCancel)
+    message.set(fields.OrderReferenceNumber, orderReferenceNumber)
+    message.set(fields.CanceledQuantity, canceledQuantity)
     message
   }
   def orderReferenceNumber = 65535L
