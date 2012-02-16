@@ -15,7 +15,7 @@
  */
 package stirling.itch.templates
 
-import stirling.itch.fields.Fields
+import stirling.itch.fields.itch186.Fields
 import stirling.itch.messages.ITCHMessage
 
 class MillisecondsSpec extends TemplateSpec with MillisecondsFixtures

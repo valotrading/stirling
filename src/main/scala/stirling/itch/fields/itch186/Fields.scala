@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.fields
+package stirling.itch.fields.itch186
 
+import stirling.itch.fields.Field
 import stirling.itch.types.{Alpha, Numeric}
 
 object Fields {
