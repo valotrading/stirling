@@ -39,5 +39,5 @@ trait TemplateFixtures {
   def encoded: String
   def fields = Fields
   def message: Message
-  def newMessage(template: ITCHTemplate) = new Message(template)
+  def newMessage(template: Template) = new Message(template)
 }

@@ -19,7 +19,7 @@ import java.nio.ByteBuffer
 import stirling.itch.messages.itch186.Message
 import stirling.itch.templates.MessageTemplate
 
-abstract class ITCHTemplate extends MessageTemplate[Message] {
+abstract class Template extends MessageTemplate[Message] {
   override def encode(buffer: ByteBuffer, container: Message) = {
     super.encode(buffer, container)
   }
