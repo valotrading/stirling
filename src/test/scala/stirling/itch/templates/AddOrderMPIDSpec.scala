@@ -16,7 +16,7 @@
 package stirling.itch.templates
 
 import stirling.itch.fields.itch186.Fields
-import stirling.itch.messages.ITCHMessage
+import stirling.itch.messages.itch186.ITCHMessage
 
 class AddOrderMPIDSpec extends TemplateSpec with AddOrderMPIDFixtures
 

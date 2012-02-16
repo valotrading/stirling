@@ -21,7 +21,8 @@ import java.nio.channels.{Channels, ReadableByteChannel}
 import java.util.zip.ZipFile
 import scala.collection.JavaConversions._
 import silvertip.PartialMessageException
-import stirling.itch.messages.{ITCHFileParser, Message}
+import stirling.itch.messages.Message
+import stirling.itch.messages.itch186.ITCHFileParser
 
 trait Source extends Iterator[Message] with Closeable
 

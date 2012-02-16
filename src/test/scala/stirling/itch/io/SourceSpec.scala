@@ -19,7 +19,7 @@ import java.io.{File, FileOutputStream, FileWriter, PrintWriter}
 import java.util.zip.{ZipEntry, ZipOutputStream}
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.itch.messages.MessageType.{Milliseconds, Seconds}
+import stirling.itch.messages.itch186.MessageType.{Milliseconds, Seconds}
 
 abstract class SourceSpec extends WordSpec with MustMatchers with SourceFixtures {
   "Source" when {

@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.messages
+package stirling.itch.messages.itch186
 
 import java.nio.ByteBuffer
+import stirling.itch.messages.Message
 import stirling.itch.templates.ITCHTemplate
 
 case class ITCHMessage(template: ITCHTemplate) extends Message {

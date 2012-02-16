@@ -16,7 +16,7 @@
 package stirling.itch.templates
 
 import java.nio.ByteBuffer
-import stirling.itch.messages.ITCHMessage
+import stirling.itch.messages.itch186.ITCHMessage
 
 abstract class ITCHTemplate extends MessageTemplate[ITCHMessage] {
   override def encode(buffer: ByteBuffer, container: ITCHMessage) = {

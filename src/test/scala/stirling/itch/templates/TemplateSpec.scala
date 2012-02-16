@@ -17,7 +17,7 @@ package stirling.itch.templates
 
 import java.nio.ByteBuffer
 import stirling.itch.Spec
-import stirling.itch.messages.{ITCHMessage, ITCHMessageParser}
+import stirling.itch.messages.itch186.{ITCHMessage, ITCHMessageParser}
 
 abstract class TemplateSpec extends Spec with TemplateFixtures {
   "Template" when {
