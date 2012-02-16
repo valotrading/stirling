@@ -16,7 +16,6 @@
 package stirling.itch.types
 
 import java.nio.ByteBuffer
-import stirling.itch.elements.ASCII
 
 trait ASCIIFieldType[T] extends FieldType[T] with ASCII {
   protected def read(buffer: ByteBuffer) = {
