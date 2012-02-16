@@ -20,7 +20,7 @@ import stirling.itch.messages.itch186.MessageType
 
 object Templates {
   /**
-   * Template for Seconds message as specified in section 4.1.1 of [1].
+   * Template for Seconds message as specified in section 4.1.1.
    */
   val Seconds = new Template {
     val messageType = MessageType.Seconds
@@ -28,7 +28,7 @@ object Templates {
   }
 
   /**
-   * Template for Milliseconds message as specified in section 4.1.2 of [1].
+   * Template for Milliseconds message as specified in section 4.1.2.
    */
   val Milliseconds = new Template {
     val messageType = MessageType.Milliseconds
@@ -36,7 +36,7 @@ object Templates {
   }
 
   /**
-   * Template for System Event message as specified in section 4.2.1 of [1].
+   * Template for System Event message as specified in section 4.2.1.
    */
   val SystemEvent = new Template {
     val messageType = MessageType.SystemEvent
@@ -44,7 +44,7 @@ object Templates {
   }
 
   /**
-   * Template for Market Segment State message as specified in section 4.2.2 of [1].
+   * Template for Market Segment State message as specified in section 4.2.2.
    */
   val MarketSegmentState = new Template {
     val messageType = MessageType.MarketSegmentEvent
@@ -52,7 +52,7 @@ object Templates {
   }
 
   /**
-   * Template for Order Book Directory message as specified in section 4.3.1 of [1].
+   * Template for Order Book Directory message as specified in section 4.3.1.
    */
   val OrderBookDirectory = new Template {
     val messageType = MessageType.OrderBookDirectory
@@ -62,7 +62,7 @@ object Templates {
   }
 
   /**
-   * Template for Order Book Trading Action message as specified in section 4.3.2 of [1].
+   * Template for Order Book Trading Action message as specified in section 4.3.2.
    */
   val OrderBookTradingAction = new Template {
     val messageType = MessageType.StockTradingAction
@@ -70,7 +70,7 @@ object Templates {
   }
 
   /**
-   * Template for Add Order message as specified in section 4.4.1 of [1].
+   * Template for Add Order message as specified in section 4.4.1.
    */
   val AddOrder = new Template {
     val messageType = MessageType.AddOrder
@@ -79,7 +79,7 @@ object Templates {
   }
 
   /**
-   * Template for Add Order message as specified in section 4.4.2 of [1].
+   * Template for Add Order message as specified in section 4.4.2.
    */
   val AddOrderMPID = new Template {
     val messageType = MessageType.AddOrderMPID
@@ -87,7 +87,7 @@ object Templates {
   }
 
   /**
-   * Template for Order Executed message as specified in section 4.5.1 of [1].
+   * Template for Order Executed message as specified in section 4.5.1.
    */
   val OrderExecuted = new Template {
     val messageType = MessageType.OrderExecuted
@@ -96,7 +96,7 @@ object Templates {
   }
 
   /**
-   * Template for Order Executed with Price message as specified in section 4.5.2 of [1].
+   * Template for Order Executed with Price message as specified in section 4.5.2.
    */
   val OrderExecutedWithPrice = new Template {
     val messageType = MessageType.OrderExecutedWithPrice
@@ -105,7 +105,7 @@ object Templates {
   }
 
   /**
-   * Template for Order Cancel message as specified in section 4.5.3 of [1].
+   * Template for Order Cancel message as specified in section 4.5.3.
    */
   val OrderCancel = new Template {
     val messageType = MessageType.OrderCancel
@@ -113,7 +113,7 @@ object Templates {
   }
 
   /**
-   * Template for Order Delete message as specified in section 4.5.4 of [1].
+   * Template for Order Delete message as specified in section 4.5.4.
    */
   val OrderDelete = new Template {
     val messageType = MessageType.OrderDelete
@@ -121,7 +121,7 @@ object Templates {
   }
 
   /**
-   * Template for Trade message as specified in section 4.6.1 of [1].
+   * Template for Trade message as specified in section 4.6.1.
    */
   val Trade = new Template {
     val messageType = MessageType.Trade
@@ -131,7 +131,7 @@ object Templates {
   }
 
   /**
-   * Template for Cross Trade message as specified in section 4.6.2 of [1].
+   * Template for Cross Trade message as specified in section 4.6.2.
    */
   val CrossTrade = new Template {
     val messageType = MessageType.CrossTrade
@@ -140,7 +140,7 @@ object Templates {
   }
 
   /**
-   * Template for Broken Trade message as specified in section 4.7 of [1].
+   * Template for Broken Trade message as specified in section 4.7.
    */
   val BrokenTrade = new Template {
     val messageType = MessageType.BrokenTrade
@@ -148,7 +148,7 @@ object Templates {
   }
 
   /**
-   * Template for Net Order Imbalance Indicator message as specified in section 4.8 of [1].
+   * Template for Net Order Imbalance Indicator message as specified in section 4.8.
    */
   val NOII = new Template {
     val messageType = MessageType.NOII
