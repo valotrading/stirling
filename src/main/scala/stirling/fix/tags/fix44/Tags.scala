@@ -229,7 +229,7 @@ object StrikeCurrency extends CurrencyTag(947)
 object NoLinesOfText extends NumInGroupTag(33)
 object MarginRatio extends IntegerTag(898)
 object MarginExcess extends AmtTag(899)
-object TotalNetValue extends StringTag(900)
+object TotalNetValue extends AmtTag(900)
 object CollRptID extends StringTag(908)
 object CollStatus extends IntegerTag(910)
 object CollInquiryStatus extends EnumTag[Integer](945) {

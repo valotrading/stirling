@@ -17,8 +17,8 @@ package stirling.fix.messages
 
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.fix.messages.fix42.DefaultMessageFactory;
-import stirling.fix.messages.fix42.MsgTypeValue;
+import stirling.fix.messages.fix42.DefaultMessageFactory
+import stirling.fix.messages.fix42.MsgTypeValue
 
 class DefaultMessageFactorySpec extends WordSpec with MustMatchers {
   "DefaultMessageFactory" when {
