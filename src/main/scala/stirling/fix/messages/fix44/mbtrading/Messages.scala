@@ -183,13 +183,13 @@ import stirling.fix.tags.fix44.mbtrading.{
 }
 
 class CollateralInquiry(header: MessageHeader) extends AbstractMessage(header) with CollateralInquiryTrait {
-  field(Account.Tag)
-  field(SenderLocationID.Tag)
-  field(SubscriptionRequestType.Tag)
-  field(MessageEncoding.Tag)
-  field(Username.Tag)
-  field(Password.Tag)
-  field(CollInquiryID.Tag)
+  field(Account.Tag, Required.NO)
+  field(SenderLocationID.Tag, Required.NO)
+  field(SubscriptionRequestType.Tag, Required.NO)
+  field(MessageEncoding.Tag, Required.NO)
+  field(Username.Tag, Required.NO)
+  field(Password.Tag, Required.NO)
+  field(CollInquiryID.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
