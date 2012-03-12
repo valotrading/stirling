@@ -19,17 +19,23 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 
+import stirling.fix.messages.Message;
 import stirling.fix.messages.fix42.MsgTypeValue;
 import stirling.fix.tags.fix42.EncryptMethod;
 import stirling.fix.tags.fix42.GapFillFlag;
 import stirling.fix.tags.fix42.HeartBtInt;
 import stirling.fix.tags.fix42.NewSeqNo;
+import stirling.lang.Predicate;
 
 @RunWith(JDaveRunner.class) public class LogonSpec extends InitiatorSpecification {
     public class InitializedSession {
         /* Ref ID 1B: b. Send Logon message */
         public void valid() throws Exception {
-            server.expect(MsgTypeValue.LOGON);
+            server.expect(MsgTypeValue.LOGON, new Predicate<Message>() {
+                @Override public boolean apply(Message message) {
+                    return message.getInteger(HeartBtInt.Tag()).equals(getHeartbeatIntervalInSeconds());
+                }
+            });
             server.respondLogon();
             runInClient(new Runnable() {
                 @Override public void run() {
