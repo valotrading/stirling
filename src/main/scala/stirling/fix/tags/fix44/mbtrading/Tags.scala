@@ -25,6 +25,15 @@ import stirling.fix.messages.{
 }
 import java.lang.Integer
 
+object TimeInForce extends EnumTag[Integer](59) {
+  val Day = IntegerValue(0)
+  val GoodTillCancel = IntegerValue(1)
+  val AtTheOpening = IntegerValue(2)
+  val ImmediateOrCancel = IntegerValue(3)
+  val FillOrKill = IntegerValue(4)
+  val GoodTillDate = IntegerValue(6)
+  val DayPlus = IntegerValue(9)
+}
 object PosReqType extends EnumTag[Integer](724) {
   val PositionsCurrent = IntegerValue(0)
   val PositionsBOD = IntegerValue(9)
