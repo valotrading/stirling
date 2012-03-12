@@ -95,7 +95,6 @@ import stirling.fix.tags.fix42.{
   Symbol,
   SymbolSfx,
   Text,
-  TimeInForce,
   TradeDate,
   TradeSesReqID,
   TradingSessionID,
@@ -178,6 +177,7 @@ import stirling.fix.tags.fix44.mbtrading.{
   PosRealizedPNL,
   PosReqType,
   RealizedPnL,
+  TimeInForce,
   UserQuotePerms,
   UserSessionID
 }
