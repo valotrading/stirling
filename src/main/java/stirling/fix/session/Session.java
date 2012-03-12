@@ -451,7 +451,7 @@ public class Session {
     public void logon(Connection conn) {
         authenticated = initiatedLogout = false;
         Logon message = (Logon) messageFactory.create(LOGON);
-        message.setInteger(HeartBtInt.Tag(), 30);
+        message.setInteger(HeartBtInt.Tag(), heartBtInt.getSeconds());
         message.setEnum(EncryptMethod.Tag(), EncryptMethod.None());
         message.setMsgSeqNum(outgoingSeq.next());
         send(conn, message, false, true);

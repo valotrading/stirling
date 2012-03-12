@@ -38,6 +38,10 @@ public class HeartBtIntValue {
         this.millis = millis;
     }
 
+    public int getSeconds() {
+      return (int)(millis / 1000);
+    }
+
     public Timeout heartbeat() {
         return Timeout.milliseconds(millis);
     }
