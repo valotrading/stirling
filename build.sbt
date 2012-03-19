@@ -7,7 +7,7 @@ version := "1.0.1-SNAPSHOT"
 scalaVersion := "2.9.1"
 
 resolvers ++= Seq(
-  "laughingpanda" at "http://www.laughingpanda.org/maven2/",
+  "laughingpanda" at "http://maven.laughingpanda.org/maven2/",
   "Typesafe Repository (releases)" at "http://repo.typesafe.com/typesafe/releases/"
 )
 
