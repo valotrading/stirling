@@ -8,7 +8,7 @@ scalaVersion := "2.9.1"
 
 resolvers ++= Seq(
   "laughingpanda" at "http://maven.laughingpanda.org/maven2/",
-  "Typesafe Repository (releases)" at "http://repo.typesafe.com/typesafe/releases/"
+  "Silvertip Repository" at "http://penberg.github.com/silvertip/maven/"
 )
 
 libraryDependencies ++= Seq(
@@ -21,7 +21,7 @@ libraryDependencies ++= Seq(
   "org.mockito" % "mockito-core" % "1.9.0" % "test",
   "org.mongodb" % "mongo-java-driver" % "1.4",
   "org.scalatest" %% "scalatest" % "1.6.1" % "test",
-  "silvertip" % "silvertip" % "0.2.1"
+  "silvertip" % "silvertip" % "0.2.3"
 )
 
 testFrameworks += new TestFramework("org.jdave.sbt.JDaveFramework")
