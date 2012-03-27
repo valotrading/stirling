@@ -15,6 +15,9 @@
  */
 package stirling.fix.messages
 
+trait Logon extends Message {
+  override def isAdminMessage = true
+}
 trait RequestForPositions extends Message
 trait NewOrderMultiLeg extends RequestMessage
 trait TradingSessionStatus extends Message
