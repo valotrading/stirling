@@ -24,7 +24,6 @@ import stirling.lang.Predicate;
 import stirling.fix.messages.Field;
 import stirling.fix.messages.Message;
 import stirling.fix.messages.fix42.MsgTypeValue;
-import stirling.fix.messages.Reject;
 import stirling.fix.messages.Required;
 import stirling.fix.messages.SequenceReset;
 import stirling.fix.tags.fix42.BeginSeqNo;
