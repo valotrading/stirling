@@ -16,6 +16,7 @@
 package stirling.fix.tags.fix44.mbtrading
 
 import stirling.fix.messages.{
+  CharValue,
   EnumTag,
   FloatTag,
   IntegerTag,
@@ -23,7 +24,10 @@ import stirling.fix.messages.{
   QtyTag,
   StringTag
 }
-import java.lang.Integer
+import java.lang.{
+  Character,
+  Integer
+}
 
 object TimeInForce extends EnumTag[Integer](59) {
   val Day = IntegerValue(0)
@@ -33,6 +37,24 @@ object TimeInForce extends EnumTag[Integer](59) {
   val FillOrKill = IntegerValue(4)
   val GoodTillDate = IntegerValue(6)
   val DayPlus = IntegerValue(9)
+}
+object ExecType extends EnumTag[Character](150) {
+  val New = CharValue('0')
+  val PartialFill = CharValue('1')
+  val Fill = CharValue('2')
+  val DoneForDay = CharValue('3')
+  val Canceled = CharValue('4')
+  val Replace = CharValue('5')
+  val PendingCancel = CharValue('6')
+  val Rejected = CharValue('8')
+  val Suspended = CharValue('9')
+  val PendingNew = CharValue('A')
+  val Restated = CharValue('D')
+  val PendingReplace = CharValue('E')
+  val Trade = CharValue('F')
+  val Break = CharValue('H')
+  val Status = CharValue('I')
+  val Resumed = CharValue('R')
 }
 object PosReqType extends EnumTag[Integer](724) {
   val PositionsCurrent = IntegerValue(0)
