@@ -20,14 +20,22 @@ import stirling.fix.messages.{
   Logon => LogonTrait,
   MessageHeader,
   MessageVisitor,
+  Reject => RejectTrait,
   Required
 }
 import stirling.fix.tags.fix42.{
   EncryptMethod,
-  HeartBtInt
+  HeartBtInt,
+  RefMsgType,
+  RefSeqNo,
+  RefTagId,
+  Text
 }
 import stirling.fix.tags.fix42.samrat.{
   CancelAllOnDisconnect
+}
+import stirling.fix.tags.fix43.{
+  SessionRejectReason
 }
 import stirling.fix.tags.fix44.{
   Password,
@@ -40,5 +48,14 @@ class Logon(header: MessageHeader) extends AbstractMessage(header) with LogonTra
   field(Username.Tag)
   field(Password.Tag, Required.NO)
   field(CancelAllOnDisconnect.Tag, Required.NO)
+  def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class Reject(header: MessageHeader) extends AbstractMessage(header) with RejectTrait {
+  field(RefSeqNo.Tag)
+  field(Text.Tag, Required.NO)
+  field(RefTagId.Tag, Required.NO)
+  field(RefMsgType.Tag, Required.NO)
+  field(SessionRejectReason.Tag, Required.NO)
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
