@@ -48,6 +48,7 @@ object AllowRouting extends BooleanTag(9011)
 object AlternateExDestination extends StringTag(9012)
 object RouteToNYSE extends BooleanTag(9014)
 object ISO extends BooleanTag(9017)
+object CancelAllOpen extends BooleanTag(9020)
 object PegType extends EnumTag[Character](9034) {
   val Primary = CharValue('1')
   val Market = CharValue('2')

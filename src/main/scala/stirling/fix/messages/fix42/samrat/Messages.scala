@@ -21,6 +21,7 @@ import stirling.fix.messages.{
   MessageHeader,
   MessageVisitor,
   NewOrderSingle => NewOrderSingleTrait,
+  OrderCancelRequest => OrderCancelRequestTrait,
   Reject => RejectTrait,
   Required
 }
@@ -33,7 +34,9 @@ import stirling.fix.tags.fix42.{
   MaxFloor,
   MinQty,
   OrdType,
+  OrderID,
   OrderQty,
+  OrigClOrdID,
   PegDifference,
   Price,
   RefMsgType,
@@ -48,6 +51,7 @@ import stirling.fix.tags.fix42.samrat.{
   AllowRouting,
   AlternateExDestination,
   CancelAllOnDisconnect,
+  CancelAllOpen,
   ISO,
   Invisible,
   LockedOrCrossedAction,
@@ -116,5 +120,13 @@ class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with
   field(PegType.Tag, Required.NO)
   field(LockedOrCrossedAction.Tag, Required.NO)
   field(RegularSessionOnly.Tag, Required.NO)
+  def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestTrait {
+  field(ClOrdID.Tag)
+  field(OrderID.Tag, Required.NO)
+  field(OrigClOrdID.Tag)
+  field(CancelAllOpen.Tag, Required.NO)
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
