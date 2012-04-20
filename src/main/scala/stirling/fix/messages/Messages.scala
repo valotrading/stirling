@@ -47,3 +47,4 @@ trait PositionReport extends Message
 trait RequestForPositionAcknowledgment extends Message
 trait OrderStatusRequest extends Message
 trait Allocation extends Message
+trait BulkCancelRequest extends Message

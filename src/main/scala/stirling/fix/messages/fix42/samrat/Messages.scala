@@ -17,6 +17,7 @@ package stirling.fix.messages.fix42.samrat
 
 import stirling.fix.messages.{
   AbstractMessage,
+  BulkCancelRequest => BulkCancelRequestTrait,
   Logon => LogonTrait,
   MessageHeader,
   MessageVisitor,
@@ -53,6 +54,7 @@ import stirling.fix.tags.fix42.samrat.{
   AlternateExDestination,
   CancelAllOnDisconnect,
   CancelAllOpen,
+  CancelPairs,
   ISO,
   Invisible,
   LockedOrCrossedAction,
@@ -141,5 +143,11 @@ class OrderCancelReplaceRequest(header: MessageHeader) extends AbstractMessage(h
   field(OrderQty.Tag, Required.NO)
   field(Price.Tag, Required.NO)
   field(ParticipationRate.Tag, Required.NO)
+  def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class BulkCancelRequest(header: MessageHeader) extends AbstractMessage(header) with BulkCancelRequestTrait {
+  field(ClOrdID.Tag)
+  field(CancelPairs.Tag)
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
