@@ -31,6 +31,7 @@ import stirling.fix.messages.{
   IntegerValue,
   LocalMktDateTag,
   NumInGroupTag,
+  PercentageTag,
   PriceTag,
   QtyTag,
   SeqNumTag,
@@ -202,6 +203,7 @@ object PegScope extends EnumTag[Integer](840) {
   val Global = IntegerValue(3)
   val NationalExcludingLocal = IntegerValue(4)
 }
+object ParticipationRate extends PercentageTag(849)
 object LastLiquidityInd extends EnumTag[Integer](851) {
   val AddedLiquidity = IntegerValue(1)
   val RemovedLiquidity = IntegerValue(2)

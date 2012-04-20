@@ -20,6 +20,7 @@ import stirling.fix.messages.{
   BusinessMessageReject => BusinessMessageRejectTrait,
   MessageHeader,
   MessageVisitor,
+  Reject => RejectTrait,
   RepeatingGroup,
   RepeatingGroupInstance,
   Required
@@ -66,6 +67,7 @@ import stirling.fix.tags.fix42.{
   Price,
   RefMsgType,
   RefSeqNo,
+  RefTagId,
   ResetSeqNumFlag,
   SecurityExchange,
   SecurityID,
@@ -82,6 +84,15 @@ import stirling.fix.tags.fix42.{
   TradeDate,
   TradingSessionID,
   TransactTime
+}
+import stirling.fix.tags.fix43.SessionRejectReason
+
+class Reject(header: MessageHeader) extends AbstractMessage(header) with RejectTrait {
+  field(RefSeqNo.Tag)
+  field(RefTagId.Tag, Required.NO)
+  field(SessionRejectReason.Tag, Required.NO)
+  field(Text.Tag, Required.NO)
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
 class BusinessMessageReject(header: MessageHeader) extends AbstractMessage(header) with BusinessMessageRejectTrait {

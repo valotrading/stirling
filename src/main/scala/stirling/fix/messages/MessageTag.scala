@@ -105,3 +105,4 @@ abstract class SeqNumTag(value: Int) extends MessageTag[SeqNumField](value, clas
 
 abstract class CurrencyTag(value: Int) extends StringTag(value)
 abstract class AmtTag(value: Int) extends FloatTag(value)
+abstract class PercentageTag(value: Int) extends FloatTag(value)

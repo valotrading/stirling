@@ -28,7 +28,6 @@ import stirling.fix.messages.Logout;
 import stirling.fix.messages.Message;
 import stirling.fix.messages.MessageFactory;
 import stirling.fix.messages.MessageHeader;
-import stirling.fix.messages.Reject;
 import stirling.fix.messages.ResendRequest;
 import stirling.fix.messages.SequenceReset;
 import stirling.fix.messages.Tag;
@@ -36,6 +35,7 @@ import stirling.fix.messages.TestRequest;
 import stirling.fix.messages.UnsupportedMsgTypeException;
 import stirling.fix.messages.fix42.BusinessMessageReject;
 import stirling.fix.messages.fix42.MsgTypeValue;
+import stirling.fix.messages.fix42.Reject;
 
 import java.lang.reflect.Constructor;
 

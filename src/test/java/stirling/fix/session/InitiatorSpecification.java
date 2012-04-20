@@ -50,6 +50,7 @@ import stirling.fix.messages.Field;
 import stirling.fix.messages.FixMessageParser;
 import stirling.fix.messages.FloatField;
 import stirling.fix.messages.IntegerField;
+import stirling.fix.messages.InvalidMsgTypeException;
 import stirling.fix.messages.Message;
 import stirling.fix.messages.MessageHeader;
 import stirling.fix.messages.MessageVisitor;
@@ -58,6 +59,7 @@ import stirling.fix.messages.Parser;
 import stirling.fix.messages.RawMessageBuilder;
 import stirling.fix.messages.StringField;
 import stirling.fix.messages.Tag;
+import stirling.fix.messages.UnsupportedMsgTypeException;
 import stirling.fix.messages.Value;
 import stirling.fix.messages.fix42.DefaultMessageFactory;
 import stirling.fix.session.store.InMemorySessionStore;
@@ -392,12 +394,15 @@ public class InitiatorSpecification extends Specification<Session> {
                         }
 
                         @Override public void unsupportedMsgType(String msgType, int msgSeqNum) {
+                            throw new UnsupportedMsgTypeException("MsgType(35): Unsupported message type: " + msgType);
                         }
 
                         @Override public void invalidMsgType(String msgType, int msgSeqNum) {
+                            throw new InvalidMsgTypeException("MsgType(35): Invalid message type: " + msgType);
                         }
 
                         @Override public void invalidMessage(int msgSeqNum, Value<Integer> reason, String text) {
+                            throw new IllegalStateException("Invalid message: %s (%d)".format(text, reason));
                         }
                     });
                 }

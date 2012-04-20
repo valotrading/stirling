@@ -15,6 +15,12 @@
  */
 package stirling.fix.messages
 
+trait Logon extends Message {
+  override def isAdminMessage = true
+}
+trait Reject extends Message {
+  override def isAdminMessage = true
+}
 trait RequestForPositions extends Message
 trait NewOrderMultiLeg extends RequestMessage
 trait TradingSessionStatus extends Message
@@ -41,3 +47,4 @@ trait PositionReport extends Message
 trait RequestForPositionAcknowledgment extends Message
 trait OrderStatusRequest extends Message
 trait Allocation extends Message
+trait BulkCancelRequest extends Message
