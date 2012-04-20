@@ -18,8 +18,10 @@ package stirling.fix.tags.fix42.samrat
 import stirling.fix.messages.{
   BooleanTag,
   CharValue,
+  FloatTag,
   EnumTag,
   IntegerTag,
+  PriceTag,
   StringTag
 }
 import java.lang.Character
@@ -40,6 +42,9 @@ object TimeInForce extends EnumTag[Character](59) {
   val TimeInMarket = CharValue('8')
 }
 object CancelAllOnDisconnect extends BooleanTag(7001)
+object Liquidity extends IntegerTag(8001)
+object Position extends IntegerTag(8004)
+object BuyingPower extends FloatTag(8005)
 object Invisible extends BooleanTag(9003)
 object PostOnly extends BooleanTag(9004)
 object ShortSaleAffirm extends BooleanTag(9009)
@@ -50,6 +55,7 @@ object RouteToNYSE extends BooleanTag(9014)
 object ISO extends BooleanTag(9017)
 object CancelAllOpen extends BooleanTag(9020)
 object CancelPairs extends StringTag(9021)
+object MarketConfirmPrices extends PriceTag(9028)
 object PegType extends EnumTag[Character](9034) {
   val Primary = CharValue('1')
   val Market = CharValue('2')
@@ -59,6 +65,7 @@ object PegType extends EnumTag[Character](9034) {
   val PriceImprovedMarket = CharValue('6') // LAVA only
   val PriceImprovedMidPoint = CharValue('7') // LAVA only
 }
+object ClientOrderData extends StringTag(9050)
 object LockedOrCrossedAction extends EnumTag[Character](9064) {
   val Reject = CharValue('R')
   val PriceAdjust = CharValue('P')
@@ -69,3 +76,4 @@ object LockedOrCrossedAction extends EnumTag[Character](9064) {
 }
 object RegularSessionOnly extends BooleanTag(9066)
 object ShortSaleAffirmLongQuantity extends IntegerTag(9067)
+object ExternalClOrdId extends StringTag(9508)

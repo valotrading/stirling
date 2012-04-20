@@ -18,6 +18,7 @@ package stirling.fix.messages.fix42.samrat
 import stirling.fix.messages.{
   AbstractMessage,
   BulkCancelRequest => BulkCancelRequestTrait,
+  ExecutionReport => ExecutionReportTrait,
   Logon => LogonTrait,
   MessageHeader,
   MessageVisitor,
@@ -28,13 +29,26 @@ import stirling.fix.messages.{
   Required
 }
 import stirling.fix.tags.fix42.{
+  AvgPx,
   ClOrdID,
+  ContraBroker,
+  CumQty,
   DiscretionOffset,
   EncryptMethod,
+  ExecBroker,
+  ExecID,
+  ExecRefID,
+  ExecTransType,
+  ExecType,
   ExpireTime,
   HeartBtInt,
+  LastPx,
+  LastShares,
+  LeavesQty,
   MaxFloor,
   MinQty,
+  NoContraBrokers,
+  OrdStatus,
   OrdType,
   OrderID,
   OrderQty,
@@ -47,19 +61,26 @@ import stirling.fix.tags.fix42.{
   SecurityID,
   Symbol,
   SymbolSfx,
-  Text
+  Text,
+  TransactTime
 }
 import stirling.fix.tags.fix42.samrat.{
   AllowRouting,
   AlternateExDestination,
+  BuyingPower,
   CancelAllOnDisconnect,
   CancelAllOpen,
   CancelPairs,
+  ClientOrderData,
+  ExternalClOrdId,
   ISO,
   Invisible,
+  Liquidity,
   LockedOrCrossedAction,
   LongSaleAffirm,
+  MarketConfirmPrices,
   PegType,
+  Position,
   PostOnly,
   RegularSessionOnly,
   RouteToNYSE,
@@ -149,5 +170,40 @@ class OrderCancelReplaceRequest(header: MessageHeader) extends AbstractMessage(h
 class BulkCancelRequest(header: MessageHeader) extends AbstractMessage(header) with BulkCancelRequestTrait {
   field(ClOrdID.Tag)
   field(CancelPairs.Tag)
+  def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) with ExecutionReportTrait {
+  field(ExecType.Tag)
+  field(OrdStatus.Tag)
+  field(OrderID.Tag)
+  field(ClOrdID.Tag)
+  field(OrigClOrdID.Tag, Required.NO)
+  field(ExecID.Tag)
+  field(ExecBroker.Tag)
+  field(ExecTransType.Tag)
+  field(ExecRefID.Tag, Required.NO)
+  field(Symbol.Tag)
+  field(SymbolSfx.Tag, Required.NO)
+  field(Side.Tag)
+  field(SecurityID.Tag, Required.NO)
+  field(SecurityIDSource.Tag, Required.NO)
+  field(OrderQty.Tag)
+  field(Price.Tag, Required.NO)
+  field(LastShares.Tag)
+  field(LastPx.Tag)
+  field(LeavesQty.Tag)
+  field(CumQty.Tag)
+  field(AvgPx.Tag)
+  field(TransactTime.Tag)
+  field(Text.Tag, Required.NO)
+  field(Liquidity.Tag, Required.NO)
+  field(Position.Tag, Required.NO)
+  field(BuyingPower.Tag, Required.NO)
+  field(MarketConfirmPrices.Tag, Required.NO)
+  field(ContraBroker.Tag, Required.NO)
+  field(NoContraBrokers.Tag, Required.NO)
+  field(ClientOrderData.Tag, Required.NO)
+  field(ExternalClOrdId.Tag, Required.NO)
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
