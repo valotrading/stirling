@@ -21,6 +21,7 @@ import stirling.fix.messages.{
   MessageHeader,
   MessageVisitor,
   NewOrderSingle => NewOrderSingleTrait,
+  OrderCancelReplaceRequest => OrderCancelReplaceRequestTrait,
   OrderCancelRequest => OrderCancelRequestTrait,
   Reject => RejectTrait,
   Required
@@ -70,6 +71,7 @@ import stirling.fix.tags.fix43.{
   SessionRejectReason
 }
 import stirling.fix.tags.fix44.{
+  ParticipationRate,
   Password,
   Username
 }
@@ -128,5 +130,16 @@ class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) 
   field(OrderID.Tag, Required.NO)
   field(OrigClOrdID.Tag)
   field(CancelAllOpen.Tag, Required.NO)
+  def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
+class OrderCancelReplaceRequest(header: MessageHeader) extends AbstractMessage(header) with OrderCancelReplaceRequestTrait {
+  field(OrdType.Tag, Required.NO)
+  field(OrigClOrdID.Tag)
+  field(OrderID.Tag, Required.NO)
+  field(ClOrdID.Tag)
+  field(OrderQty.Tag, Required.NO)
+  field(Price.Tag, Required.NO)
+  field(ParticipationRate.Tag, Required.NO)
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
