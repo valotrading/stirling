@@ -8,7 +8,7 @@ scalaVersion := "2.9.1"
 
 resolvers ++= Seq(
   "laughingpanda" at "http://maven.laughingpanda.org/maven2/",
-  "Silvertip Repository" at "http://penberg.github.com/silvertip/maven/"
+  "Silvertip Repository" at "http://valotrading.github.com/silvertip/maven/"
 )
 
 libraryDependencies ++= Seq(
