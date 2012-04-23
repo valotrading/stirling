@@ -1,10 +1,7 @@
 Stirling
 ========
 
-Stirling is an open source electronic trading library for the JVM. It currently
-comprises of a [FIX Engine][FIX] and an ITCH implementation.
-
-[FIX]: http://fixprotocol.org/
+Stirling is an open source electronic trading library for the JVM.
 
 
 Hacking
@@ -30,9 +27,10 @@ Components
 
 ### FIX Engine
 
-The FIX Engine requires [MongoDB][] 1.4.3 or newer. It uses a database called
+The [FIX Engine][FIX] requires [MongoDB][] 1.4.3 or newer. It uses a database called
 `fixengine`. 
 
+[FIX]: http://fixprotocol.org/
 [MongoDB]: http://www.mongodb.org/
 
 
@@ -71,3 +69,11 @@ It currently comprises of a message parser. SoupTCP, the transport protocol
 used by ITCH, is yet to be implemented.
 
 [ITCH 1.86]: http://nordic.nasdaqomxtrader.com/digitalAssets/72/72740_nordic_equity_totalview-itch_1.86.pdf
+
+
+### MB Trading Quote API
+
+The MB Trading Quote API implementation supports the market data feed protocol
+specified by [MB Trading][].
+
+[MB Trading]: http://www.mbtrading.com/developersMain.aspx?page=api
