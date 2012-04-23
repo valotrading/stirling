@@ -2,22 +2,25 @@ organization := "stirling"
 
 name := "stirling"
 
-version := "1.0.2-SNAPSHOT"
+version := "1.1.1-SNAPSHOT"
 
 scalaVersion := "2.9.1"
 
 resolvers ++= Seq(
-  "laughingpanda" at "http://maven.laughingpanda.org/maven2/",
-  "Silvertip Repository" at "http://valotrading.github.com/silvertip/maven/"
+  "Laughing Panda Repository" at "http://maven.laughingpanda.org/maven2/",
+  "Silvertip Repository" at "http://valotrading.github.com/silvertip/maven/",
+  "Twitter Repository" at "http://maven.twttr.com/"
 )
 
 libraryDependencies ++= Seq(
+  "com.twitter" % "util-logging" % "3.0.0",
   "commons-lang" % "commons-lang" % "2.4",
   "jline" % "jline" % "0.9.94",
-  "joda-time" % "joda-time" % "1.5.2",
+  "joda-time" % "joda-time" % "2.1",
   "log4j" % "log4j" % "1.2.16",
   "org.jdave" % "jdave-junit4" % "1.1" % "test",
   "org.jmock" % "jmock" % "2.5.1" % "test",
+  "org.joda" % "joda-convert" % "1.2",
   "org.mockito" % "mockito-core" % "1.9.0" % "test",
   "org.mongodb" % "mongo-java-driver" % "1.4",
   "org.scalatest" %% "scalatest" % "1.6.1" % "test",
