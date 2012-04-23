@@ -4,6 +4,17 @@ Stirling
 Stirling is an open source electronic trading library for the JVM.
 
 
+Installation
+------------
+
+Stirling is made available through a Maven repository. If you are using SBT,
+amend your `build.sbt` with:
+
+    resolvers += "stirling-repository" at "http://valotrading.github.com/stirling/maven"
+
+    libraryDependencies += "stirling " %% "stirling" % "1.1.0"
+
+
 Hacking
 -------
 
