@@ -20,16 +20,16 @@ Hacking
 
 Open a FIX console:
 
-    sbt one-jar
+    ./sbt one-jar
     java -jar stirling.jar
 
 Run all unit tests:
 
-    sbt test
+    ./sbt test
 
 Run the performance test:
 
-    sbt make-perftest
+    ./sbt make-perftest
     script/perftest
 
 

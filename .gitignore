@@ -6,6 +6,7 @@ target/
 /bin
 /build
 /data
+/sbt-launch.jar
 /stirling.jar
 /stirling.log
 /out
