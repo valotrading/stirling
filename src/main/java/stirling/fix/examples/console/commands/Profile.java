@@ -28,6 +28,7 @@ public class Profile implements Command {
   private static final String MB_TRADING_PROFILE = "mb-trading";
   private static final String BURGUNDY_PROFILE = "burgundy";
   private static final String HOTSPOT_FX_PROFILE = "hotspot-fx";
+  private static final String SAMRAT_PROFILE = "samrat";
   private static final String ARGUMENT_NAME = "Name";
 
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
@@ -42,6 +43,8 @@ public class Profile implements Command {
       client.setMessageFactory(new stirling.fix.messages.fix44.burgundy.MessageFactory());
     else if (profile.equals(HOTSPOT_FX_PROFILE))
       client.setMessageFactory(new stirling.fix.messages.fix42.hotspotfx.MessageFactory());
+    else if (profile.equals(SAMRAT_PROFILE))
+      client.setMessageFactory(new stirling.fix.messages.fix42.samrat.MessageFactory());
     else
       throw new CommandArgException("unknown profile: " + profile);
   }
@@ -53,6 +56,7 @@ public class Profile implements Command {
     profiles.add(ARGUMENT_NAME + "=" + MB_TRADING_PROFILE);
     profiles.add(ARGUMENT_NAME + "=" + BURGUNDY_PROFILE);
     profiles.add(ARGUMENT_NAME + "=" + HOTSPOT_FX_PROFILE);
+    profiles.add(ARGUMENT_NAME + "=" + SAMRAT_PROFILE);
     return profiles.toArray(new String[0]);
   }
 
