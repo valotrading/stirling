@@ -24,6 +24,8 @@ libraryDependencies ++= Seq(
   "silvertip" % "silvertip" % "0.2.3"
 )
 
+testListeners <<= target.map(t => Seq(new eu.henkelmann.sbt.JUnitXmlTestsListener(t.getAbsolutePath)))
+
 testFrameworks += new TestFramework("org.jdave.sbt.JDaveFramework")
 
 seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)
