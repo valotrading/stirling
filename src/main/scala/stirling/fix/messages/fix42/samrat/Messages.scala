@@ -207,5 +207,6 @@ class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) wit
   field(NoContraBrokers.Tag, Required.NO)
   field(ClientOrderData.Tag, Required.NO)
   field(ExternalClOrdId.Tag, Required.NO)
+  field(OrdType.Tag, Required.NO)
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
