@@ -35,6 +35,7 @@ import stirling.fix.tags.fix42.{
   CumQty,
   DiscretionOffset,
   EncryptMethod,
+  ExDestination,
   ExecBroker,
   ExecID,
   ExecRefID,
@@ -127,6 +128,7 @@ class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with
   field(OrderQty.Tag)
   field(OrdType.Tag)
   field(Price.Tag, Required.NO)
+  field(ExDestination.Tag, Required.NO)
   field(TimeInForce.Tag, Required.NO)
   field(MinQty.Tag, Required.NO)
   field(MaxFloor.Tag, Required.NO)
