@@ -102,7 +102,7 @@ import stirling.fix.tags.fix44.{
 class Logon(header: MessageHeader) extends AbstractMessage(header) with LogonTrait {
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
-  field(Username.Tag)
+  field(Username.Tag, Required.NO)
   field(Password.Tag, Required.NO)
   field(CancelAllOnDisconnect.Tag, Required.NO)
   def apply(visitor: MessageVisitor) = visitor.visit(this)
