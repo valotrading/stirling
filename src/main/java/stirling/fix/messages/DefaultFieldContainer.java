@@ -22,7 +22,7 @@ import java.util.Map;
 
 import org.joda.time.DateTime;
 
-public class FieldContainer implements Iterable<Field> {
+public class DefaultFieldContainer implements Iterable<Field> {
     private final Map<Integer, Field> fields = new LinkedHashMap<Integer, Field>();
 
     @Override public Iterator<Field> iterator() {

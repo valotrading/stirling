@@ -19,7 +19,7 @@ import stirling.fix.tags.fix43.SessionRejectReason;
 
 import java.nio.ByteBuffer;
 
-public class RepeatingGroupInstance extends FieldContainer implements Field {
+public class RepeatingGroupInstance extends DefaultFieldContainer implements Field {
     private final Tag<?> delimiter;
 
     public RepeatingGroupInstance(Tag<?> delimiter) {
