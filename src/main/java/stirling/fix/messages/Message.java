@@ -63,7 +63,7 @@ public interface Message extends Parseable, Iterable<Field>, SequencedMessage<Me
     boolean getPossResend();
     boolean isPointToPoint();
     boolean hasAccurateSendingTime();
-    boolean hasOrigSendTimeAfterSendingTime();
+    boolean hasOrigSendingTimeEarlierThanOrEqualToSendingTime();
     boolean hasOrigSendingTime();
     boolean hasValidBeginString(Config config);
     boolean hasValidSenderCompId(Config config);

@@ -202,8 +202,8 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
     }
 
     @Override
-    public boolean hasOrigSendTimeAfterSendingTime() {
-        return header.hasOrigSendTimeAfterSendingTime();
+    public boolean hasOrigSendingTimeEarlierThanOrEqualToSendingTime() {
+        return header.hasOrigSendingTimeEarlierThanOrEqualToSendingTime();
     }
 
     public void parse(ByteBuffer b) {

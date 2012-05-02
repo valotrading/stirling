@@ -127,7 +127,7 @@ public class MessageHeader extends FieldContainer implements Parseable {
         return Math.abs(difference.getMinutes()) < MAX_TIME_DIFFERENCE.getMinutes();
     }
 
-    public boolean hasOrigSendTimeAfterSendingTime() {
+    public boolean hasOrigSendingTimeEarlierThanOrEqualToSendingTime() {
         if (!getBoolean(PossDupFlag.Tag()) || !hasValue(OrigSendingTime.Tag())) {
             return true;
         }

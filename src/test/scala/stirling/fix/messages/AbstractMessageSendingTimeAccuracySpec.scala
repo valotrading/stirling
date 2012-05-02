@@ -28,7 +28,7 @@ class AbstractMessageSendingTimeAccuracySpec extends WordSpec with MustMatchers
       message.setPossDupFlag(true)
       message.setSendingTime(now)
       "have accurate sending time" in {
-        message.hasOrigSendTimeAfterSendingTime must equal(true)
+        message.hasOrigSendingTimeEarlierThanOrEqualToSendingTime must equal(true)
       }
     }
     "has original sending time equal to sending time" should {
@@ -37,7 +37,7 @@ class AbstractMessageSendingTimeAccuracySpec extends WordSpec with MustMatchers
       message.setSendingTime(now)
       message.setOrigSendingTime(now)
       "have accurate sending time" in {
-        message.hasOrigSendTimeAfterSendingTime must equal(true)
+        message.hasOrigSendingTimeEarlierThanOrEqualToSendingTime must equal(true)
       }
     }
     "has original sending time less than sending time" should {
@@ -46,7 +46,7 @@ class AbstractMessageSendingTimeAccuracySpec extends WordSpec with MustMatchers
       message.setSendingTime(now)
       message.setOrigSendingTime(inPast)
       "have accurate sending time" in {
-        message.hasOrigSendTimeAfterSendingTime must equal(true)
+        message.hasOrigSendingTimeEarlierThanOrEqualToSendingTime must equal(true)
       }
     }
     "has original sending time greater than sending time" should {
@@ -55,7 +55,7 @@ class AbstractMessageSendingTimeAccuracySpec extends WordSpec with MustMatchers
       message.setSendingTime(now)
       message.setOrigSendingTime(inFuture)
       "have accurate sending time" in {
-        message.hasOrigSendTimeAfterSendingTime must equal (false)
+        message.hasOrigSendingTimeEarlierThanOrEqualToSendingTime must equal (false)
       }
     }
   }
