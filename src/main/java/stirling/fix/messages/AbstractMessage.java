@@ -49,10 +49,6 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
     private final MessageHeader header;
     private DateTime receiveTime;
 
-    protected AbstractMessage(String msgType) {
-        this(new MessageHeader(msgType));
-    }
-
     protected AbstractMessage(MessageHeader header) {
         this.header = header;
     }
