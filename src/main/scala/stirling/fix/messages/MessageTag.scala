@@ -51,7 +51,7 @@ abstract class EnumTag[T](value: Int) extends MessageTag[EnumField[Value[T]]](va
   private def method(field: java.lang.reflect.Field) = getClass.getDeclaredMethod(field.getName)
 }
 
-abstract class Value[T](val v: T) extends Formattable {
+abstract class Value[T](val v: T) extends EnumType {
   def value = v.toString
 }
 

@@ -15,6 +15,6 @@
  */
 package stirling.fix.messages;
 
-public interface Formattable {
+public interface EnumType {
     String value();
 }

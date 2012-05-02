@@ -163,7 +163,7 @@ public class FieldContainer implements Iterable<Field> {
         return field.getValue();
     }
 
-    @SuppressWarnings("unchecked") public <T extends Formattable> T getEnum(Tag<? extends EnumField<T>> tag) {
+    @SuppressWarnings("unchecked") public <T extends EnumType> T getEnum(Tag<? extends EnumField<T>> tag) {
         EnumField<T> field = (EnumField<T>) lookup(tag);
         return field.getValue();
     }
