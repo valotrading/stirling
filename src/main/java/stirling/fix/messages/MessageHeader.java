@@ -133,8 +133,4 @@ public class MessageHeader extends FieldContainer implements Parseable {
         }
         return !getDateTime(OrigSendingTime.Tag()).isAfter(getDateTime(SendingTime.Tag()));
     }
-
-    public Message newMessage(MessageFactory messageFactory) {
-        return messageFactory.create(getMsgType(), this);
-    }
 }

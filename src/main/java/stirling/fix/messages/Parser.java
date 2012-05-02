@@ -44,7 +44,7 @@ public class Parser {
             header = new MessageHeader();
             header.parse(b);
             header.validate();
-            Message msg = header.newMessage(messageFactory);
+            Message msg = messageFactory.create(header.getMsgType(), header);
             msg.parse(b);
             msg.validate();
             msg.setReceiveTime(receiveTime);
