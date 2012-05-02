@@ -29,7 +29,7 @@ import stirling.fix.tags.fix42.OrigSendingTime;
 import stirling.fix.tags.fix42.PossDupFlag;
 import stirling.fix.tags.fix42.SendingTime;
 
-public abstract class AbstractMessageHeader extends FieldContainer implements Formattable, Parseable {
+public abstract class AbstractMessageHeader extends FieldContainer implements MessageHeader {
     private static final Minutes MAX_TIME_DIFFERENCE = Minutes.TWO;
 
     private final FieldContainer head = new FieldContainer();
