@@ -16,7 +16,7 @@
 package stirling.fix.messages.fix44;
 
 import stirling.fix.messages.AbstractMessage;
-import stirling.fix.messages.MessageHeader;
+import stirling.fix.messages.DefaultMessageHeader;
 import stirling.fix.messages.MessageVisitor;
 import stirling.fix.messages.Required;
 import stirling.fix.tags.fix42.ClOrdID;
@@ -35,7 +35,7 @@ import stirling.fix.tags.fix42.TransactTime;
 import stirling.fix.tags.fix42.TimeInForce;
 
 public class NewOrderSingle extends AbstractMessage implements stirling.fix.messages.NewOrderSingle {
-    public NewOrderSingle(MessageHeader header) {
+    public NewOrderSingle(DefaultMessageHeader header) {
         super(header);
         field(ClOrdID.Tag());
         field(Currency.Tag(), Required.NO);

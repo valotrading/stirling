@@ -46,10 +46,10 @@ import stirling.fix.tags.fix42.TargetSubID;
  * @author Pekka Enberg
  */
 public abstract class AbstractMessage extends FieldContainer implements Message {
-    private final MessageHeader header;
+    private final DefaultMessageHeader header;
     private DateTime receiveTime;
 
-    protected AbstractMessage(MessageHeader header) {
+    protected AbstractMessage(DefaultMessageHeader header) {
         this.header = header;
     }
 

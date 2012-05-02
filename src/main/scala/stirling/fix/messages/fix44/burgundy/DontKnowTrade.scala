@@ -17,7 +17,7 @@ package stirling.fix.messages.fix44.burgundy
 
 import stirling.fix.messages.{
 AbstractMessage,
-MessageHeader,
+DefaultMessageHeader,
 MessageVisitor,
 DontKnowTrade => DontKnowTradeTrait,
 Required
@@ -25,7 +25,7 @@ Required
 import stirling.fix.tags.fix43.SecurityIDSource
 import stirling.fix.tags.fix42.{DKReason, Text, SecurityID, Side, Symbol, OrderQty, OrderID, LastShares, LastPx, ExecID}
 
-class DontKnowTrade(header: MessageHeader) extends AbstractMessage(header) with DontKnowTradeTrait {
+class DontKnowTrade(header: DefaultMessageHeader) extends AbstractMessage(header) with DontKnowTradeTrait {
   field(ExecID.Tag)
   field(LastPx.Tag, Required.NO)
   field(LastShares.Tag, Required.NO)

@@ -39,9 +39,9 @@ public class Parser {
     }
 
     private static void parse(MessageFactory messageFactory, ByteBuffer b, Callback callback, DateTime receiveTime) {
-        MessageHeader header = null;
+        DefaultMessageHeader header = null;
         try {
-            header = new MessageHeader();
+            header = new DefaultMessageHeader();
             header.parse(b);
             header.validate();
             Message msg = messageFactory.create(header.getMsgType(), header);

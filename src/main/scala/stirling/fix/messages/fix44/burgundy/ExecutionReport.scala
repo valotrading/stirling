@@ -18,7 +18,7 @@ package stirling.fix.messages.fix44.burgundy
 import stirling.fix.messages.{
   AbstractMessage,
   ExecutionReport => ExecutionReportTrait,
-  MessageHeader,
+  DefaultMessageHeader,
   MessageVisitor,
   RepeatingGroup,
   RepeatingGroupInstance,
@@ -92,7 +92,7 @@ import stirling.fix.tags.fix50.{
   DisplayMinIncr
 }
 
-class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) with ExecutionReportTrait with Groups {
+class ExecutionReport(header: DefaultMessageHeader) extends AbstractMessage(header) with ExecutionReportTrait with Groups {
   field(Account.Tag, Required.NO)
   field(AvgPx.Tag)
   field(ClOrdID.Tag, Required.NO)

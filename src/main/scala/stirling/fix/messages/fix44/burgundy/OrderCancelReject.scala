@@ -17,7 +17,7 @@ package stirling.fix.messages.fix44.burgundy
 
 import stirling.fix.messages.{
   AbstractMessage,
-  MessageHeader,
+  DefaultMessageHeader,
   MessageVisitor,
   OrderCancelReject => OrderCancelRejectTrait,
   Required
@@ -34,7 +34,7 @@ import stirling.fix.tags.fix42.{
   TransactTime
 }
 
-class OrderCancelReject(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRejectTrait {
+class OrderCancelReject(header: DefaultMessageHeader) extends AbstractMessage(header) with OrderCancelRejectTrait {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(OrderID.Tag, Required.NO)

@@ -17,7 +17,7 @@ package stirling.fix.messages.fix44.burgundy
 
 import stirling.fix.messages.{
   AbstractMessage,
-  MessageHeader,
+  DefaultMessageHeader,
   MessageVisitor,
   Required
 }
@@ -60,7 +60,7 @@ import stirling.fix.tags.fix50.{
   ExecInst
 }
 
-class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with Groups with stirling.fix.messages.NewOrderSingle {
+class NewOrderSingle(header: DefaultMessageHeader) extends AbstractMessage(header) with Groups with stirling.fix.messages.NewOrderSingle {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(Currency.Tag, Required.NO)

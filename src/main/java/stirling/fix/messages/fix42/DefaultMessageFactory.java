@@ -27,7 +27,7 @@ import stirling.fix.messages.InvalidMsgTypeException;
 import stirling.fix.messages.Logout;
 import stirling.fix.messages.Message;
 import stirling.fix.messages.MessageFactory;
-import stirling.fix.messages.MessageHeader;
+import stirling.fix.messages.DefaultMessageHeader;
 import stirling.fix.messages.ResendRequest;
 import stirling.fix.messages.SequenceReset;
 import stirling.fix.messages.Tag;
@@ -60,10 +60,10 @@ public class DefaultMessageFactory implements MessageFactory {
     }
 
     @Override public Message create(String msgType) {
-        return create(msgType, new MessageHeader(msgType));
+        return create(msgType, new DefaultMessageHeader(msgType));
     }
 
-    @Override public Message create(String msgType, MessageHeader header) {
+    @Override public Message create(String msgType, DefaultMessageHeader header) {
         if (!isValid(msgType))
             throw new InvalidMsgTypeException("MsgType(35): Invalid message type: " + msgType);
         if (!messageTypes.containsKey(msgType))
@@ -116,7 +116,7 @@ public class DefaultMessageFactory implements MessageFactory {
     }
 
     private Constructor<? extends Message> constructor(String msgType) throws NoSuchMethodException {
-        return messageClass(msgType).getDeclaredConstructor(MessageHeader.class);
+        return messageClass(msgType).getDeclaredConstructor(DefaultMessageHeader.class);
     }
 
     private Class<? extends Message> messageClass(String msgType) {

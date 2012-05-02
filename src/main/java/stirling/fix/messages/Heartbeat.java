@@ -21,7 +21,7 @@ import stirling.fix.tags.fix42.TestReqID;
  * @author Pekka Enberg 
  */
 public class Heartbeat extends AbstractMessage {
-    public Heartbeat(MessageHeader header) {
+    public Heartbeat(DefaultMessageHeader header) {
         super(header);
 
         field(TestReqID.Tag(), Required.NO);

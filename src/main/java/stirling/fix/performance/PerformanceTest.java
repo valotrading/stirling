@@ -38,7 +38,7 @@ import stirling.fix.session.Session;
 import stirling.fix.session.store.MongoSessionStore;
 import stirling.fix.session.store.NonPersistentInMemorySessionStore;
 import stirling.fix.session.store.SessionStore;
-import stirling.fix.messages.MessageHeader;
+import stirling.fix.messages.DefaultMessageHeader;
 import stirling.fix.messages.fix42.MsgTypeValue;
 import stirling.fix.messages.fix42.DefaultMessageFactory;
 import stirling.fix.messages.fix42.NewOrderSingle;
@@ -220,7 +220,7 @@ public class PerformanceTest implements Runnable {
                         session.logon(conn);
                         while (txCount < NUM_MESSAGES) {
                             tx[txCount++] = System.nanoTime();
-                            MessageHeader header = new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE);
+                            DefaultMessageHeader header = new DefaultMessageHeader(MsgTypeValue.NEW_ORDER_SINGLE);
                             NewOrderSingle message = new NewOrderSingle(header);
                             session.send(conn, message);
                         }

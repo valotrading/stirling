@@ -15,7 +15,7 @@
  */
 package stirling.fix.messages.fix42.chix.europe;
 
-import stirling.fix.messages.MessageHeader;
+import stirling.fix.messages.DefaultMessageHeader;
 import stirling.fix.messages.MessageVisitor;
 import stirling.fix.messages.Required;
 import stirling.fix.messages.AbstractMessage;
@@ -38,7 +38,7 @@ import stirling.fix.tags.fix42.TransactTime;
 import stirling.fix.tags.fix42.chix.europe.ExecInst;
 
 public class OrderCancelReplaceRequest extends stirling.fix.messages.fix42.OrderCancelReplaceRequest {
-    public OrderCancelReplaceRequest(MessageHeader header) {
+    public OrderCancelReplaceRequest(DefaultMessageHeader header) {
         super(header);
 
         field(ClOrdID.Tag());

@@ -20,7 +20,7 @@ import stirling.fix.messages.{
   BulkCancelRequest => BulkCancelRequestTrait,
   ExecutionReport => ExecutionReportTrait,
   Logon => LogonTrait,
-  MessageHeader,
+  DefaultMessageHeader,
   MessageVisitor,
   NewOrderSingle => NewOrderSingleTrait,
   OrderCancelReplaceRequest => OrderCancelReplaceRequestTrait,
@@ -100,7 +100,7 @@ import stirling.fix.tags.fix44.{
   Username
 }
 
-class Logon(header: MessageHeader) extends AbstractMessage(header) with LogonTrait {
+class Logon(header: DefaultMessageHeader) extends AbstractMessage(header) with LogonTrait {
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
   field(Username.Tag, Required.NO)
@@ -109,7 +109,7 @@ class Logon(header: MessageHeader) extends AbstractMessage(header) with LogonTra
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class Reject(header: MessageHeader) extends AbstractMessage(header) with RejectTrait {
+class Reject(header: DefaultMessageHeader) extends AbstractMessage(header) with RejectTrait {
   field(RefSeqNo.Tag)
   field(Text.Tag, Required.NO)
   field(RefTagId.Tag, Required.NO)
@@ -118,7 +118,7 @@ class Reject(header: MessageHeader) extends AbstractMessage(header) with RejectT
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with NewOrderSingleTrait {
+class NewOrderSingle(header: DefaultMessageHeader) extends AbstractMessage(header) with NewOrderSingleTrait {
   field(ClOrdID.Tag)
   field(Symbol.Tag)
   field(SymbolSfx.Tag, Required.NO)
@@ -150,7 +150,7 @@ class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestTrait {
+class OrderCancelRequest(header: DefaultMessageHeader) extends AbstractMessage(header) with OrderCancelRequestTrait {
   field(ClOrdID.Tag)
   field(OrderID.Tag, Required.NO)
   field(OrigClOrdID.Tag)
@@ -158,7 +158,7 @@ class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) 
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderCancelReplaceRequest(header: MessageHeader) extends AbstractMessage(header) with OrderCancelReplaceRequestTrait {
+class OrderCancelReplaceRequest(header: DefaultMessageHeader) extends AbstractMessage(header) with OrderCancelReplaceRequestTrait {
   field(OrdType.Tag, Required.NO)
   field(OrigClOrdID.Tag)
   field(OrderID.Tag, Required.NO)
@@ -169,13 +169,13 @@ class OrderCancelReplaceRequest(header: MessageHeader) extends AbstractMessage(h
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class BulkCancelRequest(header: MessageHeader) extends AbstractMessage(header) with BulkCancelRequestTrait {
+class BulkCancelRequest(header: DefaultMessageHeader) extends AbstractMessage(header) with BulkCancelRequestTrait {
   field(ClOrdID.Tag)
   field(CancelPairs.Tag)
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) with ExecutionReportTrait {
+class ExecutionReport(header: DefaultMessageHeader) extends AbstractMessage(header) with ExecutionReportTrait {
   field(ExecType.Tag)
   field(OrdStatus.Tag)
   field(OrderID.Tag)

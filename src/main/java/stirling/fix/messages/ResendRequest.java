@@ -22,7 +22,7 @@ import stirling.fix.tags.fix42.EndSeqNo;
  * @author Pekka Enberg 
  */
 public class ResendRequest extends AbstractMessage {
-    public ResendRequest(MessageHeader header) {
+    public ResendRequest(DefaultMessageHeader header) {
         super(header);
 
         field(BeginSeqNo.Tag());

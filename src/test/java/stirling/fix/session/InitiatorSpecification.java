@@ -52,7 +52,7 @@ import stirling.fix.messages.FloatField;
 import stirling.fix.messages.IntegerField;
 import stirling.fix.messages.InvalidMsgTypeException;
 import stirling.fix.messages.Message;
-import stirling.fix.messages.MessageHeader;
+import stirling.fix.messages.DefaultMessageHeader;
 import stirling.fix.messages.MessageVisitor;
 import stirling.fix.messages.fix42.MsgTypeValue;
 import stirling.fix.messages.Parser;
@@ -196,7 +196,7 @@ public class InitiatorSpecification extends Specification<Session> {
         private final Message message;
 
         public MessageBuilder(String type) {
-            MessageHeader header = new MessageHeader(type);
+            DefaultMessageHeader header = new DefaultMessageHeader(type);
             header.setBeginString(VERSION.value());
             header.setString(SenderCompID.Tag(), ACCEPTOR);
             header.setString(TargetCompID.Tag(), INITIATOR);

@@ -24,7 +24,7 @@ import stirling.fix.tags.fix42.NewSeqNo;
  * @author Pekka Enberg 
  */
 public class SequenceReset extends AbstractMessage {
-    public SequenceReset(MessageHeader header) {
+    public SequenceReset(DefaultMessageHeader header) {
         super(header);
         
         field(GapFillFlag.Tag(), Required.NO);

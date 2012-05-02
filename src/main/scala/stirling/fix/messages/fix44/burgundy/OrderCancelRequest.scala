@@ -17,7 +17,7 @@ package stirling.fix.messages.fix44.burgundy
 
 import stirling.fix.messages.{
   AbstractMessage,
-  MessageHeader,
+  DefaultMessageHeader,
   MessageVisitor,
   OrderCancelRequest => OrderCancelRequestTrait,
   Required
@@ -36,7 +36,7 @@ import stirling.fix.tags.fix43.{
   SecurityIDSource
 }
 
-class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestTrait {
+class OrderCancelRequest(header: DefaultMessageHeader) extends AbstractMessage(header) with OrderCancelRequestTrait {
   field(ClOrdID.Tag)
   field(OrderID.Tag, Required.NO)
   field(OrderQty.Tag)

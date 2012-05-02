@@ -15,7 +15,7 @@
  */
 package stirling.fix.messages.fix42.bats.europe
 
-import stirling.fix.messages.MessageHeader
+import stirling.fix.messages.DefaultMessageHeader
 import stirling.fix.messages.MessageVisitor
 import stirling.fix.messages.Required
 import stirling.fix.messages.UserDefinedMessage;
@@ -78,7 +78,7 @@ import stirling.fix.tags.fix42.bats.europe.{
 }
 import stirling.fix.tags.fix43.ExecRestatementReason
 
-class OrderCancelReject(header: MessageHeader) extends stirling.fix.messages.fix42.OrderCancelReject(header) {
+class OrderCancelReject(header: DefaultMessageHeader) extends stirling.fix.messages.fix42.OrderCancelReject(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(OrderID.Tag)
@@ -89,7 +89,7 @@ class OrderCancelReject(header: MessageHeader) extends stirling.fix.messages.fix
   field(CxlRejResponseTo.Tag)
 }
 
-class ExecutionReport(header: MessageHeader) extends stirling.fix.messages.fix42.ExecutionReport(header) {
+class ExecutionReport(header: DefaultMessageHeader) extends stirling.fix.messages.fix42.ExecutionReport(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(CumQty.Tag)
@@ -148,7 +148,7 @@ class ExecutionReport(header: MessageHeader) extends stirling.fix.messages.fix42
   field(PegDifference.Tag, Required.NO)
 }
 
-class NewOrderSingle(header: MessageHeader) extends stirling.fix.messages.fix42.NewOrderSingle(header) {
+class NewOrderSingle(header: DefaultMessageHeader) extends stirling.fix.messages.fix42.NewOrderSingle(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(Currency.Tag, new Required {
@@ -191,7 +191,7 @@ class NewOrderSingle(header: MessageHeader) extends stirling.fix.messages.fix42.
   field(OrigSubID.Tag, Required.NO)
 }
 
-class OrderCancelRequest(header: MessageHeader) extends stirling.fix.messages.fix42.OrderCancelRequest(header) {
+class OrderCancelRequest(header: DefaultMessageHeader) extends stirling.fix.messages.fix42.OrderCancelRequest(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(Currency.Tag, new Required {
@@ -213,7 +213,7 @@ class OrderCancelRequest(header: MessageHeader) extends stirling.fix.messages.fi
   })
 }
 
-class TradeCancelCorrect(header: MessageHeader) extends UserDefinedMessage(header) {
+class TradeCancelCorrect(header: DefaultMessageHeader) extends UserDefinedMessage(header) {
   field(ClOrdID.Tag)
   field(Currency.Tag, Required.NO)
   field(ExecID.Tag)
@@ -242,7 +242,7 @@ class TradeCancelCorrect(header: MessageHeader) extends UserDefinedMessage(heade
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderCancelReplaceRequest(header: MessageHeader) extends stirling.fix.messages.fix42.OrderCancelReplaceRequest(header) {
+class OrderCancelReplaceRequest(header: DefaultMessageHeader) extends stirling.fix.messages.fix42.OrderCancelReplaceRequest(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(Currency.Tag, new Required {

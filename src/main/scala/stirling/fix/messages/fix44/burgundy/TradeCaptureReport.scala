@@ -19,7 +19,7 @@ import stirling.fix.messages.{
   RepeatingGroup,
   RepeatingGroupInstance,
   AbstractMessage,
-  MessageHeader,
+  DefaultMessageHeader,
   MessageVisitor,
   Required,
   TradeCaptureReport => TradeCaptureReportTrait
@@ -55,7 +55,7 @@ import stirling.fix.tags.fix44.burgundy.{
 }
 import stirling.fix.tags.fix50.MatchType
 
-class TradeCaptureReport(header: MessageHeader) extends AbstractMessage(header) with TradeCaptureReportTrait with Groups {
+class TradeCaptureReport(header: DefaultMessageHeader) extends AbstractMessage(header) with TradeCaptureReportTrait with Groups {
   field(TradeRequestID.Tag)
   field(PreviouslyReported.Tag)
   field(Symbol.Tag)

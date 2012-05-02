@@ -17,7 +17,7 @@ package stirling.fix.messages.fix44.burgundy
 
 import stirling.fix.messages.{
   AbstractMessage,
-  MessageHeader,
+  DefaultMessageHeader,
   MessageVisitor,
   OrderMassCancelReport => OrderMassCancelReportTrait,
   Required
@@ -33,7 +33,7 @@ import stirling.fix.tags.fix44.{
   MassCancelRejectReason
 }
 
-class OrderMassCancelReport(header: MessageHeader) extends AbstractMessage(header) with OrderMassCancelReportTrait {
+class OrderMassCancelReport(header: DefaultMessageHeader) extends AbstractMessage(header) with OrderMassCancelReportTrait {
   field(ClOrdID.Tag)
   field(OrderID.Tag)
   field(MassCancelRequestType.Tag)

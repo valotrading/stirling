@@ -41,18 +41,18 @@ import stirling.fix.tags.fix42.SenderLocationID;
 /**
  * @author Pekka Enberg 
  */
-public class MessageHeader extends FieldContainer implements Formattable, Parseable {
+public class DefaultMessageHeader extends FieldContainer implements Formattable, Parseable {
     private static final Minutes MAX_TIME_DIFFERENCE = Minutes.TWO;
 
     private final FieldContainer head = new FieldContainer();
 
-    public MessageHeader(String msgType) {
+    public DefaultMessageHeader(String msgType) {
         this();
 
         setMsgType(msgType);
     }
 
-    public MessageHeader() {
+    public DefaultMessageHeader() {
         head.field(BeginString.Tag());
         head.field(BodyLength.Tag());
         head.field(MsgType.Tag());

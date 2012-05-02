@@ -22,14 +22,14 @@ import stirling.fix.tags.fix44.{
 }
 import stirling.fix.messages.{
   AbstractMessage,
-  MessageHeader,
+  DefaultMessageHeader,
   MessageVisitor,
   News => NewsTrait,
   RepeatingGroup,
   RepeatingGroupInstance
 }
 
-class News(header: MessageHeader) extends AbstractMessage(header) with NewsTrait {
+class News(header: DefaultMessageHeader) extends AbstractMessage(header) with NewsTrait {
   field(Headline.Tag)
 
   def linesOfTextGrp() {

@@ -21,7 +21,7 @@ import stirling.fix.tags.fix42.Text;
  * @author Pekka Enberg 
  */
 public class Logout extends AbstractMessage {
-    public Logout(MessageHeader header) {
+    public Logout(DefaultMessageHeader header) {
         super(header);
 
         field(Text.Tag(), Required.NO);

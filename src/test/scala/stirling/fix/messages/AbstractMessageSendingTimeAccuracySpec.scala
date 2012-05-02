@@ -62,7 +62,7 @@ class AbstractMessageSendingTimeAccuracySpec extends WordSpec with MustMatchers
 }
 
 trait AbstractMessageFixtures {
-  def newMessage = new AbstractMessage(new MessageHeader(MsgTypeValue.LOGON)) {
+  def newMessage = new AbstractMessage(new DefaultMessageHeader(MsgTypeValue.LOGON)) {
     override def apply(visitor: MessageVisitor) {
     }
   }

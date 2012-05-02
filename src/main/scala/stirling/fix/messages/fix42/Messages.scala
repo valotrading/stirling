@@ -18,7 +18,7 @@ package stirling.fix.messages.fix42;
 import stirling.fix.messages.{
   AbstractMessage,
   BusinessMessageReject => BusinessMessageRejectTrait,
-  MessageHeader,
+  DefaultMessageHeader,
   MessageVisitor,
   Reject => RejectTrait,
   RepeatingGroup,
@@ -87,7 +87,7 @@ import stirling.fix.tags.fix42.{
 }
 import stirling.fix.tags.fix43.SessionRejectReason
 
-class Reject(header: MessageHeader) extends AbstractMessage(header) with RejectTrait {
+class Reject(header: DefaultMessageHeader) extends AbstractMessage(header) with RejectTrait {
   field(RefSeqNo.Tag)
   field(RefTagId.Tag, Required.NO)
   field(SessionRejectReason.Tag, Required.NO)
@@ -95,7 +95,7 @@ class Reject(header: MessageHeader) extends AbstractMessage(header) with RejectT
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class BusinessMessageReject(header: MessageHeader) extends AbstractMessage(header) with BusinessMessageRejectTrait {
+class BusinessMessageReject(header: DefaultMessageHeader) extends AbstractMessage(header) with BusinessMessageRejectTrait {
   field(RefSeqNo.Tag, Required.NO)
   field(RefMsgType.Tag)
   field(Text.Tag, Required.NO)
@@ -104,7 +104,7 @@ class BusinessMessageReject(header: MessageHeader) extends AbstractMessage(heade
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) with stirling.fix.messages.ExecutionReport {
+class ExecutionReport(header: DefaultMessageHeader) extends AbstractMessage(header) with stirling.fix.messages.ExecutionReport {
   field(OrderID.Tag)
   field(ClOrdID.Tag, Required.NO)
   field(OrigClOrdID.Tag, Required.NO)
@@ -136,14 +136,14 @@ class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) wit
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class Logon(header: MessageHeader) extends AbstractMessage(header) with stirling.fix.messages.Logon {
+class Logon(header: DefaultMessageHeader) extends AbstractMessage(header) with stirling.fix.messages.Logon {
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
   field(ResetSeqNumFlag.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class DontKnowTrade(header: MessageHeader) extends AbstractMessage(header) with stirling.fix.messages.DontKnowTrade {
+class DontKnowTrade(header: DefaultMessageHeader) extends AbstractMessage(header) with stirling.fix.messages.DontKnowTrade {
   field(OrderID.Tag)
   field(ExecID.Tag)
   field(DKReason.Tag)
@@ -177,7 +177,7 @@ class DontKnowTrade(header: MessageHeader) extends AbstractMessage(header) with 
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class Allocation(header: MessageHeader) extends AbstractMessage(header) with stirling.fix.messages.Allocation {
+class Allocation(header: DefaultMessageHeader) extends AbstractMessage(header) with stirling.fix.messages.Allocation {
   field(AllocID.Tag)
   field(AllocTransType.Tag)
   field(NoOrders.Tag);
@@ -197,7 +197,7 @@ class Allocation(header: MessageHeader) extends AbstractMessage(header) with sti
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with stirling.fix.messages.NewOrderSingle {
+class NewOrderSingle(header: DefaultMessageHeader) extends AbstractMessage(header) with stirling.fix.messages.NewOrderSingle {
   field(ClOrdID.Tag)
   field(Currency.Tag, Required.NO)
   field(HandlInst.Tag)
@@ -215,7 +215,7 @@ class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderCancelReject(header: MessageHeader) extends AbstractMessage(header) with stirling.fix.messages.OrderCancelReject {
+class OrderCancelReject(header: DefaultMessageHeader) extends AbstractMessage(header) with stirling.fix.messages.OrderCancelReject {
   field(OrderID.Tag)
   field(ClOrdID.Tag)
   field(OrigClOrdID.Tag)
@@ -226,7 +226,7 @@ class OrderCancelReject(header: MessageHeader) extends AbstractMessage(header) w
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) with stirling.fix.messages.OrderCancelRequest {
+class OrderCancelRequest(header: DefaultMessageHeader) extends AbstractMessage(header) with stirling.fix.messages.OrderCancelRequest {
   field(OrigClOrdID.Tag)
   field(ClOrdID.Tag)
   field(Symbol.Tag)
@@ -238,7 +238,7 @@ class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) 
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderCancelReplaceRequest(header: MessageHeader) extends AbstractMessage(header) with stirling.fix.messages.OrderCancelReplaceRequest {
+class OrderCancelReplaceRequest(header: DefaultMessageHeader) extends AbstractMessage(header) with stirling.fix.messages.OrderCancelReplaceRequest {
   field(OrigClOrdID.Tag)
   field(ClOrdID.Tag)
   field(HandlInst.Tag)
@@ -254,7 +254,7 @@ class OrderCancelReplaceRequest(header: MessageHeader) extends AbstractMessage(h
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderStatusRequest(header: MessageHeader) extends AbstractMessage(header) with stirling.fix.messages.OrderStatusRequest {
+class OrderStatusRequest(header: DefaultMessageHeader) extends AbstractMessage(header) with stirling.fix.messages.OrderStatusRequest {
   field(OrderID.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(ClientID.Tag, Required.NO)
@@ -283,7 +283,7 @@ class OrderStatusRequest(header: MessageHeader) extends AbstractMessage(header) 
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class TradingSessionStatusRequest(header: MessageHeader) extends AbstractMessage(header) with stirling.fix.messages.TradingSessionStatusRequest {
+class TradingSessionStatusRequest(header: DefaultMessageHeader) extends AbstractMessage(header) with stirling.fix.messages.TradingSessionStatusRequest {
   field(TradSesReqID.Tag)
   field(TradingSessionID.Tag)
   field(TradSesMethod.Tag)

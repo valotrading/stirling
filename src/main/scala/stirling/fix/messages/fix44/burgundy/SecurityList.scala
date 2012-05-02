@@ -17,7 +17,7 @@ package stirling.fix.messages.fix44.burgundy
 
 import stirling.fix.messages.{
   AbstractMessage,
-  MessageHeader,
+  DefaultMessageHeader,
   MessageVisitor,
   RepeatingGroup,
   RepeatingGroupInstance,
@@ -88,7 +88,7 @@ import stirling.fix.tags.fix43.{
   UnderlyingSecurityAltIDSource
 }
 
-class SecurityList(header: MessageHeader) extends AbstractMessage(header) with SecurityListTrait {
+class SecurityList(header: DefaultMessageHeader) extends AbstractMessage(header) with SecurityListTrait {
   field(SecurityReqID.Tag)
   field(SecurityResponseID.Tag)
 

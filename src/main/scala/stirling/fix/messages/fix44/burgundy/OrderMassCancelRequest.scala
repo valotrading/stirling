@@ -17,7 +17,7 @@ package stirling.fix.messages.fix44.burgundy
 
 import stirling.fix.messages.{
   AbstractMessage,
-  MessageHeader,
+  DefaultMessageHeader,
   MessageVisitor,
   OrderMassCancelRequest => OrderMassCancelRequestTrait,
   Required
@@ -36,7 +36,7 @@ import stirling.fix.tags.fix44.{
   MassCancelRequestType
 }
 
-class OrderMassCancelRequest(header: MessageHeader) extends AbstractMessage(header) with OrderMassCancelRequestTrait {
+class OrderMassCancelRequest(header: DefaultMessageHeader) extends AbstractMessage(header) with OrderMassCancelRequestTrait {
   field(ClOrdID.Tag)
   field(OnBehalfOfCompID.Tag, Required.NO)
   field(MassCancelRequestType.Tag)

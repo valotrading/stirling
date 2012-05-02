@@ -21,7 +21,7 @@ import stirling.fix.tags.fix42.TestReqID;
  * @author Pekka Enberg 
  */
 public class TestRequest extends AbstractMessage {
-    public TestRequest(MessageHeader header) {
+    public TestRequest(DefaultMessageHeader header) {
         super(header);
 
         field(TestReqID.Tag());

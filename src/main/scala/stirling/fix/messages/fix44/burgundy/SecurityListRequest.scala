@@ -25,11 +25,11 @@ import stirling.fix.messages.{
   MessageVisitor,
   Required,
   AbstractMessage,
-  MessageHeader,
+  DefaultMessageHeader,
   SecurityListRequest => SecurityListRequestTrait
 }
 
-class SecurityListRequest(header: MessageHeader) extends AbstractMessage(header) with SecurityListRequestTrait {
+class SecurityListRequest(header: DefaultMessageHeader) extends AbstractMessage(header) with SecurityListRequestTrait {
   field(Currency.Tag, Required.NO)
   field(IncludeTickRules.Tag, Required.NO)
   field(SecurityReqID.Tag)
