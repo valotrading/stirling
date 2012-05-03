@@ -88,3 +88,8 @@ The MB Trading Quote API implementation supports the market data feed protocol
 specified by [MB Trading][].
 
 [MB Trading]: http://www.mbtrading.com/developersMain.aspx?page=api
+
+Bugs
+----
+
+- Encryption is not handled at all. See session level test Ref ID 17.
