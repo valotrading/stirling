@@ -17,7 +17,7 @@ package stirling.fix.messages;
 
 import org.joda.time.DateTime;
 
-public interface FieldContainer extends Iterable<Field> {
+public interface FieldContainer extends Formattable, Iterable<Field>, Parseable {
     Field lookup(int tag);
     Field lookup(Tag<?> tag);
     boolean isDefined(Tag<?> tag);
@@ -34,5 +34,4 @@ public interface FieldContainer extends Iterable<Field> {
     void setBoolean(Tag<? extends BooleanField> tag, Boolean value);
     <T> void setEnum(Tag<? extends EnumField<Value<T>>> tag, Value<T> value);
     void setDateTime(Tag<? extends UtcTimestampField> tag, DateTime value);
-    String format();
 }
