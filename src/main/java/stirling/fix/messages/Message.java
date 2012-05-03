@@ -22,7 +22,7 @@ import stirling.fix.Config;
 /**
  * @author Pekka Enberg 
  */
-public interface Message extends FieldContainer, Formattable, Parseable, SequencedMessage<Message>  {
+public interface Message extends FieldContainer, Formattable, Parseable, SequencedMessage<Message>, Validatable  {
     void apply(MessageVisitor visitor);
     boolean isAdminMessage();
     void setBeginString(String beginString);
@@ -54,5 +54,4 @@ public interface Message extends FieldContainer, Formattable, Parseable, Sequenc
     boolean hasValidSenderCompId(Config config);
     boolean hasValidTargetCompId(Config config);
     boolean isTooLowSeqNum(int seqNo);
-    void validate();
 }
