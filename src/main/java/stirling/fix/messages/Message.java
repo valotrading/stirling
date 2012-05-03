@@ -22,7 +22,7 @@ import stirling.fix.Config;
 /**
  * @author Pekka Enberg 
  */
-public interface Message extends Parseable, Iterable<Field>, SequencedMessage<Message>  {
+public interface Message extends Formattable, Parseable, Iterable<Field>, SequencedMessage<Message>  {
     void apply(MessageVisitor visitor);
     String format();
     boolean isAdminMessage();
