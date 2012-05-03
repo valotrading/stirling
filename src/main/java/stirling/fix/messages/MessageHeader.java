@@ -17,7 +17,7 @@ package stirling.fix.messages;
 
 import org.joda.time.DateTime;
 
-public interface MessageHeader extends Formattable, Parseable {
+public interface MessageHeader extends FieldContainer, Formattable, Parseable {
     String getBeginString();
     void setBeginString(String beginString);
     int getBodyLength();

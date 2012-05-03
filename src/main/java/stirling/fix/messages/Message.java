@@ -22,24 +22,9 @@ import stirling.fix.Config;
 /**
  * @author Pekka Enberg 
  */
-public interface Message extends Formattable, Parseable, Iterable<Field>, SequencedMessage<Message>  {
+public interface Message extends FieldContainer, Formattable, Parseable, SequencedMessage<Message>  {
     void apply(MessageVisitor visitor);
-    String format();
     boolean isAdminMessage();
-    Field lookup(Tag<?> tag);
-    boolean isDefined(Tag<?> tag);
-    String getString(Tag<? extends StringField> tag);
-    Integer getInteger(Tag<? extends IntegerField> tag);
-    Double getFloat(Tag<? extends FloatField> tag);
-    boolean getBoolean(Tag<? extends BooleanField> tag);
-    <T extends EnumType> T getEnum(Tag<? extends EnumField<T>> tag);
-    DateTime getDateTime(Tag<? extends UtcTimestampField> tag);
-    void setString(Tag<? extends StringField> tag, String value);
-    void setInteger(Tag<? extends IntegerField> tag, Integer value);
-    void setFloat(Tag<? extends FloatField> tag, Double value);
-    void setBoolean(Tag<? extends BooleanField> tag, Boolean value);
-    <T> void setEnum(Tag<? extends EnumField<Value<T>>> tag, Value<T> value);
-    void setDateTime(Tag<? extends UtcTimestampField> tag, DateTime value);
     void setBeginString(String beginString);
     String getBeginString();
     String getMsgType();
