@@ -54,7 +54,6 @@ import stirling.fix.messages.InvalidMsgTypeException;
 import stirling.fix.messages.Message;
 import stirling.fix.messages.MessageHeader;
 import stirling.fix.messages.MessageVisitor;
-import stirling.fix.messages.fix42.MsgTypeValue;
 import stirling.fix.messages.Parser;
 import stirling.fix.messages.RawMessageBuilder;
 import stirling.fix.messages.StringField;
@@ -62,6 +61,8 @@ import stirling.fix.messages.Tag;
 import stirling.fix.messages.UnsupportedMsgTypeException;
 import stirling.fix.messages.Value;
 import stirling.fix.messages.fix42.DefaultMessageFactory;
+import stirling.fix.messages.fix42.DefaultMessageHeader;
+import stirling.fix.messages.fix42.MsgTypeValue;
 import stirling.fix.session.store.InMemorySessionStore;
 import stirling.fix.session.store.MongoSessionStore;
 import stirling.fix.session.store.SessionStore;
@@ -196,7 +197,7 @@ public class InitiatorSpecification extends Specification<Session> {
         private final Message message;
 
         public MessageBuilder(String type) {
-            MessageHeader header = new MessageHeader(type);
+            MessageHeader header = new DefaultMessageHeader(type);
             header.setBeginString(VERSION.value());
             header.setString(SenderCompID.Tag(), ACCEPTOR);
             header.setString(TargetCompID.Tag(), INITIATOR);

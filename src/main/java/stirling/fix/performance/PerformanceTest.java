@@ -29,19 +29,20 @@ import silvertip.Server;
 import silvertip.Server.ConnectionFactory;
 import stirling.fix.Config;
 import stirling.fix.Version;
-import stirling.fix.messages.Message;
-import stirling.fix.messages.DefaultMessageVisitor;
 import stirling.fix.messages.DefaultMessageComparator;
+import stirling.fix.messages.DefaultMessageVisitor;
 import stirling.fix.messages.FixMessageParser;
+import stirling.fix.messages.Message;
+import stirling.fix.messages.MessageHeader;
+import stirling.fix.messages.fix42.DefaultMessageFactory;
+import stirling.fix.messages.fix42.DefaultMessageHeader;
+import stirling.fix.messages.fix42.MsgTypeValue;
+import stirling.fix.messages.fix42.NewOrderSingle;
 import stirling.fix.session.HeartBtIntValue;
 import stirling.fix.session.Session;
 import stirling.fix.session.store.MongoSessionStore;
 import stirling.fix.session.store.NonPersistentInMemorySessionStore;
 import stirling.fix.session.store.SessionStore;
-import stirling.fix.messages.MessageHeader;
-import stirling.fix.messages.fix42.MsgTypeValue;
-import stirling.fix.messages.fix42.DefaultMessageFactory;
-import stirling.fix.messages.fix42.NewOrderSingle;
 
 public class PerformanceTest implements Runnable {
     private static final Random generator = new Random();
@@ -220,7 +221,7 @@ public class PerformanceTest implements Runnable {
                         session.logon(conn);
                         while (txCount < NUM_MESSAGES) {
                             tx[txCount++] = System.nanoTime();
-                            MessageHeader header = new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE);
+                            MessageHeader header = new DefaultMessageHeader(MsgTypeValue.NEW_ORDER_SINGLE);
                             NewOrderSingle message = new NewOrderSingle(header);
                             session.send(conn, message);
                         }
