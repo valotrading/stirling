@@ -20,8 +20,8 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
 import stirling.fix.messages.DefaultMessageVisitor;
-import stirling.fix.messages.DefaultMessageHeader;
 import stirling.fix.messages.MessageHeader;
+import stirling.fix.messages.fix42.DefaultMessageHeader;
 import stirling.fix.messages.fix42.MsgTypeValue;
 import stirling.fix.messages.fix42.NewOrderSingle;
 import stirling.fix.tags.fix42.BeginSeqNo;

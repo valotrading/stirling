@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 import org.apache.commons.lang.CharUtils;
 
-import stirling.fix.messages.DefaultMessageHeader;
 import stirling.fix.messages.Heartbeat;
 import stirling.fix.messages.InvalidMsgTypeException;
 import stirling.fix.messages.Logout;

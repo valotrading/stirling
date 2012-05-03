@@ -18,7 +18,7 @@ package stirling.fix.messages
 import org.joda.time.DateTime
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.fix.messages.fix42.MsgTypeValue
+import stirling.fix.messages.fix42.{DefaultMessageHeader, MsgTypeValue}
 
 class AbstractMessageSendingTimeAccuracySpec extends WordSpec with MustMatchers
   with AbstractMessageFixtures with TimeFixtures {

@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.messages;
+package stirling.fix.messages.fix42;
 
+import stirling.fix.messages.AbstractMessageHeader;
+import stirling.fix.messages.Required;
 import stirling.fix.tags.fix42.DeliverToCompID;
 import stirling.fix.tags.fix42.DeliverToSubID;
 import stirling.fix.tags.fix42.MsgSeqNum;
