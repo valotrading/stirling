@@ -102,7 +102,10 @@ public class DefaultFieldContainer implements FieldContainer {
 
     public boolean hasValue(Tag<?> tag) {
         Field field = lookup(tag);
-        return field.hasValue();
+        if (field == null)
+            return false;
+        else
+            return field.hasValue();
     }
 
     public void setString(Tag<? extends StringField> tag, String value) {
