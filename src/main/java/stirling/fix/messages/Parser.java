@@ -20,7 +20,6 @@ import java.nio.ByteBuffer;
 
 import stirling.fix.messages.FixMessage;
 import stirling.fix.messages.fix42.DefaultMessageFactory;
-import stirling.fix.messages.fix42.DefaultMessageHeader;
 import stirling.fix.tags.fix42.MsgSeqNum;
 
 public class Parser {
@@ -42,7 +41,7 @@ public class Parser {
     private static void parse(MessageFactory messageFactory, ByteBuffer b, Callback callback, DateTime receiveTime) {
         MessageHeader header = null;
         try {
-            header = new DefaultMessageHeader();
+            header = messageFactory.createHeader();
             header.parse(b);
             header.validate();
             Message msg = messageFactory.create(header.getMsgType(), header);

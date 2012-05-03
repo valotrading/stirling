@@ -60,7 +60,9 @@ public class DefaultMessageFactory implements MessageFactory {
     }
 
     @Override public Message create(String msgType) {
-        return create(msgType, new DefaultMessageHeader(msgType));
+        MessageHeader header = createHeader();
+        header.setMsgType(msgType);
+        return create(msgType, header);
     }
 
     @Override public Message create(String msgType, MessageHeader header) {
@@ -73,6 +75,10 @@ public class DefaultMessageFactory implements MessageFactory {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override public MessageHeader createHeader() {
+        return new DefaultMessageHeader();
     }
 
     @Override public Tag<?> createTag(String tagName) {
