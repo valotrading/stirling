@@ -21,6 +21,7 @@ import org.junit.runner.RunWith;
 
 import stirling.fix.messages.DefaultMessageVisitor;
 import stirling.fix.messages.MessageHeader;
+import stirling.fix.messages.fix42.DefaultMessageHeader;
 import stirling.fix.messages.fix42.MsgTypeValue;
 import stirling.fix.messages.fix42.NewOrderSingle;
 import stirling.fix.tags.fix42.BeginSeqNo;
@@ -35,7 +36,7 @@ import stirling.fix.tags.fix42.EndSeqNo;
                     session.logon(connection);
                 }
             });
-            MessageHeader header = new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE);
+            MessageHeader header = new DefaultMessageHeader(MsgTypeValue.NEW_ORDER_SINGLE);
             NewOrderSingle message = new NewOrderSingle(header);
             specify(session.getOutgoingMsgQueue().isEmpty(), true);
             session.send(connection, message);
@@ -71,7 +72,7 @@ import stirling.fix.tags.fix42.EndSeqNo;
         }
 
         private NewOrderSingle message(int msgSeqNum) {
-            NewOrderSingle message = new NewOrderSingle(new MessageHeader(MsgTypeValue.NEW_ORDER_SINGLE));
+            NewOrderSingle message = new NewOrderSingle(new DefaultMessageHeader(MsgTypeValue.NEW_ORDER_SINGLE));
             message.setMsgSeqNum(msgSeqNum);
             return message;
         }

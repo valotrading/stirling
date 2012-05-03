@@ -41,10 +41,10 @@ public class Parser {
     private static void parse(MessageFactory messageFactory, ByteBuffer b, Callback callback, DateTime receiveTime) {
         MessageHeader header = null;
         try {
-            header = new MessageHeader();
+            header = messageFactory.createHeader();
             header.parse(b);
             header.validate();
-            Message msg = header.newMessage(messageFactory);
+            Message msg = messageFactory.create(header.getMsgType(), header);
             msg.parse(b);
             msg.validate();
             msg.setReceiveTime(receiveTime);

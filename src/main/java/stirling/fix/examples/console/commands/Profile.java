@@ -16,44 +16,45 @@
 package stirling.fix.examples.console.commands;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import stirling.fix.examples.console.Arguments;
 import stirling.fix.examples.console.ConsoleClient;
+import stirling.fix.messages.MessageFactory;
 
 public class Profile implements Command {
-  private static final String DEFAULT_PROFILE = "default";
-  private static final String BATS_PROFILE = "bats-europe";
-  private static final String MB_TRADING_PROFILE = "mb-trading";
-  private static final String BURGUNDY_PROFILE = "burgundy";
-  private static final String HOTSPOT_FX_PROFILE = "hotspot-fx";
   private static final String ARGUMENT_NAME = "Name";
+
+  private Map<String, MessageFactory> factories = new HashMap<String, MessageFactory>();
+
+  public Profile() {
+    factories.put("default", new stirling.fix.messages.fix42.DefaultMessageFactory());
+    factories.put("bats-europe", new stirling.fix.messages.fix42.bats.europe.MessageFactory());
+    factories.put("mb-trading", new stirling.fix.messages.fix44.mbtrading.MessageFactory());
+    factories.put("burgundy", new stirling.fix.messages.fix44.burgundy.MessageFactory());
+    factories.put("hotspot-fx", new stirling.fix.messages.fix42.hotspotfx.MessageFactory());
+    factories.put("samrat", new stirling.fix.messages.fix42.samrat.MessageFactory());
+  }
 
   public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
     String profile = new Arguments(scanner).requiredValue(ARGUMENT_NAME);
-    if (profile.equals(DEFAULT_PROFILE))
-      client.setMessageFactory(new stirling.fix.messages.fix42.DefaultMessageFactory());
-    else if (profile.equals(BATS_PROFILE))
-      client.setMessageFactory(new stirling.fix.messages.fix42.bats.europe.MessageFactory());
-    else if (profile.equals(MB_TRADING_PROFILE))
-      client.setMessageFactory(new stirling.fix.messages.fix44.mbtrading.MessageFactory());
-    else if (profile.equals(BURGUNDY_PROFILE))
-      client.setMessageFactory(new stirling.fix.messages.fix44.burgundy.MessageFactory());
-    else if (profile.equals(HOTSPOT_FX_PROFILE))
-      client.setMessageFactory(new stirling.fix.messages.fix42.hotspotfx.MessageFactory());
-    else
+    MessageFactory factory = factories.get(profile);
+    if (factory == null)
       throw new CommandArgException("unknown profile: " + profile);
+    client.setMessageFactory(factory);
   }
 
   @Override public String[] getArgumentNames(ConsoleClient client) {
-    List<String> profiles = new ArrayList<String>();
-    profiles.add(ARGUMENT_NAME + "=" + DEFAULT_PROFILE);
-    profiles.add(ARGUMENT_NAME + "=" + BATS_PROFILE);
-    profiles.add(ARGUMENT_NAME + "=" + MB_TRADING_PROFILE);
-    profiles.add(ARGUMENT_NAME + "=" + BURGUNDY_PROFILE);
-    profiles.add(ARGUMENT_NAME + "=" + HOTSPOT_FX_PROFILE);
-    return profiles.toArray(new String[0]);
+    List<String> profiles = new ArrayList<String>(factories.keySet());
+    List<String> argumentNames = new ArrayList<String>();
+    Collections.sort(profiles);
+    for (String profile : profiles)
+      argumentNames.add(ARGUMENT_NAME + "=" + profile);
+    return argumentNames.toArray(new String[0]);
   }
 
   @Override public String usage() {

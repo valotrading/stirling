@@ -65,7 +65,7 @@ public class MessageValidator {
             });
             add(new AbstractMessageValidator() {
                 @Override protected boolean isValid(Session session, Message message) {
-                    return message.hasOrigSendTimeAfterSendingTime();
+                    return message.hasOrigSendingTimeEarlierThanOrEqualToSendingTime();
                 }
 
                 @Override protected void error(Session session, Message message, ErrorHandler handler) {

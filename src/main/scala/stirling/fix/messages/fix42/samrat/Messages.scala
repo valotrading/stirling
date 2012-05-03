@@ -20,7 +20,7 @@ import stirling.fix.messages.{
   BulkCancelRequest => BulkCancelRequestTrait,
   ExecutionReport => ExecutionReportTrait,
   Logon => LogonTrait,
-  MessageHeader,
+  MessageHeader => MessageHeaderTrait,
   MessageVisitor,
   NewOrderSingle => NewOrderSingleTrait,
   OrderCancelReplaceRequest => OrderCancelReplaceRequestTrait,
@@ -35,6 +35,7 @@ import stirling.fix.tags.fix42.{
   CumQty,
   DiscretionOffset,
   EncryptMethod,
+  ExDestination,
   ExecBroker,
   ExecID,
   ExecRefID,
@@ -99,16 +100,16 @@ import stirling.fix.tags.fix44.{
   Username
 }
 
-class Logon(header: MessageHeader) extends AbstractMessage(header) with LogonTrait {
+class Logon(header: MessageHeaderTrait) extends AbstractMessage(header) with LogonTrait {
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
-  field(Username.Tag)
+  field(Username.Tag, Required.NO)
   field(Password.Tag, Required.NO)
   field(CancelAllOnDisconnect.Tag, Required.NO)
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class Reject(header: MessageHeader) extends AbstractMessage(header) with RejectTrait {
+class Reject(header: MessageHeaderTrait) extends AbstractMessage(header) with RejectTrait {
   field(RefSeqNo.Tag)
   field(Text.Tag, Required.NO)
   field(RefTagId.Tag, Required.NO)
@@ -117,7 +118,7 @@ class Reject(header: MessageHeader) extends AbstractMessage(header) with RejectT
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with NewOrderSingleTrait {
+class NewOrderSingle(header: MessageHeaderTrait) extends AbstractMessage(header) with NewOrderSingleTrait {
   field(ClOrdID.Tag)
   field(Symbol.Tag)
   field(SymbolSfx.Tag, Required.NO)
@@ -127,6 +128,7 @@ class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with
   field(OrderQty.Tag)
   field(OrdType.Tag)
   field(Price.Tag, Required.NO)
+  field(ExDestination.Tag, Required.NO)
   field(TimeInForce.Tag, Required.NO)
   field(MinQty.Tag, Required.NO)
   field(MaxFloor.Tag, Required.NO)
@@ -148,7 +150,7 @@ class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestTrait {
+class OrderCancelRequest(header: MessageHeaderTrait) extends AbstractMessage(header) with OrderCancelRequestTrait {
   field(ClOrdID.Tag)
   field(OrderID.Tag, Required.NO)
   field(OrigClOrdID.Tag)
@@ -156,7 +158,7 @@ class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) 
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderCancelReplaceRequest(header: MessageHeader) extends AbstractMessage(header) with OrderCancelReplaceRequestTrait {
+class OrderCancelReplaceRequest(header: MessageHeaderTrait) extends AbstractMessage(header) with OrderCancelReplaceRequestTrait {
   field(OrdType.Tag, Required.NO)
   field(OrigClOrdID.Tag)
   field(OrderID.Tag, Required.NO)
@@ -167,13 +169,13 @@ class OrderCancelReplaceRequest(header: MessageHeader) extends AbstractMessage(h
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class BulkCancelRequest(header: MessageHeader) extends AbstractMessage(header) with BulkCancelRequestTrait {
+class BulkCancelRequest(header: MessageHeaderTrait) extends AbstractMessage(header) with BulkCancelRequestTrait {
   field(ClOrdID.Tag)
   field(CancelPairs.Tag)
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) with ExecutionReportTrait {
+class ExecutionReport(header: MessageHeaderTrait) extends AbstractMessage(header) with ExecutionReportTrait {
   field(ExecType.Tag)
   field(OrdStatus.Tag)
   field(OrderID.Tag)
@@ -205,5 +207,6 @@ class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) wit
   field(NoContraBrokers.Tag, Required.NO)
   field(ClientOrderData.Tag, Required.NO)
   field(ExternalClOrdId.Tag, Required.NO)
+  field(OrdType.Tag, Required.NO)
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

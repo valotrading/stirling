@@ -45,13 +45,9 @@ import stirling.fix.tags.fix42.TargetSubID;
 /**
  * @author Pekka Enberg
  */
-public abstract class AbstractMessage extends FieldContainer implements Message {
+public abstract class AbstractMessage extends DefaultFieldContainer implements Message {
     private final MessageHeader header;
     private DateTime receiveTime;
-
-    protected AbstractMessage(String msgType) {
-        this(new MessageHeader(msgType));
-    }
 
     protected AbstractMessage(MessageHeader header) {
         this.header = header;
@@ -206,8 +202,8 @@ public abstract class AbstractMessage extends FieldContainer implements Message 
     }
 
     @Override
-    public boolean hasOrigSendTimeAfterSendingTime() {
-        return header.hasOrigSendTimeAfterSendingTime();
+    public boolean hasOrigSendingTimeEarlierThanOrEqualToSendingTime() {
+        return header.hasOrigSendingTimeEarlierThanOrEqualToSendingTime();
     }
 
     public void parse(ByteBuffer b) {

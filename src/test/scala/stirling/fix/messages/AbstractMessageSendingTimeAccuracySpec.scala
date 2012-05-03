@@ -18,7 +18,7 @@ package stirling.fix.messages
 import org.joda.time.DateTime
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.fix.messages.fix42.MsgTypeValue
+import stirling.fix.messages.fix42.{DefaultMessageHeader, MsgTypeValue}
 
 class AbstractMessageSendingTimeAccuracySpec extends WordSpec with MustMatchers
   with AbstractMessageFixtures with TimeFixtures {
@@ -28,7 +28,7 @@ class AbstractMessageSendingTimeAccuracySpec extends WordSpec with MustMatchers
       message.setPossDupFlag(true)
       message.setSendingTime(now)
       "have accurate sending time" in {
-        message.hasOrigSendTimeAfterSendingTime must equal(true)
+        message.hasOrigSendingTimeEarlierThanOrEqualToSendingTime must equal(true)
       }
     }
     "has original sending time equal to sending time" should {
@@ -37,7 +37,7 @@ class AbstractMessageSendingTimeAccuracySpec extends WordSpec with MustMatchers
       message.setSendingTime(now)
       message.setOrigSendingTime(now)
       "have accurate sending time" in {
-        message.hasOrigSendTimeAfterSendingTime must equal(true)
+        message.hasOrigSendingTimeEarlierThanOrEqualToSendingTime must equal(true)
       }
     }
     "has original sending time less than sending time" should {
@@ -46,7 +46,7 @@ class AbstractMessageSendingTimeAccuracySpec extends WordSpec with MustMatchers
       message.setSendingTime(now)
       message.setOrigSendingTime(inPast)
       "have accurate sending time" in {
-        message.hasOrigSendTimeAfterSendingTime must equal(true)
+        message.hasOrigSendingTimeEarlierThanOrEqualToSendingTime must equal(true)
       }
     }
     "has original sending time greater than sending time" should {
@@ -55,14 +55,14 @@ class AbstractMessageSendingTimeAccuracySpec extends WordSpec with MustMatchers
       message.setSendingTime(now)
       message.setOrigSendingTime(inFuture)
       "have accurate sending time" in {
-        message.hasOrigSendTimeAfterSendingTime must equal (false)
+        message.hasOrigSendingTimeEarlierThanOrEqualToSendingTime must equal (false)
       }
     }
   }
 }
 
 trait AbstractMessageFixtures {
-  def newMessage = new AbstractMessage(MsgTypeValue.LOGON) {
+  def newMessage = new AbstractMessage(new DefaultMessageHeader(MsgTypeValue.LOGON)) {
     override def apply(visitor: MessageVisitor) {
     }
   }

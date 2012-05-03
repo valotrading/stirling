@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
 /**
  * @author Pekka Enberg 
  */
-public class EnumField<T extends Formattable> extends AbstractField<T> {
+public class EnumField<T extends EnumType> extends AbstractField<T> {
     public EnumField(Tag<? extends EnumField<T>> tag) {
         this(tag, Required.YES);
     }

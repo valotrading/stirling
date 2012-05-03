@@ -13,17 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.messages;
+package stirling.fix.messages
 
-import org.joda.time.DateTime;
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
+import stirling.fix.tags.fix42.MsgType
 
-public interface MessageHeader extends FieldContainer, Formattable, Parseable, Validatable {
-    String getBeginString();
-    void setBeginString(String beginString);
-    int getBodyLength();
-    String getMsgType();
-    void setMsgType(String msgType);
-    boolean isPointToPoint();
-    boolean hasAccurateSendingTime(DateTime currentTime);
-    boolean hasOrigSendingTimeEarlierThanOrEqualToSendingTime();
+class DefaultFieldContainerSpec extends WordSpec with MustMatchers with DefaultFieldContainerFixtures {
+  "DefaultFieldContainer" should {
+    "return false" in {
+      newContainer.hasValue(MsgType.Tag) must equal(false)
+    }
+  }
+}
+
+trait DefaultFieldContainerFixtures {
+  def newContainer = new DefaultFieldContainer
 }

@@ -18,6 +18,7 @@ package stirling.fix.messages;
 public interface MessageFactory {
     Message create(String msgType);
     Message create(String msgType, MessageHeader header);
+    MessageHeader createHeader();
     Tag<?> createTag(String tagName);
     String getProfile();
 }
