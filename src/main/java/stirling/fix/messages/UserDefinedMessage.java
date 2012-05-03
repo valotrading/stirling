@@ -16,7 +16,7 @@
 package stirling.fix.messages;
 
 public abstract class UserDefinedMessage extends AbstractMessage {
-    public UserDefinedMessage(DefaultMessageHeader header) {
+    public UserDefinedMessage(MessageHeader header) {
         super(header);
     }
 }

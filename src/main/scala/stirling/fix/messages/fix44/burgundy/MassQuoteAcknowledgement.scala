@@ -20,7 +20,7 @@ import stirling.fix.messages.{
   RepeatingGroup,
   AbstractMessage,
   MassQuoteAcknowledgement => MassQuoteAcknowledgementTrait,
-  DefaultMessageHeader,
+  MessageHeader,
   MessageVisitor,
   Required
 }
@@ -47,7 +47,7 @@ import stirling.fix.tags.fix44.{
   QuoteAckStatus
 }
 
-class MassQuoteAcknowledgement(header: DefaultMessageHeader) extends AbstractMessage(header) with MassQuoteAcknowledgementTrait with Groups {
+class MassQuoteAcknowledgement(header: MessageHeader) extends AbstractMessage(header) with MassQuoteAcknowledgementTrait with Groups {
   field(QuoteID.Tag)
   field(QuoteAckStatus.Tag)
   field(QuoteRejectReason.Tag, Required.NO)

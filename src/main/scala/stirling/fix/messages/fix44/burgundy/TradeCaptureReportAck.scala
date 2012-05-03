@@ -17,7 +17,7 @@ package stirling.fix.messages.fix44.burgundy
 
 import stirling.fix.messages.{
   AbstractMessage,
-  DefaultMessageHeader,
+  MessageHeader,
   MessageVisitor,
   Required,
   TradeCaptureReportAck => TradeCaptureReportAckTrait
@@ -35,7 +35,7 @@ import stirling.fix.tags.fix43.{
   SecurityIDSource
 }
 
-class TradeCaptureReportAck(header: DefaultMessageHeader) extends AbstractMessage(header) with TradeCaptureReportAckTrait with Groups {
+class TradeCaptureReportAck(header: MessageHeader) extends AbstractMessage(header) with TradeCaptureReportAckTrait with Groups {
   field(TradeReportId.Tag)
   field(ExecType.Tag)
   field(Symbol.Tag)

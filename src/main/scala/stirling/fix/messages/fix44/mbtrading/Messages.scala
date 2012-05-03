@@ -35,7 +35,7 @@ import stirling.fix.messages.{
 }
 import stirling.fix.messages.{
   AbstractMessage,
-  DefaultMessageHeader,
+  MessageHeader,
   MessageVisitor,
   RepeatingGroup,
   RepeatingGroupInstance,
@@ -182,7 +182,7 @@ import stirling.fix.tags.fix44.mbtrading.{
   UserSessionID
 }
 
-class CollateralInquiry(header: DefaultMessageHeader) extends AbstractMessage(header) with CollateralInquiryTrait {
+class CollateralInquiry(header: MessageHeader) extends AbstractMessage(header) with CollateralInquiryTrait {
   field(Account.Tag, Required.NO)
   field(SenderLocationID.Tag, Required.NO)
   field(SubscriptionRequestType.Tag, Required.NO)
@@ -193,7 +193,7 @@ class CollateralInquiry(header: DefaultMessageHeader) extends AbstractMessage(he
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class NewOrderMultiLeg(header: DefaultMessageHeader) extends AbstractMessage(header) with NewOrderMultiLegTrait {
+class NewOrderMultiLeg(header: MessageHeader) extends AbstractMessage(header) with NewOrderMultiLegTrait {
   field(Account.Tag)
   field(ClOrdID.Tag)
   field(ExecInst.Tag, Required.NO)
@@ -225,7 +225,7 @@ class NewOrderMultiLeg(header: DefaultMessageHeader) extends AbstractMessage(hea
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class NewOrderSingle(header: DefaultMessageHeader) extends AbstractMessage(header) with NewOrderSingleTrait {
+class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with NewOrderSingleTrait {
   field(Account.Tag)
   field(ClOrdID.Tag)
   field(ExecInst.Tag, Required.NO)
@@ -271,7 +271,7 @@ class NewOrderSingle(header: DefaultMessageHeader) extends AbstractMessage(heade
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderCancelRequest(header: DefaultMessageHeader) extends AbstractMessage(header) with OrderCancelRequestTrait {
+class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestTrait {
   field(Account.Tag)
   field(ClOrdID.Tag)
   field(OrigClOrdID.Tag)
@@ -282,7 +282,7 @@ class OrderCancelRequest(header: DefaultMessageHeader) extends AbstractMessage(h
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderCancelReplaceRequest(header: DefaultMessageHeader) extends AbstractMessage(header) with OrderCancelReplaceRequestTrait {
+class OrderCancelReplaceRequest(header: MessageHeader) extends AbstractMessage(header) with OrderCancelReplaceRequestTrait {
   field(Account.Tag)
   field(ClOrdID.Tag)
   field(HandlInst.Tag)
@@ -298,7 +298,7 @@ class OrderCancelReplaceRequest(header: DefaultMessageHeader) extends AbstractMe
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class ExecutionReport(header: DefaultMessageHeader) extends AbstractMessage(header) with ExecutionReportTrait {
+class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) with ExecutionReportTrait {
   field(Account.Tag)
   field(AvgPx.Tag)
   field(ClOrdID.Tag)
@@ -359,7 +359,7 @@ class ExecutionReport(header: DefaultMessageHeader) extends AbstractMessage(head
   field(MBTInternalOrderId.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
-class TradingSessionStatus(header: DefaultMessageHeader) extends AbstractMessage(header) with TradingSessionStatusTrait {
+class TradingSessionStatus(header: MessageHeader) extends AbstractMessage(header) with TradingSessionStatusTrait {
   field(TradeSesReqID.Tag, Required.NO)
   field(TradingSessionID.Tag, Required.NO)
   field(TradSesStatus.Tag, Required.NO)
@@ -367,7 +367,7 @@ class TradingSessionStatus(header: DefaultMessageHeader) extends AbstractMessage
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class RequestForPositions(header: DefaultMessageHeader) extends AbstractMessage(header) with RequestForPositionsTrait {
+class RequestForPositions(header: MessageHeader) extends AbstractMessage(header) with RequestForPositionsTrait {
   field(Account.Tag, Required.NO)
   field(SubscriptionRequestType.Tag, Required.NO)
   field(MessageEncoding.Tag, Required.NO)
@@ -378,7 +378,7 @@ class RequestForPositions(header: DefaultMessageHeader) extends AbstractMessage(
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class News(header: DefaultMessageHeader) extends AbstractMessage(header) with NewsMessageTrait {
+class News(header: MessageHeader) extends AbstractMessage(header) with NewsMessageTrait {
   field(LinesOfText.Tag)
   field(OrigTime.Tag)
   field(Text.Tag)
@@ -387,7 +387,7 @@ class News(header: DefaultMessageHeader) extends AbstractMessage(header) with Ne
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class Logon(header: DefaultMessageHeader) extends AbstractMessage(header) with stirling.fix.messages.Logon {
+class Logon(header: MessageHeader) extends AbstractMessage(header) with stirling.fix.messages.Logon {
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
   field(ResetSeqNumFlag.Tag, Required.NO)
@@ -396,7 +396,7 @@ class Logon(header: DefaultMessageHeader) extends AbstractMessage(header) with s
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class BusinessMessageReject(header: DefaultMessageHeader) extends AbstractMessage(header) with BusinessMessageRejectTrait {
+class BusinessMessageReject(header: MessageHeader) extends AbstractMessage(header) with BusinessMessageRejectTrait {
   field(RefSeqNo.Tag)
   field(Text.Tag)
   field(RefMsgType.Tag)
@@ -407,7 +407,7 @@ class BusinessMessageReject(header: DefaultMessageHeader) extends AbstractMessag
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class CollateralReport(header: DefaultMessageHeader) extends AbstractMessage(header) with CollateralReportMessageTrait {
+class CollateralReport(header: MessageHeader) extends AbstractMessage(header) with CollateralReportMessageTrait {
   field(Account.Tag)
   field(Commission.Tag, Required.NO)
   field(Currency.Tag, Required.NO)
@@ -433,7 +433,7 @@ class CollateralReport(header: DefaultMessageHeader) extends AbstractMessage(hea
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class CollateralInquiryAcknowledgment(header: DefaultMessageHeader) extends AbstractMessage(header) with CollateralInquiryAcknowledgmentTrait {
+class CollateralInquiryAcknowledgment(header: MessageHeader) extends AbstractMessage(header) with CollateralInquiryAcknowledgmentTrait {
   field(CollInquiryID.Tag, Required.NO)
   field(TotNumReports.Tag)
   field(CollInquiryStatus.Tag)
@@ -441,7 +441,7 @@ class CollateralInquiryAcknowledgment(header: DefaultMessageHeader) extends Abst
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class RequestForPositionAcknowledgment(header: DefaultMessageHeader) extends AbstractMessage(header) with RequestForPositionAcknowledgmentTrait {
+class RequestForPositionAcknowledgment(header: MessageHeader) extends AbstractMessage(header) with RequestForPositionAcknowledgmentTrait {
   field(Account.Tag)
   field(Text.Tag, Required.NO)
   field(PosReqID.Tag)
@@ -451,7 +451,7 @@ class RequestForPositionAcknowledgment(header: DefaultMessageHeader) extends Abs
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class PositionReport(header: DefaultMessageHeader) extends AbstractMessage(header) with PositionReportTrait {
+class PositionReport(header: MessageHeader) extends AbstractMessage(header) with PositionReportTrait {
   field(Account.Tag)
   field(Commission.Tag, Required.NO)
   field(Symbol.Tag, Required.NO)
@@ -478,7 +478,7 @@ class PositionReport(header: DefaultMessageHeader) extends AbstractMessage(heade
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
-class OrderCancelReject(header: DefaultMessageHeader) extends AbstractMessage(header) with OrderCancelRejectTrait {
+class OrderCancelReject(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRejectTrait {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(OrderID.Tag)

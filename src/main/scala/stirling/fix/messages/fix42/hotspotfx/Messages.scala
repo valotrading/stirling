@@ -16,7 +16,7 @@
 package stirling.fix.messages.fix42.hotspotfx
 
 import stirling.fix.messages.{
-  DefaultMessageHeader,
+  MessageHeader,
   Required
 }
 import stirling.fix.tags.fix42.{
@@ -61,7 +61,7 @@ import stirling.fix.tags.fix42.{
 }
 import stirling.fix.tags.fix44.{TradeLinkID, ExecType}
 
-class NewOrderSingle(header: DefaultMessageHeader) extends stirling.fix.messages.fix42.NewOrderSingle(header) {
+class NewOrderSingle(header: MessageHeader) extends stirling.fix.messages.fix42.NewOrderSingle(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(ExecInst.Tag, Required.NO)
@@ -80,7 +80,7 @@ class NewOrderSingle(header: DefaultMessageHeader) extends stirling.fix.messages
   field(TradeLinkID.Tag, Required.NO)
 }
 
-class OrderCancelRequest(header: DefaultMessageHeader) extends stirling.fix.messages.fix42.OrderCancelRequest(header) {
+class OrderCancelRequest(header: MessageHeader) extends stirling.fix.messages.fix42.OrderCancelRequest(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(OrigClOrdID.Tag)
@@ -90,7 +90,7 @@ class OrderCancelRequest(header: DefaultMessageHeader) extends stirling.fix.mess
   field(Currency.Tag, Required.NO)
 }
 
-class OrderCancelReplaceRequest(header: DefaultMessageHeader) extends stirling.fix.messages.fix42.OrderCancelReplaceRequest(header) {
+class OrderCancelReplaceRequest(header: MessageHeader) extends stirling.fix.messages.fix42.OrderCancelReplaceRequest(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(OrigClOrdID.Tag)
@@ -105,7 +105,7 @@ class OrderCancelReplaceRequest(header: DefaultMessageHeader) extends stirling.f
   field(TransactTime.Tag, Required.NO)
 }
 
-class ExecutionReport(header: DefaultMessageHeader) extends stirling.fix.messages.fix42.ExecutionReport(header) {
+class ExecutionReport(header: MessageHeader) extends stirling.fix.messages.fix42.ExecutionReport(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(ExecID.Tag)
@@ -143,7 +143,7 @@ class ExecutionReport(header: DefaultMessageHeader) extends stirling.fix.message
   field(TradeLinkID.Tag, Required.NO)
 }
 
-class OrderCancelReject(header: DefaultMessageHeader) extends stirling.fix.messages.fix42.OrderCancelReject(header) {
+class OrderCancelReject(header: MessageHeader) extends stirling.fix.messages.fix42.OrderCancelReject(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(OrderID.Tag)
@@ -154,7 +154,7 @@ class OrderCancelReject(header: DefaultMessageHeader) extends stirling.fix.messa
   field(Text.Tag, Required.NO)
 }
 
-class OrderStatusRequest(header: DefaultMessageHeader) extends stirling.fix.messages.fix42.OrderStatusRequest(header) {
+class OrderStatusRequest(header: MessageHeader) extends stirling.fix.messages.fix42.OrderStatusRequest(header) {
   field(Account.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(Symbol.Tag, Required.NO)

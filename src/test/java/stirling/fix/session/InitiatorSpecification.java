@@ -44,6 +44,7 @@ import stirling.fix.Config;
 import stirling.fix.Version;
 import stirling.fix.messages.BooleanField;
 import stirling.fix.messages.DefaultMessageComparator;
+import stirling.fix.messages.DefaultMessageHeader;
 import stirling.fix.messages.DefaultMessageVisitor;
 import stirling.fix.messages.EnumField;
 import stirling.fix.messages.Field;
@@ -52,9 +53,8 @@ import stirling.fix.messages.FloatField;
 import stirling.fix.messages.IntegerField;
 import stirling.fix.messages.InvalidMsgTypeException;
 import stirling.fix.messages.Message;
-import stirling.fix.messages.DefaultMessageHeader;
+import stirling.fix.messages.MessageHeader;
 import stirling.fix.messages.MessageVisitor;
-import stirling.fix.messages.fix42.MsgTypeValue;
 import stirling.fix.messages.Parser;
 import stirling.fix.messages.RawMessageBuilder;
 import stirling.fix.messages.StringField;
@@ -62,6 +62,7 @@ import stirling.fix.messages.Tag;
 import stirling.fix.messages.UnsupportedMsgTypeException;
 import stirling.fix.messages.Value;
 import stirling.fix.messages.fix42.DefaultMessageFactory;
+import stirling.fix.messages.fix42.MsgTypeValue;
 import stirling.fix.session.store.InMemorySessionStore;
 import stirling.fix.session.store.MongoSessionStore;
 import stirling.fix.session.store.SessionStore;
@@ -196,7 +197,7 @@ public class InitiatorSpecification extends Specification<Session> {
         private final Message message;
 
         public MessageBuilder(String type) {
-            DefaultMessageHeader header = new DefaultMessageHeader(type);
+            MessageHeader header = new DefaultMessageHeader(type);
             header.setBeginString(VERSION.value());
             header.setString(SenderCompID.Tag(), ACCEPTOR);
             header.setString(TargetCompID.Tag(), INITIATOR);

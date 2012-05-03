@@ -15,7 +15,7 @@
  */
 package stirling.fix.messages.fix42.chix.europe;
 
-import stirling.fix.messages.DefaultMessageHeader;
+import stirling.fix.messages.MessageHeader;
 import stirling.fix.messages.MessageVisitor;
 import stirling.fix.messages.Required;
 
@@ -55,7 +55,7 @@ import stirling.fix.tags.fix42.LastCapacity;
 import stirling.fix.tags.fix42.Side;
 
 public class ExecutionReport extends stirling.fix.messages.AbstractMessage implements stirling.fix.messages.ExecutionReport {
-    public ExecutionReport(DefaultMessageHeader header) {
+    public ExecutionReport(MessageHeader header) {
         super(header);
 
         field(Account.Tag(), Required.NO);

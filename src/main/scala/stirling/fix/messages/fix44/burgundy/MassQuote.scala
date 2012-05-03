@@ -18,7 +18,7 @@ package stirling.fix.messages.fix44.burgundy
 import stirling.fix.messages.{
   AbstractMessage,
   MassQuote => MassQuoteTrait,
-  DefaultMessageHeader,
+  MessageHeader,
   MessageVisitor,
   RepeatingGroup,
   RepeatingGroupInstance,
@@ -44,7 +44,7 @@ import stirling.fix.tags.fix42.{
   TotQuoteEntries
 }
 
-class MassQuote(header: DefaultMessageHeader) extends AbstractMessage(header) with MassQuoteTrait with Groups {
+class MassQuote(header: MessageHeader) extends AbstractMessage(header) with MassQuoteTrait with Groups {
   field(QuoteID.Tag)
   field(QuoteResponseLevel.Tag, Required.NO)
   field(DefBidSize.Tag, Required.NO)

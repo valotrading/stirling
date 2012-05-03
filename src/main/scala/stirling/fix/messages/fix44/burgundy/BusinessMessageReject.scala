@@ -17,7 +17,7 @@ package stirling.fix.messages.fix44.burgundy
 
 import stirling.fix.messages.{
   AbstractMessage,
-  DefaultMessageHeader,
+  MessageHeader,
   MessageVisitor,
   BusinessMessageReject => BusinessMessageRejectTrait,
   Required
@@ -30,7 +30,7 @@ import stirling.fix.tags.fix42.{
 }
 import stirling.fix.tags.fix43.BusinessRejectReason
 
-class BusinessMessageReject(header: DefaultMessageHeader) extends AbstractMessage(header) with BusinessMessageRejectTrait {
+class BusinessMessageReject(header: MessageHeader) extends AbstractMessage(header) with BusinessMessageRejectTrait {
   field(RefSeqNo.Tag)
   field(Text.Tag, Required.NO)
   field(RefMsgType.Tag)

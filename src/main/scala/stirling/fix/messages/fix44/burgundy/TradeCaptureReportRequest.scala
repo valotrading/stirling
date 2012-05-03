@@ -17,7 +17,7 @@ package stirling.fix.messages.fix44.burgundy
 
 import stirling.fix.messages.{
   AbstractMessage,
-  DefaultMessageHeader,
+  MessageHeader,
   MessageVisitor,
   RepeatingGroup,
   RepeatingGroupInstance,
@@ -43,7 +43,7 @@ import stirling.fix.tags.fix43.{
 }
 import stirling.fix.tags.fix44.burgundy.TrdType
 
-class TradeCaptureReportRequest(header: DefaultMessageHeader) extends AbstractMessage(header) with TradeCaptureReportRequestTrait with Groups{
+class TradeCaptureReportRequest(header: MessageHeader) extends AbstractMessage(header) with TradeCaptureReportRequestTrait with Groups{
   field(TradeRequestID.Tag)
   field(TradeRequestType.Tag)
   parties(Required.NO)

@@ -16,7 +16,7 @@
 package stirling.fix.messages.fix44;
 
 import stirling.fix.messages.AbstractMessage;
-import stirling.fix.messages.DefaultMessageHeader;
+import stirling.fix.messages.MessageHeader;
 import stirling.fix.messages.MessageVisitor;
 import stirling.fix.messages.Required;
 import stirling.fix.tags.fix42.EncryptMethod;
@@ -27,7 +27,7 @@ import stirling.fix.tags.fix44.Password;
 import stirling.fix.tags.fix44.Username;
 
 public class Logon extends AbstractMessage implements stirling.fix.messages.Logon {
-    public Logon(DefaultMessageHeader header) {
+    public Logon(MessageHeader header) {
         super(header);
 
         field(EncryptMethod.Tag());

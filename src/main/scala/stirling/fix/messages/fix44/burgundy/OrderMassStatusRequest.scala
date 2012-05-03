@@ -16,10 +16,10 @@
 package stirling.fix.messages.fix44.burgundy
 
 
-import stirling.fix.messages.{MessageVisitor, AbstractMessage, DefaultMessageHeader, OrderMassStatusRequest => OrderMassStatusRequestTrait}
+import stirling.fix.messages.{MessageVisitor, AbstractMessage, MessageHeader, OrderMassStatusRequest => OrderMassStatusRequestTrait}
 import stirling.fix.tags.fix43.{MassStatusReqType, MassStatusReqID}
 
-class OrderMassStatusRequest(header: DefaultMessageHeader) extends AbstractMessage(header) with OrderMassStatusRequestTrait {
+class OrderMassStatusRequest(header: MessageHeader) extends AbstractMessage(header) with OrderMassStatusRequestTrait {
   field(MassStatusReqID.Tag)
   field(MassStatusReqType.Tag)
 

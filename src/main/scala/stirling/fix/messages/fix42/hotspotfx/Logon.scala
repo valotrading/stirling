@@ -16,7 +16,7 @@
 package stirling.fix.messages.fix42.hotspotfx
 
 import stirling.fix.messages.AbstractMessage
-import stirling.fix.messages.DefaultMessageHeader
+import stirling.fix.messages.MessageHeader
 import stirling.fix.messages.MessageVisitor
 import stirling.fix.messages.Required
 import stirling.fix.tags.fix42.EncryptMethod
@@ -25,7 +25,7 @@ import stirling.fix.tags.fix42.ResetSeqNumFlag
 import stirling.fix.tags.fix44.Password
 import stirling.fix.tags.fix44.Username
 
-class Logon(header: DefaultMessageHeader) extends AbstractMessage(header) with stirling.fix.messages.Logon {
+class Logon(header: MessageHeader) extends AbstractMessage(header) with stirling.fix.messages.Logon {
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
   field(ResetSeqNumFlag.Tag, Required.NO)

@@ -39,7 +39,7 @@ public class Parser {
     }
 
     private static void parse(MessageFactory messageFactory, ByteBuffer b, Callback callback, DateTime receiveTime) {
-        DefaultMessageHeader header = null;
+        MessageHeader header = null;
         try {
             header = new DefaultMessageHeader();
             header.parse(b);
