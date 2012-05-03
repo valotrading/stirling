@@ -12,7 +12,7 @@ amend your `build.sbt` with:
 
     resolvers += "stirling-repository" at "http://valotrading.github.com/stirling/maven"
 
-    libraryDependencies += "stirling " %% "stirling" % "1.1.0"
+    libraryDependencies += "stirling " %% "stirling" % "1.1.1"
 
 
 Hacking
