@@ -31,6 +31,8 @@ testListeners <<= target.map(t => Seq(new eu.henkelmann.sbt.JUnitXmlTestsListene
 
 testFrameworks += new TestFramework("org.jdave.sbt.JDaveFramework")
 
+parallelExecution in Test := false
+
 seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)
 
 artifactPath in com.github.retronym.SbtOneJar.oneJar := new File("stirling.jar")
