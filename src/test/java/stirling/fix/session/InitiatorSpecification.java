@@ -64,6 +64,7 @@ import stirling.fix.messages.fix42.DefaultMessageFactory;
 import stirling.fix.messages.fix42.DefaultMessageHeader;
 import stirling.fix.messages.fix42.MsgTypeValue;
 import stirling.fix.session.store.InMemorySessionStore;
+import stirling.fix.session.store.DiskSessionStore;
 import stirling.fix.session.store.MongoSessionStore;
 import stirling.fix.session.store.SessionStore;
 import stirling.fix.tags.fix42.BeginSeqNo;
@@ -514,13 +515,16 @@ public class InitiatorSpecification extends Specification<Session> {
     }
 
     private SessionStore newSessionStore() throws Exception {
-        String value = System.getProperty("fixengine.session.store");
-        if ("mongo".equals(value)) {
-            SessionStore store = new MongoSessionStore("localhost", 27017);
-            store.clear(INITIATOR, ACCEPTOR);
-            return store;
+        String type = System.getProperty("fixengine.session.store");
+        SessionStore store = new InMemorySessionStore();
+        if ("mongo".equals(type))
+            store = new MongoSessionStore("localhost", 27017);
+        else if ("disk".equals(type)) {
+            String path = System.getProperty("fixengine.session.store.path", "/tmp/fixengine");
+            store = new DiskSessionStore(path);
         }
-        return new InMemorySessionStore();
+        store.clear(INITIATOR, ACCEPTOR);
+        return store;
     }
 
     protected class TestSession extends Session {
