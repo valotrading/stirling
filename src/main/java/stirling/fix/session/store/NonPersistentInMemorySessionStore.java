@@ -52,4 +52,7 @@ public class NonPersistentInMemorySessionStore implements SessionStore {
     @Override public boolean isDuplicate(Session session, Message message) {
         return false;
     }
+
+    @Override public void close() {
+    }
 }

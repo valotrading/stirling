@@ -537,6 +537,10 @@ public class InitiatorSpecification extends Specification<Session> {
             return store;
         }
 
+        protected void dispose() throws IOException {
+            store.close();
+        }
+
         @Override protected long getLogoutResponseTimeoutMsec() {
             return LOGOUT_RESPONSE_TIMEOUT_MSEC;
         }
@@ -548,5 +552,10 @@ public class InitiatorSpecification extends Specification<Session> {
         @Override public DateTime currentTime() {
             return super.currentTime().plus(sessionTimeShift);
         }
+    }
+
+    public void destroy() throws Exception {
+        if (session != null)
+            session.dispose();
     }
 }

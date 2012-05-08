@@ -94,4 +94,7 @@ public class InMemorySessionStore implements SessionStore {
         }
         return false;
     }
+
+    @Override public void close() {
+    }
 }

@@ -15,6 +15,7 @@
  */
 package stirling.fix.session.store;
 
+import java.io.Closeable;
 import java.util.List;
 
 import stirling.fix.messages.Message;
@@ -24,7 +25,7 @@ import stirling.fix.session.Session;
 /**
  * @author Karim Osman
  */
-public interface SessionStore {
+public interface SessionStore extends Closeable {
     void save(Session session);
     void saveOutgoingMessage(Session session, Message message);
     void saveIncomingMessage(Session session, Message message);

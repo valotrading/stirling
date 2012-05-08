@@ -36,10 +36,11 @@ import stirling.fix.session.Session;
  * @author Karim Osman
  */
 public class MongoSessionStore implements SessionStore {
+    private Mongo mongo;
     private DB db;
 
     public MongoSessionStore(String address, int port) throws Exception {
-        Mongo mongo = new Mongo(address, port);
+        mongo = new Mongo(address, port);
         // Fail-fast if MongoDB is not up and running
         mongo.getDatabaseNames();
         db = mongo.getDB("fixengine");
@@ -114,6 +115,10 @@ public class MongoSessionStore implements SessionStore {
                 return true;
         }
         return false;
+    }
+
+    @Override public void close() {
+        mongo.close();
     }
 
     private List<Message> load(Session session, DBCollection collection) {
