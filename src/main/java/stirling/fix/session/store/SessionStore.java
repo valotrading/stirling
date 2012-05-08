@@ -32,7 +32,7 @@ public interface SessionStore extends Closeable {
     void load(Session session);
     List<Message> getOutgoingMessages(Session session, int beginSeqNo, int endSeqNo);
     List<Message> getIncomingMessages(Session session, int beginSeqNo, int endSeqNo);
-    void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq);
+    void resetOutgoingSeq(Session session, Sequence incomingSeq, Sequence outgoingSeq);
     void clear(String senderCompId, String targetCompId);
     boolean isDuplicate(Session session, Message message);
 }

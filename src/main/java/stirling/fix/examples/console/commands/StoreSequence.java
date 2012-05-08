@@ -33,7 +33,7 @@ public class StoreSequence implements Command {
     String targetCompId = arguments.requiredValue(ArgumentNames.TARGET_COMP_ID.value());
     Sequence incomingSeq = seq(ArgumentNames.INCOMING_SEQ, arguments);
     Sequence outgoingSeq = seq(ArgumentNames.OUTGOING_SEQ, arguments);
-    client.getSessionStore().resetOutgoingSeq(senderCompId, targetCompId, incomingSeq, outgoingSeq);
+    client.getSessionStore().resetOutgoingSeq(client.getSession(), incomingSeq, outgoingSeq);
   }
 
   private Sequence seq(ArgumentNames name, Arguments arguments) throws CommandArgException {
