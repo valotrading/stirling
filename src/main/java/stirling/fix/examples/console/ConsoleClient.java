@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import stirling.fix.session.Session;
+import stirling.fix.session.store.InMemorySessionStore;
 import stirling.fix.session.store.MongoSessionStore;
 import stirling.fix.session.store.SessionStore;
 
@@ -77,7 +78,7 @@ public class ConsoleClient {
     if (console == null) {
       System.err.println("no console");
     } else {
-      MongoSessionStore sessionStore = new MongoSessionStore("localhost", 27017);
+      SessionStore sessionStore = newSessionStore(console);
       console.printf("  #\n");
       console.printf("  # FIX console session started.\n");
       console.printf("  #\n");
@@ -85,6 +86,17 @@ public class ConsoleClient {
       console.printf("  #   console. You can also use the Tab key for command completion.\n");
       console.printf("  #\n");
       new ConsoleClient(console, sessionStore).run(getInitialCommandLines(args));
+    }
+  }
+
+  private static SessionStore newSessionStore(Console console) {
+    try {
+      return new MongoSessionStore("localhost", 27017);
+    } catch (Exception e) {
+      console.printf("  #\n");
+      console.printf("  # MongoDB not running. Falling back to in-memory session store.");
+      console.printf("  #\n");
+      return new InMemorySessionStore();
     }
   }
 
