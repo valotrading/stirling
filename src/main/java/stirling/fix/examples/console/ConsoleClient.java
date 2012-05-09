@@ -94,8 +94,7 @@ public class ConsoleClient {
       return new MongoSessionStore("localhost", 27017);
     } catch (Exception e) {
       console.printf("  #\n");
-      console.printf("  # MongoDB not running. Falling back to in-memory session store.");
-      console.printf("  #\n");
+      console.printf("  # MongoDB not running. Falling back to in-memory session store.\n");
       return new InMemorySessionStore();
     }
   }
