@@ -25,6 +25,18 @@ public class Config {
     private String targetSubId;
     private Version version;
 
+    public Config() {
+        this.version = Version.FIX_4_2;
+        this.senderCompId = "";
+        this.targetCompId = "";
+    }
+
+    public Config(Version version, String senderCompId, String targetCompId) {
+        this.version = version;
+        this.senderCompId = senderCompId;
+        this.targetCompId = targetCompId;
+    }
+
     public String getSenderCompId() {
         return senderCompId;
     }
@@ -72,5 +84,15 @@ public class Config {
 
     public boolean supports(Version version) {
         return this.version.ordinal() >= version.ordinal();
+    }
+
+    public Config counterparty() {
+        Config config = new Config();
+        config.setVersion(getVersion());
+        config.setSenderCompId(getTargetCompId());
+        config.setSenderSubId(getTargetSubId());
+        config.setTargetCompId(getSenderCompId());
+        config.setTargetSubId(getSenderSubId());
+        return config;
     }
 }

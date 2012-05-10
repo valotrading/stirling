@@ -19,16 +19,37 @@ import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
 
 class ConfigSpec extends WordSpec with MustMatchers {
-  "Config" should {
-    val config = new Config().setVersion(Version.FIX_4_2)
-    "support earlier versions" in {
-      config.supports(Version.FIX_4_1) must equal(true)
+  "Config" when {
+    "testing support" should {
+      val config = new Config().setVersion(Version.FIX_4_2)
+      "support earlier versions" in {
+        config.supports(Version.FIX_4_1) must equal(true)
+      }
+      "support current version" in {
+        config.supports(Version.FIX_4_2) must equal(true)
+      }
+      "not support future versions" in {
+        config.supports(Version.FIX_4_3) must equal(false)
+      }
     }
-    "support current version" in {
-      config.supports(Version.FIX_4_2) must equal(true)
-    }
-    "not support future versions" in {
-      config.supports(Version.FIX_4_3) must equal(false)
+    "configuring counterparty" should {
+      val senderCompId = "INITIATOR"
+      val senderSubId = "SUB-INITIATOR"
+      val targetCompId = "ACCEPTOR"
+      val targetSubId = "SUB-ACCEPTOR"
+      val version = Version.FIX_4_2
+      val config = new Config(version, senderCompId, targetCompId)
+        .setSenderSubId(senderSubId).setTargetSubId(targetSubId)
+      val counterparty = config.counterparty
+      "reverse sender and target identifiers" in {
+        counterparty.getSenderCompId must equal(targetCompId)
+        counterparty.getSenderSubId must equal(targetSubId)
+        counterparty.getTargetCompId must equal(senderCompId)
+        counterparty.getTargetSubId must equal(senderSubId)
+      }
+      "retain version" in {
+        counterparty.getVersion must equal(version)
+      }
     }
   }
 }
