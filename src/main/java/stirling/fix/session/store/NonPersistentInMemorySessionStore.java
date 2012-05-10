@@ -34,7 +34,7 @@ public class NonPersistentInMemorySessionStore implements SessionStore {
         return new ArrayList<Message>();
     }
 
-    @Override public void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq) {
+    @Override public void resetOutgoingSeq(Session session, Sequence incomingSeq, Sequence outgoingSeq) {
     }
 
     @Override public void save(Session session) {
@@ -51,5 +51,8 @@ public class NonPersistentInMemorySessionStore implements SessionStore {
 
     @Override public boolean isDuplicate(Session session, Message message) {
         return false;
+    }
+
+    @Override public void close() {
     }
 }
