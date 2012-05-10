@@ -68,7 +68,7 @@ public class InMemorySessionStore implements SessionStore {
         return range;
     }
 
-    @Override public void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq) {
+    @Override public void resetOutgoingSeq(Session session, Sequence incomingSeq, Sequence outgoingSeq) {
     }
 
     @Override public void save(Session session) {
@@ -93,5 +93,8 @@ public class InMemorySessionStore implements SessionStore {
                 return true;
         }
         return false;
+    }
+
+    @Override public void close() {
     }
 }

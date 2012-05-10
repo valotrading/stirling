@@ -36,10 +36,11 @@ import stirling.fix.session.Session;
  * @author Karim Osman
  */
 public class MongoSessionStore implements SessionStore {
+    private Mongo mongo;
     private DB db;
 
     public MongoSessionStore(String address, int port) throws Exception {
-        Mongo mongo = new Mongo(address, port);
+        mongo = new Mongo(address, port);
         // Fail-fast if MongoDB is not up and running
         mongo.getDatabaseNames();
         db = mongo.getDB("fixengine");
@@ -88,9 +89,9 @@ public class MongoSessionStore implements SessionStore {
         return range;
     }
 
-    public void resetOutgoingSeq(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq) {
-        BasicDBObject query = sessionQuery(senderCompId, targetCompId);
-        BasicDBObject doc = sessionDoc(senderCompId, targetCompId, incomingSeq, outgoingSeq);
+    public void resetOutgoingSeq(Session session, Sequence incomingSeq, Sequence outgoingSeq) {
+        BasicDBObject query = sessionQuery(session);
+        BasicDBObject doc = sessionDoc(session, incomingSeq, outgoingSeq);
         sessions().update(query, doc, true, false);
     }
 
@@ -114,6 +115,10 @@ public class MongoSessionStore implements SessionStore {
                 return true;
         }
         return false;
+    }
+
+    @Override public void close() {
+        mongo.close();
     }
 
     private List<Message> load(Session session, DBCollection collection) {
@@ -167,16 +172,15 @@ public class MongoSessionStore implements SessionStore {
     }
 
     private BasicDBObject sessionDoc(Session session) {
-        Config config = session.getConfig();
-        return sessionDoc(config.getSenderCompId(), config.getTargetCompId(), session.getIncomingSeq(), session.getOutgoingSeq());
+        return sessionDoc(session, session.getIncomingSeq(), session.getOutgoingSeq());
     }
 
-    private BasicDBObject sessionDoc(String senderCompId, String targetCompId, Sequence incomingSeq, Sequence outgoingSeq) {
+    private BasicDBObject sessionDoc(Session session, Sequence incomingSeq, Sequence outgoingSeq) {
         BasicDBObject doc = new BasicDBObject();
         doc.put("outgoingSeq", outgoingSeq.peek());
         doc.put("incomingSeq", incomingSeq.peek());
-        doc.put("senderCompId", senderCompId);
-        doc.put("targetCompId", targetCompId);
+        doc.put("senderCompId", session.getConfig().getSenderCompId());
+        doc.put("targetCompId", session.getConfig().getTargetCompId());
         return doc;
     }
 

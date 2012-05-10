@@ -22,7 +22,7 @@ libraryDependencies ++= Seq(
   "org.jmock" % "jmock" % "2.5.1" % "test",
   "org.joda" % "joda-convert" % "1.2",
   "org.mockito" % "mockito-core" % "1.9.0" % "test",
-  "org.mongodb" % "mongo-java-driver" % "1.4",
+  "org.mongodb" % "mongo-java-driver" % "2.7.2",
   "org.scalatest" %% "scalatest" % "1.6.1" % "test",
   "silvertip" % "silvertip" % "0.2.3"
 )
@@ -30,6 +30,8 @@ libraryDependencies ++= Seq(
 testListeners <<= target.map(t => Seq(new eu.henkelmann.sbt.JUnitXmlTestsListener(t.getAbsolutePath)))
 
 testFrameworks += new TestFramework("org.jdave.sbt.JDaveFramework")
+
+parallelExecution in Test := false
 
 seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)
 
