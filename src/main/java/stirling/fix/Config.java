@@ -20,9 +20,9 @@ package stirling.fix;
  */
 public class Config {
     private String senderCompId;
-    private String senderSubID;
+    private String senderSubId;
     private String targetCompId;
-    private String targetSubID;
+    private String targetSubId;
     private Version version;
 
     public String getSenderCompId() {
@@ -34,12 +34,12 @@ public class Config {
         return this;
     }
 
-    public String getSenderSubID() {
-        return senderSubID;
+    public String getSenderSubId() {
+        return senderSubId;
     }
 
-    public Config setSenderSubID(String senderSubID) {
-        this.senderSubID = senderSubID;
+    public Config setSenderSubId(String senderSubId) {
+        this.senderSubId = senderSubId;
         return this;
     }
 
@@ -52,12 +52,12 @@ public class Config {
         return this;
     }
 
-    public String getTargetSubID() {
-        return targetSubID;
+    public String getTargetSubId() {
+        return targetSubId;
     }
 
-    public Config setTargetSubID(String targetSubID) {
-        this.targetSubID = targetSubID;
+    public Config setTargetSubId(String targetSubId) {
+        this.targetSubId = targetSubId;
         return this;
     }
 

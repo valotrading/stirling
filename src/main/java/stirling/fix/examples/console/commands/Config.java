@@ -33,8 +33,8 @@ public class Config implements Command {
     config.setVersion(version(arguments.requiredValue(ArgumentNames.VERSION.value())));
     config.setSenderCompId(arguments.requiredValue(ArgumentNames.SENDER_COMP_ID.value()));
     config.setTargetCompId(arguments.requiredValue(ArgumentNames.TARGET_COMP_ID.value()));
-    config.setSenderSubID(arguments.value(ArgumentNames.SENDER_SUB_ID.value()));
-    config.setTargetSubID(arguments.value(ArgumentNames.TARGET_SUB_ID.value()));
+    config.setSenderSubId(arguments.value(ArgumentNames.SENDER_SUB_ID.value()));
+    config.setTargetSubId(arguments.value(ArgumentNames.TARGET_SUB_ID.value()));
     return config;
   }
 
