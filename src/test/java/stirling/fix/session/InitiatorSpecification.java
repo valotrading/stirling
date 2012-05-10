@@ -17,6 +17,7 @@ package stirling.fix.session;
 
 import static org.joda.time.DateTimeZone.UTC;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
@@ -520,7 +521,8 @@ public class InitiatorSpecification extends Specification<Session> {
         if ("mongo".equals(type))
             store = new MongoSessionStore("localhost", 27017);
         else if ("disk".equals(type)) {
-            String path = System.getProperty("fixengine.session.store.path", "/tmp/fixengine");
+            String defaultPath = System.getProperty("java.io.tmpdir") + File.separator + "fixengine";
+            String path = System.getProperty("fixengine.session.store.path", defaultPath);
             store = new DiskSessionStore(path);
         }
         store.clear(INITIATOR, ACCEPTOR);
