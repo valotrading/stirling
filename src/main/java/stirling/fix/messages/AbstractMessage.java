@@ -73,12 +73,12 @@ public abstract class AbstractMessage extends DefaultFieldContainer implements M
         setBeginString(config.getVersion().value());
 
         setSenderCompId(config.getSenderCompId());
-        if (config.getSenderSubID() != null)
-          setSenderSubID(config.getSenderSubID());
+        if (config.getSenderSubId() != null)
+          setSenderSubId(config.getSenderSubId());
 
         setTargetCompId(config.getTargetCompId());
-        if (config.getTargetSubID() != null)
-          setTargetSubID(config.getTargetSubID());
+        if (config.getTargetSubId() != null)
+          setTargetSubId(config.getTargetSubId());
     }
 
     public String getMsgType() {
@@ -97,8 +97,8 @@ public abstract class AbstractMessage extends DefaultFieldContainer implements M
         header.setString(SenderCompID.Tag(), senderCompId);
     }
 
-    public void setSenderSubID(String senderSubID) {
-        header.setString(SenderSubID.Tag(), senderSubID);
+    public void setSenderSubId(String senderSubId) {
+        header.setString(SenderSubID.Tag(), senderSubId);
     }
 
     public String getSenderCompId() {
@@ -109,8 +109,8 @@ public abstract class AbstractMessage extends DefaultFieldContainer implements M
         header.setString(TargetCompID.Tag(), targetCompId);
     }
 
-    public void setTargetSubID(String targetSubID) {
-        header.setString(TargetSubID.Tag(), targetSubID);
+    public void setTargetSubId(String targetSubId) {
+        header.setString(TargetSubID.Tag(), targetSubId);
     }
 
     public String getTargetCompId() {
