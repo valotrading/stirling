@@ -20,10 +20,22 @@ package stirling.fix;
  */
 public class Config {
     private String senderCompId;
-    private String senderSubID;
+    private String senderSubId;
     private String targetCompId;
-    private String targetSubID;
+    private String targetSubId;
     private Version version;
+
+    public Config() {
+        this.version = Version.FIX_4_2;
+        this.senderCompId = "";
+        this.targetCompId = "";
+    }
+
+    public Config(Version version, String senderCompId, String targetCompId) {
+        this.version = version;
+        this.senderCompId = senderCompId;
+        this.targetCompId = targetCompId;
+    }
 
     public String getSenderCompId() {
         return senderCompId;
@@ -34,12 +46,12 @@ public class Config {
         return this;
     }
 
-    public String getSenderSubID() {
-        return senderSubID;
+    public String getSenderSubId() {
+        return senderSubId;
     }
 
-    public Config setSenderSubID(String senderSubID) {
-        this.senderSubID = senderSubID;
+    public Config setSenderSubId(String senderSubId) {
+        this.senderSubId = senderSubId;
         return this;
     }
 
@@ -52,12 +64,12 @@ public class Config {
         return this;
     }
 
-    public String getTargetSubID() {
-        return targetSubID;
+    public String getTargetSubId() {
+        return targetSubId;
     }
 
-    public Config setTargetSubID(String targetSubID) {
-        this.targetSubID = targetSubID;
+    public Config setTargetSubId(String targetSubId) {
+        this.targetSubId = targetSubId;
         return this;
     }
 
@@ -72,5 +84,15 @@ public class Config {
 
     public boolean supports(Version version) {
         return this.version.ordinal() >= version.ordinal();
+    }
+
+    public Config counterparty() {
+        Config config = new Config();
+        config.setVersion(getVersion());
+        config.setSenderCompId(getTargetCompId());
+        config.setSenderSubId(getTargetSubId());
+        config.setTargetCompId(getSenderCompId());
+        config.setTargetSubId(getSenderSubId());
+        return config;
     }
 }
