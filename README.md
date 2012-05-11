@@ -4,6 +4,21 @@ Stirling
 Stirling is an open source electronic trading library for the JVM.
 
 
+Features
+--------
+
+  - FIX Engine with the following profiles:
+    - BATS Europe
+    - Burgundy
+    - Chi-X Europe
+    - Hotspot FX
+    - MB Trading
+    - UBS
+  - ITCH with the following profiles:
+    - NASDAQ OMX Nordic Equity TotalView-ITCH 1.86
+  - MB Trading Quote API
+
+
 Installation
 ------------
 
@@ -31,35 +46,3 @@ Run the performance test:
 
     ./sbt make-perftest
     script/perftest
-
-
-Components
-----------
-
-### FIX Engine
-
-The [FIX Engine][FIX] requires [MongoDB][] 1.4.3 or newer. It uses a database called
-`fixengine`. 
-
-[FIX]: http://fixprotocol.org/
-[MongoDB]: http://www.mongodb.org/
-
-
-### ITCH
-
-The ITCH implementation supports the following profiles:
-
-- [NASDAQ OMX Nordic Equity TotalView-ITCH 1.86][ITCH 1.86]
-
-It currently comprises of a message parser. SoupTCP, the transport protocol
-used by ITCH, is yet to be implemented.
-
-[ITCH 1.86]: http://nordic.nasdaqomxtrader.com/digitalAssets/72/72740_nordic_equity_totalview-itch_1.86.pdf
-
-
-### MB Trading Quote API
-
-The MB Trading Quote API implementation supports the market data feed protocol
-specified by [MB Trading][].
-
-[MB Trading]: http://www.mbtrading.com/developersMain.aspx?page=api
