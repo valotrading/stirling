@@ -29,24 +29,6 @@ Stirling is available at a Maven repository. Add this into your `build.sbt`:
     libraryDependencies += "stirling " %% "stirling" % "1.1.1"
 
 
-Hacking
--------
-
-Open a FIX console:
-
-    ./sbt one-jar
-    java -jar stirling.jar
-
-Run all unit tests:
-
-    ./sbt test
-
-Run the performance test:
-
-    ./sbt make-perftest
-    script/perftest
-
-
 License
 -------
 
