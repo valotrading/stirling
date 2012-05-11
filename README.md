@@ -22,8 +22,7 @@ Features
 Installation
 ------------
 
-Stirling is made available through a Maven repository. If you are using SBT,
-amend your `build.sbt` with:
+Stirling is available at a Maven repository. Add this into your `build.sbt`:
 
     resolvers += "stirling-repository" at "http://valotrading.github.com/stirling/maven"
 
