@@ -45,3 +45,9 @@ Run the performance test:
 
     ./sbt make-perftest
     script/perftest
+
+
+License
+-------
+
+Stirling is released under the Apache License, Version 2.0.
