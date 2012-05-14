@@ -28,77 +28,7 @@ import stirling.fix.messages.{
   Reject => RejectTrait,
   Required
 }
-import stirling.fix.tags.fix42.{
-  AvgPx,
-  ClOrdID,
-  ContraBroker,
-  CumQty,
-  DiscretionOffset,
-  EncryptMethod,
-  ExDestination,
-  ExecBroker,
-  ExecID,
-  ExecRefID,
-  ExecTransType,
-  ExecType,
-  ExpireTime,
-  HeartBtInt,
-  LastPx,
-  LastShares,
-  LeavesQty,
-  MaxFloor,
-  MinQty,
-  NoContraBrokers,
-  OrdStatus,
-  OrdType,
-  OrderID,
-  OrderQty,
-  OrigClOrdID,
-  PegDifference,
-  Price,
-  RefMsgType,
-  RefSeqNo,
-  RefTagId,
-  SecurityID,
-  Symbol,
-  SymbolSfx,
-  Text,
-  TransactTime
-}
-import stirling.fix.tags.fix42.samrat.{
-  AllowRouting,
-  AlternateExDestination,
-  BuyingPower,
-  CancelAllOnDisconnect,
-  CancelAllOpen,
-  CancelPairs,
-  ClientOrderData,
-  ExternalClOrdId,
-  ISO,
-  Invisible,
-  Liquidity,
-  LockedOrCrossedAction,
-  LongSaleAffirm,
-  MarketConfirmPrices,
-  PegType,
-  Position,
-  PostOnly,
-  RegularSessionOnly,
-  RouteToNYSE,
-  ShortSaleAffirm,
-  ShortSaleAffirmLongQuantity,
-  Side,
-  TimeInForce
-}
-import stirling.fix.tags.fix43.{
-  SecurityIDSource,
-  SessionRejectReason
-}
-import stirling.fix.tags.fix44.{
-  ParticipationRate,
-  Password,
-  Username
-}
+import stirling.fix.tags.fix42.samrat._
 
 class Logon(header: MessageHeaderTrait) extends AbstractMessage(header) with LogonTrait {
   field(EncryptMethod.Tag)
