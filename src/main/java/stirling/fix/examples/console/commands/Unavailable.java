@@ -20,7 +20,7 @@ import java.util.Scanner;
 import stirling.fix.examples.console.ConsoleClient;
 
 public class Unavailable implements Command {
-  @Override public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
+  @Override public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
     if (client.getSession() != null)
       client.getSession().setAvailable(false);
   }

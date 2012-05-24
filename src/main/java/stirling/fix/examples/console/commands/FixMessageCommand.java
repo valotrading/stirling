@@ -70,7 +70,7 @@ public abstract class FixMessageCommand implements Command {
     return fields.toArray(new String[0]);
   }
 
-  public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
+  public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
     try {
       Message message = newMessage(client);
       if (message.isDefined(TransactTime.Tag()))
@@ -81,7 +81,7 @@ public abstract class FixMessageCommand implements Command {
       if (client.getSession() != null)
         client.getSession().send(client.getConnection(), message);
     } catch (Exception e) {
-      throw new CommandArgException("failed to set field: " + e.getMessage());
+      throw new CommandException("failed to set field: " + e.getMessage());
     }
   }
 
