@@ -52,7 +52,7 @@ public class Connect implements Command {
     }
   }
 
-  public void execute(final ConsoleClient client, Scanner scanner) throws CommandArgException {
+  public void execute(final ConsoleClient client, Scanner scanner) throws CommandException {
     Arguments arguments = new Arguments(scanner);
     try {
       Connection conn = Connection.connect(new InetSocketAddress(host(arguments), port(arguments)),
@@ -104,11 +104,11 @@ public class Connect implements Command {
     return HeartBtIntValue.seconds(30);
   }
 
-  private InetAddress host(Arguments arguments) throws CommandArgException {
+  private InetAddress host(Arguments arguments) throws CommandException {
     try {
       return InetAddress.getByName(arguments.requiredValue(ARGUMENT_HOST));
     } catch (UnknownHostException e) {
-      throw new CommandArgException("unknown hostname");
+      throw new CommandException("unknown hostname");
     }
   }
 

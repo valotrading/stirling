@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.examples.console.commands;
+package stirling.fix.session.store;
 
-import java.util.Scanner;
+public class SessionStoreException extends Exception {
+    public SessionStoreException(String message) {
+        super(message);
+    }
 
-import stirling.fix.examples.console.ConsoleClient;
-
-/**
- * @author Karim Osman
- */
-public interface Command {
-  void execute(ConsoleClient client, Scanner scanner) throws CommandException;
-
-  String[] getArgumentNames(ConsoleClient client);
-
-  String usage();
+    private static final long serialVersionUID = 1L;
 }

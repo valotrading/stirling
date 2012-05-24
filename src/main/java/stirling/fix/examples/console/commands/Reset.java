@@ -28,7 +28,7 @@ import stirling.fix.examples.console.ConsoleClient;
 public class Reset implements Command {
   private static final String SEQUENCE_ARGUMENT_NAME = "SequenceNumber";
 
-  public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
+  public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
     if (client.getSession() != null)
       client.getSession().sequenceReset(client.getConnection(), sequence(scanner));
   }

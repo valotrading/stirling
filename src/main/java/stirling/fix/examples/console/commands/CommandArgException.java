@@ -18,7 +18,7 @@ package stirling.fix.examples.console.commands;
 /**
  * @author Karim Osman
  */
-public class CommandArgException extends Exception {
+public class CommandArgException extends CommandException {
   public CommandArgException(String s) {
     super(s);
   }

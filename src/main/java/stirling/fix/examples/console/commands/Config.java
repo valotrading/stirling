@@ -24,7 +24,7 @@ import stirling.fix.examples.console.Arguments;
 import stirling.fix.examples.console.ConsoleClient;
 
 public class Config implements Command {
-  public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
+  public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
     client.setConfig(config(new Arguments(scanner)));
   }
 
