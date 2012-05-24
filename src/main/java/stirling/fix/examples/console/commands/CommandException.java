@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,10 @@
  */
 package stirling.fix.examples.console.commands;
 
-import java.util.Scanner;
-
-import stirling.fix.examples.console.ConsoleClient;
-
-/**
- * @author Karim Osman
- */
-public class Logout implements Command {
-  public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
-    if (client.getSession() != null) client.getSession().logout(client.getConnection());
+public class CommandException extends Exception {
+  public CommandException(String s) {
+    super(s);
   }
 
-  public String[] getArgumentNames(ConsoleClient client) {
-    return new String[0];
-  }
-
-  public String usage() {
-    return ": Creates and sends logout message.";
-  }
+  private static final long serialVersionUID = 1L;
 }

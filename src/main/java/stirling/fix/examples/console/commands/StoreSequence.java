@@ -27,7 +27,7 @@ import stirling.fix.session.Sequence;
  * @author Karim Osman
  */
 public class StoreSequence implements Command {
-  public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
+  public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
     Arguments arguments = new Arguments(scanner);
     String senderCompId = arguments.requiredValue(ArgumentNames.SENDER_COMP_ID.value());
     String targetCompId = arguments.requiredValue(ArgumentNames.TARGET_COMP_ID.value());

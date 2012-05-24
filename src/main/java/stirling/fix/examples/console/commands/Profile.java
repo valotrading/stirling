@@ -40,7 +40,7 @@ public class Profile implements Command {
     factories.put("samrat", new stirling.fix.messages.fix42.samrat.MessageFactory());
   }
 
-  public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
+  public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
     String profile = new Arguments(scanner).requiredValue(ARGUMENT_NAME);
     MessageFactory factory = factories.get(profile);
     if (factory == null)

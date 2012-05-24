@@ -28,8 +28,6 @@ import java.util.ArrayList;
 
 import stirling.fix.session.Session;
 import stirling.fix.session.store.InMemorySessionStore;
-import stirling.fix.session.store.MongoSessionStore;
-import stirling.fix.session.store.SessionStore;
 
 import stirling.fix.messages.MessageFactory;
 import stirling.fix.messages.fix42.DefaultMessageFactory;
@@ -57,8 +55,8 @@ public class ConsoleClient {
   private final Map<String, String> orderIDs = new HashMap<String, String>();
 
   private final Console console;
-  private final SessionStore sessionStore;
 
+  private stirling.fix.session.store.SessionStore sessionStore;
   private Connection conn;
   private Session session;
   private Events events;
@@ -78,24 +76,13 @@ public class ConsoleClient {
     if (console == null) {
       System.err.println("no console");
     } else {
-      SessionStore sessionStore = newSessionStore(console);
       console.printf("  #\n");
       console.printf("  # FIX console session started.\n");
       console.printf("  #\n");
       console.printf("  #   Type 'help' for list of available commands and 'exit' to exit the\n");
       console.printf("  #   console. You can also use the Tab key for command completion.\n");
       console.printf("  #\n");
-      new ConsoleClient(console, sessionStore).run(getInitialCommandLines(args));
-    }
-  }
-
-  private static SessionStore newSessionStore(Console console) {
-    try {
-      return new MongoSessionStore("localhost", 27017);
-    } catch (Exception e) {
-      console.printf("  #\n");
-      console.printf("  # MongoDB not running. Falling back to in-memory session store.\n");
-      return new InMemorySessionStore();
+      new ConsoleClient(console).run(getInitialCommandLines(args));
     }
   }
 
@@ -124,9 +111,9 @@ public class ConsoleClient {
     }
   }
 
-  public ConsoleClient(Console console, SessionStore sessionStore) {
+  public ConsoleClient(Console console) {
     this.console = console;
-    this.sessionStore = sessionStore;
+    this.sessionStore = new InMemorySessionStore();
     registerCommands();
   }
 
@@ -134,8 +121,16 @@ public class ConsoleClient {
     return console;
   }
 
-  public SessionStore getSessionStore() {
+  public stirling.fix.session.store.SessionStore getSessionStore() {
     return sessionStore;
+  }
+
+  public void setSessionStore(stirling.fix.session.store.SessionStore sessionStore) {
+    try {
+      this.sessionStore.close();
+    } catch (IOException e) {
+    }
+    this.sessionStore = sessionStore;
   }
 
   public MessageFactory getMessageFactory() {
@@ -196,7 +191,7 @@ public class ConsoleClient {
         continue;
       try {
         cmd.execute(ConsoleClient.this, scanner);
-      } catch (CommandArgException e) {
+      } catch (CommandException e) {
         error(e.getMessage());
       }
     }
@@ -216,6 +211,9 @@ public class ConsoleClient {
           } catch (CommandArgException e) {
             error(e.getMessage());
             printUsage(commandName);
+            prompt();
+          } catch (CommandException e) {
+            error(e.getMessage());
             prompt();
           }
         }
@@ -247,6 +245,7 @@ public class ConsoleClient {
     commands.put("logon", new Logon());
     commands.put("logout", new Logout());
     commands.put("reset", new Reset());
+    commands.put("session-store", new SessionStore());
     commands.put("storeseq", new StoreSequence());
     commands.put("available", new Available());
     commands.put("unavailable", new Unavailable());
@@ -282,7 +281,7 @@ public class ConsoleClient {
   private Command helpCommand() {
     return new Command() {
       @Override
-      public void execute(ConsoleClient client, Scanner scanner) throws CommandArgException {
+      public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
         String commandName = null;
         if (scanner.hasNext())
           commandName = scanner.next();
