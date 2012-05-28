@@ -15,6 +15,7 @@
  */
 package stirling.fix.messages
 
+import java.util.Locale
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
 import stirling.fix.tags.fix42.BidPx
@@ -45,6 +46,13 @@ class FloatFieldSpec extends WordSpec with MustMatchers {
     "format a huge number to a decimal number" in {
       field.setValue(10000000.0)
       field.value() must equal("10000000.00")
+    }
+    "use a full stop as the decimal separator regardless of the default local" in {
+      val locale = Locale.getDefault
+      Locale.setDefault(Locale.FRANCE)
+      field.setValue(23.23)
+      field.value() must equal("23.23")
+      Locale.setDefault(locale)
     }
   }
 }
