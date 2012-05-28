@@ -182,7 +182,7 @@ public class ConsoleClient {
   }
 
   public void run(List<String> initialCommandLines) throws IOException {
-    events = Events.open(100);
+    events = Events.open();
     for (String commandLine : initialCommandLines) {
       Scanner scanner = new Scanner(commandLine);
       String commandName = scanner.next().toLowerCase();
@@ -223,7 +223,7 @@ public class ConsoleClient {
     registerHistory(commandLine);
     commandLine.addCompletor(new CommandCompletor(this, commands));
     events.register(commandLine);
-    events.dispatch();
+    events.dispatch(100);
   }
 
   private Command getCommand(String commandName) {

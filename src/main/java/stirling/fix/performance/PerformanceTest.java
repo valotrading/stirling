@@ -133,7 +133,7 @@ public class PerformanceTest implements Runnable {
 
         @Override public void run() {
             try {
-                final Events events = Events.open(30000);
+                final Events events = Events.open();
                 Server server = Server.accept(port, new ConnectionFactory() {
                     boolean firstMessage = true;
                     @Override public Connection newConnection(SocketChannel channel) {
@@ -171,7 +171,7 @@ public class PerformanceTest implements Runnable {
                     }
                 });
                 events.register(server);
-                events.dispatch();
+                events.dispatch(30000);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -187,7 +187,7 @@ public class PerformanceTest implements Runnable {
 
         @Override public void run() {
             try {
-                Events events = Events.open(30000);
+                Events events = Events.open();
                 final Session session = new Session(getHeartBtIntValue(), getConfig(), sessionStore, getMessageFactory(), new DefaultMessageComparator());
                 SocketChannel channel = SocketChannel.open();
                 channel.connect(new InetSocketAddress("localhost", port));
@@ -228,7 +228,7 @@ public class PerformanceTest implements Runnable {
                     }
                 });
                 worker.start();
-                events.dispatch();
+                events.dispatch(30000);
                 worker.join();
             } catch (Exception e) {
                 throw new RuntimeException(e);
