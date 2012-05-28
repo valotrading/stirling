@@ -30,7 +30,7 @@ class MbtMessageClient(val application: MbtMessageListener, val config: MbtMessa
       events.register(connection)
       log.info("Connected, logging in")
       application.login
-      events.dispatch
+      events.dispatch(idleEventTimeoutMillis)
     } catch {
       case e =>
         log.fatal(e, "Error while establishing connection")
@@ -39,6 +39,6 @@ class MbtMessageClient(val application: MbtMessageListener, val config: MbtMessa
   def send(message: MbtMessage) = connection.send(message.format.getBytes)
   private def idleEventTimeoutMillis = 50
   private var connection: Connection[MbtMessage] = null
-  private val events = Events.open(idleEventTimeoutMillis)
+  private val events = Events.open()
   private val log = Logger.get
 }
