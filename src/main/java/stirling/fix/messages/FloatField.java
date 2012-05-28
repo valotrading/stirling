@@ -16,6 +16,8 @@
 package stirling.fix.messages;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +25,7 @@ import java.util.regex.Pattern;
  * @author Pekka Enberg 
  */
 public class FloatField extends AbstractField<Double> {
+    private static final DecimalFormatSymbols DECIMAL_SYMBOLS = new DecimalFormatSymbols(Locale.US);
     private static final Pattern DECIMAL_PATTERN = Pattern.compile("-?\\d*(\\.\\d*)?");
 
     public FloatField(Tag<? extends FloatField> tag) {
@@ -53,7 +56,7 @@ public class FloatField extends AbstractField<Double> {
 
     @Override
     protected final String value() {
-        DecimalFormat format = new DecimalFormat("0.00#############");
+        DecimalFormat format = new DecimalFormat("0.00#############", DECIMAL_SYMBOLS);
         return format.format(doubleValue());
     }
 
