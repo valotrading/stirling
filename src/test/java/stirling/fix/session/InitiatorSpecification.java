@@ -153,13 +153,13 @@ public class InitiatorSpecification extends Specification<Session> {
         Thread serverThread = new Thread(server);
         serverThread.start();
         server.awaitForStart();
-        Events events = Events.open(eventsIdleMSec);
+        Events events = Events.open();
         session = new TestSession();
         beforeConnecting.run();
         connection = openConnection(session, visitor, server.getPort(), keepAlive);
         events.register(connection);
         afterConnected.run();
-        events.dispatch();
+        events.dispatch(eventsIdleMSec);
         server.stop();
         specify(server.passed());
     }
