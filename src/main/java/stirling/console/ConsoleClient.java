@@ -110,10 +110,6 @@ public class ConsoleClient {
     registerCommands();
   }
 
-  public Console getConsole() {
-    return console;
-  }
-
   public stirling.fix.session.store.SessionStore getSessionStore() {
     return sessionStore;
   }
