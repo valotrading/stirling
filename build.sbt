@@ -37,7 +37,7 @@ seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)
 
 artifactPath in com.github.retronym.SbtOneJar.oneJar := new File("stirling.jar")
 
-mainClass in com.github.retronym.SbtOneJar.oneJar := Some("stirling.fix.examples.console.ConsoleClient")
+mainClass in com.github.retronym.SbtOneJar.oneJar := Some("stirling.console.ConsoleClient")
 
 TaskKey[File]("make-perftest") <<= (baseDirectory, fullClasspath in Runtime) map { (base, classpath) =>
   val template = """|#!/bin/sh
