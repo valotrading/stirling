@@ -31,7 +31,11 @@ public class Logout implements Command {
     return new String[0];
   }
 
+  public String description() {
+    return "Creates and sends logout message.";
+  }
+
   public String usage() {
-    return ": Creates and sends logout message.";
+    return ": " + description();
   }
 }

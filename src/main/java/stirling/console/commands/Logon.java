@@ -36,7 +36,11 @@ public class Logon extends FixMessageCommand {
     return false;
   }
 
+  @Override public String description() {
+    return "Creates and sends logon message.";
+  }
+
   @Override public String usage() {
-    return "<Argument=value>* : Creates and sends logon message.";
+    return "<Argument=value>* : " + description();
   }
 }

@@ -63,7 +63,11 @@ public class SessionStore implements Command {
     return argumentNames.toArray(new String[0]);
   }
 
+  @Override public String description() {
+    return "Sets the session store.";
+  }
+
   @Override public String usage() {
-    return ARGUMENT_NAME + "=<session-store> : Sets the session store.";
+    return ARGUMENT_NAME + "=<session-store> : " + description();
   }
 }

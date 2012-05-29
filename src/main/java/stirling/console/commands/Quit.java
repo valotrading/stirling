@@ -31,7 +31,11 @@ public class Quit implements Command {
     return new String[0];
   }
 
+  @Override public String description() {
+    return "Terminates this console-client session.";
+  }
+
   @Override public String usage() {
-    return ": Terminates this console-client session.";
+    return ": " + description();
   }
 }
