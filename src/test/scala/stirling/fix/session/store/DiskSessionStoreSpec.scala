@@ -71,6 +71,11 @@ class DiskSessionStoreSpec extends WordSpec with MustMatchers with MockitoSugar 
 }
 
 trait DiskSessionStoreFixtures {
+  val path = {
+    val file = File.createTempFile("DiskSessionStoreSpec", "")
+    file.deleteOnExit
+    file.getPath + "0"
+  }
   def newConfig = new Config {
     setVersion(Version.FIX_4_2)
     setSenderCompId(senderCompId)
@@ -87,7 +92,6 @@ trait DiskSessionStoreFixtures {
   def newMessageVisitor = new DefaultMessageVisitor
   def newSession = new Session(newHeartBtIntValue, newConfig, newSessionStore, newMessageFactory, newMessageComparator)
   def newSessionStore = new DiskSessionStore(path)
-  def path = "/tmp/DiskSessionStoreSpec"
   def senderCompId = "INITIATOR"
   def targetCompId = "ACCEPTOR"
   def date = ISODateTimeFormat.date.print(new LocalDate(DateTimeZone.UTC))
