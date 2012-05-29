@@ -57,7 +57,11 @@ public class Profile implements Command {
     return argumentNames.toArray(new String[0]);
   }
 
+  @Override public String description() {
+    return "Sets profile which will be used for creating and sending messages.";
+  }
+
   @Override public String usage() {
-    return ARGUMENT_NAME + "=<profile> : Sets profile which will be used for creating and sending messages.";
+    return ARGUMENT_NAME + "=<profile> : " + description();
   }
 }

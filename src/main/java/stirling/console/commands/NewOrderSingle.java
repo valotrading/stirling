@@ -29,7 +29,11 @@ public class NewOrderSingle extends FixMessageCommand {
     return false;
   }
 
+  @Override public String description() {
+    return "Creates and sends new single order message.";
+  }
+
   @Override public String usage() {
-    return "<Argument=value>* : Creates and sends new single order message.";
+    return "<Argument=value>* : " + description();
   }
 }

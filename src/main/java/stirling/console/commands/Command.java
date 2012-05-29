@@ -27,5 +27,7 @@ public interface Command {
 
   String[] getArgumentNames(ConsoleClient client);
 
+  String description();
+
   String usage();
 }

@@ -29,7 +29,11 @@ public class CancelOrder extends FixMessageCommand {
     return true;
   }
 
+  @Override public String description() {
+    return "Creates and sends order cancel request message.";
+  }
+
   @Override public String usage() {
-    return "OrigClOrdID=<id> <Argument=value>* : Creates and sends order cancel request message.";
+    return "OrigClOrdID=<id> <Argument=value>* : " + description();
   }
 }

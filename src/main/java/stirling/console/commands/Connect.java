@@ -120,7 +120,11 @@ public class Connect implements Command {
     return new String[] { ARGUMENT_HOST + "=", ARGUMENT_PORT + "=" };
   }
 
+  public String description() {
+    return "Opens connection which will be used for sending messages.";
+  }
+
   public String usage() {
-    return ARGUMENT_HOST + "=<host> " + ARGUMENT_PORT + "=<port> : Opens connection which will be used for sending messages.";
+    return ARGUMENT_HOST + "=<host> " + ARGUMENT_PORT + "=<port> : " + description();
   }
 }

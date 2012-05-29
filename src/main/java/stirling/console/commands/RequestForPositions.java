@@ -31,7 +31,11 @@ public class RequestForPositions extends FixMessageCommand {
     return false;
   }
 
+  @Override public String description() {
+    return "Creates and sends a request for positions.";
+  }
+
   @Override public String usage() {
-    return "<Argument=value>* : Creates and sends a request for positions.";
+    return "<Argument=value>* : " + description();
   }
 }
