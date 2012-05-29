@@ -76,12 +76,7 @@ public class ConsoleClient {
     if (console == null) {
       System.err.println("no console");
     } else {
-      console.printf("  #\n");
-      console.printf("  # FIX console session started.\n");
-      console.printf("  #\n");
-      console.printf("  #   Type 'help' for list of available commands and 'exit' to exit the\n");
-      console.printf("  #   console. You can also use the Tab key for command completion.\n");
-      console.printf("  #\n");
+      console.printf("Stirling console, type 'help' for help text\n");
       new ConsoleClient(console).run(getInitialCommandLines(args));
     }
   }
