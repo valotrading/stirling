@@ -24,7 +24,7 @@ libraryDependencies ++= Seq(
   "org.mockito" % "mockito-core" % "1.9.0" % "test",
   "org.mongodb" % "mongo-java-driver" % "2.7.2",
   "org.scalatest" %% "scalatest" % "1.6.1" % "test",
-  "silvertip" % "silvertip" % "0.2.6"
+  "silvertip" % "silvertip" % "0.2.7"
 )
 
 testListeners <<= target.map(t => Seq(new eu.henkelmann.sbt.JUnitXmlTestsListener(t.getAbsolutePath)))
