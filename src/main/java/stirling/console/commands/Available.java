@@ -29,7 +29,11 @@ public class Available implements Command {
         return new String[0];
     }
 
+    @Override public String description() {
+        return "Marks client session available.";
+    }
+
     @Override public String usage() {
-        return ": Marks client session available.";
+        return ": " + description();
     }
 }

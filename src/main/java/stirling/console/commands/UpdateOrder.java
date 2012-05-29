@@ -29,7 +29,11 @@ public class UpdateOrder extends FixMessageCommand {
     return true;
   }
 
+  @Override public String description() {
+    return "Creates and sends order modification request message.";
+  }
+
   @Override public String usage() {
-    return "<Argument=value>* : Creates and sends order modification request message.";
+    return "<Argument=value>* : " + description();
   }
 }

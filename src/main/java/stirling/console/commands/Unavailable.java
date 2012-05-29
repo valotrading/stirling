@@ -29,7 +29,11 @@ public class Unavailable implements Command {
     return new String[0];
   }
 
+  @Override public String description() {
+    return "Marks client session unavailable.";
+  }
+
   @Override public String usage() {
-    return ": Marks client session unavailable.";
+    return ": " + description();
   }
 }

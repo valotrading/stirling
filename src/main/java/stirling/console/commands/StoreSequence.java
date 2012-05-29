@@ -52,8 +52,12 @@ public class StoreSequence implements Command {
     return fields.toArray(new String[0]);
   }
 
+  public String description() { 
+    return "Resets outgoing and outgoing sequence numbers.";
+  }
+
   public String usage() {
-    return "SenderCompID=<id> TargetCompID=<id> <Argument=value>* : Resets outgoing and outgoing sequence numbers.";
+    return "SenderCompID=<id> TargetCompID=<id> <Argument=value>* : " + description();
   }
 
   private enum ArgumentNames {

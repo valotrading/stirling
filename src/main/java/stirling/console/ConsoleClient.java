@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import stirling.fix.session.Session;
 import stirling.fix.session.store.InMemorySessionStore;
@@ -76,12 +77,7 @@ public class ConsoleClient {
     if (console == null) {
       System.err.println("no console");
     } else {
-      console.printf("  #\n");
-      console.printf("  # FIX console session started.\n");
-      console.printf("  #\n");
-      console.printf("  #   Type 'help' for list of available commands and 'exit' to exit the\n");
-      console.printf("  #   console. You can also use the Tab key for command completion.\n");
-      console.printf("  #\n");
+      console.printf("Stirling console, type 'help' for help text\n");
       new ConsoleClient(console).run(getInitialCommandLines(args));
     }
   }
@@ -299,6 +295,11 @@ public class ConsoleClient {
       }
 
       @Override
+      public String description() {
+        return "Lists all available commands.";
+      }
+
+      @Override
       public String usage() {
         return ": Lists all available commands. Use 'help <command>' to display help for a single command.";
       }
@@ -306,9 +307,10 @@ public class ConsoleClient {
   }
 
   private void printUsage(String commandName) {
+    Command command = getCommand(commandName);
     console.printf("Usage:\n");
-    printHelp(commandName);
-    String[] argumentNames = getCommand(commandName).getArgumentNames(this);
+    console.printf("  %s %s\n", commandName, command.usage());
+    String[] argumentNames = command.getArgumentNames(this);
     if (argumentNames.length > 0)
       printAllAvailableArguments(commandName, argumentNames);
   }
@@ -331,17 +333,14 @@ public class ConsoleClient {
 
   private void printHelp(String commandName) {
     Command command = getCommand(commandName);
-    StringBuilder builder = new StringBuilder("  ");
-    builder.append(commandName);
-    builder.append(" ");
-    builder.append(command.usage());
-    builder.append("\n");
-    console.printf(builder.toString());
+    console.printf("  %-22s %s\n", commandName, command.description());
   }
 
   private void printHelp() {
     console.printf("Available commands:\n");
-    for (String commandName : commands.keySet()) {
+    List<String> commandNames = new ArrayList<String>(commands.keySet());
+    Collections.sort(commandNames);
+    for (String commandName : commandNames) {
       printHelp(commandName);
     }
     console.printf("\n");

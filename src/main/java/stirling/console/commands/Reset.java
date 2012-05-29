@@ -43,7 +43,11 @@ public class Reset implements Command {
     return new String[] {SEQUENCE_ARGUMENT_NAME + "="};
   }
 
+  public String description() {
+    return "Sends sequence number reset message.";
+  }
+
   public String usage() {
-    return SEQUENCE_ARGUMENT_NAME + "=<number> : Sends sequence number reset message.";
+    return SEQUENCE_ARGUMENT_NAME + "=<number> : " + description();
   }
 }

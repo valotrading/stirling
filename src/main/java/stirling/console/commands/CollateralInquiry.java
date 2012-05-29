@@ -31,7 +31,11 @@ public class CollateralInquiry extends FixMessageCommand {
     return false;
   }
 
+  @Override public String description() {
+    return "Creates and sends a collateral inquiry.";
+  }
+
   @Override public String usage() {
-    return "<Argument=value>* : Creates and sends a collateral inquiry.";
+    return "<Argument=value>* : " + description();
   }
 }
