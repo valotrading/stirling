@@ -41,9 +41,6 @@ import silvertip.Events;
 
 import stirling.console.commands.*;
 
-/**
- * @author Karim Osman
- */
 public class ConsoleClient {
   private static final Version VERSION = Version.FIX_4_2;
   private static final String SENDER_COMP_ID = "initiator";
