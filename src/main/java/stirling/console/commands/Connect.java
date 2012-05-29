@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import stirling.console.Arguments;
 import stirling.console.ConsoleClient;
@@ -46,7 +47,9 @@ public class Connect implements Command {
   static {
     logger.setUseParentHandlers(false);
     try {
-      logger.addHandler(new FileHandler("stirling.log"));
+      FileHandler stirlingLog = new FileHandler("stirling.log");
+      stirlingLog.setFormatter(new SimpleFormatter());
+      logger.addHandler(stirlingLog);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
