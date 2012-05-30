@@ -173,6 +173,7 @@ public class ConsoleClient {
   public void run(List<String> initialCommandLines) throws IOException {
     events = Events.open();
     for (String commandLine : initialCommandLines) {
+      console.printf("< %s\n", commandLine);
       Scanner scanner = new Scanner(commandLine);
       String commandName = scanner.next().toLowerCase();
       Command cmd = getCommand(commandName);

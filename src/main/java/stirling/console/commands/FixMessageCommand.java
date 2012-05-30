@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import stirling.console.ConsoleClient;
 import stirling.fix.messages.AbstractField;
@@ -46,6 +47,8 @@ import stirling.fix.tags.fix42.OrigClOrdID;
 import stirling.fix.tags.fix42.TransactTime;
 
 public abstract class FixMessageCommand implements Command {
+  private static final Logger logger = Logger.getLogger("ConsoleClient");
+
   private static final Set<Class<? extends Parser>> parserClasses = new HashSet<Class<? extends Parser>>();
 
   {
@@ -78,8 +81,12 @@ public abstract class FixMessageCommand implements Command {
       setFields(message, scanner, client.getMessageFactory());
       if (isModifyingOrderMessage() && message.isDefined(OrderID.Tag()))
         setMessageOrderID(message, client);
-      if (client.getSession() != null)
+      if (client.getSession() != null) {
         client.getSession().send(client.getConnection(), message);
+        logger.info("SEND> " + message.toString());
+      } else {
+        logger.info("Not sending message (session == null): " + message.toString());
+      }
     } catch (Exception e) {
       throw new CommandException("failed to set field: " + e.getMessage());
     }

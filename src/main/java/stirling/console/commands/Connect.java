@@ -24,7 +24,9 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
+import silvertip.MessageParser;
 import stirling.console.Arguments;
 import stirling.console.ConsoleClient;
 import stirling.fix.messages.DefaultMessageComparator;
@@ -46,7 +48,9 @@ public class Connect implements Command {
   static {
     logger.setUseParentHandlers(false);
     try {
-      logger.addHandler(new FileHandler("stirling.log"));
+      FileHandler stirlingLog = new FileHandler("stirling.log");
+      stirlingLog.setFormatter(new SimpleFormatter());
+      logger.addHandler(stirlingLog);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -55,19 +59,26 @@ public class Connect implements Command {
   public void execute(final ConsoleClient client, Scanner scanner) throws CommandException {
     Arguments arguments = new Arguments(scanner);
     try {
-      Connection conn = Connection.connect(new InetSocketAddress(host(arguments), port(arguments)),
+      InetAddress host = host(arguments);
+      int port = port(arguments);
+      logger.info("Connecting...");
+      Connection conn = Connection.connect(new InetSocketAddress(host, port),
           new FixMessageParser(), new Connection.Callback<FixMessage>() {
           @Override public void messages(Connection<FixMessage> conn, Iterator<FixMessage> messages) {
             while (messages.hasNext()) {
               FixMessage msg = messages.next();
+              logger.info("RECV> " + formatFixMessage(msg));
               client.getSession().receive(conn, msg, new DefaultMessageVisitor() {
                 @Override public void defaultAction(stirling.fix.messages.Message message) {
                   if (message.getMsgType().equals(MsgTypeValue.EXECUTION_REPORT))
                     client.setOrderID(message.getString(ClOrdID.Tag()), message.getString(OrderID.Tag()));
-                  logger.info(message.toString());
+                  logger.info("RECV> " + message.toString());
                 }
               });
             }
+          }
+          private String formatFixMessage(FixMessage msg) {
+              return msg.toString().replaceAll("" + FixMessageParser.DELIMITER, "|");
           }
 
           @Override public void idle(Connection<FixMessage> conn) {
@@ -75,11 +86,14 @@ public class Connect implements Command {
           }
 
           @Override public void closed(Connection<FixMessage> conn) {
+            logger.info("Connection closed");
           }
 
           @Override public void garbledMessage(String message, byte[] data) {
+            logger.warning("Garbled message: " + message);
           }
         });
+      logger.info("Connecting finished");
       client.setConnection(conn);
       Session session = new Session(getHeartBtInt(), client.getConfig(), client.getSessionStore(), client.getMessageFactory(), new DefaultMessageComparator()) {
         @Override
