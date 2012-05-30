@@ -69,6 +69,8 @@ public class InMemorySessionStore implements SessionStore {
     }
 
     @Override public void resetOutgoingSeq(Session session, Sequence incomingSeq, Sequence outgoingSeq) {
+        session.setIncomingSeq(incomingSeq);
+        session.setOutgoingSeq(outgoingSeq);
     }
 
     @Override public void save(Session session) {
