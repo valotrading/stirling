@@ -27,6 +27,7 @@ class MessageFactory extends DefaultMessageFactory {
   message(ORDER_CANCEL_REPLACE_REQUEST, classOf[OrderCancelReplaceRequest])
   message(BULK_CANCEL_REQUEST, classOf[BulkCancelRequest])
   message(EXECUTION_REPORT, classOf[ExecutionReport])
+  message(ORDER_CANCEL_REJECT, classOf[OrderCancelReject])
   override def createHeader = new MessageHeader
   override def getProfile = "samrat"
   override def isValid(msgType: String) = {
