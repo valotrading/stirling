@@ -21,15 +21,15 @@ import stirling.itch.templates.{MillisecondsFixtures, SecondsFixtures}
 
 class ITCHFileParserSpec extends Spec with ITCHFileParserFixtures {
   "ITCHFileParser" must {
-    val buffer = (crlf + crlf + Milliseconds.encoded + crlf + Seconds.encoded +
-      crlf + crlf).toByteBuffer
-    "ignore CRLFs before messages" in {
+    val buffer = (crlf + lf + Milliseconds.encoded + lf + crlf + Seconds.encoded +
+      lf + crlf + lf).toByteBuffer
+    "ignore CRLFs and LFs before messages" in {
       ITCHFileParser.parse(buffer) must equal(Milliseconds.message)
     }
-    "ignore CRLFs between messages" in {
+    "ignore CRLFs and LFs between messages" in {
       ITCHFileParser.parse(buffer) must equal(Seconds.message)
     }
-    "ignore CRLFs after messages" in {
+    "ignore CRLFs and LFs after messages" in {
       intercept[PartialMessageException] {
         ITCHFileParser.parse(buffer)
       }
@@ -38,7 +38,9 @@ class ITCHFileParserSpec extends Spec with ITCHFileParserFixtures {
 }
 
 trait ITCHFileParserFixtures {
-  def crlf = "\r\n"
+  def cr = "\r"
+  def crlf = cr + lf
+  def lf = "\n"
 }
 
 object Milliseconds extends MillisecondsFixtures
