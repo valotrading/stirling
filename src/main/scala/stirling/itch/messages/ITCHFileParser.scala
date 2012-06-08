@@ -22,17 +22,16 @@ import silvertip.GarbledMessageException
 object ITCHFileParser extends ITCHMessageParser {
   override protected def decode(buffer: ByteBuffer) = {
     @tailrec def skipCrlf: ITCHMessage = {
-      val messageTypeOrCr = decodeMessageType(buffer)
-      if (messageTypeOrCr != cr)
-        decodeMessage(buffer, messageTypeOrCr)
+      val messageTypeOrCrOrLf = decodeMessageType(buffer)
+      if ((messageTypeOrCrOrLf != '\n') && (messageTypeOrCrOrLf != '\r'))
+        decodeMessage(buffer, messageTypeOrCrOrLf)
       else {
-        if (buffer.get != lf)
+        if ((messageTypeOrCrOrLf == '\r') && (buffer.get != lf))
           throw new GarbledMessageException("Expected LF")
         skipCrlf
       }
     }
     skipCrlf
   }
-  private val cr = '\r'
   private val lf = '\n'.toByte
 }
