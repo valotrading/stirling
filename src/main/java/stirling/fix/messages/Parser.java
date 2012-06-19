@@ -54,7 +54,10 @@ public class Parser {
         } catch (UnsupportedMsgTypeException e) {
             callback.unsupportedMsgType(header.getMsgType(), header.getInteger(MsgSeqNum.Tag()));
         } catch (ParseException e) {
-            callback.invalidMessage(header.getInteger(MsgSeqNum.Tag()), e.getReason(), e.getMessage());
+            int msgSeqNum = 0;
+            if (header.hasValue(MsgSeqNum.Tag()))
+              msgSeqNum = header.getInteger(MsgSeqNum.Tag());
+            callback.invalidMessage(msgSeqNum, e.getReason(), e.getMessage());
         }
     }
 
