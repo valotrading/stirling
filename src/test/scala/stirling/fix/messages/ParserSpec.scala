@@ -361,11 +361,32 @@ class ParserSpec extends WordSpec with MustMatchers with MockitoSugar with Parse
         expectInvalidMessage(raw, msgType, SessionRejectReason.NumInGroupMismatch, "NoAllocs(78): Incorrect NumInGroup count for repeating group. Expected: 1, but was: 2")
       }
     }
+    "parsing a malformed message header" should {
+      val msgType = "A"
+      val raw = message
+        .field(BeginString, "FIX.4.2")
+        .field(BodyLength, "68")
+        .field(MsgType, msgType)
+        .field(0, "0")
+        .field(SenderCompID, "Sender")
+        .field(TargetCompID, "Target")
+        .field(MsgSeqNum, "1")
+        .field(SendingTime, "20120618-13:08:02.68498")
+        .field(HeartBtInt, "15")
+        .field(CheckSum, "054")
+        .toString
+      "invoke the invalid message callback" in {
+        expectInvalidMessage(raw, msgType, 0, SessionRejectReason.InvalidTag, "Tag not defined for this message: 0")
+      }
+    }
   }
   def expectInvalidMessage(raw: String, msgType: String, reason: Value[Integer], text: String) {
+    expectInvalidMessage(raw, msgType, 1, reason, text)
+  }
+  def expectInvalidMessage(raw: String, msgType: String, msgSeqNum: Int, reason: Value[Integer], text: String) {
     val callback = mock[Parser.Callback]
     Parser.parse(FixMessage.fromString(raw, msgType), callback)
-    verify(callback).invalidMessage(1, reason, text)
+    verify(callback).invalidMessage(msgSeqNum, reason, text)
   }
 }
 
