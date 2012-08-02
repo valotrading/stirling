@@ -19,7 +19,8 @@ import java.io.{File, FileOutputStream, FileWriter, PrintWriter}
 import java.util.zip.{ZipEntry, ZipOutputStream}
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.itch.messages.itch186.{Seconds, Milliseconds, MessageType}
+import stirling.itch.messages.itch186._
+import stirling.itch.io.Source
 
 abstract class SourceSpec extends WordSpec with MustMatchers with SourceFixtures {
   "Source" when {
@@ -36,7 +37,7 @@ abstract class SourceSpec extends WordSpec with MustMatchers with SourceFixtures
       }
     }
   }
-  def newSource(stream: String): Source
+  def newSource(stream: String): Source[Message]
 }
 
 class CompressedSourceSpec extends SourceSpec {
@@ -52,7 +53,7 @@ class CompressedSourceSpec extends SourceSpec {
     tempWriter.close()
     zipStream.close()
     tempStream.close()
-    Source.fromFile(tempFile)
+    Source.fromFile[Message](tempFile, FileParser)
   }
 }
 
@@ -63,7 +64,7 @@ class UncompressedSourceSpec extends SourceSpec {
     val tempWriter = new FileWriter(tempFile)
     tempWriter.write(stream)
     tempWriter.close()
-    Source.fromFile(tempFile)
+    Source.fromFile[Message](tempFile, FileParser)
   }
 }
 

@@ -20,14 +20,14 @@ import java.nio.ByteBuffer
 import java.nio.channels.{Channels, ReadableByteChannel}
 import java.util.zip.ZipFile
 import scala.collection.JavaConversions._
-import silvertip.PartialMessageException
 import stirling.itch.messages.itch186.{FileParser, Message}
+import silvertip.{MessageParser, PartialMessageException}
 
-trait Source extends Iterator[Message] with Closeable
+trait Source[T] extends Iterator[T] with Closeable
 
 object Source {
-  def fromFile(file: File): Source = {
-    new FileSource(newChannel(file))
+  def fromFile[T](file: File, parser: MessageParser[T]): Source[T] = {
+    new FileSource[T](newChannel(file), parser)
   }
 
   private def newChannel(file: File) = {
@@ -47,7 +47,7 @@ object Source {
     new FileInputStream(file).getChannel
   }
 
-  private class FileSource(channel: ReadableByteChannel) extends Source {
+  private class FileSource[T](channel: ReadableByteChannel, parser: MessageParser[T]) extends Source[T] {
     private val buffer = ByteBuffer.allocate(4096)
     private val iterator = Iterator.continually(read).takeWhile(!_.isEmpty).map(_.get)
 
@@ -55,10 +55,10 @@ object Source {
     def next() = iterator.next()
     def hasNext = iterator.hasNext
 
-    private def read(): Option[Message] = {
+    private def read(): Option[T] = {
       try {
         buffer.mark()
-        Some(FileParser.parse(buffer))
+        Some(parser.parse(buffer))
       } catch {
         case _: PartialMessageException =>
           buffer.reset()
