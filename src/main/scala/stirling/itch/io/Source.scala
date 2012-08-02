@@ -16,12 +16,12 @@
 package stirling.itch.io
 
 import java.io.{Closeable, File, FileInputStream, IOException}
-import java.nio.ByteBuffer
 import java.nio.channels.{Channels, ReadableByteChannel}
-import java.util.zip.ZipFile
 import scala.collection.JavaConversions._
 import stirling.itch.messages.itch186.{FileParser, Message}
 import silvertip.{MessageParser, PartialMessageException}
+import java.util.zip.{GZIPInputStream, ZipFile}
+import java.nio.{ByteOrder, ByteBuffer}
 
 trait Source[T] extends Iterator[T] with Closeable
 
@@ -32,16 +32,21 @@ object Source {
 
   private def newChannel(file: File) = {
     if (file.getName.endsWith(".zip"))
-      newCompressedChannel(file)
+      newZipChannel(file)
+    else if (file.getName.endsWith(".gz"))
+      newGZipChannel(file)
     else
       newUncompressedChannel(file)
   }
-  private def newCompressedChannel(file: File) = {
+  private def newZipChannel(file: File) = {
     val stream = {
       val zipFile = new ZipFile(file)
       zipFile.getInputStream(zipFile.entries.toSeq.head)
     }
     Channels.newChannel(stream)
+  }
+  private def newGZipChannel(file: File) = {
+    Channels.newChannel(new GZIPInputStream(new FileInputStream(file)))
   }
   private def newUncompressedChannel(file: File) = {
     new FileInputStream(file).getChannel
@@ -49,6 +54,8 @@ object Source {
 
   private class FileSource[T](channel: ReadableByteChannel, parser: MessageParser[T]) extends Source[T] {
     private val buffer = ByteBuffer.allocate(4096)
+    buffer.order(ByteOrder.BIG_ENDIAN)
+
     private val iterator = Iterator.continually(read).takeWhile(!_.isEmpty).map(_.get)
 
     def close() = channel.close()
