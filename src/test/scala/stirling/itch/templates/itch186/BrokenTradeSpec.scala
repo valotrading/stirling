@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch
+package stirling.itch.templates.itch186
 
-import stirling.itch.messages.{Message, MessageOps}
-import stirling.itch.types.{FieldType, FieldTypeOps}
+class BrokenTradeSpec extends TemplateSpec with BrokenTradeFixtures
 
-abstract class Spec extends BaseSpec with Helpers
-
-trait Helpers {
-  implicit def fieldTypeToFieldTypeOps[T](value: FieldType[T]) = new FieldTypeOps(value)
-  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
+trait BrokenTradeFixtures extends TemplateFixtures {
+  def encoded = "B123456789"
+  def matchNumber = 123456789L
+  def message = {
+    val message = newMessage(Templates.BrokenTrade)
+    message.set(fields.MatchNumber, matchNumber)
+    message
+  }
 }

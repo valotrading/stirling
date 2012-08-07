@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch
+package stirling.itch.messages
 
-import stirling.itch.messages.{Message, MessageOps}
-import stirling.itch.types.{FieldType, FieldTypeOps}
+import java.nio.ByteBuffer
 
-abstract class Spec extends BaseSpec with Helpers
-
-trait Helpers {
-  implicit def fieldTypeToFieldTypeOps[T](value: FieldType[T]) = new FieldTypeOps(value)
-  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
+package object itch41 {
+  type SystemMessageType        = Byte
+  type MarketCategory           = Byte
+  type FinancialStatusIndicator = Byte
+  type TradingState             = Byte
+  type RegSHOAction             = Byte
+  type MarketMakerMode          = Byte
+  type MarketParticipantState   = Byte
+  type BuySellIndicator         = Byte
+  type CrossType                = Byte
+  type ImbalanceDirection       = Byte
+  type PriceVarianceIndicator   = Byte
 }

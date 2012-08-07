@@ -13,17 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.messages
+package stirling.itch.messages.itch186
 
 import java.nio.ByteBuffer
-import stirling.itch.fields.FieldContainer
-import stirling.itch.templates.MessageTemplate
+import scala.annotation.tailrec
+import silvertip.GarbledMessageException
 
-trait Message extends FieldContainer {
-  def encode(buffer: ByteBuffer) {
-    buffer.put(messageType)
+object FileParser extends MessageParser {
+  override protected def decode(buffer: ByteBuffer) = {
+    @tailrec def skipCrlf: Message = {
+      val messageTypeOrCrOrLf = decodeMessageType(buffer)
+      if ((messageTypeOrCrOrLf != '\n') && (messageTypeOrCrOrLf != '\r'))
+        decodeMessage(buffer, messageTypeOrCrOrLf)
+      else {
+        if ((messageTypeOrCrOrLf == '\r') && (buffer.get != lf))
+          throw new GarbledMessageException("Expected LF")
+        skipCrlf
+      }
+    }
+    skipCrlf
   }
-  def length = 1 + template.length
-  def template: MessageTemplate[_]
-  def messageType = template.messageType.toByte
+  private val lf = '\n'.toByte
 }

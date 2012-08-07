@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch
+package stirling.itch.templates.itch186
 
-import stirling.itch.messages.{Message, MessageOps}
-import stirling.itch.types.{FieldType, FieldTypeOps}
+import java.nio.ByteBuffer
+import stirling.itch.messages.itch186.Message
+import stirling.itch.templates.MessageTemplate
 
-abstract class Spec extends BaseSpec with Helpers
-
-trait Helpers {
-  implicit def fieldTypeToFieldTypeOps[T](value: FieldType[T]) = new FieldTypeOps(value)
-  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
+abstract class Template extends MessageTemplate[Message] {
+  override def encode(buffer: ByteBuffer, container: Message) = {
+    super.encode(buffer, container)
+  }
+  def newFieldContainer = Message(this)
 }
