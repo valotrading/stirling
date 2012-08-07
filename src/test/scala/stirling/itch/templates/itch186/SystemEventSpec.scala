@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch
+package stirling.itch.templates.itch186
 
-import stirling.itch.messages.{Message, MessageOps}
-import stirling.itch.types.{FieldType, FieldTypeOps}
+class SystemEventSpec extends TemplateSpec with SystemEventFixtures
 
-abstract class Spec extends BaseSpec with Helpers
-
-trait Helpers {
-  implicit def fieldTypeToFieldTypeOps[T](value: FieldType[T]) = new FieldTypeOps(value)
-  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
+trait SystemEventFixtures extends TemplateFixtures {
+  def encoded = "SO"
+  def message = {
+    val message = newMessage(Templates.SystemEvent)
+    message.set(fields.EventCode, eventCode)
+    message
+  }
+  def eventCode = "O"
 }

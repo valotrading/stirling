@@ -13,14 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch
+package stirling.itch.templates.itch186
 
-import stirling.itch.messages.{Message, MessageOps}
-import stirling.itch.types.{FieldType, FieldTypeOps}
+class OrderBookTradingActionSpec extends TemplateSpec with OrderBookTradingActionFixtures
 
-abstract class Spec extends BaseSpec with Helpers
-
-trait Helpers {
-  implicit def fieldTypeToFieldTypeOps[T](value: FieldType[T]) = new FieldTypeOps(value)
-  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
+trait OrderBookTradingActionFixtures extends TemplateFixtures {
+  def encoded = "H123456T     "
+  def message = {
+    val message = newMessage(Templates.OrderBookTradingAction)
+    message.set(fields.OrderBook, orderBook)
+    message.set(fields.TradingState, tradingState)
+    message.set(fields.Reserved, " ")
+    message.set(fields.Reason, reason)
+    message
+  }
+  def orderBook = 123456L
+  def reason = " "
+  def tradingState = "T"
 }

@@ -17,29 +17,31 @@ package stirling.itch.io
 
 import java.io.{File, FileOutputStream, FileWriter, PrintWriter}
 import java.util.zip.{ZipEntry, ZipOutputStream}
+import java.util.zip.GZIPOutputStream
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.itch.messages.MessageType.{Milliseconds, Seconds}
+import stirling.itch.messages.itch186._
+import java.nio.charset.Charset
 
 abstract class SourceSpec extends WordSpec with MustMatchers with SourceFixtures {
   "Source" when {
     "reading a message stream" should {
       val source = newSource(stream)
       "yield a Seconds message" in {
-        source.next.messageType must equal(Seconds.toByte)
+        source.next.messageType must equal(MessageType.Seconds.toByte)
       }
       "yield a Milliseconds message" in {
-        source.next.messageType must equal(Milliseconds.toByte)
+        source.next.messageType must equal(MessageType.Milliseconds.toByte)
       }
       "not yield more messages" in {
         source.hasNext must equal(false)
       }
     }
   }
-  def newSource(stream: String): Source
+  def newSource(stream: String): Source[Message]
 }
 
-class CompressedSourceSpec extends SourceSpec {
+class ZipCompressedSourceSpec extends SourceSpec {
   def newSource(stream: String) = {
     val tempFile = File.createTempFile("SourceSpec", ".zip")
     tempFile.deleteOnExit()
@@ -52,7 +54,18 @@ class CompressedSourceSpec extends SourceSpec {
     tempWriter.close()
     zipStream.close()
     tempStream.close()
-    Source.fromFile(tempFile)
+    Source.fromFile[Message](tempFile, FileParser)
+  }
+}
+
+class GZipCompressedSourceSpec extends SourceSpec {
+  def newSource(stream: String) = {
+    val tempFile = File.createTempFile("SourceSpec", ".gz")
+    tempFile.deleteOnExit()
+    val gzipStream = new GZIPOutputStream(new FileOutputStream(tempFile))
+    gzipStream.write(stream.getBytes(Charset.forName("US-ASCII")))
+    gzipStream.close()
+    Source.fromFile[Message](tempFile, FileParser)
   }
 }
 
@@ -63,7 +76,7 @@ class UncompressedSourceSpec extends SourceSpec {
     val tempWriter = new FileWriter(tempFile)
     tempWriter.write(stream)
     tempWriter.close()
-    Source.fromFile(tempFile)
+    Source.fromFile[Message](tempFile, FileParser)
   }
 }
 

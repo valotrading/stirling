@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch
+package stirling.itch.types
 
-import stirling.itch.messages.{Message, MessageOps}
-import stirling.itch.types.{FieldType, FieldTypeOps}
+import java.nio.charset.Charset
 
-abstract class Spec extends BaseSpec with Helpers
+trait TextEncoding {
+  def charset: Charset
+}
 
-trait Helpers {
-  implicit def fieldTypeToFieldTypeOps[T](value: FieldType[T]) = new FieldTypeOps(value)
-  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
+trait ASCII extends TextEncoding {
+  val charset = Charset.forName("US-ASCII")
 }

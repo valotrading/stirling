@@ -13,14 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch
+package stirling.itch.templates.itch186
 
-import stirling.itch.messages.{Message, MessageOps}
-import stirling.itch.types.{FieldType, FieldTypeOps}
+class MarketSegmentStateSpec extends TemplateSpec with MarketSegmentStateFixtures
 
-abstract class Spec extends BaseSpec with Helpers
-
-trait Helpers {
-  implicit def fieldTypeToFieldTypeOps[T](value: FieldType[T]) = new FieldTypeOps(value)
-  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
+trait MarketSegmentStateFixtures extends TemplateFixtures {
+  def encoded = "O123C"
+  def eventCode = "C"
+  def marketSegmentId = 123L
+  def message = {
+    val message = newMessage(Templates.MarketSegmentState)
+    message.set(fields.MarketSegmentID, marketSegmentId)
+    message.set(fields.EventCode, eventCode)
+    message
+  }
 }

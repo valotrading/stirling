@@ -13,14 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch
+package stirling.itch.fields
 
-import stirling.itch.messages.{Message, MessageOps}
-import stirling.itch.types.{FieldType, FieldTypeOps}
+import scala.collection.mutable.Map
 
-abstract class Spec extends BaseSpec with Helpers
-
-trait Helpers {
-  implicit def fieldTypeToFieldTypeOps[T](value: FieldType[T]) = new FieldTypeOps(value)
-  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
+trait FieldContainer {
+  def apply[T](field: Field[T]) = values(field).asInstanceOf[T]
+  def fields = values.keySet
+  def get[T](field: Field[T]) = values.get(field) match {
+    case Some(value) => Some(value.asInstanceOf[T])
+    case None => None
+  }
+  def set(field: Field[_], value: Any) {
+    values += (field -> value)
+  }
+  private val values = Map[Field[_], Any]()
 }
