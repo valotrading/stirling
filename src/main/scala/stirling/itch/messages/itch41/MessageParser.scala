@@ -186,7 +186,7 @@ class MessageParser extends silvertip.MessageParser[Message] {
       stock                = readBytes8(buf),
       price                = buf.getInt,
       matchNumber          = buf.getLong
-     )
+    )
   }
 
   private def crossTrade(buf: ByteBuffer) = {
