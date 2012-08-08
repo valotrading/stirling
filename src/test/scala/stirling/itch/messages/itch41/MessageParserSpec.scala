@@ -23,9 +23,12 @@ import stirling.itch.messages.itch41
 
 class MessageParserSpec extends Spec with MessageParserFixtures {
   "MessageParser" must {
-    "parse messages from binary file" in {
-      val file = new File("src/test/resources/itch-v41.txt")
-      val source = Source.fromFile[Message](file, new SoupBinTCPFileParser)
+    "parse messages from a binary file with partial reads" in {
+      val source = Source.fromFile[Message](
+        file           = new File("src/test/resources/itch-v41.txt"),
+        parser         = new SoupBinTCPFileParser,
+        readBufferSize = 64
+      )
       expectedMessages must equal (source.toList)
     }
   }
