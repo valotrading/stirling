@@ -20,7 +20,6 @@ import silvertip.{PartialMessageException, GarbledMessageException}
 import stirling.itch.types.Alpha
 
 class MessageParser extends silvertip.MessageParser[Message] {
-  import MessageParser._
   def parse(buffer: ByteBuffer) = {
     try {
       decode(buffer)
@@ -186,7 +185,7 @@ class MessageParser extends silvertip.MessageParser[Message] {
       stock                = readBytes8(buf),
       price                = buf.getInt,
       matchNumber          = buf.getLong
-     )
+    )
   }
 
   private def crossTrade(buf: ByteBuffer) = {
@@ -221,12 +220,14 @@ class MessageParser extends silvertip.MessageParser[Message] {
       priceVarianceIndicator = buf.get
     )
   }
-}
 
-object MessageParser {
-  def readBytes(buf: ByteBuffer, length: Int): ByteBuffer = {
+  private def readBytes(buf: ByteBuffer, length: Int): ByteBuffer = {
+    val newLimit = buf.position + length
     val origLimit = buf.limit
-    buf.limit(buf.position + length)
+
+    if (newLimit > buf.capacity)
+      throw new PartialMessageException
+    buf.limit(newLimit)
 
     val targetBuffer = ByteBuffer.allocate(length)
     targetBuffer.order(ByteOrder.BIG_ENDIAN)
@@ -237,7 +238,7 @@ object MessageParser {
     targetBuffer
   }
 
-  def readBytes4(buf: ByteBuffer): ByteBuffer = readBytes(buf, 4)
-  def readBytes8(buf: ByteBuffer): ByteBuffer = readBytes(buf, 8)
-  def readChar(buf: ByteBuffer): Char = buf.get.toChar
+  private def readBytes4(buf: ByteBuffer): ByteBuffer = readBytes(buf, 4)
+  private def readBytes8(buf: ByteBuffer): ByteBuffer = readBytes(buf, 8)
+  private def readChar(buf: ByteBuffer): Char = buf.get.toChar
 }
