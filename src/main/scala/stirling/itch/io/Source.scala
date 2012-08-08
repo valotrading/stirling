@@ -26,8 +26,8 @@ import java.nio.{ByteOrder, ByteBuffer}
 trait Source[T] extends Iterator[T] with Closeable
 
 object Source {
-  def fromFile[T](file: File, parser: MessageParser[T]): Source[T] = {
-    new FileSource[T](newChannel(file), parser)
+  def fromFile[T](file: File, parser: MessageParser[T], readBufferSize: Int = 4096): Source[T] = {
+    new FileSource[T](newChannel(file), parser, readBufferSize)
   }
 
   private def newChannel(file: File) = {
@@ -52,8 +52,8 @@ object Source {
     new FileInputStream(file).getChannel
   }
 
-  private class FileSource[T](channel: ReadableByteChannel, parser: MessageParser[T]) extends Source[T] {
-    private val buffer = ByteBuffer.allocate(4096)
+  private class FileSource[T](channel: ReadableByteChannel, parser: MessageParser[T], readBufferSize: Int) extends Source[T] {
+    private val buffer = ByteBuffer.allocate(readBufferSize)
     buffer.order(ByteOrder.BIG_ENDIAN)
 
     private val iterator = Iterator.continually(read).takeWhile(!_.isEmpty).map(_.get)
