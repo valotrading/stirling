@@ -25,6 +25,17 @@ import stirling.fix.messages.Value;
 import stirling.fix.session.Sequence;
 import stirling.fix.session.Session;
 
+/**
+ * InMemorySessionStore is not meant to be used in production systems.
+ *
+ * It is a persistent in-memory session store for testing and performs badly in
+ * long sessions with lots of messages.
+ *
+ * It stores each message going through it for duplicate message identification
+ * purposes. Because of this, it will eventually run out of memory and, while doing
+ * so, get slower as it compares each message going through it against all stored
+ * messages.
+ */
 public class InMemorySessionStore implements SessionStore {
     private List<Message> outgoingMessages = new LinkedList<Message>();
     private List<Message> incomingMessages = new LinkedList<Message>();
