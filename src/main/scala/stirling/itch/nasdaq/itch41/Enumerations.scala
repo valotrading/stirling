@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.messages.itch41
+package stirling.itch.nasdaq.itch41
 
-/**
- * System Event Codes as specified in section 4.2.
+/*
+ * Section 4.2
  */
-object SystemMessageType {
+object SystemEventCode {
   val StartOfMessages    = 'O'.toByte
   val StartOfSystemHours = 'S'.toByte
   val StartOfMarketHours = 'Q'.toByte
@@ -30,8 +30,8 @@ object SystemMessageType {
   val Resumption         = 'B'.toByte
 }
 
-/**
- * Market Category as specified in section 4.3.1.
+/*
+ * Section 4.3.1
  */
 object MarketCategory {
   val Nyse                     = 'N'.toByte
@@ -43,8 +43,8 @@ object MarketCategory {
   val BatsBzxExchange          = 'Z'.toByte
 }
 
-/**
- * Financial Status Indicator as specified in section 4.3.1.
+/*
+ * Section 4.3.1
  */
 object FinancialStatusIndicator {
   val Deficient                   = 'D'.toByte
@@ -55,31 +55,31 @@ object FinancialStatusIndicator {
   val DeficientAndDeliquent       = 'H'.toByte
   val DelinquentAndBankrupt       = 'J'.toByte
   val DeficientDelinquentBankrupt = 'K'.toByte
-  val NasdaqCompliant             = ' '.toByte
+  val CompliantOnNasdaqOrUnknown  = ' '.toByte
 }
 
-/**
- * Trading State as specified in section 4.3.2.
+/*
+ * Section 4.3.2
  */
 object TradingState {
-  val Halted          = 'H'.toByte
-  val HaltedInNasdaq  = 'V'.toByte
-  val Quotation       = 'Q'.toByte
-  val QuotationNasdaq = 'R'.toByte
-  val TradingOnNasdaq = 'T'.toByte
+  val Halted            = 'H'.toByte
+  val HaltedOnNasdaq    = 'V'.toByte
+  val Quotation         = 'Q'.toByte
+  val QuotationOnNasdaq = 'R'.toByte
+  val TradingOnNasdaq   = 'T'.toByte
 }
 
-/**
- * Reg SHO Action as specified in section 4.3.3.
+/*
+ * Section 4.3.3
  */
 object RegSHOAction {
-  val NoPriceTest                       = '0'.toByte
-  val PriceTestRemainsIntraDayPriceDrop = '1'.toByte
-  val PriceTestRemains                  = '2'.toByte
+  val NoPriceTest                     = '0'.toByte
+  val PriceTestDueToIntraDayPriceDrop = '1'.toByte
+  val PriceTestRemains                = '2'.toByte
 }
 
-/**
- * Market Maker Mode as specified in section 4.3.4.
+/*
+ * Section 4.3.4
  */
 object MarketMakerMode {
   val Normal       = 'N'.toByte
@@ -89,8 +89,8 @@ object MarketMakerMode {
   val Penalty      = 'L'.toByte
 }
 
-/**
- * Market Participant State as specified in section 4.3.4.
+/*
+ * Section 4.3.4
  */
 object MarketParticipantState {
   val Active             = 'A'.toByte
@@ -100,50 +100,50 @@ object MarketParticipantState {
   val Deleted            = 'D'.toByte
 }
 
-/**
- * Buy/Sell Indicator as specified in section 4.6.1.
+/*
+ * Section 4.6.1
  */
 object BuySellIndicator {
   val Buy  = 'B'.toByte
   val Sell = 'S'.toByte
 }
 
-/**
- * Imbalance Direction as specified in section 4.7.
+/*
+ * Section 4.6.2
+ */
+object CrossType {
+  val NasdaqOpening             = 'O'.toByte
+  val NasdaqClosing             = 'C'.toByte
+  val IpoOrHaltedOrPaused       = 'H'.toByte
+  val NasdaqIntradayOrPostClose = 'I'.toByte
+}
+
+/*
+ * Section 4.7
  */
 object ImbalanceDirection {
-  val Buy                           = 'B'.toByte
-  val Sell                          = 'S'.toByte
+  val BuyImbalance                  = 'B'.toByte
+  val SellImbalance                 = 'S'.toByte
   val NoImbalance                   = 'N'.toByte
   val InsufficientOrdersToCalculate = 'O'.toByte
 }
 
-/**
- * Cross Type as specified in section 4.7.
- */
-object CrossType {
-  val NasdaqOpening              = 'O'.toByte
-  val NasdaqClosing              = 'C'.toByte
-  val IpoAndHaltedOrPaused       = 'H'.toByte
-  val NasdaqIntradayAndPostClose = 'I'.toByte
-}
-
-/**
- * Price Variance Indicator as specified in Section 4.7.
+/*
+ * Section 4.7
  */
 object PriceVarianceIndicator {
-  val CannotBeCalculated              = ' '.toByte
-  val LessThanOnePercent              = 'L'.toByte
-  val LessThanTwoPercent              = '1'.toByte
-  val LessThanThreePercent            = '2'.toByte
-  val LessThanFourPercent             = '3'.toByte
-  val LessThanFivePercent             = '4'.toByte
-  val LessThanSixPercent              = '5'.toByte
-  val LessThanSevenPercent            = '6'.toByte
-  val LessThanEightPercent            = '7'.toByte
-  val LessThanNinePercent             = '8'.toByte
-  val LessThanTenPercent              = '9'.toByte
-  val LessThanTwentyPercent           = 'A'.toByte
-  val LessThanThirtyPercent           = 'B'.toByte
-  val EqualOrGreaterThanThirtyPercent = 'C'.toByte
+  val LessThanOnePercent     = 'L'.toByte
+  val LessThanTwoPercent     = '1'.toByte //  1% to  1.99%
+  val LessThanThreePercent   = '2'.toByte //  2% to  2.99%
+  val LessThanFourPercent    = '3'.toByte //  3% to  3.99%
+  val LessThanFivePercent    = '4'.toByte //  4% to  4.99%
+  val LessThanSixPercent     = '5'.toByte //  5% to  5.99%
+  val LessThanSevenPercent   = '6'.toByte //  6% to  6.99%
+  val LessThanEightPercent   = '7'.toByte //  7% to  7.99%
+  val LessThanNinePercent    = '8'.toByte //  8% to  8.99%
+  val LessThanTenPercent     = '9'.toByte //  9% to  9.99%
+  val LessThanTwentyPercent  = 'A'.toByte // 10% to 19.99%
+  val LessThanThirtyPercent  = 'B'.toByte // 20% to 29.99%
+  val ThirtyPercentOrGreater = 'C'.toByte
+  val CannotBeCalculated     = ' '.toByte
 }

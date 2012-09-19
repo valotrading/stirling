@@ -13,13 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.messages.itch41
+package stirling.itch.nasdaq.itch41
 
-import java.nio.ByteBuffer
+import java.util.Arrays
 
-class SoupBinTCPFileParser extends MessageParser {
-  override protected def decode(buf: ByteBuffer) = {
-    buf.getShort()
-    super.decode(buf)
+case class ByteString(value: Array[Byte]) {
+  override def equals(other: Any): Boolean = other match {
+    case ByteString(other) => Arrays.equals(value, other)
+    case _                 => false
   }
+
+  override def toString: String = new String(value)
 }
