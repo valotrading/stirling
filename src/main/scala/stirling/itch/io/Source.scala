@@ -23,11 +23,11 @@ import silvertip.{MessageParser, PartialMessageException}
 import java.util.zip.{GZIPInputStream, ZipFile}
 import java.nio.{ByteOrder, ByteBuffer}
 
-trait Source[T] extends Iterator[T] with Closeable
+trait Source[Message] extends Iterator[Message] with Closeable
 
 object Source {
-  def fromFile[T](file: File, parser: MessageParser[T], readBufferSize: Int = 65535): Source[T] = {
-    new FileSource[T](newChannel(file), parser, readBufferSize)
+  def fromFile[Message](file: File, parser: MessageParser[Message], readBufferSize: Int = 65535): Source[Message] = {
+    new FileSource(newChannel(file), parser, readBufferSize)
   }
 
   private def newChannel(file: File) = {
@@ -52,7 +52,7 @@ object Source {
     new FileInputStream(file).getChannel
   }
 
-  private class FileSource[T](channel: ReadableByteChannel, parser: MessageParser[T], readBufferSize: Int) extends Source[T] {
+  private class FileSource[Message](channel: ReadableByteChannel, parser: MessageParser[Message], readBufferSize: Int) extends Source[Message] {
     private val buffer = ByteBuffer.allocate(readBufferSize)
     buffer.order(ByteOrder.BIG_ENDIAN)
 
@@ -62,7 +62,7 @@ object Source {
     def next() = iterator.next()
     def hasNext = iterator.hasNext
 
-    private def read(): Option[T] = {
+    private def read(): Option[Message] = {
       try {
         buffer.mark()
         Some(parser.parse(buffer))
