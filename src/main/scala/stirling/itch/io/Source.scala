@@ -22,7 +22,7 @@ import java.util.zip.{GZIPInputStream, ZipFile}
 import scala.collection.JavaConversions._
 import silvertip.{MessageParser, PartialMessageException}
 
-trait Source[Message] extends Iterator[Message] with Closeable
+abstract class Source[Message] extends Iterator[Message] with Closeable
 
 object Source {
   def fromFile[Message](file: File, parser: MessageParser[Message], readBufferSize: Int = 65535): Source[Message] = {
@@ -49,36 +49,5 @@ object Source {
   }
   private def newUncompressedChannel(file: File) = {
     new FileInputStream(file).getChannel
-  }
-
-  private class MessageIterator[Message](channel: ReadableByteChannel, parser: MessageParser[Message], readBufferSize: Int)
-      extends Source[Message] {
-    private val buffer = ByteBuffer.allocate(readBufferSize)
-    buffer.order(ByteOrder.BIG_ENDIAN)
-
-    private val iterator = Iterator.continually(read).takeWhile(!_.isEmpty).map(_.get)
-
-    def close() = channel.close()
-    def next() = iterator.next()
-    def hasNext = iterator.hasNext
-
-    private def read(): Option[Message] = {
-      try {
-        buffer.mark()
-        Some(parser.parse(buffer))
-      } catch {
-        case _: PartialMessageException =>
-          buffer.reset()
-          buffer.compact()
-          if (refill() <= 0) None else read()
-      }
-    }
-    private def refill() = {
-      val bytes = channel.read(buffer)
-      buffer.flip()
-      bytes
-    }
-
-    refill()
   }
 }
