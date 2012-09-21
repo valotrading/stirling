@@ -26,7 +26,7 @@ import java.nio.{ByteOrder, ByteBuffer}
 trait Source[T] extends Iterator[T] with Closeable
 
 object Source {
-  def fromFile[T](file: File, parser: MessageParser[T], readBufferSize: Int = 4096): Source[T] = {
+  def fromFile[T](file: File, parser: MessageParser[T], readBufferSize: Int = 65535): Source[T] = {
     new FileSource[T](newChannel(file), parser, readBufferSize)
   }
 
