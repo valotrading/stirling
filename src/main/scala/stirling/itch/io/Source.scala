@@ -15,13 +15,12 @@
  */
 package stirling.itch.io
 
-import java.io.{Closeable, File, FileInputStream, IOException}
+import java.io.{Closeable, File, FileInputStream}
 import java.nio.channels.{Channels, ReadableByteChannel}
-import scala.collection.JavaConversions._
-import stirling.itch.messages.itch186.{FileParser, Message}
-import silvertip.{MessageParser, PartialMessageException}
-import java.util.zip.{GZIPInputStream, ZipFile}
 import java.nio.{ByteOrder, ByteBuffer}
+import java.util.zip.{GZIPInputStream, ZipFile}
+import scala.collection.JavaConversions._
+import silvertip.{MessageParser, PartialMessageException}
 
 trait Source[Message] extends Iterator[Message] with Closeable
 
