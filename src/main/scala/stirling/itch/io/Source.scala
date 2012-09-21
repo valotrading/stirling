@@ -26,7 +26,7 @@ trait Source[Message] extends Iterator[Message] with Closeable
 
 object Source {
   def fromFile[Message](file: File, parser: MessageParser[Message], readBufferSize: Int = 65535): Source[Message] = {
-    new FileSource(newChannel(file), parser, readBufferSize)
+    new MessageIterator(newChannel(file), parser, readBufferSize)
   }
 
   private def newChannel(file: File) = {
@@ -51,7 +51,8 @@ object Source {
     new FileInputStream(file).getChannel
   }
 
-  private class FileSource[Message](channel: ReadableByteChannel, parser: MessageParser[Message], readBufferSize: Int) extends Source[Message] {
+  private class MessageIterator[Message](channel: ReadableByteChannel, parser: MessageParser[Message], readBufferSize: Int)
+      extends Source[Message] {
     private val buffer = ByteBuffer.allocate(readBufferSize)
     buffer.order(ByteOrder.BIG_ENDIAN)
 
