@@ -15,19 +15,18 @@
  */
 package stirling.itch.io
 
-import java.io.{Closeable, File, FileInputStream, IOException}
+import java.io.{Closeable, File, FileInputStream}
 import java.nio.channels.{Channels, ReadableByteChannel}
-import scala.collection.JavaConversions._
-import stirling.itch.messages.itch186.{FileParser, Message}
-import silvertip.{MessageParser, PartialMessageException}
-import java.util.zip.{GZIPInputStream, ZipFile}
 import java.nio.{ByteOrder, ByteBuffer}
+import java.util.zip.{GZIPInputStream, ZipFile}
+import scala.collection.JavaConversions._
+import silvertip.{MessageParser, PartialMessageException}
 
-trait Source[T] extends Iterator[T] with Closeable
+abstract class Source[Message] extends Iterator[Message] with Closeable
 
 object Source {
-  def fromFile[T](file: File, parser: MessageParser[T], readBufferSize: Int = 4096): Source[T] = {
-    new FileSource[T](newChannel(file), parser, readBufferSize)
+  def fromFile[Message](file: File, parser: MessageParser[Message], readBufferSize: Int = 65535): Source[Message] = {
+    new MessageIterator(newChannel(file), parser, readBufferSize)
   }
 
   private def newChannel(file: File) = {
@@ -50,35 +49,5 @@ object Source {
   }
   private def newUncompressedChannel(file: File) = {
     new FileInputStream(file).getChannel
-  }
-
-  private class FileSource[T](channel: ReadableByteChannel, parser: MessageParser[T], readBufferSize: Int) extends Source[T] {
-    private val buffer = ByteBuffer.allocate(readBufferSize)
-    buffer.order(ByteOrder.BIG_ENDIAN)
-
-    private val iterator = Iterator.continually(read).takeWhile(!_.isEmpty).map(_.get)
-
-    def close() = channel.close()
-    def next() = iterator.next()
-    def hasNext = iterator.hasNext
-
-    private def read(): Option[T] = {
-      try {
-        buffer.mark()
-        Some(parser.parse(buffer))
-      } catch {
-        case _: PartialMessageException =>
-          buffer.reset()
-          buffer.compact()
-          if (refill() <= 0) None else read()
-      }
-    }
-    private def refill() = {
-      val bytes = channel.read(buffer)
-      buffer.flip()
-      bytes
-    }
-
-    refill()
   }
 }
