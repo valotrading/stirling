@@ -15,7 +15,7 @@
  */
 package stirling.itch.io
 
-import java.io.{Closeable, File, FileInputStream}
+import java.io.{Closeable, File, FileInputStream, InputStream}
 import java.nio.channels.{Channels, ReadableByteChannel}
 import java.nio.{ByteOrder, ByteBuffer}
 import java.util.zip.{GZIPInputStream, ZipFile}
@@ -25,8 +25,13 @@ import silvertip.{MessageParser, PartialMessageException}
 abstract class Source[Message] extends Iterator[Message] with Closeable
 
 object Source {
-  def fromFile[Message](file: File, parser: MessageParser[Message], readBufferSize: Int = 65535): Source[Message] = {
+  val defaultReadBufferSize: Int = 65535
+
+  def fromFile[Message](file: File, parser: MessageParser[Message], readBufferSize: Int = defaultReadBufferSize): Source[Message] = {
     new MessageIterator(newChannel(file), parser, readBufferSize)
+  }
+  def fromInputStream[Message](stream: InputStream, parser: MessageParser[Message], readBufferSize: Int = defaultReadBufferSize): Source[Message] = {
+    new MessageIterator(Channels.newChannel(stream), parser, readBufferSize)
   }
 
   private def newChannel(file: File) = {
