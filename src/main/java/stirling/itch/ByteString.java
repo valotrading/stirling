@@ -56,6 +56,17 @@ public class ByteString {
         return new ByteString(bytes, offset, length);
     }
 
+    public long toLong() {
+        long longValue = 0;
+
+        for (int i = offset; i < offset + length; i++) {
+            if (bytes[i] != ' ')
+                longValue = longValue * 10 + bytes[i] - '0';
+        }
+
+        return longValue;
+    }
+
     @Override
     public String toString() {
         try {

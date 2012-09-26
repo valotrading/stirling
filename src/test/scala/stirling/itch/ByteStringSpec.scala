@@ -30,8 +30,19 @@ class ByteStringSpec extends Spec {
         new ByteString(foobar).slice(0, 3) must equal(new ByteString(foo))
       }
     }
+    "converting to integer" should {
+      "convert number prefixed with spaces" in {
+        new ByteString(numberWithSpaces).toLong must equal(100)
+      }
+      "convert number not prefixed with spaces" in {
+        new ByteString(numberWithoutSpaces).toLong must equal(20304)
+      }
+    }
   }
 
   def foo    = "foo".getBytes
-  def foobar =  "foobar".getBytes
+  def foobar = "foobar".getBytes
+
+  def numberWithSpaces    = "  100".getBytes
+  def numberWithoutSpaces = "20304".getBytes
 }
