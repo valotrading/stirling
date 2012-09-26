@@ -16,13 +16,20 @@
 package stirling.itch;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 
 public class ByteString {
     private final byte[] bytes;
+    private final int    offset;
+    private final int    length;
 
     public ByteString(byte[] bytes) {
-        this.bytes = bytes;
+        this(bytes, 0, bytes.length);
+    }
+
+    public ByteString(byte[] bytes, int offset, int length) {
+        this.bytes  = bytes;
+        this.offset = offset;
+        this.length = length;
     }
 
     @Override
@@ -34,13 +41,25 @@ public class ByteString {
     }
 
     private boolean equals(ByteString that) {
-        return Arrays.equals(this.bytes, that.bytes);
+        if (this.length != that.length)
+            return false;
+
+        for (int i = 0; i < length; i++) {
+            if (this.bytes[this.offset + i] != that.bytes[that.offset + i])
+                return false;
+        }
+
+        return true;
+    }
+
+    public ByteString slice(int offset, int length) {
+        return new ByteString(bytes, offset, length);
     }
 
     @Override
     public String toString() {
         try {
-            return new String(bytes, "US-ASCII");
+            return new String(bytes, offset, length, "US-ASCII");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
