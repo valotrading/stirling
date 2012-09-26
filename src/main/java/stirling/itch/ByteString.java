@@ -32,6 +32,10 @@ public class ByteString {
         this.length = length;
     }
 
+    public byte byteAt(int index) {
+        return bytes[offset + index];
+    }
+
     @Override
     public boolean equals(Object that) {
         if (that instanceof ByteString)
