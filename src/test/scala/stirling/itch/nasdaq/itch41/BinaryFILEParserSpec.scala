@@ -17,7 +17,7 @@ package stirling.itch.nasdaq.itch41
 
 import java.io.File
 import java.nio.ByteBuffer
-import stirling.itch.Spec
+import stirling.itch.{ByteString, Spec}
 import stirling.itch.io.Source
 
 class BinaryFILEParserSpec extends Spec with MessageParserFixtures {
