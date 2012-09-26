@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.messages.itch41
+package stirling.itch.nasdaq.itch41
 
 import java.nio.ByteBuffer
 
-object ITCH {
-  def toAscii(str: String): ByteBuffer = {
-    ByteBuffer.wrap(str.getBytes("US-ASCII"))
+class BinaryFILEParser extends MessageParser {
+  override protected def parseMessage(buffer: ByteBuffer) = {
+    buffer.getShort()
+    super.parseMessage(buffer)
   }
 }
