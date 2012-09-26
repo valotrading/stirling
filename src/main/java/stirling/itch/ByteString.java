@@ -15,6 +15,7 @@
  */
 package stirling.itch;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 public class ByteString {
@@ -38,6 +39,10 @@ public class ByteString {
 
     @Override
     public String toString() {
-        return new String(bytes);
+        try {
+            return new String(bytes, "US-ASCII");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
