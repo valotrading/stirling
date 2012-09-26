@@ -161,5 +161,5 @@ trait MessageParserFixtures {
     )
   )
 
-  implicit def stringToByteString(string: String): ByteString = ByteString(string.getBytes)
+  implicit def stringToByteString(string: String): ByteString = new ByteString(string.getBytes)
 }

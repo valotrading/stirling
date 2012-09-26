@@ -44,6 +44,6 @@ object ByteBuffers {
     val slice = new Array[Byte](length)
     buffer.get(slice)
 
-    ByteString(slice)
+    new ByteString(slice)
   }
 }

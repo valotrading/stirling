@@ -13,15 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch
+package stirling.itch;
 
-import java.util.Arrays
+import java.util.Arrays;
 
-case class ByteString(value: Array[Byte]) {
-  override def equals(other: Any): Boolean = other match {
-    case ByteString(other) => Arrays.equals(value, other)
-    case _                 => false
-  }
+public class ByteString {
+    private final byte[] bytes;
 
-  override def toString: String = new String(value)
+    public ByteString(byte[] bytes) {
+        this.bytes = bytes;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof ByteString)
+            return equals((ByteString)that);
+        else
+            return false;
+    }
+
+    private boolean equals(ByteString that) {
+        return Arrays.equals(this.bytes, that.bytes);
+    }
+
+    @Override
+    public String toString() {
+        return new String(bytes);
+    }
 }
