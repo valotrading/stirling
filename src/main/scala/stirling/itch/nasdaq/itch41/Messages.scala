@@ -151,6 +151,18 @@ object MarketParticipantPosition extends MessageType {
 }
 
 /*
+ * Common fields for Sections 4.4.1 and 4.4.2
+ */
+sealed trait AddOrderMessage extends Message {
+  def nanoseconds: Int
+  def orderReferenceNumber: Long
+  def buySellIndicator: Byte
+  def shares: Int
+  def stock: ByteString
+  def price: Int
+}
+
+/*
  * Section 4.4.1
  */
 case class AddOrder(
@@ -160,7 +172,7 @@ case class AddOrder(
   shares:               Int,
   stock:                ByteString,
   price:                Int
-) extends Message
+) extends AddOrderMessage
 
 object AddOrder extends MessageType {
   def parse(buffer: ByteBuffer) = AddOrder(
@@ -186,7 +198,7 @@ case class AddOrderMPID(
   stock:                ByteString,
   price:                Int,
   attribution:          ByteString
-) extends Message
+) extends AddOrderMessage
 
 object AddOrderMPID extends MessageType {
   def parse(buffer: ByteBuffer) = AddOrderMPID(
@@ -203,6 +215,16 @@ object AddOrderMPID extends MessageType {
 }
 
 /*
+ * Common fields for Sections 4.5.1 and 4.5.2
+ */
+sealed trait OrderExecutedMessage extends Message {
+  def nanoseconds: Int
+  def orderReferenceNumber: Long
+  def executedShares: Int
+  def matchNumber: Long
+}
+
+/*
  * Section 4.5.1
  */
 case class OrderExecuted(
@@ -210,7 +232,7 @@ case class OrderExecuted(
   orderReferenceNumber: Long,
   executedShares:       Int,
   matchNumber:          Long
-) extends Message
+) extends OrderExecutedMessage
 
 object OrderExecuted extends MessageType {
   def parse(buffer: ByteBuffer) = OrderExecuted(
@@ -233,7 +255,7 @@ case class OrderExecutedWithPrice(
   matchNumber:          Long,
   printable:            Boolean,
   price:                Int
-) extends Message
+) extends OrderExecutedMessage
 
 object OrderExecutedWithPrice extends MessageType {
   def parse(buffer: ByteBuffer) = OrderExecutedWithPrice(
