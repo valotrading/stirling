@@ -15,12 +15,7 @@
  */
 package stirling.itch
 
-import stirling.itch.messages.{Message, MessageOps}
-import stirling.itch.types.{FieldType, FieldTypeOps}
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
 
-abstract class Spec extends BaseSpec with Helpers
-
-trait Helpers {
-  implicit def fieldTypeToFieldTypeOps[T](value: FieldType[T]) = new FieldTypeOps(value)
-  implicit def messageToMessageOps(value: Message) = new MessageOps(value)
-}
+abstract class Spec extends WordSpec with MustMatchers
