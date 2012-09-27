@@ -38,6 +38,16 @@ class ByteStringSpec extends Spec {
         new ByteString(numberWithoutSpaces).toLong must equal(20304)
       }
     }
+    "returning unsafe bytes" should {
+      "return backing array" in {
+        val bytes = new ByteString(foobar).getBytesUnsafe()
+        bytes must equal(Array('f','o','o','b','a','r'))
+      }
+      "return a copy of the backing array for a partial view" in {
+        val bytes = new ByteString(foobar, 2, 3).getBytesUnsafe()
+        bytes must equal(Array('o','b','a'))
+      }
+    }
   }
 
   def foo    = "foo".getBytes

@@ -35,6 +35,15 @@ public class ByteString {
     public byte byteAt(int index) {
         return bytes[offset + index];
     }
+    
+    public byte[] getBytesUnsafe() {
+        if (offset == 0 && bytes.length == length) {
+            return bytes;
+        }
+        byte[] copy = new byte[length];
+        System.arraycopy(bytes, offset, copy, 0, length);
+        return copy;
+    }
 
     @Override
     public boolean equals(Object that) {
