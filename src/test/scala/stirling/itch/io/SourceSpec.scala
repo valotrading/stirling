@@ -15,71 +15,61 @@
  */
 package stirling.itch.io
 
-import java.io.{File, FileOutputStream, FileWriter, PrintWriter}
-import java.util.zip.{ZipEntry, ZipOutputStream}
-import java.util.zip.GZIPOutputStream
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
-import stirling.itch.messages.itch186._
-import java.nio.charset.Charset
+import java.io.{File, FileOutputStream}
+import java.util.zip.{GZIPOutputStream, ZipEntry, ZipOutputStream}
+import stirling.itch.Spec
+import stirling.itch.nasdaqomx.itch186.{Message, SoupFILEParser}
 
-abstract class SourceSpec extends WordSpec with MustMatchers with SourceFixtures {
+abstract class SourceSpec extends Spec {
   "Source" when {
     "reading a message stream" should {
-      val source = newSource(stream)
-      "yield a Seconds message" in {
-        source.next.messageType must equal(MessageType.Seconds.toByte)
-      }
-      "yield a Milliseconds message" in {
-        source.next.messageType must equal(MessageType.Milliseconds.toByte)
-      }
-      "not yield more messages" in {
-        source.hasNext must equal(false)
+      "yield messages" in {
+        source("T    1\r\nM  1\r\n").map(_.messageType.toChar).mkString must equal("TM")
       }
     }
   }
-  def newSource(stream: String): Source[Message]
+  def source(data: String): Source[Message] = {
+    val bytes = data.getBytes("US-ASCII")
+    Source.fromFile(file(bytes), new SoupFILEParser)
+  }
+
+  protected def file(data: Array[Byte]): File
 }
 
 class ZipCompressedSourceSpec extends SourceSpec {
-  def newSource(stream: String) = {
-    val tempFile = File.createTempFile("SourceSpec", ".zip")
-    tempFile.deleteOnExit()
-    val tempStream = new FileOutputStream(tempFile)
-    val zipEntry = new ZipEntry("SourceSpec.txt")
-    val zipStream = new ZipOutputStream(tempStream)
-    zipStream.putNextEntry(zipEntry)
-    val tempWriter = new PrintWriter(zipStream)
-    tempWriter.write(stream)
-    tempWriter.close()
-    zipStream.close()
-    tempStream.close()
-    Source.fromFile[Message](tempFile, FileParser)
+  def file(data: Array[Byte]): File = {
+    val file   = File.createTempFile("SourceSpec", ".zip")
+    val output = new ZipOutputStream(new FileOutputStream(file))
+    val entry  = new ZipEntry("SourceSpec.txt")
+
+    output.putNextEntry(entry)
+    output.write(data)
+    output.close()
+
+    file
   }
 }
 
 class GZipCompressedSourceSpec extends SourceSpec {
-  def newSource(stream: String) = {
-    val tempFile = File.createTempFile("SourceSpec", ".gz")
-    tempFile.deleteOnExit()
-    val gzipStream = new GZIPOutputStream(new FileOutputStream(tempFile))
-    gzipStream.write(stream.getBytes(Charset.forName("US-ASCII")))
-    gzipStream.close()
-    Source.fromFile[Message](tempFile, FileParser)
+  def file(data: Array[Byte]): File = {
+    val file   = File.createTempFile("SourceSpec", ".gz")
+    val output = new GZIPOutputStream(new FileOutputStream(file))
+
+    output.write(data)
+    output.close()
+
+    file
   }
 }
 
 class UncompressedSourceSpec extends SourceSpec {
-  def newSource(stream: String) = {
-    val tempFile = File.createTempFile("SourceSpec", ".txt")
-    tempFile.deleteOnExit()
-    val tempWriter = new FileWriter(tempFile)
-    tempWriter.write(stream)
-    tempWriter.close()
-    Source.fromFile[Message](tempFile, FileParser)
-  }
-}
+  def file(data: Array[Byte]): File = {
+    val file   = File.createTempFile("SourceSpec", ".txt")
+    val output = new FileOutputStream(file)
 
-trait SourceFixtures {
-  def stream = "\r\nT    1\r\nM  1\r\n\r\n"
+    output.write(data)
+    output.close()
+
+    file
+  }
 }

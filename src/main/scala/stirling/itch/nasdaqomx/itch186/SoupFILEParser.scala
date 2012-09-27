@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.types
+package stirling.itch.nasdaqomx.itch186
 
 import java.nio.ByteBuffer
 
-class FieldTypeOps[T](val fieldType: FieldType[T]) {
-  def decodeBytes(bytes: List[Byte]): T = {
-    val buffer = ByteBuffer.allocate(fieldType.length)
-    buffer.put(Array[Byte](bytes: _*))
-    buffer.flip
-    fieldType.decode(buffer)
+class SoupFILEParser extends MessageParser {
+  override protected def parseMessage(buffer: ByteBuffer) = {
+    val message = super.parseMessage(buffer)
+
+    buffer.get()
+    buffer.get()
+
+    message
   }
-  def encodeBytes(value: T): List[Byte] = {
-    val buffer = ByteBuffer.allocate(fieldType.length)
-    fieldType.encode(buffer, value)
-    buffer.flip
-    val bytes = new Array[Byte](fieldType.length)
-    buffer.get(bytes)
-    List(bytes: _*)
+
+  override protected def messageType(messageType: Byte) = {
+    if (messageType == '\r') EndOfSession else super.messageType(messageType)
   }
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.nasdaq.itch41
+package stirling.itch
 
 import java.nio.{BufferUnderflowException, ByteBuffer, ByteOrder}
 
@@ -44,6 +44,6 @@ object ByteBuffers {
     val slice = new Array[Byte](length)
     buffer.get(slice)
 
-    ByteString(slice)
+    new ByteString(slice)
   }
 }
