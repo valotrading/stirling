@@ -13,6 +13,7 @@ Features
     - Chi-X Europe
     - Hotspot FX
     - MB Trading
+    - NASDAQ OMX
     - UBS
   - ITCH with the following profiles:
     - NASDAQ OMX Nordic Equity TotalView-ITCH 1.86
