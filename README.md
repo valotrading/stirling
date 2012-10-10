@@ -17,6 +17,7 @@ Features
     - UBS
   - ITCH with the following profiles:
     - BATS TCP PITCH 1.12.0
+    - BATS TOP 1.2.0
     - NASDAQ OMX Nordic Equity TotalView-ITCH 1.86
     - NASDAQ TotalView-ITCH 4.1
   - MB Trading Quote API
