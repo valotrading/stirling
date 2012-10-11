@@ -20,7 +20,7 @@ import stirling.itch.io.Source
 
 class MessageParserSpec extends Spec {
   "MessageParser" must {
-    "parse messages with read buffer overflow inside message" in {
+    "parse messages with read buffer underflow inside message" in {
       val messageTypes = "CJsDHTMEBbeAaFUufVvt"
       source(128).map(_.messageType.toChar).mkString must equal(messageTypes)
     }
