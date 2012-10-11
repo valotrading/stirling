@@ -22,9 +22,13 @@ import stirling.itch.io.Source
 
 class SoupTCPFileParserSpec extends Spec {
   "SoupTCPFileParser" must {
-    "parse messages with read buffer overflow inside message" in {
+    "parse messages with read buffer underflow inside message" in {
       val messageTypes = "uAdEXPrBHIJR"
       source(128).map(_.messageType.toChar).mkString must equal(messageTypes)
+    }
+    "parse messages with read buffer underflow on message type" in {
+      val messageTypes = "uAdEXPrBHIJR"
+      source(314).map(_.messageType.toChar).mkString must equal(messageTypes)
     }
   }
 

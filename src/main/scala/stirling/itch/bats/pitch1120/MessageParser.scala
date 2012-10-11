@@ -30,7 +30,7 @@ class MessageParser extends silvertip.MessageParser[Message] {
   }
 
   protected def parseMessage(buffer: ByteBuffer) = {
-    if (buffer.limit - buffer.position < Message.messageTypeOffset)
+    if (buffer.position + Message.messageTypeOffset >= buffer.limit)
       throw new PartialMessageException
 
     val msgType = messageType(buffer.get(buffer.position + Message.messageTypeOffset))

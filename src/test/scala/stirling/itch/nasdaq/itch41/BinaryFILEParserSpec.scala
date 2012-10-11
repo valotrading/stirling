@@ -22,10 +22,10 @@ import stirling.itch.io.Source
 
 class BinaryFILEParserSpec extends Spec with MessageParserFixtures {
   "BinaryFILEParser" must {
-    "parse messages with read buffer overflow inside message" in {
+    "parse messages with read buffer underflow inside message" in {
       source(64).toList must equal(expectedMessages)
     }
-    "parse messages with read buffer overflow on message boundary" in {
+    "parse messages with read buffer underflow on message boundary" in {
       source(46).toList must equal(expectedMessages)
     }
   }
