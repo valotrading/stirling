@@ -29,10 +29,6 @@ import stirling.fix.messages.{
   Reject => RejectTrait,
   Required
 }
-import stirling.fix.tags.fix42.{
-  CxlRejReason,
-  CxlRejResponseTo
-}
 import stirling.fix.tags.fix42.samrat._
 
 class Logon(header: MessageHeaderTrait) extends AbstractMessage(header) with LogonTrait {
