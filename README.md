@@ -12,6 +12,7 @@ Features
     - Burgundy
     - Chi-X Europe
     - Hotspot FX
+    - Lime Brokerage
     - MB Trading
     - NASDAQ OMX
     - UBS

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.messages.fix42.samrat
+package stirling.fix.messages.fix42.lime
 
 import stirling.fix.messages.fix42.DefaultMessageFactory
 import stirling.fix.messages.fix42.MsgTypeValue._
@@ -32,7 +32,7 @@ class MessageFactory extends DefaultMessageFactory {
 
   override def createHeader = new MessageHeader
 
-  override def getProfile = "samrat"
+  override def getProfile = "lime"
 
   override def isValid(msgType: String) = {
     if (msgType.equals(BULK_CANCEL_REQUEST)) true else super.isValid(msgType)

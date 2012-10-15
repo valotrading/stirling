@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.tags.fix42.samrat
+package stirling.fix.tags.fix42.lime
 
 import stirling.fix.messages.{
   BooleanTag,

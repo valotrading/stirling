@@ -17,7 +17,7 @@ package stirling.fix.tags.fix42
 
 import stirling.fix.tags._
 
-package object samrat {
+package object lime {
   val AvgPx            = fix42.AvgPx
   val ClOrdID          = fix42.ClOrdID
   val ContraBroker     = fix42.ContraBroker
