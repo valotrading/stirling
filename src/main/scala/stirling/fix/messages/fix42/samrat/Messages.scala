@@ -129,6 +129,7 @@ class ExecutionReport(header: MessageHeaderTrait) extends AbstractMessage(header
   field(Price.Tag, Required.NO)
   field(LastShares.Tag)
   field(LastPx.Tag)
+  field(LastMkt.Tag, Required.NO)
   field(LeavesQty.Tag)
   field(CumQty.Tag)
   field(AvgPx.Tag)
