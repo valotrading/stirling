@@ -17,23 +17,24 @@ package stirling.fix.messages.fix42.samrat
 
 import stirling.fix.messages.fix42.DefaultMessageFactory
 import stirling.fix.messages.fix42.MsgTypeValue._
-import stirling.fix.messages.fix42.samrat.MsgTypeValue._
 
 class MessageFactory extends DefaultMessageFactory {
-  message(LOGON, classOf[Logon])
-  message(REJECT, classOf[Reject])
-  message(NEW_ORDER_SINGLE, classOf[NewOrderSingle])
-  message(ORDER_CANCEL_REQUEST, classOf[OrderCancelRequest])
+  import MsgTypeValue._
+
+  message(LOGON,                        classOf[Logon])
+  message(REJECT,                       classOf[Reject])
+  message(NEW_ORDER_SINGLE,             classOf[NewOrderSingle])
+  message(ORDER_CANCEL_REQUEST,         classOf[OrderCancelRequest])
   message(ORDER_CANCEL_REPLACE_REQUEST, classOf[OrderCancelReplaceRequest])
-  message(BULK_CANCEL_REQUEST, classOf[BulkCancelRequest])
-  message(EXECUTION_REPORT, classOf[ExecutionReport])
-  message(ORDER_CANCEL_REJECT, classOf[OrderCancelReject])
+  message(BULK_CANCEL_REQUEST,          classOf[BulkCancelRequest])
+  message(EXECUTION_REPORT,             classOf[ExecutionReport])
+  message(ORDER_CANCEL_REJECT,          classOf[OrderCancelReject])
+
   override def createHeader = new MessageHeader
+
   override def getProfile = "samrat"
+
   override def isValid(msgType: String) = {
-    if (msgType.equals(BULK_CANCEL_REQUEST))
-      true
-    else
-      super.isValid(msgType)
+    if (msgType.equals(BULK_CANCEL_REQUEST)) true else super.isValid(msgType)
   }
 }

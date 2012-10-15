@@ -20,11 +20,7 @@ import stirling.fix.messages.{
   Required
 }
 import stirling.fix.tags.fix42.{
-  DeliverToCompID,
-  DeliverToSubID,
   MsgSeqNum,
-  OnBehalfOfCompID,
-  OnBehalfOfSubID,
   OrigSendingTime,
   PossDupFlag,
   PossResend,
@@ -32,18 +28,17 @@ import stirling.fix.tags.fix42.{
   SenderSubID,
   SendingTime,
   TargetCompID,
-  TargetSubID,
-  SenderLocationID
+  TargetSubID
 }
 
 class MessageHeader extends AbstractMessageHeader {
   field(SenderCompID.Tag)
   field(TargetCompID.Tag)
   field(MsgSeqNum.Tag)
-  field(SenderSubID.Tag, Required.NO)
-  field(TargetSubID.Tag, Required.NO)
-  field(PossDupFlag.Tag, Required.NO)
-  field(PossResend.Tag, Required.NO)
+  field(SenderSubID.Tag,     Required.NO)
+  field(TargetSubID.Tag,     Required.NO)
+  field(PossDupFlag.Tag,     Required.NO)
+  field(PossResend.Tag,      Required.NO)
   field(SendingTime.Tag)
   field(OrigSendingTime.Tag, Required.NO)
 }
