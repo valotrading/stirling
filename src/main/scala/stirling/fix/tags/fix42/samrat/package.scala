@@ -32,6 +32,7 @@ package object samrat {
   val ExpireTime = fix42.ExpireTime
   val EncryptMethod = fix42.EncryptMethod
   val HeartBtInt = fix42.HeartBtInt
+  val LastMkt = fix42.LastMkt
   val LastPx = fix42.LastPx
   val LastShares = fix42.LastShares
   val LeavesQty = fix42.LeavesQty
