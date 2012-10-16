@@ -26,8 +26,9 @@ object RejectReason {
  * Section 5.1.2
  */
 object HaltStatus {
-  val Halted  = 'H'.toByte
-  val Trading = 'T'.toByte
+  val Halted    = 'H'.toByte
+  val QuoteOnly = 'Q'.toByte
+  val Trading   = 'T'.toByte
 }
 
 /*
