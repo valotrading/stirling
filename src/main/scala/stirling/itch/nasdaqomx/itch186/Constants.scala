@@ -84,7 +84,7 @@ object NoteCode {
 object TradingState {
   val Halted                   = 'H'.toByte
   val TradingOnNasdaqOmxNordic = 'T'.toByte
-  val auctionPeriod            = 'Q'.toByte
+  val AuctionPeriod            = 'Q'.toByte
 }
 
 /*
