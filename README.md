@@ -31,7 +31,7 @@ Stirling is available at a Maven repository. Add this into your `build.sbt`:
 
     resolvers += "stirling-repository" at "http://valotrading.github.com/stirling/maven"
 
-    libraryDependencies += "stirling" %% "stirling" % "1.3.0"
+    libraryDependencies += "stirling" %% "stirling" % "1.3.1"
 
 
 License
