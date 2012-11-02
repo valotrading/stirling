@@ -72,6 +72,7 @@ import stirling.fix.tags.fix42.{
   SecurityExchange,
   SecurityID,
   SecurityType,
+  SessionRejectReason,
   Shares,
   Side,
   SubscriptionRequestType,
@@ -85,7 +86,6 @@ import stirling.fix.tags.fix42.{
   TradingSessionID,
   TransactTime
 }
-import stirling.fix.tags.fix43.SessionRejectReason
 
 class Reject(header: MessageHeader) extends AbstractMessage(header) with RejectTrait {
   field(RefSeqNo.Tag)
