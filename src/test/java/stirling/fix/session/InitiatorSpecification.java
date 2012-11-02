@@ -494,6 +494,9 @@ public class InitiatorSpecification extends Specification<Session> {
 
     protected Connection openConnection(final Session session, final MessageVisitor messageVisitor, int port, final boolean keepAlive) throws IOException {
         return Connection.connect(new InetSocketAddress("localhost", port), new FixMessageParser(), new Connection.Callback<stirling.fix.messages.FixMessage>() {
+            @Override public void connected(Connection<stirling.fix.messages.FixMessage> conn) {
+            }
+
             @Override public void messages(Connection<stirling.fix.messages.FixMessage> conn, Iterator<stirling.fix.messages.FixMessage> messages) {
                 while (messages.hasNext())
                     session.receive(conn, messages.next(), messageVisitor);
@@ -509,7 +512,7 @@ public class InitiatorSpecification extends Specification<Session> {
             @Override public void closed(Connection<stirling.fix.messages.FixMessage> conn) {
             }
 
-            @Override public void garbledMessage(String message, byte[] data) {
+            @Override public void garbledMessage(Connection<stirling.fix.messages.FixMessage> conn, String message, byte[] data) {
                 logger.warning(message);
             }
         });
