@@ -35,7 +35,7 @@ public class ByteString {
     public byte byteAt(int index) {
         return bytes[offset + index];
     }
-    
+
     public byte[] getBytesUnsafe() {
         if (offset == 0 && bytes.length == length) {
             return bytes;

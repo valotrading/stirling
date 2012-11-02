@@ -74,11 +74,11 @@ public abstract class AbstractMessage extends DefaultFieldContainer implements M
 
         setSenderCompId(config.getSenderCompId());
         if (config.getSenderSubId() != null)
-          setSenderSubId(config.getSenderSubId());
+            setSenderSubId(config.getSenderSubId());
 
         setTargetCompId(config.getTargetCompId());
         if (config.getTargetSubId() != null)
-          setTargetSubId(config.getTargetSubId());
+            setTargetSubId(config.getTargetSubId());
     }
 
     public String getMsgType() {

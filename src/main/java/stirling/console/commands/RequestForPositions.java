@@ -22,20 +22,20 @@ import stirling.fix.messages.Message;
 import stirling.fix.messages.MessageFactory;
 
 public class RequestForPositions extends FixMessageCommand {
-  @Override protected Message newMessage(ConsoleClient client) {
-    MessageFactory messageFactory = client.getMessageFactory();
-    return messageFactory.create(REQUEST_FOR_POSITIONS);
-  }
+    @Override protected Message newMessage(ConsoleClient client) {
+        MessageFactory messageFactory = client.getMessageFactory();
+        return messageFactory.create(REQUEST_FOR_POSITIONS);
+    }
 
-  @Override protected boolean isModifyingOrderMessage() {
-    return false;
-  }
+    @Override protected boolean isModifyingOrderMessage() {
+        return false;
+    }
 
-  @Override public String description() {
-    return "Creates and sends a request for positions.";
-  }
+    @Override public String description() {
+        return "Creates and sends a request for positions.";
+    }
 
-  @Override public String usage() {
-    return "<Argument=value>* : " + description();
-  }
+    @Override public String usage() {
+        return "<Argument=value>* : " + description();
+    }
 }

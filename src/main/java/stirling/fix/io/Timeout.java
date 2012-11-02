@@ -37,9 +37,9 @@ public class Timeout {
     }
 
     public long delayMsec() {
-      return delayMsec;
+        return delayMsec;
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hashCode(this);

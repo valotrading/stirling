@@ -19,9 +19,9 @@ package stirling.console.commands;
  * @author Karim Osman
  */
 public class CommandArgException extends CommandException {
-  public CommandArgException(String s) {
-    super(s);
-  }
+    public CommandArgException(String s) {
+        super(s);
+    }
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 }

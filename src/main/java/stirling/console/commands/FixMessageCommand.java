@@ -47,277 +47,277 @@ import stirling.fix.tags.fix42.OrigClOrdID;
 import stirling.fix.tags.fix42.TransactTime;
 
 public abstract class FixMessageCommand implements Command {
-  private static final Logger logger = Logger.getLogger("ConsoleClient");
+    private static final Logger logger = Logger.getLogger("ConsoleClient");
 
-  private static final Set<Class<? extends Parser>> parserClasses = new HashSet<Class<? extends Parser>>();
+    private static final Set<Class<? extends Parser>> parserClasses = new HashSet<Class<? extends Parser>>();
 
-  {
-    parserClasses.add(IntegerFieldParser.class);
-    parserClasses.add(StringFieldParser.class);
-    parserClasses.add(ExchangeFieldParser.class);
-    parserClasses.add(FloatFieldParser.class);
-    parserClasses.add(QtyFieldParser.class);
-    parserClasses.add(PriceFieldParser.class);
-    parserClasses.add(EnumFieldParser.class);
-    parserClasses.add(BooleanFieldParser.class);
-  }
-
-  public String[] getArgumentNames(ConsoleClient client) {
-    List<String> fields = new ArrayList<String>();
-    Iterator<Field> fieldsIterator = newMessage(client).iterator();
-    while (fieldsIterator.hasNext()) {
-      Field field = fieldsIterator.next();
-      String prettyName = field.prettyName();
-      fields.add(prettyName.replaceAll("\\(([0-9]+)\\)", "="));
-    }
-    return fields.toArray(new String[0]);
-  }
-
-  public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
-    try {
-      Message message = newMessage(client);
-      if (message.isDefined(TransactTime.Tag()))
-        message.setDateTime(TransactTime.Tag(), client.getSession().currentTime());
-      setFields(message, scanner, client.getMessageFactory());
-      if (isModifyingOrderMessage() && message.isDefined(OrderID.Tag()))
-        setMessageOrderID(message, client);
-      if (client.getSession() != null) {
-        client.getSession().send(client.getConnection(), message);
-        logger.info("SEND> " + message.toString());
-      } else {
-        logger.info("Not sending message (session == null): " + message.toString());
-      }
-    } catch (Exception e) {
-      throw new CommandException("failed to set field: " + e.getMessage());
-    }
-  }
-
-  private void setMessageOrderID(Message msg, ConsoleClient client) {
-    String orderID = client.findOrderID(origClientOrderID(msg));
-    if (orderID == null)
-      throw new RuntimeException("cannot find OrderID for OrigClOrdID: " + origClientOrderID(msg));
-    msg.setString(OrderID.Tag(), orderID);
-  }
-
-  private String origClientOrderID(Message msg) {
-    return msg.getString(OrigClOrdID.Tag());
-  }
-
-  protected abstract Message newMessage(ConsoleClient client);
-
-  protected abstract boolean isModifyingOrderMessage();
-
-  private void setFields(Message message, Scanner scanner, MessageFactory messageFactory) {
-    while (scanner.hasNext()) {
-      String field = scanner.next();
-      findParserForField(field, messageFactory).setField(message, field);
-    }
-  }
-
-  private Parser findParserForField(String field, MessageFactory messageFactory) {
-    for (Class<? extends Parser> parserClass : parserClasses) {
-      Parser parser = newParser(parserClass, messageFactory);
-      if (parser.matches(field))
-        return parser;
-    }
-    throw new RuntimeException("cannot parse field: " + field);
-  }
-
-  private Parser newParser(Class<? extends Parser> clazz, MessageFactory messageFactory) {
-    try {
-      return clazz.getDeclaredConstructor(MessageFactory.class).newInstance(messageFactory);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  private interface Parser {
-    boolean matches(String field);
-    void setField(Message msg, String field);
-  }
-
-  private static abstract class AbstractFieldParser implements Parser {
-    protected final MessageFactory messageFactory;
-
-    protected AbstractFieldParser(MessageFactory messageFactory) {
-      this.messageFactory = messageFactory;
+    {
+        parserClasses.add(IntegerFieldParser.class);
+        parserClasses.add(StringFieldParser.class);
+        parserClasses.add(ExchangeFieldParser.class);
+        parserClasses.add(FloatFieldParser.class);
+        parserClasses.add(QtyFieldParser.class);
+        parserClasses.add(PriceFieldParser.class);
+        parserClasses.add(EnumFieldParser.class);
+        parserClasses.add(BooleanFieldParser.class);
     }
 
-    @Override public boolean matches(String field) {
-      if (hasTypeArg(field))
-        return typeArg(field).equals(getFieldClass());
-      return false;
+    public String[] getArgumentNames(ConsoleClient client) {
+        List<String> fields = new ArrayList<String>();
+        Iterator<Field> fieldsIterator = newMessage(client).iterator();
+        while (fieldsIterator.hasNext()) {
+            Field field = fieldsIterator.next();
+            String prettyName = field.prettyName();
+            fields.add(prettyName.replaceAll("\\(([0-9]+)\\)", "="));
+        }
+        return fields.toArray(new String[0]);
     }
 
-    @SuppressWarnings("unchecked") protected Class<? extends Tag> tagClass(String field) {
-      return messageFactory.createTag(tag(field)).getClass();
+    public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
+        try {
+            Message message = newMessage(client);
+            if (message.isDefined(TransactTime.Tag()))
+                message.setDateTime(TransactTime.Tag(), client.getSession().currentTime());
+            setFields(message, scanner, client.getMessageFactory());
+            if (isModifyingOrderMessage() && message.isDefined(OrderID.Tag()))
+                setMessageOrderID(message, client);
+            if (client.getSession() != null) {
+                client.getSession().send(client.getConnection(), message);
+                logger.info("SEND> " + message.toString());
+            } else {
+                logger.info("Not sending message (session == null): " + message.toString());
+            }
+        } catch (Exception e) {
+            throw new CommandException("failed to set field: " + e.getMessage());
+        }
     }
 
-    protected abstract Class<? extends Field> getFieldClass();
-
-    protected boolean hasTypeArg(String field) {
-      ParameterizedType type = (ParameterizedType) tagClass(field).getSuperclass().getGenericSuperclass();
-      return type.getActualTypeArguments().length > 0;
+    private void setMessageOrderID(Message msg, ConsoleClient client) {
+        String orderID = client.findOrderID(origClientOrderID(msg));
+        if (orderID == null)
+            throw new RuntimeException("cannot find OrderID for OrigClOrdID: " + origClientOrderID(msg));
+        msg.setString(OrderID.Tag(), orderID);
     }
 
-    protected Type typeArg(String field) {
-      return typeArg(tagClass(field));
+    private String origClientOrderID(Message msg) {
+        return msg.getString(OrigClOrdID.Tag());
     }
 
-    protected Type typeArg(Class<?> clazz) {
-      ParameterizedType type = (ParameterizedType) clazz.getSuperclass().getGenericSuperclass();
-      return type.getActualTypeArguments()[0];
+    protected abstract Message newMessage(ConsoleClient client);
+
+    protected abstract boolean isModifyingOrderMessage();
+
+    private void setFields(Message message, Scanner scanner, MessageFactory messageFactory) {
+        while (scanner.hasNext()) {
+            String field = scanner.next();
+            findParserForField(field, messageFactory).setField(message, field);
+        }
     }
 
-    protected String tag(String field) {
-      return tagAndValue(field)[0];
+    private Parser findParserForField(String field, MessageFactory messageFactory) {
+        for (Class<? extends Parser> parserClass : parserClasses) {
+            Parser parser = newParser(parserClass, messageFactory);
+            if (parser.matches(field))
+                return parser;
+        }
+        throw new RuntimeException("cannot parse field: " + field);
     }
 
-    protected String value(String field) {
-      return tagAndValue(field)[1];
+    private Parser newParser(Class<? extends Parser> clazz, MessageFactory messageFactory) {
+        try {
+            return clazz.getDeclaredConstructor(MessageFactory.class).newInstance(messageFactory);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private String[] tagAndValue(String field) {
-      String[] tagAndValue = field.split("=");
-      if (tagAndValue.length != 2)
-        throw new RuntimeException("invalid field: " + field);
-      return tagAndValue;
-    }
-  }
-
-  private static class StringFieldParser extends AbstractFieldParser {
-    public StringFieldParser(MessageFactory messageFactory) {
-      super(messageFactory);
+    private interface Parser {
+        boolean matches(String field);
+        void setField(Message msg, String field);
     }
 
-    @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
-      try {
-        AbstractField<String> f = (AbstractField<String>) msg.lookup(messageFactory.createTag(tag(field)));
-        if (f != null)
-          f.setValue(value(field));
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
+    private static abstract class AbstractFieldParser implements Parser {
+        protected final MessageFactory messageFactory;
+
+        protected AbstractFieldParser(MessageFactory messageFactory) {
+            this.messageFactory = messageFactory;
+        }
+
+        @Override public boolean matches(String field) {
+            if (hasTypeArg(field))
+                return typeArg(field).equals(getFieldClass());
+            return false;
+        }
+
+        @SuppressWarnings("unchecked") protected Class<? extends Tag> tagClass(String field) {
+            return messageFactory.createTag(tag(field)).getClass();
+        }
+
+        protected abstract Class<? extends Field> getFieldClass();
+
+        protected boolean hasTypeArg(String field) {
+            ParameterizedType type = (ParameterizedType) tagClass(field).getSuperclass().getGenericSuperclass();
+            return type.getActualTypeArguments().length > 0;
+        }
+
+        protected Type typeArg(String field) {
+            return typeArg(tagClass(field));
+        }
+
+        protected Type typeArg(Class<?> clazz) {
+            ParameterizedType type = (ParameterizedType) clazz.getSuperclass().getGenericSuperclass();
+            return type.getActualTypeArguments()[0];
+        }
+
+        protected String tag(String field) {
+            return tagAndValue(field)[0];
+        }
+
+        protected String value(String field) {
+            return tagAndValue(field)[1];
+        }
+
+        private String[] tagAndValue(String field) {
+            String[] tagAndValue = field.split("=");
+            if (tagAndValue.length != 2)
+                throw new RuntimeException("invalid field: " + field);
+            return tagAndValue;
+        }
     }
 
-    @Override protected Class<? extends Field> getFieldClass() {
-      return StringField.class;
-    }
-  }
+    private static class StringFieldParser extends AbstractFieldParser {
+        public StringFieldParser(MessageFactory messageFactory) {
+            super(messageFactory);
+        }
 
-  private static class ExchangeFieldParser extends StringFieldParser {
-    public ExchangeFieldParser(MessageFactory messageFactory) {
-      super(messageFactory);
-    }
+        @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
+            try {
+                AbstractField<String> f = (AbstractField<String>) msg.lookup(messageFactory.createTag(tag(field)));
+                if (f != null)
+                    f.setValue(value(field));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
 
-    @Override protected Class<? extends Field> getFieldClass() {
-      return ExchangeField.class;
-    }
-  }
-
-  private static class FloatFieldParser extends AbstractFieldParser {
-    public FloatFieldParser(MessageFactory messageFactory) {
-      super(messageFactory);
-    }
-
-    @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
-      try {
-        AbstractField<Double> f = (AbstractField<Double>) msg.lookup(messageFactory.createTag(tag(field)));
-        f.setValue(Double.valueOf(value(field)));
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
+        @Override protected Class<? extends Field> getFieldClass() {
+            return StringField.class;
+        }
     }
 
-    @Override protected Class<? extends Field> getFieldClass() {
-      return FloatField.class;
-    }
-  }
+    private static class ExchangeFieldParser extends StringFieldParser {
+        public ExchangeFieldParser(MessageFactory messageFactory) {
+            super(messageFactory);
+        }
 
-  private static class QtyFieldParser extends FloatFieldParser {
-    public QtyFieldParser(MessageFactory messageFactory) {
-      super(messageFactory);
-    }
-
-    @Override protected Class<? extends Field> getFieldClass() {
-      return QtyField.class;
-    }
-  }
-
-  private static class PriceFieldParser extends FloatFieldParser {
-    public PriceFieldParser(MessageFactory messageFactory) {
-      super(messageFactory);
+        @Override protected Class<? extends Field> getFieldClass() {
+            return ExchangeField.class;
+        }
     }
 
-    @Override protected Class<? extends Field> getFieldClass() {
-      return PriceField.class;
-    }
-  }
+    private static class FloatFieldParser extends AbstractFieldParser {
+        public FloatFieldParser(MessageFactory messageFactory) {
+            super(messageFactory);
+        }
 
-  private static class IntegerFieldParser extends AbstractFieldParser {
-    public IntegerFieldParser(MessageFactory messageFactory) {
-      super(messageFactory);
-    }
+        @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
+            try {
+                AbstractField<Double> f = (AbstractField<Double>) msg.lookup(messageFactory.createTag(tag(field)));
+                f.setValue(Double.valueOf(value(field)));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
 
-    @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
-      try {
-        AbstractField<Integer> f = (AbstractField<Integer>) msg.lookup(messageFactory.createTag(tag(field)));
-        f.setValue(Integer.valueOf(value(field)));
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
-    }
-
-    @Override protected Class<? extends Field> getFieldClass() {
-      return IntegerField.class;
-    }
-  }
-
-  private static class EnumFieldParser extends AbstractFieldParser {
-    public EnumFieldParser(MessageFactory messageFactory) {
-      super(messageFactory);
+        @Override protected Class<? extends Field> getFieldClass() {
+            return FloatField.class;
+        }
     }
 
-    @Override public boolean matches(String field) {
-      if (hasTypeArg(field) && typeArg(field) instanceof ParameterizedType) {
-        ParameterizedType type = (ParameterizedType) typeArg(field);
-        return type.getRawType().equals(getFieldClass());
-      }
-      return false;
+    private static class QtyFieldParser extends FloatFieldParser {
+        public QtyFieldParser(MessageFactory messageFactory) {
+            super(messageFactory);
+        }
+
+        @Override protected Class<? extends Field> getFieldClass() {
+            return QtyField.class;
+        }
     }
 
-    @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
-      try {
-        EnumTag<?> tag = (EnumTag<?>) messageFactory.createTag(tag(field));
-        AbstractField<Value<?>> f = (AbstractField<Value<?>>) msg.lookup(tag);
-        f.setValue(tag.valueOf(value(field)));
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
+    private static class PriceFieldParser extends FloatFieldParser {
+        public PriceFieldParser(MessageFactory messageFactory) {
+            super(messageFactory);
+        }
+
+        @Override protected Class<? extends Field> getFieldClass() {
+            return PriceField.class;
+        }
     }
 
-    @Override protected Class<? extends Field> getFieldClass() {
-      return EnumField.class;
-    }
-  }
+    private static class IntegerFieldParser extends AbstractFieldParser {
+        public IntegerFieldParser(MessageFactory messageFactory) {
+            super(messageFactory);
+        }
 
-  private static class BooleanFieldParser extends AbstractFieldParser {
-    public BooleanFieldParser(MessageFactory messageFactory) {
-      super(messageFactory);
+        @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
+            try {
+                AbstractField<Integer> f = (AbstractField<Integer>) msg.lookup(messageFactory.createTag(tag(field)));
+                f.setValue(Integer.valueOf(value(field)));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override protected Class<? extends Field> getFieldClass() {
+            return IntegerField.class;
+        }
     }
 
-    @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
-      try {
-        AbstractField<Boolean> f = (AbstractField<Boolean>) msg.lookup(messageFactory.createTag(tag(field)));
-        if (f != null)
-          f.setValue(Boolean.valueOf(value(field)));
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
+    private static class EnumFieldParser extends AbstractFieldParser {
+        public EnumFieldParser(MessageFactory messageFactory) {
+            super(messageFactory);
+        }
+
+        @Override public boolean matches(String field) {
+            if (hasTypeArg(field) && typeArg(field) instanceof ParameterizedType) {
+                ParameterizedType type = (ParameterizedType) typeArg(field);
+                return type.getRawType().equals(getFieldClass());
+            }
+            return false;
+        }
+
+        @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
+            try {
+                EnumTag<?> tag = (EnumTag<?>) messageFactory.createTag(tag(field));
+                AbstractField<Value<?>> f = (AbstractField<Value<?>>) msg.lookup(tag);
+                f.setValue(tag.valueOf(value(field)));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override protected Class<? extends Field> getFieldClass() {
+            return EnumField.class;
+        }
     }
 
-    @Override protected Class<? extends Field> getFieldClass() {
-      return BooleanField.class;
+    private static class BooleanFieldParser extends AbstractFieldParser {
+        public BooleanFieldParser(MessageFactory messageFactory) {
+            super(messageFactory);
+        }
+
+        @Override @SuppressWarnings("unchecked") public void setField(Message msg, String field) {
+            try {
+                AbstractField<Boolean> f = (AbstractField<Boolean>) msg.lookup(messageFactory.createTag(tag(field)));
+                if (f != null)
+                    f.setValue(Boolean.valueOf(value(field)));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override protected Class<? extends Field> getFieldClass() {
+            return BooleanField.class;
+        }
     }
-  }
 }

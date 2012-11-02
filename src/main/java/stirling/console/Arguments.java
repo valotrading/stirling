@@ -22,39 +22,39 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Arguments {
-  private Map<String, String> namesAndValues = new HashMap<String, String>();
+    private Map<String, String> namesAndValues = new HashMap<String, String>();
 
-  public Arguments(Scanner scanner) {
-    parseNamesAndValues(scanner);
-  }
-
-  private void parseNamesAndValues(Scanner scanner) {
-    while (scanner.hasNext()) {
-      String[] nameAndValue = scanner.next().split("=");
-      String value = null;
-      if (nameAndValue.length > 1)
-        value = nameAndValue[1];
-      namesAndValues.put(nameAndValue[0], value);
+    public Arguments(Scanner scanner) {
+        parseNamesAndValues(scanner);
     }
-  }
 
-  public String requiredValue(String name) throws CommandArgException {
-    String value = value(name);
-    if (value != null)
-      return value;
-    throw new CommandArgException(name + " must be specified");
-  }
-
-  public String value(String name) {
-    return namesAndValues.get(name);
-  }
-
-  public int requiredIntValue(String name) throws CommandArgException {
-    String value = requiredValue(name);
-    try {
-      return Integer.parseInt(value);
-    } catch (NumberFormatException e) {
-      throw new CommandArgException(name + " must be an integer");
+    private void parseNamesAndValues(Scanner scanner) {
+        while (scanner.hasNext()) {
+            String[] nameAndValue = scanner.next().split("=");
+            String value = null;
+            if (nameAndValue.length > 1)
+                value = nameAndValue[1];
+            namesAndValues.put(nameAndValue[0], value);
+        }
     }
-  }
+
+    public String requiredValue(String name) throws CommandArgException {
+        String value = value(name);
+        if (value != null)
+            return value;
+        throw new CommandArgException(name + " must be specified");
+    }
+
+    public String value(String name) {
+        return namesAndValues.get(name);
+    }
+
+    public int requiredIntValue(String name) throws CommandArgException {
+        String value = requiredValue(name);
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            throw new CommandArgException(name + " must be an integer");
+        }
+    }
 }

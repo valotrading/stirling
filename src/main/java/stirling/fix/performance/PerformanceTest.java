@@ -201,25 +201,25 @@ public class PerformanceTest implements Runnable {
                     throw new RuntimeException(e);
                 }
                 final Connection conn = new Connection<FixMessage>(channel, new FixMessageParser(),
-                        new Connection.Callback<FixMessage>() {
-                            @Override public void connected(Connection<FixMessage> conn) {
-                            }
+                new Connection.Callback<FixMessage>() {
+                    @Override public void connected(Connection<FixMessage> conn) {
+                    }
 
-                            @Override public void messages(Connection<FixMessage> conn, Iterator<FixMessage> messages) {
-                                while (messages.hasNext())
-                                    session.receive(conn, messages.next(), new DefaultMessageVisitor());
-                            }
+                    @Override public void messages(Connection<FixMessage> conn, Iterator<FixMessage> messages) {
+                        while (messages.hasNext())
+                            session.receive(conn, messages.next(), new DefaultMessageVisitor());
+                    }
 
-                            @Override public void idle(Connection<FixMessage> conn) {
-                                session.keepAlive(conn);
-                            }
+                    @Override public void idle(Connection<FixMessage> conn) {
+                        session.keepAlive(conn);
+                    }
 
-                            @Override public void closed(Connection<FixMessage> conn) {
-                            }
+                    @Override public void closed(Connection<FixMessage> conn) {
+                    }
 
-                            @Override public void garbledMessage(Connection<FixMessage> conn, String message, byte[] data) {
-                            }
-                        });
+                    @Override public void garbledMessage(Connection<FixMessage> conn, String message, byte[] data) {
+                    }
+                });
                 events.register(conn);
                 Thread worker = new Thread(new Runnable() {
                     @Override public void run() {

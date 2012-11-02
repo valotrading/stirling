@@ -21,19 +21,19 @@ import stirling.fix.messages.Message;
 import static stirling.fix.messages.fix42.MsgTypeValue.ORDER_CANCEL_REPLACE_REQUEST;
 
 public class UpdateOrder extends FixMessageCommand {
-  @Override protected Message newMessage(ConsoleClient client) {
-    return client.getMessageFactory().create(ORDER_CANCEL_REPLACE_REQUEST);
-  }
+    @Override protected Message newMessage(ConsoleClient client) {
+        return client.getMessageFactory().create(ORDER_CANCEL_REPLACE_REQUEST);
+    }
 
-  @Override protected boolean isModifyingOrderMessage() {
-    return true;
-  }
+    @Override protected boolean isModifyingOrderMessage() {
+        return true;
+    }
 
-  @Override public String description() {
-    return "Creates and sends order modification request message.";
-  }
+    @Override public String description() {
+        return "Creates and sends order modification request message.";
+    }
 
-  @Override public String usage() {
-    return "<Argument=value>* : " + description();
-  }
+    @Override public String usage() {
+        return "<Argument=value>* : " + description();
+    }
 }
