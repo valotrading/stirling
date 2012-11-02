@@ -12,10 +12,13 @@ class MbtMessageClient(val application: MbtMessageListener, val config: MbtMessa
     try {
       log.info("Connecting to %s".format(config.address.toString))
       connection = Connection.connect(config.address, new MbtMessageParser, new Callback[MbtMessage] {
+        def connected(connection: Connection[MbtMessage]) {
+          log.info("Connected")
+        }
         def closed(connection: Connection[MbtMessage]) {
           log.info("Connection closed")
         }
-        def garbledMessage(message: String, data: Array[Byte]) {
+        def garbledMessage(connection: Connection[MbtMessage], message: String, data: Array[Byte]) {
           log.error("Received garbled message '%s'", message)
         }
         def idle(connection: Connection[MbtMessage]) {
