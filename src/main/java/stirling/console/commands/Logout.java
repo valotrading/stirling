@@ -23,19 +23,19 @@ import stirling.console.ConsoleClient;
  * @author Karim Osman
  */
 public class Logout implements Command {
-  public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
-    if (client.getSession() != null) client.getSession().logout(client.getConnection());
-  }
+    public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
+        if (client.getSession() != null) client.getSession().logout(client.getConnection());
+    }
 
-  public String[] getArgumentNames(ConsoleClient client) {
-    return new String[0];
-  }
+    public String[] getArgumentNames(ConsoleClient client) {
+        return new String[0];
+    }
 
-  public String description() {
-    return "Creates and sends logout message.";
-  }
+    public String description() {
+        return "Creates and sends logout message.";
+    }
 
-  public String usage() {
-    return ": " + description();
-  }
+    public String usage() {
+        return ": " + description();
+    }
 }

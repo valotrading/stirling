@@ -95,16 +95,16 @@ public class DefaultMessageFactory implements MessageFactory {
 
     @SuppressWarnings("unchecked") private Class<Tag<?>> tagClass(String tagName) {
         for (String tagsPackage : getTagsPackages()) {
-          try {
-              return (Class<Tag<?>>) Class.forName(tagsPackage + "." + tagName);
-          } catch (ClassNotFoundException e) {
-          }
+            try {
+                return (Class<Tag<?>>) Class.forName(tagsPackage + "." + tagName);
+            } catch (ClassNotFoundException e) {
+            }
         }
         throw new RuntimeException("Tag not found");
     }
 
     protected String getTagsPackage() {
-      return getClass().getPackage().getName().replaceAll("^stirling.fix.messages", "stirling.fix.tags");
+        return getClass().getPackage().getName().replaceAll("^stirling.fix.messages", "stirling.fix.tags");
     }
 
     protected void message(String msgType, Class<? extends Message> clazz) {

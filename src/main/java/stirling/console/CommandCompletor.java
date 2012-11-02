@@ -26,66 +26,66 @@ import java.util.List;
 import java.util.Map;
 
 public class CommandCompletor implements Completor {
-  private ConsoleClient consoleClient;
-  private Map<String, Command> commands;
-  private Completor delegate;
-  private SimpleCompletor argumentCompletor;
+    private ConsoleClient consoleClient;
+    private Map<String, Command> commands;
+    private Completor delegate;
+    private SimpleCompletor argumentCompletor;
 
-  public CommandCompletor(ConsoleClient consoleClient, Map<String, Command> commands) {
-    this.consoleClient = consoleClient;
-    this.commands = commands;
-    this.argumentCompletor = argumentCompletor();
-    this.delegate = commandsCompletor();
-  }
+    public CommandCompletor(ConsoleClient consoleClient, Map<String, Command> commands) {
+        this.consoleClient = consoleClient;
+        this.commands = commands;
+        this.argumentCompletor = argumentCompletor();
+        this.delegate = commandsCompletor();
+    }
 
-  @Override
-  public int complete(final String buffer, final int cursor, final List candidates) {
-    setArgumentNames(buffer);
-    return delegate.complete(buffer, cursor, candidates);
-  }
-
-  private SimpleCompletor argumentCompletor() {
-    return new SimpleCompletor("") {
-      @Override
-      @SuppressWarnings("unchecked")
-      public int complete(final String buffer, final int cursor, final List candidates) {
-        int index = super.complete(buffer, cursor, candidates);
-        for (int i = 0; i < candidates.size(); i++) {
-          String candidate = (String) candidates.get(i);
-          candidates.set(i, candidate.replaceAll("= ", "="));
-        }
-        return index;
-      }
-    };
-  }
-
-  private Completor commandsCompletor() {
-    SimpleCompletor simpleCompletor = new SimpleCompletor(commandNames()) {
-      public int complete(final String buffer, final int cursor, final List candidates) {
+    @Override
+    public int complete(final String buffer, final int cursor, final List candidates) {
         setArgumentNames(buffer);
-        return super.complete(buffer, cursor, candidates);
-      }
-    };
-    ArgumentCompletor completor = new ArgumentCompletor(new Completor[] {simpleCompletor, argumentCompletor});
-    completor.setStrict(false);
-    return completor;
-  }
+        return delegate.complete(buffer, cursor, candidates);
+    }
 
-  private void setArgumentNames(String buffer) {
-    if (buffer == null)
-      return;
-    String command = buffer.split(" ")[0];
-    if (commands.containsKey(command))
-      argumentCompletor.setCandidateStrings(argumentNames(command));
-  }
+    private SimpleCompletor argumentCompletor() {
+        return new SimpleCompletor("") {
+            @Override
+            @SuppressWarnings("unchecked")
+            public int complete(final String buffer, final int cursor, final List candidates) {
+                int index = super.complete(buffer, cursor, candidates);
+                for (int i = 0; i < candidates.size(); i++) {
+                    String candidate = (String) candidates.get(i);
+                    candidates.set(i, candidate.replaceAll("= ", "="));
+                }
+                return index;
+            }
+        };
+    }
 
-  private String[] commandNames() {
-    List<String> commandNames = new ArrayList<String>(commands.keySet());
-    Collections.sort(commandNames);
-    return commandNames.toArray(new String[0]);
-  }
+    private Completor commandsCompletor() {
+        SimpleCompletor simpleCompletor = new SimpleCompletor(commandNames()) {
+            public int complete(final String buffer, final int cursor, final List candidates) {
+                setArgumentNames(buffer);
+                return super.complete(buffer, cursor, candidates);
+            }
+        };
+        ArgumentCompletor completor = new ArgumentCompletor(new Completor[] {simpleCompletor, argumentCompletor});
+        completor.setStrict(false);
+        return completor;
+    }
 
-  private String[] argumentNames(String command) {
-    return commands.get(command).getArgumentNames(consoleClient);
-  }
+    private void setArgumentNames(String buffer) {
+        if (buffer == null)
+            return;
+        String command = buffer.split(" ")[0];
+        if (commands.containsKey(command))
+            argumentCompletor.setCandidateStrings(argumentNames(command));
+    }
+
+    private String[] commandNames() {
+        List<String> commandNames = new ArrayList<String>(commands.keySet());
+        Collections.sort(commandNames);
+        return commandNames.toArray(new String[0]);
+    }
+
+    private String[] argumentNames(String command) {
+        return commands.get(command).getArgumentNames(consoleClient);
+    }
 }

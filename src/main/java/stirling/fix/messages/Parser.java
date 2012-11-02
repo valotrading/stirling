@@ -56,7 +56,7 @@ public class Parser {
         } catch (ParseException e) {
             int msgSeqNum = 0;
             if (header.hasValue(MsgSeqNum.Tag()))
-              msgSeqNum = header.getInteger(MsgSeqNum.Tag());
+                msgSeqNum = header.getInteger(MsgSeqNum.Tag());
             callback.invalidMessage(msgSeqNum, e.getReason(), e.getMessage());
         }
     }
@@ -77,7 +77,7 @@ public class Parser {
                 int tag = Tag.parseTag(b);
                 String value = AbstractField.parseValue(b);
                 if (tag == tagToFind.value())
-                  return value;
+                    return value;
             } catch (NonDataValueIncludesFieldDelimiterException e) {
                 /* Ignore tag that cannot be parsed due to delimiter in tag */
             }

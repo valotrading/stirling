@@ -41,107 +41,107 @@ import stirling.fix.tags.fix42.OrderID;
 import silvertip.Connection;
 
 public class Connect implements Command {
-  private static final Logger logger = Logger.getLogger("ConsoleClient");
-  private static final String ARGUMENT_PORT = "Port";
-  private static final String ARGUMENT_HOST = "Host";
+    private static final Logger logger = Logger.getLogger("ConsoleClient");
+    private static final String ARGUMENT_PORT = "Port";
+    private static final String ARGUMENT_HOST = "Host";
 
-  static {
-    logger.setUseParentHandlers(false);
-    try {
-      FileHandler stirlingLog = new FileHandler("stirling.log");
-      stirlingLog.setFormatter(new SimpleFormatter());
-      logger.addHandler(stirlingLog);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  public void execute(final ConsoleClient client, Scanner scanner) throws CommandException {
-    Arguments arguments = new Arguments(scanner);
-    try {
-      InetAddress host = host(arguments);
-      int port = port(arguments);
-      logger.info("Connecting...");
-      Connection conn = Connection.connect(new InetSocketAddress(host, port),
-          new FixMessageParser(), new Connection.Callback<FixMessage>() {
-          @Override public void connected(Connection<FixMessage> conn) {
-          }
-
-          @Override public void messages(Connection<FixMessage> conn, Iterator<FixMessage> messages) {
-            while (messages.hasNext()) {
-              FixMessage msg = messages.next();
-              logger.info("RECV> " + formatFixMessage(msg));
-              client.getSession().receive(conn, msg, new DefaultMessageVisitor() {
-                @Override public void defaultAction(stirling.fix.messages.Message message) {
-                  if (message.getMsgType().equals(MsgTypeValue.EXECUTION_REPORT))
-                    client.setOrderID(message.getString(ClOrdID.Tag()), message.getString(OrderID.Tag()));
-                  logger.info("RECV> " + message.toString());
-                }
-              });
-            }
-          }
-          private String formatFixMessage(FixMessage msg) {
-              return msg.toString().replaceAll("" + FixMessageParser.DELIMITER, "|");
-          }
-
-          @Override public void idle(Connection<FixMessage> conn) {
-            client.getSession().keepAlive(conn);
-          }
-
-          @Override public void closed(Connection<FixMessage> conn) {
-            logger.info("Connection closed");
-          }
-
-          @Override public void garbledMessage(Connection<FixMessage> conn, String message, byte[] data) {
-            logger.warning("Garbled message: " + message);
-          }
-        });
-      logger.info("Connecting finished");
-      client.setConnection(conn);
-      Session session = new Session(getHeartBtInt(), client.getConfig(), client.getSessionStore(), client.getMessageFactory(), new DefaultMessageComparator()) {
-        @Override
-        protected boolean checkSeqResetSeqNum() {
-          /* Do not verify that the sequence numbers of SeqReset messages as
-           * test scenarios of OpenFIX certification sets MsgSeqNum to 1
-           * despite the value of GapFillFlag.
-           */
-          return false;
+    static {
+        logger.setUseParentHandlers(false);
+        try {
+            FileHandler stirlingLog = new FileHandler("stirling.log");
+            stirlingLog.setFormatter(new SimpleFormatter());
+            logger.addHandler(stirlingLog);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-      };
-      client.setSession(session);
-      client.getEvents().register(conn);
-    } catch (ConnectException e) {
-      client.error("Unable to connect: " + e.getMessage());
-    } catch (IOException e) {
-      throw new RuntimeException(e);
     }
-  }
 
-  private HeartBtIntValue getHeartBtInt() {
-    return HeartBtIntValue.seconds(30);
-  }
+    public void execute(final ConsoleClient client, Scanner scanner) throws CommandException {
+        Arguments arguments = new Arguments(scanner);
+        try {
+            InetAddress host = host(arguments);
+            int port = port(arguments);
+            logger.info("Connecting...");
+            Connection conn = Connection.connect(new InetSocketAddress(host, port),
+            new FixMessageParser(), new Connection.Callback<FixMessage>() {
+                @Override public void connected(Connection<FixMessage> conn) {
+                }
 
-  private InetAddress host(Arguments arguments) throws CommandException {
-    try {
-      return InetAddress.getByName(arguments.requiredValue(ARGUMENT_HOST));
-    } catch (UnknownHostException e) {
-      throw new CommandException("unknown hostname");
+                @Override public void messages(Connection<FixMessage> conn, Iterator<FixMessage> messages) {
+                    while (messages.hasNext()) {
+                        FixMessage msg = messages.next();
+                        logger.info("RECV> " + formatFixMessage(msg));
+                        client.getSession().receive(conn, msg, new DefaultMessageVisitor() {
+                            @Override public void defaultAction(stirling.fix.messages.Message message) {
+                                if (message.getMsgType().equals(MsgTypeValue.EXECUTION_REPORT))
+                                    client.setOrderID(message.getString(ClOrdID.Tag()), message.getString(OrderID.Tag()));
+                                logger.info("RECV> " + message.toString());
+                            }
+                        });
+                    }
+                }
+                private String formatFixMessage(FixMessage msg) {
+                    return msg.toString().replaceAll("" + FixMessageParser.DELIMITER, "|");
+                }
+
+                @Override public void idle(Connection<FixMessage> conn) {
+                    client.getSession().keepAlive(conn);
+                }
+
+                @Override public void closed(Connection<FixMessage> conn) {
+                    logger.info("Connection closed");
+                }
+
+                @Override public void garbledMessage(Connection<FixMessage> conn, String message, byte[] data) {
+                    logger.warning("Garbled message: " + message);
+                }
+            });
+            logger.info("Connecting finished");
+            client.setConnection(conn);
+            Session session = new Session(getHeartBtInt(), client.getConfig(), client.getSessionStore(), client.getMessageFactory(), new DefaultMessageComparator()) {
+                @Override
+                protected boolean checkSeqResetSeqNum() {
+                    /* Do not verify that the sequence numbers of SeqReset messages as
+                     * test scenarios of OpenFIX certification sets MsgSeqNum to 1
+                     * despite the value of GapFillFlag.
+                     */
+                    return false;
+                }
+            };
+            client.setSession(session);
+            client.getEvents().register(conn);
+        } catch (ConnectException e) {
+            client.error("Unable to connect: " + e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-  }
 
-  private int port(Arguments arguments) throws CommandArgException {
-    return arguments.requiredIntValue(ARGUMENT_PORT);
-  }
+    private HeartBtIntValue getHeartBtInt() {
+        return HeartBtIntValue.seconds(30);
+    }
 
-  public String[] getArgumentNames(ConsoleClient client) {
-    return new String[] { ARGUMENT_HOST + "=", ARGUMENT_PORT + "=" };
-  }
+    private InetAddress host(Arguments arguments) throws CommandException {
+        try {
+            return InetAddress.getByName(arguments.requiredValue(ARGUMENT_HOST));
+        } catch (UnknownHostException e) {
+            throw new CommandException("unknown hostname");
+        }
+    }
 
-  public String description() {
-    return "Opens connection which will be used for sending messages.";
-  }
+    private int port(Arguments arguments) throws CommandArgException {
+        return arguments.requiredIntValue(ARGUMENT_PORT);
+    }
 
-  public String usage() {
-    return ARGUMENT_HOST + "=<host> " + ARGUMENT_PORT + "=<port> : " + description();
-  }
+    public String[] getArgumentNames(ConsoleClient client) {
+        return new String[] { ARGUMENT_HOST + "=", ARGUMENT_PORT + "=" };
+    }
+
+    public String description() {
+        return "Opens connection which will be used for sending messages.";
+    }
+
+    public String usage() {
+        return ARGUMENT_HOST + "=<host> " + ARGUMENT_PORT + "=<port> : " + description();
+    }
 }

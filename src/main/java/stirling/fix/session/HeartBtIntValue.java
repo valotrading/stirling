@@ -39,7 +39,7 @@ public class HeartBtIntValue {
     }
 
     public int getSeconds() {
-      return (int)(millis / 1000);
+        return (int)(millis / 1000);
     }
 
     public Timeout heartbeat() {

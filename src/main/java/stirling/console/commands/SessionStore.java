@@ -31,43 +31,43 @@ import stirling.fix.session.store.NonPersistentInMemorySessionStore;
 import stirling.fix.session.store.SessionStoreException;
 
 public class SessionStore implements Command {
-  private static final String ARGUMENT_NAME = "Name";
+    private static final String ARGUMENT_NAME = "Name";
 
-  private Map<String, SessionStoreFactory> factories = new HashMap<String, SessionStoreFactory>();
+    private Map<String, SessionStoreFactory> factories = new HashMap<String, SessionStoreFactory>();
 
-  public SessionStore() {
-    factories.put("disk", new SessionStoreFactory.Disk());
-    factories.put("in-memory", new SessionStoreFactory.InMemory());
-    factories.put("mongo", new SessionStoreFactory.Mongo());
-    factories.put("non-persistent-in-memory", new SessionStoreFactory.NonPersistentInMemory());
-  }
-
-  public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
-    String sessionStore = new Arguments(scanner).requiredValue(ARGUMENT_NAME);
-    SessionStoreFactory factory = factories.get(sessionStore);
-    if (factory == null)
-      throw new CommandArgException("unknown session store: " + sessionStore);
-    try {
-      client.setSessionStore(factory.create());
-    } catch (SessionStoreException e) {
-      throw new CommandException(e.getMessage());
+    public SessionStore() {
+        factories.put("disk", new SessionStoreFactory.Disk());
+        factories.put("in-memory", new SessionStoreFactory.InMemory());
+        factories.put("mongo", new SessionStoreFactory.Mongo());
+        factories.put("non-persistent-in-memory", new SessionStoreFactory.NonPersistentInMemory());
     }
-  }
 
-  public String[] getArgumentNames(ConsoleClient client) {
-    List<String> sessionStores = new ArrayList<String>(factories.keySet());
-    List<String> argumentNames = new ArrayList<String>();
-    Collections.sort(sessionStores);
-    for (String sessionStore : sessionStores)
-      argumentNames.add(ARGUMENT_NAME + "=" + sessionStore);
-    return argumentNames.toArray(new String[0]);
-  }
+    public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
+        String sessionStore = new Arguments(scanner).requiredValue(ARGUMENT_NAME);
+        SessionStoreFactory factory = factories.get(sessionStore);
+        if (factory == null)
+            throw new CommandArgException("unknown session store: " + sessionStore);
+        try {
+            client.setSessionStore(factory.create());
+        } catch (SessionStoreException e) {
+            throw new CommandException(e.getMessage());
+        }
+    }
 
-  @Override public String description() {
-    return "Sets the session store.";
-  }
+    public String[] getArgumentNames(ConsoleClient client) {
+        List<String> sessionStores = new ArrayList<String>(factories.keySet());
+        List<String> argumentNames = new ArrayList<String>();
+        Collections.sort(sessionStores);
+        for (String sessionStore : sessionStores)
+            argumentNames.add(ARGUMENT_NAME + "=" + sessionStore);
+        return argumentNames.toArray(new String[0]);
+    }
 
-  @Override public String usage() {
-    return ARGUMENT_NAME + "=<session-store> : " + description();
-  }
+    @Override public String description() {
+        return "Sets the session store.";
+    }
+
+    @Override public String usage() {
+        return ARGUMENT_NAME + "=<session-store> : " + description();
+    }
 }

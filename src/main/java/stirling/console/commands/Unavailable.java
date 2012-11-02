@@ -20,20 +20,20 @@ import java.util.Scanner;
 import stirling.console.ConsoleClient;
 
 public class Unavailable implements Command {
-  @Override public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
-    if (client.getSession() != null)
-      client.getSession().setAvailable(false);
-  }
+    @Override public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
+        if (client.getSession() != null)
+            client.getSession().setAvailable(false);
+    }
 
-  public String[] getArgumentNames(ConsoleClient client) {
-    return new String[0];
-  }
+    public String[] getArgumentNames(ConsoleClient client) {
+        return new String[0];
+    }
 
-  @Override public String description() {
-    return "Marks client session unavailable.";
-  }
+    @Override public String description() {
+        return "Marks client session unavailable.";
+    }
 
-  @Override public String usage() {
-    return ": " + description();
-  }
+    @Override public String usage() {
+        return ": " + description();
+    }
 }

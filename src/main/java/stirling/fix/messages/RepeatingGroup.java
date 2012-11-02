@@ -55,7 +55,7 @@ public abstract class RepeatingGroup implements Field {
         }
         if (instances.size() != countField.getValue())
             throw new ParseException(countTag.prettyName() + ": Incorrect NumInGroup count for repeating group. Expected: " + countField.getValue() +
-                ", but was: " + instances.size(), SessionRejectReason.NumInGroupMismatch());
+                                     ", but was: " + instances.size(), SessionRejectReason.NumInGroupMismatch());
     }
 
     @Override public String format() {

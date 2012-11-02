@@ -24,23 +24,23 @@ import stirling.fix.tags.fix42.EncryptMethod;
 import stirling.fix.tags.fix42.HeartBtInt;
 
 public class Logon extends FixMessageCommand {
-  @Override protected Message newMessage(ConsoleClient client) {
-    MessageFactory messageFactory = client.getMessageFactory();
-    stirling.fix.messages.Logon message = (stirling.fix.messages.Logon) messageFactory.create(LOGON);
-    message.setInteger(HeartBtInt.Tag(), 30);
-    message.setEnum(EncryptMethod.Tag(), EncryptMethod.None());
-    return message;
-  }
+    @Override protected Message newMessage(ConsoleClient client) {
+        MessageFactory messageFactory = client.getMessageFactory();
+        stirling.fix.messages.Logon message = (stirling.fix.messages.Logon) messageFactory.create(LOGON);
+        message.setInteger(HeartBtInt.Tag(), 30);
+        message.setEnum(EncryptMethod.Tag(), EncryptMethod.None());
+        return message;
+    }
 
-  @Override protected boolean isModifyingOrderMessage() {
-    return false;
-  }
+    @Override protected boolean isModifyingOrderMessage() {
+        return false;
+    }
 
-  @Override public String description() {
-    return "Creates and sends logon message.";
-  }
+    @Override public String description() {
+        return "Creates and sends logon message.";
+    }
 
-  @Override public String usage() {
-    return "<Argument=value>* : " + description();
-  }
+    @Override public String usage() {
+        return "<Argument=value>* : " + description();
+    }
 }

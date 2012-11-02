@@ -18,41 +18,41 @@ package stirling.fix.messages;
 import org.joda.time.DateTime;
 
 public class FixMessage extends silvertip.Message implements SequencedMessage<FixMessage> {
-  private String msgType;
-  private int msgSeqNum;
-  private DateTime receiveTime;
+    private String msgType;
+    private int msgSeqNum;
+    private DateTime receiveTime;
 
-  public static FixMessage fromString(String s, String msgType) {
-    return new FixMessage(s.getBytes(), msgType);
-  }
+    public static FixMessage fromString(String s, String msgType) {
+        return new FixMessage(s.getBytes(), msgType);
+    }
 
-  public FixMessage(byte[] data, String msgType) {
-    super(data);
+    public FixMessage(byte[] data, String msgType) {
+        super(data);
 
-    this.msgType = msgType;
-  }
+        this.msgType = msgType;
+    }
 
-  public String getMsgType() {
-    return msgType;
-  }
+    public String getMsgType() {
+        return msgType;
+    }
 
-  @Override public int getMsgSeqNum() {
-    return msgSeqNum;
-  }
+    @Override public int getMsgSeqNum() {
+        return msgSeqNum;
+    }
 
-  public void setMsgSeqNum(int msgSeqNum) {
-    this.msgSeqNum = msgSeqNum;
-  }
+    public void setMsgSeqNum(int msgSeqNum) {
+        this.msgSeqNum = msgSeqNum;
+    }
 
-  public DateTime getReceiveTime() {
-    return receiveTime;
-  }
+    public DateTime getReceiveTime() {
+        return receiveTime;
+    }
 
-  public void setReceiveTime(DateTime receiveTime) {
-    this.receiveTime = receiveTime;
-  }
+    public void setReceiveTime(DateTime receiveTime) {
+        this.receiveTime = receiveTime;
+    }
 
-  @Override public int compareTo(FixMessage message) {
-    return getMsgSeqNum() - message.getMsgSeqNum();
-  }
+    @Override public int compareTo(FixMessage message) {
+        return getMsgSeqNum() - message.getMsgSeqNum();
+    }
 }

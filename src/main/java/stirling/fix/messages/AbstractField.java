@@ -64,7 +64,7 @@ public abstract class AbstractField<T> implements Field {
     @Override public boolean isParsed() {
         return defined;
     }
-    
+
     @Override public boolean hasValue() {
         return value != null;
     }
@@ -125,7 +125,7 @@ public abstract class AbstractField<T> implements Field {
     }
 
     public abstract void parse(String value);
-    
+
     public String format() {
         String value = null;
         if (hasValue()) {
@@ -142,7 +142,7 @@ public abstract class AbstractField<T> implements Field {
     @Override public boolean equals(Object obj) {
         return Objects.equal(this, obj);
     }
-    
+
     @Override public int hashCode() {
         return Objects.hashCode(this);
     }
@@ -153,7 +153,7 @@ public abstract class AbstractField<T> implements Field {
 
     private String name() {
         if (name == null) {
-          name = parseFieldName();
+            name = parseFieldName();
         }
         return name;
     }

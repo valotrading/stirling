@@ -22,20 +22,20 @@ import stirling.fix.messages.Message;
 import stirling.fix.messages.MessageFactory;
 
 public class CollateralInquiry extends FixMessageCommand {
-  @Override protected Message newMessage(ConsoleClient client) {
-    MessageFactory messageFactory = client.getMessageFactory();
-    return messageFactory.create(COLLATERAL_INQUIRY);
-  }
+    @Override protected Message newMessage(ConsoleClient client) {
+        MessageFactory messageFactory = client.getMessageFactory();
+        return messageFactory.create(COLLATERAL_INQUIRY);
+    }
 
-  @Override protected boolean isModifyingOrderMessage() {
-    return false;
-  }
+    @Override protected boolean isModifyingOrderMessage() {
+        return false;
+    }
 
-  @Override public String description() {
-    return "Creates and sends a collateral inquiry.";
-  }
+    @Override public String description() {
+        return "Creates and sends a collateral inquiry.";
+    }
 
-  @Override public String usage() {
-    return "<Argument=value>* : " + description();
-  }
+    @Override public String usage() {
+        return "<Argument=value>* : " + description();
+    }
 }
