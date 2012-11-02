@@ -155,6 +155,8 @@ class Allocation(header: MessageHeader) extends AbstractMessage(header) with All
 
 class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with NewOrderSingleTrait {
   field(ClOrdID.Tag)
+  field(ClientID.Tag, Required.NO)
+  field(Account.Tag, Required.NO)
   field(Currency.Tag, Required.NO)
   field(HandlInst.Tag)
   field(ExDestination.Tag)
