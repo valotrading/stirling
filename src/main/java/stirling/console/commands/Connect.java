@@ -64,6 +64,9 @@ public class Connect implements Command {
       logger.info("Connecting...");
       Connection conn = Connection.connect(new InetSocketAddress(host, port),
           new FixMessageParser(), new Connection.Callback<FixMessage>() {
+          @Override public void connected(Connection<FixMessage> conn) {
+          }
+
           @Override public void messages(Connection<FixMessage> conn, Iterator<FixMessage> messages) {
             while (messages.hasNext()) {
               FixMessage msg = messages.next();
@@ -89,7 +92,7 @@ public class Connect implements Command {
             logger.info("Connection closed");
           }
 
-          @Override public void garbledMessage(String message, byte[] data) {
+          @Override public void garbledMessage(Connection<FixMessage> conn, String message, byte[] data) {
             logger.warning("Garbled message: " + message);
           }
         });

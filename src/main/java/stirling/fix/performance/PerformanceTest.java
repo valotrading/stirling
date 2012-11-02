@@ -143,6 +143,9 @@ public class PerformanceTest implements Runnable {
                             throw new RuntimeException(e);
                         }
                         return new Connection<FixMessage>(channel, new FixMessageParser(), new Connection.Callback<FixMessage>() {
+                            @Override public void connected(Connection<FixMessage> conn) {
+                            }
+
                             @Override public void messages(Connection<FixMessage> conn, Iterator<FixMessage> messages) {
                                 while (messages.hasNext()) {
                                     messages.next();
@@ -165,7 +168,7 @@ public class PerformanceTest implements Runnable {
                                 events.stop();
                             }
 
-                            @Override public void garbledMessage(String message, byte[] data) {
+                            @Override public void garbledMessage(Connection<FixMessage> conn, String message, byte[] data) {
                             }
                         });
                     }
@@ -199,6 +202,9 @@ public class PerformanceTest implements Runnable {
                 }
                 final Connection conn = new Connection<FixMessage>(channel, new FixMessageParser(),
                         new Connection.Callback<FixMessage>() {
+                            @Override public void connected(Connection<FixMessage> conn) {
+                            }
+
                             @Override public void messages(Connection<FixMessage> conn, Iterator<FixMessage> messages) {
                                 while (messages.hasNext())
                                     session.receive(conn, messages.next(), new DefaultMessageVisitor());
@@ -211,7 +217,7 @@ public class PerformanceTest implements Runnable {
                             @Override public void closed(Connection<FixMessage> conn) {
                             }
 
-                            @Override public void garbledMessage(String message, byte[] data) {
+                            @Override public void garbledMessage(Connection<FixMessage> conn, String message, byte[] data) {
                             }
                         });
                 events.register(conn);
