@@ -25,35 +25,35 @@ import stirling.fix.session.store.SessionStore;
 import stirling.fix.session.store.SessionStoreException;
 
 public interface SessionStoreFactory {
-  SessionStore create() throws SessionStoreException;
+    SessionStore create() throws SessionStoreException;
 
-  public static class Disk implements SessionStoreFactory {
-    @Override
-    public SessionStore create() throws SessionStoreException {
-      String directory = System.getProperty("java.io.tmpdir");
-      String path = directory + File.separator + "fixengine";
-      return new DiskSessionStore(path);
+    public static class Disk implements SessionStoreFactory {
+        @Override
+        public SessionStore create() throws SessionStoreException {
+            String directory = System.getProperty("java.io.tmpdir");
+            String path = directory + File.separator + "fixengine";
+            return new DiskSessionStore(path);
+        }
     }
-  }
 
-  public static class InMemory implements SessionStoreFactory {
-    @Override
-    public SessionStore create() throws SessionStoreException {
-      return new InMemorySessionStore();
+    public static class InMemory implements SessionStoreFactory {
+        @Override
+        public SessionStore create() throws SessionStoreException {
+            return new InMemorySessionStore();
+        }
     }
-  }
 
-  public static class Mongo implements SessionStoreFactory {
-    @Override
-    public SessionStore create() throws SessionStoreException {
-      return new MongoSessionStore("localhost", 27017);
+    public static class Mongo implements SessionStoreFactory {
+        @Override
+        public SessionStore create() throws SessionStoreException {
+            return new MongoSessionStore("localhost", 27017);
+        }
     }
-  }
 
-  public static class NonPersistentInMemory implements SessionStoreFactory {
-    @Override
-    public SessionStore create() throws SessionStoreException {
-      return new NonPersistentInMemorySessionStore();
+    public static class NonPersistentInMemory implements SessionStoreFactory {
+        @Override
+        public SessionStore create() throws SessionStoreException {
+            return new NonPersistentInMemorySessionStore();
+        }
     }
-  }
 }

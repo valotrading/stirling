@@ -18,11 +18,11 @@ package stirling.fix.messages;
 import stirling.fix.session.Session;
 
 /**
- * @author Pekka Enberg 
+ * @author Pekka Enberg
  */
 public interface Validator<T> {
     public enum ErrorLevel {
-      WARNING, ERROR
+        WARNING, ERROR
     }
 
     public interface ErrorHandler {

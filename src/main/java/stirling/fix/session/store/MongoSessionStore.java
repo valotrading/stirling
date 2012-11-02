@@ -42,11 +42,11 @@ public class MongoSessionStore implements SessionStore {
     public MongoSessionStore(String address, int port) throws SessionStoreException {
         // Fail-fast if MongoDB is not up and running
         try {
-          mongo = new Mongo(address, port);
-          mongo.getDatabaseNames();
-          db = mongo.getDB("fixengine");
+            mongo = new Mongo(address, port);
+            mongo.getDatabaseNames();
+            db = mongo.getDB("fixengine");
         } catch (Exception e) {
-          throw new SessionStoreException("MongoDB is not listening at " + address + ":" + port);
+            throw new SessionStoreException("MongoDB is not listening at " + address + ":" + port);
         }
     }
 

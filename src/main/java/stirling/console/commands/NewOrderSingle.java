@@ -21,19 +21,19 @@ import stirling.fix.messages.Message;
 import static stirling.fix.messages.fix42.MsgTypeValue.NEW_ORDER_SINGLE;
 
 public class NewOrderSingle extends FixMessageCommand {
-  @Override protected Message newMessage(ConsoleClient client) {
-    return client.getMessageFactory().create(NEW_ORDER_SINGLE);
-  }
+    @Override protected Message newMessage(ConsoleClient client) {
+        return client.getMessageFactory().create(NEW_ORDER_SINGLE);
+    }
 
-  @Override protected boolean isModifyingOrderMessage() {
-    return false;
-  }
+    @Override protected boolean isModifyingOrderMessage() {
+        return false;
+    }
 
-  @Override public String description() {
-    return "Creates and sends new single order message.";
-  }
+    @Override public String description() {
+        return "Creates and sends new single order message.";
+    }
 
-  @Override public String usage() {
-    return "<Argument=value>* : " + description();
-  }
+    @Override public String usage() {
+        return "<Argument=value>* : " + description();
+    }
 }

@@ -27,42 +27,42 @@ import stirling.console.ConsoleClient;
 import stirling.fix.messages.MessageFactory;
 
 public class Profile implements Command {
-  private static final String ARGUMENT_NAME = "Name";
+    private static final String ARGUMENT_NAME = "Name";
 
-  private Map<String, MessageFactory> factories = new HashMap<String, MessageFactory>();
+    private Map<String, MessageFactory> factories = new HashMap<String, MessageFactory>();
 
-  public Profile() {
-    factories.put("default", new stirling.fix.messages.fix42.DefaultMessageFactory());
-    factories.put("bats-europe", new stirling.fix.messages.fix42.bats.europe.MessageFactory());
-    factories.put("mb-trading", new stirling.fix.messages.fix44.mbtrading.MessageFactory());
-    factories.put("burgundy", new stirling.fix.messages.fix44.burgundy.MessageFactory());
-    factories.put("hotspot-fx", new stirling.fix.messages.fix42.hotspotfx.MessageFactory());
-    factories.put("lime", new stirling.fix.messages.fix42.lime.MessageFactory());
-    factories.put("nasdaq-omx", new stirling.fix.messages.fix42.nasdaqomx.MessageFactory());
-  }
+    public Profile() {
+        factories.put("default", new stirling.fix.messages.fix42.DefaultMessageFactory());
+        factories.put("bats-europe", new stirling.fix.messages.fix42.bats.europe.MessageFactory());
+        factories.put("mb-trading", new stirling.fix.messages.fix44.mbtrading.MessageFactory());
+        factories.put("burgundy", new stirling.fix.messages.fix44.burgundy.MessageFactory());
+        factories.put("hotspot-fx", new stirling.fix.messages.fix42.hotspotfx.MessageFactory());
+        factories.put("lime", new stirling.fix.messages.fix42.lime.MessageFactory());
+        factories.put("nasdaq-omx", new stirling.fix.messages.fix42.nasdaqomx.MessageFactory());
+    }
 
-  public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
-    String profile = new Arguments(scanner).requiredValue(ARGUMENT_NAME);
-    MessageFactory factory = factories.get(profile);
-    if (factory == null)
-      throw new CommandArgException("unknown profile: " + profile);
-    client.setMessageFactory(factory);
-  }
+    public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
+        String profile = new Arguments(scanner).requiredValue(ARGUMENT_NAME);
+        MessageFactory factory = factories.get(profile);
+        if (factory == null)
+            throw new CommandArgException("unknown profile: " + profile);
+        client.setMessageFactory(factory);
+    }
 
-  @Override public String[] getArgumentNames(ConsoleClient client) {
-    List<String> profiles = new ArrayList<String>(factories.keySet());
-    List<String> argumentNames = new ArrayList<String>();
-    Collections.sort(profiles);
-    for (String profile : profiles)
-      argumentNames.add(ARGUMENT_NAME + "=" + profile);
-    return argumentNames.toArray(new String[0]);
-  }
+    @Override public String[] getArgumentNames(ConsoleClient client) {
+        List<String> profiles = new ArrayList<String>(factories.keySet());
+        List<String> argumentNames = new ArrayList<String>();
+        Collections.sort(profiles);
+        for (String profile : profiles)
+            argumentNames.add(ARGUMENT_NAME + "=" + profile);
+        return argumentNames.toArray(new String[0]);
+    }
 
-  @Override public String description() {
-    return "Sets profile which will be used for creating and sending messages.";
-  }
+    @Override public String description() {
+        return "Sets profile which will be used for creating and sending messages.";
+    }
 
-  @Override public String usage() {
-    return ARGUMENT_NAME + "=<profile> : " + description();
-  }
+    @Override public String usage() {
+        return ARGUMENT_NAME + "=<profile> : " + description();
+    }
 }

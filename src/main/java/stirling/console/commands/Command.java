@@ -23,11 +23,11 @@ import stirling.console.ConsoleClient;
  * @author Karim Osman
  */
 public interface Command {
-  void execute(ConsoleClient client, Scanner scanner) throws CommandException;
+    void execute(ConsoleClient client, Scanner scanner) throws CommandException;
 
-  String[] getArgumentNames(ConsoleClient client);
+    String[] getArgumentNames(ConsoleClient client);
 
-  String description();
+    String description();
 
-  String usage();
+    String usage();
 }

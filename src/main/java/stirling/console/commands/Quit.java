@@ -23,19 +23,19 @@ import stirling.console.ConsoleClient;
  * @author Karim Osman
  */
 public class Quit implements Command {
-  public void execute(ConsoleClient client, Scanner scanner) {
-    client.quit();
-  }
+    public void execute(ConsoleClient client, Scanner scanner) {
+        client.quit();
+    }
 
-  public String[] getArgumentNames(ConsoleClient client) {
-    return new String[0];
-  }
+    public String[] getArgumentNames(ConsoleClient client) {
+        return new String[0];
+    }
 
-  @Override public String description() {
-    return "Terminates this console-client session.";
-  }
+    @Override public String description() {
+        return "Terminates this console-client session.";
+    }
 
-  @Override public String usage() {
-    return ": " + description();
-  }
+    @Override public String usage() {
+        return ": " + description();
+    }
 }

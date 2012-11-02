@@ -26,28 +26,28 @@ import stirling.console.ConsoleClient;
  * @author Karim Osman
  */
 public class Reset implements Command {
-  private static final String SEQUENCE_ARGUMENT_NAME = "SequenceNumber";
+    private static final String SEQUENCE_ARGUMENT_NAME = "SequenceNumber";
 
-  public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
-    if (client.getSession() != null)
-      client.getSession().sequenceReset(client.getConnection(), sequence(scanner));
-  }
+    public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
+        if (client.getSession() != null)
+            client.getSession().sequenceReset(client.getConnection(), sequence(scanner));
+    }
 
-  private Sequence sequence(Scanner scanner) throws CommandArgException {
-    Sequence seq = new Sequence();
-    seq.reset(new Arguments(scanner).requiredIntValue(SEQUENCE_ARGUMENT_NAME));
-    return seq;
-  }
+    private Sequence sequence(Scanner scanner) throws CommandArgException {
+        Sequence seq = new Sequence();
+        seq.reset(new Arguments(scanner).requiredIntValue(SEQUENCE_ARGUMENT_NAME));
+        return seq;
+    }
 
-  public String[] getArgumentNames(ConsoleClient client) {
-    return new String[] {SEQUENCE_ARGUMENT_NAME + "="};
-  }
+    public String[] getArgumentNames(ConsoleClient client) {
+        return new String[] {SEQUENCE_ARGUMENT_NAME + "="};
+    }
 
-  public String description() {
-    return "Sends sequence number reset message.";
-  }
+    public String description() {
+        return "Sends sequence number reset message.";
+    }
 
-  public String usage() {
-    return SEQUENCE_ARGUMENT_NAME + "=<number> : " + description();
-  }
+    public String usage() {
+        return SEQUENCE_ARGUMENT_NAME + "=<number> : " + description();
+    }
 }

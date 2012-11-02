@@ -27,53 +27,53 @@ import stirling.fix.session.Sequence;
  * @author Karim Osman
  */
 public class StoreSequence implements Command {
-  public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
-    Arguments arguments = new Arguments(scanner);
-    String senderCompId = arguments.requiredValue(ArgumentNames.SENDER_COMP_ID.value());
-    String targetCompId = arguments.requiredValue(ArgumentNames.TARGET_COMP_ID.value());
-    Sequence incomingSeq = seq(ArgumentNames.INCOMING_SEQ, arguments);
-    Sequence outgoingSeq = seq(ArgumentNames.OUTGOING_SEQ, arguments);
-    client.getSessionStore().resetOutgoingSeq(client.getSession(), incomingSeq, outgoingSeq);
-  }
-
-  private Sequence seq(ArgumentNames name, Arguments arguments) throws CommandArgException {
-    Sequence sequence = new Sequence();
-    String value = arguments.value(name.value());
-    if (value != null)
-      sequence.reset(arguments.requiredIntValue(name.value()));
-    return sequence;
-  }
-
-  public String[] getArgumentNames(ConsoleClient client) {
-    List<String> fields = new ArrayList<String>();
-    for (ArgumentNames argument : ArgumentNames.values()) {
-      fields.add(argument.value() + "=");
-    }
-    return fields.toArray(new String[0]);
-  }
-
-  public String description() { 
-    return "Resets outgoing and outgoing sequence numbers.";
-  }
-
-  public String usage() {
-    return "SenderCompID=<id> TargetCompID=<id> <Argument=value>* : " + description();
-  }
-
-  private enum ArgumentNames {
-    SENDER_COMP_ID("SenderCompID"),
-    TARGET_COMP_ID("TargetCompID"),
-    INCOMING_SEQ("IncomingSeq"),
-    OUTGOING_SEQ("OutgoingSeq");
-
-    private String value;
-
-    private ArgumentNames(String value) {
-      this.value = value;
+    public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
+        Arguments arguments = new Arguments(scanner);
+        String senderCompId = arguments.requiredValue(ArgumentNames.SENDER_COMP_ID.value());
+        String targetCompId = arguments.requiredValue(ArgumentNames.TARGET_COMP_ID.value());
+        Sequence incomingSeq = seq(ArgumentNames.INCOMING_SEQ, arguments);
+        Sequence outgoingSeq = seq(ArgumentNames.OUTGOING_SEQ, arguments);
+        client.getSessionStore().resetOutgoingSeq(client.getSession(), incomingSeq, outgoingSeq);
     }
 
-    public String value() {
-      return value;
+    private Sequence seq(ArgumentNames name, Arguments arguments) throws CommandArgException {
+        Sequence sequence = new Sequence();
+        String value = arguments.value(name.value());
+        if (value != null)
+            sequence.reset(arguments.requiredIntValue(name.value()));
+        return sequence;
     }
-  }
+
+    public String[] getArgumentNames(ConsoleClient client) {
+        List<String> fields = new ArrayList<String>();
+        for (ArgumentNames argument : ArgumentNames.values()) {
+            fields.add(argument.value() + "=");
+        }
+        return fields.toArray(new String[0]);
+    }
+
+    public String description() {
+        return "Resets outgoing and outgoing sequence numbers.";
+    }
+
+    public String usage() {
+        return "SenderCompID=<id> TargetCompID=<id> <Argument=value>* : " + description();
+    }
+
+    private enum ArgumentNames {
+        SENDER_COMP_ID("SenderCompID"),
+        TARGET_COMP_ID("TargetCompID"),
+        INCOMING_SEQ("IncomingSeq"),
+        OUTGOING_SEQ("OutgoingSeq");
+
+        private String value;
+
+        private ArgumentNames(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return value;
+        }
+    }
 }
