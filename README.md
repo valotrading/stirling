@@ -1,11 +1,11 @@
-Stirling
-========
+# Stirling
+
+[![Build Status](https://secure.travis-ci.org/valotrading/stirling.png)](http://travis-ci.org/valotrading/stirling)
 
 Stirling is an open source electronic trading library for the JVM.
 
 
-Features
---------
+## Features
 
   - FIX Engine with the following profiles:
     - BATS Europe
@@ -24,8 +24,7 @@ Features
   - MB Trading Quote API
 
 
-Installation
-------------
+## Installation
 
 Stirling is available at a Maven repository. Add this into your `build.sbt`:
 
@@ -34,7 +33,6 @@ Stirling is available at a Maven repository. Add this into your `build.sbt`:
     libraryDependencies += "stirling" %% "stirling" % "1.3.1"
 
 
-License
--------
+## License
 
 Stirling is released under the Apache License, Version 2.0.
