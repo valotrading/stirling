@@ -1,6 +1,6 @@
 # Stirling
 
-[![Build Status](https://secure.travis-ci.org/valotrading/stirling.png)](http://travis-ci.org/valotrading/stirling)
+[![Build Status](https://travis-ci.org/valotrading/stirling.png?branch=master)](https://travis-ci.org/valotrading/stirling)
 
 Stirling is an open source electronic trading library for the JVM.
 
