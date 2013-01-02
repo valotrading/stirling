@@ -43,7 +43,7 @@ object MbtMessage {
 
 import MbtMessage._
 
-case class MbtMessage(msgType: MessageType, fields: Map[Tag, Value] = Map()) {
+case class MbtMessage(msgType: MessageType, fields: Map[MbtMessage.Tag, MbtMessage.Value] = Map()) {
   import MbtMessageTag._
   import MbtMessageType._
   import Predef._
