@@ -35,7 +35,7 @@ class MbtMessageClient(val application: MbtMessageListener, val config: MbtMessa
       application.login
       events.dispatch(idleEventTimeoutMillis)
     } catch {
-      case e =>
+      case e: Throwable =>
         log.fatal(e, "Error while establishing connection")
     }
   }
