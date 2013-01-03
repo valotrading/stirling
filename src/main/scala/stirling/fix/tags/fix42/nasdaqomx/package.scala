@@ -28,6 +28,7 @@ package object nasdaqomx {
   val Currency         = fix42.Currency
   val CxlRejReason     = fix42.CxlRejReason
   val CxlRejResponseTo = fix42.CxlRejResponseTo
+  val EncryptMethod    = fix42.EncryptMethod
   val ExecBroker       = fix42.ExecBroker
   val ExecID           = fix42.ExecID
   val ExecInst         = fix42.ExecInst
@@ -36,6 +37,7 @@ package object nasdaqomx {
   val ExecType         = fix42.ExecType
   val ExpireTime       = fix42.ExpireTime
   val HandlInst        = fix42.HandlInst
+  val HeartBtInt       = fix42.HeartBtInt
   val IDSource         = fix42.IDSource
   val LastPx           = fix42.LastPx
   val LastShares       = fix42.LastShares

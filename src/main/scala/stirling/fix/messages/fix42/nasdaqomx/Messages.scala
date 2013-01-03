@@ -18,6 +18,7 @@ package stirling.fix.messages.fix42.nasdaqomx
 import stirling.fix.messages.{
   AbstractMessage,
   ExecutionReport => ExecutionReportTrait,
+  Logon => LogonTrait,
   MessageHeader => MessageHeaderTrait,
   MessageVisitor,
   NewOrderSingle => NewOrderSingleTrait,
@@ -28,6 +29,13 @@ import stirling.fix.messages.{
   Required
 }
 import stirling.fix.tags.fix42.nasdaqomx._
+
+class Logon(header: MessageHeaderTrait) extends AbstractMessage(header) with LogonTrait {
+  field(EncryptMethod.Tag)
+  field(HeartBtInt.Tag)
+
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
 
 class Reject(header: MessageHeaderTrait) extends AbstractMessage(header) with RejectTrait {
   field(RefSeqNo.Tag)
