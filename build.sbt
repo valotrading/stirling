@@ -56,6 +56,6 @@ TaskKey[File]("make-perftest") <<= (baseDirectory, fullClasspath in Runtime) map
   outputFile
 }
 
-publishTo := Some(Resolver.file("GitHub Pages", file("../stirling-gh-pages/maven/")))
+publishTo := Some(Resolver.file("GitHub Pages", file("../maven-gh-pages/")))
 
 publishArtifact in (Compile, packageDoc) := false
