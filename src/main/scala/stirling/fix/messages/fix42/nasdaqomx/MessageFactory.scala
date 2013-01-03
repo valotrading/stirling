@@ -19,6 +19,7 @@ import stirling.fix.messages.fix42.DefaultMessageFactory
 import stirling.fix.messages.fix42.MsgTypeValue._
 
 class MessageFactory extends DefaultMessageFactory {
+  message(LOGON,                        classOf[Logon])
   message(REJECT,                       classOf[Reject])
   message(NEW_ORDER_SINGLE,             classOf[NewOrderSingle])
   message(ORDER_CANCEL_REQUEST,         classOf[OrderCancelRequest])
