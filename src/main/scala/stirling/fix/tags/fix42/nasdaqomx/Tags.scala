@@ -26,6 +26,8 @@ import stirling.fix.messages.{
 }
 import java.lang.Character
 
+object OrderQty extends IntegerTag(38)
+
 object OrdType extends EnumTag[Character](40) {
   val Market = CharValue('1')
   val Limit  = CharValue('2')
