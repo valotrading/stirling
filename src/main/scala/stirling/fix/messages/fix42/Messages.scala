@@ -196,13 +196,40 @@ class OrderCancelReject(header: MessageHeader) extends AbstractMessage(header) w
 
 class OrderCancelRequest(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRequestTrait {
   field(OrigClOrdID.Tag)
+  field(OrderID.Tag, Required.NO)
   field(ClOrdID.Tag)
+  /* ListID(66) */
+  field(Account.Tag, Required.NO)
+  field(ClientID.Tag, Required.NO)
+  field(ExecBroker.Tag, Required.NO)
   field(Symbol.Tag)
+  field(SymbolSfx.Tag, Required.NO)
+  field(SecurityID.Tag, Required.NO)
+  field(IDSource.Tag, Required.NO)
   field(SecurityType.Tag, Required.NO)
   field(MaturityMonthYear.Tag, Required.NO)
+  /* MaturityDay(205) */
+  field(PutOrCall.Tag, Required.NO)
+  field(StrikePrice.Tag, Required.NO)
+  /* OptAttribute(206) */
+  field(ContractMultiplier.Tag, Required.NO)
+  /* CouponRate(223) */
+  field(SecurityExchange.Tag, Required.NO)
+  field(Issuer.Tag, Required.NO)
+  /* EncodedIssuerLen(348) */
+  /* EncodedIssuer(349) */
+  field(SecurityDesc.Tag, Required.NO)
+  /* EncodedSecurityDescLen(350) */
+  /* EncodedSecurityDesc(351) */
   field(Side.Tag)
   field(TransactTime.Tag)
-  field(OrderQty.Tag)
+  field(OrderQty.Tag, Required.NO)
+  /* CashOrderQty(152) */
+  field(ComplianceID.Tag, Required.NO)
+  /* SolicitedFlag(377) */
+  field(Text.Tag, Required.NO)
+  /* EncodedTextLen(354) */
+  /* EncodedText(355) */
 
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
