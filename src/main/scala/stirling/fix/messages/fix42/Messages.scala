@@ -239,12 +239,20 @@ class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with
 
 class OrderCancelReject(header: MessageHeader) extends AbstractMessage(header) with OrderCancelRejectTrait {
   field(OrderID.Tag)
+  field(SecondaryOrderID.Tag, Required.NO)
   field(ClOrdID.Tag)
   field(OrigClOrdID.Tag)
   field(OrdStatus.Tag)
+  field(ClientID.Tag, Required.NO)
+  field(ExecBroker.Tag, Required.NO)
+  /* ListID(66) */
+  field(Account.Tag, Required.NO)
+  field(TransactTime.Tag, Required.NO)
   field(CxlRejResponseTo.Tag)
   field(CxlRejReason.Tag, Required.NO)
   field(Text.Tag, Required.NO)
+  /* EncodedTextLen(354) */
+  /* EncodedText(355) */
 
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
