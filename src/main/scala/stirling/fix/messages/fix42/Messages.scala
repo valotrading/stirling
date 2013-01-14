@@ -102,7 +102,9 @@ class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) wit
   field(OrderQty.Tag, Required.NO)
   /* CashOrderQty(152) */
   field(OrdType.Tag, Required.NO)
-  field(Price.Tag, Required.NO)
+  field(Price.Tag, new Required {
+    override def isRequired = getEnum(OrdType.Tag) == OrdType.Limit
+  })
   field(StopPx.Tag, Required.NO)
   field(PegDifference.Tag, Required.NO)
   field(DiscretionInst.Tag, Required.NO)
