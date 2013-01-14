@@ -154,9 +154,9 @@ object TradeReportTransType extends EnumTag[Character](487) {
 object SecondaryClOrdID extends StringTag(526)
 object SecondaryExecID extends StringTag(527)
 object OrderCapacity extends EnumTag[Character](528) {
-  val Agency = IntegerValue('A')
-  val Principal = IntegerValue('P')
-  val Riskless = IntegerValue('R')
+  val Agency = CharValue('A')
+  val Principal = CharValue('P')
+  val Riskless = CharValue('R')
 }
 object OrderRestrictions extends EnumTag[Character](529) {
   val ProgramTrade = IntegerValue(1)
