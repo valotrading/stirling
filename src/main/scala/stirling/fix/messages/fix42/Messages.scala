@@ -161,23 +161,78 @@ class Allocation(header: MessageHeader) extends AbstractMessage(header) with All
 class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with NewOrderSingleTrait {
   field(ClOrdID.Tag)
   field(ClientID.Tag, Required.NO)
+  field(ExecBroker.Tag, Required.NO)
   field(Account.Tag, Required.NO)
-  field(Currency.Tag, Required.NO)
+  /* NoAllocs(78) */
+  /* AllocAccount(79) */
+  /* AllocShares(80) */
+  /* SttlmntTyp(63) */
+  field(FutSettDate.Tag, Required.NO)
   field(HandlInst.Tag)
-  field(ExDestination.Tag)
-  field(Side.Tag)
-  field(TransactTime.Tag)
-  field(OrdType.Tag)
+  field(ExecInst.Tag, Required.NO)
+  field(MinQty.Tag, Required.NO)
+  field(MaxFloor.Tag, Required.NO)
+  field(ExDestination.Tag, Required.NO)
+  /* NoTradingSessions(386) */
+  /* TradingSessionID(336) */
+  /* ProcessCode(81) */
   field(Symbol.Tag)
+  field(SymbolSfx.Tag, Required.NO)
   field(SecurityID.Tag, Required.NO)
   field(IDSource.Tag, Required.NO)
   field(SecurityType.Tag, Required.NO)
   field(MaturityMonthYear.Tag, Required.NO)
+  /* MaturityDay(205) */
+  field(PutOrCall.Tag, Required.NO)
+  field(StrikePrice.Tag, Required.NO)
+  /* OptAttribute(206) */
+  field(ContractMultiplier.Tag, Required.NO)
+  /* CouponRate(223) */
   field(SecurityExchange.Tag, Required.NO)
-  field(OrderQty.Tag)
-  field(CustomerOrFirm.Tag, Required.NO)
+  field(Issuer.Tag, Required.NO)
+  /* EncodedIssuerLen(348) */
+  /* EncodedIssuer(349) */
+  field(SecurityDesc.Tag, Required.NO)
+  /* EncodedSecurityDescLen(350) */
+  /* EncodedSecurityDesc(351) */
+  /* PrevClosePx(140) */
+  field(Side.Tag, Required.NO)
+  field(LocateReqd.Tag, Required.NO)
+  field(TransactTime.Tag)
+  field(OrderQty.Tag, Required.NO)
+  /* CashOrderQty(152) */
+  field(OrdType.Tag)
   field(Price.Tag, Required.NO)
+  field(StopPx.Tag, Required.NO)
+  field(Currency.Tag, Required.NO)
+  field(ComplianceID.Tag, Required.NO)
+  /* SolicitedFlag(377) */
+  /* IOIid(23) */
+  field(QuoteID.Tag, Required.NO)
   field(TimeInForce.Tag, Required.NO)
+  field(EffectiveTime.Tag, Required.NO)
+  /* ExpireDate(432) */
+  field(ExpireTime.Tag, Required.NO)
+  /* GTBookingInst(427) */
+  field(Commission.Tag, Required.NO)
+  /* CommType(13) */
+  field(OrderCapacity.Tag, Required.NO)
+  /* ForexReq(121) */
+  field(SettlCurrency.Tag, Required.NO)
+  field(Text.Tag, Required.NO)
+  /* EncodedTextLen(354) */
+  /* EncodedText(355) */
+  /* FutSettDate2(193) */
+  field(OrderQty2.Tag, Required.NO)
+  /* OpenClose(77) */
+  /* CoveredOrUncovered(203) */
+  field(CustomerOrFirm.Tag, Required.NO)
+  field(MaxShow.Tag, Required.NO)
+  field(PegDifference.Tag, Required.NO)
+  field(DiscretionInst.Tag, Required.NO)
+  field(DiscretionOffset.Tag, Required.NO)
+  field(ClearingFirm.Tag, Required.NO)
+  field(ClearingAccount.Tag, Required.NO)
 
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
