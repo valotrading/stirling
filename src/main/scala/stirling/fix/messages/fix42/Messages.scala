@@ -133,6 +133,7 @@ class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) wit
   /* DayAvgPx(426) */
   /* GTBookingInst(427) */
   field(TradeDate.Tag, Required.NO)
+  field(TransactTime.Tag, Required.NO)
   /* ReportToExch(113) */
   field(Commission.Tag, Required.NO)
   /* CommType(13) */
