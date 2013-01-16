@@ -138,6 +138,10 @@ public class DefaultFieldContainer implements FieldContainer {
         field.setValue(value);
     }
 
+    public RepeatingGroup getGroup(Tag<? extends IntegerField> countTag) {
+        return (RepeatingGroup) lookup(countTag);
+    }
+
     public String getString(Tag<? extends StringField> tag) {
         StringField field = (StringField) lookup(tag);
         return field.getValue();
