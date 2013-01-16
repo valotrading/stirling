@@ -18,6 +18,7 @@ package stirling.fix.messages
 import java.nio.ByteBuffer
 import org.scalatest.{Assertions, WordSpec}
 import org.scalatest.matchers.MustMatchers
+import scala.language.implicitConversions
 import silvertip.{GarbledMessageException, PartialMessageException}
 
 class FixMessageParserSpec extends WordSpec with MustMatchers with FixMessageParserFixtures {

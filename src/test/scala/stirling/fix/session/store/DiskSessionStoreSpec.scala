@@ -22,6 +22,7 @@ import org.scalatest.WordSpec
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.matchers.MustMatchers
 import scala.io.Source
+import scala.language.implicitConversions
 import silvertip.Connection
 import stirling.fix.{Config, Version}
 import stirling.fix.messages.{DefaultMessageComparator, DefaultMessageVisitor, FixMessage, Message}
