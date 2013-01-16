@@ -22,6 +22,7 @@ public interface FieldContainer extends Formattable, Iterable<Field>, Parseable 
     Field lookup(Tag<?> tag);
     boolean isDefined(Tag<?> tag);
     boolean hasValue(Tag<?> tag);
+    RepeatingGroup getGroup(Tag<? extends IntegerField> countTag);
     String getString(Tag<? extends StringField> tag);
     Integer getInteger(Tag<? extends IntegerField> tag);
     Double getFloat(Tag<? extends FloatField> tag);
