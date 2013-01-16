@@ -128,8 +128,8 @@ public class DefaultFieldContainer implements FieldContainer {
         field.setValue(value);
     }
 
-    public void setDateTime(Tag<? extends UtcTimestampField> tag, DateTime value) {
-        UtcTimestampField field = (UtcTimestampField) lookup(tag);
+    @SuppressWarnings("unchecked") public void setDateTime(Tag<? extends AbstractField<DateTime>> tag, DateTime value) {
+        AbstractField<DateTime> field = (AbstractField<DateTime>) lookup(tag);
         field.setValue(value);
     }
 
@@ -161,8 +161,8 @@ public class DefaultFieldContainer implements FieldContainer {
         return result;
     }
 
-    public DateTime getDateTime(Tag<? extends UtcTimestampField> tag) {
-        UtcTimestampField field = (UtcTimestampField) lookup(tag);
+    @SuppressWarnings("unchecked") public DateTime getDateTime(Tag<? extends AbstractField<DateTime>> tag) {
+        AbstractField<DateTime> field = (AbstractField<DateTime>) lookup(tag);
         return field.getValue();
     }
 
