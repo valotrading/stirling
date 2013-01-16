@@ -8,6 +8,8 @@ scalaVersion := "2.10.0"
 
 javacOptions ++= Seq("-Xlint:unchecked")
 
+scalacOptions := Seq("-feature")
+
 crossScalaVersions := Seq("2.9.2", "2.10.0")
 
 resolvers ++= Seq(
