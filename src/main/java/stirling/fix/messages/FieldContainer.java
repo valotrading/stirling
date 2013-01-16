@@ -27,11 +27,11 @@ public interface FieldContainer extends Formattable, Iterable<Field>, Parseable 
     Double getFloat(Tag<? extends FloatField> tag);
     boolean getBoolean(Tag<? extends BooleanField> tag);
     <T extends EnumType> T getEnum(Tag<? extends EnumField<T>> tag);
-    DateTime getDateTime(Tag<? extends UtcTimestampField> tag);
+    DateTime getDateTime(Tag<? extends AbstractField<DateTime>> tag);
     void setString(Tag<? extends StringField> tag, String value);
     void setInteger(Tag<? extends IntegerField> tag, Integer value);
     void setFloat(Tag<? extends FloatField> tag, Double value);
     void setBoolean(Tag<? extends BooleanField> tag, Boolean value);
     <T> void setEnum(Tag<? extends EnumField<Value<T>>> tag, Value<T> value);
-    void setDateTime(Tag<? extends UtcTimestampField> tag, DateTime value);
+    void setDateTime(Tag<? extends AbstractField<DateTime>> tag, DateTime value);
 }
