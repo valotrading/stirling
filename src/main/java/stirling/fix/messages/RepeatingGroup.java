@@ -17,6 +17,7 @@ package stirling.fix.messages;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import stirling.fix.tags.fix43.SessionRejectReason;
@@ -36,7 +37,16 @@ public abstract class RepeatingGroup implements Field {
         return countTag;
     }
 
-    protected abstract RepeatingGroupInstance newInstance();
+    public abstract RepeatingGroupInstance newInstance();
+
+    public void addInstance(RepeatingGroupInstance instance) {
+        instances.add(instance);
+        countField.setValue(instances.size());
+    }
+
+    public List<RepeatingGroupInstance> getInstances() {
+        return Collections.unmodifiableList(instances);
+    }
 
     @Override public void parse(ByteBuffer b) {
         countField.parse(b);
@@ -60,7 +70,7 @@ public abstract class RepeatingGroup implements Field {
 
     @Override public String format() {
         StringBuilder result = new StringBuilder();
-        if (isParsed()) {
+        if (hasValue()) {
             result.append(new IntegerField(countTag, instances.size()).format());
             for (RepeatingGroupInstance instance : instances) {
                 result.append(instance.format());
