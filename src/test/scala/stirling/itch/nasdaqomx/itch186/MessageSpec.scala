@@ -15,6 +15,7 @@
  */
 package stirling.itch.nasdaqomx.itch186
 
+import scala.language.implicitConversions
 import stirling.itch.{ByteString, Spec}
 
 class MessageSpec extends Spec {

@@ -15,6 +15,7 @@
  */
 package stirling.itch.bats.pitch1120
 
+import scala.language.implicitConversions
 import stirling.itch.{ByteString, Spec}
 
 class MessageSpec extends Spec {
