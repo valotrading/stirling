@@ -396,7 +396,7 @@ public class Session {
                 }
 
                 @Override public void defaultAction(Message message) {
-                    getLogger().severe("first message is not a logon");
+                    getLogger().severe("first message is not a logon: " + message.toString());
                     logout(conn);
                 }
             });

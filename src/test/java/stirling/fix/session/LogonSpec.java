@@ -82,13 +82,14 @@ import stirling.lang.Predicate;
 
         /* Ref ID 1B: e. Receive any message other than a Logon message. */
         public void otherMessageThanLogon() throws Exception {
+            Message message =
+                new MessageBuilder(MsgTypeValue.HEARTBEAT)
+                    .msgSeqNum(1)
+                    .build();
             server.expect(MsgTypeValue.LOGON);
-            server.respond(
-                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
-                        .msgSeqNum(1)
-                    .build());
+            server.respond(message);
             server.expect(MsgTypeValue.LOGOUT);
-            checking(expectLogSevere("first message is not a logon"));
+            checking(expectLogSevere("first message is not a logon: " + message.toString()));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
