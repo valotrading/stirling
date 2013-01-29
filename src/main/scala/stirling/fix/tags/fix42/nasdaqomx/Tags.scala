@@ -63,6 +63,7 @@ object TradeID extends StringTag(1003)
 
 object LiquidityFlag extends EnumTag[Character](9882) {
   val NordicAddedLiquidity           = CharValue('A')
+  val NordicAddedLiquidityTopOfBook  = CharValue('W')
   val NordicRemovedLiquidity         = CharValue('R')
   val InternalizedInContinuousMarket = CharValue('X')
   val ExecutedInAuction              = CharValue('C')
