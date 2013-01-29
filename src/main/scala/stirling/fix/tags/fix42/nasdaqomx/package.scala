@@ -39,6 +39,7 @@ package object nasdaqomx {
   val HandlInst        = fix42.HandlInst
   val HeartBtInt       = fix42.HeartBtInt
   val IDSource         = fix42.IDSource
+  val LastMkt          = fix42.LastMkt
   val LastPx           = fix42.LastPx
   val LastShares       = fix42.LastShares
   val LeavesQty        = fix42.LeavesQty

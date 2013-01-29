@@ -131,6 +131,7 @@ class ExecutionReport(header: MessageHeaderTrait) extends AbstractMessage(header
   field(ExecRefID.Tag,             Required.NO)
   field(ExecTransType.Tag)
   field(IDSource.Tag,              Required.NO)
+  field(LastMkt.Tag,               Required.NO)
   field(LastPx.Tag,                Required.NO)
   field(LastShares.Tag,            Required.NO)
   field(OrderID.Tag)
