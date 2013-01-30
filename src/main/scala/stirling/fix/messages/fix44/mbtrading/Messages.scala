@@ -435,6 +435,7 @@ class CollateralReport(header: MessageHeader) extends AbstractMessage(header) wi
   field(Account.Tag)
   field(Commission.Tag, Required.NO)
   field(Currency.Tag, Required.NO)
+  field(SubscriptionRequestType.Tag, Required.NO)
   field(MarginRatio.Tag, Required.NO)
   field(MarginExcess.Tag)
   field(TotalNetValue.Tag)
@@ -474,8 +475,8 @@ class CollateralInquiryAcknowledgment(header: MessageHeader) extends AbstractMes
 
 class RequestForPositionAcknowledgment(header: MessageHeader) extends AbstractMessage(header) with RequestForPositionAcknowledgmentTrait {
   field(Account.Tag)
-  field(SendingTime.Tag)
-  field(Text.Tag)
+  field(SendingTime.Tag, Required.NO)
+  field(Text.Tag, Required.NO)
   field(PosReqID.Tag)
   field(PosMaintRptID.Tag)
   field(TotalNumPosReports.Tag)
