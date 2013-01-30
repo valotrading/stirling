@@ -203,6 +203,7 @@ object PegScope extends EnumTag[Integer](840) {
   val Global = IntegerValue(3)
   val NationalExcludingLocal = IntegerValue(4)
 }
+object TargetStrategy extends IntegerTag(847)
 object ParticipationRate extends PercentageTag(849)
 object LastLiquidityInd extends EnumTag[Integer](851) {
   val AddedLiquidity = IntegerValue(1)
@@ -241,3 +242,4 @@ object CollInquiryStatus extends EnumTag[Integer](945) {
   val CompletedWithWarnings = IntegerValue(3)
   val Rejected = IntegerValue(4)
 }
+object CollInquiryResult extends IntegerTag(946)

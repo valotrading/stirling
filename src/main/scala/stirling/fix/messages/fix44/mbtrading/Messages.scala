@@ -105,6 +105,7 @@ import stirling.fix.tags.fix42.{
 }
 import stirling.fix.tags.fix43.{
   BusinessRejectReason,
+  ClOrdLinkID,
   LegCFICode,
   LegMaturityMonthYear,
   LegPositionEffect,
@@ -129,6 +130,7 @@ import stirling.fix.tags.fix43.{
 import stirling.fix.tags.fix44.{
   ClearingBusinessDate,
   CollInquiryID,
+  CollInquiryResult,
   CollInquiryStatus,
   CollRptID,
   CollStatus,
@@ -139,11 +141,13 @@ import stirling.fix.tags.fix44.{
   MessageEncoding,
   NoTrdRegTimestamps,
   Password,
+  PeggedPrice,
   PosMaintRptID,
   PosReqID,
   PosReqResult,
   SettlPrice,
   ShortQty,
+  TargetStrategy,
   TotNumReports,
   TotalNetValue,
   TotalNumPosReports,
@@ -153,20 +157,26 @@ import stirling.fix.tags.fix44.{
   Username
 }
 import stirling.fix.tags.fix44.mbtrading.{
+  AccountBank,
   AccountBasedPerms,
+  AccountBranch,
   AccountCredit,
   BODOOvernightExcessEq,
-  BasisClosedPnL,
+  CompanyID,
   ExecType,
   FLID,
   LiquidityTag,
   MBTAccountType,
   MBTInternalOrderId,
+  MBTMultifunction,
   MBTXAggressive,
   MorningAccountValue,
   MorningBuyingPower,
   MorningExcessEquity,
   MorningExcessEquity2,
+  MultiPrice,
+  MultiSymbol,
+  OptionStrategyCode,
   OrderGroupID1,
   OvernightBuyingPower,
   OvernightExcess,
@@ -178,7 +188,10 @@ import stirling.fix.tags.fix44.mbtrading.{
   PosReqType,
   RealizedPnL,
   TimeInForce,
+  TodayRealizedPNL2,
+  TriggerFromOrderID,
   UserQuotePerms,
+  UserRoutePerm,
   UserSessionID
 }
 
@@ -232,11 +245,10 @@ class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with
   field(HandlInst.Tag)
   field(OrderQty.Tag)
   field(OrdType.Tag)
-  field(StopPx.Tag, Required.NO)
-  field(SendingTime.Tag)
-  field(Symbol.Tag)
   field(Price.Tag, Required.NO)
+  field(SendingTime.Tag)
   field(Side.Tag)
+  field(Symbol.Tag)
   field(TimeInForce.Tag)
   field(TransactTime.Tag)
   field(StopPx.Tag, Required.NO)
@@ -254,20 +266,27 @@ class NewOrderSingle(header: MessageHeader) extends AbstractMessage(header) with
   field(PutOrCall.Tag, Required.NO)
   field(StrikePrice.Tag, Required.NO)
   field(PegDifference.Tag, Required.NO)
+  field(ComplianceID.Tag, Required.NO)
   field(DiscretionInst.Tag, Required.NO)
   field(DiscretionOffset.Tag, Required.NO)
-  field(ComplianceID.Tag, Required.NO)
   field(SecondaryClOrdID.Tag, Required.NO)
   field(OrderRestrictions.Tag, Required.NO)
   field(Username.Tag)
   field(LegPrice.Tag, Required.NO)
+  field(ClOrdLinkID.Tag, Required.NO)
   field(Price2.Tag, Required.NO)
   field(NoTrdRegTimestamps.Tag, Required.NO)
   field(TrdRegTimestamp.Tag, Required.NO)
   field(TrdRegTimestampType.Tag, Required.NO)
   field(TrdRegTimestampOrigin.Tag, Required.NO)
+  field(PeggedPrice.Tag, Required.NO)
+  field(TargetStrategy.Tag, Required.NO)
   field(MBTXAggressive.Tag, Required.NO)
   field(OrderGroupID1.Tag, Required.NO)
+  field(MultiSymbol.Tag, Required.NO)
+  field(MultiPrice.Tag, Required.NO)
+  field(MBTMultifunction.Tag, Required.NO)
+  field(TriggerFromOrderID.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
@@ -338,7 +357,6 @@ class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) wit
   field(MultiLegReportingType.Tag, Required.NO)
   field(Product.Tag, Required.NO)
   field(OrderRestrictions.Tag, Required.NO)
-  field(MassStatusReqID.Tag, Required.NO)
   group(new RepeatingGroup(NoLegs.Tag) {
     override def newInstance:RepeatingGroupInstance = {
       return new RepeatingGroupInstance(LegPrice.Tag) {
@@ -351,14 +369,19 @@ class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) wit
       }
     }
   }, Required.NO)
+  field(ClOrdLinkID.Tag, Required.NO)
+  field(MassStatusReqID.Tag, Required.NO)
+  field(Price2.Tag, Required.NO)
+  field(PeggedPrice.Tag, Required.NO)
   field(LastRptRequested.Tag, Required.NO)
   field(LiquidityTag.Tag, Required.NO)
   field(PosRealizedPNL.Tag, Required.NO)
-  field(OrderGroupID1.Tag, Required.NO)
-  field(Price2.Tag, Required.NO)
   field(MBTInternalOrderId.Tag, Required.NO)
+  field(OrderGroupID1.Tag, Required.NO)
+  field(TriggerFromOrderID.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
+
 class TradingSessionStatus(header: MessageHeader) extends AbstractMessage(header) with TradingSessionStatusTrait {
   field(TradeSesReqID.Tag, Required.NO)
   field(TradingSessionID.Tag, Required.NO)
@@ -424,12 +447,15 @@ class CollateralReport(header: MessageHeader) extends AbstractMessage(header) wi
   field(MorningAccountValue.Tag, Required.NO)
   field(MorningExcessEquity.Tag, Required.NO)
   field(AccountCredit.Tag, Required.NO)
+  field(AccountBasedPerms.Tag, Required.NO)
   field(MorningExcessEquity2.Tag, Required.NO)
-  field(FLID.Tag, Required.NO)
-  field(UserSessionID.Tag, Required.NO)
   field(OvernightExcess.Tag, Required.NO)
   field(BODOOvernightExcessEq.Tag, Required.NO)
-  field(AccountBasedPerms.Tag, Required.NO)
+  field(CompanyID.Tag, Required.NO)
+  field(AccountBank.Tag, Required.NO)
+  field(AccountBranch.Tag, Required.NO)
+  field(FLID.Tag, Required.NO)
+  field(UserSessionID.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
@@ -437,13 +463,18 @@ class CollateralInquiryAcknowledgment(header: MessageHeader) extends AbstractMes
   field(CollInquiryID.Tag, Required.NO)
   field(TotNumReports.Tag)
   field(CollInquiryStatus.Tag)
+  field(CollInquiryResult.Tag, Required.NO)
+  field(UserSessionID.Tag, Required.NO)
   field(UserQuotePerms.Tag, Required.NO)
+  field(UserRoutePerm.Tag)
+  field(CompanyID.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
 class RequestForPositionAcknowledgment(header: MessageHeader) extends AbstractMessage(header) with RequestForPositionAcknowledgmentTrait {
   field(Account.Tag)
-  field(Text.Tag, Required.NO)
+  field(SendingTime.Tag)
+  field(Text.Tag)
   field(PosReqID.Tag)
   field(PosMaintRptID.Tag)
   field(TotalNumPosReports.Tag)
@@ -454,15 +485,17 @@ class RequestForPositionAcknowledgment(header: MessageHeader) extends AbstractMe
 class PositionReport(header: MessageHeader) extends AbstractMessage(header) with PositionReportTrait {
   field(Account.Tag)
   field(Commission.Tag, Required.NO)
-  field(Symbol.Tag, Required.NO)
   field(Side.Tag, Required.NO)
+  field(Symbol.Tag, Required.NO)
   field(TradeDate.Tag, Required.NO)
+  field(MaturityMonthYear.Tag, Required.NO)
+  field(PutOrCall.Tag, Required.NO)
+  field(StrikePrice.Tag, Required.NO)
   field(SubscriptionRequestType.Tag, Required.NO)
   field(UnsolicitedIndicator.Tag, Required.NO)
   field(Price2.Tag, Required.NO)
   field(LongQty.Tag, Required.NO)
   field(ShortQty.Tag, Required.NO)
-  field(PosMaintRptID.Tag)
   field(PosReqID.Tag, Required.NO)
   field(ClearingBusinessDate.Tag)
   field(PosMaintRptID.Tag)
@@ -474,7 +507,8 @@ class PositionReport(header: MessageHeader) extends AbstractMessage(header) with
   field(PosBuyPowerUsed.Tag, Required.NO)
   field(PosRealizedPNL.Tag, Required.NO)
   field(PosEquityUsed.Tag, Required.NO)
-  field(BasisClosedPnL.Tag, Required.NO)
+  field(OptionStrategyCode.Tag, Required.NO)
+  field(TodayRealizedPNL2.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
