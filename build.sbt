@@ -2,7 +2,7 @@ organization := "stirling"
 
 name := "stirling"
 
-version := "1.3.3"
+version := "1.3.4-SNAPSHOT"
 
 scalaVersion := "2.10.0"
 
