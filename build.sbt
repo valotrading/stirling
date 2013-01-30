@@ -14,7 +14,7 @@ crossScalaVersions := Seq("2.9.2", "2.10.0")
 
 resolvers ++= Seq(
   "Laughing Panda Repository" at "http://maven.laughingpanda.org/maven2/",
-  "Silvertip Repository" at "http://valotrading.github.com/silvertip/maven/",
+  "valotrading" at "http://valotrading.github.com/maven",
   "Twitter Repository" at "http://maven.twttr.com/",
   "mpeltonen.github.com" at "http://mpeltonen.github.com/maven"
 )
@@ -32,7 +32,7 @@ libraryDependencies ++= Seq(
   "org.mockito" % "mockito-core" % "1.9.0" % "test",
   "org.mongodb" % "mongo-java-driver" % "2.7.2",
   "org.scalatest" %% "scalatest" % "1.9.1" % "test",
-  "silvertip" % "silvertip" % "0.3.0"
+  "silvertip" % "silvertip" % "0.3.5"
 )
 
 testListeners <<= target.map(t => Seq(new eu.henkelmann.sbt.JUnitXmlTestsListener(t.getAbsolutePath)))

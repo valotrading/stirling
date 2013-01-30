@@ -20,6 +20,7 @@ import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.logging.FileHandler;
@@ -94,6 +95,9 @@ public class Connect implements Command {
 
                 @Override public void garbledMessage(Connection<FixMessage> conn, String message, byte[] data) {
                     logger.warning("Garbled message: " + message);
+                }
+
+                @Override public void sent(ByteBuffer buffer) {
                 }
             });
             logger.info("Connecting finished");
