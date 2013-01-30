@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -514,6 +515,9 @@ public class InitiatorSpecification extends Specification<Session> {
 
             @Override public void garbledMessage(Connection<stirling.fix.messages.FixMessage> conn, String message, byte[] data) {
                 logger.warning(message);
+            }
+
+            @Override public void sent(ByteBuffer buffer) {
             }
         });
     }

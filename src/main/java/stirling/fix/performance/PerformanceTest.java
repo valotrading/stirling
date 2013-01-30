@@ -18,6 +18,7 @@ package stirling.fix.performance;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
+import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Random;
@@ -170,6 +171,9 @@ public class PerformanceTest implements Runnable {
 
                             @Override public void garbledMessage(Connection<FixMessage> conn, String message, byte[] data) {
                             }
+
+                            @Override public void sent(ByteBuffer buffer) {
+                            }
                         });
                     }
                 });
@@ -218,6 +222,9 @@ public class PerformanceTest implements Runnable {
                     }
 
                     @Override public void garbledMessage(Connection<FixMessage> conn, String message, byte[] data) {
+                    }
+
+                    @Override public void sent(ByteBuffer buffer) {
                     }
                 });
                 events.register(conn);
