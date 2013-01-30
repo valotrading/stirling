@@ -22,7 +22,6 @@ package object lime {
   val ClOrdID          = fix42.ClOrdID
   val ContraBroker     = fix42.ContraBroker
   val CumQty           = fix42.CumQty
-  val CxlRejReason     = fix42.CxlRejReason
   val CxlRejResponseTo = fix42.CxlRejResponseTo
   val DiscretionOffset = fix42.DiscretionOffset
   val EncryptMethod    = fix42.EncryptMethod
