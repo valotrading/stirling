@@ -466,7 +466,7 @@ class CollateralInquiryAcknowledgment(header: MessageHeader) extends AbstractMes
   field(CollInquiryResult.Tag, Required.NO)
   field(UserSessionID.Tag, Required.NO)
   field(UserQuotePerms.Tag, Required.NO)
-  field(UserRoutePerm.Tag)
+  field(UserRoutePerm.Tag, Required.NO)
   field(CompanyID.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
