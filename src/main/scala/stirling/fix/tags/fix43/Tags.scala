@@ -209,6 +209,7 @@ object AccountType extends EnumTag[Integer](581) {
   val HouseTraderCross = IntegerValue(7)
   val JointBOAcct = IntegerValue(8)
 }
+object ClOrdLinkID extends StringTag(583)
 object MassStatusReqID extends StringTag(584)
 object MassStatusReqType extends EnumTag[Integer](585) {
   val StatusSecurity = IntegerValue(1)
