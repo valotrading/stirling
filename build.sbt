@@ -14,7 +14,7 @@ crossScalaVersions := Seq("2.9.2", "2.10.0")
 
 resolvers ++= Seq(
   "Laughing Panda Repository" at "http://maven.laughingpanda.org/maven2/",
-  "Silvertip Repository" at "http://valotrading.github.com/silvertip/maven/",
+  "valotrading" at "http://valotrading.github.com/maven",
   "Twitter Repository" at "http://maven.twttr.com/",
   "mpeltonen.github.com" at "http://mpeltonen.github.com/maven"
 )
