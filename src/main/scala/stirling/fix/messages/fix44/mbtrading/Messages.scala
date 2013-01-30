@@ -420,13 +420,14 @@ class Logon(header: MessageHeader) extends AbstractMessage(header) with stirling
 }
 
 class BusinessMessageReject(header: MessageHeader) extends AbstractMessage(header) with BusinessMessageRejectTrait {
+  field(Account.Tag, Required.NO)
   field(RefSeqNo.Tag)
   field(Text.Tag)
   field(RefMsgType.Tag)
   field(BusinessRejectRefID.Tag, Required.NO)
   field(BusinessRejectReason.Tag)
   field(PosReqID.Tag)
-  field(CollInquiryID.Tag)
+  field(CollInquiryID.Tag, Required.NO)
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
