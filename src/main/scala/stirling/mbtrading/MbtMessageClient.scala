@@ -1,6 +1,7 @@
 package stirling.mbtrading
 
 import com.twitter.logging.Logger
+import java.nio.ByteBuffer
 import java.util.Iterator
 import scala.collection.JavaConversions._
 import silvertip.Connection.Callback
@@ -28,6 +29,8 @@ class MbtMessageClient(val application: MbtMessageListener, val config: MbtMessa
             log.debug("Received '%s'", message)
             application.receive(message)
           }
+        }
+        def sent(buffer: ByteBuffer) {
         }
       })
       events.register(connection)
