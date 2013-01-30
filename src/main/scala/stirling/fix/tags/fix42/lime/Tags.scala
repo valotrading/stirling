@@ -21,6 +21,7 @@ import stirling.fix.messages.{
   EnumTag,
   FloatTag,
   IntegerTag,
+  IntegerValue,
   PriceTag,
   StringTag
 }
@@ -41,6 +42,14 @@ object TimeInForce extends EnumTag[Character](59) {
   val GoodTillDate      = CharValue('6')
   val AtTheClose        = CharValue('7')
   val TimeInMarket      = CharValue('8')
+}
+
+object CxlRejReason extends EnumTag[Integer](102) {
+  val TooLateToCancel        = IntegerValue(0)
+  val UnknownOrder           = IntegerValue(1)
+  val BrokerExchangeOption   = IntegerValue(2)
+  val PendingCancelOrReplace = IntegerValue(3)
+  val DuplicateClOrdID       = IntegerValue(6)
 }
 
 object CancelAllOnDisconnect extends BooleanTag(7001)
