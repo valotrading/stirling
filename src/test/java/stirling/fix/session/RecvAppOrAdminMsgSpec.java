@@ -111,7 +111,7 @@ import stirling.fix.tags.fix42.ExecTransType;
                 .field(CheckSum.Tag(), "209")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(expectLogSevere("Tag not defined for this message: 88"));
+            checking(expectLogSevere("Tag not defined for message '0': 88"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

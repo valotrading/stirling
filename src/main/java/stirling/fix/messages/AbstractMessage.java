@@ -220,7 +220,7 @@ public abstract class AbstractMessage extends DefaultFieldContainer implements M
             } else if (field != null) {
                 throw new OutOfOrderTagException(field.prettyName() + ": Out of order tag");
             }
-            throw new InvalidTagException("Tag not defined for this message: " + tag);
+            throw new InvalidTagException("Tag not defined for message '" + header.getMsgType() + "': " + tag);
         }
     }
 

@@ -196,7 +196,7 @@ class ParserSpec extends WordSpec with MustMatchers with MockitoSugar with Parse
         .field(CheckSum, "168")
         .toString
       "invoke the invalid message callback" in {
-        expectInvalidMessage(raw, msgType, SessionRejectReason.InvalidTag, "Tag not defined for this message: 88")
+        expectInvalidMessage(raw, msgType, SessionRejectReason.InvalidTag, "Tag not defined for message '0': 88")
       }
     }
     "parsing a header field within body" should {
