@@ -15,6 +15,7 @@
  */
 package stirling.itch.nasdaqomx.ouch114
 
+import java.nio.ByteBuffer
 import scala.language.implicitConversions
 import stirling.itch.{ByteString, Spec}
 
@@ -96,6 +97,53 @@ class MessageSpec extends Spec {
       message.matchNumber         must equal(123456789)
       message.reason              must equal(BrokenTradeReason.Erroneous)
     }
+    "format EnterOrder" in {
+      val buffer = ByteBuffer.allocate(EnterOrder.size)
+
+      EnterOrder.format(
+        buffer,
+        messageType      = 'O',
+        orderToken       = "ABCDEFGHIJKLMN",
+        buySellIndicator = BuySellIndicator.Buy,
+        quantity         = 200,
+        orderBook        = 123456,
+        price            = 1250000,
+        timeInForce      = TimeInForce.MarketHours,
+        firm             = "ABC",
+        display          = Display.Display,
+        capacity         = Capacity.OwnAccount,
+        user             = "Donald",
+        clientReference  = "X",
+        orderReference   = "ABCDEFGHIJ",
+        clearingFirm     = "XXXX",
+        clearingAccount  = "ABCDEFGHIJKL",
+        minimumQuantity  = 0,
+        crossType        = CrossType.ClosingCross
+      )
+
+      asString(buffer) must equal("OABCDEFGHIJKLMNB000000200123456000125000099998ABC Y2DonaldX              ABCDEFGHIJXXXXABCDEFGHIJKL000000000C")
+    }
+    "format CancelOrder" in {
+      val buffer = ByteBuffer.allocate(CancelOrder.size)
+
+      CancelOrder.format(
+        buffer,
+        orderToken = "ABCDEFGHIJKLMN",
+        quantity   = 100,
+        user       = "Donald"
+      )
+
+      asString(buffer) must equal("XABCDEFGHIJKLMN000000100Donald")
+    }
+  }
+
+  def asString(buffer: ByteBuffer): String = {
+    buffer.flip
+
+    val bytes = new Array[Byte](buffer.remaining)
+    buffer.get(bytes)
+
+    new String(bytes, "US-ASCII")
   }
 
   implicit def stringToByteString(string: String): ByteString = new ByteString(string.getBytes)

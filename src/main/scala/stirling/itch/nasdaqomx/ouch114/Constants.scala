@@ -133,3 +133,12 @@ object CrossType {
   val OpeningCross = 'O'.toByte
   val HaltCross    = 'H'.toByte
 }
+
+/*
+ * Section 3.1
+ */
+object TimeInForce {
+  val ImmediateOrCancel = 0
+  val MarketHours       = 99998
+  val SystemHours       = 99999
+}

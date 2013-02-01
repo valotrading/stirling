@@ -15,6 +15,9 @@
  */
 package stirling.itch.nasdaqomx.ouch114
 
+import java.nio.ByteBuffer
+import java.nio.charset.Charset
+import java.util.Arrays
 import scala.annotation.switch
 import stirling.itch.ByteString
 
@@ -28,7 +31,46 @@ sealed trait Message {
 }
 
 object Message {
+  val ASCII = Charset.forName("US-ASCII")
+
   val messageTypeOffset = 8
+
+  def alpha(value: String, fieldSize: Int): Array[Byte] = {
+    if (value.length > fieldSize)
+      throw new IllegalArgumentException("Value length %d exceeds field size %d".format(value.length, fieldSize))
+
+    val formatted = value.getBytes(ASCII)
+    val formattedLength = formatted.length
+
+    if (formattedLength == fieldSize) {
+      formatted
+    } else {
+      val bytes = new Array[Byte](fieldSize)
+      System.arraycopy(formatted, 0, bytes, 0, formattedLength)
+      Arrays.fill(bytes, formattedLength, fieldSize, ' '.toByte)
+
+      bytes
+    }
+  }
+
+  def numeric(value: Long, fieldSize: Int): Array[Byte] = {
+    if (value < 0)
+      throw new IllegalArgumentException("Negative value %d".format(value))
+
+    val formatted = value.toString.getBytes(ASCII)
+    val formattedLength = formatted.length
+
+    if (formattedLength > fieldSize)
+      throw new IllegalArgumentException("Formatted length %d exceeds field size %d".format(formattedLength, fieldSize))
+
+    val padTo = fieldSize - formattedLength
+
+    val bytes = new Array[Byte](fieldSize)
+    Arrays.fill(bytes, 0, padTo, '0'.toByte)
+    System.arraycopy(formatted, 0, bytes, padTo, formattedLength)
+
+    bytes
+  }
 }
 
 sealed trait MessageType {
@@ -169,4 +211,73 @@ object MMORefreshRequest extends MessageType {
   def apply(payload: ByteString) = new MMORefreshRequest(payload)
 
   def size(messageType: Byte) = 19
+}
+
+/*
+ * Section 3.1
+ */
+object EnterOrder {
+  import Message._
+
+  val size = 109
+
+  def format(
+    buffer:           ByteBuffer,
+    messageType:      Byte,
+    orderToken:       String,
+    buySellIndicator: Byte,
+    quantity:         Long,
+    orderBook:        Long,
+    price:            Long,
+    timeInForce:      Long,
+    firm:             String,
+    display:          Byte,
+    capacity:         Byte,
+    user:             String,
+    clientReference:  String,
+    orderReference:   String,
+    clearingFirm:     String,
+    clearingAccount:  String,
+    minimumQuantity:  Long,
+    crossType:        Byte
+  ) {
+    buffer.put(messageType)
+    buffer.put(alpha(orderToken, 14))
+    buffer.put(buySellIndicator)
+    buffer.put(numeric(quantity, 9))
+    buffer.put(numeric(orderBook, 6))
+    buffer.put(numeric(price, 10))
+    buffer.put(numeric(timeInForce, 5))
+    buffer.put(alpha(firm, 4))
+    buffer.put(display)
+    buffer.put(capacity)
+    buffer.put(alpha(user, 6))
+    buffer.put(alpha(clientReference, 15))
+    buffer.put(alpha(orderReference, 10))
+    buffer.put(alpha(clearingFirm, 4))
+    buffer.put(alpha(clearingAccount, 12))
+    buffer.put(numeric(minimumQuantity, 9))
+    buffer.put(crossType)
+  }
+}
+
+/*
+ * Section 3.2
+ */
+object CancelOrder {
+  import Message._
+
+  val size = 30
+
+  def format(
+    buffer:     ByteBuffer,
+    orderToken: String,
+    quantity:   Long,
+    user:       String
+  ) {
+    buffer.put('X'.toByte)
+    buffer.put(alpha(orderToken, 14))
+    buffer.put(numeric(quantity, 9))
+    buffer.put(alpha(user, 6))
+  }
 }
