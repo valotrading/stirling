@@ -291,14 +291,3 @@ object NOII extends MessageType {
 
   val size = 75
 }
-
-/*
- * SoupFILE
- */
-object EndOfSession extends Message with MessageType {
-  def apply(payload: ByteString) = this
-
-  val payload = new ByteString(Array('-'))
-
-  val size = 0
-}

@@ -19,19 +19,26 @@ import java.io.{File, FileOutputStream}
 import java.util.zip.{GZIPOutputStream, ZipEntry, ZipOutputStream}
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.nasdaqomx.itch186.{Message, SoupFILEParser}
+import stirling.nasdaq.soupfile100.{EndOfSession, Packet, SequencedData, SoupFILEParser}
+import stirling.nasdaqomx.itch186.{Message, MessageParser}
 
 abstract class SourceSpec extends WordSpec with MustMatchers {
   "Source" when {
     "reading a message stream" should {
       "yield messages" in {
-        source("T    1\r\nM  1\r\n").map(_.messageType.toChar).mkString must equal("TM")
+        source("T    1\r\nM  1\r\n").map(messageType).mkString must equal("TM")
       }
     }
   }
-  def source(data: String): Source[Message] = {
+
+  def messageType(packet: Packet[Message]): Char = packet match {
+    case SequencedData(message) => message.messageType.toChar
+    case EndOfSession           => '-'
+  }
+
+  def source(data: String): Source[Packet[Message]] = {
     val bytes = data.getBytes("US-ASCII")
-    Source.fromFile(file(bytes), new SoupFILEParser)
+    Source.fromFile(file(bytes), new SoupFILEParser(new MessageParser))
   }
 
   protected def file(data: Array[Byte]): File
