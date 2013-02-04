@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 the original author or authors.
+ * Copyright 2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.nasdaqomx.ouch114
+package stirling.nasdaqomx.itch186
 
 import java.nio.{BufferUnderflowException, ByteBuffer, ByteOrder}
 import scala.annotation.switch
@@ -30,26 +30,32 @@ class MessageParser extends silvertip.MessageParser[Message] {
   }
 
   protected def parseMessage(buffer: ByteBuffer) = {
-    if (buffer.position + Message.messageTypeOffset >= buffer.limit)
+    if (buffer.position == buffer.limit)
       throw new PartialMessageException
 
-    val msgTypeValue = buffer.get(buffer.position + Message.messageTypeOffset)
-    val msgType      = messageType(msgTypeValue)
-    val msg          = msgType.apply(ByteBuffers.slice(buffer, buffer.position, msgType.size(msgTypeValue)))
+    val msgType = messageType(buffer.get(buffer.position))
+    val msg     = msgType.apply(ByteBuffers.slice(buffer, buffer.position, msgType.size))
 
     msg
   }
 
   protected def messageType(messageType: Byte) = (messageType: @switch) match {
+    case 'T' => Seconds
+    case 'M' => Milliseconds
     case 'S' => SystemEvent
-    case 'A' => OrderAccepted
-    case 'R' => OrderAccepted
-    case 'C' => CanceledOrder
-    case 'E' => ExecutedOrder
+    case 'O' => MarketSegmentState
+    case 'R' => OrderBookDirectory
+    case 'H' => OrderBookTradingAction
+    case 'A' => AddOrder
+    case 'F' => AddOrderMPID
+    case 'E' => OrderExecuted
+    case 'C' => OrderExecutedWithPrice
+    case 'X' => OrderCancel
+    case 'D' => OrderDelete
+    case 'P' => Trade
+    case 'Q' => CrossTrade
     case 'B' => BrokenTrade
-    case 'J' => RejectedOrder
-    case 'P' => CancelPending
-    case 'W' => MMORefreshRequest
+    case 'I' => NOII
     case  x  => throw new GarbledMessageException("Unknown message type: " + x)
   }
 }

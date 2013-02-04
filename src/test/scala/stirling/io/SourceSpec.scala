@@ -19,7 +19,7 @@ import java.io.{File, FileOutputStream}
 import java.util.zip.{GZIPOutputStream, ZipEntry, ZipOutputStream}
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.itch.nasdaqomx.itch186.{Message, SoupFILEParser}
+import stirling.nasdaqomx.itch186.{Message, SoupFILEParser}
 
 abstract class SourceSpec extends WordSpec with MustMatchers {
   "Source" when {

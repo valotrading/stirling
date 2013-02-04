@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 the original author or authors.
+ * Copyright 2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.nasdaqomx.itch186
+package stirling.nasdaqomx.ouch114
 
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
@@ -22,14 +22,14 @@ import stirling.io.Source
 class SoupFILEParserSpec extends WordSpec with MustMatchers {
   "SoupFILEParser" must {
     "parse messages with read buffer underflow inside message" in {
-      val messageTypes = "TMSORHAFECXDPQBI-"
+      val messageTypes = "SARCEB"
       source(128).map(_.messageType.toChar).mkString must equal(messageTypes)
     }
   }
 
   private def source(readBufferSize: Int): Source[Message] = {
     Source.fromInputStream[Message](
-      stream         = getClass.getResourceAsStream("/itch-v186.txt"),
+      stream         = getClass.getResourceAsStream("/ouch-v114.txt"),
       parser         = new SoupFILEParser,
       readBufferSize = readBufferSize
     )

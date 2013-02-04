@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.nasdaqomx.itch186
+package stirling.nasdaqomx.itch186
 
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
