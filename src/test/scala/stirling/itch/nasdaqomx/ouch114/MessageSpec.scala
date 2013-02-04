@@ -16,11 +16,12 @@
 package stirling.itch.nasdaqomx.ouch114
 
 import java.nio.ByteBuffer
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
 import scala.language.implicitConversions
 import stirling.io.ByteString
-import stirling.itch.Spec
 
-class MessageSpec extends Spec {
+class MessageSpec extends WordSpec with MustMatchers {
   "Message" should {
     "parse SystemEvent" in {
       val message = SystemEvent("12345678SS")

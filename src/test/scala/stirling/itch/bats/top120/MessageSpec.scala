@@ -15,11 +15,12 @@
  */
 package stirling.itch.bats.top120
 
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
 import scala.language.implicitConversions
 import stirling.io.ByteString
-import stirling.itch.Spec
 
-class MessageSpec extends Spec {
+class MessageSpec extends WordSpec with MustMatchers {
   "Message" should {
     "decode LogonAccepted" in {
       val message = LogonAccepted("C\n")

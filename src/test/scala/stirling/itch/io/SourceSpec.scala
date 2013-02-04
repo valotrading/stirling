@@ -17,10 +17,11 @@ package stirling.itch.io
 
 import java.io.{File, FileOutputStream}
 import java.util.zip.{GZIPOutputStream, ZipEntry, ZipOutputStream}
-import stirling.itch.Spec
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
 import stirling.itch.nasdaqomx.itch186.{Message, SoupFILEParser}
 
-abstract class SourceSpec extends Spec {
+abstract class SourceSpec extends WordSpec with MustMatchers {
   "Source" when {
     "reading a message stream" should {
       "yield messages" in {

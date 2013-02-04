@@ -15,10 +15,11 @@
  */
 package stirling.itch.bats.top120
 
-import stirling.itch.Spec
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
 import stirling.itch.io.Source
 
-class MessageParserSpec extends Spec {
+class MessageParserSpec extends WordSpec with MustMatchers {
   "MessageParser" must {
     "parse messages with read buffer underflow inside message" in {
       val messageTypes = "CJsDHTMEBbeAaFUufVvt"

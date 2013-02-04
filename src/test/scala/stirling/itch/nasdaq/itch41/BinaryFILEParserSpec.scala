@@ -17,12 +17,13 @@ package stirling.itch.nasdaq.itch41
 
 import java.io.File
 import java.nio.ByteBuffer
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
 import scala.language.implicitConversions
 import stirling.io.ByteString
-import stirling.itch.Spec
 import stirling.itch.io.Source
 
-class BinaryFILEParserSpec extends Spec with MessageParserFixtures {
+class BinaryFILEParserSpec extends WordSpec with MustMatchers with MessageParserFixtures {
   "BinaryFILEParser" must {
     "parse messages with read buffer underflow inside message" in {
       source(64).toList must equal(expectedMessages)

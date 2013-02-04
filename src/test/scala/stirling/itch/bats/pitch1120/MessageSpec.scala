@@ -15,11 +15,12 @@
  */
 package stirling.itch.bats.pitch1120
 
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
 import scala.language.implicitConversions
 import stirling.io.ByteString
-import stirling.itch.Spec
 
-class MessageSpec extends Spec {
+class MessageSpec extends WordSpec with MustMatchers {
   "Message" should {
     "decode SymbolClear" in {
       val message = SymbolClear("12345678uACME  ")
