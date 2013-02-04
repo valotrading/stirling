@@ -15,7 +15,7 @@
  */
 package stirling.itch.nasdaqomx.itch186
 
-import stirling.itch.ByteString
+import stirling.io.ByteString
 
 sealed trait Message {
   def payload: ByteString

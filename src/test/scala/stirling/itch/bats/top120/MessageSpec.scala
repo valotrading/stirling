@@ -16,7 +16,8 @@
 package stirling.itch.bats.top120
 
 import scala.language.implicitConversions
-import stirling.itch.{ByteString, Spec}
+import stirling.io.ByteString
+import stirling.itch.Spec
 
 class MessageSpec extends Spec {
   "Message" should {

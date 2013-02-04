@@ -17,7 +17,8 @@ package stirling.itch.bats.pitch1120
 
 import java.io.File
 import java.nio.ByteBuffer
-import stirling.itch.{ByteString, Spec}
+import stirling.io.ByteString
+import stirling.itch.Spec
 import stirling.itch.io.Source
 
 class SoupTCPFileParserSpec extends Spec {

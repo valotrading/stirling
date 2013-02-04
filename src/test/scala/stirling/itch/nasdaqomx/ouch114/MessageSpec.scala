@@ -17,7 +17,8 @@ package stirling.itch.nasdaqomx.ouch114
 
 import java.nio.ByteBuffer
 import scala.language.implicitConversions
-import stirling.itch.{ByteString, Spec}
+import stirling.io.ByteString
+import stirling.itch.Spec
 
 class MessageSpec extends Spec {
   "Message" should {

@@ -17,7 +17,8 @@ package stirling.itch.nasdaqomx.itch186
 
 import java.io.File
 import java.nio.ByteBuffer
-import stirling.itch.{ByteString, Spec}
+import stirling.io.ByteString
+import stirling.itch.Spec
 import stirling.itch.io.Source
 
 class SoupFILEParserSpec extends Spec {

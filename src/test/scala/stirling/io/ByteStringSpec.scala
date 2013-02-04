@@ -13,9 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch
+package stirling.io
 
-class ByteStringSpec extends Spec {
+import org.scalatest.WordSpec
+import org.scalatest.matchers.MustMatchers
+
+class ByteStringSpec extends WordSpec with MustMatchers {
   "ByteString" when {
     "checking equality" should {
       "not equal another ByteString unless bytes within range equal" in {

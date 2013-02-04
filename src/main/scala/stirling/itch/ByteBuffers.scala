@@ -16,6 +16,7 @@
 package stirling.itch
 
 import java.nio.{BufferUnderflowException, ByteBuffer, ByteOrder}
+import stirling.io.ByteString
 
 object ByteBuffers {
   def copy(buffer: ByteBuffer, length: Int): ByteBuffer = {

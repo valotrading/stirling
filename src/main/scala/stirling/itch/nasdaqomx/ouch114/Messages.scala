@@ -19,7 +19,7 @@ import java.nio.ByteBuffer
 import java.nio.charset.Charset
 import java.util.Arrays
 import scala.annotation.switch
-import stirling.itch.ByteString
+import stirling.io.ByteString
 
 sealed trait Message {
   def payload: ByteString

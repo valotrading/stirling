@@ -15,7 +15,7 @@
  */
 package stirling.itch.nasdaqomx.ouch114
 
-import stirling.itch.ByteString
+import stirling.io.ByteString
 
 /*
  * Section 2.1
