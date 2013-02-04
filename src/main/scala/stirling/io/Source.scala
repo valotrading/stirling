@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.io
+package stirling.io
 
 import java.io.{Closeable, File, FileInputStream, InputStream}
 import java.nio.channels.{Channels, ReadableByteChannel}

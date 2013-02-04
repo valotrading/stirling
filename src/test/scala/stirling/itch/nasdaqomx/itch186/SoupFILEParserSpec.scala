@@ -15,12 +15,9 @@
  */
 package stirling.itch.nasdaqomx.itch186
 
-import java.io.File
-import java.nio.ByteBuffer
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.io.ByteString
-import stirling.itch.io.Source
+import stirling.io.Source
 
 class SoupFILEParserSpec extends WordSpec with MustMatchers {
   "SoupFILEParser" must {

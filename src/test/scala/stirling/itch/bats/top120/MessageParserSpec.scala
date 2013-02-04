@@ -17,7 +17,7 @@ package stirling.itch.bats.top120
 
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.itch.io.Source
+import stirling.io.Source
 
 class MessageParserSpec extends WordSpec with MustMatchers {
   "MessageParser" must {

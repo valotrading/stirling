@@ -17,7 +17,7 @@ package stirling.itch.nasdaqomx.ouch114
 
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.itch.io.Source
+import stirling.io.Source
 
 class SoupFILEParserSpec extends WordSpec with MustMatchers {
   "SoupFILEParser" must {

@@ -15,13 +15,10 @@
  */
 package stirling.itch.nasdaq.itch41
 
-import java.io.File
-import java.nio.ByteBuffer
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
 import scala.language.implicitConversions
-import stirling.io.ByteString
-import stirling.itch.io.Source
+import stirling.io.{ByteString, Source}
 
 class BinaryFILEParserSpec extends WordSpec with MustMatchers with MessageParserFixtures {
   "BinaryFILEParser" must {
