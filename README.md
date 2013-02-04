@@ -5,23 +5,22 @@
 Stirling is an open source electronic trading library for the JVM.
 
 
-## Features
+## Protocols
 
-  - FIX Engine with the following profiles:
-    - BATS Europe
-    - Burgundy
-    - Chi-X Europe
-    - Hotspot FX
-    - Lime Brokerage
-    - MB Trading
-    - NASDAQ OMX
-    - UBS
-  - ITCH with the following profiles:
-    - BATS TCP PITCH 1.12.0
-    - BATS TOP 1.2.0
-    - NASDAQ OMX Nordic Equity TotalView-ITCH 1.86
-    - NASDAQ TotalView-ITCH 4.1
+  - BATS TCP PITCH 1.12.0
+  - BATS TOP 1.2.0
+  - BATS Europe FIX
+  - Burgundy FIX
+  - Chi-X Europe FIX
+  - Hotspot FX FIX
+  - Lime Brokerage FIX
+  - MB Trading FIX
   - MB Trading Quote API
+  - NASDAQ TotalView-ITCH 4.1
+  - NASDAQ OMX FIX
+  - NASDAQ OMX Nordic Equity TotalView-ITCH 1.86
+  - NASDAQ OMX OUCH 1.14
+  - UBS FIX
 
 
 ## Installation
