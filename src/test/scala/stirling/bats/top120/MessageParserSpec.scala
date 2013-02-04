@@ -13,28 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.bats.pitch1120
+package stirling.bats.top120
 
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
 import stirling.io.Source
 
-class SoupTCPFileParserSpec extends WordSpec with MustMatchers {
-  "SoupTCPFileParser" must {
+class MessageParserSpec extends WordSpec with MustMatchers {
+  "MessageParser" must {
     "parse messages with read buffer underflow inside message" in {
-      val messageTypes = "uAdEXPrBHIJR"
+      val messageTypes = "CJsDHTMEBbeAaFUufVvt"
       source(128).map(_.messageType.toChar).mkString must equal(messageTypes)
-    }
-    "parse messages with read buffer underflow on message type" in {
-      val messageTypes = "uAdEXPrBHIJR"
-      source(314).map(_.messageType.toChar).mkString must equal(messageTypes)
     }
   }
 
   private def source(readBufferSize: Int): Source[Message] = {
     Source.fromInputStream[Message](
-      stream         = getClass.getResourceAsStream("/pitch-v1120.txt"),
-      parser         = new SoupTCPFileParser,
+      stream         = getClass.getResourceAsStream("/top-v120.txt"),
+      parser         = new MessageParser,
       readBufferSize = readBufferSize
     )
   }

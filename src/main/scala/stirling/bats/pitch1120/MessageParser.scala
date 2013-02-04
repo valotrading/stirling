@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.bats.pitch1120
+package stirling.bats.pitch1120
 
 import java.nio.{BufferUnderflowException, ByteBuffer, ByteOrder}
 import scala.annotation.switch

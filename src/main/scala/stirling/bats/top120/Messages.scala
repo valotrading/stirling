@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch.bats.top120
+package stirling.bats.top120
 
 import stirling.io.ByteString
 
