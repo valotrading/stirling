@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.itch
+package stirling.io
 
 import java.nio.{BufferUnderflowException, ByteBuffer, ByteOrder}
-import stirling.io.ByteString
 
 object ByteBuffers {
   def copy(buffer: ByteBuffer, length: Int): ByteBuffer = {

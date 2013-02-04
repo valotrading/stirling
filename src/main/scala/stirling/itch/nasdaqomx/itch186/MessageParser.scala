@@ -18,7 +18,7 @@ package stirling.itch.nasdaqomx.itch186
 import java.nio.{BufferUnderflowException, ByteBuffer, ByteOrder}
 import scala.annotation.switch
 import silvertip.{GarbledMessageException, PartialMessageException}
-import stirling.itch.ByteBuffers
+import stirling.io.ByteBuffers
 
 class MessageParser extends silvertip.MessageParser[Message] {
   def parse(buffer: ByteBuffer) = {

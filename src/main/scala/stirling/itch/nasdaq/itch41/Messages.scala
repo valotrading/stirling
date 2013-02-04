@@ -16,8 +16,7 @@
 package stirling.itch.nasdaq.itch41
 
 import java.nio.ByteBuffer
-import stirling.io.ByteString
-import stirling.itch.ByteBuffers
+import stirling.io.{ByteBuffers, ByteString}
 
 sealed trait Message
 

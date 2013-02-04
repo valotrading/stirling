@@ -16,8 +16,7 @@
 package stirling.itch.bats.pitch1120
 
 import java.nio.ByteBuffer
-import stirling.io.ByteString
-import stirling.itch.ByteBuffers
+import stirling.io.{ByteBuffers, ByteString}
 
 sealed trait Message {
   def payload: ByteString
