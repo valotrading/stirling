@@ -13,17 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.nasdaqomx.ouch114
+package stirling.nasdaq.soupfile100
 
-import java.nio.ByteBuffer
+sealed trait Packet[+Message]
 
-class SoupFILEParser extends MessageParser {
-  override protected def parseMessage(buffer: ByteBuffer) = {
-    val message = super.parseMessage(buffer)
-
-    buffer.get()
-    buffer.get()
-
-    message
-  }
-}
+case class  SequencedData[Message](message: Message) extends Packet[Message]
+case object EndOfSession                             extends Packet[Nothing]

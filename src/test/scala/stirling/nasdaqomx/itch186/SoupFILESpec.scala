@@ -18,19 +18,25 @@ package stirling.nasdaqomx.itch186
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
 import stirling.io.Source
+import stirling.nasdaq.soupfile100.{EndOfSession, Packet, SequencedData, SoupFILEParser}
 
 class SoupFILEParserSpec extends WordSpec with MustMatchers {
   "SoupFILEParser" must {
     "parse messages with read buffer underflow inside message" in {
       val messageTypes = "TMSORHAFECXDPQBI-"
-      source(128).map(_.messageType.toChar).mkString must equal(messageTypes)
+      source(128).map(messageType).mkString must equal(messageTypes)
     }
   }
 
-  private def source(readBufferSize: Int): Source[Message] = {
-    Source.fromInputStream[Message](
+  private def messageType(packet: Packet[Message]): Char = packet match {
+    case SequencedData(message) => message.messageType.toChar
+    case EndOfSession           => '-'
+  }
+
+  private def source(readBufferSize: Int): Source[Packet[Message]] = {
+    Source.fromInputStream(
       stream         = getClass.getResourceAsStream("/itch-v186.txt"),
-      parser         = new SoupFILEParser,
+      parser         = new SoupFILEParser(new MessageParser),
       readBufferSize = readBufferSize
     )
   }
