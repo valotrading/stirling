@@ -15,36 +15,68 @@
  */
 package stirling.nasdaqomx.itch186
 
-import org.scalatest.WordSpec
+import java.nio.ByteBuffer
 import org.scalatest.matchers.MustMatchers
+import org.scalatest.{OneInstancePerTest, WordSpec}
 import scala.language.implicitConversions
 import stirling.io.ByteString
 
-class MessageSpec extends WordSpec with MustMatchers {
+class MessageSpec extends WordSpec with MustMatchers with OneInstancePerTest {
   "Message" should {
-    "decode Seconds" in {
-      val message = Seconds("T12345")
+    val payload = ByteBuffer.allocate(1024)
+
+    "format and parse Seconds" in {
+      Seconds.format(
+        buffer = payload,
+        second = 12345
+      )
+      val message = Seconds(payload)
       message.messageType must equal('T')
       message.second      must equal(12345)
     }
-    "decode Milliseconds" in {
-      val message = Milliseconds("M123")
+    "format and parse Milliseconds" in {
+      Milliseconds.format(
+        buffer      = payload,
+        millisecond = 123
+      )
+      val message = Milliseconds(payload)
       message.messageType must equal('M')
       message.millisecond must equal(123)
     }
-    "decode SystemEvent" in {
-      val message = SystemEvent("SO")
+    "format and parse SystemEvent" in {
+      SystemEvent.format(
+        buffer    = payload,
+        eventCode = 'O'.toByte
+      )
+      val message = SystemEvent(payload)
       message.messageType must equal('S')
       message.eventCode   must equal(SystemEventCode.StartOfMessages)
     }
-    "decode MarketSegmentState" in {
-      val message = MarketSegmentState("O123P")
+    "format and parse MarketSegmentState" in {
+      MarketSegmentState.format(
+        buffer          = payload,
+        marketSegmentId = 123,
+        eventCode       = 'P'.toByte
+      )
+      val message = MarketSegmentState(payload)
       message.messageType     must equal('O')
       message.marketSegmentId must equal(123)
       message.eventCode       must equal(MarketSegmentStateCode.PreOpen)
     }
-    "decode OrderBookDirectory" in {
-      val message = OrderBookDirectory("R123456ABCDEFGHIJKLMNOPFI0000000000  1EURXHEL123       9     1000")
+    "format and parse OrderBookDirectory" in {
+      OrderBookDirectory.format(
+        buffer           = payload,
+        orderBook        = 123456,
+        symbol           = "ABCDEFGHIJKLMNOP",
+        isin             = "FI0000000000",
+        financialProduct = 1,
+        tradingCurrency  = "EUR",
+        mic              = "XHEL",
+        marketSegmentId  = 123,
+        noteCodes        = 9,
+        roundLotSize     = 1000
+      )
+      val message = OrderBookDirectory(payload)
       message.messageType              must equal('R')
       message.orderBook                must equal(123456)
       message.symbol.toString          must equal("ABCDEFGHIJKLMNOP")
@@ -56,15 +88,30 @@ class MessageSpec extends WordSpec with MustMatchers {
       message.noteCodes                must equal(NoteCode.NM | NoteCode.PO)
       message.roundLotSize             must equal(1000)
     }
-    "decode OrderBookTradingAction" in {
-      val message = OrderBookTradingAction("H123456TX    ")
+    "format and parse OrderBookTradingAction" in {
+      OrderBookTradingAction.format(
+        buffer       = payload,
+        orderBook    = 123456,
+        tradingState = 'T'.toByte,
+        reserved     = 'X'.toByte,
+        reason       = " "
+      )
+      val message = OrderBookTradingAction(payload)
       message.messageType  must equal('H')
       message.orderBook    must equal(123456)
       message.tradingState must equal(TradingState.TradingOnNasdaqOmxNordic)
       message.reason       must equal(TradingActionReason.NotAvailable)
     }
-    "decode AddOrder" in {
-      val message = AddOrder("A123456789B    10000123456    215000")
+    "format and parse AddOrder" in {
+      AddOrder.format(
+        buffer               = payload,
+        orderReferenceNumber = 123456789,
+        buySellIndicator     = 'B'.toByte,
+        quantity             = 10000,
+        orderBook            = 123456,
+        price                = 215000
+      )
+      val message = AddOrder(payload)
       message.messageType          must equal('A')
       message.orderReferenceNumber must equal(123456789)
       message.buySellIndicator     must equal(BuySellIndicator.Buy)
@@ -72,8 +119,17 @@ class MessageSpec extends WordSpec with MustMatchers {
       message.orderBook            must equal(123456)
       message.price                must equal(215000)
     }
-    "decode AddOrderMPID" in {
-      val message = AddOrderMPID("F123456789B    10000123456    215000_MMO")
+    "format and parse AddOrderMPID" in {
+      AddOrderMPID.format(
+        buffer               = payload,
+        orderReferenceNumber = 123456789,
+        buySellIndicator     = 'B'.toByte,
+        quantity             = 10000,
+        orderBook            = 123456,
+        price                = 215000,
+        attribution          = "_MMO"
+      )
+      val message = AddOrderMPID(payload)
       message.messageType          must equal('F')
       message.orderReferenceNumber must equal(123456789)
       message.buySellIndicator     must equal(BuySellIndicator.Buy)
@@ -82,8 +138,16 @@ class MessageSpec extends WordSpec with MustMatchers {
       message.price                must equal(215000)
       message.attribution          must equal(Attribution.MarketMaker)
     }
-    "decode OrderExecuted" in {
-      val message = OrderExecuted("E123456789     1000123456789ACMEBAT ")
+    "format and parse OrderExecuted" in {
+      OrderExecuted.format(
+        buffer               = payload,
+        orderReferenceNumber = 123456789,
+        executedQuantity     = 1000,
+        matchNumber          = 123456789,
+        owner                = "ACME",
+        counterparty         = "BAT "
+      )
+      val message = OrderExecuted(payload)
       message.messageType           must equal('E')
       message.orderReferenceNumber  must equal(123456789)
       message.executedQuantity      must equal(1000)
@@ -91,8 +155,18 @@ class MessageSpec extends WordSpec with MustMatchers {
       message.owner.toString        must equal("ACME")
       message.counterparty.toString must equal("BAT ")
     }
-    "decode OrderExecutedWithPrice" in {
-      val message = OrderExecutedWithPrice("C123456789     1000123456789Y    332500ACMEBAT ")
+    "format and parse OrderExecutedWithPrice" in {
+      OrderExecutedWithPrice.format(
+        buffer               = payload,
+        orderReferenceNumber = 123456789,
+        executedQuantity     = 1000,
+        matchNumber          = 123456789,
+        printable            = true,
+        tradePrice           = 332500,
+        owner                = "ACME",
+        counterparty         = "BAT"
+      )
+      val message = OrderExecutedWithPrice(payload)
       message.messageType           must equal('C')
       message.orderReferenceNumber  must equal(123456789)
       message.executedQuantity      must equal(1000)
@@ -102,19 +176,39 @@ class MessageSpec extends WordSpec with MustMatchers {
       message.owner.toString        must equal("ACME")
       message.counterparty.toString must equal("BAT ")
     }
-    "decode OrderCancel" in {
-      val message = OrderCancel("X123456789      500")
+    "format and parse OrderCancel" in {
+      OrderCancel.format(
+        buffer               = payload,
+        orderReferenceNumber = 123456789,
+        canceledQuantity     = 500
+      )
+      val message = OrderCancel(payload)
       message.messageType          must equal('X')
       message.orderReferenceNumber must equal(123456789)
       message.canceledQuantity     must equal(500)
     }
-    "decode OrderDelete" in {
-      val message = OrderDelete("D123456789")
+    "format and parse OrderDelete" in {
+      OrderDelete.format(
+        buffer               = payload,
+        orderReferenceNumber = 123456789
+      )
+      val message = OrderDelete(payload)
       message.messageType          must equal('D')
       message.orderReferenceNumber must equal(123456789)
     }
-    "decode Trade" in {
-      val message = Trade("P123456789B     1000123456123456789    332500ACMEBAT ")
+    "format and parse Trade" in {
+      Trade.format(
+        buffer               = payload,
+        orderReferenceNumber = 123456789,
+        tradeType            = 'B'.toByte,
+        quantity             = 1000,
+        orderBook            = 123456,
+        matchNumber          = 123456789,
+        tradePrice           = 332500,
+        buyer                = "ACME",
+        seller               = "BAT"
+      )
+      val message = Trade(payload)
       message.messageType          must equal('P')
       message.orderReferenceNumber must equal(123456789)
       message.tradeType            must equal(TradeType.MainBook)
@@ -125,8 +219,17 @@ class MessageSpec extends WordSpec with MustMatchers {
       message.buyer.toString       must equal("ACME")
       message.seller.toString      must equal("BAT ")
     }
-    "decode CrossTrade" in {
-      val message = CrossTrade("Q123456789123456    122500123456789O      1000")
+    "format and parse CrossTrade" in {
+      CrossTrade.format(
+        buffer         = payload,
+        quantity       = 123456789,
+        orderBook      = 123456,
+        crossPrice     = 122500,
+        matchNumber    = 123456789,
+        crossType      = 'O'.toByte,
+        numberOfTrades = 1000
+      )
+      val message = CrossTrade(payload)
       message.messageType    must equal('Q')
       message.quantity       must equal(123456789)
       message.orderBook      must equal(123456)
@@ -135,13 +238,30 @@ class MessageSpec extends WordSpec with MustMatchers {
       message.crossType      must equal(CrossType.OpeningCross)
       message.numberOfTrades must equal(1000)
     }
-    "decode BrokenTrade" in {
-      val message = BrokenTrade("B123456789")
+    "format and parse BrokenTrade" in {
+      BrokenTrade.format(
+        buffer      = payload,
+        matchNumber = 123456789
+      )
+      val message = BrokenTrade(payload)
       message.messageType must equal('B')
       message.matchNumber must equal(123456789)
     }
-    "decode NOII" in {
-      val message = NOII("I     1000     2000B123456    125000C    122500      500    127500      250")
+    "format and parse NOII" in {
+      NOII.format(
+        buffer             = payload,
+        pairedQuantity     = 1000,
+        imbalanceQuantity  = 2000,
+        imbalanceDirection = 'B'.toByte,
+        orderBook          = 123456,
+        equilibriumPrice   = 125000,
+        crossType          = 'C'.toByte,
+        bestBidPrice       = 122500,
+        bestBidQuantity    = 500,
+        bestAskPrice       = 127500,
+        bestAskQuantity    = 250
+      )
+      val message = NOII(payload)
       message.messageType        must equal('I')
       message.pairedQuantity     must equal(1000)
       message.imbalanceQuantity  must equal(2000)
@@ -156,5 +276,12 @@ class MessageSpec extends WordSpec with MustMatchers {
     }
   }
 
-  implicit def stringToByteString(string: String): ByteString = new ByteString(string.getBytes)
+  implicit def byteBufferToByteString(buffer: ByteBuffer): ByteString = {
+    buffer.flip
+
+    val bytes = new Array[Byte](buffer.remaining)
+    buffer.get(bytes)
+
+    new ByteString(bytes)
+  }
 }

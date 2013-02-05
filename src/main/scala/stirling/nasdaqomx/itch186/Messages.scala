@@ -15,7 +15,8 @@
  */
 package stirling.nasdaqomx.itch186
 
-import stirling.io.ByteString
+import java.nio.ByteBuffer
+import stirling.io.{ByteString, TextFormat}
 
 sealed trait Message {
   def payload: ByteString
@@ -23,6 +24,12 @@ sealed trait Message {
   def messageType = payload.byteAt(0)
 
   override def toString = payload.toString
+}
+
+object Message {
+  def alpha(value: String, fieldSize: Int) = TextFormat.alpha(value, fieldSize, ' '.toByte)
+
+  def numeric(value: Long, fieldSize: Int) = TextFormat.numeric(value, fieldSize, '0'.toByte)
 }
 
 sealed trait MessageType {
@@ -39,9 +46,19 @@ class Seconds(val payload: ByteString) extends Message {
 }
 
 object Seconds extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new Seconds(payload)
 
   val size = 6
+
+  def format(
+    buffer: ByteBuffer,
+    second: Long
+  ) {
+    buffer.put('T'.toByte)
+    buffer.put(numeric(second, 5))
+  }
 }
 
 /*
@@ -52,9 +69,19 @@ class Milliseconds(val payload: ByteString) extends Message {
 }
 
 object Milliseconds extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new Milliseconds(payload)
 
   val size = 4
+
+  def format(
+    buffer:      ByteBuffer,
+    millisecond: Long
+  ) {
+    buffer.put('M'.toByte)
+    buffer.put(numeric(millisecond, 3))
+  }
 }
 
 /*
@@ -65,9 +92,19 @@ class SystemEvent(val payload: ByteString) extends Message {
 }
 
 object SystemEvent extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new SystemEvent(payload)
 
   val size = 2
+
+  def format(
+    buffer:    ByteBuffer,
+    eventCode: Byte
+  ) {
+    buffer.put('S'.toByte)
+    buffer.put(eventCode)
+  }
 }
 
 /*
@@ -79,9 +116,21 @@ class MarketSegmentState(val payload: ByteString) extends Message {
 }
 
 object MarketSegmentState extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new MarketSegmentState(payload)
 
   val size = 5
+
+  def format(
+    buffer:          ByteBuffer,
+    marketSegmentId: Long,
+    eventCode:       Byte
+  ) {
+    buffer.put('O'.toByte)
+    buffer.put(numeric(marketSegmentId, 3))
+    buffer.put(eventCode)
+  }
 }
 
 /*
@@ -100,9 +149,35 @@ class OrderBookDirectory(val payload: ByteString) extends Message {
 }
 
 object OrderBookDirectory extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new OrderBookDirectory(payload)
 
   val size = 65
+
+  def format(
+    buffer:           ByteBuffer,
+    orderBook:        Long,
+    symbol:           String,
+    isin:             String,
+    financialProduct: Long,
+    tradingCurrency:  String,
+    mic:              String,
+    marketSegmentId:  Long,
+    noteCodes:        Long,
+    roundLotSize:     Long
+  ) {
+    buffer.put('R'.toByte)
+    buffer.put(numeric(orderBook, 6))
+    buffer.put(alpha(symbol, 16))
+    buffer.put(alpha(isin, 12))
+    buffer.put(numeric(financialProduct, 3))
+    buffer.put(alpha(tradingCurrency, 3))
+    buffer.put(alpha(mic, 4))
+    buffer.put(numeric(marketSegmentId, 3))
+    buffer.put(numeric(noteCodes, 8))
+    buffer.put(numeric(roundLotSize, 9))
+  }
 }
 
 /*
@@ -116,9 +191,25 @@ class OrderBookTradingAction(val payload: ByteString) extends Message {
 }
 
 object OrderBookTradingAction extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new OrderBookTradingAction(payload)
 
   val size = 13
+
+  def format(
+    buffer:       ByteBuffer,
+    orderBook:    Long,
+    tradingState: Byte,
+    reserved:     Byte,
+    reason:       String
+  ) {
+    buffer.put('H'.toByte)
+    buffer.put(numeric(orderBook, 6))
+    buffer.put(tradingState)
+    buffer.put(reserved)
+    buffer.put(alpha(reason, 4))
+  }
 }
 
 /*
@@ -133,15 +224,35 @@ class AddOrder(val payload: ByteString) extends Message {
 }
 
 object AddOrder extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new AddOrder(payload)
 
   val size = 36
+
+  def format(
+    buffer:               ByteBuffer,
+    orderReferenceNumber: Long,
+    buySellIndicator:     Byte,
+    quantity:             Long,
+    orderBook:            Long,
+    price:                Long
+  ) {
+    buffer.put('A'.toByte)
+    buffer.put(numeric(orderReferenceNumber, 9))
+    buffer.put(buySellIndicator)
+    buffer.put(numeric(quantity, 9))
+    buffer.put(numeric(orderBook, 6))
+    buffer.put(numeric(price, 10))
+  }
 }
 
 /*
  * Section 4.4.2
  */
 class AddOrderMPID(val payload: ByteString) extends Message {
+  import Message._
+
   def orderReferenceNumber: Long       = payload.slice( 1,  9).toLong
   def buySellIndicator:     Byte       = payload.byteAt(10)
   def quantity:             Long       = payload.slice(11,  9).toLong
@@ -151,9 +262,29 @@ class AddOrderMPID(val payload: ByteString) extends Message {
 }
 
 object AddOrderMPID extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new AddOrderMPID(payload)
 
   val size = 40
+
+  def format(
+    buffer:               ByteBuffer,
+    orderReferenceNumber: Long,
+    buySellIndicator:     Byte,
+    quantity:             Long,
+    orderBook:            Long,
+    price:                Long,
+    attribution:          String
+  ) {
+    buffer.put('F'.toByte)
+    buffer.put(numeric(orderReferenceNumber, 9))
+    buffer.put(buySellIndicator)
+    buffer.put(numeric(quantity, 9))
+    buffer.put(numeric(orderBook, 6))
+    buffer.put(numeric(price, 10))
+    buffer.put(alpha(attribution, 4))
+  }
 }
 
 /*
@@ -168,9 +299,27 @@ class OrderExecuted(val payload: ByteString) extends Message {
 }
 
 object OrderExecuted extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new OrderExecuted(payload)
 
   val size = 36
+
+  def format(
+    buffer:               ByteBuffer,
+    orderReferenceNumber: Long,
+    executedQuantity:     Long,
+    matchNumber:          Long,
+    owner:                String,
+    counterparty:         String
+  ) {
+    buffer.put('E'.toByte)
+    buffer.put(numeric(orderReferenceNumber, 9))
+    buffer.put(numeric(executedQuantity, 9))
+    buffer.put(numeric(matchNumber, 9))
+    buffer.put(alpha(owner, 4))
+    buffer.put(alpha(counterparty, 4))
+  }
 }
 
 /*
@@ -187,9 +336,31 @@ class OrderExecutedWithPrice(val payload: ByteString) extends Message {
 }
 
 object OrderExecutedWithPrice extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new OrderExecutedWithPrice(payload)
 
   val size = 47
+
+  def format(
+    buffer:               ByteBuffer,
+    orderReferenceNumber: Long,
+    executedQuantity:     Long,
+    matchNumber:          Long,
+    printable:            Boolean,
+    tradePrice:           Long,
+    owner:                String,
+    counterparty:         String
+  ) {
+    buffer.put('C'.toByte)
+    buffer.put(numeric(orderReferenceNumber, 9))
+    buffer.put(numeric(executedQuantity, 9))
+    buffer.put(numeric(matchNumber, 9))
+    buffer.put((if (printable) 'Y' else 'N').toByte)
+    buffer.put(numeric(tradePrice, 10))
+    buffer.put(alpha(owner, 4))
+    buffer.put(alpha(counterparty, 4))
+  }
 }
 
 /*
@@ -201,9 +372,21 @@ class OrderCancel(val payload: ByteString) extends Message {
 }
 
 object OrderCancel extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new OrderCancel(payload)
 
   val size = 19
+
+  def format(
+    buffer:               ByteBuffer,
+    orderReferenceNumber: Long,
+    canceledQuantity:     Long
+  ) {
+    buffer.put('X'.toByte)
+    buffer.put(numeric(orderReferenceNumber, 9))
+    buffer.put(numeric(canceledQuantity, 9))
+  }
 }
 
 /*
@@ -214,9 +397,19 @@ class OrderDelete(val payload: ByteString) extends Message {
 }
 
 object OrderDelete extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new OrderDelete(payload)
 
   val size = 10
+
+  def format(
+    buffer:               ByteBuffer,
+    orderReferenceNumber: Long
+  ) {
+    buffer.put('D'.toByte)
+    buffer.put(numeric(orderReferenceNumber, 9))
+  }
 }
 
 /*
@@ -234,9 +427,33 @@ class Trade(val payload: ByteString) extends Message {
 }
 
 object Trade extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new Trade(payload)
 
   val size = 53
+
+  def format(
+    buffer:               ByteBuffer,
+    orderReferenceNumber: Long,
+    tradeType:            Byte,
+    quantity:             Long,
+    orderBook:            Long,
+    matchNumber:          Long,
+    tradePrice:           Long,
+    buyer:                String,
+    seller:               String
+  ) {
+    buffer.put('P'.toByte)
+    buffer.put(numeric(orderReferenceNumber, 9))
+    buffer.put(tradeType)
+    buffer.put(numeric(quantity, 9))
+    buffer.put(numeric(orderBook, 6))
+    buffer.put(numeric(matchNumber, 9))
+    buffer.put(numeric(tradePrice, 10))
+    buffer.put(alpha(buyer, 4))
+    buffer.put(alpha(seller, 4))
+  }
 }
 
 /*
@@ -252,9 +469,29 @@ class CrossTrade(val payload: ByteString) extends Message {
 }
 
 object CrossTrade extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new CrossTrade(payload)
 
   val size = 46
+
+  def format(
+    buffer:         ByteBuffer,
+    quantity:       Long,
+    orderBook:      Long,
+    crossPrice:     Long,
+    matchNumber:    Long,
+    crossType:      Byte,
+    numberOfTrades: Long
+  ) {
+    buffer.put('Q'.toByte)
+    buffer.put(numeric(quantity, 9))
+    buffer.put(numeric(orderBook, 6))
+    buffer.put(numeric(crossPrice, 10))
+    buffer.put(numeric(matchNumber, 9))
+    buffer.put(crossType)
+    buffer.put(numeric(numberOfTrades, 10))
+  }
 }
 
 /*
@@ -265,9 +502,19 @@ class BrokenTrade(val payload: ByteString) extends Message {
 }
 
 object BrokenTrade extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new BrokenTrade(payload)
 
   val size = 10
+
+  def format(
+    buffer:         ByteBuffer,
+    matchNumber:    Long
+  ) {
+    buffer.put('B'.toByte)
+    buffer.put(numeric(matchNumber, 9))
+  }
 }
 
 /*
@@ -287,7 +534,35 @@ class NOII(val payload: ByteString) extends Message {
 }
 
 object NOII extends MessageType {
+  import Message._
+
   def apply(payload: ByteString) = new NOII(payload)
 
   val size = 75
+
+  def format(
+    buffer:             ByteBuffer,
+    pairedQuantity:     Long,
+    imbalanceQuantity:  Long,
+    imbalanceDirection: Byte,
+    orderBook:          Long,
+    equilibriumPrice:   Long,
+    crossType:          Byte,
+    bestBidPrice:       Long,
+    bestBidQuantity:    Long,
+    bestAskPrice:       Long,
+    bestAskQuantity:    Long
+  ) {
+    buffer.put('I'.toByte)
+    buffer.put(numeric(pairedQuantity, 9))
+    buffer.put(numeric(imbalanceQuantity, 9))
+    buffer.put(imbalanceDirection)
+    buffer.put(numeric(orderBook, 6))
+    buffer.put(numeric(equilibriumPrice, 10))
+    buffer.put(crossType)
+    buffer.put(numeric(bestBidPrice, 10))
+    buffer.put(numeric(bestBidQuantity, 9))
+    buffer.put(numeric(bestAskPrice, 10))
+    buffer.put(numeric(bestAskQuantity, 9))
+  }
 }
