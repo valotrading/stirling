@@ -13,7 +13,7 @@ Stirling is an open source electronic trading library for the JVM.
   - Burgundy FIX
   - Chi-X Europe FIX
   - Hotspot FX FIX
-  - Lime Brokerage FIX
+  - Lime Brokerage FIX 3.6.3
   - MB Trading FIX
   - MB Trading Quote API
   - NASDAQ TotalView-ITCH 4.1

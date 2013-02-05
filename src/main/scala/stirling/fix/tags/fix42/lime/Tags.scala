@@ -95,12 +95,15 @@ object PegType extends EnumTag[Character](9034) {
 object ClientOrderData extends StringTag(9050)
 
 object LockedOrCrossedAction extends EnumTag[Character](9064) {
-  val Reject                   = CharValue('R')
-  val PriceAdjust              = CharValue('P')
-  val HideNotSlide             = CharValue('H')
-  val PriceAdjustRejectCrossed = CharValue('L')
-  val SingleReprice            = CharValue('S')
-  val Blind                    = CharValue('B')
+  val Reject                      = CharValue('R')
+  val PriceAdjust                 = CharValue('P')
+  val HideNotSlide                = CharValue('H')
+  val PriceAdjustRejectCrossed    = CharValue('L')
+  val SingleReprice               = CharValue('S')
+  val Blind                       = CharValue('B')
+  val NoMidpointMatch             = CharValue('M') // BATS/BYX only
+  val MultipleDisplayPriceSliding = CharValue('D') // BATS/BYX only
+  val ProactiveIfLocked           = CharValue('A') // ARCA/ARCE only
 }
 
 object RegularSessionOnly extends BooleanTag(9066)
