@@ -22,6 +22,26 @@ import java.util.Arrays
 object TextFormat {
   val ASCII = Charset.forName("US-ASCII")
 
+  def alphaPadLeft(value: String, fieldSize: Int, fillChar: Byte): Array[Byte] = {
+    if (value.length > fieldSize)
+      throw new IllegalArgumentException("Value length %d exceeds field size %d".format(value.length, fieldSize))
+
+    val formatted = value.getBytes(ASCII)
+    val formattedLength = formatted.length
+
+    if (formattedLength == fieldSize) {
+      formatted
+    } else {
+      val padTo = fieldSize - formattedLength
+
+      val bytes = new Array[Byte](fieldSize)
+      Arrays.fill(bytes, 0, padTo, fillChar)
+      System.arraycopy(formatted, 0, bytes, padTo, formattedLength)
+
+      bytes
+    }
+  }
+
   def alphaPadRight(value: String, fieldSize: Int, fillChar: Byte): Array[Byte] = {
     if (value.length > fieldSize)
       throw new IllegalArgumentException("Value length %d exceeds field size %d".format(value.length, fieldSize))
