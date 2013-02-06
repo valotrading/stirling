@@ -28,6 +28,14 @@ object SystemEventCode {
 /*
  * Section 2.2.2
  */
+object ReplacedOrderReason {
+  val User        = 'U'.toByte
+  val Supervisory = 'S'.toByte
+}
+
+/*
+ * Section 2.2.2
+ */
 object CanceledOrderReason {
   val UserRequested         = 'U'.toByte
   val ImmediateOrCancel     = 'I'.toByte

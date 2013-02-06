@@ -43,6 +43,7 @@ class MessageParser extends silvertip.MessageParser[Message] {
     case 'S' => SystemEvent
     case 'A' => OrderAccepted
     case 'R' => OrderAccepted
+    case 'U' => OrderReplaced
     case 'C' => CanceledOrder
     case 'E' => ExecutedOrder
     case 'B' => BrokenTrade

@@ -23,8 +23,8 @@ import stirling.nasdaq.soupfile100.{EndOfSession, Packet, SequencedData, SoupFIL
 class SoupFILESpec extends WordSpec with MustMatchers {
   "SoupFILEParser" must {
     "parse messages with read buffer underflow inside message" in {
-      val messageTypes = "SARCEB"
-      source(128).map(messageType).mkString must equal(messageTypes)
+      val messageTypes = "SARUCEB"
+      source(256).map(messageType).mkString must equal(messageTypes)
     }
   }
 

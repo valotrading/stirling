@@ -91,6 +91,37 @@ object OrderAccepted extends MessageType {
 /*
  * Section 2.2.2
  */
+class OrderReplaced(val payload: ByteString) extends Message {
+  def oldOrderToken:        ByteString = payload.slice(  9, 14)
+  def reason:               Byte       = payload.byteAt(23)
+  def orderToken:           ByteString = payload.slice( 24, 14)
+  def buySellIndicator:     Byte       = payload.byteAt(38)
+  def quantity:             Long       = payload.slice( 39,  9).toLong
+  def orderBook:            Long       = payload.slice( 48,  6).toLong
+  def price:                Long       = payload.slice( 54, 10).toLong
+  def timeInForce:          Long       = payload.slice( 64,  5).toLong
+  def firm:                 ByteString = payload.slice( 69,  4)
+  def display:              Byte       = payload.byteAt(73)
+  def orderReferenceNumber: Long       = payload.slice( 74,  9).toLong
+  def capacity:             Byte       = payload.byteAt(83)
+  def user:                 ByteString = payload.slice( 84,  6)
+  def clientReference:      ByteString = payload.slice( 90, 15)
+  def orderReference:       ByteString = payload.slice(105, 10)
+  def clearingFirm:         ByteString = payload.slice(115,  4)
+  def clearingAccount:      ByteString = payload.slice(119, 12)
+  def minimumQuantity:      Long       = payload.slice(131,  9).toLong
+  def crossType:            Byte       = payload.byteAt(140)
+}
+
+object OrderReplaced extends MessageType {
+  def apply(payload: ByteString) = new OrderReplaced(payload)
+
+  def size = 141
+}
+
+/*
+ * Section 2.2.2
+ */
 class CanceledOrder(val payload: ByteString) extends Message {
   def orderToken:        ByteString = payload.slice( 9, 14)
   def decrementQuantity: Long       = payload.slice(23,  9).toLong
