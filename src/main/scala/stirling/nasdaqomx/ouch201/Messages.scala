@@ -135,7 +135,7 @@ object CanceledOrder extends MessageType {
 }
 
 /*
- * Section 2.2.3
+ * Section 2.2.4
  */
 class ExecutedOrder(val payload: ByteString) extends Message {
   def orderToken:       ByteString = payload.slice( 9, 14)

@@ -46,7 +46,7 @@ object CanceledOrderReason {
 }
 
 /*
- * Section 2.2.3
+ * Section 2.2.4
  */
 object LiquidityFlag {
   val AddedLiquidity                 = 'A'.toByte
