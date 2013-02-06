@@ -30,7 +30,7 @@ class MessageSpec extends WordSpec with MustMatchers {
       message.eventCode   must equal(SystemEventCode.StartOfDay)
     }
     "parse OrderAccepted" in {
-      val message = OrderAccepted("12345678AABCDEFGHIJKLMNB000000400123456000125000012345ABC W1234567893DonaldX              ABCDEFGHIJXXXXABCDEFGHIJKL000000000")
+      val message = OrderAccepted("12345678AABCDEFGHIJKLMNB000000400123456000125000012345ABC W1234567893DonaldX              ABCDEFGHIJXXXXABCDEFGHIJKL000000000 ")
       message.timestamp                must equal(12345678)
       message.messageType              must equal('A')
       message.orderToken.toString      must equal("ABCDEFGHIJKLMN")
