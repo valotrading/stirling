@@ -153,7 +153,7 @@ object ExecutedOrder extends MessageType {
 }
 
 /*
- * Section 2.2.4
+ * Section 2.2.5
  */
 class BrokenTrade(val payload: ByteString) extends Message {
   def orderToken:  ByteString = payload.slice( 9, 14)

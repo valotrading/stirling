@@ -57,7 +57,7 @@ object LiquidityFlag {
 }
 
 /*
- * Section 2.2.4
+ * Section 2.2.5
  */
 object BrokenTradeReason {
   val Erroneous   = 'E'.toByte
