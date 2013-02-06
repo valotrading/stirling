@@ -19,7 +19,7 @@ import java.nio.ByteBuffer
 import java.nio.charset.Charset
 import java.util.Arrays
 import scala.annotation.switch
-import stirling.io.ByteString
+import stirling.io.{ByteString, TextFormat}
 
 sealed trait Message {
   def payload: ByteString
@@ -35,42 +35,9 @@ object Message {
 
   val messageTypeOffset = 8
 
-  def alpha(value: String, fieldSize: Int): Array[Byte] = {
-    if (value.length > fieldSize)
-      throw new IllegalArgumentException("Value length %d exceeds field size %d".format(value.length, fieldSize))
+  def alpha(value: String, fieldSize: Int) = TextFormat.alpha(value, fieldSize, ' '.toByte)
 
-    val formatted = value.getBytes(ASCII)
-    val formattedLength = formatted.length
-
-    if (formattedLength == fieldSize) {
-      formatted
-    } else {
-      val bytes = new Array[Byte](fieldSize)
-      System.arraycopy(formatted, 0, bytes, 0, formattedLength)
-      Arrays.fill(bytes, formattedLength, fieldSize, ' '.toByte)
-
-      bytes
-    }
-  }
-
-  def numeric(value: Long, fieldSize: Int): Array[Byte] = {
-    if (value < 0)
-      throw new IllegalArgumentException("Negative value %d".format(value))
-
-    val formatted = value.toString.getBytes(ASCII)
-    val formattedLength = formatted.length
-
-    if (formattedLength > fieldSize)
-      throw new IllegalArgumentException("Formatted length %d exceeds field size %d".format(formattedLength, fieldSize))
-
-    val padTo = fieldSize - formattedLength
-
-    val bytes = new Array[Byte](fieldSize)
-    Arrays.fill(bytes, 0, padTo, '0'.toByte)
-    System.arraycopy(formatted, 0, bytes, padTo, formattedLength)
-
-    bytes
-  }
+  def numeric(value: Long, fieldSize: Int) = TextFormat.numeric(value, fieldSize, '0'.toByte)
 }
 
 sealed trait MessageType {
