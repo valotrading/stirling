@@ -136,6 +136,12 @@ class MessageSpec extends WordSpec with MustMatchers {
       message.messageType         must equal('P')
       message.orderToken.toString must equal("ABCDEFGHIJKLMN")
     }
+    "parse CancelReject" in {
+      val message = CancelReject("12345678IABCDEFGHIJKLMN")
+      message.timestamp           must equal(12345678)
+      message.messageType         must equal('I')
+      message.orderToken.toString must equal("ABCDEFGHIJKLMN")
+    }
     "format EnterOrder" in {
       val buffer = ByteBuffer.allocate(EnterOrder.size)
 

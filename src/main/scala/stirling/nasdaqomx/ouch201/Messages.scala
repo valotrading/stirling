@@ -195,6 +195,19 @@ object CancelPending extends MessageType {
 }
 
 /*
+ * Section 2.2.8
+ */
+class CancelReject(val payload: ByteString) extends Message {
+  def orderToken: ByteString = payload.slice(9, 14)
+}
+
+object CancelReject extends MessageType {
+  def apply(payload: ByteString) = new CancelReject(payload)
+
+  def size = 23
+}
+
+/*
  * Section 2.2.7
  */
 class MMORefreshRequest(val payload: ByteString) extends Message {

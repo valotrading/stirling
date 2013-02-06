@@ -49,6 +49,7 @@ class MessageParser extends silvertip.MessageParser[Message] {
     case 'B' => BrokenTrade
     case 'J' => RejectedOrder
     case 'P' => CancelPending
+    case 'I' => CancelReject
     case 'W' => MMORefreshRequest
     case  x  => throw new GarbledMessageException("Unknown message type: " + x)
   }
