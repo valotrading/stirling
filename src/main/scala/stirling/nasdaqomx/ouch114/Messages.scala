@@ -43,7 +43,7 @@ object Message {
 sealed trait MessageType {
   def apply(payload: ByteString): Message
 
-  def size(messageType: Byte): Int
+  def size: Int
 }
 
 /*
@@ -56,7 +56,7 @@ class SystemEvent(val payload: ByteString) extends Message {
 object SystemEvent extends MessageType {
   def apply(payload: ByteString) = new SystemEvent(payload)
 
-  def size(messageType: Byte) = 10
+  def size = 10
 }
 
 /*
@@ -85,10 +85,7 @@ class OrderAccepted(val payload: ByteString) extends Message {
 object OrderAccepted extends MessageType {
   def apply(payload: ByteString) = new OrderAccepted(payload)
 
-  def size(messageType: Byte) = (messageType: @switch) match {
-    case 'A' => 125
-    case 'R' => 126
-  }
+  def size = 126
 }
 
 /*
@@ -103,7 +100,7 @@ class CanceledOrder(val payload: ByteString) extends Message {
 object CanceledOrder extends MessageType {
   def apply(payload: ByteString) = new CanceledOrder(payload)
 
-  def size(messageType: Byte) = 33
+  def size = 33
 }
 
 /*
@@ -121,7 +118,7 @@ class ExecutedOrder(val payload: ByteString) extends Message {
 object ExecutedOrder extends MessageType {
   def apply(payload: ByteString) = new ExecutedOrder(payload)
 
-  def size(messageType: Byte) = 56
+  def size = 56
 }
 
 /*
@@ -136,7 +133,7 @@ class BrokenTrade(val payload: ByteString) extends Message {
 object BrokenTrade extends MessageType {
   def apply(payload: ByteString) = new BrokenTrade(payload)
 
-  def size(messageType: Byte) = 33
+  def size = 33
 }
 
 /*
@@ -150,7 +147,7 @@ class RejectedOrder(val payload: ByteString) extends Message {
 object RejectedOrder extends MessageType {
   def apply(payload: ByteString) = new RejectedOrder(payload)
 
-  def size(messageType: Byte) = 24
+  def size = 24
 }
 
 /*
@@ -163,7 +160,7 @@ class CancelPending(val payload: ByteString) extends Message {
 object CancelPending extends MessageType {
   def apply(payload: ByteString) = new CancelPending(payload)
 
-  def size(messageType: Byte) = 23
+  def size = 23
 }
 
 /*
@@ -177,7 +174,7 @@ class MMORefreshRequest(val payload: ByteString) extends Message {
 object MMORefreshRequest extends MessageType {
   def apply(payload: ByteString) = new MMORefreshRequest(payload)
 
-  def size(messageType: Byte) = 19
+  def size = 19
 }
 
 /*
