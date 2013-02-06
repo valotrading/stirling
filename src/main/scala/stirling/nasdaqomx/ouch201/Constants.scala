@@ -34,7 +34,7 @@ object ReplacedOrderReason {
 }
 
 /*
- * Section 2.2.2
+ * Section 2.2.3
  */
 object CanceledOrderReason {
   val UserRequested         = 'U'.toByte
