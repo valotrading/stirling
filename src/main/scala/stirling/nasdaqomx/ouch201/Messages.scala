@@ -208,7 +208,7 @@ object CancelReject extends MessageType {
 }
 
 /*
- * Section 2.2.7
+ * Section 2.2.9
  */
 class MMORefreshRequest(val payload: ByteString) extends Message {
   def firm:       ByteString = payload.slice( 9, 4)
