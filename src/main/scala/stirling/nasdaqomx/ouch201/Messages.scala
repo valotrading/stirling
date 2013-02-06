@@ -311,7 +311,7 @@ object ReplaceOrder {
 }
 
 /*
- * Section 3.2
+ * Section 3.3
  */
 object CancelOrder {
   import Message._
