@@ -48,7 +48,6 @@ package object nasdaqomx {
   val NoContraBrokers  = fix42.NoContraBrokers
   val OrdRejReason     = fix42.OrdRejReason
   val OrdStatus        = fix42.OrdStatus
-  val OrdType          = fix42.OrdType
   val OrderID          = fix42.OrderID
   val OrigClOrdID      = fix42.OrigClOrdID
   val PegDifference    = fix42.PegDifference
