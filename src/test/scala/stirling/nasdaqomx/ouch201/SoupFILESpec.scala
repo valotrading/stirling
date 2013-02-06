@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.nasdaqomx.ouch114
+package stirling.nasdaqomx.ouch201
 
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
@@ -35,7 +35,7 @@ class SoupFILESpec extends WordSpec with MustMatchers {
 
   private def source(readBufferSize: Int): Source[Packet[Message]] = {
     Source.fromInputStream(
-      stream         = getClass.getResourceAsStream("/ouch-v114.txt"),
+      stream         = getClass.getResourceAsStream("/ouch-v201.txt"),
       parser         = new SoupFILEParser(new MessageParser),
       readBufferSize = readBufferSize
     )
