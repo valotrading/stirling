@@ -168,7 +168,7 @@ object BrokenTrade extends MessageType {
 }
 
 /*
- * Section 2.2.5
+ * Section 2.2.6
  */
 class RejectedOrder(val payload: ByteString) extends Message {
   def orderToken: ByteString = payload.slice(9, 14)
