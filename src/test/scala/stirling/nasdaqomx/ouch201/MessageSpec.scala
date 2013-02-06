@@ -168,6 +168,28 @@ class MessageSpec extends WordSpec with MustMatchers {
 
       asString(buffer) must equal("OABCDEFGHIJKLMNB000000200123456000125000099998ABC Y2DonaldX              ABCDEFGHIJXXXXABCDEFGHIJKL000000000C")
     }
+    "format ReplaceOrder" in {
+      val buffer = ByteBuffer.allocate(ReplaceOrder.size)
+
+      ReplaceOrder.format(
+        buffer,
+        oldOrderToken    = "ABCDEFGHIJKLMN",
+        orderToken       = "NMLKJIHGFEDCBA",
+        quantity         = 200,
+        price            = 1250000,
+        timeInForce      = TimeInForce.MarketHours,
+        display          = Display.Display,
+        user             = "Donald",
+        clientReference  = "X",
+        orderReference   = "ABCDEFGHIJ",
+        clearingFirm     = "XXXX",
+        clearingAccount  = "ABCDEFGHIJKL",
+        minimumQuantity  = 0,
+        crossType        = CrossType.ClosingCross
+      )
+
+      asString(buffer) must equal("UABCDEFGHIJKLMNNMLKJIHGFEDCBA000000200000125000099998YDonaldX              ABCDEFGHIJXXXXABCDEFGHIJKL000000000C")
+    }
     "format CancelOrder" in {
       val buffer = ByteBuffer.allocate(CancelOrder.size)
 

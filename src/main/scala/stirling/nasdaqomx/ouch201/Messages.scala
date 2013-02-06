@@ -272,6 +272,47 @@ object EnterOrder {
 /*
  * Section 3.2
  */
+object ReplaceOrder {
+  import Message._
+
+  val size = 111
+
+  def format(
+    buffer:          ByteBuffer,
+    oldOrderToken:   String,
+    orderToken:      String,
+    quantity:        Long,
+    price:           Long,
+    timeInForce:     Long,
+    display:         Byte,
+    user:            String,
+    clientReference: String,
+    orderReference:  String,
+    clearingFirm:    String,
+    clearingAccount: String,
+    minimumQuantity: Long,
+    crossType:       Byte
+  ) {
+    buffer.put('U'.toByte)
+    buffer.put(alpha(oldOrderToken, 14))
+    buffer.put(alpha(orderToken, 14))
+    buffer.put(numeric(quantity, 9))
+    buffer.put(numeric(price, 10))
+    buffer.put(numeric(timeInForce, 5))
+    buffer.put(display)
+    buffer.put(alpha(user, 6))
+    buffer.put(alpha(clientReference, 15))
+    buffer.put(alpha(orderReference, 10))
+    buffer.put(alpha(clearingFirm, 4))
+    buffer.put(alpha(clearingAccount, 12))
+    buffer.put(numeric(minimumQuantity, 9))
+    buffer.put(crossType)
+  }
+}
+
+/*
+ * Section 3.2
+ */
 object CancelOrder {
   import Message._
 
