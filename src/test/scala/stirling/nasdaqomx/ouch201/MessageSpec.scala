@@ -130,6 +130,12 @@ class MessageSpec extends WordSpec with MustMatchers {
       message.orderToken.toString must equal("ABCDEFGHIJKLMN")
       message.reason              must equal(RejectedOrderReason.TestMode)
     }
+    "parse CancelPending" in {
+      val message = CancelPending("12345678PABCDEFGHIJKLMN")
+      message.timestamp           must equal(12345678)
+      message.messageType         must equal('P')
+      message.orderToken.toString must equal("ABCDEFGHIJKLMN")
+    }
     "format EnterOrder" in {
       val buffer = ByteBuffer.allocate(EnterOrder.size)
 
