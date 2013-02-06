@@ -85,10 +85,7 @@ class OrderAccepted(val payload: ByteString) extends Message {
 object OrderAccepted extends MessageType {
   def apply(payload: ByteString) = new OrderAccepted(payload)
 
-  def size(messageType: Byte) = (messageType: @switch) match {
-    case 'A' => 125
-    case 'R' => 126
-  }
+  def size(messageType: Byte) = 126
 }
 
 /*
