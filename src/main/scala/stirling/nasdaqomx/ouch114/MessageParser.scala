@@ -33,9 +33,8 @@ class MessageParser extends silvertip.MessageParser[Message] {
     if (buffer.position + Message.messageTypeOffset >= buffer.limit)
       throw new PartialMessageException
 
-    val msgTypeValue = buffer.get(buffer.position + Message.messageTypeOffset)
-    val msgType      = messageType(msgTypeValue)
-    val msg          = msgType.apply(ByteBuffers.slice(buffer, buffer.position, msgType.size(msgTypeValue)))
+    val msgType = messageType(buffer.get(buffer.position + Message.messageTypeOffset))
+    val msg     = msgType.apply(ByteBuffers.slice(buffer, buffer.position, msgType.size))
 
     msg
   }
