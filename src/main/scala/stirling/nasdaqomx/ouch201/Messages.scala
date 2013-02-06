@@ -182,7 +182,7 @@ object RejectedOrder extends MessageType {
 }
 
 /*
- * Section 2.2.6
+ * Section 2.2.7
  */
 class CancelPending(val payload: ByteString) extends Message {
   def orderToken: ByteString = payload.slice(9, 14)
