@@ -26,14 +26,6 @@ object SystemEventCode {
 }
 
 /*
- * Section 2.2.1
- */
-object BuySellIndicator {
-  val Buy  = 'B'.toByte
-  val Sell = 'S'.toByte
-}
-
-/*
  * Section 2.2.2
  */
 object CanceledOrderReason {
@@ -98,6 +90,14 @@ object RejectedOrderReason {
   val PrmOverDailyTradeTotalValue        = 'k'.toByte
   val PrmOverDailyOpenOrderOneSidedValue = 'l'.toByte
   val PrmOverDailyOpenOrderTotalValue    = 'm'.toByte
+}
+
+/*
+ * Section 3.1
+ */
+object BuySellIndicator {
+  val Buy  = 'B'.toByte
+  val Sell = 'S'.toByte
 }
 
 /*
