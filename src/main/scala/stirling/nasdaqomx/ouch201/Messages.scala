@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.nasdaqomx.ouch114
+package stirling.nasdaqomx.ouch201
 
 import java.nio.ByteBuffer
 import java.nio.charset.Charset
@@ -91,6 +91,37 @@ object OrderAccepted extends MessageType {
 /*
  * Section 2.2.2
  */
+class OrderReplaced(val payload: ByteString) extends Message {
+  def oldOrderToken:        ByteString = payload.slice(  9, 14)
+  def reason:               Byte       = payload.byteAt(23)
+  def orderToken:           ByteString = payload.slice( 24, 14)
+  def buySellIndicator:     Byte       = payload.byteAt(38)
+  def quantity:             Long       = payload.slice( 39,  9).toLong
+  def orderBook:            Long       = payload.slice( 48,  6).toLong
+  def price:                Long       = payload.slice( 54, 10).toLong
+  def timeInForce:          Long       = payload.slice( 64,  5).toLong
+  def firm:                 ByteString = payload.slice( 69,  4)
+  def display:              Byte       = payload.byteAt(73)
+  def orderReferenceNumber: Long       = payload.slice( 74,  9).toLong
+  def capacity:             Byte       = payload.byteAt(83)
+  def user:                 ByteString = payload.slice( 84,  6)
+  def clientReference:      ByteString = payload.slice( 90, 15)
+  def orderReference:       ByteString = payload.slice(105, 10)
+  def clearingFirm:         ByteString = payload.slice(115,  4)
+  def clearingAccount:      ByteString = payload.slice(119, 12)
+  def minimumQuantity:      Long       = payload.slice(131,  9).toLong
+  def crossType:            Byte       = payload.byteAt(140)
+}
+
+object OrderReplaced extends MessageType {
+  def apply(payload: ByteString) = new OrderReplaced(payload)
+
+  def size = 141
+}
+
+/*
+ * Section 2.2.3
+ */
 class CanceledOrder(val payload: ByteString) extends Message {
   def orderToken:        ByteString = payload.slice( 9, 14)
   def decrementQuantity: Long       = payload.slice(23,  9).toLong
@@ -104,7 +135,7 @@ object CanceledOrder extends MessageType {
 }
 
 /*
- * Section 2.2.3
+ * Section 2.2.4
  */
 class ExecutedOrder(val payload: ByteString) extends Message {
   def orderToken:       ByteString = payload.slice( 9, 14)
@@ -122,7 +153,7 @@ object ExecutedOrder extends MessageType {
 }
 
 /*
- * Section 2.2.4
+ * Section 2.2.5
  */
 class BrokenTrade(val payload: ByteString) extends Message {
   def orderToken:  ByteString = payload.slice( 9, 14)
@@ -137,7 +168,7 @@ object BrokenTrade extends MessageType {
 }
 
 /*
- * Section 2.2.5
+ * Section 2.2.6
  */
 class RejectedOrder(val payload: ByteString) extends Message {
   def orderToken: ByteString = payload.slice(9, 14)
@@ -151,7 +182,7 @@ object RejectedOrder extends MessageType {
 }
 
 /*
- * Section 2.2.6
+ * Section 2.2.7
  */
 class CancelPending(val payload: ByteString) extends Message {
   def orderToken: ByteString = payload.slice(9, 14)
@@ -164,7 +195,20 @@ object CancelPending extends MessageType {
 }
 
 /*
- * Section 2.2.7
+ * Section 2.2.8
+ */
+class CancelReject(val payload: ByteString) extends Message {
+  def orderToken: ByteString = payload.slice(9, 14)
+}
+
+object CancelReject extends MessageType {
+  def apply(payload: ByteString) = new CancelReject(payload)
+
+  def size = 23
+}
+
+/*
+ * Section 2.2.9
  */
 class MMORefreshRequest(val payload: ByteString) extends Message {
   def firm:       ByteString = payload.slice( 9, 4)
@@ -227,6 +271,47 @@ object EnterOrder {
 
 /*
  * Section 3.2
+ */
+object ReplaceOrder {
+  import Message._
+
+  val size = 111
+
+  def format(
+    buffer:          ByteBuffer,
+    oldOrderToken:   String,
+    orderToken:      String,
+    quantity:        Long,
+    price:           Long,
+    timeInForce:     Long,
+    display:         Byte,
+    user:            String,
+    clientReference: String,
+    orderReference:  String,
+    clearingFirm:    String,
+    clearingAccount: String,
+    minimumQuantity: Long,
+    crossType:       Byte
+  ) {
+    buffer.put('U'.toByte)
+    buffer.put(alpha(oldOrderToken, 14))
+    buffer.put(alpha(orderToken, 14))
+    buffer.put(numeric(quantity, 9))
+    buffer.put(numeric(price, 10))
+    buffer.put(numeric(timeInForce, 5))
+    buffer.put(display)
+    buffer.put(alpha(user, 6))
+    buffer.put(alpha(clientReference, 15))
+    buffer.put(alpha(orderReference, 10))
+    buffer.put(alpha(clearingFirm, 4))
+    buffer.put(alpha(clearingAccount, 12))
+    buffer.put(numeric(minimumQuantity, 9))
+    buffer.put(crossType)
+  }
+}
+
+/*
+ * Section 3.3
  */
 object CancelOrder {
   import Message._
