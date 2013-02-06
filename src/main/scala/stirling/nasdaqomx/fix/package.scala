@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.tags.fix42
+package stirling.nasdaqomx
 
 import stirling.fix.tags._
 
-package object nasdaqomx {
+package object fix {
   val AvgPx            = fix42.AvgPx
   val ClOrdID          = fix42.ClOrdID
   val ClearingAccount  = fix42.ClearingAccount

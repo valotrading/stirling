@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.messages.fix42.nasdaqomx
+package stirling.nasdaqomx.fix
 
 import stirling.fix.messages.fix42.DefaultMessageFactory
 import stirling.fix.messages.fix42.MsgTypeValue._

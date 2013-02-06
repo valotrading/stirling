@@ -38,7 +38,7 @@ public class Profile implements Command {
         factories.put("burgundy", new stirling.fix.messages.fix44.burgundy.MessageFactory());
         factories.put("hotspot-fx", new stirling.fix.messages.fix42.hotspotfx.MessageFactory());
         factories.put("lime", new stirling.fix.messages.fix42.lime.MessageFactory());
-        factories.put("nasdaq-omx", new stirling.fix.messages.fix42.nasdaqomx.MessageFactory());
+        factories.put("nasdaq-omx", new stirling.nasdaqomx.fix.MessageFactory());
     }
 
     public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
