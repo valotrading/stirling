@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.nasdaqomx.ouch114
+package stirling.nasdaqomx.ouch201
 
 import java.nio.{BufferUnderflowException, ByteBuffer, ByteOrder}
 import scala.annotation.switch
@@ -43,11 +43,13 @@ class MessageParser extends silvertip.MessageParser[Message] {
     case 'S' => SystemEvent
     case 'A' => OrderAccepted
     case 'R' => OrderAccepted
+    case 'U' => OrderReplaced
     case 'C' => CanceledOrder
     case 'E' => ExecutedOrder
     case 'B' => BrokenTrade
     case 'J' => RejectedOrder
     case 'P' => CancelPending
+    case 'I' => CancelReject
     case 'W' => MMORefreshRequest
     case  x  => throw new GarbledMessageException("Unknown message type: " + x)
   }

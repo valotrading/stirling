@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.nasdaqomx.ouch114
+package stirling.nasdaqomx.ouch201
 
 import stirling.io.ByteString
 
@@ -26,15 +26,15 @@ object SystemEventCode {
 }
 
 /*
- * Section 2.2.1
+ * Section 2.2.2
  */
-object BuySellIndicator {
-  val Buy  = 'B'.toByte
-  val Sell = 'S'.toByte
+object ReplacedOrderReason {
+  val User        = 'U'.toByte
+  val Supervisory = 'S'.toByte
 }
 
 /*
- * Section 2.2.2
+ * Section 2.2.3
  */
 object CanceledOrderReason {
   val UserRequested         = 'U'.toByte
@@ -46,7 +46,7 @@ object CanceledOrderReason {
 }
 
 /*
- * Section 2.2.3
+ * Section 2.2.4
  */
 object LiquidityFlag {
   val AddedLiquidity                 = 'A'.toByte
@@ -57,7 +57,7 @@ object LiquidityFlag {
 }
 
 /*
- * Section 2.2.4
+ * Section 2.2.5
  */
 object BrokenTradeReason {
   val Erroneous   = 'E'.toByte
@@ -67,7 +67,7 @@ object BrokenTradeReason {
 }
 
 /*
- * Section 2.2.5
+ * Section 2.2.6
  */
 object RejectedOrderReason {
   val TestMode                           = 'T'.toByte
@@ -98,6 +98,14 @@ object RejectedOrderReason {
   val PrmOverDailyTradeTotalValue        = 'k'.toByte
   val PrmOverDailyOpenOrderOneSidedValue = 'l'.toByte
   val PrmOverDailyOpenOrderTotalValue    = 'm'.toByte
+}
+
+/*
+ * Section 3.1
+ */
+object BuySellIndicator {
+  val Buy  = 'B'.toByte
+  val Sell = 'S'.toByte
 }
 
 /*

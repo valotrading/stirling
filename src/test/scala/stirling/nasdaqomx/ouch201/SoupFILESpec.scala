@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.nasdaqomx.ouch114
+package stirling.nasdaqomx.ouch201
 
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
@@ -23,8 +23,8 @@ import stirling.nasdaq.soupfile100.{EndOfSession, Packet, SequencedData, SoupFIL
 class SoupFILESpec extends WordSpec with MustMatchers {
   "SoupFILEParser" must {
     "parse messages with read buffer underflow inside message" in {
-      val messageTypes = "SARCEB"
-      source(128).map(messageType).mkString must equal(messageTypes)
+      val messageTypes = "SARUCEBJPI-"
+      source(256).map(messageType).mkString must equal(messageTypes)
     }
   }
 
@@ -35,7 +35,7 @@ class SoupFILESpec extends WordSpec with MustMatchers {
 
   private def source(readBufferSize: Int): Source[Packet[Message]] = {
     Source.fromInputStream(
-      stream         = getClass.getResourceAsStream("/ouch-v114.txt"),
+      stream         = getClass.getResourceAsStream("/ouch-v201.txt"),
       parser         = new SoupFILEParser(new MessageParser),
       readBufferSize = readBufferSize
     )
