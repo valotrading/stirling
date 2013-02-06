@@ -123,6 +123,13 @@ class MessageSpec extends WordSpec with MustMatchers {
       message.matchNumber         must equal(123456789)
       message.reason              must equal(BrokenTradeReason.Erroneous)
     }
+    "parse RejectedOrder" in {
+      val message = RejectedOrder("12345678JABCDEFGHIJKLMNT")
+      message.timestamp           must equal(12345678)
+      message.messageType         must equal('J')
+      message.orderToken.toString must equal("ABCDEFGHIJKLMN")
+      message.reason              must equal(RejectedOrderReason.TestMode)
+    }
     "format EnterOrder" in {
       val buffer = ByteBuffer.allocate(EnterOrder.size)
 
