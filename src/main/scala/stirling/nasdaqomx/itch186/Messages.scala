@@ -26,16 +26,18 @@ sealed trait Message {
   override def toString = payload.toString
 }
 
-object Message {
-  def alpha(value: String, fieldSize: Int) = TextFormat.alpha(value, fieldSize, ' '.toByte)
-
-  def numeric(value: Long, fieldSize: Int) = TextFormat.numeric(value, fieldSize, '0'.toByte)
-}
-
 sealed trait MessageType {
   def apply(payload: ByteString): Message
 
   def size: Int
+
+  protected def alpha(value: String, fieldSize: Int) = {
+    TextFormat.alpha(value, fieldSize, ' '.toByte)
+  }
+
+  protected def numeric(value: Long, fieldSize: Int) = {
+    TextFormat.numeric(value, fieldSize, '0'.toByte)
+  }
 }
 
 /*
@@ -46,8 +48,6 @@ class Seconds(val payload: ByteString) extends Message {
 }
 
 object Seconds extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new Seconds(payload)
 
   val size = 6
@@ -69,8 +69,6 @@ class Milliseconds(val payload: ByteString) extends Message {
 }
 
 object Milliseconds extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new Milliseconds(payload)
 
   val size = 4
@@ -92,8 +90,6 @@ class SystemEvent(val payload: ByteString) extends Message {
 }
 
 object SystemEvent extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new SystemEvent(payload)
 
   val size = 2
@@ -116,8 +112,6 @@ class MarketSegmentState(val payload: ByteString) extends Message {
 }
 
 object MarketSegmentState extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new MarketSegmentState(payload)
 
   val size = 5
@@ -149,8 +143,6 @@ class OrderBookDirectory(val payload: ByteString) extends Message {
 }
 
 object OrderBookDirectory extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new OrderBookDirectory(payload)
 
   val size = 65
@@ -191,8 +183,6 @@ class OrderBookTradingAction(val payload: ByteString) extends Message {
 }
 
 object OrderBookTradingAction extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new OrderBookTradingAction(payload)
 
   val size = 13
@@ -224,8 +214,6 @@ class AddOrder(val payload: ByteString) extends Message {
 }
 
 object AddOrder extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new AddOrder(payload)
 
   val size = 36
@@ -251,8 +239,6 @@ object AddOrder extends MessageType {
  * Section 4.4.2
  */
 class AddOrderMPID(val payload: ByteString) extends Message {
-  import Message._
-
   def orderReferenceNumber: Long       = payload.slice( 1,  9).toLong
   def buySellIndicator:     Byte       = payload.byteAt(10)
   def quantity:             Long       = payload.slice(11,  9).toLong
@@ -262,8 +248,6 @@ class AddOrderMPID(val payload: ByteString) extends Message {
 }
 
 object AddOrderMPID extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new AddOrderMPID(payload)
 
   val size = 40
@@ -299,8 +283,6 @@ class OrderExecuted(val payload: ByteString) extends Message {
 }
 
 object OrderExecuted extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new OrderExecuted(payload)
 
   val size = 36
@@ -336,8 +318,6 @@ class OrderExecutedWithPrice(val payload: ByteString) extends Message {
 }
 
 object OrderExecutedWithPrice extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new OrderExecutedWithPrice(payload)
 
   val size = 47
@@ -372,8 +352,6 @@ class OrderCancel(val payload: ByteString) extends Message {
 }
 
 object OrderCancel extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new OrderCancel(payload)
 
   val size = 19
@@ -397,8 +375,6 @@ class OrderDelete(val payload: ByteString) extends Message {
 }
 
 object OrderDelete extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new OrderDelete(payload)
 
   val size = 10
@@ -427,8 +403,6 @@ class Trade(val payload: ByteString) extends Message {
 }
 
 object Trade extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new Trade(payload)
 
   val size = 53
@@ -469,8 +443,6 @@ class CrossTrade(val payload: ByteString) extends Message {
 }
 
 object CrossTrade extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new CrossTrade(payload)
 
   val size = 46
@@ -502,8 +474,6 @@ class BrokenTrade(val payload: ByteString) extends Message {
 }
 
 object BrokenTrade extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new BrokenTrade(payload)
 
   val size = 10
@@ -534,8 +504,6 @@ class NOII(val payload: ByteString) extends Message {
 }
 
 object NOII extends MessageType {
-  import Message._
-
   def apply(payload: ByteString) = new NOII(payload)
 
   val size = 75
