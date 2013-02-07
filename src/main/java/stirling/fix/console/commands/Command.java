@@ -18,9 +18,6 @@ package stirling.fix.console.commands;
 import java.util.Scanner;
 import stirling.fix.console.ConsoleClient;
 
-/**
- * @author Karim Osman
- */
 public interface Command {
     void execute(ConsoleClient client, Scanner scanner) throws CommandException;
 

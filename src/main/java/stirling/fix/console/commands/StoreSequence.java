@@ -22,9 +22,6 @@ import stirling.fix.console.Arguments;
 import stirling.fix.console.ConsoleClient;
 import stirling.fix.session.Sequence;
 
-/**
- * @author Karim Osman
- */
 public class StoreSequence implements Command {
     public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
         Arguments arguments = new Arguments(scanner);

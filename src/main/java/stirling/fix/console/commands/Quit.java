@@ -18,9 +18,6 @@ package stirling.fix.console.commands;
 import java.util.Scanner;
 import stirling.fix.console.ConsoleClient;
 
-/**
- * @author Karim Osman
- */
 public class Quit implements Command {
     public void execute(ConsoleClient client, Scanner scanner) {
         client.quit();

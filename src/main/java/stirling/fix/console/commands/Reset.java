@@ -20,9 +20,6 @@ import stirling.fix.console.Arguments;
 import stirling.fix.console.ConsoleClient;
 import stirling.fix.session.Sequence;
 
-/**
- * @author Karim Osman
- */
 public class Reset implements Command {
     private static final String SEQUENCE_ARGUMENT_NAME = "SequenceNumber";
 
