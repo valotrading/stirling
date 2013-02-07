@@ -16,10 +16,13 @@
 package stirling.nasdaq.binaryfile100
 
 import java.nio.ByteBuffer
-import silvertip.MessageParser
+import silvertip.{MessageParser, PartialMessageException}
 
 class BinaryFILEParser[Message](messageParser: MessageParser[Message]) extends MessageParser[Packet[Message]] {
   override def parse(buffer: ByteBuffer): Packet[Message] = {
+    if (buffer.remaining < 2)
+      throw new PartialMessageException
+
     if (buffer.getShort() == 0)
       EndOfSession
     else
