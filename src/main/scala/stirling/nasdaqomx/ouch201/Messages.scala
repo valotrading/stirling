@@ -35,9 +35,13 @@ object Message {
 
   val messageTypeOffset = 8
 
-  def alpha(value: String, fieldSize: Int) = TextFormat.alpha(value, fieldSize, ' '.toByte)
+  def alpha(value: String, fieldSize: Int) = {
+    TextFormat.alphaPadLeft(value, fieldSize, ' '.toByte)
+  }
 
-  def numeric(value: Long, fieldSize: Int) = TextFormat.numeric(value, fieldSize, '0'.toByte)
+  def numeric(value: Long, fieldSize: Int) = {
+    TextFormat.numericPadLeft(value, fieldSize, '0'.toByte)
+  }
 }
 
 sealed trait MessageType {
