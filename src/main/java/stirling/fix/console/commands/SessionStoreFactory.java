@@ -16,7 +16,6 @@
 package stirling.fix.console.commands;
 
 import java.io.File;
-
 import stirling.fix.session.store.DiskSessionStore;
 import stirling.fix.session.store.InMemorySessionStore;
 import stirling.fix.session.store.MongoSessionStore;

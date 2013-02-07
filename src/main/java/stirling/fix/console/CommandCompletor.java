@@ -15,15 +15,14 @@
  */
 package stirling.fix.console;
 
-import stirling.fix.console.commands.Command;
-import jline.ArgumentCompletor;
-import jline.Completor;
-import jline.SimpleCompletor;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import jline.ArgumentCompletor;
+import jline.Completor;
+import jline.SimpleCompletor;
+import stirling.fix.console.commands.Command;
 
 public class CommandCompletor implements Completor {
     private ConsoleClient consoleClient;

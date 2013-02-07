@@ -15,10 +15,10 @@
  */
 package stirling.fix.console.commands;
 
+import static stirling.fix.messages.fix42.MsgTypeValue.NEW_ORDER_SINGLE;
+
 import stirling.fix.console.ConsoleClient;
 import stirling.fix.messages.Message;
-
-import static stirling.fix.messages.fix42.MsgTypeValue.NEW_ORDER_SINGLE;
 
 public class NewOrderSingle extends FixMessageCommand {
     @Override protected Message newMessage(ConsoleClient client) {

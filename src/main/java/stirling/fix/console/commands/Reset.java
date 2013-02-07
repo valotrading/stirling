@@ -16,11 +16,9 @@
 package stirling.fix.console.commands;
 
 import java.util.Scanner;
-
 import stirling.fix.console.Arguments;
-import stirling.fix.session.Sequence;
-
 import stirling.fix.console.ConsoleClient;
+import stirling.fix.session.Sequence;
 
 /**
  * @author Karim Osman

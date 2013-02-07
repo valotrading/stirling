@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
 import stirling.fix.console.Arguments;
 import stirling.fix.console.ConsoleClient;
 import stirling.fix.messages.MessageFactory;

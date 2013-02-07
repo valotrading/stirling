@@ -15,10 +15,10 @@
  */
 package stirling.fix.console.commands;
 
+import static stirling.fix.messages.fix42.MsgTypeValue.ORDER_CANCEL_REQUEST;
+
 import stirling.fix.console.ConsoleClient;
 import stirling.fix.messages.Message;
-
-import static stirling.fix.messages.fix42.MsgTypeValue.ORDER_CANCEL_REQUEST;
 
 public class CancelOrder extends FixMessageCommand {
     @Override protected Message newMessage(ConsoleClient client) {

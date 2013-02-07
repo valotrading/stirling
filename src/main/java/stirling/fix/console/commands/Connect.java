@@ -26,7 +26,7 @@ import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-
+import silvertip.Connection;
 import silvertip.MessageParser;
 import stirling.fix.console.Arguments;
 import stirling.fix.console.ConsoleClient;
@@ -39,7 +39,6 @@ import stirling.fix.session.HeartBtIntValue;
 import stirling.fix.session.Session;
 import stirling.fix.tags.fix42.ClOrdID;
 import stirling.fix.tags.fix42.OrderID;
-import silvertip.Connection;
 
 public class Connect implements Command {
     private static final Logger logger = Logger.getLogger("ConsoleClient");

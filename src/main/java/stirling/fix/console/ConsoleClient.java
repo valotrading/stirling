@@ -20,26 +20,21 @@ import java.io.Console;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-
-import stirling.fix.session.Session;
-import stirling.fix.session.store.InMemorySessionStore;
-
-import stirling.fix.messages.MessageFactory;
-import stirling.fix.messages.fix42.DefaultMessageFactory;
-
-import stirling.fix.Version;
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import silvertip.CommandLine;
 import silvertip.Connection;
 import silvertip.Events;
-
+import stirling.fix.Version;
 import stirling.fix.console.commands.*;
+import stirling.fix.messages.MessageFactory;
+import stirling.fix.messages.fix42.DefaultMessageFactory;
+import stirling.fix.session.Session;
+import stirling.fix.session.store.InMemorySessionStore;
 
 public class ConsoleClient {
     private static final Version VERSION = Version.FIX_4_2;

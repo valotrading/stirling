@@ -15,11 +15,10 @@
  */
 package stirling.fix.console;
 
-import stirling.fix.console.commands.CommandArgException;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import stirling.fix.console.commands.CommandArgException;
 
 public class Arguments {
     private Map<String, String> namesAndValues = new HashMap<String, String>();

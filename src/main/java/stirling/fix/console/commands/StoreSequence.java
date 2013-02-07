@@ -18,7 +18,6 @@ package stirling.fix.console.commands;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import stirling.fix.console.Arguments;
 import stirling.fix.console.ConsoleClient;
 import stirling.fix.session.Sequence;

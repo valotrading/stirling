@@ -16,7 +16,6 @@
 package stirling.fix.console.commands;
 
 import java.util.Scanner;
-
 import stirling.fix.console.ConsoleClient;
 
 public class Unavailable implements Command {
