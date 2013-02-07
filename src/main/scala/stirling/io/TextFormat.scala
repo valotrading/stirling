@@ -22,7 +22,7 @@ import java.util.Arrays
 object TextFormat {
   val ASCII = Charset.forName("US-ASCII")
 
-  def alpha(value: String, fieldSize: Int, fillChar: Byte): Array[Byte] = {
+  def alphaPadLeft(value: String, fieldSize: Int, fillChar: Byte): Array[Byte] = {
     if (value.length > fieldSize)
       throw new IllegalArgumentException("Value length %d exceeds field size %d".format(value.length, fieldSize))
 
@@ -40,7 +40,7 @@ object TextFormat {
     }
   }
 
-  def numeric(value: Long, fieldSize: Int, fillChar: Byte): Array[Byte] = {
+  def numericPadLeft(value: Long, fieldSize: Int, fillChar: Byte): Array[Byte] = {
     if (value < 0)
       throw new IllegalArgumentException("Negative value %d".format(value))
 
