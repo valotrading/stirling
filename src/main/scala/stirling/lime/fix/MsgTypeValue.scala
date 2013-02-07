@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.messages.fix42.lime
+package stirling.lime.fix
 
 object MsgTypeValue {
   val BULK_CANCEL_REQUEST = "s"

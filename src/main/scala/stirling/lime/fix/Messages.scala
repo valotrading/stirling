@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.messages.fix42.lime
+package stirling.lime.fix
 
 import stirling.fix.messages.{
   AbstractMessage,
@@ -29,7 +29,6 @@ import stirling.fix.messages.{
   Reject => RejectTrait,
   Required
 }
-import stirling.fix.tags.fix42.lime._
 
 class Logon(header: MessageHeaderTrait) extends AbstractMessage(header) with LogonTrait {
   field(EncryptMethod.Tag)
