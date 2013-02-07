@@ -101,7 +101,7 @@ package object mbtrading {
   val SecondaryClOrdID        = fix43.SecondaryClOrdID
   val TradSesStatus           = fix43.TradSesStatus
   val TradingSessionSubID     = fix43.TradingSessionSubID
-  
+
   val ClearingBusinessDate    = fix44.ClearingBusinessDate
   val CollInquiryID           = fix44.CollInquiryID
   val CollInquiryResult       = fix44.CollInquiryResult
