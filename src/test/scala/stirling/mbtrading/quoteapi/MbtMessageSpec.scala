@@ -1,13 +1,13 @@
-package stirling.mbtrading
+package stirling.mbtrading.quoteapi
 
 import java.nio.ByteBuffer
 import org.joda.time.DateTime
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
 import silvertip.{PartialMessageException, GarbledMessageException}
-import stirling.mbtrading.MbtMessage._
-import stirling.mbtrading.MbtMessageTag._
-import stirling.mbtrading.MbtMessageType._
+import stirling.mbtrading.quoteapi.MbtMessage._
+import stirling.mbtrading.quoteapi.MbtMessageTag._
+import stirling.mbtrading.quoteapi.MbtMessageType._
 
 class MbtMessageSpec extends WordSpec with MustMatchers with MbtMessageFixtures {
   "MbtMessage" when {

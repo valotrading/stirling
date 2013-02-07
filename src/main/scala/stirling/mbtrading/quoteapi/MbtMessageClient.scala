@@ -1,4 +1,4 @@
-package stirling.mbtrading
+package stirling.mbtrading.quoteapi
 
 import com.twitter.logging.Logger
 import java.nio.ByteBuffer
@@ -6,7 +6,7 @@ import java.util.Iterator
 import scala.collection.JavaConversions._
 import silvertip.Connection.Callback
 import silvertip.{Connection, Events}
-import stirling.mbtrading.config.MbtMessageClientConfig
+import stirling.mbtrading.quoteapi.config.MbtMessageClientConfig
 
 class MbtMessageClient(val application: MbtMessageListener, val config: MbtMessageClientConfig) {
   def start = {
