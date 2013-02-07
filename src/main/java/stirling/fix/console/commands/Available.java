@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
-import stirling.console.ConsoleClient;
-import stirling.fix.messages.Message;
+import java.util.Scanner;
 
-import static stirling.fix.messages.fix42.MsgTypeValue.NEW_ORDER_SINGLE;
+import stirling.fix.console.ConsoleClient;
 
-public class NewOrderSingle extends FixMessageCommand {
-    @Override protected Message newMessage(ConsoleClient client) {
-        return client.getMessageFactory().create(NEW_ORDER_SINGLE);
+public class Available implements Command {
+    @Override public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
+        if (client.getSession() != null)
+            client.getSession().setAvailable(true);
     }
 
-    @Override protected boolean isModifyingOrderMessage() {
-        return false;
+    public String[] getArgumentNames(ConsoleClient client) {
+        return new String[0];
     }
 
     @Override public String description() {
-        return "Creates and sends new single order message.";
+        return "Marks client session available.";
     }
 
     @Override public String usage() {
-        return "<Argument=value>* : " + description();
+        return ": " + description();
     }
 }

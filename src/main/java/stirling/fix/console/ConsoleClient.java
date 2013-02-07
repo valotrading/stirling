@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console;
+package stirling.fix.console;
 
 import java.io.BufferedReader;
 import java.io.Console;
@@ -39,7 +39,7 @@ import silvertip.CommandLine;
 import silvertip.Connection;
 import silvertip.Events;
 
-import stirling.console.commands.*;
+import stirling.fix.console.commands.*;
 
 public class ConsoleClient {
     private static final Version VERSION = Version.FIX_4_2;

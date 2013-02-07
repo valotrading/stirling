@@ -13,15 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
+
+import java.util.Scanner;
+
+import stirling.fix.console.ConsoleClient;
 
 /**
  * @author Karim Osman
  */
-public class CommandArgException extends CommandException {
-    public CommandArgException(String s) {
-        super(s);
-    }
+public interface Command {
+    void execute(ConsoleClient client, Scanner scanner) throws CommandException;
 
-    private static final long serialVersionUID = 1L;
+    String[] getArgumentNames(ConsoleClient client);
+
+    String description();
+
+    String usage();
 }

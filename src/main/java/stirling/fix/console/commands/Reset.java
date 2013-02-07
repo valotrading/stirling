@@ -13,29 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
 import java.util.Scanner;
 
-import stirling.console.ConsoleClient;
+import stirling.fix.console.Arguments;
+import stirling.fix.session.Sequence;
+
+import stirling.fix.console.ConsoleClient;
 
 /**
  * @author Karim Osman
  */
-public class Logout implements Command {
+public class Reset implements Command {
+    private static final String SEQUENCE_ARGUMENT_NAME = "SequenceNumber";
+
     public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
-        if (client.getSession() != null) client.getSession().logout(client.getConnection());
+        if (client.getSession() != null)
+            client.getSession().sequenceReset(client.getConnection(), sequence(scanner));
+    }
+
+    private Sequence sequence(Scanner scanner) throws CommandArgException {
+        Sequence seq = new Sequence();
+        seq.reset(new Arguments(scanner).requiredIntValue(SEQUENCE_ARGUMENT_NAME));
+        return seq;
     }
 
     public String[] getArgumentNames(ConsoleClient client) {
-        return new String[0];
+        return new String[] {SEQUENCE_ARGUMENT_NAME + "="};
     }
 
     public String description() {
-        return "Creates and sends logout message.";
+        return "Sends sequence number reset message.";
     }
 
     public String usage() {
-        return ": " + description();
+        return SEQUENCE_ARGUMENT_NAME + "=<number> : " + description();
     }
 }

@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
-import java.util.Scanner;
+import stirling.fix.console.ConsoleClient;
+import stirling.fix.messages.Message;
 
-import stirling.console.ConsoleClient;
+import static stirling.fix.messages.fix42.MsgTypeValue.ORDER_CANCEL_REQUEST;
 
-public class Available implements Command {
-    @Override public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
-        if (client.getSession() != null)
-            client.getSession().setAvailable(true);
+public class CancelOrder extends FixMessageCommand {
+    @Override protected Message newMessage(ConsoleClient client) {
+        return client.getMessageFactory().create(ORDER_CANCEL_REQUEST);
     }
 
-    public String[] getArgumentNames(ConsoleClient client) {
-        return new String[0];
+    @Override protected boolean isModifyingOrderMessage() {
+        return true;
     }
 
     @Override public String description() {
-        return "Marks client session available.";
+        return "Creates and sends order cancel request message.";
     }
 
     @Override public String usage() {
-        return ": " + description();
+        return "OrigClOrdID=<id> <Argument=value>* : " + description();
     }
 }

@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
 import java.util.Scanner;
 
-import stirling.console.ConsoleClient;
+import stirling.fix.console.ConsoleClient;
 
 public class Unavailable implements Command {
     @Override public void execute(ConsoleClient client, Scanner scanner) throws CommandException {

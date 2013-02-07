@@ -13,23 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
-import static stirling.fix.messages.fix42.MsgTypeValue.LOGON;
-
-import stirling.console.ConsoleClient;
+import stirling.fix.console.ConsoleClient;
 import stirling.fix.messages.Message;
-import stirling.fix.messages.MessageFactory;
-import stirling.fix.tags.fix42.EncryptMethod;
-import stirling.fix.tags.fix42.HeartBtInt;
 
-public class Logon extends FixMessageCommand {
+import static stirling.fix.messages.fix42.MsgTypeValue.NEW_ORDER_SINGLE;
+
+public class NewOrderSingle extends FixMessageCommand {
     @Override protected Message newMessage(ConsoleClient client) {
-        MessageFactory messageFactory = client.getMessageFactory();
-        stirling.fix.messages.Logon message = (stirling.fix.messages.Logon) messageFactory.create(LOGON);
-        message.setInteger(HeartBtInt.Tag(), 30);
-        message.setEnum(EncryptMethod.Tag(), EncryptMethod.None());
-        return message;
+        return client.getMessageFactory().create(NEW_ORDER_SINGLE);
     }
 
     @Override protected boolean isModifyingOrderMessage() {
@@ -37,7 +30,7 @@ public class Logon extends FixMessageCommand {
     }
 
     @Override public String description() {
-        return "Creates and sends logon message.";
+        return "Creates and sends new single order message.";
     }
 
     @Override public String usage() {

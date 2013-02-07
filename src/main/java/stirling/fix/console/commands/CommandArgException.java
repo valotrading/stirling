@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 the original author or authors.
+ * Copyright 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands
+package stirling.fix.console.commands;
 
-import java.util.Scanner
-import org.scalatest.WordSpec
-import org.scalatest.matchers.MustMatchers
-
-class ConfigSpec extends WordSpec with MustMatchers {
-  "Config" should {
-    "throw an exception on an invalid version" in {
-      intercept[CommandArgException] {
-        new Config().execute(null, new Scanner("Version=invalid"))
-      }.getMessage must equal("unknown version: 'invalid'")
+/**
+ * @author Karim Osman
+ */
+public class CommandArgException extends CommandException {
+    public CommandArgException(String s) {
+        super(s);
     }
-  }
+
+    private static final long serialVersionUID = 1L;
 }

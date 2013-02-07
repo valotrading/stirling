@@ -13,27 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
-import stirling.console.ConsoleClient;
-import stirling.fix.messages.Message;
+import java.util.Scanner;
 
-import static stirling.fix.messages.fix42.MsgTypeValue.ORDER_CANCEL_REPLACE_REQUEST;
+import stirling.fix.console.ConsoleClient;
 
-public class UpdateOrder extends FixMessageCommand {
-    @Override protected Message newMessage(ConsoleClient client) {
-        return client.getMessageFactory().create(ORDER_CANCEL_REPLACE_REQUEST);
+/**
+ * @author Karim Osman
+ */
+public class Quit implements Command {
+    public void execute(ConsoleClient client, Scanner scanner) {
+        client.quit();
     }
 
-    @Override protected boolean isModifyingOrderMessage() {
-        return true;
+    public String[] getArgumentNames(ConsoleClient client) {
+        return new String[0];
     }
 
     @Override public String description() {
-        return "Creates and sends order modification request message.";
+        return "Terminates this console-client session.";
     }
 
     @Override public String usage() {
-        return "<Argument=value>* : " + description();
+        return ": " + description();
     }
 }

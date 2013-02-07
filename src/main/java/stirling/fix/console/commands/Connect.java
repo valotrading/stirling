@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -28,8 +28,8 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import silvertip.MessageParser;
-import stirling.console.Arguments;
-import stirling.console.ConsoleClient;
+import stirling.fix.console.Arguments;
+import stirling.fix.console.ConsoleClient;
 import stirling.fix.messages.DefaultMessageComparator;
 import stirling.fix.messages.DefaultMessageVisitor;
 import stirling.fix.messages.FixMessage;

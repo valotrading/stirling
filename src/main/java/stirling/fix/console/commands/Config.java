@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import stirling.fix.Version;
-import stirling.console.Arguments;
-import stirling.console.ConsoleClient;
+import stirling.fix.console.Arguments;
+import stirling.fix.console.ConsoleClient;
 
 public class Config implements Command {
     public void execute(ConsoleClient client, Scanner scanner) throws CommandException {

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -25,7 +25,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import stirling.console.ConsoleClient;
+import stirling.fix.console.ConsoleClient;
 import stirling.fix.messages.AbstractField;
 import stirling.fix.messages.ExchangeField;
 import stirling.fix.messages.BooleanField;

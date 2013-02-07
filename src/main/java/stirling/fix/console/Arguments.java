@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console;
+package stirling.fix.console;
 
-import stirling.console.commands.CommandArgException;
+import stirling.fix.console.commands.CommandArgException;
 
 import java.util.HashMap;
 import java.util.Map;
