@@ -1,4 +1,4 @@
-package stirling.mbtrading
+package stirling.mbtrading.quoteapi
 
 trait MbtMessageListener {
   def login

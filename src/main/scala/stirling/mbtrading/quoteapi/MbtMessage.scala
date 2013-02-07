@@ -1,4 +1,4 @@
-package stirling.mbtrading
+package stirling.mbtrading.quoteapi
 
 import java.nio.ByteBuffer
 import org.joda.time.DateTime

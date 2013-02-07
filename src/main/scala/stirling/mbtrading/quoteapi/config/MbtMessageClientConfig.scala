@@ -1,4 +1,4 @@
-package stirling.mbtrading.config
+package stirling.mbtrading.quoteapi.config
 
 import java.net.InetSocketAddress
 
