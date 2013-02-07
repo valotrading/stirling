@@ -19,28 +19,36 @@ import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
 import scala.language.implicitConversions
 import stirling.io.{ByteString, Source}
+import stirling.nasdaq.binaryfile100.{BinaryFILEParser, EndOfSession, Packet, SequencedData}
 
-class BinaryFILEParserSpec extends WordSpec with MustMatchers with MessageParserFixtures {
+class BinaryFILESpec extends WordSpec with MustMatchers with BinaryFILEFixtures {
   "BinaryFILEParser" must {
     "parse messages with read buffer underflow inside message" in {
-      source(64).toList must equal(expectedMessages)
+      messages(source(64)).toSeq must equal(expectedMessages)
     }
     "parse messages with read buffer underflow on message boundary" in {
-      source(46).toList must equal(expectedMessages)
+      messages(source(46)).toSeq must equal(expectedMessages)
     }
   }
 
-  private def source(readBufferSize: Int): Source[Message] = {
-    Source.fromInputStream[Message](
+  private def messages(source: Source[Packet[Message]]): Iterator[Message] = {
+    source.flatMap {
+      case SequencedData(message) => Some(message)
+      case EndOfSession           => None
+    }
+  }
+
+  private def source(readBufferSize: Int): Source[Packet[Message]] = {
+    Source.fromInputStream(
       stream         = getClass.getResourceAsStream("/itch-v41.txt"),
-      parser         = new BinaryFILEParser,
+      parser         = new BinaryFILEParser(new MessageParser),
       readBufferSize = readBufferSize
     )
   }
 }
 
-trait MessageParserFixtures {
-  val expectedMessages = List(
+trait BinaryFILEFixtures {
+  val expectedMessages = Seq(
     Seconds(
       seconds = 24136
     ),
