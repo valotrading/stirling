@@ -69,7 +69,7 @@ public class ConsoleClient {
         if (console == null) {
             System.err.println("no console");
         } else {
-            console.printf("Stirling console, type 'help' for help text\n");
+            console.printf("Stirling FIX console, type 'help' for help text\n");
             new ConsoleClient(console).run(getInitialCommandLines(args));
         }
     }
