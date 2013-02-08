@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console
+package stirling.fix.console
 
 import java.util.ArrayList
 import org.mockito.Mockito._
@@ -21,7 +21,7 @@ import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
 import org.scalatest.mock.MockitoSugar
 import scala.collection.JavaConversions._
-import stirling.console.commands.Command
+import stirling.fix.console.commands.Command
 
 class CommandCompletorSpec extends WordSpec with MustMatchers with CommandCompletorFixtures {
   "CommandCompletor" should {

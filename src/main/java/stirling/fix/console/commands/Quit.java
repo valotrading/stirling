@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
 import java.util.Scanner;
+import stirling.fix.console.ConsoleClient;
 
-import stirling.console.ConsoleClient;
-
-/**
- * @author Karim Osman
- */
 public class Quit implements Command {
     public void execute(ConsoleClient client, Scanner scanner) {
         client.quit();

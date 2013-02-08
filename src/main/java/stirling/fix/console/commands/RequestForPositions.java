@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2011 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,27 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
-import stirling.console.ConsoleClient;
+import static stirling.fix.messages.fix44.MsgTypeValue.REQUEST_FOR_POSITIONS;
+
+import stirling.fix.console.ConsoleClient;
 import stirling.fix.messages.Message;
+import stirling.fix.messages.MessageFactory;
 
-import static stirling.fix.messages.fix42.MsgTypeValue.ORDER_CANCEL_REQUEST;
-
-public class CancelOrder extends FixMessageCommand {
+public class RequestForPositions extends FixMessageCommand {
     @Override protected Message newMessage(ConsoleClient client) {
-        return client.getMessageFactory().create(ORDER_CANCEL_REQUEST);
+        MessageFactory messageFactory = client.getMessageFactory();
+        return messageFactory.create(REQUEST_FOR_POSITIONS);
     }
 
     @Override protected boolean isModifyingOrderMessage() {
-        return true;
+        return false;
     }
 
     @Override public String description() {
-        return "Creates and sends order cancel request message.";
+        return "Creates and sends a request for positions.";
     }
 
     @Override public String usage() {
-        return "OrigClOrdID=<id> <Argument=value>* : " + description();
+        return "<Argument=value>* : " + description();
     }
 }

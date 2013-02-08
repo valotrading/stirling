@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -26,10 +26,10 @@ import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-
+import silvertip.Connection;
 import silvertip.MessageParser;
-import stirling.console.Arguments;
-import stirling.console.ConsoleClient;
+import stirling.fix.console.Arguments;
+import stirling.fix.console.ConsoleClient;
 import stirling.fix.messages.DefaultMessageComparator;
 import stirling.fix.messages.DefaultMessageVisitor;
 import stirling.fix.messages.FixMessage;
@@ -39,7 +39,6 @@ import stirling.fix.session.HeartBtIntValue;
 import stirling.fix.session.Session;
 import stirling.fix.tags.fix42.ClOrdID;
 import stirling.fix.tags.fix42.OrderID;
-import silvertip.Connection;
 
 public class Connect implements Command {
     private static final Logger logger = Logger.getLogger("ConsoleClient");

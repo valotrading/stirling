@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
 import static stirling.fix.messages.fix44.MsgTypeValue.COLLATERAL_INQUIRY;
 
-import stirling.console.ConsoleClient;
+import stirling.fix.console.ConsoleClient;
 import stirling.fix.messages.Message;
 import stirling.fix.messages.MessageFactory;
 

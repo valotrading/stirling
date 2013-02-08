@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
 import java.util.Scanner;
+import stirling.fix.console.ConsoleClient;
 
-import stirling.console.ConsoleClient;
-
-public class Unavailable implements Command {
+public class Available implements Command {
     @Override public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
         if (client.getSession() != null)
-            client.getSession().setAvailable(false);
+            client.getSession().setAvailable(true);
     }
 
     public String[] getArgumentNames(ConsoleClient client) {
@@ -30,7 +29,7 @@ public class Unavailable implements Command {
     }
 
     @Override public String description() {
-        return "Marks client session unavailable.";
+        return "Marks client session available.";
     }
 
     @Override public String usage() {

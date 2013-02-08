@@ -13,33 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console;
+package stirling.fix.console;
 
 import java.io.BufferedReader;
 import java.io.Console;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-
-import stirling.fix.session.Session;
-import stirling.fix.session.store.InMemorySessionStore;
-
-import stirling.fix.messages.MessageFactory;
-import stirling.fix.messages.fix42.DefaultMessageFactory;
-
-import stirling.fix.Version;
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import silvertip.CommandLine;
 import silvertip.Connection;
 import silvertip.Events;
-
-import stirling.console.commands.*;
+import stirling.fix.Version;
+import stirling.fix.console.commands.*;
+import stirling.fix.messages.MessageFactory;
+import stirling.fix.messages.fix42.DefaultMessageFactory;
+import stirling.fix.session.Session;
+import stirling.fix.session.store.InMemorySessionStore;
 
 public class ConsoleClient {
     private static final Version VERSION = Version.FIX_4_2;
@@ -74,7 +69,7 @@ public class ConsoleClient {
         if (console == null) {
             System.err.println("no console");
         } else {
-            console.printf("Stirling console, type 'help' for help text\n");
+            console.printf("Stirling FIX console, type 'help' for help text\n");
             new ConsoleClient(console).run(getInitialCommandLines(args));
         }
     }

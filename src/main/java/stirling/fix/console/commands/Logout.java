@@ -13,15 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
-/**
- * @author Karim Osman
- */
-public class CommandArgException extends CommandException {
-    public CommandArgException(String s) {
-        super(s);
+import java.util.Scanner;
+import stirling.fix.console.ConsoleClient;
+
+public class Logout implements Command {
+    public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
+        if (client.getSession() != null) client.getSession().logout(client.getConnection());
     }
 
-    private static final long serialVersionUID = 1L;
+    public String[] getArgumentNames(ConsoleClient client) {
+        return new String[0];
+    }
+
+    public String description() {
+        return "Creates and sends logout message.";
+    }
+
+    public String usage() {
+        return ": " + description();
+    }
 }

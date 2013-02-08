@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -24,23 +24,22 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.logging.Logger;
-
-import stirling.console.ConsoleClient;
+import stirling.fix.console.ConsoleClient;
 import stirling.fix.messages.AbstractField;
-import stirling.fix.messages.ExchangeField;
 import stirling.fix.messages.BooleanField;
 import stirling.fix.messages.EnumField;
 import stirling.fix.messages.EnumTag;
+import stirling.fix.messages.ExchangeField;
 import stirling.fix.messages.Field;
 import stirling.fix.messages.FloatField;
 import stirling.fix.messages.IntegerField;
-import stirling.fix.messages.UtcTimestampField;
 import stirling.fix.messages.Message;
 import stirling.fix.messages.MessageFactory;
 import stirling.fix.messages.PriceField;
 import stirling.fix.messages.QtyField;
 import stirling.fix.messages.StringField;
 import stirling.fix.messages.Tag;
+import stirling.fix.messages.UtcTimestampField;
 import stirling.fix.messages.Value;
 import stirling.fix.tags.fix42.OrderID;
 import stirling.fix.tags.fix42.OrigClOrdID;
