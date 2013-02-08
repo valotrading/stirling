@@ -13,24 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
-import stirling.console.ConsoleClient;
+import static stirling.fix.messages.fix42.MsgTypeValue.NEW_ORDER_SINGLE;
+
+import stirling.fix.console.ConsoleClient;
 import stirling.fix.messages.Message;
 
-import static stirling.fix.messages.fix42.MsgTypeValue.ORDER_CANCEL_REPLACE_REQUEST;
-
-public class UpdateOrder extends FixMessageCommand {
+public class NewOrderSingle extends FixMessageCommand {
     @Override protected Message newMessage(ConsoleClient client) {
-        return client.getMessageFactory().create(ORDER_CANCEL_REPLACE_REQUEST);
+        return client.getMessageFactory().create(NEW_ORDER_SINGLE);
     }
 
     @Override protected boolean isModifyingOrderMessage() {
-        return true;
+        return false;
     }
 
     @Override public String description() {
-        return "Creates and sends order modification request message.";
+        return "Creates and sends new single order message.";
     }
 
     @Override public String usage() {

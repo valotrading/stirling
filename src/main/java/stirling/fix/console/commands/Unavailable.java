@@ -13,29 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
 import java.util.Scanner;
+import stirling.fix.console.ConsoleClient;
 
-import stirling.console.ConsoleClient;
-
-/**
- * @author Karim Osman
- */
-public class Logout implements Command {
-    public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
-        if (client.getSession() != null) client.getSession().logout(client.getConnection());
+public class Unavailable implements Command {
+    @Override public void execute(ConsoleClient client, Scanner scanner) throws CommandException {
+        if (client.getSession() != null)
+            client.getSession().setAvailable(false);
     }
 
     public String[] getArgumentNames(ConsoleClient client) {
         return new String[0];
     }
 
-    public String description() {
-        return "Creates and sends logout message.";
+    @Override public String description() {
+        return "Marks client session unavailable.";
     }
 
-    public String usage() {
+    @Override public String usage() {
         return ": " + description();
     }
 }

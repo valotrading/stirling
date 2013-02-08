@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 the original author or authors.
+ * Copyright 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
-import static stirling.fix.messages.fix44.MsgTypeValue.REQUEST_FOR_POSITIONS;
+import static stirling.fix.messages.fix42.MsgTypeValue.LOGON;
 
-import stirling.console.ConsoleClient;
+import stirling.fix.console.ConsoleClient;
 import stirling.fix.messages.Message;
 import stirling.fix.messages.MessageFactory;
+import stirling.fix.tags.fix42.EncryptMethod;
+import stirling.fix.tags.fix42.HeartBtInt;
 
-public class RequestForPositions extends FixMessageCommand {
+public class Logon extends FixMessageCommand {
     @Override protected Message newMessage(ConsoleClient client) {
         MessageFactory messageFactory = client.getMessageFactory();
-        return messageFactory.create(REQUEST_FOR_POSITIONS);
+        stirling.fix.messages.Logon message = (stirling.fix.messages.Logon) messageFactory.create(LOGON);
+        message.setInteger(HeartBtInt.Tag(), 30);
+        message.setEnum(EncryptMethod.Tag(), EncryptMethod.None());
+        return message;
     }
 
     @Override protected boolean isModifyingOrderMessage() {
@@ -32,7 +37,7 @@ public class RequestForPositions extends FixMessageCommand {
     }
 
     @Override public String description() {
-        return "Creates and sends a request for positions.";
+        return "Creates and sends logon message.";
     }
 
     @Override public String usage() {

@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console;
-
-import stirling.console.commands.CommandArgException;
+package stirling.fix.console;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import stirling.fix.console.commands.CommandArgException;
 
 public class Arguments {
     private Map<String, String> namesAndValues = new HashMap<String, String>();

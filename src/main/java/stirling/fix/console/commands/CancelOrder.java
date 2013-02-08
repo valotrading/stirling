@@ -13,34 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console.commands;
+package stirling.fix.console.commands;
 
-import static stirling.fix.messages.fix42.MsgTypeValue.LOGON;
+import static stirling.fix.messages.fix42.MsgTypeValue.ORDER_CANCEL_REQUEST;
 
-import stirling.console.ConsoleClient;
+import stirling.fix.console.ConsoleClient;
 import stirling.fix.messages.Message;
-import stirling.fix.messages.MessageFactory;
-import stirling.fix.tags.fix42.EncryptMethod;
-import stirling.fix.tags.fix42.HeartBtInt;
 
-public class Logon extends FixMessageCommand {
+public class CancelOrder extends FixMessageCommand {
     @Override protected Message newMessage(ConsoleClient client) {
-        MessageFactory messageFactory = client.getMessageFactory();
-        stirling.fix.messages.Logon message = (stirling.fix.messages.Logon) messageFactory.create(LOGON);
-        message.setInteger(HeartBtInt.Tag(), 30);
-        message.setEnum(EncryptMethod.Tag(), EncryptMethod.None());
-        return message;
+        return client.getMessageFactory().create(ORDER_CANCEL_REQUEST);
     }
 
     @Override protected boolean isModifyingOrderMessage() {
-        return false;
+        return true;
     }
 
     @Override public String description() {
-        return "Creates and sends logon message.";
+        return "Creates and sends order cancel request message.";
     }
 
     @Override public String usage() {
-        return "<Argument=value>* : " + description();
+        return "OrigClOrdID=<id> <Argument=value>* : " + description();
     }
 }

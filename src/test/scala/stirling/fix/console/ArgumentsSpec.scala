@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.console
+package stirling.fix.console
 
 import java.util.Scanner
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.console.commands.CommandArgException
+import stirling.fix.console.commands.CommandArgException
 
 class ArgumentsSpec extends WordSpec with MustMatchers with ArgumentsFixtures {
   "Arguments" should {
