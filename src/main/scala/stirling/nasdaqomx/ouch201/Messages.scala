@@ -36,7 +36,7 @@ object Message {
   val messageTypeOffset = 8
 
   def alpha(value: String, fieldSize: Int) = {
-    TextFormat.alphaPadLeft(value, fieldSize, ' '.toByte)
+    TextFormat.alphaPadRight(value, fieldSize, ' '.toByte)
   }
 
   def numeric(value: Long, fieldSize: Int) = {

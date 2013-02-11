@@ -32,7 +32,7 @@ sealed trait MessageType {
   def size: Int
 
   protected def alpha(value: String, fieldSize: Int) = {
-    TextFormat.alphaPadLeft(value, fieldSize, ' '.toByte)
+    TextFormat.alphaPadRight(value, fieldSize, ' '.toByte)
   }
 
   protected def numeric(value: Long, fieldSize: Int) = {
