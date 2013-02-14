@@ -15,29 +15,9 @@
  */
 package stirling.io
 
-import java.nio.{BufferUnderflowException, ByteBuffer, ByteOrder}
+import java.nio.ByteBuffer
 
 object ByteBuffers {
-  def copy(buffer: ByteBuffer, length: Int): ByteBuffer = {
-    val original = buffer.limit
-    val limit    = buffer.position + length
-
-    if (limit > buffer.capacity)
-      throw new BufferUnderflowException()
-
-    buffer.limit(limit)
-
-    val copy = ByteBuffer.allocate(length)
-    copy.order(ByteOrder.BIG_ENDIAN)
-    copy.put(buffer)
-    copy.flip()
-
-    buffer.position(limit)
-    buffer.limit(original)
-
-    copy
-  }
-
   def slice(buffer: ByteBuffer, index: Int, length: Int): ByteString = {
     buffer.position(index)
 
