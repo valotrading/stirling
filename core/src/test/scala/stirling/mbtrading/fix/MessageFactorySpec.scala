@@ -17,7 +17,6 @@ package stirling.mbtrading.fix
 
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.fix.messages.fix44.MsgTypeValue._
 
 class MessageFactorySpec extends WordSpec with MustMatchers with MessageFactoryFixtures {
   "MessageFactory" should {
@@ -30,23 +29,25 @@ class MessageFactorySpec extends WordSpec with MustMatchers with MessageFactoryF
 }
 
 trait MessageFactoryFixtures {
+  import MsgTypeValue._
+
   def factory = new MessageFactory
   def msgTypes = List(
-    EXECUTION_REPORT,
-    ORDER_CANCEL_REQUEST,
-    ORDER_CANCEL_REJECT,
-    BUSINESS_MESSAGE_REJECT,
-    NEW_ORDER_SINGLE,
-    ORDER_CANCEL_REPLACE_REQUEST,
-    LOGON,
-    NEW_ORDER_MULTILEG,
-    REQUEST_FOR_POSITIONS,
-    POSITION_REPORT,
-    TRADING_SESSION_STATUS,
-    NEWS,
-    COLLATERAL_REPORT,
-    COLLATERAL_INQUIRY,
-    COLLATERAL_INQUIRY_ACK,
-    REQUEST_FOR_POSITIONS_ACK
+    ExecutionReport,
+    OrderCancelRequest,
+    OrderCancelReject,
+    BusinessMessageReject,
+    NewOrderSingle,
+    OrderCancelReplaceRequest,
+    Logon,
+    NewOrderMultiLeg,
+    RequestForPositions,
+    PositionReport,
+    TradingSessionStatus,
+    News,
+    CollateralReport,
+    CollateralInquiry,
+    CollateralInquiryAck,
+    RequestForPositionsAck
   )
 }
