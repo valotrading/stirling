@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.tags.fix44.mbtrading
+package stirling.mbtrading.fix
 
 import stirling.fix.messages.{
   CharValue,

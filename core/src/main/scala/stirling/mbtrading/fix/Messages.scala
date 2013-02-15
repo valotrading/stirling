@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.messages.fix44.mbtrading
+package stirling.mbtrading.fix
 
 import stirling.fix.messages.{
   BusinessMessageReject => BusinessMessageRejectTrait,
@@ -41,7 +41,6 @@ import stirling.fix.messages.{
   RepeatingGroupInstance,
   Required
 }
-import stirling.fix.tags.fix44.mbtrading._
 
 class CollateralInquiry(header: MessageHeader) extends AbstractMessage(header) with CollateralInquiryTrait {
   field(Account.Tag, Required.NO)
