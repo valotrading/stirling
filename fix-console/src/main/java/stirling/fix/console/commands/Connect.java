@@ -48,7 +48,7 @@ public class Connect implements Command {
     static {
         logger.setUseParentHandlers(false);
         try {
-            FileHandler stirlingLog = new FileHandler("stirling.log");
+            FileHandler stirlingLog = new FileHandler("fix-console.log");
             stirlingLog.setFormatter(new SimpleFormatter());
             logger.addHandler(stirlingLog);
         } catch (IOException e) {
