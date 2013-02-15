@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.tags.fix44
+package stirling.mbtrading
 
 import stirling.fix.tags._
 
-package object mbtrading {
+package object fix {
   val Account                 = fix42.Account
   val AvgPx                   = fix42.AvgPx
   val BusinessRejectRefID     = fix42.BusinessRejectRefID

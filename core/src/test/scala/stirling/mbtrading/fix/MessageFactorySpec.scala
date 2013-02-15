@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.fix.messages.fix44.mbtrading
+package stirling.mbtrading.fix
 
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers

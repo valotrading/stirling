@@ -20,10 +20,7 @@ import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
 import scala.collection.JavaConversions._
 import stirling.fix.messages.fix44.MsgTypeValue
-import stirling.fix.messages.fix44.mbtrading
-import stirling.fix.tags.fix42._
-import stirling.fix.tags.fix43._
-import stirling.fix.tags.fix44._
+import stirling.mbtrading.fix._
 
 class RepeatingGroupSpec extends WordSpec with MustMatchers with RepeatingGroupFixtures {
   "RepeatingGroup" when {
@@ -74,7 +71,7 @@ class RepeatingGroupSpec extends WordSpec with MustMatchers with RepeatingGroupF
 
 trait RepeatingGroupFixtures {
   def messageWithoutOrWithEmptyRepeatingGroup = {
-    val factory = new mbtrading.MessageFactory
+    val factory = new stirling.mbtrading.fix.MessageFactory
     val message = factory.create(MsgTypeValue.NEW_ORDER_MULTILEG)
 
     message.setString(Account.Tag, "1")
