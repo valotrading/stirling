@@ -9,15 +9,16 @@ object StirlingBuild extends Build {
   import Resolvers._
 
   lazy val commonSettings = Defaults.defaultSettings ++ Seq(
-    organization               := "stirling",
-    version                    := "1.3.4-SNAPSHOT",
-    scalaVersion               := "2.10.0",
-    javacOptions              ++= Seq("-Xlint:unchecked"),
-    crossScalaVersions         := Seq("2.9.2", "2.10.0"),
-    resolvers                 ++= Seq(laughingPanda, mpeltonen, twitter, valotrading),
-    testListeners             <<= (target).map(t => Seq(new eu.henkelmann.sbt.JUnitXmlTestsListener(t.getAbsolutePath))),
-    parallelExecution in Test  := false,
-    exportJars                 := true
+    organization                              := "stirling",
+    version                                   := "1.3.4-SNAPSHOT",
+    scalaVersion                              := "2.10.0",
+    javacOptions                             ++= Seq("-Xlint:unchecked"),
+    crossScalaVersions                        := Seq("2.9.2", "2.10.0"),
+    resolvers                                ++= Seq(laughingPanda, mpeltonen, twitter, valotrading),
+    testListeners                            <<= (target).map(t => Seq(new eu.henkelmann.sbt.JUnitXmlTestsListener(t.getAbsolutePath))),
+    parallelExecution in Test                 := false,
+    exportJars                                := true,
+    publishArtifact in (Compile, packageDoc)  := false
   )
 
   lazy val stirling = Project(
