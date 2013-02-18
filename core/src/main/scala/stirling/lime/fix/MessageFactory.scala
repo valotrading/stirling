@@ -16,25 +16,22 @@
 package stirling.lime.fix
 
 import stirling.fix.messages.fix42.DefaultMessageFactory
-import stirling.fix.messages.fix42.MsgTypeValue._
 
 class MessageFactory extends DefaultMessageFactory {
-  import MsgTypeValue._
-
-  message(LOGON,                        classOf[Logon])
-  message(REJECT,                       classOf[Reject])
-  message(NEW_ORDER_SINGLE,             classOf[NewOrderSingle])
-  message(ORDER_CANCEL_REQUEST,         classOf[OrderCancelRequest])
-  message(ORDER_CANCEL_REPLACE_REQUEST, classOf[OrderCancelReplaceRequest])
-  message(BULK_CANCEL_REQUEST,          classOf[BulkCancelRequest])
-  message(EXECUTION_REPORT,             classOf[ExecutionReport])
-  message(ORDER_CANCEL_REJECT,          classOf[OrderCancelReject])
+  message(MsgTypeValue.Logon,                     classOf[Logon])
+  message(MsgTypeValue.Reject,                    classOf[Reject])
+  message(MsgTypeValue.NewOrderSingle,            classOf[NewOrderSingle])
+  message(MsgTypeValue.OrderCancelRequest,        classOf[OrderCancelRequest])
+  message(MsgTypeValue.OrderCancelReplaceRequest, classOf[OrderCancelReplaceRequest])
+  message(MsgTypeValue.BulkCancelRequest,         classOf[BulkCancelRequest])
+  message(MsgTypeValue.ExecutionReport,           classOf[ExecutionReport])
+  message(MsgTypeValue.OrderCancelReject,         classOf[OrderCancelReject])
 
   override def createHeader = new MessageHeader
 
   override def getProfile = "lime"
 
   override def isValid(msgType: String) = {
-    if (msgType.equals(BULK_CANCEL_REQUEST)) true else super.isValid(msgType)
+    if (msgType == MsgTypeValue.BulkCancelRequest) true else super.isValid(msgType)
   }
 }
