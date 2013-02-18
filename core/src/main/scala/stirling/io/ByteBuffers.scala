@@ -26,4 +26,24 @@ object ByteBuffers {
 
     new ByteString(slice)
   }
+
+  def getAlpha(buffer: ByteBuffer): String = {
+    getAlpha(buffer, buffer.remaining)
+  }
+
+  def getAlpha(buffer: ByteBuffer, length: Int): String = {
+    new String(unwrap(buffer, length), TextFormat.ASCII)
+  }
+
+  def unwrap(buffer: ByteBuffer): Array[Byte] = {
+    unwrap(buffer, buffer.remaining)
+  }
+
+  def unwrap(buffer: ByteBuffer, length: Int): Array[Byte] = {
+    val bytes = new Array[Byte](length)
+
+    buffer.get(bytes)
+
+    bytes
+  }
 }
