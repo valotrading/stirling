@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 the original author or authors.
+ * Copyright 2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.lime.fix
+package stirling.nasdaqomx.fix
 
 import stirling.fix.messages.fix42.MsgTypeValue._
 
 object MsgTypeValue {
+  val Reject                    = REJECT
   val Heartbeat                 = HEARTBEAT
   val Logon                     = LOGON
   val TestRequest               = TEST_REQUEST
   val ResendRequest             = RESEND_REQUEST
-  val Reject                    = REJECT
   val SequenceReset             = SEQUENCE_RESET
   val Logout                    = LOGOUT
-  val BusinessMessageReject     = BUSINESS_MESSAGE_REJECT
   val NewOrderSingle            = NEW_ORDER_SINGLE
   val OrderCancelRequest        = ORDER_CANCEL_REQUEST
   val OrderCancelReplaceRequest = ORDER_CANCEL_REPLACE_REQUEST
-  val BulkCancelRequest         = "s"
-  val OrderCancelReject         = ORDER_CANCEL_REJECT
   val ExecutionReport           = EXECUTION_REPORT
+  val OrderCancelReject         = ORDER_CANCEL_REJECT
 }

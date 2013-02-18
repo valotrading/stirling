@@ -15,25 +15,27 @@
  */
 package stirling.mbtrading.fix
 
-import stirling.fix.messages.fix44.MsgTypeValue._
+import stirling.fix.messages.fix42.DefaultMessageFactory
 
-class MessageFactory extends stirling.fix.messages.fix42.DefaultMessageFactory {
-  message(EXECUTION_REPORT, classOf[ExecutionReport])
-  message(ORDER_CANCEL_REQUEST, classOf[OrderCancelRequest])
-  message(ORDER_CANCEL_REJECT, classOf[OrderCancelReject])
-  message(BUSINESS_MESSAGE_REJECT, classOf[BusinessMessageReject])
-  message(NEW_ORDER_SINGLE, classOf[NewOrderSingle])
-  message(ORDER_CANCEL_REPLACE_REQUEST, classOf[OrderCancelReplaceRequest])
-  message(LOGON, classOf[Logon])
-  message(NEW_ORDER_MULTILEG, classOf[NewOrderMultiLeg])
-  message(REQUEST_FOR_POSITIONS, classOf[RequestForPositions])
-  message(POSITION_REPORT, classOf[PositionReport])
-  message(TRADING_SESSION_STATUS, classOf[TradingSessionStatus])
-  message(NEWS, classOf[News])
-  message(COLLATERAL_REPORT, classOf[CollateralReport])
-  message(COLLATERAL_INQUIRY, classOf[CollateralInquiry])
-  message(COLLATERAL_INQUIRY_ACK, classOf[CollateralInquiryAcknowledgment])
-  message(REQUEST_FOR_POSITIONS_ACK, classOf[RequestForPositionAcknowledgment])
+class MessageFactory extends DefaultMessageFactory {
+  message(MsgTypeValue.ExecutionReport,           classOf[ExecutionReport])
+  message(MsgTypeValue.OrderCancelRequest,        classOf[OrderCancelRequest])
+  message(MsgTypeValue.OrderCancelReject,         classOf[OrderCancelReject])
+  message(MsgTypeValue.BusinessMessageReject,     classOf[BusinessMessageReject])
+  message(MsgTypeValue.NewOrderSingle,            classOf[NewOrderSingle])
+  message(MsgTypeValue.OrderCancelReplaceRequest, classOf[OrderCancelReplaceRequest])
+  message(MsgTypeValue.Logon,                     classOf[Logon])
+  message(MsgTypeValue.NewOrderMultiLeg,          classOf[NewOrderMultiLeg])
+  message(MsgTypeValue.RequestForPositions,       classOf[RequestForPositions])
+  message(MsgTypeValue.PositionReport,            classOf[PositionReport])
+  message(MsgTypeValue.TradingSessionStatus,      classOf[TradingSessionStatus])
+  message(MsgTypeValue.News,                      classOf[News])
+  message(MsgTypeValue.CollateralReport,          classOf[CollateralReport])
+  message(MsgTypeValue.CollateralInquiry,         classOf[CollateralInquiry])
+  message(MsgTypeValue.CollateralInquiryAck,      classOf[CollateralInquiryAcknowledgment])
+  message(MsgTypeValue.RequestForPositionsAck,    classOf[RequestForPositionAcknowledgment])
+
   override def getProfile = "mb-trading"
+
   override def isValid(msgType: String) = isSupported(msgType)
 }
