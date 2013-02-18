@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.nasdaqomx.souptcp10.support
+package stirling.test
 
 import java.net.InetSocketAddress
 import java.nio.ByteBuffer

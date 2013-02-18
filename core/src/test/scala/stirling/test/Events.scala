@@ -13,22 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.nasdaqomx.souptcp10.support
+package stirling.test
 
-import silvertip.Connection
+sealed trait Event
 
-sealed trait Action[+Message] {
-  def description: String
-
-  override def toString = description
+object Event {
+  case object Connected                                        extends Event
+  case object Closed                                           extends Event
+  case class  GarbledMessage(message: String, data: Seq[Byte]) extends Event
 }
-
-case class Act[Message](
-  description: String,
-  procedure:   (Connection[Message]) => Unit
-) extends Action[Message]
-
-case class React(
-  description: String,
-  procedure:   (Any) => Unit
-) extends Action[Nothing]
