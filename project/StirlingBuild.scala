@@ -62,7 +62,7 @@ object StirlingBuild extends Build {
       artifactPath in SbtOneJar.oneJar  := new File("fix-console.jar"),
       libraryDependencies              ++= Seq(
         mockito,
-        scalatest
+        scalatest % "test"
       )
     )
   )
@@ -91,7 +91,7 @@ object StirlingBuild extends Build {
     val log4j           = "log4j"         %  "log4j"             % "1.2.16"
     val mockito         = "org.mockito"   %  "mockito-core"      % "1.9.0"  % "test"
     val mongoJavaDriver = "org.mongodb"   %  "mongo-java-driver" % "2.7.2"
-    val scalatest       = "org.scalatest" %% "scalatest"         % "1.9.1"  % "test"
+    val scalatest       = "org.scalatest" %% "scalatest"         % "1.9.1"
     val silvertip       = "silvertip"     %  "silvertip"         % "0.3.5"
   }
 }
