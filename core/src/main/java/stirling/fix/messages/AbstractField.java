@@ -34,7 +34,7 @@ public abstract class AbstractField<T> implements Field {
         this.tag = tag;
     }
 
-    @Override public Required isRequired() {
+    @Override public Required required() {
         return required;
     }
 

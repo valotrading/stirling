@@ -20,7 +20,7 @@ import java.nio.ByteBuffer;
 public interface Field {
     static final char DELIMITER = '\001';
 
-    Required isRequired();
+    Required required();
     boolean hasValue();
     boolean hasSingleTag();
     void parse(ByteBuffer b);

@@ -124,7 +124,7 @@ public abstract class RepeatingGroup implements Field {
         throw new UnsupportedOperationException();
     }
 
-    @Override public Required isRequired() {
+    @Override public Required required() {
         return required;
     }
 

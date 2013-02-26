@@ -77,7 +77,7 @@ public class RepeatingGroupInstance extends DefaultFieldContainer implements Fie
         return "";
     }
 
-    @Override public Required isRequired() {
+    @Override public Required required() {
         throw new UnsupportedOperationException();
     }
 }
