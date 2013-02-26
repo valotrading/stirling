@@ -58,7 +58,7 @@ public abstract class AbstractField<T> implements Field {
 
     @Override public void parse(ByteBuffer b) {
         if (isParsed())
-            throw new TagMultipleTimesException(prettyName() + ": Tag multiple times");
+            throw new TagMultipleTimesException(tag.prettyName() + ": Tag multiple times");
         String value = parseValue(b);
         if (!value.isEmpty())
             parseValue(value);
@@ -108,34 +108,10 @@ public abstract class AbstractField<T> implements Field {
         return Objects.hashCode(this);
     }
 
-    public String prettyName() {
-        return name() + "(" + tag() + ")";
-    }
-
-    private String name() {
-        if (name == null) {
-            name = parseFieldName();
-        }
-        return name;
-    }
-
-    private String parseFieldName() {
-        if (!tag.getClass().equals(Tag.class)) {
-            return ClassNameHelper.removeTrailingDollar(tag.getClass().getSimpleName());
-        }
-        String s = ClassNameHelper.removeTrailingDollar(getClass().getSimpleName());
-        if (s.length() < 5) {
-            return s;
-        }
-        return s.substring(0, s.length() - 5);
-    }
-
     @Override public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append(name());
-        result.append("(");
-        result.append(tag.value());
-        result.append(")=");
+        result.append(tag.prettyName());
+        result.append("=");
         if (hasValue()) {
             result.append(value());
         }
@@ -143,6 +119,6 @@ public abstract class AbstractField<T> implements Field {
     }
 
     protected InvalidValueFormatException newInvalidValueFormatException(String value) {
-        return new InvalidValueFormatException(prettyName() + ": Invalid value format: " + value);
+        return new InvalidValueFormatException(tag.prettyName() + ": Invalid value format: " + value);
     }
 }

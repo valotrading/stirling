@@ -96,10 +96,6 @@ public abstract class RepeatingGroup implements Field {
         throw new UnsupportedOperationException();
     }
 
-    @Override public String prettyName() {
-        throw new UnsupportedOperationException();
-    }
-
     @Override public Required required() {
         return required;
     }

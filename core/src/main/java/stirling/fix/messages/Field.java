@@ -26,5 +26,4 @@ public interface Field {
     boolean isParsed();
     Tag<?> tag();
     String format();
-    String prettyName();
 }

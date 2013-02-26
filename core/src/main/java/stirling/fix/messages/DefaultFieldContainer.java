@@ -67,7 +67,7 @@ public class DefaultFieldContainer implements FieldContainer {
     public void validate() {
         for (Field field : fields.values()) {
             if (field.isParsed() && !field.hasValue())
-                throw new EmptyTagException(field.prettyName() + ": Empty tag");
+                throw new EmptyTagException(field.tag().prettyName() + ": Empty tag");
         }
     }
 
