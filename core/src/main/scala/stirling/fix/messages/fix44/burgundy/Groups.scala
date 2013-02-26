@@ -9,13 +9,13 @@ trait Groups {
   def parties(req: Required) {
     import stirling.fix.tags.fix44.PartyRole
     import stirling.fix.tags.fix43.{PartyIDSource, PartyID, NoPartyIDs}
-    group(new RepeatingGroup(NoPartyIDs.Tag) {
+    group(new RepeatingGroup(NoPartyIDs.Tag, req) {
       override def newInstance(): RepeatingGroupInstance =
         new RepeatingGroupInstance(PartyID.Tag) {
           field(PartyIDSource.Tag)
           field(PartyRole.Tag, Required.NO)
         }
-    }, req)
+    })
   }
-  protected def group(group: RepeatingGroup, required: Required): Unit
+  protected def group(group: RepeatingGroup): Unit
 }

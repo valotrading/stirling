@@ -29,8 +29,13 @@ public abstract class RepeatingGroup implements Field {
     private Required required;
 
     public RepeatingGroup(Tag<? extends IntegerField> countTag) {
+        this(countTag, Required.YES);
+    }
+
+    public RepeatingGroup(Tag<? extends IntegerField> countTag, Required required) {
         this.countTag = countTag;
         this.countField = countTag.newField(Required.NO);
+        this.required = required;
     }
 
     public Tag<?> countTag() {

@@ -79,8 +79,7 @@ public class DefaultFieldContainer implements FieldContainer {
         this.fields.put(tag.value(), tag.newField(required));
     }
 
-    public void add(RepeatingGroup group, Required required) {
-        group.setRequired(required);
+    public void add(RepeatingGroup group) {
         fields.put(group.countTag().value(), group);
     }
 
@@ -92,12 +91,8 @@ public class DefaultFieldContainer implements FieldContainer {
         add(tag, required);
     }
 
-    protected void group(RepeatingGroup group, Required required) {
-        add(group, required);
-    }
-
     protected void group(RepeatingGroup group) {
-        group(group, Required.YES);
+        add(group);
     }
 
     public boolean hasValue(Tag<?> tag) {

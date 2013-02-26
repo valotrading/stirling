@@ -500,13 +500,13 @@ class SecurityList(header: MessageHeader) extends AbstractMessage(header) with S
   field(SecurityReqID.Tag)
   field(SecurityResponseID.Tag)
   def tickRulesGrp() {
-    group(new RepeatingGroup(NoTickRules.Tag) {
+    group(new RepeatingGroup(NoTickRules.Tag, Required.NO) {
       override def newInstance() =
         new RepeatingGroupInstance(StartTickPriceRange.Tag) {
           field(TickIncrement.Tag)
           field(TickRuleID.Tag)
         }
-    }, Required.NO)
+    })
   }
   tickRulesGrp()
   field(TotalNumSecurities.Tag, Required.NO)
@@ -552,12 +552,12 @@ class SecurityList(header: MessageHeader) extends AbstractMessage(header) with S
         }
         instrument()
         def instrumentExtension() {
-          group(new RepeatingGroup(NoInstrAttrib.Tag) {
+          group(new RepeatingGroup(NoInstrAttrib.Tag, Required.NO) {
             override def newInstance() =
               new RepeatingGroupInstance(InstrAttribType.Tag) {
                 field(InstrAttribValue.Tag)
               }
-          }, Required.NO)
+          })
         }
         instrumentExtension()
         def undInstrmtGrp() {
@@ -662,12 +662,12 @@ class TradeCaptureReportRequest(header: MessageHeader) extends AbstractMessage(h
   field(SecurityIDSource.Tag, Required.NO)
   field(SecurityID.Tag, Required.NO)
   field(Currency.Tag, Required.NO)
-  group(new RepeatingGroup(NoDates.Tag) {
+  group(new RepeatingGroup(NoDates.Tag, Required.NO) {
     override def newInstance(): RepeatingGroupInstance =
       new RepeatingGroupInstance(TradeDate.Tag) {
         field(TransactTime.Tag, Required.NO)
       }
-  }, Required.NO)
+  })
   field(LastPx.Tag, Required.NO)
   field(LastShares.Tag, Required.NO)
   field(Side.Tag, Required.NO)
