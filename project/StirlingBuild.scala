@@ -18,7 +18,8 @@ object StirlingBuild extends Build {
     testListeners                            <<= (target).map(t => Seq(new eu.henkelmann.sbt.JUnitXmlTestsListener(t.getAbsolutePath))),
     parallelExecution in Test                 := false,
     exportJars                                := true,
-    publishArtifact in (Compile, packageDoc)  := false
+    publishArtifact in (Compile, packageDoc)  := false,
+    publishTo                                 := Some(Resolver.file("GitHub Pages", file("../maven-gh-pages/")))
   )
 
   lazy val stirling = Project(
