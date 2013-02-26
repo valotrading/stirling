@@ -106,7 +106,7 @@ public abstract class AbstractField<T> implements Field {
         }
         try {
             parse(value);
-        } catch (InvalidValueForTagException e) {
+        } catch (InvalidValueException e) {
             validValue = false;
         } catch (InvalidValueFormatException e) {
             validFormat = false;

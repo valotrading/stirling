@@ -51,7 +51,7 @@ public class EnumField<T extends EnumType> extends AbstractField<T> {
                     return;
                 }
             }
-            throw new InvalidValueForTagException(value);
+            throw new InvalidValueException(value);
         }
         throw new UnsupportedOperationException("parsing not implemented for this tag type");
     }
