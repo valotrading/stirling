@@ -60,10 +60,6 @@ public abstract class AbstractField<T> implements Field {
         return value != null;
     }
 
-    @Override public boolean isConditional() {
-        return required.isConditional();
-    }
-
     @Override public void parse(ByteBuffer b) {
         if (isParsed())
             throw new TagMultipleTimesException(prettyName() + ": Tag multiple times");

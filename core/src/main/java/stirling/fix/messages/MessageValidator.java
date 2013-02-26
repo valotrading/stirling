@@ -95,7 +95,7 @@ public class MessageValidator {
             });
             add(new AbstractFieldsValidator() {
                 @Override protected boolean isValid(Session session, Field field) {
-                    if (field.isConditional()) {
+                    if (field.required().isConditional()) {
                         return true;
                     }
                     return !missing(field);
@@ -112,7 +112,7 @@ public class MessageValidator {
             });
             add(new AbstractFieldsValidator() {
                 @Override protected boolean isValid(Session session, Field field) {
-                    if (!field.isConditional()) {
+                    if (!field.required().isConditional()) {
                         return true;
                     }
                     return !missing(field);

@@ -92,10 +92,6 @@ public abstract class RepeatingGroup implements Field {
         return countField.isEmpty();
     }
 
-    @Override public boolean isConditional() {
-        return false;
-    }
-
     @Override public boolean isParsed() {
         return countField.isParsed();
     }
