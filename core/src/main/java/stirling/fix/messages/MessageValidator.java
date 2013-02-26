@@ -98,7 +98,7 @@ public class MessageValidator {
                     if (field.isConditional()) {
                         return true;
                     }
-                    return !field.isMissing();
+                    return !missing(field);
                 }
 
                 @Override protected void error(Session session, Message message, Field field, ErrorHandler handler) {
@@ -115,7 +115,7 @@ public class MessageValidator {
                     if (!field.isConditional()) {
                         return true;
                     }
-                    return !field.isMissing();
+                    return !missing(field);
                 }
 
                 @Override protected void error(Session session, Message message, Field field, ErrorHandler handler) {
@@ -136,5 +136,9 @@ public class MessageValidator {
                 return false;
         }
         return true;
+    }
+
+    private static boolean missing(Field field) {
+        return field.required().isRequired() && !field.hasValue();
     }
 }
