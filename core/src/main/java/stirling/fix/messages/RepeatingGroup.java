@@ -88,10 +88,6 @@ public abstract class RepeatingGroup implements Field {
         return countField.hasValue();
     }
 
-    @Override public boolean hasSingleTag() {
-        return false;
-    }
-
     @Override public boolean isEmpty() {
         return countField.isEmpty();
     }

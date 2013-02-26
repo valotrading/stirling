@@ -62,10 +62,6 @@ public abstract class AbstractField<T> implements Field {
         return value != null;
     }
 
-    @Override public boolean hasSingleTag() {
-        return true;
-    }
-
     public boolean isFormatValid() {
         return validFormat;
     }

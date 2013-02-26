@@ -119,7 +119,7 @@ public class MessageValidator {
                 }
 
                 @Override protected void error(Session session, Message message, Field field, ErrorHandler handler) {
-                    if (field.hasSingleTag() && OrigSendingTime.Tag().equals(field.tag())) {
+                    if (OrigSendingTime.Tag().equals(field.tag())) {
                         handler.sessionReject(SessionRejectReason.TagMissing(), toString(field) + ": Required tag missing", ErrorLevel.ERROR, false);
                     } else {
                         handler.businessReject(BusinessRejectReason.ConditionallyRequiredFieldMissing(), toString(field) + ": Conditionally required field missing", ErrorLevel.ERROR);

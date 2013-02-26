@@ -22,7 +22,6 @@ public interface Field {
 
     Required required();
     boolean hasValue();
-    boolean hasSingleTag();
     void parse(ByteBuffer b);
     boolean isFormatValid();
     boolean isValueValid();
