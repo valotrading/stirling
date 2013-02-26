@@ -20,7 +20,6 @@ import java.nio.ByteBuffer;
 import stirling.lang.Objects;
 
 public abstract class AbstractField<T> implements Field {
-    protected boolean validFormat = true;
     private boolean validValue = true;
     private Required required;
     private String name;
@@ -60,10 +59,6 @@ public abstract class AbstractField<T> implements Field {
 
     @Override public boolean hasValue() {
         return value != null;
-    }
-
-    public boolean isFormatValid() {
-        return validFormat;
     }
 
     public boolean isValueValid() {
@@ -108,8 +103,6 @@ public abstract class AbstractField<T> implements Field {
             parse(value);
         } catch (InvalidValueException e) {
             validValue = false;
-        } catch (InvalidValueFormatException e) {
-            validFormat = false;
         }
     }
 
@@ -168,5 +161,9 @@ public abstract class AbstractField<T> implements Field {
             result.append(value());
         }
         return result.toString();
+    }
+
+    protected InvalidValueFormatException newInvalidValueFormatException() {
+        return new InvalidValueFormatException(prettyName() + ": Invalid value format");
     }
 }

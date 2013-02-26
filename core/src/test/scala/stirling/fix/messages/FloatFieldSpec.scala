@@ -36,8 +36,9 @@ class FloatFieldSpec extends WordSpec with MustMatchers {
       field.doubleValue must equal(23.0)
     }
     "fail to parse the scientific notation" in {
-      field.parse("1.23E4")
-      field.isFormatValid must equal(false)
+      intercept[InvalidValueFormatException] {
+        field.parse("1.23E4")
+      }.getMessage must equal("BidPx(132): Invalid value format")
     }
     "format to a decimal number" in {
       field.setValue(23.23)

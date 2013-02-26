@@ -65,8 +65,6 @@ public class Parser {
         String value = parseField(message, MsgSeqNum.Tag());
         IntegerField field = new IntegerField(MsgSeqNum.Tag());
         field.parse(value);
-        if (!field.isFormatValid())
-            throw new InvalidValueFormatException(MsgSeqNum.Tag().prettyName() + " has invalid value format: " + value);
         return field.intValue();
     }
 

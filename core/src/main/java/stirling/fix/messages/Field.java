@@ -23,7 +23,6 @@ public interface Field {
     Required required();
     boolean hasValue();
     void parse(ByteBuffer b);
-    boolean isFormatValid();
     boolean isValueValid();
     boolean isMissing();
     boolean isConditional();

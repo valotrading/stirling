@@ -26,8 +26,9 @@ class UtcTimestampFieldSpec extends WordSpec with MustMatchers with UtcTimestamp
     "parsing" should {
       val timestamp = new UtcTimestampField(OrigTime.Tag)
       "not parse non-timestamp strings" in {
-        timestamp.parse("ZZ")
-        timestamp.isFormatValid must equal(false)
+        intercept[InvalidValueFormatException] {
+          timestamp.parse("ZZ")
+        }.getMessage must equal("OrigTime(42): Invalid value format")
       }
     }
     "it has a value" should {

@@ -37,7 +37,7 @@ public class IntegerField extends AbstractField<Integer> {
         try {
             this.value = Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            validFormat = false;
+            throw newInvalidValueFormatException();
         }
     }
 

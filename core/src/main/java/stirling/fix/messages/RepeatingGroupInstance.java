@@ -45,10 +45,6 @@ public class RepeatingGroupInstance extends DefaultFieldContainer implements Fie
         return false;
     }
 
-    @Override public boolean isFormatValid() {
-        return false;
-    }
-
     @Override public boolean isMissing() {
         return false;
     }
