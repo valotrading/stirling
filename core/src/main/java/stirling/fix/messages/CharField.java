@@ -15,9 +15,6 @@
  */
 package stirling.fix.messages;
 
-/**
- * @author Pekka Enberg 
- */
 public class CharField extends AbstractField<Character> {
     public CharField(Tag<CharField> tag) {
         this(tag, null, Required.YES);
@@ -25,6 +22,10 @@ public class CharField extends AbstractField<Character> {
 
     public CharField(Tag<CharField> tag, Character value) {
         this(tag, value, Required.YES);
+    }
+
+    public CharField(Tag<CharField> tag, Required required) {
+        this(tag, null, required);
     }
 
     public CharField(Tag<CharField> tag, Character value, Required required) {

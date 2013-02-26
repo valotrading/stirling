@@ -19,9 +19,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
- * @author Pekka Enberg 
- */
 public class EnumField<T extends EnumType> extends AbstractField<T> {
     public EnumField(Tag<? extends EnumField<T>> tag) {
         this(tag, Required.YES);
@@ -31,12 +28,12 @@ public class EnumField<T extends EnumType> extends AbstractField<T> {
         this(tag, value, Required.YES);
     }
 
-    public EnumField(Tag<? extends EnumField<T>> tag, T value, Required required) {
-        super(tag, value, required);
-    }
-
     public EnumField(Tag<? extends EnumField<T>> tag, Required required) {
         super(tag, null, required);
+    }
+
+    public EnumField(Tag<? extends EnumField<T>> tag, T value, Required required) {
+        super(tag, value, required);
     }
 
     public void setValue(T value) {

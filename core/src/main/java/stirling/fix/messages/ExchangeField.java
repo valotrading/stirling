@@ -16,8 +16,8 @@
 package stirling.fix.messages;
 
 public class ExchangeField extends StringField {
-    public ExchangeField(Tag<ExchangeField> tag) {
-        this(tag, null, Required.YES);
+    public ExchangeField(Tag<ExchangeField> tag, Required required) {
+        this(tag, null, required);
     }
 
     protected ExchangeField(Tag<ExchangeField> tag, String value, Required required) {

@@ -16,8 +16,8 @@
 package stirling.fix.messages;
 
 public class PriceField extends FloatField {
-    public PriceField(Tag<PriceField> tag) {
-        this(tag, null, Required.YES);
+    public PriceField(Tag<PriceField> tag, Required required) {
+        this(tag, null, required);
     }
 
     protected PriceField(Tag<PriceField> tag, Double value, Required required) {

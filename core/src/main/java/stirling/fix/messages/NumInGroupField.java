@@ -16,8 +16,8 @@
 package stirling.fix.messages;
 
 public class NumInGroupField extends IntegerField {
-    public NumInGroupField(Tag<NumInGroupField> tag) {
-        this(tag, null, Required.YES);
+    public NumInGroupField(Tag<NumInGroupField> tag, Required required) {
+        this(tag, null, required);
     }
 
     protected NumInGroupField(Tag<NumInGroupField> tag, Integer value, Required required) {

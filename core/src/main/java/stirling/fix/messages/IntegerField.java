@@ -15,9 +15,6 @@
  */
 package stirling.fix.messages;
 
-/**
- * @author Pekka Enberg 
- */
 public class IntegerField extends AbstractField<Integer> {
     public IntegerField(Tag<? extends IntegerField> tag) {
         this(tag, null, Required.YES);
@@ -25,6 +22,10 @@ public class IntegerField extends AbstractField<Integer> {
 
     public IntegerField(Tag<? extends IntegerField> tag, Integer value) {
         this(tag, value, Required.YES);
+    }
+
+    public IntegerField(Tag<? extends IntegerField> tag, Required required) {
+        this(tag, null, required);
     }
 
     public IntegerField(Tag<? extends IntegerField> tag, Integer value, Required required) {
