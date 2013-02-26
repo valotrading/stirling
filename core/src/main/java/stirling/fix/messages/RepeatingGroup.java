@@ -128,10 +128,6 @@ public abstract class RepeatingGroup implements Field {
         return required;
     }
 
-    @Override public void setRequired(Required required) {
-        this.required = required;
-    }
-
     @Override public String toString() {
         StringBuilder result = new StringBuilder();
         if (isParsed()) {

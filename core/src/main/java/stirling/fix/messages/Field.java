@@ -17,13 +17,9 @@ package stirling.fix.messages;
 
 import java.nio.ByteBuffer;
 
-/**
- * @author Pekka Enberg
- */
 public interface Field {
     static final char DELIMITER = '\001';
 
-    void setRequired(Required required);
     Required isRequired();
     boolean hasValue();
     boolean hasSingleTag();

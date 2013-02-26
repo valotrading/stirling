@@ -19,9 +19,6 @@ import java.nio.ByteBuffer;
 
 import stirling.lang.Objects;
 
-/**
- * @author Pekka Enberg 
- */
 public abstract class AbstractField<T> implements Field {
     protected boolean validFormat = true;
     private boolean validValue = true;
@@ -39,10 +36,6 @@ public abstract class AbstractField<T> implements Field {
 
     @Override public Required isRequired() {
         return required;
-    }
-
-    @Override public void setRequired(Required required) {
-        this.required = required;
     }
 
     public void setValue(T value) {

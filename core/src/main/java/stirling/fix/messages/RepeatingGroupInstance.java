@@ -80,8 +80,4 @@ public class RepeatingGroupInstance extends DefaultFieldContainer implements Fie
     @Override public Required isRequired() {
         throw new UnsupportedOperationException();
     }
-
-    @Override public void setRequired(Required required) {
-        throw new UnsupportedOperationException();
-    }
 }
