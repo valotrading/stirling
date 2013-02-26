@@ -57,10 +57,6 @@ public class RepeatingGroupInstance extends DefaultFieldContainer implements Fie
         return false;
     }
 
-    @Override public boolean isValueValid() {
-        return false;
-    }
-
     @Override public Tag<?> tag() {
         throw new UnsupportedOperationException();
     }

@@ -53,8 +53,6 @@ public class DefaultFieldContainer implements FieldContainer {
                 break;
             }
             field.parse(b);
-            if (!field.isValueValid())
-                throw new InvalidValueException(field.prettyName() + ": Invalid value");
         }
     }
 

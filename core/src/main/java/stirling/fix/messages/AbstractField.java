@@ -20,7 +20,6 @@ import java.nio.ByteBuffer;
 import stirling.lang.Objects;
 
 public abstract class AbstractField<T> implements Field {
-    private boolean validValue = true;
     private Required required;
     private String name;
     private boolean defined;
@@ -61,10 +60,6 @@ public abstract class AbstractField<T> implements Field {
         return value != null;
     }
 
-    public boolean isValueValid() {
-        return validValue;
-    }
-
     @Override public boolean isMissing() {
         return required.isRequired() && !hasValue();
     }
@@ -99,11 +94,7 @@ public abstract class AbstractField<T> implements Field {
         if (value == null) {
             return;
         }
-        try {
-            parse(value);
-        } catch (InvalidValueException e) {
-            validValue = false;
-        }
+        parse(value);
     }
 
     public abstract void parse(String value);

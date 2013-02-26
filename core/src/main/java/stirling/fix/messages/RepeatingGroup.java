@@ -104,10 +104,6 @@ public abstract class RepeatingGroup implements Field {
         return countField.isParsed();
     }
 
-    @Override public boolean isValueValid() {
-        return true;
-    }
-
     @Override public Tag<?> tag() {
         throw new UnsupportedOperationException();
     }
