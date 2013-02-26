@@ -48,10 +48,6 @@ public abstract class AbstractField<T> implements Field {
         return tag;
     }
 
-    @Override public boolean isEmpty() {
-        return !hasValue() && defined;
-    }
-
     @Override public boolean isParsed() {
         return defined;
     }

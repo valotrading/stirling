@@ -41,10 +41,6 @@ public class RepeatingGroupInstance extends DefaultFieldContainer implements Fie
         return false;
     }
 
-    @Override public boolean isEmpty() {
-        return false;
-    }
-
     @Override public boolean isParsed() {
         return false;
     }

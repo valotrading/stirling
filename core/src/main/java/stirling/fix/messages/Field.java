@@ -24,7 +24,6 @@ public interface Field {
     boolean hasValue();
     void parse(ByteBuffer b);
     boolean isParsed();
-    boolean isEmpty();
     Tag<?> tag();
     String format();
     String prettyName();
