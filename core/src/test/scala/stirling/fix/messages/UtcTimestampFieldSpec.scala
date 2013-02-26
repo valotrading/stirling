@@ -28,7 +28,7 @@ class UtcTimestampFieldSpec extends WordSpec with MustMatchers with UtcTimestamp
       "not parse non-timestamp strings" in {
         intercept[InvalidValueFormatException] {
           timestamp.parse("ZZ")
-        }.getMessage must equal("OrigTime(42): Invalid value format")
+        }.getMessage must equal("OrigTime(42): Invalid value format: ZZ")
       }
     }
     "it has a value" should {

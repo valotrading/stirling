@@ -41,12 +41,12 @@ public class FloatField extends AbstractField<Double> {
     public void parse(String value) {
         Matcher matcher = DECIMAL_PATTERN.matcher(value);
         if (!matcher.matches()) {
-            throw newInvalidValueFormatException();
+            throw newInvalidValueFormatException(value);
         }
         try {
             this.value = Double.parseDouble(value);
         } catch (NumberFormatException e) {
-            throw newInvalidValueFormatException();
+            throw newInvalidValueFormatException(value);
         }
     }
 

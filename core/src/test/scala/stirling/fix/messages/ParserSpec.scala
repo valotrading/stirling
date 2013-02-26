@@ -71,7 +71,7 @@ class ParserSpec extends WordSpec with MustMatchers with MockitoSugar with Parse
         val exception = intercept[InvalidValueFormatException] {
           Parser.parseMsgSeqNum(FixMessage.fromString(raw, msgType))
         }
-        exception.getMessage must equal("MsgSeqNum(34): Invalid value format")
+        exception.getMessage must equal("MsgSeqNum(34): Invalid value format: X")
       }
     }
     "optional field is missing" should {
@@ -121,7 +121,7 @@ class ParserSpec extends WordSpec with MustMatchers with MockitoSugar with Parse
         .field(CheckSum, "227")
         .toString
       "invoke the invalid message callback" in {
-        expectInvalidMessage(raw, msgType, SessionRejectReason.InvalidValueFormat, "SendingTime(52): Invalid value format")
+        expectInvalidMessage(raw, msgType, SessionRejectReason.InvalidValueFormat, "SendingTime(52): Invalid value format: WRONG FORMAT")
       }
     }
     "parsing a tag with invalid value" should {

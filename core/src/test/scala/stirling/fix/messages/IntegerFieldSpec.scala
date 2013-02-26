@@ -33,12 +33,12 @@ class IntegerFieldSpec extends WordSpec with MustMatchers {
     "fail to parse a decimal number" in {
       intercept[InvalidValueFormatException] {
         field.parse("1.23")
-      }.getMessage must equal("BeginSeqNo(7): Invalid value format")
+      }.getMessage must equal("BeginSeqNo(7): Invalid value format: 1.23")
     }
     "fail to parse a non-numeric string" in {
       intercept[InvalidValueFormatException] {
         field.parse("ZZ")
-      }.getMessage must equal("BeginSeqNo(7): Invalid value format")
+      }.getMessage must equal("BeginSeqNo(7): Invalid value format: ZZ")
     }
   }
 }

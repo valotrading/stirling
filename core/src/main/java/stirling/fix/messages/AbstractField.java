@@ -154,7 +154,7 @@ public abstract class AbstractField<T> implements Field {
         return result.toString();
     }
 
-    protected InvalidValueFormatException newInvalidValueFormatException() {
-        return new InvalidValueFormatException(prettyName() + ": Invalid value format");
+    protected InvalidValueFormatException newInvalidValueFormatException(String value) {
+        return new InvalidValueFormatException(prettyName() + ": Invalid value format: " + value);
     }
 }
