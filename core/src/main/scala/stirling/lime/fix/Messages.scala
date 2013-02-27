@@ -82,6 +82,20 @@ class NewOrderSingle(header: MessageHeaderTrait) extends AbstractMessage(header)
   field(PegType.Tag,                     Required.NO)
   field(LockedOrCrossedAction.Tag,       Required.NO)
   field(RegularSessionOnly.Tag,          Required.NO)
+  field(ArcaTracking.Tag,                Required.NO) // ARCA/ArcaDirect
+  field(ArcaPassiveLiquidity.Tag,        Required.NO)
+  field(MarketRoutingInstructions.Tag,   Required.NO)
+  field(BATSRoutingInstructions.Tag,     Required.NO) // BATS/BYX
+  field(DarkScan.Tag,                    Required.NO)
+  field(NoRescrapeAtLimit.Tag,           Required.NO)
+  field(EdgeRoutingInstructions.Tag,     Required.NO) // DirectEdge
+  field(ImbalanceOnly.Tag,               Required.NO) // INET/BSX/PSX/INET-FIX/BSX-FIX/PSX-FIX
+  field(INETFIXRoutingInstructions.Tag,  Required.NO)
+  field(IntradayCross.Tag,               Required.NO)
+  field(NasdaqPostOnly.Tag,              Required.NO)
+  field(MarketDisplayPrice.Tag,          Required.NO)
+  field(NYSERoutingInstructions.Tag,     Required.NO) // NYSE
+  field(TargetLocationID.Tag,            Required.NO)
 
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
