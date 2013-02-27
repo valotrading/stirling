@@ -60,6 +60,8 @@ object Position extends IntegerTag(8004)
 
 object BuyingPower extends FloatTag(8005)
 
+object TimeInMarket extends IntegerTag(9001)
+
 object Invisible extends BooleanTag(9003)
 
 object PostOnly extends BooleanTag(9004)
