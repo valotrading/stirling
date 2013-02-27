@@ -16,7 +16,7 @@
 package stirling.fix.session.store
 
 import java.io.{File, FileWriter}
-import org.joda.time.{DateTime, DateTimeZone, LocalDate}
+import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import org.scalatest.WordSpec
 import org.scalatest.mock.MockitoSugar
@@ -95,7 +95,7 @@ trait DiskSessionStoreFixtures {
   def newSessionStore = new DiskSessionStore(path)
   def senderCompId = "INITIATOR"
   def targetCompId = "ACCEPTOR"
-  def date = ISODateTimeFormat.date.print(new LocalDate(DateTimeZone.UTC))
+  def date = ISODateTimeFormat.date.print(new DateTime(System.currentTimeMillis))
   def directory = new File(path, "%s-%s".format(senderCompId, targetCompId))
   def file = new File(directory, "%s".format(date))
   def readFile = {
