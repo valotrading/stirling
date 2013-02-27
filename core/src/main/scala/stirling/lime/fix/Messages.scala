@@ -31,9 +31,10 @@ import stirling.fix.messages.{
 }
 
 class Logon(header: MessageHeaderTrait) extends AbstractMessage(header) with LogonTrait {
+  field(TargetSubID.Tag,           Required.NO)
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
-  field(Username.Tag,              Required.NO)
+  field(Username.Tag)
   field(Password.Tag,              Required.NO)
   field(CancelAllOnDisconnect.Tag, Required.NO)
 
@@ -67,6 +68,7 @@ class NewOrderSingle(header: MessageHeaderTrait) extends AbstractMessage(header)
   field(ExpireTime.Tag,                  Required.NO)
   field(PegDifference.Tag,               Required.NO)
   field(DiscretionOffset.Tag,            Required.NO)
+  field(TimeInMarket.Tag,                Required.NO)
   field(Invisible.Tag,                   Required.NO)
   field(PostOnly.Tag,                    Required.NO)
   field(ShortSaleAffirm.Tag,             Required.NO)
@@ -76,9 +78,24 @@ class NewOrderSingle(header: MessageHeaderTrait) extends AbstractMessage(header)
   field(AlternateExDestination.Tag,      Required.NO)
   field(RouteToNYSE.Tag,                 Required.NO)
   field(ISO.Tag,                         Required.NO)
+  field(ISOGroupID.Tag,                  Required.NO)
   field(PegType.Tag,                     Required.NO)
   field(LockedOrCrossedAction.Tag,       Required.NO)
   field(RegularSessionOnly.Tag,          Required.NO)
+  field(ArcaTracking.Tag,                Required.NO) // ARCA/ArcaDirect
+  field(ArcaPassiveLiquidity.Tag,        Required.NO)
+  field(MarketRoutingInstructions.Tag,   Required.NO)
+  field(BATSRoutingInstructions.Tag,     Required.NO) // BATS/BYX
+  field(DarkScan.Tag,                    Required.NO)
+  field(NoRescrapeAtLimit.Tag,           Required.NO)
+  field(EdgeRoutingInstructions.Tag,     Required.NO) // DirectEdge
+  field(ImbalanceOnly.Tag,               Required.NO) // INET/BSX/PSX/INET-FIX/BSX-FIX/PSX-FIX
+  field(INETFIXRoutingInstructions.Tag,  Required.NO)
+  field(IntradayCross.Tag,               Required.NO)
+  field(NasdaqPostOnly.Tag,              Required.NO)
+  field(MarketDisplayPrice.Tag,          Required.NO)
+  field(NYSERoutingInstructions.Tag,     Required.NO) // NYSE
+  field(TargetLocationID.Tag,            Required.NO)
 
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
@@ -111,6 +128,18 @@ class BulkCancelRequest(header: MessageHeaderTrait) extends AbstractMessage(head
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
+class OrderCancelReject(header: MessageHeaderTrait) extends AbstractMessage(header) with OrderCancelRejectTrait {
+  field(OrderID.Tag)
+  field(ClOrdID.Tag)
+  field(OrigClOrdID.Tag)
+  field(OrdStatus.Tag)
+  field(Text.Tag,             Required.NO)
+  field(CxlRejReason.Tag,     Required.NO)
+  field(CxlRejResponseTo.Tag, Required.NO)
+
+  def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
 class ExecutionReport(header: MessageHeaderTrait) extends AbstractMessage(header) with ExecutionReportTrait {
   field(ExecType.Tag)
   field(OrdStatus.Tag)
@@ -127,6 +156,7 @@ class ExecutionReport(header: MessageHeaderTrait) extends AbstractMessage(header
   field(SecurityID.Tag,          Required.NO)
   field(SecurityIDSource.Tag,    Required.NO)
   field(OrderQty.Tag)
+  field(OrdType.Tag)
   field(Price.Tag,               Required.NO)
   field(LastShares.Tag)
   field(LastPx.Tag)
@@ -144,20 +174,7 @@ class ExecutionReport(header: MessageHeaderTrait) extends AbstractMessage(header
   field(NoContraBrokers.Tag,     Required.NO)
   field(ClientOrderData.Tag,     Required.NO)
   field(ExternalClOrdId.Tag,     Required.NO)
-  field(OrdType.Tag,             Required.NO)
-
-  def apply(visitor: MessageVisitor) = visitor.visit(this)
-}
-
-class OrderCancelReject(header: MessageHeaderTrait) extends AbstractMessage(header) with OrderCancelRejectTrait {
-  field(OrderID.Tag)
-  field(ClOrdID.Tag)
-  field(OrigClOrdID.Tag)
-  field(OrdStatus.Tag)
-  field(Text.Tag,             Required.NO)
-  field(CxlRejReason.Tag,     Required.NO)
-  field(CxlRejResponseTo.Tag, Required.NO)
-  field(TransactTime.Tag,     Required.NO)
+  field(NbboWeightIndicator.Tag, Required.NO)
 
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
