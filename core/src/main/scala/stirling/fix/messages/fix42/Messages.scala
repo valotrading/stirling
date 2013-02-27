@@ -212,13 +212,13 @@ class Allocation(header: MessageHeader) extends AbstractMessage(header) with All
   field(Shares.Tag)
   field(AvgPx.Tag)
   field(TradeDate.Tag)
-  group(new RepeatingGroup(NoAllocs.Tag) {
+  group(new RepeatingGroup(NoAllocs.Tag, Required.NO) {
     override def newInstance:RepeatingGroupInstance = {
       return new RepeatingGroupInstance(AllocAccount.Tag) {
         field(AllocShares.Tag)
       }
     }
-  }, Required.NO)
+  })
 
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }

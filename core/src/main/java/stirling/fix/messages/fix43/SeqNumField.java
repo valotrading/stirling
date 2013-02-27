@@ -20,8 +20,8 @@ import stirling.fix.messages.Required;
 import stirling.fix.messages.Tag;
 
 public class SeqNumField extends IntegerField {
-    public SeqNumField(Tag<SeqNumField> tag) {
-        this(tag, null, Required.YES);
+    public SeqNumField(Tag<SeqNumField> tag, Required required) {
+        this(tag, null, required);
     }
 
     protected SeqNumField(Tag<SeqNumField> tag, Integer value, Required required) {

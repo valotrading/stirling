@@ -15,9 +15,6 @@
  */
 package stirling.fix.messages;
 
-/**
- * @author Pekka Enberg 
- */
 public class StringField extends AbstractField<String> {
     public StringField(Tag<? extends StringField> tag) {
         this(tag, Required.YES);

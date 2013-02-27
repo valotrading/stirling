@@ -15,9 +15,6 @@
  */
 package stirling.fix.messages;
 
-/**
- * @author Pekka Enberg 
- */
 public class BooleanField extends AbstractField<Boolean> {
     public BooleanField(Tag<BooleanField> tag) {
         this(tag, null, Required.YES);

@@ -29,8 +29,13 @@ public abstract class RepeatingGroup implements Field {
     private Required required;
 
     public RepeatingGroup(Tag<? extends IntegerField> countTag) {
+        this(countTag, Required.YES);
+    }
+
+    public RepeatingGroup(Tag<? extends IntegerField> countTag, Required required) {
         this.countTag = countTag;
         this.countField = countTag.newField(Required.NO);
+        this.required = required;
     }
 
     public Tag<?> countTag() {
@@ -83,48 +88,16 @@ public abstract class RepeatingGroup implements Field {
         return countField.hasValue();
     }
 
-    @Override public boolean hasSingleTag() {
-        return false;
-    }
-
-    @Override public boolean isEmpty() {
-        return countField.isEmpty();
-    }
-
-    @Override public boolean isFormatValid() {
-        return true;
-    }
-
-    @Override public boolean isMissing() {
-        return required.isRequired() && !hasValue();
-    }
-
-    @Override public boolean isConditional() {
-        return false;
-    }
-
     @Override public boolean isParsed() {
         return countField.isParsed();
-    }
-
-    @Override public boolean isValueValid() {
-        return true;
     }
 
     @Override public Tag<?> tag() {
         throw new UnsupportedOperationException();
     }
 
-    @Override public String prettyName() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override public Required isRequired() {
+    @Override public Required required() {
         return required;
-    }
-
-    @Override public void setRequired(Required required) {
-        this.required = required;
     }
 
     @Override public String toString() {

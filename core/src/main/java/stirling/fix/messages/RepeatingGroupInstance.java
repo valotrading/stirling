@@ -29,7 +29,7 @@ public class RepeatingGroupInstance extends DefaultFieldContainer implements Fie
     @Override public void parse(ByteBuffer b) {
         int tag = Tag.peekTag(b);
         if (tag != delimiter.value())
-            throw new ParseException(lookup(tag).prettyName() + ": Repeating group fields out of order", SessionRejectReason.OutOfOrderGroupField());
+            throw new ParseException(lookup(tag).tag().prettyName() + ": Repeating group fields out of order", SessionRejectReason.OutOfOrderGroupField());
         super.parse(b);
     }
 
@@ -41,31 +41,7 @@ public class RepeatingGroupInstance extends DefaultFieldContainer implements Fie
         return false;
     }
 
-    @Override public boolean hasSingleTag() {
-        return false;
-    }
-
-    @Override public boolean isEmpty() {
-        return false;
-    }
-
-    @Override public boolean isFormatValid() {
-        return false;
-    }
-
-    @Override public boolean isMissing() {
-        return false;
-    }
-
-    @Override public boolean isConditional() {
-        return false;
-    }
-
     @Override public boolean isParsed() {
-        return false;
-    }
-
-    @Override public boolean isValueValid() {
         return false;
     }
 
@@ -73,15 +49,7 @@ public class RepeatingGroupInstance extends DefaultFieldContainer implements Fie
         throw new UnsupportedOperationException();
     }
 
-    @Override public String prettyName() {
-        return "";
-    }
-
-    @Override public Required isRequired() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override public void setRequired(Required required) {
+    @Override public Required required() {
         throw new UnsupportedOperationException();
     }
 }

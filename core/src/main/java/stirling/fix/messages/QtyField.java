@@ -16,8 +16,8 @@
 package stirling.fix.messages;
 
 public class QtyField extends FloatField {
-    public QtyField(Tag<QtyField> tag) {
-        this(tag, null, Required.YES);
+    public QtyField(Tag<QtyField> tag, Required required) {
+        this(tag, null, required);
     }
 
     protected QtyField(Tag<QtyField> tag, Double value, Required required) {

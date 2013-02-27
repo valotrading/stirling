@@ -19,12 +19,7 @@ import java.nio.ByteBuffer;
 
 import stirling.lang.Objects;
 
-/**
- * @author Pekka Enberg 
- */
 public abstract class AbstractField<T> implements Field {
-    protected boolean validFormat = true;
-    private boolean validValue = true;
     private Required required;
     private String name;
     private boolean defined;
@@ -37,12 +32,8 @@ public abstract class AbstractField<T> implements Field {
         this.tag = tag;
     }
 
-    @Override public Required isRequired() {
+    @Override public Required required() {
         return required;
-    }
-
-    @Override public void setRequired(Required required) {
-        this.required = required;
     }
 
     public void setValue(T value) {
@@ -57,10 +48,6 @@ public abstract class AbstractField<T> implements Field {
         return tag;
     }
 
-    @Override public boolean isEmpty() {
-        return !hasValue() && defined;
-    }
-
     @Override public boolean isParsed() {
         return defined;
     }
@@ -69,29 +56,9 @@ public abstract class AbstractField<T> implements Field {
         return value != null;
     }
 
-    @Override public boolean hasSingleTag() {
-        return true;
-    }
-
-    public boolean isFormatValid() {
-        return validFormat;
-    }
-
-    public boolean isValueValid() {
-        return validValue;
-    }
-
-    @Override public boolean isMissing() {
-        return required.isRequired() && !hasValue();
-    }
-
-    @Override public boolean isConditional() {
-        return required.isConditional();
-    }
-
     @Override public void parse(ByteBuffer b) {
         if (isParsed())
-            throw new TagMultipleTimesException(prettyName() + ": Tag multiple times");
+            throw new TagMultipleTimesException(tag.prettyName() + ": Tag multiple times");
         String value = parseValue(b);
         if (!value.isEmpty())
             parseValue(value);
@@ -115,13 +82,7 @@ public abstract class AbstractField<T> implements Field {
         if (value == null) {
             return;
         }
-        try {
-            parse(value);
-        } catch (InvalidValueForTagException e) {
-            validValue = false;
-        } catch (InvalidValueFormatException e) {
-            validFormat = false;
-        }
+        parse(value);
     }
 
     public abstract void parse(String value);
@@ -147,37 +108,17 @@ public abstract class AbstractField<T> implements Field {
         return Objects.hashCode(this);
     }
 
-    public String prettyName() {
-        return name() + "(" + tag() + ")";
-    }
-
-    private String name() {
-        if (name == null) {
-            name = parseFieldName();
-        }
-        return name;
-    }
-
-    private String parseFieldName() {
-        if (!tag.getClass().equals(Tag.class)) {
-            return ClassNameHelper.removeTrailingDollar(tag.getClass().getSimpleName());
-        }
-        String s = ClassNameHelper.removeTrailingDollar(getClass().getSimpleName());
-        if (s.length() < 5) {
-            return s;
-        }
-        return s.substring(0, s.length() - 5);
-    }
-
     @Override public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append(name());
-        result.append("(");
-        result.append(tag.value());
-        result.append(")=");
+        result.append(tag.prettyName());
+        result.append("=");
         if (hasValue()) {
             result.append(value());
         }
         return result.toString();
+    }
+
+    protected InvalidValueFormatException newInvalidValueFormatException(String value) {
+        return new InvalidValueFormatException(tag.prettyName() + ": Invalid value format: " + value);
     }
 }

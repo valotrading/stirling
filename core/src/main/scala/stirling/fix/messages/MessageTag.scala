@@ -23,7 +23,7 @@ abstract class MessageTag[T <: Field](value: Int, clazz: Class[T]) extends Tag[T
 }
 
 abstract class EnumTag[T](value: Int) extends MessageTag[EnumField[Value[T]]](value, classOf[EnumField[Value[T]]]) {
-  def newField(required: Required) = new EnumField(this) { setRequired(required) }
+  def newField(required: Required) = new EnumField(this, required)
   def valueOf(name: String) = namesAndValues.find { case (n, v) =>
     n.equals(name)
   }.getOrElse {
@@ -49,46 +49,46 @@ case class StringValue(str: String) extends Value[String](str)
 case class BooleanValue(bool: Boolean) extends Value[Boolean](bool)
 
 abstract class BooleanTag(value: Int) extends MessageTag[BooleanField](value, classOf[BooleanField]) {
-  def newField(required: Required) = new BooleanField(this) { setRequired(required) }
+  def newField(required: Required) = new BooleanField(this, required)
 }
 abstract class CharTag(value: Int) extends MessageTag[CharField](value, classOf[CharField]) {
-  def newField(required: Required) = new CharField(this) { setRequired(required) }
+  def newField(required: Required) = new CharField(this, required)
 }
 abstract class FloatTag(value: Int) extends MessageTag[FloatField](value, classOf[FloatField]) {
-  def newField(required: Required) = new FloatField(this) { setRequired(required) }
+  def newField(required: Required) = new FloatField(this, required)
 }
 abstract class IntegerTag(value: Int) extends MessageTag[IntegerField](value, classOf[IntegerField]) {
-  def newField(required: Required) = new IntegerField(this) { setRequired(required) }
+  def newField(required: Required) = new IntegerField(this, required)
 }
 abstract class StringTag(value: Int) extends MessageTag[StringField](value, classOf[StringField]) {
-  def newField(required: Required) = new StringField(this) { setRequired(required) }
+  def newField(required: Required) = new StringField(this, required)
 }
 abstract class ExchangeTag(value: Int) extends MessageTag[ExchangeField](value, classOf[ExchangeField]) {
-  def newField(required: Required) = new ExchangeField(this) { setRequired(required) }
+  def newField(required: Required) = new ExchangeField(this, required)
 }
 abstract class LocalMktDateTag(value: Int) extends MessageTag[LocalMktDateField](value, classOf[LocalMktDateField]) {
-  def newField(required: Required) = new LocalMktDateField(this) { setRequired(required) }
+  def newField(required: Required) = new LocalMktDateField(this, required)
 }
 abstract class MonthYearTag(value: Int) extends MessageTag[MonthYearField](value, classOf[MonthYearField]) {
-  def newField(required: Required) = new MonthYearField(this) { setRequired(required) }
+  def newField(required: Required) = new MonthYearField(this, required)
 }
 abstract class UtcTimestampTag(value: Int) extends MessageTag[UtcTimestampField](value, classOf[UtcTimestampField]) {
-  def newField(required: Required) = new UtcTimestampField(this) { setRequired(required) }
+  def newField(required: Required) = new UtcTimestampField(this, required)
 }
 abstract class NumInGroupTag(value: Int) extends MessageTag[NumInGroupField](value, classOf[NumInGroupField]) {
-  def newField(required: Required) = new NumInGroupField(this) { setRequired(required) }
+  def newField(required: Required) = new NumInGroupField(this, required)
 }
 abstract class PriceTag(value: Int) extends MessageTag[PriceField](value, classOf[PriceField]) {
-  def newField(required: Required) = new PriceField(this) { setRequired(required) }
+  def newField(required: Required) = new PriceField(this, required)
 }
 abstract class PriceOffsetTag(value: Int) extends MessageTag[PriceOffsetField](value, classOf[PriceOffsetField]) {
-  def newField(required: Required) = new PriceOffsetField(this) { setRequired(required) }
+  def newField(required: Required) = new PriceOffsetField(this, required)
 }
 abstract class QtyTag(value: Int) extends MessageTag[QtyField](value, classOf[QtyField]) {
-  def newField(required: Required) = new QtyField(this) { setRequired(required) }
+  def newField(required: Required) = new QtyField(this, required)
 }
 abstract class SeqNumTag(value: Int) extends MessageTag[SeqNumField](value, classOf[SeqNumField]) {
-  def newField(required: Required) = new SeqNumField(this) { setRequired(required) }
+  def newField(required: Required) = new SeqNumField(this, required)
 }
 
 abstract class CurrencyTag(value: Int) extends StringTag(value)

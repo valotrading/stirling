@@ -21,9 +21,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-/**
- * @author Pekka Enberg 
- */
 public class UtcTimestampField extends AbstractField<DateTime> {
     private static final String FORMAT_WITHOUT_MSEC = "yyyyMMdd-HH:mm:ss";
     private static final String FORMAT_WITH_MSEC = "yyyyMMdd-HH:mm:ss.SSS";
@@ -52,7 +49,7 @@ public class UtcTimestampField extends AbstractField<DateTime> {
         try {
             this.value = fmt.withZone(UTC).parseDateTime(value);
         } catch (Exception e) {
-            validFormat = false;
+            throw newInvalidValueFormatException(value);
         }
     }
     
