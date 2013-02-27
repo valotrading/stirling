@@ -142,6 +142,7 @@ class ExecutionReport(header: MessageHeaderTrait) extends AbstractMessage(header
   field(SecurityID.Tag,          Required.NO)
   field(SecurityIDSource.Tag,    Required.NO)
   field(OrderQty.Tag)
+  field(OrdType.Tag)
   field(Price.Tag,               Required.NO)
   field(LastShares.Tag)
   field(LastPx.Tag)
@@ -159,7 +160,6 @@ class ExecutionReport(header: MessageHeaderTrait) extends AbstractMessage(header
   field(NoContraBrokers.Tag,     Required.NO)
   field(ClientOrderData.Tag,     Required.NO)
   field(ExternalClOrdId.Tag,     Required.NO)
-  field(OrdType.Tag,             Required.NO)
 
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
