@@ -114,6 +114,19 @@ class BulkCancelRequest(header: MessageHeaderTrait) extends AbstractMessage(head
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
+class OrderCancelReject(header: MessageHeaderTrait) extends AbstractMessage(header) with OrderCancelRejectTrait {
+  field(OrderID.Tag)
+  field(ClOrdID.Tag)
+  field(OrigClOrdID.Tag)
+  field(OrdStatus.Tag)
+  field(Text.Tag,             Required.NO)
+  field(CxlRejReason.Tag,     Required.NO)
+  field(CxlRejResponseTo.Tag, Required.NO)
+  field(TransactTime.Tag,     Required.NO)
+
+  def apply(visitor: MessageVisitor) = visitor.visit(this)
+}
+
 class ExecutionReport(header: MessageHeaderTrait) extends AbstractMessage(header) with ExecutionReportTrait {
   field(ExecType.Tag)
   field(OrdStatus.Tag)
@@ -148,19 +161,6 @@ class ExecutionReport(header: MessageHeaderTrait) extends AbstractMessage(header
   field(ClientOrderData.Tag,     Required.NO)
   field(ExternalClOrdId.Tag,     Required.NO)
   field(OrdType.Tag,             Required.NO)
-
-  def apply(visitor: MessageVisitor) = visitor.visit(this)
-}
-
-class OrderCancelReject(header: MessageHeaderTrait) extends AbstractMessage(header) with OrderCancelRejectTrait {
-  field(OrderID.Tag)
-  field(ClOrdID.Tag)
-  field(OrigClOrdID.Tag)
-  field(OrdStatus.Tag)
-  field(Text.Tag,             Required.NO)
-  field(CxlRejReason.Tag,     Required.NO)
-  field(CxlRejResponseTo.Tag, Required.NO)
-  field(TransactTime.Tag,     Required.NO)
 
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
