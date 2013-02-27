@@ -30,7 +30,6 @@ import silvertip.Server;
 import silvertip.Server.ConnectionFactory;
 import stirling.fix.Config;
 import stirling.fix.Version;
-import stirling.fix.messages.DefaultMessageComparator;
 import stirling.fix.messages.DefaultMessageVisitor;
 import stirling.fix.messages.FixMessageParser;
 import stirling.fix.messages.Message;
@@ -195,7 +194,7 @@ public class PerformanceTest implements Runnable {
         @Override public void run() {
             try {
                 Events events = Events.open();
-                final Session session = new Session(getHeartBtIntValue(), getConfig(), sessionStore, getMessageFactory(), new DefaultMessageComparator());
+                final Session session = new Session(getHeartBtIntValue(), getConfig(), sessionStore, getMessageFactory());
                 SocketChannel channel = SocketChannel.open();
                 channel.connect(new InetSocketAddress("localhost", port));
                 channel.configureBlocking(false);
