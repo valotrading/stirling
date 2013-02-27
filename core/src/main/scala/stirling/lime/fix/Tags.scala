@@ -42,6 +42,7 @@ object TimeInForce extends EnumTag[Character](59) {
   val GoodTillDate      = CharValue('6')
   val AtTheClose        = CharValue('7')
   val TimeInMarket      = CharValue('8')
+  val OnOpenThenDay     = CharValue('D')
 }
 
 object CxlRejReason extends EnumTag[Integer](102) {
@@ -60,6 +61,8 @@ object Position extends IntegerTag(8004)
 
 object BuyingPower extends FloatTag(8005)
 
+object TimeInMarket extends IntegerTag(9001)
+
 object Invisible extends BooleanTag(9003)
 
 object PostOnly extends BooleanTag(9004)
@@ -74,13 +77,21 @@ object AlternateExDestination extends StringTag(9012)
 
 object RouteToNYSE extends BooleanTag(9014)
 
+object BATSRoutingInstructions extends StringTag(9016)
+
 object ISO extends BooleanTag(9017)
+
+object DarkScan extends BooleanTag(9019)
 
 object CancelAllOpen extends BooleanTag(9020)
 
 object CancelPairs extends StringTag(9021)
 
+object ImbalanceOnly extends BooleanTag(9022)
+
 object MarketConfirmPrices extends PriceTag(9028)
+
+object INETFIXRoutingInstructions extends StringTag(9032)
 
 object PegType extends EnumTag[Character](9034) {
   val Primary               = CharValue('1')
@@ -90,9 +101,24 @@ object PegType extends EnumTag[Character](9034) {
   val PriceImprovedPrimary  = CharValue('5') // LAVA only
   val PriceImprovedMarket   = CharValue('6') // LAVA only
   val PriceImprovedMidPoint = CharValue('7') // LAVA only
+  val DiscretionaryMidpoint = CharValue('8') // DirectEdge only
 }
 
+object IntradayCross extends BooleanTag(9035)
+
+object NasdaqPostOnly extends BooleanTag(9036)
+
+object NoRescrapeAtLimit extends BooleanTag(9037)
+
+object ArcaTracking extends BooleanTag(9040)
+
 object ClientOrderData extends StringTag(9050)
+
+object ArcaPassiveLiquidity extends BooleanTag(9054)
+
+object ISOGroupID extends StringTag(9060)
+
+object NYSERoutingInstructions extends StringTag(9061)
 
 object LockedOrCrossedAction extends EnumTag[Character](9064) {
   val Reject                      = CharValue('R')
@@ -106,8 +132,16 @@ object LockedOrCrossedAction extends EnumTag[Character](9064) {
   val ProactiveIfLocked           = CharValue('A') // ARCA/ARCE only
 }
 
+object EdgeRoutingInstructions extends StringTag(9065)
+
 object RegularSessionOnly extends BooleanTag(9066)
 
 object ShortSaleAffirmLongQuantity extends IntegerTag(9067)
 
+object MarketRoutingInstructions extends StringTag(9068)
+
 object ExternalClOrdId extends StringTag(9508)
+
+object MarketDisplayPrice extends FloatTag(9509)
+
+object NbboWeightIndicator extends FloatTag(9511)
