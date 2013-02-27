@@ -34,6 +34,7 @@ import stirling.lang.TimeSource;
 import org.joda.time.DateTime;
 
 import stirling.fix.Config;
+import stirling.fix.messages.DefaultMessageComparator;
 import stirling.fix.messages.DefaultMessageVisitor;
 import stirling.fix.messages.FixMessage;
 import stirling.fix.messages.Heartbeat;
@@ -68,9 +69,6 @@ import stirling.fix.tags.fix42.Text;
 import stirling.fix.tags.fix43.SessionRejectReason;
 import silvertip.Connection;
 
-/**
- * @author Karim Osman
- */
 public class Session {
     public static final int MAX_CONSECUTIVE_RESEND_REQUESTS = 10;
 
@@ -99,6 +97,10 @@ public class Session {
 
     private boolean waitingForResponseToInitiatedLogout;
     private DateTime logoutInitiatedAt;
+
+    public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, MessageFactory messageFactory) {
+        this(heartBtInt, config, store, messageFactory, new DefaultMessageComparator());
+    }
 
     public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, MessageFactory messageFactory, MessageComparator messageComparator) {
         this.heartBtInt = heartBtInt;

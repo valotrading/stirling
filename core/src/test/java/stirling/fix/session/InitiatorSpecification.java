@@ -45,7 +45,6 @@ import silvertip.Events;
 import stirling.fix.Config;
 import stirling.fix.Version;
 import stirling.fix.messages.BooleanField;
-import stirling.fix.messages.DefaultMessageComparator;
 import stirling.fix.messages.DefaultMessageVisitor;
 import stirling.fix.messages.EnumField;
 import stirling.fix.messages.Field;
@@ -539,7 +538,7 @@ public class InitiatorSpecification extends Specification<Session> {
     protected class TestSession extends Session {
         protected TestSession() throws Exception {
             super(HeartBtIntValue.milliseconds(getHearbeatIntervalInMillis()), InitiatorSpecification.this.config,
-                newSessionStore(), new DefaultMessageFactory(), new DefaultMessageComparator());
+                newSessionStore(), new DefaultMessageFactory());
         }
 
         protected MessageQueue<Message> getOutgoingMsgQueue() {

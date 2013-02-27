@@ -30,7 +30,6 @@ import silvertip.Connection;
 import silvertip.MessageParser;
 import stirling.fix.console.Arguments;
 import stirling.fix.console.ConsoleClient;
-import stirling.fix.messages.DefaultMessageComparator;
 import stirling.fix.messages.DefaultMessageVisitor;
 import stirling.fix.messages.FixMessage;
 import stirling.fix.messages.FixMessageParser;
@@ -101,7 +100,7 @@ public class Connect implements Command {
             });
             logger.info("Connecting finished");
             client.setConnection(conn);
-            Session session = new Session(getHeartBtInt(), client.getConfig(), client.getSessionStore(), client.getMessageFactory(), new DefaultMessageComparator()) {
+            Session session = new Session(getHeartBtInt(), client.getConfig(), client.getSessionStore(), client.getMessageFactory()) {
                 @Override
                 protected boolean checkSeqResetSeqNum() {
                     /* Do not verify that the sequence numbers of SeqReset messages as
