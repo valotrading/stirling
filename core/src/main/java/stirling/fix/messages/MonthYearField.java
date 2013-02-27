@@ -42,7 +42,7 @@ public class MonthYearField extends AbstractField<DateTime> {
         try {
             this.value = fmt.withZone(UTC).parseDateTime(value);
         } catch (Exception e) {
-            validFormat = false;
+            throw newInvalidValueFormatException(value);
         }
     }
 

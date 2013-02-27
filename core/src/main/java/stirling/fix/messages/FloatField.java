@@ -21,9 +21,6 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author Pekka Enberg 
- */
 public class FloatField extends AbstractField<Double> {
     private static final DecimalFormatSymbols DECIMAL_SYMBOLS = new DecimalFormatSymbols(Locale.US);
     private static final Pattern DECIMAL_PATTERN = Pattern.compile("-?\\d*(\\.\\d*)?");
@@ -44,13 +41,12 @@ public class FloatField extends AbstractField<Double> {
     public void parse(String value) {
         Matcher matcher = DECIMAL_PATTERN.matcher(value);
         if (!matcher.matches()) {
-            validFormat = false;
-            return;
+            throw newInvalidValueFormatException(value);
         }
         try {
             this.value = Double.parseDouble(value);
         } catch (NumberFormatException e) {
-            validFormat = false;
+            throw newInvalidValueFormatException(value);
         }
     }
 

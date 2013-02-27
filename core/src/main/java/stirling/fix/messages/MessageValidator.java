@@ -95,10 +95,10 @@ public class MessageValidator {
             });
             add(new AbstractFieldsValidator() {
                 @Override protected boolean isValid(Session session, Field field) {
-                    if (field.isConditional()) {
+                    if (field.required().isConditional()) {
                         return true;
                     }
-                    return !field.isMissing();
+                    return !missing(field);
                 }
 
                 @Override protected void error(Session session, Message message, Field field, ErrorHandler handler) {
@@ -112,14 +112,14 @@ public class MessageValidator {
             });
             add(new AbstractFieldsValidator() {
                 @Override protected boolean isValid(Session session, Field field) {
-                    if (!field.isConditional()) {
+                    if (!field.required().isConditional()) {
                         return true;
                     }
-                    return !field.isMissing();
+                    return !missing(field);
                 }
 
                 @Override protected void error(Session session, Message message, Field field, ErrorHandler handler) {
-                    if (field.hasSingleTag() && OrigSendingTime.Tag().equals(field.tag())) {
+                    if (OrigSendingTime.Tag().equals(field.tag())) {
                         handler.sessionReject(SessionRejectReason.TagMissing(), toString(field) + ": Required tag missing", ErrorLevel.ERROR, false);
                     } else {
                         handler.businessReject(BusinessRejectReason.ConditionallyRequiredFieldMissing(), toString(field) + ": Conditionally required field missing", ErrorLevel.ERROR);
@@ -136,5 +136,9 @@ public class MessageValidator {
                 return false;
         }
         return true;
+    }
+
+    private static boolean missing(Field field) {
+        return field.required().isRequired() && !field.hasValue();
     }
 }

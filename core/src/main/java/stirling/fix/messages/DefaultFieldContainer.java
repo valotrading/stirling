@@ -53,10 +53,6 @@ public class DefaultFieldContainer implements FieldContainer {
                 break;
             }
             field.parse(b);
-            if (!field.isFormatValid())
-                throw new InvalidValueFormatException(field.prettyName() + ": Invalid value format");
-            if (!field.isValueValid())
-                throw new InvalidValueException(field.prettyName() + ": Invalid value");
         }
     }
 
@@ -70,8 +66,8 @@ public class DefaultFieldContainer implements FieldContainer {
 
     public void validate() {
         for (Field field : fields.values()) {
-            if (field.isEmpty())
-                throw new EmptyTagException(field.prettyName() + ": Empty tag");
+            if (field.isParsed() && !field.hasValue())
+                throw new EmptyTagException(field.tag().prettyName() + ": Empty tag");
         }
     }
 
@@ -79,8 +75,7 @@ public class DefaultFieldContainer implements FieldContainer {
         this.fields.put(tag.value(), tag.newField(required));
     }
 
-    public void add(RepeatingGroup group, Required required) {
-        group.setRequired(required);
+    public void add(RepeatingGroup group) {
         fields.put(group.countTag().value(), group);
     }
 
@@ -92,12 +87,8 @@ public class DefaultFieldContainer implements FieldContainer {
         add(tag, required);
     }
 
-    protected void group(RepeatingGroup group, Required required) {
-        add(group, required);
-    }
-
     protected void group(RepeatingGroup group) {
-        group(group, Required.YES);
+        add(group);
     }
 
     public boolean hasValue(Tag<?> tag) {

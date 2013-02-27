@@ -218,7 +218,7 @@ public abstract class AbstractMessage extends DefaultFieldContainer implements M
             if (CheckSum.Tag().value() == tag) {
                 throw new OutOfOrderTagException("CheckSum(10): Out of order tag");
             } else if (field != null) {
-                throw new OutOfOrderTagException(field.prettyName() + ": Out of order tag");
+                throw new OutOfOrderTagException(field.tag().prettyName() + ": Out of order tag");
             }
             throw new InvalidTagException("Tag not defined for message '" + header.getMsgType() + "': " + tag);
         }

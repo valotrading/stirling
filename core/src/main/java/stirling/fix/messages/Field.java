@@ -17,24 +17,13 @@ package stirling.fix.messages;
 
 import java.nio.ByteBuffer;
 
-/**
- * @author Pekka Enberg
- */
 public interface Field {
     static final char DELIMITER = '\001';
 
-    void setRequired(Required required);
-    Required isRequired();
+    Required required();
     boolean hasValue();
-    boolean hasSingleTag();
     void parse(ByteBuffer b);
-    boolean isFormatValid();
-    boolean isValueValid();
-    boolean isMissing();
-    boolean isConditional();
     boolean isParsed();
-    boolean isEmpty();
     Tag<?> tag();
     String format();
-    String prettyName();
 }

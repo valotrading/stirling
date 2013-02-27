@@ -69,7 +69,7 @@ class NewOrderMultiLeg(header: MessageHeader) extends AbstractMessage(header) wi
   field(TrdRegTimestamp.Tag, Required.NO)
   field(TrdRegTimestampType.Tag, Required.NO)
   field(TrdRegTimestampOrigin.Tag, Required.NO)
-  group(new RepeatingGroup(NoLegs.Tag) {
+  group(new RepeatingGroup(NoLegs.Tag, Required.NO) {
     override def newInstance = new RepeatingGroupInstance(LegSymbol.Tag) {
       field(LegCFICode.Tag)
       field(LegMaturityMonthYear.Tag)
@@ -81,7 +81,7 @@ class NewOrderMultiLeg(header: MessageHeader) extends AbstractMessage(header) wi
       field(Username.Tag)
       field(Password.Tag)
     }
-  }, Required.NO)
+  })
   override def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
 
@@ -204,18 +204,16 @@ class ExecutionReport(header: MessageHeader) extends AbstractMessage(header) wit
   field(MultiLegReportingType.Tag, Required.NO)
   field(Product.Tag, Required.NO)
   field(OrderRestrictions.Tag, Required.NO)
-  group(new RepeatingGroup(NoLegs.Tag) {
-    override def newInstance:RepeatingGroupInstance = {
-      return new RepeatingGroupInstance(LegPrice.Tag) {
-        field(LegSymbol.Tag, Required.NO)
-        field(LegProduct.Tag, Required.NO)
-        field(LegStrikePrice.Tag, Required.NO)
-        field(LegRatioQty.Tag, Required.NO)
-        field(LegSide.Tag, Required.NO)
-        field(LegRefID.Tag, Required.NO)
-      }
+  group(new RepeatingGroup(NoLegs.Tag, Required.NO) {
+    override def newInstance = new RepeatingGroupInstance(LegPrice.Tag) {
+      field(LegSymbol.Tag, Required.NO)
+      field(LegProduct.Tag, Required.NO)
+      field(LegStrikePrice.Tag, Required.NO)
+      field(LegRatioQty.Tag, Required.NO)
+      field(LegSide.Tag, Required.NO)
+      field(LegRefID.Tag, Required.NO)
     }
-  }, Required.NO)
+  })
   field(ClOrdLinkID.Tag, Required.NO)
   field(MassStatusReqID.Tag, Required.NO)
   field(Price2.Tag, Required.NO)

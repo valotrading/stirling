@@ -66,7 +66,7 @@ public abstract class FixMessageCommand implements Command {
         Iterator<Field> fieldsIterator = newMessage(client).iterator();
         while (fieldsIterator.hasNext()) {
             Field field = fieldsIterator.next();
-            String prettyName = field.prettyName();
+            String prettyName = field.tag().prettyName();
             fields.add(prettyName.replaceAll("\\(([0-9]+)\\)", "="));
         }
         return fields.toArray(new String[0]);
