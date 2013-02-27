@@ -53,6 +53,7 @@ package object fix {
   val SecurityID       = fix42.SecurityID
   val Symbol           = fix42.Symbol
   val SymbolSfx        = fix42.SymbolSfx
+  val TargetSubID      = fix42.TargetSubID
   val Text             = fix42.Text
   val TransactTime     = fix42.TransactTime
 
