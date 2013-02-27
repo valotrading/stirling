@@ -250,6 +250,7 @@ object BidSize extends IntegerTag(134)
 object OfferSize extends IntegerTag(135)
 object ResetSeqNumFlag extends BooleanTag(141)
 object SenderLocationID extends StringTag(142)
+object TargetLocationID extends StringTag(143)
 object NoRelatedSym extends IntegerTag(146)
 object Headline extends StringTag(148)
 object ExecType extends EnumTag[Character](150) {
