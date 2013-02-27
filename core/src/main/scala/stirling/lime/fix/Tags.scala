@@ -117,3 +117,5 @@ object RegularSessionOnly extends BooleanTag(9066)
 object ShortSaleAffirmLongQuantity extends IntegerTag(9067)
 
 object ExternalClOrdId extends StringTag(9508)
+
+object NbboWeightIndicator extends FloatTag(9511)

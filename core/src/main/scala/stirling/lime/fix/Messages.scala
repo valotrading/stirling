@@ -160,6 +160,7 @@ class ExecutionReport(header: MessageHeaderTrait) extends AbstractMessage(header
   field(NoContraBrokers.Tag,     Required.NO)
   field(ClientOrderData.Tag,     Required.NO)
   field(ExternalClOrdId.Tag,     Required.NO)
+  field(NbboWeightIndicator.Tag, Required.NO)
 
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
