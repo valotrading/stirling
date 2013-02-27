@@ -34,7 +34,7 @@ class Logon(header: MessageHeaderTrait) extends AbstractMessage(header) with Log
   field(TargetSubID.Tag,           Required.NO)
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
-  field(Username.Tag,              Required.NO)
+  field(Username.Tag)
   field(Password.Tag,              Required.NO)
   field(CancelAllOnDisconnect.Tag, Required.NO)
 
