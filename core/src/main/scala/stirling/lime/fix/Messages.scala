@@ -34,7 +34,7 @@ class Logon(header: MessageHeaderTrait) extends AbstractMessage(header) with Log
   // TargetSubID(57): See MessageHeader
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
-  field(Username.Tag)
+  field(Username.Tag,              Required.NO) // Initiator: Required.YES
   field(Password.Tag,              Required.NO)
   field(CancelAllOnDisconnect.Tag, Required.NO)
 
