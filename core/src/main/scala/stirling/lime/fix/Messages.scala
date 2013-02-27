@@ -122,7 +122,6 @@ class OrderCancelReject(header: MessageHeaderTrait) extends AbstractMessage(head
   field(Text.Tag,             Required.NO)
   field(CxlRejReason.Tag,     Required.NO)
   field(CxlRejResponseTo.Tag, Required.NO)
-  field(TransactTime.Tag,     Required.NO)
 
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
