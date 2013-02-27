@@ -22,19 +22,11 @@ import org.scalatest.matchers.MustMatchers
 class MessageTagSpec extends WordSpec with MustMatchers {
   "EnumTag" should {
     "resolve fields" in {
-      IntTag.parse("1") must equal(IntTag.Foo)
       IntTag.valueOf("Foo") must equal(IntTag.Foo)
-      IntTag.parse("2") must equal(IntTag.Bar)
       IntTag.valueOf("Bar") must equal(IntTag.Bar)
     }
   }
-  "EnumTag" should {
-    "throw an exception" in {
-      intercept [InvalidValueForTagException] {
-        IntTag.parse("0")
-      }
-    }
-  }
+
   private object IntTag extends EnumTag[Integer](0) {
     val Foo = IntegerValue(1)
     val Bar = IntegerValue(2)
