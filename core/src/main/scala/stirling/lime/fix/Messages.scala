@@ -31,7 +31,7 @@ import stirling.fix.messages.{
 }
 
 class Logon(header: MessageHeaderTrait) extends AbstractMessage(header) with LogonTrait {
-  field(TargetSubID.Tag,           Required.NO)
+  // TargetSubID(57): See MessageHeader
   field(EncryptMethod.Tag)
   field(HeartBtInt.Tag)
   field(Username.Tag)
