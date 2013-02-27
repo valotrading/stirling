@@ -96,6 +96,8 @@ object PegType extends EnumTag[Character](9034) {
 
 object ClientOrderData extends StringTag(9050)
 
+object ISOGroupID extends StringTag(9060)
+
 object LockedOrCrossedAction extends EnumTag[Character](9064) {
   val Reject                      = CharValue('R')
   val PriceAdjust                 = CharValue('P')
