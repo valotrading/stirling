@@ -14,7 +14,7 @@ object StirlingBuild extends Build {
     scalaVersion                              := "2.10.0",
     javacOptions                             ++= Seq("-Xlint:unchecked"),
     crossScalaVersions                        := Seq("2.9.2", "2.10.0"),
-    resolvers                                ++= Seq(laughingPanda, mpeltonen, twitter, valotrading),
+    resolvers                                ++= Seq(laughingPanda, mpeltonen, valotrading),
     testListeners                            <<= (target).map(t => Seq(new eu.henkelmann.sbt.JUnitXmlTestsListener(t.getAbsolutePath))),
     parallelExecution in Test                 := false,
     exportJars                                := true,
@@ -49,8 +49,7 @@ object StirlingBuild extends Build {
         mockito,
         mongoJavaDriver,
         scalatest,
-        silvertip,
-        utilLogging
+        silvertip
       )
     )
   )
@@ -78,7 +77,6 @@ object StirlingBuild extends Build {
   object Resolvers {
     val laughingPanda = "Laughing Panda" at "http://maven.laughingpanda.org/maven2/"
     val mpeltonen     = "Mikko Peltonen" at "http://mpeltonen.github.com/maven/"
-    val twitter       = "Twitter"        at "http://maven.twttr.com/"
     val valotrading   = "Valo"           at "http://valotrading.github.com/maven/"
   }
 
@@ -95,6 +93,5 @@ object StirlingBuild extends Build {
     val mongoJavaDriver = "org.mongodb"   %  "mongo-java-driver" % "2.7.2"
     val scalatest       = "org.scalatest" %% "scalatest"         % "1.9.1"  % "test"
     val silvertip       = "silvertip"     %  "silvertip"         % "0.3.5"
-    val utilLogging     = "com.twitter"   %  "util-logging"      % "3.0.0"
   }
 }
