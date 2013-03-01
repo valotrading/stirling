@@ -61,7 +61,6 @@ import MbtMessage._
 case class MbtMessage(msgType: MessageType, fields: Map[MbtMessage.Tag, MbtMessage.Value] = Map()) {
   import MbtMessageTag._
   import MbtMessageType._
-  import Predef._
   def get(tag: Tag): Option[String] = {
     fields.get(tag)
   }
