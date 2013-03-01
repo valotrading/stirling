@@ -47,6 +47,9 @@ case class MbtMessage(msgType: MessageType, fields: Map[MbtMessage.Tag, MbtMessa
   import MbtMessageTag._
   import MbtMessageType._
   import Predef._
+  def get(tag: Tag): Option[String] = {
+    fields.get(tag)
+  }
   def getString(tag: Tag) = {
     fields(tag)
   }
