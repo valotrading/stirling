@@ -120,10 +120,6 @@ case class MbtMessage(msgType: MessageType, fields: Map[MbtMessage.Tag, MbtMessa
     }.mkString(";")
   }
 
-  def isMarketDataMessage = {
-    marketDataMessages.contains(msgType)
-  }
-
   def level1UpdateTimestamp = {
     val (date, time) = (getString(Date), getString(Timestamp))
     dateFormat.parseDateTime(date).withFields(timeFormat.parseLocalTime(time)).getMillis
@@ -147,8 +143,6 @@ object MbtMessageType {
   val TasUpdate               = '3'
   val FundamentalDataResponse = 'N'
   val OptionsChainsUpdate     = '4'
-
-  val marketDataMessages = Set(Level1Update, Level2Update, TasUpdate, FundamentalDataResponse, OptionsChainsUpdate)
 }
 
 object MbtMessageTag {
