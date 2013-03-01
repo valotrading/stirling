@@ -204,7 +204,7 @@ object MbtQuoteServerTickCondition {
   val FormT = 29
   val IntermarketSweep = 45
   val ClosePrice = 49
-  val AveragePrice = 53;
+  val AveragePrice = 53
 }
 
 object MbtQuoteServerTickStatus {
