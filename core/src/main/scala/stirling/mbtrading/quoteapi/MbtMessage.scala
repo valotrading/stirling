@@ -22,9 +22,10 @@ import silvertip.PartialMessageException
 object MbtMessage {
   val ASCII = Charset.forName("US-ASCII")
 
-  type Tag   = Int
-  type Type  = Char
-  type Value = String
+  type Fields = Map[Tag, Value]
+  type Tag    = Int
+  type Type   = Char
+  type Value  = String
 
   def parse(buffer: ByteBuffer): MbtMessage = {
     for (pos <- buffer.position until buffer.limit) {
@@ -45,7 +46,7 @@ object MbtMessage {
     bytes(0).toChar
   }
 
-  private def msgFields(bytes: Array[Byte]): Map[Tag, Value] = {
+  private def msgFields(bytes: Array[Byte]): Fields = {
     body(bytes).split(";").map(tagAndValue).toMap
   }
 
@@ -166,7 +167,7 @@ object MbtMessage {
   }
 }
 
-case class MbtMessage(msgType: MbtMessage.Type, fields: Map[MbtMessage.Tag, MbtMessage.Value] = Map()) {
+case class MbtMessage(msgType: MbtMessage.Type, fields: MbtMessage.Fields = Map()) {
   import MbtMessage._
 
   def getString(tag: Tag): Option[String] = {
