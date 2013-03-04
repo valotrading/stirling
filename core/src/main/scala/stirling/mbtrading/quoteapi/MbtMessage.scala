@@ -200,11 +200,7 @@ case class MbtMessage(msgType: MbtMessage.Type, fields: Map[MbtMessage.Tag, MbtM
   }
 
   def set(tag: Tag, value: Value): MbtMessage = {
-    MbtMessage(msgType, fields + (tag -> value))
-  }
-
-  def set(tag: Tag, value: Int): MbtMessage = {
-    set(tag, value.toString)
+    copy(fields = fields + (tag -> value))
   }
 
   def hasValue(tag: Tag): Boolean = {
