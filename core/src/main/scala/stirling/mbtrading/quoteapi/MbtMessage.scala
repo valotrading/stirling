@@ -37,17 +37,15 @@ object MbtMessage {
   }
 
   private def message(bytes: Array[Byte]): MbtMessage = {
-    msgFields(bytes).foldLeft(MbtMessage(msgType(bytes))) { case (msg, (tag, value)) =>
-      msg.set(tag, value)
-    }
+    MbtMessage(msgType(bytes), msgFields(bytes))
   }
 
   private def msgType(bytes: Array[Byte]): MessageType = {
     bytes(0).toChar
   }
 
-  private def msgFields(bytes: Array[Byte]): Set[(Tag, Value)] = {
-    body(bytes).split(";").map(tagAndValue).toSet
+  private def msgFields(bytes: Array[Byte]): Map[Tag, Value] = {
+    body(bytes).split(";").map(tagAndValue).toMap
   }
 
   private def body(bytes: Array[Byte]): String = {
