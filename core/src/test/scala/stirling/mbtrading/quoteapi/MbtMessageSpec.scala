@@ -53,9 +53,11 @@ class MbtMessageSpec extends WordSpec with MustMatchers with MbtMessageFixtures 
     }
     "parsing" must {
       "parse non-partial messages" in {
-        val message = parse(strToByteBuffer("L|2041=A;8055=B;2004=C\n"))
+        val message = parse(strToByteBuffer("L|2041=2;8055=B;2004=1.0\n"))
         message.msgType must equal(Type.Login)
-        message.fields must equal(Map(Tag.LastAsk -> "C", Tag.InfoMsgFrom -> "B", Tag.ContractSize -> "A"))
+        message.getDouble(Tag.LastAsk) must equal(Some(1.0))
+        message.getString(Tag.InfoMsgFrom) must equal(Some("B"))
+        message.getInt(Tag.ContractSize) must equal(Some(2))
       }
       "parse partial messages" in {
         evaluating {

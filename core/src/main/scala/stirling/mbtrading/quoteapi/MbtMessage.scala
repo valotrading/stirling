@@ -175,20 +175,28 @@ case class MbtMessage(msgType: MbtMessage.Type, fields: Map[MbtMessage.Tag, MbtM
     fields.get(tag)
   }
 
-  def getString(tag: Tag): String = {
-    fields(tag)
+  def getString(tag: Tag): Option[String] = {
+    get(tag)
   }
 
-  def getDouble(tag: Tag): Double = {
-    fields(tag).toDouble
+  def getDouble(tag: Tag): Option[Double] = {
+    getNumber(tag, _.toDouble)
   }
 
-  def getInt(tag: Tag): Int = {
-    fields(tag).toInt
+  def getInt(tag: Tag): Option[Int] = {
+    getNumber(tag, _.toInt)
   }
 
-  def getLong(tag: Tag): Long = {
-    fields(tag).toLong
+  def getLong(tag: Tag): Option[Long] = {
+    getNumber(tag, _.toLong)
+  }
+
+  private def getNumber[T](tag: Tag, convert: (String) => T): Option[T] = {
+    try {
+      get(tag).map(convert)
+    } catch {
+      case e: NumberFormatException => None
+    }
   }
 
   def set(tag: Tag, value: Value): MbtMessage = {
@@ -222,12 +230,16 @@ case class MbtMessage(msgType: MbtMessage.Type, fields: Map[MbtMessage.Tag, MbtM
     }.mkString(";")
   }
 
-  def level1UpdateTimestamp: Long = {
-    val (date, time) = (getString(Tag.Date), getString(Tag.Timestamp))
-    dateFormat.parseDateTime(date).withFields(timeFormat.parseLocalTime(time)).getMillis
+  def level1UpdateTimestamp: Option[Long] = {
+    for {
+      date <- getString(Tag.Date)
+      time <- getString(Tag.Timestamp)
+    } yield dateFormat.parseDateTime(date).withFields(timeFormat.parseLocalTime(time)).getMillis
   }
 
-  def tasUpdateTimestamp: Long = {
-    timeFormat.parseDateTime(getString(Tag.Timestamp)).getMillis
+  def tasUpdateTimestamp: Option[Long] = {
+    for {
+      time <- getString(Tag.Timestamp)
+    } yield timeFormat.parseDateTime(time).getMillis
   }
 }
