@@ -36,25 +36,25 @@ object MbtMessage {
     throw new PartialMessageException
   }
 
-  private def message(bytes: Array[Byte]) = {
+  private def message(bytes: Array[Byte]): MbtMessage = {
     msgFields(bytes).foldLeft(MbtMessage(msgType(bytes))) { case (msg, (tag, value)) =>
       msg.set(tag, value)
     }
   }
 
-  private def msgType(bytes: Array[Byte]) = {
+  private def msgType(bytes: Array[Byte]): MessageType = {
     bytes(0).toChar
   }
 
-  private def msgFields(bytes: Array[Byte]) = {
+  private def msgFields(bytes: Array[Byte]): Set[(Tag, Value)] = {
     body(bytes).split(";").map(tagAndValue).toSet
   }
 
-  private def body(bytes: Array[Byte]) = {
+  private def body(bytes: Array[Byte]): String = {
     new String(bytes, 2, bytes.length - 2).trim
   }
 
-  private def tagAndValue(field: String) = {
+  private def tagAndValue(field: String): (Tag, Value) = {
     val tagAndValue = field.split("=")
     (tagAndValue(0).toInt, tagAndValue(1))
   }
@@ -73,19 +73,19 @@ case class MbtMessage(msgType: MessageType, fields: Map[MbtMessage.Tag, MbtMessa
     fields.get(tag)
   }
 
-  def getString(tag: Tag) = {
+  def getString(tag: Tag): String = {
     fields(tag)
   }
 
-  def getDouble(tag: Tag) = {
+  def getDouble(tag: Tag): Double = {
     fields(tag).toDouble
   }
 
-  def getInt(tag: Tag) = {
+  def getInt(tag: Tag): Int = {
     fields(tag).toInt
   }
 
-  def getLong(tag: Tag) = {
+  def getLong(tag: Tag): Long = {
     fields(tag).toLong
   }
 
@@ -97,35 +97,35 @@ case class MbtMessage(msgType: MessageType, fields: Map[MbtMessage.Tag, MbtMessa
     set(tag, value.toString)
   }
 
-  def hasValue(tag: Tag) = {
+  def hasValue(tag: Tag): Boolean = {
     fields.contains(tag)
   }
 
-  def merge(other: MbtMessage) = other.msgType match {
+  def merge(other: MbtMessage): MbtMessage = other.msgType match {
     case this.msgType => MbtMessage(this.msgType, this.fields ++ other.fields)
     case _ => throw new IllegalArgumentException("msgType %c, expected msgType %c".format(other.msgType, this.msgType))
   }
 
-  def format = {
+  def format: String = {
     formatHeader + formatBody + "\n"
   }
 
-  def formatHeader = {
+  def formatHeader: String = {
     "%c|".format(msgType)
   }
 
-  def formatBody = {
+  def formatBody: String = {
     fields.map { case (tag, value) =>
       "%s=%s".format(tag, value)
     }.mkString(";")
   }
 
-  def level1UpdateTimestamp = {
+  def level1UpdateTimestamp: Long = {
     val (date, time) = (getString(Date), getString(Timestamp))
     dateFormat.parseDateTime(date).withFields(timeFormat.parseLocalTime(time)).getMillis
   }
 
-  def tasUpdateTimestamp = {
+  def tasUpdateTimestamp: Long = {
     timeFormat.parseDateTime(getString(Timestamp)).getMillis
   }
 }
