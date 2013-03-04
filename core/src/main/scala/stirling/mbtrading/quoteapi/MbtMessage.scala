@@ -171,10 +171,6 @@ object MbtMessage {
 case class MbtMessage(msgType: MbtMessage.Type, fields: Map[MbtMessage.Tag, MbtMessage.Value] = Map()) {
   import MbtMessage._
 
-  def get(tag: Tag): Option[String] = {
-    fields.get(tag)
-  }
-
   def getString(tag: Tag): Option[String] = {
     get(tag)
   }
@@ -197,6 +193,10 @@ case class MbtMessage(msgType: MbtMessage.Type, fields: Map[MbtMessage.Tag, MbtM
     } catch {
       case e: NumberFormatException => None
     }
+  }
+
+  private def get(tag: Tag): Option[String] = {
+    fields.get(tag)
   }
 
   def set(tag: Tag, value: Value): MbtMessage = {
