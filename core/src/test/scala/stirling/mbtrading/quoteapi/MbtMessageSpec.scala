@@ -20,44 +20,42 @@ import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
 import silvertip.PartialMessageException
 import stirling.mbtrading.quoteapi.MbtMessage._
-import stirling.mbtrading.quoteapi.MbtMessageTag._
-import stirling.mbtrading.quoteapi.MbtMessageType._
 
 class MbtMessageSpec extends WordSpec with MustMatchers with MbtMessageFixtures {
   "MbtMessage" when {
     "formatting" must {
       "format valid messages with one or more fields" in {
-        val message = MbtMessage(Login)
-          .set(Password, "password") .set(Username, "username")
+        val message = MbtMessage(Type.Login)
+          .set(Tag.Password, "password") .set(Tag.Username, "username")
         message.format must equal("L|101=password;100=username\n")
       }
       "format valid messages with zero fields" in {
-        MbtMessage(Heartbeat).format must equal("9|\n")
+        MbtMessage(Type.Heartbeat).format must equal("9|\n")
       }
     }
     "merging" must {
       "merge copies messages from the given message" in {
-        MbtMessage(Login)
-          .set(Username, "username")
-        .merge(MbtMessage(Login)
-          .set(Password, "password")
-        ) must equal(MbtMessage(Login)
-          .set(Username, "username")
-          .set(Password, "password")
+        MbtMessage(Type.Login)
+          .set(Tag.Username, "username")
+        .merge(MbtMessage(Type.Login)
+          .set(Tag.Password, "password")
+        ) must equal(MbtMessage(Type.Login)
+          .set(Tag.Username, "username")
+          .set(Tag.Password, "password")
         )
       }
       "throw an IllegalArgumentException if message types differ" in {
         intercept[IllegalArgumentException] {
-          MbtMessage(Login)
-          .merge(MbtMessage(Subscription))
+          MbtMessage(Type.Login)
+          .merge(MbtMessage(Type.Subscription))
         }
       }
     }
     "parsing" must {
       "parse non-partial messages" in {
         val message = parse(strToByteBuffer("L|2041=A;8055=B;2004=C\n"))
-        message.msgType must equal(Login)
-        message.fields must equal(Map(LastAsk -> "C", InfoMsgFrom -> "B", ContractSize -> "A"))
+        message.msgType must equal(Type.Login)
+        message.fields must equal(Map(Tag.LastAsk -> "C", Tag.InfoMsgFrom -> "B", Tag.ContractSize -> "A"))
       }
       "parse partial messages" in {
         evaluating {
