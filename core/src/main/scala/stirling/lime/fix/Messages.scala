@@ -176,6 +176,7 @@ class ExecutionReport(header: MessageHeaderTrait) extends AbstractMessage(header
   field(ClientOrderData.Tag,     Required.NO)
   field(ExternalClOrdId.Tag,     Required.NO)
   field(NbboWeightIndicator.Tag, Required.NO)
+  field(TimeInForce.Tag,         Required.NO) // Undocumented
 
   def apply(visitor: MessageVisitor) = visitor.visit(this)
 }
