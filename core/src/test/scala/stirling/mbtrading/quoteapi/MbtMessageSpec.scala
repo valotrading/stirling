@@ -16,10 +16,9 @@
 package stirling.mbtrading.quoteapi
 
 import java.nio.ByteBuffer
-import org.joda.time.DateTime
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import silvertip.{PartialMessageException, GarbledMessageException}
+import silvertip.PartialMessageException
 import stirling.mbtrading.quoteapi.MbtMessage._
 import stirling.mbtrading.quoteapi.MbtMessageTag._
 import stirling.mbtrading.quoteapi.MbtMessageType._
