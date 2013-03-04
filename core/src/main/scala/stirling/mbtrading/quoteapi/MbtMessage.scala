@@ -203,11 +203,6 @@ case class MbtMessage(msgType: MbtMessage.Type, fields: Map[MbtMessage.Tag, MbtM
     copy(fields = fields + (tag -> value))
   }
 
-  def merge(other: MbtMessage): MbtMessage = other.msgType match {
-    case this.msgType => MbtMessage(this.msgType, this.fields ++ other.fields)
-    case _ => throw new IllegalArgumentException("msgType %c, expected msgType %c".format(other.msgType, this.msgType))
-  }
-
   def format: String = {
     formatHeader + formatBody + "\n"
   }

@@ -33,24 +33,6 @@ class MbtMessageSpec extends WordSpec with MustMatchers with MbtMessageFixtures 
         MbtMessage(Type.Heartbeat).format must equal("9|\n")
       }
     }
-    "merging" must {
-      "merge copies messages from the given message" in {
-        MbtMessage(Type.Login)
-          .set(Tag.Username, "username")
-        .merge(MbtMessage(Type.Login)
-          .set(Tag.Password, "password")
-        ) must equal(MbtMessage(Type.Login)
-          .set(Tag.Username, "username")
-          .set(Tag.Password, "password")
-        )
-      }
-      "throw an IllegalArgumentException if message types differ" in {
-        intercept[IllegalArgumentException] {
-          MbtMessage(Type.Login)
-          .merge(MbtMessage(Type.Subscription))
-        }
-      }
-    }
     "parsing" must {
       "parse non-partial messages" in {
         val message = parse(strToByteBuffer("L|2041=2;8055=B;2004=1.0\n"))
