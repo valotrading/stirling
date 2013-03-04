@@ -16,11 +16,14 @@
 package stirling.mbtrading.quoteapi
 
 import java.nio.ByteBuffer
+import java.nio.charset.Charset
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import silvertip.PartialMessageException
 
 object MbtMessage {
+  val ASCII = Charset.forName("US-ASCII")
+
   type Tag   = Int
   type Type  = Char
   type Value = String
@@ -49,7 +52,7 @@ object MbtMessage {
   }
 
   private def body(bytes: Array[Byte]): String = {
-    new String(bytes, 2, bytes.length - 2).trim
+    new String(bytes, 2, bytes.length - 2, ASCII).trim
   }
 
   private def tagAndValue(field: String): (Tag, Value) = {
@@ -203,20 +206,6 @@ case class MbtMessage(msgType: MbtMessage.Type, fields: Map[MbtMessage.Tag, MbtM
     copy(fields = fields + (tag -> value))
   }
 
-  def format: String = {
-    formatHeader + formatBody + "\n"
-  }
-
-  def formatHeader: String = {
-    "%c|".format(msgType)
-  }
-
-  def formatBody: String = {
-    fields.map { case (tag, value) =>
-      "%s=%s".format(tag, value)
-    }.mkString(";")
-  }
-
   def level1UpdateTimestamp: Option[Long] = {
     for {
       date <- getString(Tag.Date)
@@ -228,5 +217,23 @@ case class MbtMessage(msgType: MbtMessage.Type, fields: Map[MbtMessage.Tag, MbtM
     for {
       time <- getString(Tag.Timestamp)
     } yield timeFormat.parseDateTime(time).getMillis
+  }
+
+  def format: Array[Byte] = {
+    toString.getBytes(ASCII)
+  }
+
+  override def toString: String = {
+    header + body + "\n"
+  }
+
+  private def header: String = {
+    "%c|".format(msgType)
+  }
+
+  private def body: String = {
+    fields.map { case (tag, value) =>
+      "%s=%s".format(tag, value)
+    }.mkString(";")
   }
 }
