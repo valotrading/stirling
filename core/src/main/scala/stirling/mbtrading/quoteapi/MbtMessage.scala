@@ -17,8 +17,6 @@ package stirling.mbtrading.quoteapi
 
 import java.nio.ByteBuffer
 import java.nio.charset.Charset
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 import silvertip.PartialMessageException
 
 object MbtMessage {
@@ -59,9 +57,6 @@ object MbtMessage {
     val tagAndValue = field.split("=")
     (tagAndValue(0).toInt, tagAndValue(1))
   }
-
-  val dateFormat = DateTimeFormat.forPattern("MM/dd/yy")
-  val timeFormat = DateTimeFormat.forPattern("HH:mm:ss")
 
   object Type {
     val Login                   = 'L'
@@ -204,19 +199,6 @@ case class MbtMessage(msgType: MbtMessage.Type, fields: Map[MbtMessage.Tag, MbtM
 
   def set(tag: Tag, value: Value): MbtMessage = {
     copy(fields = fields + (tag -> value))
-  }
-
-  def level1UpdateTimestamp: Option[Long] = {
-    for {
-      date <- getString(Tag.Date)
-      time <- getString(Tag.Timestamp)
-    } yield dateFormat.parseDateTime(date).withFields(timeFormat.parseLocalTime(time)).getMillis
-  }
-
-  def tasUpdateTimestamp: Option[Long] = {
-    for {
-      time <- getString(Tag.Timestamp)
-    } yield timeFormat.parseDateTime(time).getMillis
   }
 
   def format: Array[Byte] = {
