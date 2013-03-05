@@ -39,7 +39,7 @@ object MbtMessage {
   }
 
   private def message(bytes: Array[Byte]): MbtMessage = {
-    MbtMessage(msgType(bytes), msgFields(bytes))
+    Message(msgType(bytes))(msgFields(bytes))
   }
 
   private def msgType(bytes: Array[Byte]): Type = {
@@ -58,6 +58,21 @@ object MbtMessage {
     val tagAndValue = field.split("=")
     (tagAndValue(0).toInt, tagAndValue(1))
   }
+
+  val Message = Map(
+    Type.Login                   -> Login,
+    Type.Subscription            -> Subscription,
+    Type.Unsubscription          -> Unsubscription,
+    Type.Fundamental             -> Fundamental,
+    Type.Heartbeat               -> Heartbeat,
+    Type.LogonAccepted           -> LogonAccepted,
+    Type.LogonDenied             -> LogonDenied,
+    Type.Level1Update            -> Level1Update,
+    Type.Level2Update            -> Level2Update,
+    Type.TasUpdate               -> TasUpdate,
+    Type.FundamentalDataResponse -> FundamentalDataResponse,
+    Type.OptionsChainsUpdate     -> OptionsChainsUpdate
+  )
 
   object Type {
     val Login                   = 'L'
@@ -167,8 +182,18 @@ object MbtMessage {
   }
 }
 
-case class MbtMessage(msgType: MbtMessage.Type, fields: MbtMessage.Fields = Map()) {
+sealed trait MbtMessage {
   import MbtMessage._
+
+  def messageType: Type
+
+  def fields: Fields
+
+  def set(tag: Tag, value: Value): MbtMessage
+
+  protected def containing(tag: Tag, value: Value): Fields = {
+    fields.updated(tag, value)
+  }
 
   def getString(tag: Tag): Option[String] = {
     get(tag)
@@ -198,10 +223,6 @@ case class MbtMessage(msgType: MbtMessage.Type, fields: MbtMessage.Fields = Map(
     fields.get(tag)
   }
 
-  def set(tag: Tag, value: Value): MbtMessage = {
-    copy(fields = fields + (tag -> value))
-  }
-
   def format: Array[Byte] = {
     toString.getBytes(ASCII)
   }
@@ -211,7 +232,7 @@ case class MbtMessage(msgType: MbtMessage.Type, fields: MbtMessage.Fields = Map(
   }
 
   private def header: String = {
-    "%c|".format(msgType)
+    "%c|".format(messageType)
   }
 
   private def body: String = {
@@ -219,4 +240,80 @@ case class MbtMessage(msgType: MbtMessage.Type, fields: MbtMessage.Fields = Map(
       "%s=%s".format(tag, value)
     }.mkString(";")
   }
+}
+
+import MbtMessage.{Fields, Tag, Value}
+import MbtMessage.{Type => MessageType}
+import Map.empty
+
+case class Login(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Login
+
+  def set(tag: Tag, value: Value) = Login(containing(tag, value))
+}
+
+case class Subscription(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Subscription
+
+  def set(tag: Tag, value: Value) = Subscription(containing(tag, value))
+}
+
+case class Unsubscription(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Unsubscription
+
+  def set(tag: Tag, value: Value) = Unsubscription(containing(tag, value))
+}
+
+case class Fundamental(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Fundamental
+
+  def set(tag: Tag, value: Value) = Fundamental(containing(tag, value))
+}
+
+case class Heartbeat(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Heartbeat
+
+  def set(tag: Tag, value: Value) = Heartbeat(containing(tag, value))
+}
+
+case class LogonAccepted(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.LogonAccepted
+
+  def set(tag: Tag, value: Value) = LogonAccepted(containing(tag, value))
+}
+
+case class LogonDenied(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.LogonDenied
+
+  def set(tag: Tag, value: Value) = LogonDenied(containing(tag, value))
+}
+
+case class Level1Update(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Level1Update
+
+  def set(tag: Tag, value: Value) = Level1Update(containing(tag, value))
+}
+
+case class Level2Update(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Level2Update
+
+  def set(tag: Tag, value: Value) = Level2Update(containing(tag, value))
+}
+
+case class TasUpdate(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.TasUpdate
+
+  def set(tag: Tag, value: Value) = TasUpdate(containing(tag, value))
+}
+
+case class FundamentalDataResponse(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.FundamentalDataResponse
+
+  def set(tag: Tag, value: Value) = FundamentalDataResponse(containing(tag, value))
+}
+
+case class OptionsChainsUpdate(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.OptionsChainsUpdate
+
+  def set(tag: Tag, value: Value) = OptionsChainsUpdate(containing(tag, value))
 }
