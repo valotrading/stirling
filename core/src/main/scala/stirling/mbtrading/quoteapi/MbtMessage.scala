@@ -68,8 +68,8 @@ object MbtMessage {
     Type.LogonAccepted           -> LogonAccepted,
     Type.LogonDenied             -> LogonDenied,
     Type.Level1Update            -> Level1Update,
-    Type.Level2Update            -> Level2Update,
-    Type.TasUpdate               -> TasUpdate,
+    Type.Level2MarketDepthUpdate -> Level2MarketDepthUpdate,
+    Type.TimeAndSalesUpdate      -> TimeAndSalesUpdate,
     Type.FundamentalDataResponse -> FundamentalDataResponse,
     Type.OptionsChainsUpdate     -> OptionsChainsUpdate
   )
@@ -83,8 +83,8 @@ object MbtMessage {
     val LogonAccepted           = 'G'
     val LogonDenied             = 'D'
     val Level1Update            = '1'
-    val Level2Update            = '2'
-    val TasUpdate               = '3'
+    val Level2MarketDepthUpdate = '2'
+    val TimeAndSalesUpdate      = '3'
     val FundamentalDataResponse = 'N'
     val OptionsChainsUpdate     = '4'
   }
@@ -294,16 +294,16 @@ case class Level1Update(fields: Fields = empty) extends MbtMessage {
   def updated(tag: Tag, value: Value) = Level1Update(containing(tag, value))
 }
 
-case class Level2Update(fields: Fields = empty) extends MbtMessage {
-  def messageType = MessageType.Level2Update
+case class Level2MarketDepthUpdate(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Level2MarketDepthUpdate
 
-  def updated(tag: Tag, value: Value) = Level2Update(containing(tag, value))
+  def updated(tag: Tag, value: Value) = Level2MarketDepthUpdate(containing(tag, value))
 }
 
-case class TasUpdate(fields: Fields = empty) extends MbtMessage {
-  def messageType = MessageType.TasUpdate
+case class TimeAndSalesUpdate(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.TimeAndSalesUpdate
 
-  def updated(tag: Tag, value: Value) = TasUpdate(containing(tag, value))
+  def updated(tag: Tag, value: Value) = TimeAndSalesUpdate(containing(tag, value))
 }
 
 case class FundamentalDataResponse(fields: Fields = empty) extends MbtMessage {
