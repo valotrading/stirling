@@ -26,7 +26,8 @@ class MbtMessageSpec extends WordSpec with MustMatchers with MbtMessageFixtures 
     "formatting" must {
       "format valid messages with one or more fields" in {
         val message = Login()
-          .set(Tag.Password, "password") .set(Tag.Username, "username")
+          .updated(Tag.Password, "password")
+          .updated(Tag.Username, "username")
         message.toString must equal("L|101=password;100=username\n")
       }
       "format valid messages with zero fields" in {

@@ -189,7 +189,7 @@ sealed trait MbtMessage {
 
   def fields: Fields
 
-  def set(tag: Tag, value: Value): MbtMessage
+  def updated(tag: Tag, value: Value): MbtMessage
 
   protected def containing(tag: Tag, value: Value): Fields = {
     fields.updated(tag, value)
@@ -249,71 +249,71 @@ import Map.empty
 case class Login(fields: Fields = empty) extends MbtMessage {
   def messageType = MessageType.Login
 
-  def set(tag: Tag, value: Value) = Login(containing(tag, value))
+  def updated(tag: Tag, value: Value) = Login(containing(tag, value))
 }
 
 case class Subscription(fields: Fields = empty) extends MbtMessage {
   def messageType = MessageType.Subscription
 
-  def set(tag: Tag, value: Value) = Subscription(containing(tag, value))
+  def updated(tag: Tag, value: Value) = Subscription(containing(tag, value))
 }
 
 case class Unsubscription(fields: Fields = empty) extends MbtMessage {
   def messageType = MessageType.Unsubscription
 
-  def set(tag: Tag, value: Value) = Unsubscription(containing(tag, value))
+  def updated(tag: Tag, value: Value) = Unsubscription(containing(tag, value))
 }
 
 case class Fundamental(fields: Fields = empty) extends MbtMessage {
   def messageType = MessageType.Fundamental
 
-  def set(tag: Tag, value: Value) = Fundamental(containing(tag, value))
+  def updated(tag: Tag, value: Value) = Fundamental(containing(tag, value))
 }
 
 case class Heartbeat(fields: Fields = empty) extends MbtMessage {
   def messageType = MessageType.Heartbeat
 
-  def set(tag: Tag, value: Value) = Heartbeat(containing(tag, value))
+  def updated(tag: Tag, value: Value) = Heartbeat(containing(tag, value))
 }
 
 case class LogonAccepted(fields: Fields = empty) extends MbtMessage {
   def messageType = MessageType.LogonAccepted
 
-  def set(tag: Tag, value: Value) = LogonAccepted(containing(tag, value))
+  def updated(tag: Tag, value: Value) = LogonAccepted(containing(tag, value))
 }
 
 case class LogonDenied(fields: Fields = empty) extends MbtMessage {
   def messageType = MessageType.LogonDenied
 
-  def set(tag: Tag, value: Value) = LogonDenied(containing(tag, value))
+  def updated(tag: Tag, value: Value) = LogonDenied(containing(tag, value))
 }
 
 case class Level1Update(fields: Fields = empty) extends MbtMessage {
   def messageType = MessageType.Level1Update
 
-  def set(tag: Tag, value: Value) = Level1Update(containing(tag, value))
+  def updated(tag: Tag, value: Value) = Level1Update(containing(tag, value))
 }
 
 case class Level2Update(fields: Fields = empty) extends MbtMessage {
   def messageType = MessageType.Level2Update
 
-  def set(tag: Tag, value: Value) = Level2Update(containing(tag, value))
+  def updated(tag: Tag, value: Value) = Level2Update(containing(tag, value))
 }
 
 case class TasUpdate(fields: Fields = empty) extends MbtMessage {
   def messageType = MessageType.TasUpdate
 
-  def set(tag: Tag, value: Value) = TasUpdate(containing(tag, value))
+  def updated(tag: Tag, value: Value) = TasUpdate(containing(tag, value))
 }
 
 case class FundamentalDataResponse(fields: Fields = empty) extends MbtMessage {
   def messageType = MessageType.FundamentalDataResponse
 
-  def set(tag: Tag, value: Value) = FundamentalDataResponse(containing(tag, value))
+  def updated(tag: Tag, value: Value) = FundamentalDataResponse(containing(tag, value))
 }
 
 case class OptionsChainsUpdate(fields: Fields = empty) extends MbtMessage {
   def messageType = MessageType.OptionsChainsUpdate
 
-  def set(tag: Tag, value: Value) = OptionsChainsUpdate(containing(tag, value))
+  def updated(tag: Tag, value: Value) = OptionsChainsUpdate(containing(tag, value))
 }
