@@ -15,22 +15,16 @@
  */
 package stirling.test
 
-import org.scalatest.Assertions
-import scala.annotation.tailrec
-import silvertip.{Connection, EventSource}
+import silvertip.EventSource
 
-abstract class TestActor[Message] {
-  private var enqueuedActions         = Seq[Action[Message]]()
-  private var unhandledReceivedEvents = Seq[Any]()
-  private var handledReceivedEvents   = Seq[Any]()
-
+trait TestActor[Message] {
   def eventSource: Option[EventSource]
 
-  def actions: Seq[Action[Message]] = enqueuedActions
+  def actions: Seq[Action[Message]]
 
-  def unhandledEvents: Seq[Any] = unhandledReceivedEvents
+  def unhandledEvents: Seq[Any]
 
-  def handledEvents: Seq[Any] = handledReceivedEvents
+  def handledEvents: Seq[Any]
 
   def start()
 
@@ -38,61 +32,5 @@ abstract class TestActor[Message] {
 
   def act()
 
-  @tailrec
-  protected final def act(connection: Connection[Message]) {
-    actions.headOption match {
-      case None =>
-        Unit
-      case Some(_: React) =>
-        Unit
-      case Some(action: Act[Message]) =>
-        action.procedure(connection)
-        enqueuedActions = enqueuedActions.tail
-        act(connection)
-    }
-  }
-
-  @tailrec
-  final def react() {
-    (actions.headOption, unhandledEvents.headOption) match {
-      case (_, None) =>
-        Unit
-      case (None, _) =>
-        Unit
-      case (Some(_: Act[Message]), _) =>
-        Unit
-      case (Some(action: React), Some(event)) =>
-        action.procedure(event)
-        enqueuedActions         = enqueuedActions.tail
-        unhandledReceivedEvents = unhandledReceivedEvents.tail
-        handledReceivedEvents   = handledReceivedEvents :+ event
-        react()
-    }
-  }
-
-  def expect(expected: Any) {
-    import Assertions._
-
-    enqueue(React(
-      "expect(%s)".format(expected),
-      { received: Any =>
-        assert(received === expected)
-      }
-    ))
-  }
-
-  def expectOne() {
-    enqueue(React(
-      "expectOne",
-      { received: Any => Unit }
-    ))
-  }
-
-  protected def enqueue(action: Action[Message]) {
-    enqueuedActions = enqueuedActions :+ action
-  }
-
-  protected def receive(event: Any) {
-    unhandledReceivedEvents = unhandledReceivedEvents :+ event
-  }
+  def react()
 }
