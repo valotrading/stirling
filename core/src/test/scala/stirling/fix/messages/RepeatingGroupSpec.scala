@@ -71,8 +71,7 @@ class RepeatingGroupSpec extends WordSpec with MustMatchers with RepeatingGroupF
 
 trait RepeatingGroupFixtures {
   def messageWithoutOrWithEmptyRepeatingGroup = {
-    val factory = new stirling.mbtrading.fix.MessageFactory
-    val message = factory.create(MsgTypeValue.NEW_ORDER_MULTILEG)
+    val message = stirling.mbtrading.fix.MessageFactory.create(MsgTypeValue.NEW_ORDER_MULTILEG)
 
     message.setString(Account.Tag, "1")
     message.setString(ClOrdID.Tag, "2")
