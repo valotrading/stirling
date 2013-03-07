@@ -10,7 +10,7 @@ object StirlingBuild extends Build {
 
   lazy val commonSettings = Defaults.defaultSettings ++ Seq(
     organization                              := "stirling",
-    version                                   := "1.4.6-SNAPSHOT",
+    version                                   := "1.5.0",
     scalaVersion                              := "2.10.0",
     javacOptions                             ++= Seq("-Xlint:unchecked"),
     crossScalaVersions                        := Seq("2.9.2", "2.10.0"),
