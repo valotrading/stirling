@@ -13,30 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.nasdaqomx.souptcp10.support
+package stirling.test
 
 import org.scalatest.Assertions
 import scala.annotation.tailrec
 import silvertip.{Connection, EventSource}
 
-abstract class TestActor[Message] {
+abstract class TestSilvertipActor[Message] extends TestActor[Message] {
   private var enqueuedActions         = Seq[Action[Message]]()
   private var unhandledReceivedEvents = Seq[Any]()
   private var handledReceivedEvents   = Seq[Any]()
 
-  def eventSource: Option[EventSource]
+  override def eventSource: Option[EventSource]
 
-  def actions: Seq[Action[Message]] = enqueuedActions
+  override def actions: Seq[Action[Message]] = enqueuedActions
 
-  def unhandledEvents: Seq[Any] = unhandledReceivedEvents
+  override def unhandledEvents: Seq[Any] = unhandledReceivedEvents
 
-  def handledEvents: Seq[Any] = handledReceivedEvents
+  override def handledEvents: Seq[Any] = handledReceivedEvents
 
-  def start()
+  override def start()
 
-  def stop()
+  override def stop()
 
-  def act()
+  override def act()
 
   @tailrec
   protected final def act(connection: Connection[Message]) {
@@ -53,7 +53,7 @@ abstract class TestActor[Message] {
   }
 
   @tailrec
-  final def react() {
+  override final def react() {
     (actions.headOption, unhandledEvents.headOption) match {
       case (_, None) =>
         Unit

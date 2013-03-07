@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.nasdaqomx.souptcp10
+package stirling.test.nasdaqomx.souptcp10
 
 import java.nio.ByteBuffer
 import silvertip.{Connection, MessageParser}
-import stirling.nasdaqomx.souptcp10.support.{Act, TestClient}
+import stirling.nasdaqomx.souptcp10._
+import stirling.test.{Act, TestClient}
 
 class SoupTCPTestClient[Message](
   parser:   MessageParser[Message],
