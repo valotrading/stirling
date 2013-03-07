@@ -15,9 +15,18 @@
  */
 package stirling.nasdaqomx
 
+import stirling.fix.messages
 import stirling.fix.tags._
 
 package object fix {
+  type Message = messages.Message
+
+  type Heartbeat     = messages.Heartbeat
+  type Logout        = messages.Logout
+  type ResendRequest = messages.ResendRequest
+  type SequenceReset = messages.SequenceReset
+  type TestRequest   = messages.TestRequest
+
   val AvgPx            = fix42.AvgPx
   val ClOrdID          = fix42.ClOrdID
   val ClearingAccount  = fix42.ClearingAccount
