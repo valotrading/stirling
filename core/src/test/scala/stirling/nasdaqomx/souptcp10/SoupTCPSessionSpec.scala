@@ -17,7 +17,8 @@ package stirling.nasdaqomx.souptcp10
 
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.nasdaqomx.souptcp10.support._
+import stirling.test.{Conductor, Event}
+import stirling.test.nasdaqomx.souptcp10.{SoupTCPTestClient, SoupTCPTestServer}
 
 class SoupTCPSessionSpec extends WordSpec with MustMatchers {
   "SoupTCP" should {

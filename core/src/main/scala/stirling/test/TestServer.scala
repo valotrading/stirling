@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.nasdaqomx.souptcp10.support
+package stirling.test
 
 import java.nio.ByteBuffer
 import java.nio.channels.SocketChannel
@@ -21,7 +21,7 @@ import java.util.Iterator
 import scala.collection.JavaConversions._
 import silvertip.{Connection, MessageParser, Server}
 
-abstract class TestServer[Message](parser: MessageParser[Message], val port: Int) extends TestActor[Message] {
+abstract class TestServer[Message](parser: MessageParser[Message], val port: Int) extends TestSilvertipActor[Message] {
   private var server:           Option[Server]              = None
   private var clientConnection: Option[Connection[Message]] = None
 

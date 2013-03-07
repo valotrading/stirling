@@ -13,12 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stirling.nasdaqomx.souptcp10.support
+package stirling.test
 
-sealed trait Event
+import silvertip.EventSource
 
-object Event {
-  case object Connected                                        extends Event
-  case object Closed                                           extends Event
-  case class  GarbledMessage(message: String, data: Seq[Byte]) extends Event
+trait TestActor[Message] {
+  def eventSource: Option[EventSource]
+
+  def actions: Seq[Action[Message]]
+
+  def unhandledEvents: Seq[Any]
+
+  def handledEvents: Seq[Any]
+
+  def start()
+
+  def stop()
+
+  def act()
+
+  def react()
 }
