@@ -90,56 +90,79 @@ object MbtMessage {
   }
 
   object Tag {
-    val CompanyName      = 2021
-    val ContractSize     = 2041
-    val Country          = 2025
-    val Currency         = 2026
-    val CurrentTick      = 2013
-    val Cusip            = 2028
-    val Date             = 2015
-    val Exchange         = 2022
-    val ExpMonth         = 2036
-    val ExpYear          = 2040
-    val High             = 2009
-    val InfoMsgFrom      = 8055
-    val Isin             = 2029
-    val LastAsk          = 2004
-    val LastAskSize      = 2006
-    val LastBid          = 2003
-    val LastBidSize      = 2005
-    val LastExchange     = 2042
-    val Size             = 2007
-    val LoginReason      = 103
-    val Low              = 2010
-    val MarginMultiplier = 2031
-    val MmidPrice        = 2019
-    val MmidSource       = 2033
-    val MmidStatus       = 2024
-    val MmidTime         = 2020
-    val Mpid             = 2016
-    val Open             = 2011
-    val OpenInterest     = 2037
-    val Password         = 101
-    val PrevClose        = 2008
-    val Price            = 2002
-    val PutOrCall        = 2038
-    val QuotePrice       = 2018
-    val QuoteSize        = 2017
-    val RequestRejected  = 1011
-    val StrikePrice      = 2035
-    val SubscriptionType = 2000
-    val Symbol           = 1003
-    val TickCondition    = 2082
-    val TickSize         = 2027
-    val TickStatus       = 2083
-    val TickType         = 2084
-    val Timestamp        = 2014
-    val TotalVolume      = 2012
-    val TradingStatus    = 2032
-    val UpcInfo          = 2023
-    val TasType          = 2039
-    val Username         = 100
-    val UserPermissions  = 154
+    val CashInLieu           = 2080
+    val Close                = 2056
+    val CompanyName          = 2021
+    val ContractSize         = 2041
+    val Country              = 2025
+    val Currency             = 2026
+    val CurrentTick          = 2013
+    val Cusip                = 2028
+    val Date                 = 2015
+    val DisplayFormat        = 2045
+    val Exchange             = 2022
+    val ExpMonth             = 2036
+    val ExpYear              = 2040
+    val FiftyTwoWeekHigh     = 2046
+    val FiftyTwoWeekHighDate = 2048
+    val FiftyTwoWeekLow      = 2049
+    val FiftyTwoWeekLowDate  = 2049
+    val HashedPassword       = 133
+    val High                 = 2009
+    val HistChange           = 2057
+    val InfoMsgFrom          = 8055
+    val Isin                 = 2029
+    val LastAsk              = 2004
+    val LastAskSize          = 2006
+    val LastBid              = 2003
+    val LastBidSize          = 2005
+    val LastExchange         = 2042
+    val Size                 = 2007
+    val LoginReason          = 103
+    val Low                  = 2010
+    val MarginMultiplier     = 2031
+    val MmidPrice            = 2019
+    val MmidSource           = 2033
+    val MmidStatus           = 2024
+    val MmidTime             = 2020
+    val Mpid                 = 2016
+    val NbboFlags            = 2091
+    val Open                 = 2011
+    val OpenIndicator        = 2087
+    val OpenInterest         = 2037
+    val Password             = 101
+    val PrevClose            = 2008
+    val Price                = 2002
+    val PutOrCall            = 2038
+    val QuoteIndicator       = 2090
+    val QuotePrice           = 2018
+    val QuoteSize            = 2017
+    val RequestRejected      = 1011
+    val SecurityType         = 2058
+    val StrikePrice          = 2035
+    val SubscriptionType     = 2000
+    val Symbol               = 1003
+    val TickCondition        = 2082
+    val TickSize             = 2027
+    val TickStatus           = 2083
+    val TickType             = 2084
+    val Timestamp            = 2014
+    val TotalVolume          = 2012
+    val TradeIndicator       = 2089
+    val TradingStatus        = 2032
+    val UpcInfo              = 2023
+    val TimeAndSalesType     = 2039
+    val Underlier            = 2034
+    val Username             = 100
+    val UserPermissions      = 154
+  }
+
+  object NbboFlag {
+    val Filtered                       = 'F'
+    val EligibleForOpenHighAndLowPrice = 'O'
+    val EligibleForLastPrice           = 'C'
+    val EligibleForVolume              = 'V'
+    val EligibleToUpdate1MinBarData    = 'U'
   }
 
   object Tick {
@@ -155,7 +178,7 @@ object MbtMessage {
     val OptionsChains   = 20004
   }
 
-  object TasType {
+  object TimeAndSalesType {
     val Normal = 30030
     val FormT  = 30031
   }
