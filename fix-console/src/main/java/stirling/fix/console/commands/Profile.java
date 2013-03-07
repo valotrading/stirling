@@ -36,7 +36,7 @@ public class Profile implements Command {
         factories.put("mb-trading", new stirling.mbtrading.fix.MessageFactory());
         factories.put("burgundy", new stirling.fix.messages.fix44.burgundy.MessageFactory());
         factories.put("hotspot-fx", new stirling.fix.messages.fix42.hotspotfx.MessageFactory());
-        factories.put("lime", new stirling.lime.fix.MessageFactory());
+        factories.put("lime", stirling.lime.fix.MessageFactory$.MODULE$);
         factories.put("nasdaq-omx", new stirling.nasdaqomx.fix.MessageFactory());
     }
 
