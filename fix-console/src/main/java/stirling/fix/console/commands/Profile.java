@@ -33,7 +33,7 @@ public class Profile implements Command {
     public Profile() {
         factories.put("default", new stirling.fix.messages.fix42.DefaultMessageFactory());
         factories.put("bats-europe", new stirling.fix.messages.fix42.bats.europe.MessageFactory());
-        factories.put("mb-trading", new stirling.mbtrading.fix.MessageFactory());
+        factories.put("mb-trading", stirling.mbtrading.fix.MessageFactory$.MODULE$);
         factories.put("burgundy", new stirling.fix.messages.fix44.burgundy.MessageFactory());
         factories.put("hotspot-fx", new stirling.fix.messages.fix42.hotspotfx.MessageFactory());
         factories.put("lime", stirling.lime.fix.MessageFactory$.MODULE$);

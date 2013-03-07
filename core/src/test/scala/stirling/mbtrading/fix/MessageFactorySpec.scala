@@ -31,7 +31,7 @@ class MessageFactorySpec extends WordSpec with MustMatchers with MessageFactoryF
 trait MessageFactoryFixtures {
   import MsgTypeValue._
 
-  def factory = new MessageFactory
+  def factory = MessageFactory
   def msgTypes = List(
     ExecutionReport,
     OrderCancelRequest,
