@@ -17,7 +17,7 @@ package stirling.mbtrading.fix
 
 import stirling.fix.messages.fix42.DefaultMessageFactory
 
-class MessageFactory extends DefaultMessageFactory {
+object MessageFactory extends DefaultMessageFactory {
   message(MsgTypeValue.ExecutionReport,           classOf[ExecutionReport])
   message(MsgTypeValue.OrderCancelRequest,        classOf[OrderCancelRequest])
   message(MsgTypeValue.OrderCancelReject,         classOf[OrderCancelReject])

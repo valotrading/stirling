@@ -17,7 +17,7 @@ package stirling.lime.fix
 
 import stirling.fix.messages.fix42.DefaultMessageFactory
 
-class MessageFactory extends DefaultMessageFactory {
+object MessageFactory extends DefaultMessageFactory {
   message(MsgTypeValue.Logon,                     classOf[Logon])
   message(MsgTypeValue.Reject,                    classOf[Reject])
   message(MsgTypeValue.NewOrderSingle,            classOf[NewOrderSingle])
