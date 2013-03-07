@@ -15,9 +15,18 @@
  */
 package stirling.mbtrading
 
+import stirling.fix.messages
 import stirling.fix.tags._
 
 package object fix {
+  type Message = messages.Message
+
+  type Heartbeat     = messages.Heartbeat
+  type Logout        = messages.Logout
+  type Reject        = messages.Reject
+  type ResendRequest = messages.ResendRequest
+  type TestRequest   = messages.TestRequest
+
   val Account                 = fix42.Account
   val AvgPx                   = fix42.AvgPx
   val BusinessRejectRefID     = fix42.BusinessRejectRefID
