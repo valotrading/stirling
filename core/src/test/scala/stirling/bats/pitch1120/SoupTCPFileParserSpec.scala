@@ -17,6 +17,7 @@ package stirling.bats.pitch1120
 
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
+import stirling.bats.souptcpfile.SoupTCPFileParser
 import stirling.io.Source
 
 class SoupTCPFileParserSpec extends WordSpec with MustMatchers {
@@ -34,7 +35,7 @@ class SoupTCPFileParserSpec extends WordSpec with MustMatchers {
   private def source(readBufferSize: Int): Source[Message] = {
     Source.fromInputStream[Message](
       stream         = getClass.getResourceAsStream("/pitch-v1120.txt"),
-      parser         = new SoupTCPFileParser,
+      parser         = new SoupTCPFileParser(MessageParser),
       readBufferSize = readBufferSize
     )
   }
