@@ -30,7 +30,7 @@ object Message {
   val messageTypeOffset = 8
 }
 
-sealed trait MessageType {
+trait MessageType {
   def apply(payload: ByteString): Message
 
   def size: Int
