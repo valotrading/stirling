@@ -20,7 +20,7 @@ import scala.annotation.switch
 import silvertip.{GarbledMessageException, PartialMessageException}
 import stirling.io.ByteBuffers
 
-class MessageParser extends silvertip.MessageParser[Message] {
+object MessageParser extends silvertip.MessageParser[Message] {
   def parse(buffer: ByteBuffer) = {
     try {
       parseMessage(buffer)

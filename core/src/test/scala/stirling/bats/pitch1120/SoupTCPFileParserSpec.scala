@@ -35,7 +35,7 @@ class SoupTCPFileParserSpec extends WordSpec with MustMatchers {
   private def source(readBufferSize: Int): Source[Message] = {
     Source.fromInputStream[Message](
       stream         = getClass.getResourceAsStream("/pitch-v1120.txt"),
-      parser         = new SoupTCPFileParser(new MessageParser),
+      parser         = new SoupTCPFileParser(MessageParser),
       readBufferSize = readBufferSize
     )
   }
