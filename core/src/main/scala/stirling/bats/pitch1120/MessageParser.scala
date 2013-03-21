@@ -20,7 +20,7 @@ import scala.annotation.switch
 import silvertip.{GarbledMessageException, PartialMessageException}
 import stirling.io.ByteBuffers
 
-object MessageParser extends silvertip.MessageParser[Message] {
+trait MessageParser[Message] extends silvertip.MessageParser[Message] {
   def parse(buffer: ByteBuffer) = try {
     if (buffer.position + Commons.messageTypeOffset >= buffer.limit)
       throw new PartialMessageException
@@ -32,7 +32,11 @@ object MessageParser extends silvertip.MessageParser[Message] {
     case _: BufferUnderflowException => throw new PartialMessageException
   }
 
-  protected def messageType(messageType: Byte) = (messageType: @switch) match {
+  protected def messageType(messageType: Byte): MessageType[Message]
+}
+
+object MessageParser extends MessageParser[Message] {
+  override protected def messageType(messageType: Byte) = (messageType: @switch) match {
     case 'u' => SymbolClear
     case 'A' => AddOrderShort
     case 'd' => AddOrderLong
