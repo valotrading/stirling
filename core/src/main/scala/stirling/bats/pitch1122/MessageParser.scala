@@ -15,12 +15,27 @@
  */
 package stirling.bats.pitch1122
 
+import java.nio.{BufferUnderflowException, ByteBuffer}
 import scala.annotation.switch
-import silvertip.GarbledMessageException
-import stirling.bats.pitch1120
+import silvertip.{GarbledMessageException, PartialMessageException}
 import stirling.io.ByteBuffers
 
-object MessageParser extends pitch1120.MessageParser[Message] {
+trait MessageParser[Message] extends silvertip.MessageParser[Message] {
+  def parse(buffer: ByteBuffer) = try {
+    if (buffer.position + Commons.messageTypeOffset >= buffer.limit)
+      throw new PartialMessageException
+
+    val msgType = messageType(buffer.get(buffer.position + Commons.messageTypeOffset))
+
+    msgType.apply(ByteBuffers.slice(buffer, buffer.position, msgType.size))
+  } catch {
+    case _: BufferUnderflowException => throw new PartialMessageException
+  }
+
+  protected def messageType(messageType: Byte): MessageType[Message]
+}
+
+object MessageParser extends MessageParser[Message] {
   override protected def messageType(messageType: Byte) = (messageType: @switch) match {
     case 's' => SymbolClear
     case 'A' => AddOrderShort

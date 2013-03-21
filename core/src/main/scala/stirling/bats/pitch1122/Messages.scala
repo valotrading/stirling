@@ -15,12 +15,29 @@
  */
 package stirling.bats.pitch1122
 
-import stirling.bats.pitch1120
-import stirling.bats.pitch1120.{Commons, MessageType}
 import stirling.io.ByteString
 
 sealed trait Message {
   def messageType: Byte
+}
+
+trait MessageType[Message] {
+  def apply(payload: ByteString): Message
+
+  def size: Int
+}
+
+trait Commons {
+  def payload: ByteString
+
+  def timestamp:   Long = payload.slice(0, 8).toLong
+  def messageType: Byte = payload.byteAt(8)
+
+  override def toString = payload.toString
+}
+
+object Commons {
+  val messageTypeOffset = 8
 }
 
 /*
@@ -39,120 +56,180 @@ object SymbolClear extends MessageType[Message] {
 /*
  * Section 4.3
  */
-class AddOrderShort(payload: ByteString) extends pitch1120.AddOrderShort(payload) with Message
+class AddOrderShort(val payload: ByteString) extends Message with Commons {
+  def orderId:       ByteString = payload.slice(9, 12)
+  def sideIndicator: Byte       = payload.byteAt(21)
+  def shares:        Long       = payload.slice(22, 6).toLong
+  def stockSymbol:   ByteString = payload.slice(28, 6)
+  def price:         Long       = payload.slice(34, 10).toLong
+  def display:       Boolean    = payload.byteAt(44) == 'Y'
+}
 
 object AddOrderShort extends MessageType[Message] {
   def apply(payload: ByteString) = new AddOrderShort(payload)
 
-  val size = pitch1120.AddOrderShort.size
+  val size = 45
 }
 
 /*
  * Section 4.3
  */
-class AddOrderLong(payload: ByteString) extends pitch1120.AddOrderLong(payload) with Message
+class AddOrderLong(val payload: ByteString) extends Message with Commons {
+  def orderId:       ByteString = payload.slice(9, 12)
+  def sideIndicator: Byte       = payload.byteAt(21)
+  def shares:        Long       = payload.slice(22, 6).toLong
+  def stockSymbol:   ByteString = payload.slice(28, 8)
+  def price:         Long       = payload.slice(36, 10).toLong
+  def display:       Boolean    = payload.byteAt(46) == 'Y'
+  def participantId: ByteString = payload.slice(47, 4)
+}
 
 object AddOrderLong extends MessageType[Message] {
   def apply(payload: ByteString) = new AddOrderLong(payload)
 
-  val size = pitch1120.AddOrderLong.size
+  val size = 51
 }
 
 /*
  * Section 4.4.1
  */
-class OrderExecuted(payload: ByteString) extends pitch1120.OrderExecuted(payload) with Message
+class OrderExecuted(val payload: ByteString) extends Message with Commons {
+  def orderId:        ByteString = payload.slice(9, 12)
+  def executedShares: Long       = payload.slice(21, 6).toLong
+  def executionId:    ByteString = payload.slice(27, 12)
+}
 
 object OrderExecuted extends MessageType[Message] {
   def apply(payload: ByteString) = new OrderExecuted(payload)
 
-  val size = pitch1120.OrderExecuted.size
+  val size = 39
 }
 
 /*
  * Section 4.4.2
  */
-class OrderCancel(payload: ByteString) extends pitch1120.OrderCancel(payload) with Message
+class OrderCancel(val payload: ByteString) extends Message with Commons {
+  def orderId:        ByteString = payload.slice(9, 12)
+  def canceledShares: Long       = payload.slice(21, 6).toLong
+}
 
 object OrderCancel extends MessageType[Message] {
   def apply(payload: ByteString) = new OrderCancel(payload)
 
-  val size = pitch1120.OrderCancel.size
+  val size = 27
 }
 
 /*
  * Section 4.5
  */
-class TradeShort(payload: ByteString) extends pitch1120.TradeShort(payload) with Message
+class TradeShort(val payload: ByteString) extends Message with Commons {
+  def orderId:       ByteString = payload.slice(9, 12)
+  def sideIndicator: Byte       = payload.byteAt(21)
+  def shares:        Long       = payload.slice(22, 6).toLong
+  def stockSymbol:   ByteString = payload.slice(28, 6)
+  def price:         Long       = payload.slice(34, 10).toLong
+  def executionId:   ByteString = payload.slice(44, 12)
+}
 
 object TradeShort extends MessageType[Message] {
   def apply(payload: ByteString) = new TradeShort(payload)
 
-  val size = pitch1120.TradeShort.size
+  val size = 56
 }
 
 /*
  * Section 4.5
  */
-class TradeLong(payload: ByteString) extends pitch1120.TradeLong(payload) with Message
+class TradeLong(val payload: ByteString) extends Message with Commons {
+  def orderId:       ByteString = payload.slice(9, 12)
+  def sideIndicator: Byte       = payload.byteAt(21)
+  def shares:        Long       = payload.slice(22, 6).toLong
+  def stockSymbol:   ByteString = payload.slice(28, 8)
+  def price:         Long       = payload.slice(36, 10).toLong
+  def executionId:   ByteString = payload.slice(46, 12)
+}
 
 object TradeLong extends MessageType[Message] {
   def apply(payload: ByteString) = new TradeLong(payload)
 
-  val size = pitch1120.TradeLong.size
+  val size = 58
 }
 
 /*
  * Section 4.6
  */
-class TradeBreak(payload: ByteString) extends pitch1120.TradeBreak(payload) with Message
+class TradeBreak(val payload: ByteString) extends Message with Commons {
+  def executionId: ByteString = payload.slice(9, 12)
+}
 
 object TradeBreak extends MessageType[Message] {
   def apply(payload: ByteString) = new TradeBreak(payload)
 
-  val size = pitch1120.TradeBreak.size
+  val size = 21
 }
 
 /*
  * Section 4.7
  */
-class TradingStatus(payload: ByteString) extends pitch1120.TradingStatus(payload) with Message
+class TradingStatus(val payload: ByteString) extends Message with Commons {
+  def stockSymbol:  ByteString = payload.slice(9, 8)
+  def haltStatus:   Byte       = payload.byteAt(17)
+  def regShoAction: Byte       = payload.byteAt(18)
+  def reserved1:    Byte       = payload.byteAt(19)
+  def reserved2:    Byte       = payload.byteAt(20)
+}
 
 object TradingStatus extends MessageType[Message] {
   def apply(payload: ByteString) = new TradingStatus(payload)
 
-  val size = pitch1120.TradingStatus.size
+  val size = 21
 }
 
 /*
  * Section 4.8
  */
-class AuctionUpdate(payload: ByteString) extends pitch1120.AuctionUpdate(payload) with Message
+class AuctionUpdate(val payload: ByteString) extends Message with Commons {
+  def stockSymbol:      ByteString = payload.slice(9, 8)
+  def auctionType:      Byte       = payload.byteAt(17)
+  def referencePrice:   Long       = payload.slice(18, 10).toLong
+  def buyShares:        Long       = payload.slice(28, 10).toLong
+  def sellShares:       Long       = payload.slice(38, 10).toLong
+  def indicativePrice:  Long       = payload.slice(48, 10).toLong
+  def auctionOnlyPrice: Long       = payload.slice(58, 10).toLong
+}
 
 object AuctionUpdate extends MessageType[Message] {
   def apply(payload: ByteString) = new AuctionUpdate(payload)
 
-  val size = pitch1120.AuctionUpdate.size
+  val size = 68
 }
 
 /*
  * Section 4.9
  */
-class AuctionSummary(payload: ByteString) extends pitch1120.AuctionSummary(payload) with Message
+class AuctionSummary(val payload: ByteString) extends Message with Commons {
+  def stockSymbol: ByteString = payload.slice(9, 8)
+  def auctionType: Byte       = payload.byteAt(17)
+  def price:       Long       = payload.slice(18, 10).toLong
+  def shares:      Long       = payload.slice(28, 10).toLong
+}
 
 object AuctionSummary extends MessageType[Message] {
   def apply(payload: ByteString) = new AuctionSummary(payload)
 
-  val size = pitch1120.AuctionSummary.size
+  val size = 38
 }
 
 /*
  * Section 4.10
  */
-class RetailPriceImprovement(payload: ByteString) extends pitch1120.RetailPriceImprovement(payload) with Message
+class RetailPriceImprovement(val payload: ByteString) extends Message with Commons {
+  def stockSymbol:            ByteString = payload.slice(9, 8)
+  def retailPriceImprovement: Byte       = payload.byteAt(17)
+}
 
 object RetailPriceImprovement extends MessageType[Message] {
   def apply(payload: ByteString) = new RetailPriceImprovement(payload)
 
-  val size = pitch1120.RetailPriceImprovement.size
+  val size = 18
 }
