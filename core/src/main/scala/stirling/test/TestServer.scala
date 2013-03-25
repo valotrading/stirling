@@ -38,9 +38,6 @@ abstract class TestServer[Message](parser: MessageParser[Message], val port: Int
           def messages(connection: Connection[Message], messages: Iterator[Message]) {
             messages.foreach(onMessage(connection, _))
           }
-          def idle(connection: Connection[Message]) {
-            onIdle(connection)
-          }
           def closed(connection: Connection[Message]) {
             receive(Event.Closed)
           }
@@ -70,7 +67,11 @@ abstract class TestServer[Message](parser: MessageParser[Message], val port: Int
     case None             => Unit
   }
 
+  override def onAct() {
+    clientConnection.foreach(keepAlive)
+  }
+
   protected def onMessage(connection: Connection[Message], message: Message)
 
-  protected def onIdle(connection: Connection[Message])
+  protected def keepAlive(connection: Connection[Message])
 }

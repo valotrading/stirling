@@ -53,6 +53,7 @@ public class ConsoleClient {
     private Connection conn;
     private Session session;
     private Events events;
+    private boolean quit;
 
     private stirling.fix.Config config = new stirling.fix.Config() {
         {
@@ -162,7 +163,7 @@ public class ConsoleClient {
     }
 
     public void quit() {
-        events.stop();
+        quit = true;
     }
 
     public void run(List<String> initialCommandLines) throws IOException {
@@ -208,7 +209,14 @@ public class ConsoleClient {
         registerHistory(commandLine);
         commandLine.addCompletor(new CommandCompletor(this, commands));
         events.register(commandLine);
-        events.dispatch(100);
+        while (!quit) {
+            events.process(100);
+
+            if (conn != null && session != null) {
+                session.keepAlive(conn);
+            }
+        }
+        events.close();
     }
 
     private Command getCommand(String commandName) {
