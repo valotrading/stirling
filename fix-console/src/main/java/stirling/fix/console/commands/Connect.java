@@ -83,10 +83,6 @@ public class Connect implements Command {
                     return msg.toString().replaceAll("" + FixMessageParser.DELIMITER, "|");
                 }
 
-                @Override public void idle(Connection<FixMessage> conn) {
-                    client.getSession().keepAlive(conn);
-                }
-
                 @Override public void closed(Connection<FixMessage> conn) {
                     logger.info("Connection closed");
                 }

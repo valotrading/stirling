@@ -159,7 +159,20 @@ public class InitiatorSpecification extends Specification<Session> {
         connection = openConnection(session, visitor, server.getPort(), keepAlive);
         events.register(connection);
         afterConnected.run();
-        events.dispatch(eventsIdleMSec);
+        while (true) {
+            long started = System.currentTimeMillis();
+            while (System.currentTimeMillis() - started < eventsIdleMSec) {
+                events.processNow();
+            }
+
+            if (keepAlive) {
+                session.keepAlive(connection);
+            } else {
+                break;
+            }
+        }
+        connection.close();
+        events.close();
         server.stop();
         specify(server.passed());
     }
@@ -500,13 +513,6 @@ public class InitiatorSpecification extends Specification<Session> {
             @Override public void messages(Connection<stirling.fix.messages.FixMessage> conn, Iterator<stirling.fix.messages.FixMessage> messages) {
                 while (messages.hasNext())
                     session.receive(conn, messages.next(), messageVisitor);
-            }
-
-            @Override public void idle(Connection<stirling.fix.messages.FixMessage> conn) {
-                if (keepAlive)
-                    session.keepAlive(conn);
-                else
-                    conn.close();
             }
 
             @Override public void closed(Connection<stirling.fix.messages.FixMessage> conn) {
