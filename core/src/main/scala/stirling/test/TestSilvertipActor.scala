@@ -40,6 +40,7 @@ abstract class TestSilvertipActor[Message] extends TestActor[Message] {
 
   @tailrec
   protected final def act(connection: Connection[Message]) {
+    onAct()
     actions.headOption match {
       case None =>
         Unit
@@ -51,6 +52,8 @@ abstract class TestSilvertipActor[Message] extends TestActor[Message] {
         act(connection)
     }
   }
+
+  protected def onAct() {}
 
   @tailrec
   override final def react() {

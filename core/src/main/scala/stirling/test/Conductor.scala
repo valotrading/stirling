@@ -46,25 +46,27 @@ object Conductor {
       timeout = timeout
     )
 
-    actors.reverse.foreach(_.stop())
+    try {
+      status match {
+        case Error(exception) =>
+          throw exception
+        case Timeout(pendingActions) =>
+          fail("Timeout, pending actions: %s".format(pendingActions.mkString(", ")))
+        case Done =>
+          Unit
+      }
 
-    events.stop()
+      actors.flatMap(_.unhandledEvents).foreach { event =>
+        fail("Unhandled event: %s".format(event))
+      }
 
-    status match {
-      case Error(exception) =>
-        throw exception
-      case Timeout(pendingActions) =>
-        fail("Timeout, pending actions: %s".format(pendingActions.mkString(", ")))
-      case Done =>
-        Unit
-    }
+      actors.flatMap(_.actions).foreach { action =>
+        fail("Unexecuted action: %s".format(action))
+      }
+    } finally {
+      actors.reverse.foreach(_.stop())
 
-    actors.flatMap(_.unhandledEvents).foreach { event =>
-      fail("Unhandled event: %s".format(event))
-    }
-
-    actors.flatMap(_.actions).foreach { action =>
-      fail("Unexecuted action: %s".format(action))
+      events.close()
     }
   }
 

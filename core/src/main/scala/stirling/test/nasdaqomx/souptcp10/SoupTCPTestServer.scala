@@ -31,7 +31,7 @@ class SoupTCPTestServer[Message](
     session.receive(packet).foreach(receive)
   }
 
-  override protected def onIdle(connection: Connection[Packet]) {
+  override protected def keepAlive(connection: Connection[Packet]) {
     session.keepAlive(connection).foreach(receive)
   }
 

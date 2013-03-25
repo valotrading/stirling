@@ -126,6 +126,7 @@ public class PerformanceTest implements Runnable {
     public class PerfServer implements Runnable {
         private final int port;
         private int count;
+        private boolean closed;
 
         public PerfServer(int port) {
             this.port = port;
@@ -161,11 +162,8 @@ public class PerformanceTest implements Runnable {
                                 }
                             }
 
-                            @Override public void idle(Connection<FixMessage> conn) {
-                            }
-
                             @Override public void closed(Connection<FixMessage> conn) {
-                                events.stop();
+                                closed = true;
                             }
 
                             @Override public void garbledMessage(Connection<FixMessage> conn, String message, byte[] data) {
@@ -177,7 +175,9 @@ public class PerformanceTest implements Runnable {
                     }
                 });
                 events.register(server);
-                events.dispatch(30000);
+                while (!closed)
+                    events.processNow();
+                events.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -186,6 +186,7 @@ public class PerformanceTest implements Runnable {
 
     public class PerfClient implements Runnable {
         private final int port;
+        private boolean closed;
 
         public PerfClient(int port) {
             this.port = port;
@@ -213,11 +214,8 @@ public class PerformanceTest implements Runnable {
                             session.receive(conn, messages.next(), new DefaultMessageVisitor());
                     }
 
-                    @Override public void idle(Connection<FixMessage> conn) {
-                        session.keepAlive(conn);
-                    }
-
                     @Override public void closed(Connection<FixMessage> conn) {
+                        closed = true;
                     }
 
                     @Override public void garbledMessage(Connection<FixMessage> conn, String message, byte[] data) {
@@ -240,7 +238,9 @@ public class PerformanceTest implements Runnable {
                     }
                 });
                 worker.start();
-                events.dispatch(30000);
+                while (!closed)
+                    events.processNow();
+                events.close();
                 worker.join();
             } catch (Exception e) {
                 throw new RuntimeException(e);
