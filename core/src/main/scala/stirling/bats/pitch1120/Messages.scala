@@ -15,36 +15,22 @@
  */
 package stirling.bats.pitch1120
 
-import java.nio.ByteBuffer
-import stirling.io.{ByteBuffers, ByteString}
+import stirling.bats.pitch1122
+import stirling.bats.pitch1122.{Commons, MessageType}
+import stirling.io.ByteString
 
 sealed trait Message {
-  def payload: ByteString
-
-  def timestamp   = payload.slice(0, 8).toLong
-  def messageType = payload.byteAt(8)
-
-  override def toString = payload.toString
-}
-
-object Message {
-  val messageTypeOffset = 8
-}
-
-sealed trait MessageType {
-  def apply(payload: ByteString): Message
-
-  def size: Int
+  def messageType: Byte
 }
 
 /*
  * Section 4.2
  */
-class SymbolClear(val payload: ByteString) extends Message {
+class SymbolClear(val payload: ByteString) extends Message with Commons {
   def stockSymbol: ByteString = payload.slice(9, 6)
 }
 
-object SymbolClear extends MessageType {
+object SymbolClear extends MessageType[Message] {
   def apply(payload: ByteString) = new SymbolClear(payload)
 
   val size = 15
@@ -53,180 +39,120 @@ object SymbolClear extends MessageType {
 /*
  * Section 4.3
  */
-class AddOrderShort(val payload: ByteString) extends Message {
-  def orderId:       ByteString = payload.slice(9, 12)
-  def sideIndicator: Byte       = payload.byteAt(21)
-  def shares:        Long       = payload.slice(22, 6).toLong
-  def stockSymbol:   ByteString = payload.slice(28, 6)
-  def price:         Long       = payload.slice(34, 10).toLong
-  def display:       Boolean    = payload.byteAt(44) == 'Y'
-}
+class AddOrderShort(payload: ByteString) extends pitch1122.AddOrderShort(payload) with Message
 
-object AddOrderShort extends MessageType {
+object AddOrderShort extends MessageType[Message] {
   def apply(payload: ByteString) = new AddOrderShort(payload)
 
-  val size = 45
+  val size = pitch1122.AddOrderShort.size
 }
 
 /*
  * Section 4.3
  */
-class AddOrderLong(val payload: ByteString) extends Message {
-  def orderId:       ByteString = payload.slice(9, 12)
-  def sideIndicator: Byte       = payload.byteAt(21)
-  def shares:        Long       = payload.slice(22, 6).toLong
-  def stockSymbol:   ByteString = payload.slice(28, 8)
-  def price:         Long       = payload.slice(36, 10).toLong
-  def display:       Boolean    = payload.byteAt(46) == 'Y'
-  def participantId: ByteString = payload.slice(47, 4)
-}
+class AddOrderLong(payload: ByteString) extends pitch1122.AddOrderLong(payload) with Message
 
-object AddOrderLong extends MessageType {
+object AddOrderLong extends MessageType[Message] {
   def apply(payload: ByteString) = new AddOrderLong(payload)
 
-  val size = 51
+  val size = pitch1122.AddOrderLong.size
 }
 
 /*
  * Section 4.4.1
  */
-class OrderExecuted(val payload: ByteString) extends Message {
-  def orderId:        ByteString = payload.slice(9, 12)
-  def executedShares: Long       = payload.slice(21, 6).toLong
-  def executionId:    ByteString = payload.slice(27, 12)
-}
+class OrderExecuted(payload: ByteString) extends pitch1122.OrderExecuted(payload) with Message
 
-object OrderExecuted extends MessageType {
+object OrderExecuted extends MessageType[Message] {
   def apply(payload: ByteString) = new OrderExecuted(payload)
 
-  val size = 39
+  val size = pitch1122.OrderExecuted.size
 }
 
 /*
  * Section 4.4.2
  */
-class OrderCancel(val payload: ByteString) extends Message {
-  def orderId:        ByteString = payload.slice(9, 12)
-  def canceledShares: Long       = payload.slice(21, 6).toLong
-}
+class OrderCancel(payload: ByteString) extends pitch1122.OrderCancel(payload) with Message
 
-object OrderCancel extends MessageType {
+object OrderCancel extends MessageType[Message] {
   def apply(payload: ByteString) = new OrderCancel(payload)
 
-  val size = 27
+  val size = pitch1122.OrderCancel.size
 }
 
 /*
  * Section 4.5
  */
-class TradeShort(val payload: ByteString) extends Message {
-  def orderId:       ByteString = payload.slice(9, 12)
-  def sideIndicator: Byte       = payload.byteAt(21)
-  def shares:        Long       = payload.slice(22, 6).toLong
-  def stockSymbol:   ByteString = payload.slice(28, 6)
-  def price:         Long       = payload.slice(34, 10).toLong
-  def executionId:   ByteString = payload.slice(44, 12)
-}
+class TradeShort(payload: ByteString) extends pitch1122.TradeShort(payload) with Message
 
-object TradeShort extends MessageType {
+object TradeShort extends MessageType[Message] {
   def apply(payload: ByteString) = new TradeShort(payload)
 
-  val size = 56
+  val size = pitch1122.TradeShort.size
 }
 
 /*
  * Section 4.5
  */
-class TradeLong(val payload: ByteString) extends Message {
-  def orderId:       ByteString = payload.slice(9, 12)
-  def sideIndicator: Byte       = payload.byteAt(21)
-  def shares:        Long       = payload.slice(22, 6).toLong
-  def stockSymbol:   ByteString = payload.slice(28, 8)
-  def price:         Long       = payload.slice(36, 10).toLong
-  def executionId:   ByteString = payload.slice(46, 12)
-}
+class TradeLong(payload: ByteString) extends pitch1122.TradeLong(payload) with Message
 
-object TradeLong extends MessageType {
+object TradeLong extends MessageType[Message] {
   def apply(payload: ByteString) = new TradeLong(payload)
 
-  val size = 58
+  val size = pitch1122.TradeLong.size
 }
 
 /*
  * Section 4.6
  */
-class TradeBreak(val payload: ByteString) extends Message {
-  def executionId: ByteString = payload.slice(9, 12)
-}
+class TradeBreak(payload: ByteString) extends pitch1122.TradeBreak(payload) with Message
 
-object TradeBreak extends MessageType {
+object TradeBreak extends MessageType[Message] {
   def apply(payload: ByteString) = new TradeBreak(payload)
 
-  val size = 21
+  val size = pitch1122.TradeBreak.size
 }
 
 /*
  * Section 4.7
  */
-class TradingStatus(val payload: ByteString) extends Message {
-  def stockSymbol:  ByteString = payload.slice(9, 8)
-  def haltStatus:   Byte       = payload.byteAt(17)
-  def regShoAction: Byte       = payload.byteAt(18)
-  def reserved1:    Byte       = payload.byteAt(19)
-  def reserved2:    Byte       = payload.byteAt(20)
-}
+class TradingStatus(payload: ByteString) extends pitch1122.TradingStatus(payload) with Message
 
-object TradingStatus extends MessageType {
+object TradingStatus extends MessageType[Message] {
   def apply(payload: ByteString) = new TradingStatus(payload)
 
-  val size = 21
+  val size = pitch1122.TradingStatus.size
 }
 
 /*
  * Section 4.8
  */
-class AuctionUpdate(val payload: ByteString) extends Message {
-  def stockSymbol:      ByteString = payload.slice(9, 8)
-  def auctionType:      Byte       = payload.byteAt(17)
-  def referencePrice:   Long       = payload.slice(18, 10).toLong
-  def buyShares:        Long       = payload.slice(28, 10).toLong
-  def sellShares:       Long       = payload.slice(38, 10).toLong
-  def indicativePrice:  Long       = payload.slice(48, 10).toLong
-  def auctionOnlyPrice: Long       = payload.slice(58, 10).toLong
-}
+class AuctionUpdate(payload: ByteString) extends pitch1122.AuctionUpdate(payload) with Message
 
-object AuctionUpdate extends MessageType {
+object AuctionUpdate extends MessageType[Message] {
   def apply(payload: ByteString) = new AuctionUpdate(payload)
 
-  val size = 68
+  val size = pitch1122.AuctionUpdate.size
 }
 
 /*
  * Section 4.9
  */
-class AuctionSummary(val payload: ByteString) extends Message {
-  def stockSymbol: ByteString = payload.slice(9, 8)
-  def auctionType: Byte       = payload.byteAt(17)
-  def price:       Long       = payload.slice(18, 10).toLong
-  def shares:      Long       = payload.slice(28, 10).toLong
-}
+class AuctionSummary(payload: ByteString) extends pitch1122.AuctionSummary(payload) with Message
 
-object AuctionSummary extends MessageType {
+object AuctionSummary extends MessageType[Message] {
   def apply(payload: ByteString) = new AuctionSummary(payload)
 
-  val size = 38
+  val size = pitch1122.AuctionSummary.size
 }
 
 /*
  * Section 4.10
  */
-class RetailPriceImprovement(val payload: ByteString) extends Message {
-  def stockSymbol:            ByteString = payload.slice(9, 8)
-  def retailPriceImprovement: Byte       = payload.byteAt(17)
-}
+class RetailPriceImprovement(payload: ByteString) extends pitch1122.RetailPriceImprovement(payload) with Message
 
-object RetailPriceImprovement extends MessageType {
+object RetailPriceImprovement extends MessageType[Message] {
   def apply(payload: ByteString) = new RetailPriceImprovement(payload)
 
-  val size = 18
+  val size = pitch1122.RetailPriceImprovement.size
 }

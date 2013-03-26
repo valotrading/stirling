@@ -7,7 +7,7 @@ Stirling is an open source electronic trading library for the JVM.
 
 ## Protocols
 
-  - BATS TCP PITCH 1.12.0
+  - BATS TCP PITCH 1.12.0, 1.12.2
   - BATS TOP 1.2.0
   - BATS Europe FIX
   - Burgundy FIX
