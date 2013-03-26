@@ -20,7 +20,7 @@ import org.scalatest.matchers.MustMatchers
 import stirling.bats.souptcpfile.SoupTCPFileParser
 import stirling.io.Source
 
-class SoupTCPFileParserSpec extends WordSpec with MustMatchers {
+class SoupTCPFileSpec extends WordSpec with MustMatchers {
   "SoupTCPFileParser" must {
     "parse messages with read buffer underflow inside message" in {
       val messageTypes = "uAdEXPrBHIJR"
