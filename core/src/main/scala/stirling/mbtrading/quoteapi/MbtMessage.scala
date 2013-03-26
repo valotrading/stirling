@@ -1,14 +1,32 @@
+/*
+ * Copyright 2012 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package stirling.mbtrading.quoteapi
 
 import java.nio.ByteBuffer
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
+import java.nio.charset.Charset
 import silvertip.PartialMessageException
 
 object MbtMessage {
-  type Tag = Int
-  type Value = String
-  type MessageType = Char
+  val ASCII = Charset.forName("US-ASCII")
+
+  type Fields = Map[Tag, Value]
+  type Tag    = Int
+  type Type   = Char
+  type Value  = String
+
   def parse(buffer: ByteBuffer): MbtMessage = {
     for (pos <- buffer.position until buffer.limit) {
       if (buffer.get(pos) == '\n') {
@@ -19,189 +37,306 @@ object MbtMessage {
     }
     throw new PartialMessageException
   }
-  private def message(bytes: Array[Byte]) = {
-    msgFields(bytes).foldLeft(MbtMessage(msgType(bytes))) { case (msg, (tag, value)) =>
-      msg.set(tag, value)
-    }
+
+  private def message(bytes: Array[Byte]): MbtMessage = {
+    Message(msgType(bytes))(msgFields(bytes))
   }
-  private def msgType(bytes: Array[Byte]) = {
+
+  private def msgType(bytes: Array[Byte]): Type = {
     bytes(0).toChar
   }
-  private def msgFields(bytes: Array[Byte]) = {
-    body(bytes).split(";").map(tagAndValue).toSet
+
+  private def msgFields(bytes: Array[Byte]): Fields = {
+    body(bytes).split(";").map(tagAndValue).toMap
   }
-  private def body(bytes: Array[Byte]) = {
-    new String(bytes, 2, bytes.length - 2).trim
+
+  private def body(bytes: Array[Byte]): String = {
+    new String(bytes, 2, bytes.length - 2, ASCII).trim
   }
-  private def tagAndValue(field: String) = {
+
+  private def tagAndValue(field: String): (Tag, Value) = {
     val tagAndValue = field.split("=")
     (tagAndValue(0).toInt, tagAndValue(1))
   }
-  val dateFormat = DateTimeFormat.forPattern("MM/dd/yy")
-  val timeFormat = DateTimeFormat.forPattern("HH:mm:ss")
+
+  val Message = Map(
+    Type.Login                   -> Login,
+    Type.Subscription            -> Subscription,
+    Type.Unsubscription          -> Unsubscription,
+    Type.Fundamental             -> Fundamental,
+    Type.Heartbeat               -> Heartbeat,
+    Type.LogonAccepted           -> LogonAccepted,
+    Type.LogonDenied             -> LogonDenied,
+    Type.Level1Update            -> Level1Update,
+    Type.Level2MarketDepthUpdate -> Level2MarketDepthUpdate,
+    Type.TimeAndSalesUpdate      -> TimeAndSalesUpdate,
+    Type.FundamentalDataResponse -> FundamentalDataResponse,
+    Type.OptionsChainsUpdate     -> OptionsChainsUpdate
+  )
+
+  object Type {
+    val Login                   = 'L'
+    val Subscription            = 'S'
+    val Unsubscription          = 'U'
+    val Fundamental             = 'H'
+    val Heartbeat               = '9'
+    val LogonAccepted           = 'G'
+    val LogonDenied             = 'D'
+    val Level1Update            = '1'
+    val Level2MarketDepthUpdate = '2'
+    val TimeAndSalesUpdate      = '3'
+    val FundamentalDataResponse = 'N'
+    val OptionsChainsUpdate     = '4'
+  }
+
+  object Tag {
+    val CashInLieu           = 2080
+    val Close                = 2056
+    val CompanyName          = 2021
+    val ContractSize         = 2041
+    val Country              = 2025
+    val Currency             = 2026
+    val CurrentTick          = 2013
+    val Cusip                = 2028
+    val Date                 = 2015
+    val DisplayFormat        = 2045
+    val Exchange             = 2022
+    val ExpMonth             = 2036
+    val ExpYear              = 2040
+    val FiftyTwoWeekHigh     = 2046
+    val FiftyTwoWeekHighDate = 2048
+    val FiftyTwoWeekLow      = 2049
+    val FiftyTwoWeekLowDate  = 2049
+    val HashedPassword       = 133
+    val High                 = 2009
+    val HistChange           = 2057
+    val InfoMsgFrom          = 8055
+    val Isin                 = 2029
+    val LastAsk              = 2004
+    val LastAskSize          = 2006
+    val LastBid              = 2003
+    val LastBidSize          = 2005
+    val LastExchange         = 2042
+    val Size                 = 2007
+    val LoginReason          = 103
+    val Low                  = 2010
+    val MarginMultiplier     = 2031
+    val MmidPrice            = 2019
+    val MmidSource           = 2033
+    val MmidStatus           = 2024
+    val MmidTime             = 2020
+    val Mpid                 = 2016
+    val NbboFlags            = 2091
+    val Open                 = 2011
+    val OpenIndicator        = 2087
+    val OpenInterest         = 2037
+    val Password             = 101
+    val PrevClose            = 2008
+    val Price                = 2002
+    val PutOrCall            = 2038
+    val QuoteIndicator       = 2090
+    val QuotePrice           = 2018
+    val QuoteSize            = 2017
+    val RequestRejected      = 1011
+    val SecurityType         = 2058
+    val StrikePrice          = 2035
+    val SubscriptionType     = 2000
+    val Symbol               = 1003
+    val TickCondition        = 2082
+    val TickSize             = 2027
+    val TickStatus           = 2083
+    val TickType             = 2084
+    val Timestamp            = 2014
+    val TotalVolume          = 2012
+    val TradeIndicator       = 2089
+    val TradingStatus        = 2032
+    val UpcInfo              = 2023
+    val TimeAndSalesType     = 2039
+    val Underlier            = 2034
+    val Username             = 100
+    val UserPermissions      = 154
+  }
+
+  object NbboFlag {
+    val Filtered                       = 'F'
+    val EligibleForOpenHighAndLowPrice = 'O'
+    val EligibleForLastPrice           = 'C'
+    val EligibleForVolume              = 'V'
+    val EligibleToUpdate1MinBarData    = 'U'
+  }
+
+  object Tick {
+    val Uptick   = 20020
+    val Downtick = 20021
+  }
+
+  object SubscriptionType {
+    val Level1          = 20000
+    val Level2          = 20001
+    val Level1AndLevel2 = 20002
+    val Trades          = 20003
+    val OptionsChains   = 20004
+  }
+
+  object TimeAndSalesType {
+    val Normal = 30030
+    val FormT  = 30031
+  }
+
+  object TickCondition {
+    val RegularSale      = 0
+    val FormT            = 29
+    val IntermarketSweep = 45
+    val ClosePrice       = 49
+    val AveragePrice     = 53
+  }
+
+  object TickStatus {
+    val Normal        = 0
+    val Filtered      = 1
+    val OutOfSequence = 2
+    val Deleted       = 3
+  }
+
+  object TickType {
+    val Trade = 0
+    val Bid   = 1
+    val Ask   = 2
+  }
 }
 
-import MbtMessage._
+sealed trait MbtMessage {
+  import MbtMessage._
 
-case class MbtMessage(msgType: MessageType, fields: Map[MbtMessage.Tag, MbtMessage.Value] = Map()) {
-  import MbtMessageTag._
-  import MbtMessageType._
-  import Predef._
-  def get(tag: Tag): Option[String] = {
+  def messageType: Type
+
+  def fields: Fields
+
+  def updated(tag: Tag, value: Value): MbtMessage
+
+  protected def containing(tag: Tag, value: Value): Fields = {
+    fields.updated(tag, value)
+  }
+
+  def getString(tag: Tag): Option[String] = {
+    get(tag)
+  }
+
+  def getDouble(tag: Tag): Option[Double] = {
+    getNumber(tag, _.toDouble)
+  }
+
+  def getInt(tag: Tag): Option[Int] = {
+    getNumber(tag, _.toInt)
+  }
+
+  def getLong(tag: Tag): Option[Long] = {
+    getNumber(tag, _.toLong)
+  }
+
+  private def getNumber[T](tag: Tag, convert: (String) => T): Option[T] = {
+    try {
+      get(tag).map(convert)
+    } catch {
+      case e: NumberFormatException => None
+    }
+  }
+
+  private def get(tag: Tag): Option[String] = {
     fields.get(tag)
   }
-  def getString(tag: Tag) = {
-    fields(tag)
+
+  def format: Array[Byte] = {
+    toString.getBytes(ASCII)
   }
-  def getDouble(tag: Tag) = {
-    fields(tag).toDouble
+
+  override def toString: String = {
+    header + body + "\n"
   }
-  def getInt(tag: Tag) = {
-    fields(tag).toInt
+
+  private def header: String = {
+    "%c|".format(messageType)
   }
-  def getLong(tag: Tag) = {
-    fields(tag).toLong
-  }
-  def set(tag: Tag, value: Value): MbtMessage = {
-    MbtMessage(msgType, fields + (tag -> value))
-  }
-  def set(tag: Tag, value: Int): MbtMessage = {
-    set(tag, value.toString)
-  }
-  def hasValue(tag: Tag) = {
-    fields.contains(tag)
-  }
-  def merge(other: MbtMessage) = other.msgType match {
-    case this.msgType => MbtMessage(this.msgType, this.fields ++ other.fields)
-    case _ => throw new IllegalArgumentException("msgType %c, expected msgType %c".format(other.msgType, this.msgType))
-  }
-  def format = {
-    formatHeader + formatBody + "\n"
-  }
-  def formatHeader = {
-    "%c|".format(msgType)
-  }
-  def formatBody = {
+
+  private def body: String = {
     fields.map { case (tag, value) =>
       "%s=%s".format(tag, value)
     }.mkString(";")
   }
-  def isMarketDataMessage = {
-    marketDataMessages.contains(msgType)
-  }
-  def level1UpdateTimestamp = {
-    val (date, time) = (getString(Date), getString(Timestamp))
-    dateFormat.parseDateTime(date).withFields(timeFormat.parseLocalTime(time)).getMillis
-  }
-  def tasUpdateTimestamp = {
-    timeFormat.parseDateTime(getString(Timestamp)).getMillis
-  }
 }
 
-object MbtMessageType {
-  val Login = 'L'
-  val Subscription = 'S'
-  val Unsubscription = 'U'
-  val Fundamental = 'H'
-  val Heartbeat = '9'
-  val LogonAccepted = 'G'
-  val LogonDenied = 'D'
-  val Level1Update = '1'
-  val Level2Update = '2'
-  val TasUpdate = '3'
-  val FundamentalDataResponse = 'N'
-  val OptionsChainsUpdate = '4'
-  val marketDataMessages = Set(Level1Update, Level2Update, TasUpdate, FundamentalDataResponse, OptionsChainsUpdate)
+import MbtMessage.{Fields, Tag, Value}
+import MbtMessage.{Type => MessageType}
+import Map.empty
+
+case class Login(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Login
+
+  def updated(tag: Tag, value: Value) = Login(containing(tag, value))
 }
 
-object MbtMessageTag {
-  val CompanyName = 2021
-  val ContractSize = 2041
-  val Country = 2025
-  val Currency = 2026
-  val CurrentTick = 2013
-  val Cusip = 2028
-  val Date = 2015
-  val Exchange = 2022
-  val ExpMonth = 2036
-  val ExpYear = 2040
-  val High = 2009
-  val InfoMsgFrom = 8055
-  val Isin = 2029
-  val LastAsk = 2004
-  val LastAskSize = 2006
-  val LastBid = 2003
-  val LastBidSize = 2005
-  val LastExchange = 2042
-  val Size = 2007
-  val LoginReason = 103
-  val Low = 2010
-  val MarginMultiplier = 2031
-  val MmidPrice = 2019
-  val MmidSource = 2033
-  val MmidStatus = 2024
-  val MmidTime = 2020
-  val Mpid = 2016
-  val Open = 2011
-  val OpenInterest = 2037
-  val Password = 101
-  val PrevClose = 2008
-  val Price = 2002
-  val PutOrCall = 2038
-  val QuotePrice = 2018
-  val QuoteSize = 2017
-  val RequestRejected = 1011
-  val StrikePrice = 2035
-  val SubscriptionType = 2000
-  val Symbol = 1003
-  val TickCondition = 2082
-  val TickSize = 2027
-  val TickStatus = 2083
-  val TickType = 2084
-  val Timestamp = 2014
-  val TotalVolume = 2012
-  val TradingStatus = 2032
-  val UpcInfo = 2023
-  val TasType = 2039
-  val Username = 100
-  val UserPermissions = 154
+case class Subscription(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Subscription
+
+  def updated(tag: Tag, value: Value) = Subscription(containing(tag, value))
 }
 
-object MbtQuoteServerTick {
-  val Uptick = 20020
-  val Downtick = 20021
+case class Unsubscription(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Unsubscription
+
+  def updated(tag: Tag, value: Value) = Unsubscription(containing(tag, value))
 }
 
-object MbtQuoteServerSubscriptionType {
-  val Level1 = 20000
-  val Level2 = 20001
-  val Level1AndLevel2 = 20002
-  val Trades = 20003
-  val OptionsChains = 20004
+case class Fundamental(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Fundamental
+
+  def updated(tag: Tag, value: Value) = Fundamental(containing(tag, value))
 }
 
-object MbtQuoteServerTasType {
-  val Normal = 30030
-  val FormT = 30031
+case class Heartbeat(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Heartbeat
+
+  def updated(tag: Tag, value: Value) = Heartbeat(containing(tag, value))
 }
 
-object MbtQuoteServerTickCondition {
-  val RegularSale = 0
-  val FormT = 29
-  val IntermarketSweep = 45
-  val ClosePrice = 49
-  val AveragePrice = 53;
+case class LogonAccepted(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.LogonAccepted
+
+  def updated(tag: Tag, value: Value) = LogonAccepted(containing(tag, value))
 }
 
-object MbtQuoteServerTickStatus {
-  val Normal = 0
-  val Filtered = 1
-  val OutOfSequence = 2
-  val Deleted = 3
+case class LogonDenied(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.LogonDenied
+
+  def updated(tag: Tag, value: Value) = LogonDenied(containing(tag, value))
 }
 
-object MbtQuoteServerTickType {
-  val Trade = 0
-  val Bid = 1
-  val Ask = 2
+case class Level1Update(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Level1Update
+
+  def updated(tag: Tag, value: Value) = Level1Update(containing(tag, value))
+}
+
+case class Level2MarketDepthUpdate(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.Level2MarketDepthUpdate
+
+  def updated(tag: Tag, value: Value) = Level2MarketDepthUpdate(containing(tag, value))
+}
+
+case class TimeAndSalesUpdate(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.TimeAndSalesUpdate
+
+  def updated(tag: Tag, value: Value) = TimeAndSalesUpdate(containing(tag, value))
+}
+
+case class FundamentalDataResponse(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.FundamentalDataResponse
+
+  def updated(tag: Tag, value: Value) = FundamentalDataResponse(containing(tag, value))
+}
+
+case class OptionsChainsUpdate(fields: Fields = empty) extends MbtMessage {
+  def messageType = MessageType.OptionsChainsUpdate
+
+  def updated(tag: Tag, value: Value) = OptionsChainsUpdate(containing(tag, value))
 }
