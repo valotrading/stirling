@@ -79,4 +79,16 @@ object Netstring extends MessageParser[Array[Byte]] {
 
     bytes
   }
+
+  object Text extends MessageParser[String] {
+    private val UTF8 = Charset.forName("UTF-8")
+
+    def format(content: String): Array[Byte] = {
+      Netstring.format(content.getBytes(UTF8))
+    }
+
+    override def parse(buffer: ByteBuffer): String = {
+      new String(Netstring.parse(buffer), UTF8)
+    }
+  }
 }
