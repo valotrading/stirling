@@ -17,8 +17,9 @@ package stirling.nasdaqomx.souptcp10
 
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
-import stirling.test.{Conductor, Event}
+import stirling.netstring.Netstring
 import stirling.test.nasdaqomx.souptcp10.{SoupTCPTestClient, SoupTCPTestServer}
+import stirling.test.{Conductor, Event}
 
 class SoupTCPSessionSpec extends WordSpec with MustMatchers {
   "SoupTCP" should {
@@ -155,11 +156,13 @@ class SoupTCPSessionSpec extends WordSpec with MustMatchers {
 
       login(client, server)
 
-      server.send(HelloMessage.length) { buffer =>
-        buffer.put(HELO.bytes)
+      val message = Netstring.Text.format("HELO")
+
+      server.send(message.length) { buffer =>
+        buffer.put(message)
       }
       client.expect(SoupTCPClient.Event.SequencedData(
-        message = HELO
+        message = "HELO"
       ))
 
       Conductor.conduct(Seq(server, client))
@@ -170,11 +173,13 @@ class SoupTCPSessionSpec extends WordSpec with MustMatchers {
 
       login(client, server)
 
-      client.send(HelloMessage.length) { buffer =>
-        buffer.put(EHLO.bytes)
+      val message = Netstring.Text.format("EHLO")
+
+      client.send(message.length) { buffer =>
+        buffer.put(message)
       }
       server.expect(SoupTCPServer.Event.UnsequencedData(
-        message = EHLO
+        message = "EHLO"
       ))
 
       Conductor.conduct(Seq(server, client))
@@ -204,7 +209,7 @@ class SoupTCPSessionSpec extends WordSpec with MustMatchers {
     }
   }
 
-  def login(client: SoupTCPTestClient[HelloMessage], server: SoupTCPTestServer[HelloMessage]) {
+  def login(client: SoupTCPTestClient[String], server: SoupTCPTestServer[String]) {
     client.expect(Event.Connected)
     server.expect(Event.Connected)
 
@@ -224,13 +229,13 @@ class SoupTCPSessionSpec extends WordSpec with MustMatchers {
   }
 
   def newServer(heartbeatInterval: Long = 5000) = new SoupTCPTestServer(
-    parser   = HelloParser,
+    parser   = Netstring.Text,
     port     = 6666,
     settings = newSettings(heartbeatInterval)
   )
 
   def newClient(heartbeatInterval: Long = 5000) = new SoupTCPTestClient(
-    parser   = HelloParser,
+    parser   = Netstring.Text,
     hostname = "localhost",
     port     = 6666,
     settings = newSettings(heartbeatInterval)
