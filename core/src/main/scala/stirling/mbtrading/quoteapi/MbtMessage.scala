@@ -214,6 +214,10 @@ sealed trait MbtMessage {
 
   def updated(tag: Tag, value: Value): MbtMessage
 
+  def updated(tag: Tag, value: Any): MbtMessage = {
+    updated(tag, value.toString)
+  }
+
   protected def containing(tag: Tag, value: Value): Fields = {
     fields.updated(tag, value)
   }
