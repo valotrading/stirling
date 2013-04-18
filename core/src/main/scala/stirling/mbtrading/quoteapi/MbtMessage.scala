@@ -46,8 +46,9 @@ object MbtMessage {
     bytes(0).toChar
   }
 
-  private def msgFields(bytes: Array[Byte]): Fields = {
-    body(bytes).split(";").map(tagAndValue).toMap
+  private def msgFields(bytes: Array[Byte]): Fields = body(bytes) match {
+    case ""   => Map()
+    case body => body.split(";").map(tagAndValue).toMap
   }
 
   private def body(bytes: Array[Byte]): String = {
