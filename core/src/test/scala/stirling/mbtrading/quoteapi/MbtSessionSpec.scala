@@ -70,6 +70,22 @@ class MbtSessionSpec extends WordSpec with MustMatchers {
 
       Conductor.conduct(Seq(server, client))
     }
+
+    "send and receive heartbeats" in {
+      val server = newServer()
+      val client = newClient()
+
+      client.expect(Event.Connected)
+      server.expect(Event.Connected)
+
+      client.send(Heartbeat())
+      server.expect(Heartbeat())
+
+      server.send(Heartbeat())
+      client.expect(Heartbeat())
+
+      Conductor.conduct(Seq(server, client))
+    }
   }
 
   def newServer() = new MbtTestServer(port = 6666)
