@@ -85,7 +85,7 @@ object StirlingBuild extends Build {
     val jdave           = "org.jdave"     %  "jdave-junit4"      % "1.1"    % "test"
     val jdaveSbt        = "jdave-sbt"     %% "jdave-sbt"         % "0.2"    % "test"
     val jline           = "jline"         %  "jline"             % "0.9.94"
-    val jmock           = "org.jmock"     %  "jmock"             % "2.5.1"
+    val jmock           = "org.jmock"     %  "jmock"             % "2.5.1"  % "test"
     val jodaConvert     = "org.joda"      %  "joda-convert"      % "1.2"
     val jodaTime        = "joda-time"     %  "joda-time"         % "2.1"
     val log4j           = "log4j"         %  "log4j"             % "1.2.16"
