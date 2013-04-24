@@ -15,7 +15,15 @@
  */
 package stirling.fix.messages
 
-import stirling.fix.tags.fix42.{BeginSeqNo, EndSeqNo, TestReqID, Text}
+import org.joda.time.DateTime
+import stirling.fix.tags.fix42.{
+  BeginSeqNo,
+  EndSeqNo,
+  GapFillFlag,
+  NewSeqNo,
+  TestReqID,
+  Text
+}
 
 trait Allocation extends Message
 
@@ -101,6 +109,24 @@ class ResendRequest(header: MessageHeader) extends AbstractMessage(header) {
 trait SecurityList extends Message
 
 trait SecurityListRequest extends Message
+
+class SequenceReset(header: MessageHeader) extends AbstractMessage(header) {
+  field(GapFillFlag.Tag, Required.NO)
+  field(NewSeqNo.Tag, Required.NO)
+
+  override def setSendingTime(sendingTime: DateTime) {
+    super.setSendingTime(sendingTime)
+
+    if (getPossDupFlag && !hasOrigSendingTime)
+      setOrigSendingTime(sendingTime)
+  }
+
+  def getNewSeqNo: Int = getInteger(NewSeqNo.Tag)
+
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+
+  override def isAdminMessage = true
+}
 
 trait TradeCancelCorrect extends Message
 
