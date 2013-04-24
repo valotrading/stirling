@@ -15,11 +15,12 @@
  */
 package stirling.fix.messages.fix42.bats.europe
 
+import stirling.fix.messages.AbstractMessage
 import stirling.fix.messages.MessageHeader
 import stirling.fix.messages.MessageVisitor
 import stirling.fix.messages.Required
-import stirling.fix.messages.UserDefinedMessage;
-import stirling.fix.messages.Value;
+import stirling.fix.messages.{TradeCancelCorrect => TradeCancelCorrectTrait}
+import stirling.fix.messages.Value
 import stirling.fix.tags.fix42.{
   Account,
   AvgPx,
@@ -213,7 +214,7 @@ class OrderCancelRequest(header: MessageHeader) extends stirling.fix.messages.fi
   })
 }
 
-class TradeCancelCorrect(header: MessageHeader) extends UserDefinedMessage(header) {
+class TradeCancelCorrect(header: MessageHeader) extends AbstractMessage(header) with TradeCancelCorrectTrait {
   field(ClOrdID.Tag)
   field(Currency.Tag, Required.NO)
   field(ExecID.Tag)

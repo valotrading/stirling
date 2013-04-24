@@ -36,13 +36,13 @@ public interface MessageVisitor {
     void visit(SequenceReset message);
     void visit(TestRequest message);
     void visit(Allocation message);
-    void visit(UserDefinedMessage message);
     void visit(OrderStatusRequest message);
     void visit(NewOrderMultiLeg message);
     void visit(TradingSessionStatusRequest message);
     void visit(CollateralInquiry message);
     void visit(RequestForPositions message);
     void visit(TradingSessionStatus message);
+    void visit(TradeCancelCorrect message);
     void visit(TradeCaptureReport message);
     void visit(TradeCaptureReportAck message);
     void visit(TradeCaptureReportRequest message);
