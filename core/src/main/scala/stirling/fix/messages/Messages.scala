@@ -23,7 +23,7 @@ trait Reject extends Message {
 }
 trait ExecutionReport extends Message
 trait RequestForPositions extends Message
-trait NewOrderMultiLeg extends RequestMessage
+trait NewOrderMultiLeg extends Message
 trait TradingSessionStatus extends Message
 trait OrderCancelReject extends Message
 trait OrderCancelReplaceRequest extends Message

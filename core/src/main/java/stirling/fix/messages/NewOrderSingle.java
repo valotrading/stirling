@@ -15,6 +15,6 @@
  */
 package stirling.fix.messages;
 
-public interface NewOrderSingle extends RequestMessage {
+public interface NewOrderSingle extends Message {
 
 }
