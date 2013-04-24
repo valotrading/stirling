@@ -15,7 +15,7 @@
  */
 package stirling.fix.messages
 
-import stirling.fix.tags.fix42.TestReqID
+import stirling.fix.tags.fix42.{TestReqID, Text}
 
 trait Allocation extends Message
 
@@ -42,6 +42,14 @@ class Heartbeat(header: MessageHeader) extends AbstractMessage(header) {
 }
 
 trait Logon extends Message {
+  override def isAdminMessage = true
+}
+
+class Logout(header: MessageHeader) extends AbstractMessage(header) {
+  field(Text.Tag, Required.NO)
+
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+
   override def isAdminMessage = true
 }
 
