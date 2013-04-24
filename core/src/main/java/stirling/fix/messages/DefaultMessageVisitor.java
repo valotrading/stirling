@@ -83,10 +83,6 @@ public class DefaultMessageVisitor implements MessageVisitor {
         defaultAction(message);
     }
 
-    @Override public void visit(UserDefinedMessage message) {
-        defaultAction(message);
-    }
-
     @Override public void visit(OrderStatusRequest message) {
         defaultAction(message);
     }
@@ -108,6 +104,10 @@ public class DefaultMessageVisitor implements MessageVisitor {
     }
 
     @Override public void visit(TradingSessionStatus message) {
+        defaultAction(message);
+    }
+
+    @Override public void visit(TradeCancelCorrect message) {
         defaultAction(message);
     }
 
