@@ -15,6 +15,8 @@
  */
 package stirling.fix.messages
 
+import stirling.fix.tags.fix42.TestReqID
+
 trait Allocation extends Message
 
 trait BulkCancelRequest extends Message
@@ -30,6 +32,14 @@ trait CollateralReport extends Message
 trait DontKnowTrade extends Message
 
 trait ExecutionReport extends Message
+
+class Heartbeat(header: MessageHeader) extends AbstractMessage(header) {
+  field(TestReqID.Tag, Required.NO)
+
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+
+  override def isAdminMessage = true
+}
 
 trait Logon extends Message {
   override def isAdminMessage = true
