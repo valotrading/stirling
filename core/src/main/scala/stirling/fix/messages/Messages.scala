@@ -15,6 +15,16 @@
  */
 package stirling.fix.messages
 
+import org.joda.time.DateTime
+import stirling.fix.tags.fix42.{
+  BeginSeqNo,
+  EndSeqNo,
+  GapFillFlag,
+  NewSeqNo,
+  TestReqID,
+  Text
+}
+
 trait Allocation extends Message
 
 trait BulkCancelRequest extends Message
@@ -31,7 +41,23 @@ trait DontKnowTrade extends Message
 
 trait ExecutionReport extends Message
 
+class Heartbeat(header: MessageHeader) extends AbstractMessage(header) {
+  field(TestReqID.Tag, Required.NO)
+
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+
+  override def isAdminMessage = true
+}
+
 trait Logon extends Message {
+  override def isAdminMessage = true
+}
+
+class Logout(header: MessageHeader) extends AbstractMessage(header) {
+  field(Text.Tag, Required.NO)
+
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+
   override def isAdminMessage = true
 }
 
@@ -71,9 +97,44 @@ trait RequestForPositionAcknowledgment extends Message
 
 trait RequestForPositions extends Message
 
+class ResendRequest(header: MessageHeader) extends AbstractMessage(header) {
+  field(BeginSeqNo.Tag)
+  field(EndSeqNo.Tag)
+
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+
+  override def isAdminMessage = true
+}
+
 trait SecurityList extends Message
 
 trait SecurityListRequest extends Message
+
+class SequenceReset(header: MessageHeader) extends AbstractMessage(header) {
+  field(GapFillFlag.Tag, Required.NO)
+  field(NewSeqNo.Tag, Required.NO)
+
+  override def setSendingTime(sendingTime: DateTime) {
+    super.setSendingTime(sendingTime)
+
+    if (getPossDupFlag && !hasOrigSendingTime)
+      setOrigSendingTime(sendingTime)
+  }
+
+  def getNewSeqNo: Int = getInteger(NewSeqNo.Tag)
+
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+
+  override def isAdminMessage = true
+}
+
+class TestRequest(header: MessageHeader) extends AbstractMessage(header) {
+  field(TestReqID.Tag)
+
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+
+  override def isAdminMessage = true
+}
 
 trait TradeCancelCorrect extends Message
 
