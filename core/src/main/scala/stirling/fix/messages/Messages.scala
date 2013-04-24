@@ -15,36 +15,74 @@
  */
 package stirling.fix.messages
 
+trait Allocation extends Message
+
+trait BulkCancelRequest extends Message
+
+trait BusinessMessageReject extends Message
+
+trait CollateralInquiry extends Message
+
+trait CollateralInquiryAcknowledgment extends Message
+
+trait CollateralReport extends Message
+
+trait DontKnowTrade extends Message
+
+trait ExecutionReport extends Message
+
 trait Logon extends Message {
   override def isAdminMessage = true
 }
+
+trait MassQuote extends Message
+
+trait MassQuoteAcknowledgement extends Message
+
+trait NewOrderMultiLeg extends Message
+
+trait NewOrderSingle extends Message
+
+trait News extends Message
+
+trait NewsMessage extends Message
+
+trait OrderCancelReject extends Message
+
+trait OrderCancelReplaceRequest extends Message
+
+trait OrderCancelRequest extends Message
+
+trait OrderMassCancelReport extends Message
+
+trait OrderMassCancelRequest extends Message
+
+trait OrderMassStatusRequest extends Message
+
+trait OrderStatusRequest extends Message
+
+trait PositionReport extends Message
+
 trait Reject extends Message {
   override def isAdminMessage = true
 }
-trait RequestForPositions extends Message
-trait NewOrderMultiLeg extends RequestMessage
-trait TradingSessionStatus extends Message
-trait OrderCancelReject extends Message
-trait OrderCancelReplaceRequest extends Message
-trait OrderMassCancelReport extends Message
-trait OrderMassCancelRequest extends Message
-trait OrderMassStatusRequest extends Message
-trait TradeCaptureReport extends Message
-trait TradeCaptureReportAck extends Message
-trait TradeCaptureReportRequest extends Message
-trait TradeCaptureReportRequestAck extends Message
-trait MassQuote extends Message
-trait MassQuoteAcknowledgement extends Message
-trait NewsMessage extends Message
-trait SecurityListRequest extends Message
-trait SecurityList extends Message
-trait BusinessMessageReject extends Message
-trait DontKnowTrade extends Message
-trait News extends Message
-trait CollateralReport extends Message
-trait CollateralInquiryAcknowledgment extends Message
-trait PositionReport extends Message
+
 trait RequestForPositionAcknowledgment extends Message
-trait OrderStatusRequest extends Message
-trait Allocation extends Message
-trait BulkCancelRequest extends Message
+
+trait RequestForPositions extends Message
+
+trait SecurityList extends Message
+
+trait SecurityListRequest extends Message
+
+trait TradeCancelCorrect extends Message
+
+trait TradeCaptureReport extends Message
+
+trait TradeCaptureReportAck extends Message
+
+trait TradeCaptureReportRequest extends Message
+
+trait TradeCaptureReportRequestAck extends Message
+
+trait TradingSessionStatus extends Message
