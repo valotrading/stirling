@@ -128,6 +128,14 @@ class SequenceReset(header: MessageHeader) extends AbstractMessage(header) {
   override def isAdminMessage = true
 }
 
+class TestRequest(header: MessageHeader) extends AbstractMessage(header) {
+  field(TestReqID.Tag)
+
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+
+  override def isAdminMessage = true
+}
+
 trait TradeCancelCorrect extends Message
 
 trait TradeCaptureReport extends Message
