@@ -21,6 +21,7 @@ trait Logon extends Message {
 trait Reject extends Message {
   override def isAdminMessage = true
 }
+trait ExecutionReport extends Message
 trait RequestForPositions extends Message
 trait NewOrderMultiLeg extends RequestMessage
 trait TradingSessionStatus extends Message
@@ -42,6 +43,7 @@ trait BusinessMessageReject extends Message
 trait DontKnowTrade extends Message
 trait News extends Message
 trait CollateralReport extends Message
+trait CollateralInquiry extends Message
 trait CollateralInquiryAcknowledgment extends Message
 trait PositionReport extends Message
 trait RequestForPositionAcknowledgment extends Message
