@@ -26,6 +26,7 @@ trait RequestForPositions extends Message
 trait NewOrderMultiLeg extends Message
 trait NewOrderSingle extends Message
 trait TradingSessionStatus extends Message
+trait OrderCancelRequest extends Message
 trait OrderCancelReject extends Message
 trait OrderCancelReplaceRequest extends Message
 trait OrderMassCancelReport extends Message
