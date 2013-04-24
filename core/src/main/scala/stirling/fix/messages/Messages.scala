@@ -15,7 +15,7 @@
  */
 package stirling.fix.messages
 
-import stirling.fix.tags.fix42.{TestReqID, Text}
+import stirling.fix.tags.fix42.{BeginSeqNo, EndSeqNo, TestReqID, Text}
 
 trait Allocation extends Message
 
@@ -88,6 +88,15 @@ trait Reject extends Message {
 trait RequestForPositionAcknowledgment extends Message
 
 trait RequestForPositions extends Message
+
+class ResendRequest(header: MessageHeader) extends AbstractMessage(header) {
+  field(BeginSeqNo.Tag)
+  field(EndSeqNo.Tag)
+
+  override def apply(visitor: MessageVisitor) = visitor.visit(this)
+
+  override def isAdminMessage = true
+}
 
 trait SecurityList extends Message
 
