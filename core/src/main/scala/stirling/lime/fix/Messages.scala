@@ -88,6 +88,8 @@ class NewOrderSingle(header: MessageHeaderTrait) extends AbstractMessage(header)
   field(BATSRoutingInstructions.Tag,     Required.NO) // BATS/BYX
   field(DarkScan.Tag,                    Required.NO)
   field(NoRescrapeAtLimit.Tag,           Required.NO)
+  field(NearPegOffset.Tag,               Required.NO) // CICX
+  field(FarPegOffset.Tag,                Required.NO)
   field(EdgeRoutingInstructions.Tag,     Required.NO) // DirectEdge
   field(ImbalanceOnly.Tag,               Required.NO) // INET/BSX/PSX/INET-FIX/BSX-FIX/PSX-FIX
   field(INETFIXRoutingInstructions.Tag,  Required.NO)

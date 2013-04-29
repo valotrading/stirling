@@ -145,3 +145,7 @@ object ExternalClOrdId extends StringTag(9508)
 object MarketDisplayPrice extends FloatTag(9509)
 
 object NbboWeightIndicator extends FloatTag(9511)
+
+object NearPegOffset extends FloatTag(9069)
+
+object FarPegOffset extends FloatTag(9070)
