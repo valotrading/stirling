@@ -42,7 +42,11 @@ object TimeInForce extends EnumTag[Character](59) {
   val GoodTillDate      = CharValue('6')
   val AtTheClose        = CharValue('7')
   val TimeInMarket      = CharValue('8')
+  val LateLimitOnOpen   = CharValue('A') // BATS only
+  val LateLimitOnClose  = CharValue('B') // BATS only
   val OnOpenThenDay     = CharValue('D')
+  val PreOpenSession    = CharValue('E') // KMATCH only
+  val PostCloseSession  = CharValue('F') // KMATCH only
 }
 
 object CxlRejReason extends EnumTag[Integer](102) {
