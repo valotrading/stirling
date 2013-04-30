@@ -105,7 +105,7 @@ object PegType extends EnumTag[Character](9034) {
   val PriceImprovedPrimary  = CharValue('5') // LAVA only
   val PriceImprovedMarket   = CharValue('6') // LAVA only
   val PriceImprovedMidPoint = CharValue('7') // LAVA only
-  val DiscretionaryMidpoint = CharValue('8') // DirectEdge only
+  val DiscretionaryMidPoint = CharValue('8') // DirectEdge only
   val PennySpreadMidPoint   = CharValue('9') // LavaFlow only
 }
 
