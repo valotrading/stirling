@@ -42,7 +42,11 @@ object TimeInForce extends EnumTag[Character](59) {
   val GoodTillDate      = CharValue('6')
   val AtTheClose        = CharValue('7')
   val TimeInMarket      = CharValue('8')
+  val LateLimitOnOpen   = CharValue('A') // BATS only
+  val LateLimitOnClose  = CharValue('B') // BATS only
   val OnOpenThenDay     = CharValue('D')
+  val PreOpenSession    = CharValue('E') // KMATCH only
+  val PostCloseSession  = CharValue('F') // KMATCH only
 }
 
 object CxlRejReason extends EnumTag[Integer](102) {
@@ -101,7 +105,8 @@ object PegType extends EnumTag[Character](9034) {
   val PriceImprovedPrimary  = CharValue('5') // LAVA only
   val PriceImprovedMarket   = CharValue('6') // LAVA only
   val PriceImprovedMidPoint = CharValue('7') // LAVA only
-  val DiscretionaryMidpoint = CharValue('8') // DirectEdge only
+  val DiscretionaryMidPoint = CharValue('8') // DirectEdge only
+  val PennySpreadMidPoint   = CharValue('9') // LavaFlow only
 }
 
 object IntradayCross extends BooleanTag(9035)
@@ -145,3 +150,7 @@ object ExternalClOrdId extends StringTag(9508)
 object MarketDisplayPrice extends FloatTag(9509)
 
 object NbboWeightIndicator extends FloatTag(9511)
+
+object NearPegOffset extends FloatTag(9069)
+
+object FarPegOffset extends FloatTag(9070)
