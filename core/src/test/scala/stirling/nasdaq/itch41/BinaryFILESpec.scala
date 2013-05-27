@@ -166,6 +166,11 @@ trait BinaryFILEFixtures {
       currentReferencePrice  = 1048592,
       crossType              = CrossType.NasdaqOpening,
       priceVarianceIndicator = PriceVarianceIndicator.LessThanOnePercent
+    ),
+    RPII(
+      nanoseconds  = 892482614,
+      stock        = "QQQ     ",
+      interestFlag = 'B'
     )
   )
 
