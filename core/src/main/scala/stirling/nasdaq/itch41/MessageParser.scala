@@ -62,6 +62,7 @@ class MessageParser extends silvertip.MessageParser[Message] {
     case 'Q' => CrossTrade
     case 'B' => BrokenTrade
     case 'I' => NOII
+    case 'N' => RPII
     case  x  => throw new GarbledMessageException("Unknown message type: " + x)
   }
 }
