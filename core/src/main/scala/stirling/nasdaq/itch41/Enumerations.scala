@@ -147,3 +147,13 @@ object PriceVarianceIndicator {
   val ThirtyPercentOrGreater = 'C'.toByte
   val CannotBeCalculated     = ' '.toByte
 }
+
+/*
+ * Section 4.8
+ */
+object InterestFlag {
+  val BuySide   = 'B'.toByte // RPI orders available on the buy side
+  val SellSide  = 'S'.toByte // RPI orders available on the sell side
+  val BothSides = 'A'.toByte // RPI orders available on both sides
+  val None      = 'N'.toByte // No RPI orders available
+}

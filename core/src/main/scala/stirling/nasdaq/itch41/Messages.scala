@@ -409,3 +409,22 @@ object NOII extends MessageType {
 
   val size = 44
 }
+
+/*
+ * Section 4.8
+ */
+case class RPII(
+  nanoseconds:  Int,
+  stock:        ByteString,
+  interestFlag: Byte
+) extends Message
+
+object RPII extends MessageType {
+  def parse(buffer: ByteBuffer) = RPII(
+    nanoseconds  = buffer.getInt(1),
+    stock        = ByteBuffers.slice(buffer, 5, 8),
+    interestFlag = buffer.get(13)
+  )
+
+  val size = 14
+}
