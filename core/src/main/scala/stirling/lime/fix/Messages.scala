@@ -91,6 +91,7 @@ class NewOrderSingle(header: MessageHeaderTrait) extends AbstractMessage(header)
   field(NearPegOffset.Tag,               Required.NO) // CICX
   field(FarPegOffset.Tag,                Required.NO)
   field(EdgeRoutingInstructions.Tag,     Required.NO) // DirectEdge
+  field(RouteDeliveryMethod.Tag,         Required.NO)
   field(ImbalanceOnly.Tag,               Required.NO) // INET/BSX/PSX/INET-FIX/BSX-FIX/PSX-FIX
   field(INETFIXRoutingInstructions.Tag,  Required.NO)
   field(IntradayCross.Tag,               Required.NO)

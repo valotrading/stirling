@@ -154,3 +154,5 @@ object NbboWeightIndicator extends FloatTag(9511)
 object NearPegOffset extends FloatTag(9069)
 
 object FarPegOffset extends FloatTag(9070)
+
+object RouteDeliveryMethod extends StringTag(9072)
