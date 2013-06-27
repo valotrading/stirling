@@ -2,3 +2,16 @@ target/
 /sbt-launch-*.jar
 /fix-console.jar
 /fix-console.log
+
+#
+# Eclipse IDE
+#
+bin/
+.project
+.classpath
+.settings/
+
+#
+# Scala IDE 
+#
+.cache
