@@ -62,6 +62,27 @@ object Seconds extends MessageType {
 }
 
 /*
+ * Custom extension. Recording server's arrival timestamp.
+ */
+class ServerSeconds(val payload: ByteString) extends Message {
+  def second: Long = payload.slice(1, 5).toLong
+}
+
+object ServerSeconds extends MessageType {
+  def apply(payload: ByteString) = new ServerSeconds(payload)
+
+  val size = 6
+
+  def format(
+    buffer: ByteBuffer,
+    second: Long
+  ) {
+    buffer.put('s'.toByte)
+    buffer.put(numeric(second, 5))
+  }
+}
+
+/*
  * Section 4.1.2
  */
 class Milliseconds(val payload: ByteString) extends Message {
@@ -79,6 +100,27 @@ object Milliseconds extends MessageType {
   ) {
     buffer.put('M'.toByte)
     buffer.put(numeric(millisecond, 3))
+  }
+}
+
+/*
+ * Custom extension. Recording server's arrival timestamp.
+ */
+class ServerMicroseconds(val payload: ByteString) extends Message {
+  def microsecond: Long = payload.slice(1, 6).toLong
+}
+
+object ServerMicroseconds extends MessageType {
+  def apply(payload: ByteString) = new ServerMicroseconds(payload)
+
+  val size = 7
+
+  def format(
+    buffer:      ByteBuffer,
+    microsecond: Long
+  ) {
+    buffer.put('u'.toByte)
+    buffer.put(numeric(microsecond, 6))
   }
 }
 
