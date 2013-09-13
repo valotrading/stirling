@@ -129,8 +129,8 @@ object Capacity {
   val OwnAccount            = '2'.toByte
   val MarketMaker           = '3'.toByte
   val IssuerHolding         = '4'.toByte
-  val IssuePriceStabilizing = '5'.toByte
-  val RisklessPrincipal     = '6'.toByte
+  val IssuePriceStabilizing = '6'.toByte
+  val RisklessPrincipal     = '7'.toByte
 }
 
 /*
