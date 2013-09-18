@@ -42,6 +42,8 @@ class MessageParser extends silvertip.MessageParser[Message] {
   protected def messageType(messageType: Byte) = (messageType: @switch) match {
     case 'T' => Seconds
     case 'M' => Milliseconds
+    case 's' => ServerSeconds
+    case 'u' => ServerMicroseconds
     case 'S' => SystemEvent
     case 'O' => MarketSegmentState
     case 'R' => OrderBookDirectory

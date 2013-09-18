@@ -43,6 +43,24 @@ class MessageSpec extends WordSpec with MustMatchers with OneInstancePerTest {
       message.messageType must equal('M')
       message.millisecond must equal(123)
     }
+    "format and parse ServerSeconds" in {
+      ServerSeconds.format(
+        buffer = payload,
+        second = 12345
+      )
+      val message = ServerSeconds(payload)
+      message.messageType must equal('s')
+      message.second      must equal(12345)
+    }
+    "format and parse ServerMicroseconds" in {
+      ServerMicroseconds.format(
+        buffer      = payload,
+        microsecond = 123456
+      )
+      val message = ServerMicroseconds(payload)
+      message.messageType must equal('u')
+      message.microsecond must equal(123456)
+    }
     "format and parse SystemEvent" in {
       SystemEvent.format(
         buffer    = payload,
