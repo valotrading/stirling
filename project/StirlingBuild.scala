@@ -37,6 +37,7 @@ object StirlingBuild extends Build {
     id       = "stirling-core",
     base     = file("core"),
     settings = commonSettings ++ Seq(
+      testOptions          += Tests.Argument(TestFrameworks.JUnit, "-v"),
       libraryDependencies ++= Seq(
         commonsLang,
         jdave,
@@ -45,6 +46,7 @@ object StirlingBuild extends Build {
         jmock,
         jodaConvert,
         jodaTime,
+        junitInterface,
         log4j,
         mockito,
         mongoJavaDriver,
@@ -88,6 +90,7 @@ object StirlingBuild extends Build {
     val jmock           = "org.jmock"     %  "jmock"             % "2.5.1"  % "test"
     val jodaConvert     = "org.joda"      %  "joda-convert"      % "1.2"
     val jodaTime        = "joda-time"     %  "joda-time"         % "2.1"
+    val junitInterface  = "com.novocode"  %  "junit-interface"   % "0.10"   % "test"
     val log4j           = "log4j"         %  "log4j"             % "1.2.16"
     val mockito         = "org.mockito"   %  "mockito-core"      % "1.9.0"  % "test"
     val mongoJavaDriver = "org.mongodb"   %  "mongo-java-driver" % "2.7.2"

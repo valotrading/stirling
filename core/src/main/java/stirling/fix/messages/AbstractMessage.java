@@ -117,6 +117,14 @@ public abstract class AbstractMessage extends DefaultFieldContainer implements M
         return header.getString(TargetCompID.Tag());
     }
 
+    public String getOnBehalfOfCompId() {
+        return header.getString(OnBehalfOfCompID.Tag());
+    }
+
+    public String getDeliverToCompId() {
+        return header.getString(DeliverToCompID.Tag());
+    }
+
     public void setOnBehalfOfCompId(String onBehalfOfCompId) {
         header.setString(OnBehalfOfCompID.Tag(), onBehalfOfCompId);
     }
@@ -157,6 +165,14 @@ public abstract class AbstractMessage extends DefaultFieldContainer implements M
         return header.hasValue(OrigSendingTime.Tag());
     }
 
+    public boolean hasDeliverToCompId() {
+        return header.hasValue(DeliverToCompID.Tag());
+    }
+
+    public boolean hasOnBehalfOfCompId() {
+        return header.hasValue(OnBehalfOfCompID.Tag());
+    }
+
     public void setPossDupFlag(boolean possDupFlag) {
         header.setBoolean(PossDupFlag.Tag(), possDupFlag);
     }
@@ -177,8 +193,14 @@ public abstract class AbstractMessage extends DefaultFieldContainer implements M
         return config.getSenderCompId().equals(getTargetCompId());
     }
 
-    public boolean isPointToPoint() {
-        return header.isPointToPoint();
+    public boolean hasValidOnBehalfOfCompId(Config config) {
+        return config.getOnBehalfOfCompIdValidator().validate(
+            getOnBehalfOfCompId(), hasOnBehalfOfCompId(), getMsgType());
+    }
+
+    public boolean hasValidDeliverToCompId(Config config) {
+        return config.getDeliverToCompIdValidator().validate(
+            getDeliverToCompId(), hasDeliverToCompId(), getMsgType());
     }
 
     @Override

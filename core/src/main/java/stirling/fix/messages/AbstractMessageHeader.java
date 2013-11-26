@@ -85,10 +85,6 @@ public abstract class AbstractMessageHeader extends DefaultFieldContainer implem
         head.setString(MsgType.Tag(), msgType);
     }
 
-    public boolean isPointToPoint() {
-        return !hasValue(OnBehalfOfCompID.Tag()) && !hasValue(DeliverToCompID.Tag());
-    }
-
     public boolean hasAccurateSendingTime(DateTime currentTime) {
         if (!hasValue(SendingTime.Tag())) {
             return true;

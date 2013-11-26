@@ -85,11 +85,21 @@ public class MessageValidator {
             });
             add(new AbstractMessageValidator() {
                 @Override protected boolean isValid(Session session, Message message) {
-                    return message.isPointToPoint();
+                    return message.hasValidOnBehalfOfCompId(session.getConfig());
                 }
 
                 @Override protected void error(Session session, Message message, ErrorHandler handler) {
-                    String text = "Third-party message routing is not supported";
+                    String text = "Invalid OnBehalfOfCompID(115): " + message.getOnBehalfOfCompId();
+                    handler.sessionReject(SessionRejectReason.CompIdProblem(), text, ErrorLevel.ERROR, false);
+                }
+            });
+            add(new AbstractMessageValidator() {
+                @Override protected boolean isValid(Session session, Message message) {
+                    return message.hasValidDeliverToCompId(session.getConfig());
+                }
+
+                @Override protected void error(Session session, Message message, ErrorHandler handler) {
+                    String text = "Invalid DeliverToCompID(128): " + message.getDeliverToCompId();
                     handler.sessionReject(SessionRejectReason.CompIdProblem(), text, ErrorLevel.ERROR, false);
                 }
             });

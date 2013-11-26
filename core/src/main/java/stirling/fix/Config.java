@@ -25,6 +25,20 @@ public class Config {
     private String targetSubId;
     private Version version;
 
+    private CompIdValidator onBehalfOfCompIdValidator = new CompIdValidator() {
+        @Override
+        public boolean validate(String onBehalfOfCompId, boolean exists, String msgType) {
+            return exists == false;
+        }
+    };
+
+    private CompIdValidator deliverToCompIdValidator = new CompIdValidator() {
+        @Override
+        public boolean validate(String deliverToCompId, boolean exists, String msgType) {
+            return exists == false;
+        }
+    };
+
     public Config() {
         this.version = Version.FIX_4_2;
         this.senderCompId = "";
@@ -84,6 +98,22 @@ public class Config {
 
     public boolean supports(Version version) {
         return this.version.ordinal() >= version.ordinal();
+    }
+
+    public void setOnBehalfOfCompIdValidator(CompIdValidator validator) {
+        onBehalfOfCompIdValidator = validator;
+    }
+
+    public void setDeliverToCompIdValidator(CompIdValidator validator) {
+        deliverToCompIdValidator = validator;
+    }
+
+    public CompIdValidator getOnBehalfOfCompIdValidator() {
+        return onBehalfOfCompIdValidator;
+    }
+
+    public CompIdValidator getDeliverToCompIdValidator() {
+        return deliverToCompIdValidator;
     }
 
     public Config counterparty() {

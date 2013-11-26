@@ -18,7 +18,6 @@ package stirling.fix.session;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-
 import stirling.fix.messages.fix42.MsgTypeValue;
 
 @RunWith(JDaveRunner.class) public class SendHeartbeatSpec extends InitiatorSpecification {
@@ -34,7 +33,7 @@ import stirling.fix.messages.fix42.MsgTypeValue;
             logonHeartbeatTestRequest();
         }
 
-        public void logonHeartbeatTestRequest() throws Exception {
+        private void logonHeartbeatTestRequest() throws Exception {
             setHeartBeatInterval(50);
             server.expect(MsgTypeValue.LOGON);
             server.respondLogon();

@@ -33,6 +33,8 @@ public interface Message extends FieldContainer, Formattable, Parseable, Sequenc
     void setTargetCompId(String targetCompId);
     String getSenderCompId();
     String getTargetCompId();
+    String getOnBehalfOfCompId();
+    String getDeliverToCompId();
     void setOnBehalfOfCompId(String onBehalfOfCompId);
     void setDeliverToCompId(String deliverToCompId);
     void setHeaderConfig(Config config);
@@ -46,12 +48,15 @@ public interface Message extends FieldContainer, Formattable, Parseable, Sequenc
     DateTime getOrigSendingTime();
     boolean getPossDupFlag();
     boolean getPossResend();
-    boolean isPointToPoint();
     boolean hasAccurateSendingTime();
     boolean hasOrigSendingTimeEarlierThanOrEqualToSendingTime();
     boolean hasOrigSendingTime();
+    boolean hasDeliverToCompId();
+    boolean hasOnBehalfOfCompId();
     boolean hasValidBeginString(Config config);
     boolean hasValidSenderCompId(Config config);
     boolean hasValidTargetCompId(Config config);
+    boolean hasValidOnBehalfOfCompId(Config config);
+    boolean hasValidDeliverToCompId(Config config);
     boolean isTooLowSeqNum(int seqNo);
 }
