@@ -193,16 +193,6 @@ public abstract class AbstractMessage extends DefaultFieldContainer implements M
         return config.getSenderCompId().equals(getTargetCompId());
     }
 
-    public boolean hasValidOnBehalfOfCompId(Config config) {
-        return config.getOnBehalfOfCompIdValidator().validate(
-            getOnBehalfOfCompId(), hasOnBehalfOfCompId(), getMsgType());
-    }
-
-    public boolean hasValidDeliverToCompId(Config config) {
-        return config.getDeliverToCompIdValidator().validate(
-            getDeliverToCompId(), hasDeliverToCompId(), getMsgType());
-    }
-
     @Override
     public boolean hasValidBeginString(Config config) {
         return config.getVersion().value().equals(getBeginString());

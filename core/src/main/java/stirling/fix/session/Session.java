@@ -35,6 +35,7 @@ import org.joda.time.DateTime;
 
 import stirling.fix.Config;
 import stirling.fix.messages.DefaultMessageComparator;
+import stirling.fix.messages.DefaultMessageValidator;
 import stirling.fix.messages.DefaultMessageVisitor;
 import stirling.fix.messages.FixMessage;
 import stirling.fix.messages.Heartbeat;
@@ -43,7 +44,7 @@ import stirling.fix.messages.Logout;
 import stirling.fix.messages.Message;
 import stirling.fix.messages.MessageComparator;
 import stirling.fix.messages.MessageFactory;
-import stirling.fix.messages.MessageValidator;
+import stirling.fix.messages.Validator;
 import stirling.fix.messages.MessageVisitor;
 import stirling.fix.messages.ParseException;
 import stirling.fix.messages.Parser;
@@ -85,6 +86,7 @@ public class Session {
     protected final SessionStore store;
     protected final MessageFactory messageFactory;
     protected final MessageComparator messageComparator;
+    protected final Validator<Message> messageValidator;
 
     private TimeSource timeSource = new DefaultTimeSource();
     private long testReqId;
@@ -99,15 +101,24 @@ public class Session {
     private DateTime logoutInitiatedAt;
 
     public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, MessageFactory messageFactory) {
-        this(heartBtInt, config, store, messageFactory, new DefaultMessageComparator());
+        this(heartBtInt, config, store, messageFactory, new DefaultMessageComparator(), new DefaultMessageValidator());
     }
 
     public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, MessageFactory messageFactory, MessageComparator messageComparator) {
+        this(heartBtInt, config, store, messageFactory, messageComparator, new DefaultMessageValidator());
+    }
+
+    public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, MessageFactory messageFactory, Validator<Message> messageValidator) {
+        this(heartBtInt, config, store, messageFactory, new DefaultMessageComparator(), messageValidator);
+    }
+
+    public Session(HeartBtIntValue heartBtInt, Config config, SessionStore store, MessageFactory messageFactory, MessageComparator messageComparator, Validator<Message> messageValidator) {
         this.heartBtInt = heartBtInt;
         this.config = config;
         this.store = store;
         this.messageFactory = messageFactory;
         this.messageComparator = messageComparator;
+        this.messageValidator = messageValidator;
         store.load(this);
     }
 
@@ -276,7 +287,7 @@ public class Session {
     }
 
     private boolean validate(final Connection conn, final Message message) {
-        return MessageValidator.validate(this, message, new ErrorHandler() {
+        return messageValidator.validate(this, message, new ErrorHandler() {
             @Override public void sessionReject(Value<Integer> reason, String text, ErrorLevel level, boolean terminate) {
                 logError(text, level);
                 Session.this.sessionReject(conn, message, reason, text);
