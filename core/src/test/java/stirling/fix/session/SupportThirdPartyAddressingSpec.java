@@ -19,35 +19,97 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 
+import stirling.fix.CompIdValidator;
 import stirling.fix.messages.fix42.MsgTypeValue;
 
 @RunWith(JDaveRunner.class) public class SupportThirdPartyAddressingSpec extends InitiatorSpecification {
     public class InitializedSession {
-        /* Ref ID 18: a. Receive messages with OnBehalfOfCompID and
-         * DeliverToCompID values expected as specified in testing profile and
-         * with correct usage. */
-        public void valid() throws Exception {
-            respondWithNonPointToPointMsg();
-        }
-
-        /* Ref ID 18: b. Receive messages with OnBehalfOfCompID or
-         * DeliverToCompID values not specifed in testing profile or incorrect
-         * usage. */
-        public void invalid() throws Exception {
-            respondWithNonPointToPointMsg();
-        }
-
-        private void respondWithNonPointToPointMsg() throws Exception {
+        /* Ref ID 18: a. Receive messages with OnBehalfOfCompId values expected
+         * as specified in testing profile and with correct usage. */
+        public void msgWithValidBehalfOfCompId() throws Exception {
+            setOnBehalfOfCompIdValidator(new CompIdValidator() {
+                @Override
+                public boolean validate(String onBehalfOfCompId, boolean exists, String msgType) {
+                    if (msgType.equals(MsgTypeValue.HEARTBEAT))
+                        return "behalfOf".equals(onBehalfOfCompId);
+                    return true;
+                }
+            });
             server.expect(MsgTypeValue.LOGON);
             server.respondLogon();
             server.respond(
                     new MessageBuilder(MsgTypeValue.HEARTBEAT)
                         .setOnBehalfOfCompId("behalfOf")
-                        .setDeliverToCompId("deliverTo")
+                        .msgSeqNum(2)
+                    .build());
+            server.respondLogout(3);
+            server.expect(MsgTypeValue.LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 4);
+        }
+
+        /* Ref ID 18: b. Receive messages with OnBehalfOfCompId values not
+         * specifed in testing profile or incorrect usage. */
+        public void msgWithInvalidOnBehalfOfCompId() throws Exception {
+            server.expect(MsgTypeValue.LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
+                        .setOnBehalfOfCompId("invalidOnBehalfOfCompId")
                         .msgSeqNum(2)
                     .build());
             server.expect(MsgTypeValue.REJECT);
-            checking(expectLogSevere("Third-party message routing is not supported"));
+            checking(expectLogSevere("Invalid OnBehalfOfCompID(115): invalidOnBehalfOfCompId"));
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 3);
+        }
+
+        /* Ref ID 18: a. Receive messages with DeliverToCompID values expected
+         * as specified in testing profile and with correct usage. */
+        public void msgWithValidDeliverToCompId() throws Exception {
+            setDeliverToCompIdValidator(new CompIdValidator() {
+                @Override
+                public boolean validate(String deliverToCompId, boolean exists, String msgType) {
+                    if (msgType.equals(MsgTypeValue.HEARTBEAT))
+                        return "deliverTo".equals(deliverToCompId);
+                    return true;
+                }
+            });
+            server.expect(MsgTypeValue.LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
+                        .setDeliverToCompId("deliverTo")
+                        .msgSeqNum(2)
+                    .build());
+            server.respondLogout(3);
+            server.expect(MsgTypeValue.LOGOUT);
+            runInClient(new Runnable() {
+                @Override public void run() {
+                    session.logon(connection);
+                }
+            });
+            specify(session.getIncomingSeq().peek(), 4);
+        }
+
+        public void msgWithInvalidDeliverToCompId() throws Exception {
+            server.expect(MsgTypeValue.LOGON);
+            server.respondLogon();
+            server.respond(
+                    new MessageBuilder(MsgTypeValue.HEARTBEAT)
+                        .setDeliverToCompId("invalidDeliverTo")
+                        .msgSeqNum(2)
+                    .build());
+            server.expect(MsgTypeValue.REJECT);
+            checking(expectLogSevere("Invalid DeliverToCompID(128): invalidDeliverTo"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

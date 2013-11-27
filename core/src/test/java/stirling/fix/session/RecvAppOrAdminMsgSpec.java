@@ -155,7 +155,7 @@ import stirling.fix.tags.fix42.ExecTransType;
                 .field(CheckSum.Tag(), "034")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(expectLogSevere("EncryptMethod(98): Invalid value"));
+            checking(expectLogSevere("EncryptMethod(98): Invalid value: 7"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -176,7 +176,7 @@ import stirling.fix.tags.fix42.ExecTransType;
                 .field(CheckSum.Tag(), "012")
                 .toString());
             server.expect(MsgTypeValue.REJECT);
-            checking(expectLogSevere("SendingTime(52): Invalid value format"));
+            checking(expectLogSevere("SendingTime(52): Invalid value format: WRONG FORMAT"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

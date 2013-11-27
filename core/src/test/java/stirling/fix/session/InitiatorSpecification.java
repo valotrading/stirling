@@ -43,6 +43,7 @@ import org.joda.time.format.DateTimeFormatter;
 import silvertip.Connection;
 import silvertip.Events;
 import stirling.fix.Config;
+import stirling.fix.CompIdValidator;
 import stirling.fix.Version;
 import stirling.fix.messages.BooleanField;
 import stirling.fix.messages.DefaultMessageVisitor;
@@ -85,7 +86,7 @@ public class InitiatorSpecification extends Specification<Session> {
     private static final DateTimeFormatter fmt = DateTimeFormat.forPattern(dateTimeFormat);
 
     protected static final long LOGOUT_RESPONSE_TIMEOUT_MSEC = 1000;
-    private static final Version VERSION = Version.FIX_4_2;
+    protected static final Version VERSION = Version.FIX_4_2;
     protected static final String INITIATOR = "initiator";
     protected static final String ACCEPTOR = "OPENFIX";
 
@@ -115,6 +116,14 @@ public class InitiatorSpecification extends Specification<Session> {
         return new Expectations() {{
             one(logger).warning(message);
         }};
+    }
+
+    public void setOnBehalfOfCompIdValidator(CompIdValidator validator) {
+        config.setOnBehalfOfCompIdValidator(validator);
+    }
+
+    public void setDeliverToCompIdValidator(CompIdValidator validator) {
+        config.setDeliverToCompIdValidator(validator);
     }
 
     protected void setHeartBeatInterval(long intervalInMSec) {
@@ -164,6 +173,9 @@ public class InitiatorSpecification extends Specification<Session> {
             while (System.currentTimeMillis() - started < eventsIdleMSec) {
                 events.processNow();
             }
+            
+            if (server.completed())
+                break;
 
             if (keepAlive) {
                 session.keepAlive(connection);
@@ -325,6 +337,10 @@ public class InitiatorSpecification extends Specification<Session> {
 
         public boolean passed() {
             return failureCount == 0 && successCount == commands.size();
+        }
+
+        public boolean completed() {
+              return failureCount + successCount == commands.size();
         }
 
         public void respondLogon() {
