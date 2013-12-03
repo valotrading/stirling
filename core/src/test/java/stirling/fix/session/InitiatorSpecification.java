@@ -43,9 +43,9 @@ import org.joda.time.format.DateTimeFormatter;
 import silvertip.Connection;
 import silvertip.Events;
 import stirling.fix.Config;
-import stirling.fix.CompIdValidator;
 import stirling.fix.Version;
 import stirling.fix.messages.BooleanField;
+import stirling.fix.messages.DefaultMessageValidator;
 import stirling.fix.messages.DefaultMessageVisitor;
 import stirling.fix.messages.EnumField;
 import stirling.fix.messages.Field;
@@ -61,6 +61,7 @@ import stirling.fix.messages.RawMessageBuilder;
 import stirling.fix.messages.StringField;
 import stirling.fix.messages.Tag;
 import stirling.fix.messages.UnsupportedMsgTypeException;
+import stirling.fix.messages.Validator;
 import stirling.fix.messages.Value;
 import stirling.fix.messages.fix42.DefaultMessageFactory;
 import stirling.fix.messages.fix42.DefaultMessageHeader;
@@ -98,6 +99,8 @@ public class InitiatorSpecification extends Specification<Session> {
     private long sessionTimeShift;
     private long heartBeatIntervalMSec = 1000;
 
+    private Validator<Message> messageValidator = new DefaultMessageValidator();
+
     private Config config = new Config() {
         {
             setSenderCompId(INITIATOR);
@@ -118,12 +121,8 @@ public class InitiatorSpecification extends Specification<Session> {
         }};
     }
 
-    public void setOnBehalfOfCompIdValidator(CompIdValidator validator) {
-        config.setOnBehalfOfCompIdValidator(validator);
-    }
-
-    public void setDeliverToCompIdValidator(CompIdValidator validator) {
-        config.setDeliverToCompIdValidator(validator);
+    public void setMessageValidator(Validator<Message> validator) {
+        this.messageValidator = validator;
     }
 
     protected void setHeartBeatInterval(long intervalInMSec) {
@@ -560,7 +559,7 @@ public class InitiatorSpecification extends Specification<Session> {
     protected class TestSession extends Session {
         protected TestSession() throws Exception {
             super(HeartBtIntValue.milliseconds(getHearbeatIntervalInMillis()), InitiatorSpecification.this.config,
-                newSessionStore(), new DefaultMessageFactory());
+                newSessionStore(), new DefaultMessageFactory(), InitiatorSpecification.this.messageValidator);
         }
 
         protected MessageQueue<Message> getOutgoingMsgQueue() {

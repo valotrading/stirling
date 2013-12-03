@@ -19,19 +19,26 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 
-import stirling.fix.CompIdValidator;
+import stirling.fix.messages.DefaultMessageValidator;
+import stirling.fix.messages.AbstractMessageValidator;
+import stirling.fix.messages.Message;
+import stirling.fix.messages.Validator;
 import stirling.fix.messages.fix42.MsgTypeValue;
+
+import stirling.fix.messages.Validator.ErrorHandler;
+import stirling.fix.session.Session;
+import stirling.fix.tags.fix43.SessionRejectReason;
 
 @RunWith(JDaveRunner.class) public class SupportThirdPartyAddressingSpec extends InitiatorSpecification {
     public class InitializedSession {
         /* Ref ID 18: a. Receive messages with OnBehalfOfCompId values expected
          * as specified in testing profile and with correct usage. */
         public void msgWithValidBehalfOfCompId() throws Exception {
-            setOnBehalfOfCompIdValidator(new CompIdValidator() {
+            setMessageValidator(new DefaultMessageValidator() {
                 @Override
-                public boolean validate(String onBehalfOfCompId, boolean exists, String msgType) {
-                    if (msgType.equals(MsgTypeValue.HEARTBEAT))
-                        return "behalfOf".equals(onBehalfOfCompId);
+                protected boolean isOnBehalfOfCompIdValid(Session session, Message message) {
+                    if (message.getMsgType().equals(MsgTypeValue.HEARTBEAT))
+                        return "behalfOf".equals(message.getOnBehalfOfCompId());
                     return true;
                 }
             });
@@ -63,7 +70,7 @@ import stirling.fix.messages.fix42.MsgTypeValue;
                         .msgSeqNum(2)
                     .build());
             server.expect(MsgTypeValue.REJECT);
-            checking(expectLogSevere("Invalid OnBehalfOfCompID(115): invalidOnBehalfOfCompId"));
+            checking(expectLogSevere("OnBehalfOfCompID(115) not allowed: invalidOnBehalfOfCompId"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);
@@ -75,11 +82,11 @@ import stirling.fix.messages.fix42.MsgTypeValue;
         /* Ref ID 18: a. Receive messages with DeliverToCompID values expected
          * as specified in testing profile and with correct usage. */
         public void msgWithValidDeliverToCompId() throws Exception {
-            setDeliverToCompIdValidator(new CompIdValidator() {
+            setMessageValidator(new DefaultMessageValidator() {
                 @Override
-                public boolean validate(String deliverToCompId, boolean exists, String msgType) {
-                    if (msgType.equals(MsgTypeValue.HEARTBEAT))
-                        return "deliverTo".equals(deliverToCompId);
+                protected boolean isDeliverToCompIdValid(Session session, Message message) {
+                    if (message.getMsgType().equals(MsgTypeValue.HEARTBEAT))
+                        return "deliverTo".equals(message.getDeliverToCompId());
                     return true;
                 }
             });
@@ -109,7 +116,7 @@ import stirling.fix.messages.fix42.MsgTypeValue;
                         .msgSeqNum(2)
                     .build());
             server.expect(MsgTypeValue.REJECT);
-            checking(expectLogSevere("Invalid DeliverToCompID(128): invalidDeliverTo"));
+            checking(expectLogSevere("DeliverToCompID(128) not allowed: invalidDeliverTo"));
             runInClient(new Runnable() {
                 @Override public void run() {
                     session.logon(connection);

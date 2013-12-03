@@ -18,6 +18,8 @@ Stirling is an open source electronic trading library for the JVM.
   - MB Trading Quote API
   - NASDAQ TotalView-ITCH 4.1
   - NASDAQ OMX FIX
+  - NASDAQ OMX FIX Drop for Order Entry
+  - NASDAQ OMX FIX Drop for OUCH
   - NASDAQ OMX Nordic Equity TotalView-ITCH 1.86
   - NASDAQ OMX OUCH 2.01
   - Oslo Børs Millennium Exchange ITCH 2.0

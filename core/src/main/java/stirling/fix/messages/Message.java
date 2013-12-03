@@ -56,7 +56,5 @@ public interface Message extends FieldContainer, Formattable, Parseable, Sequenc
     boolean hasValidBeginString(Config config);
     boolean hasValidSenderCompId(Config config);
     boolean hasValidTargetCompId(Config config);
-    boolean hasValidOnBehalfOfCompId(Config config);
-    boolean hasValidDeliverToCompId(Config config);
     boolean isTooLowSeqNum(int seqNo);
 }
