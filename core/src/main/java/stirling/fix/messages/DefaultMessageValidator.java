@@ -35,8 +35,8 @@ public class DefaultMessageValidator implements Validator<Message> {
             add(createSendingTimeValidator());
             add(createOnBehalfOfCompIdValidator());
             add(createDeliverToCompIdValidator());
-            add(createConditionalTagValidator());
-            add(createRequiredTagValidator());
+            add(createNonConditionalRequiredTagValidator());
+            add(createConditionalRequiredTagValidator());
         }
         private static final long serialVersionUID = 1L;
     };
@@ -189,11 +189,11 @@ public class DefaultMessageValidator implements Validator<Message> {
         return !message.hasDeliverToCompId();
     }
 
-    protected Validator<Message> createConditionalTagValidator() {
+    protected Validator<Message> createNonConditionalRequiredTagValidator() {
         return new AbstractFieldsValidator() {
             @Override
             protected boolean isValid(Session session, Field field) {
-                return isConditionalTagValid(session, field);
+                return isNonConditionalRequiredTagValid(session, field);
             }
 
             @Override
@@ -208,18 +208,18 @@ public class DefaultMessageValidator implements Validator<Message> {
         };
     }
 
-    protected boolean isConditionalTagValid(Session session, Field field) {
+    protected boolean isNonConditionalRequiredTagValid(Session session, Field field) {
         if (field.required().isConditional()) {
             return true;
         }
         return !missing(field);
     }
 
-    protected Validator<Message> createRequiredTagValidator() {
+    protected Validator<Message> createConditionalRequiredTagValidator() {
         return new AbstractFieldsValidator() {
             @Override
             protected boolean isValid(Session session, Field field) {
-                return isRequiredTagValid(session, field);
+                return isConditionalRequiredTagValid(session, field);
             }
 
             @Override
@@ -233,7 +233,7 @@ public class DefaultMessageValidator implements Validator<Message> {
         };
     }
 
-    protected boolean isRequiredTagValid(Session session, Field field) {
+    protected boolean isConditionalRequiredTagValid(Session session, Field field) {
         if (!field.required().isConditional()) {
             return true;
         }
