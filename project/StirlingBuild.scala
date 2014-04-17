@@ -95,6 +95,6 @@ object StirlingBuild extends Build {
     val mockito         = "org.mockito"   %  "mockito-core"      % "1.9.0"  % "test"
     val mongoJavaDriver = "org.mongodb"   %  "mongo-java-driver" % "2.7.2"
     val scalatest       = "org.scalatest" %% "scalatest"         % "1.9.1"
-    val silvertip       = "silvertip"     %  "silvertip"         % "0.4.1"
+    val silvertip       = "silvertip"     %  "silvertip"         % "0.4.3"
   }
 }
