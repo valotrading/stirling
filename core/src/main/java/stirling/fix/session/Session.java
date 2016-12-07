@@ -470,7 +470,7 @@ public class Session {
         send(conn, message, false, true);
     }
 
-    public void logon(Connection conn, Logon logonMessage) {
+    public void logon(Connection conn, Message logonMessage) {
         authenticated = initiatedLogout = false;
         logonMessage.setMsgSeqNum(outgoingSeq.next());
         send(conn, logonMessage, false, true);
